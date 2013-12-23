@@ -1,0 +1,2 @@
+*/2 * * * * /usr/bin/curl --silent --compressed http://nilai.co/marks/backprocessOembed
+*/2 * * * * /usr/bin/curl --silent --compressed http://nilai.co/marks/backprocessRecipes
