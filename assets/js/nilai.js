@@ -32,6 +32,10 @@
       // Reset emailaddress and password to Email / Password
       // only if empty
       $('[name="emailaddress"]').blur(function(){
+        if ($(this).val() == '') { $(this).val('Email Address'); }
+      });
+      
+      $('[name="emailaddress"]').blur(function(){
         if ($(this).val() == '') { $(this).val('Email'); }
       });
       

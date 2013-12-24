@@ -26,9 +26,17 @@ class Welcome extends CI_Controller {
 	   $this->session->keep_flashdata('addurl');
 	  }
 	  
-	  if ($this->session->userdata('status') == 'paid') {
+	  if ($this->session->userdata('status') == 'active') {
 		  redirect('home');
 		} else {
+			// See if there is a users table
+    		// Also, be sure there _are_ users.
+    		$this->load->database();
+    		if ( !$this->db->table_exists('users') ) { // No user table
+    			print_r('<p>Nilai has not been installed yet. Please <a href="/install/">install</a> before continuing.</p>');
+    			exit;
+    		}
+
 		  $this->load->view('home');
 		}
 	}
@@ -37,7 +45,7 @@ class Welcome extends CI_Controller {
 	  $this->load->helper(array('url','form'));
 	  $this->load->library('session');
 	  
-	  if ($this->session->userdata('status') == 'paid') {
+	  if ($this->session->userdata('status') == 'active') {
 		  redirect('home');
 		} else {
 		  $this->load->database();

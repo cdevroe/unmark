@@ -1,33 +1,96 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Create_Nilai extends CI_Migration {
+class Migration_Create_nilai extends CI_Migration {
 
 	public function up()
-	{
-		$this->dbforge->add_field(array(
-			'blog_id' => array(
-				'type' => 'INT',
-				'constraint' => 5,
-				'unsigned' => TRUE,
-				'auto_increment' => TRUE
-			),
-			'blog_title' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
-			),
-			'blog_description' => array(
-				'type' => 'TEXT',
-				'null' => TRUE,
-			),
-		));
+	{	
+		if ( !$this->db->table_exists('groups') ) {
+			$this->db->query("CREATE TABLE `groups` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `createdby` int(11) NOT NULL,
+			  `name` varchar(255) NOT NULL,
+			  `description` text NOT NULL,
+			  `urlname` varchar(255) NOT NULL,
+			  `uid` text NOT NULL,
+			  `datecreated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+			  PRIMARY KEY (`id`)
+			) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
+		}
 
-		$this->dbforge->create_table('blog');
+		if ( !$this->db->table_exists('groups_invites') ) {
+			$this->db->query("CREATE TABLE `groups_invites` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `groupid` int(11) NOT NULL,
+			  `emailaddress` text NOT NULL,
+			  `invitedby` int(11) NOT NULL,
+			  `dateinvited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+			  `status` varchar(255) NOT NULL,
+			  PRIMARY KEY (`id`)
+			) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
+		}
+		if ( !$this->db->table_exists('marks') ) {
+			$this->db->query("CREATE TABLE `marks` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `title` text NOT NULL,
+			  `url` text NOT NULL,
+			  `oembed` text NOT NULL,
+			  `recipe` text NOT NULL,
+			  `dateadded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			  PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+		}
+		if ( !$this->db->table_exists('users') ) {
+			$this->db->query("CREATE TABLE `users` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `emailaddress` varchar(255) NOT NULL,
+			  `password` varchar(255) NOT NULL,
+			  `datejoined` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			  `status` varchar(255) NOT NULL,
+			  PRIMARY KEY (`id`),
+			  UNIQUE KEY `emailaddress` (`emailaddress`)
+			) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+		}
+		if ( !$this->db->table_exists('users_groups') ) {
+			$this->db->query("CREATE TABLE `users_groups` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `groupid` int(11) NOT NULL,
+			  `userid` int(11) NOT NULL,
+			  `datejoined` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+			  `status` varchar(255) NOT NULL,
+			  PRIMARY KEY (`id`)
+			) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
+		}
+		if ( !$this->db->table_exists('users_marks') ) {
+			$this->db->query("CREATE TABLE `users_marks` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `userid` int(11) NOT NULL,
+			  `urlid` int(11) NOT NULL,
+			  `tags` text NOT NULL,
+			  `addedby` int(11) NOT NULL,
+			  `groups` int(11) NOT NULL,
+			  `note` text NOT NULL,
+			  `dateadded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			  `status` varchar(255) NOT NULL,
+			  PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+		}
+		if ( !$this->db->table_exists('users_smartlabels') ) {
+			$this->db->query("CREATE TABLE `users_smartlabels` (
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `userid` int(11) NOT NULL,
+			  `domain` varchar(255) NOT NULL,
+			  `path` varchar(255) NOT NULL,
+			  `label` varchar(255) NOT NULL,
+			  PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+		}
 	}
 
 	public function down()
 	{
-		$this->dbforge->drop_table('blog');
+		// Why? Nah.
 	}
+}
 
 /* End of file 001_create_nilai.php */
 /* Location: ./application/migrations/001_create_nilai.php */

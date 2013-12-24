@@ -55,8 +55,13 @@ p {
 </head>
 <body>
 	<div id="container">
-		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
+		<h1>First, we need a database</h1>
+		<p>The app couldn't find your database. More than likely that is because your configuration file isn't set up yet. Here is how you do this.</p>
+			<ol>
+				<li>Rename <i>application/config/database-sample.php</i> to <i>application/config/database.php</i></li>
+				<li>Edit the hostname, username, password, and database name in database.php</li>
+				<li><a href="<?=site_url();?>install">Try again</a></li>
+			</ol>
 	</div>
 </body>
 </html>

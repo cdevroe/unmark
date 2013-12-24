@@ -43,6 +43,8 @@ $route['404_override'] = '';
 
 $route['sirius'] = "welcome/sirius";
 
+$route['install'] = "install";
+
 $route['users/login'] = "users/login";
 $route['users/logout'] = "users/logout";
 $route['users/add'] = "users/add";
