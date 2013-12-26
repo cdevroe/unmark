@@ -190,7 +190,7 @@ class Groups extends CI_Controller {
 	       
 	       	       
 	       // Copy all bookmarks that were in this group to the newly joined user.
-	       $marks = $this->db->query("SELECT * FROM users_marks WHERE groups = '".$group[0]['id']."' ORDER BY id asc");
+	       $marks = $this->db->query("SELECT * FROM users_marks GROUP BY urlid WHERE groups = '".$group[0]['id']."' ORDER BY id asc");
 	       
 	       if ($marks->num_rows() > 0) {
 	       $marks = $marks->result_array();
