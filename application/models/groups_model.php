@@ -26,7 +26,8 @@ class Groups_model extends CI_Model {
         return $groupid;
     }
 
-    function get_group_id( $uid ) {
+    function get_group_id( $uid )
+    {
         
         if (!$uid) { return false; }
 
@@ -37,6 +38,17 @@ class Groups_model extends CI_Model {
             return $group[0]->id;
         }
 
+        return false;
+    }
+
+    function get_group_info($groupid)
+    {
+        // Get Group information for email.
+        $group = $this->db->query("SELECT * FROM groups WHERE id = '".$groupid."'");
+        if ($group->num_rows() > 0) {
+            return $group->result_array();
+        }
+        
         return false;
     }
 
@@ -85,9 +97,24 @@ class Groups_model extends CI_Model {
 
     /* Invites */
 
-    function group_create_invite()
+    function invite_member_to_group()
     {
+        // Set up variables for group ID, UID, and the invitees email address
+        $groupid = $this->input->post('groupid');
+        $groupuid = $this->input->post('groupuid');
+        $emailaddress = $this->input->post('emailaddress');
 
+        // Do not allow a person to be invited more than once
+        $invites = $this->db->query("SELECT * FROM groups_invites WHERE emailaddress = '".$emailaddress."' AND groupid = '".$groupid."'");
+        
+        if ($invites->num_rows() > 0) {
+            return false;            
+        }
+
+        // Add invite to invites table
+        $this->db->insert('groups_invites',array('groupid'=>$groupid,'emailaddress'=>$emailaddress,'invitedby'=>$this->session->userdata('userid')));
+
+    return true;
     }
 
     function group_accept_invite()

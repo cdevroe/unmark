@@ -16,6 +16,10 @@ class Groups extends CI_Controller {
 
 	}
 	
+	// Just a view for the user
+	// to type in a name, description
+	// and invite some people.
+	// This doens't actually add()
 	public function create()
 	{
 		// If user is not logged in, redirect.
@@ -48,6 +52,7 @@ class Groups extends CI_Controller {
 
 	}
 	
+	// Method used to actually add a new group
 	public function add()
 	{
 		// If user is not logged in, redirect
@@ -102,29 +107,24 @@ class Groups extends CI_Controller {
 	public function invite()
 	{
 		// Set up variables for group ID, UID, and the invitees email address
-		$groupid = $this->input->post('groupid');
-		$groupuid = $this->input->post('groupuid');
-		$emailaddress = $this->input->post('emailaddress');
+        $groupid = $this->input->post('groupid');
+        $groupuid = $this->input->post('groupuid');
+        $emailaddress = $this->input->post('emailaddress');
 
 		// Load Database and Email Helper/Library
 		$this->load->database();
 	 	$this->load->helper('email');
 	 	$this->load->library('email');
+	 	$this->load->model('Groups_model');
 
-	 	// Do not allow a person to be invited more than once
-	 	$invites = $this->db->query("SELECT * FROM groups_invites WHERE emailaddress = '".$emailaddress."' AND groupid = '".$groupid."'");
-	 	if ($invites->num_rows() > 0) {
+	 	if ( $this->Groups_model->invite_member_to_group() ) {
+	 		$this->session->set_flashdata('message', $emailaddress.' has been invited.');
+	 	} else {
 	 		$this->session->set_flashdata('message', $emailaddress.' has already been invited to this group.');
-	 		redirect('groups/'.strtoupper($groupuid).'/members');
-	 		exit;
 	 	}
-
-	 	// Add invite to invites table
-	 	$this->db->insert('groups_invites',array('groupid'=>$groupid,'emailaddress'=>$emailaddress,'invitedby'=>$this->session->userdata('userid')));
-
+	 	
 	 	// Get Group information for email.
-	 	$group = $this->db->query("SELECT * FROM groups WHERE id = '".$groupid."'");
-	 	$group = $group->result_array();
+	 	$group = $this->Groups_model->get_group_info($groupid);
 
 	 	// Construct and send email
 	 	$this->email->from($this->session->userdata('emailaddress'));
@@ -133,8 +133,6 @@ class Groups extends CI_Controller {
 	 	$this->email->message("Hi $emailaddress,\n\nI assume that you know ".$this->session->userdata('emailaddress')." They have invited you to a group named \"".$group[0]['name']."\" on Nilai - The smartest way to save links for later.\n\nTo accept this invite click this link:\nhttp://nilai.co/\n\nIf you'd rather not accept this invite or if you'd like to verify that this email isn't unsolicited - simply reply to this email and your response will go directly to the person that invited you.\n\nI hope you enjoy Nilai.\nColin Devroe\nhttp://nilai.co");
 	 	$this->email->send();
 
-	 	// Message for user, redirect
-	 	$this->session->set_flashdata('message', $emailaddress.' has been invited.');
 	 	redirect('groups/'.strtoupper($groupuid).'/members');
 	}
 	
