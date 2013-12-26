@@ -513,6 +513,7 @@ class Nilai extends CI_Controller {
 		$this->session->set_flashdata('lasturl', current_url());
 
 		$this->load->database();
+		$this->load->model('Groups_model');
 
 		$urlid = $this->uri->segment(3);
 
@@ -538,6 +539,8 @@ class Nilai extends CI_Controller {
 				}
 			}
 
+			// I think this part could be reduced to a single line,
+			// such as array_merge(). But I havent be able to do it.
 			$data['title'] = $mark[0]['title'];
 			$data['url'] = $mark[0]['url'];
 			$data['urlid'] = $mark[0]['urlid'];
@@ -545,6 +548,7 @@ class Nilai extends CI_Controller {
 			$data['note'] = $mark[0]['note'];
 			$data['addedby'] = $mark[0]['addedby'];
 			$data['groupid'] = $mark[0]['groups'];
+
 			$data['urldomain'] = strtolower($parsedUrl['host']);
 
 			$createdgroups = $this->db->query('SELECT * FROM groups WHERE createdby = '.$this->session->userdata('userid').' ORDER BY urlname asc');

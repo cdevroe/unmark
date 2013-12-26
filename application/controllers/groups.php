@@ -228,18 +228,42 @@ class Groups extends CI_Controller {
 			redirect('');
 			exit;
 		}
-
-		$this->load->database();
-
-		$name = $this->input->post('name',TRUE);
-		$description = $this->input->post('description',TRUE);
 		$uid = $this->input->post('uid');
 
-		$this->db->update('groups',array('name'=>$name,'description'=>$description),array('uid'=>$uid));
+		$this->load->database();
+		$this->load->model('Groups_model');
+
+		$this->Groups_model->update_group();
 
 		$this->session->set_flashdata('message', 'Group information updated.');
 
 		redirect('groups/'.strtoupper($uid));
+	}
+
+	public function delete()
+	{
+		
+		if (!$this->session->userdata('userid')) { // Not logged in
+			redirect('');
+			exit;
+		}
+		$uid = $this->input->post('uid');
+
+		$this->load->database();
+		$this->load->model('Groups_model');
+
+		// Check to see if this user owns the current group
+        $group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($uid));
+
+        if ( is_array($group) ){
+           
+            if ( $this->session->userdata('userid') == $group[0]['createdby'] ) {
+                $this->Groups_model->delete_group();
+                $this->session->set_flashdata('message', 'All users have been removed from the group, all bookmarks have been removed from the group, all outstanding invitations to the group have been deleted and the group has been deleted. This cannot be undone.');
+            }
+        }
+
+		redirect('home');
 	}
 	
 	public function members() {

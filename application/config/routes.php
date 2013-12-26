@@ -58,6 +58,7 @@ $route['home/(:any)'] = "nilai/home";
 $route['groups/create'] = "groups/create";
 $route['groups/add'] = "groups/add";
 $route['groups/update'] = "groups/update";
+$route['groups/delete'] = "groups/delete";
 $route['groups/invite/(:any)'] = "groups/acceptinvite";
 $route['groups/(:any)/edit'] = "groups/edit";
 $route['groups/(:any)/members'] = "groups/members";

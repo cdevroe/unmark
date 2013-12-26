@@ -100,14 +100,38 @@ class Groups_model extends CI_Model {
         return false;
     }
 
-    function group_update()
+    function update_group()
     {
+        $name = $this->input->post('name',TRUE);
+        $description = $this->input->post('description',TRUE);
+        $uid = $this->input->post('uid');
 
+        if ( $this->db->update('groups',array('name'=>$name,'description'=>$description),array('uid'=>$uid)) ) {
+            return true;
+        }
+
+    return false;
     }
 
-    function group_delete()
+    function delete_group()
     {
+        $uid = $this->input->post('uid');
+        $groupid = $this->Groups_model->get_group_id($uid);
 
+        // Remove all users from group
+        $this->db->delete('users_groups', array('groupid' => $groupid));
+
+        // Remove all invites
+        $this->db->delete('groups_invites', array('groupid' => $groupid));
+
+        // Remove all marks from group
+        // But do not delete the marks themselves for the users
+        $this->db->update('users_marks', array('groups' => ''), array('groups' => $groupid));
+
+        // Delete group
+        $this->db->delete('groups', array('id' => $groupid));
+
+    return true;
     }
 
     /* Invites */
