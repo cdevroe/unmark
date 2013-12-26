@@ -1,327 +1,320 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Groups extends CI_Controller {
-  
-  public function __construct() {
-    parent::__construct();
-    
-    $this->load->helper(array('url','form'));
-    $this->load->library('session');
-    
-  }
-  
-  // Unused for now.
+
+	public function __construct()
+	{
+    	parent::__construct();
+
+    	$this->load->helper(array('url','form'));
+    	$this->load->library('session');
+    }
+  	
+  	// Unused for now.
 	public function index()
 	{
-	   
-	}
-	
-	public function create() {
-	 
-	 if (!$this->session->userdata('userid')) { redirect(''); }
-	 
-	 $data['uid'] = $this->generate_uid(10);
-	 $data['label'] = '';
-	 $data['when'] = '';
-	 $data['group']['groupuid'] = '';
-	 
-	 $this->load->database();
-	 
-	  $createdgroups = $this->db->query('SELECT * FROM groups WHERE createdby = '.$this->session->userdata('userid').' ORDER BY id asc');
-   if ($createdgroups->num_rows() > 0) {
-    $data['groups']['created'] = $createdgroups->result_array();
-   }
-    
-   $belonggroups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid='.$this->session->userdata('userid'));
-   if ($belonggroups->num_rows() > 0) {
-    $data['groups']['belong'] = $belonggroups->result_array();
-   } 
-	 
-	 $this->load->view('groups_create',$data);
-	
-	}
-	
-	public function add() {
-  	 if (!$this->session->userdata('userid')) { redirect(''); }
-  	 
-    $name = $this->input->post('name',TRUE);
-    $description = $this->input->post('description',TRUE);
-    $uid = $this->input->post('uid');
-    
-    
-    if ($name == 'Name your group') { 
-      $this->session->set_flashdata('message', 'Please type in a name for your group.');
-      redirect('groups/create');
-    }
-    
-    if ($description == 'What is the purpose of your group? (optional)') { 
-      $description = '';
-    }
-    
-    $this->load->database();
-       
-    $existinggroup = $this->db->query('SELECT * FROM groups WHERE uid = "'.$uid.'"');
-    if ($existinggroup->num_rows() > 0) {
-      $uid = $this->generate_uid(10);      
-    }
-    
-    $this->db->insert('groups',array('name'=>$name,'description'=>$description,'uid'=>$uid,'createdby'=>$this->session->userdata('userid')));
-    $groupid = $this->db->insert_id();
-    
-    $this->db->insert('users_groups',array('groupid'=>$groupid,'userid'=>$this->session->userdata('userid')));
-    
-    $this->session->set_flashdata('message', 'Your group "'.$name.'" is ready. The next time you add a link to Nilai you can share it with that group!');
-    
-    
-    // Email invites
-    $this->load->helper('email');
-    $this->load->library('email');
-    
-    $invites=array();
-    $invites[] = $this->input->post('invite1');
-    $invites[] = $this->input->post('invite2');
-    $invites[] = $this->input->post('invite3');
-    $invites[] = $this->input->post('invite4');
-    $invites[] = $this->input->post('invite5');
 
-    if (valid_email('email@somesite.com')) {
-      
-    for($i=0;$i<count($invites);$i++) {
-      if ($invites[$i] != '') {
-        
-        $this->db->insert('groups_invites',array('groupid'=>$groupid,'emailaddress'=>$invites[$i],'invitedby'=>$this->session->userdata('userid')));
-      
-        $this->email->from($this->session->userdata('emailaddress'));
-        $this->email->to($invites[$i]); 
-        
-        $this->email->subject('You\'ve been invited to the '.$name.' group on Nilai');
-        $this->email->message("Hi $invites[$i],\n\nI assume that you know ".$this->session->userdata('emailaddress')." They have invited you to a group named \"".$name."\" on Nilai - The smartest way to save links for later.\n\nTo accept this invite click this link:\nhttp://nilai.co/\n\nIf you'd rather not accept this invite or if you'd like to verify that this email isn't unsolicited - simply reply to this email and your response will go directly to the person that invited you.\n\nI hope you enjoy Nilai.\nColin Devroe\nhttp://nilai.co");
-        
-        $this->email->send();
-        $this->email->print_debugger();
-      }
-    }
-      
-      
-      
-      
-    } else {
-      echo 'At least one of the email addresses you provided was invalid. Please try again.';
-      exit;
-    }
-    
-    
-    
-    redirect('home');
-    
-    
 	}
 	
-	public function invite() {
-	
-	 $groupid = $this->input->post('groupid');
-	 $groupuid = $this->input->post('groupuid');
-	 $emailaddress = $this->input->post('emailaddress');
-	 
-	 $this->load->database();
-	 $this->load->helper('email');
-   $this->load->library('email');
-   
-   $invites = $this->db->query("SELECT * FROM groups_invites WHERE emailaddress = '".$emailaddress."' AND groupid = '".$groupid."'");
-   if ($invites->num_rows() > 0) {
-    $this->session->set_flashdata('message', $emailaddress.' has already been invited to this group.');
-	  redirect('groups/'.strtoupper($groupuid).'/members');
-	  exit;
-   }
-	 
-	 $group = $this->db->query("SELECT * FROM groups WHERE id = '".$groupid."'");
-	 $group = $group->result_array();
-	 
-	 
-	   $this->db->insert('groups_invites',array('groupid'=>$groupid,'emailaddress'=>$emailaddress,'invitedby'=>$this->session->userdata('userid')));
-      
-     $this->email->from($this->session->userdata('emailaddress'));
-     $this->email->to($emailaddress); 
-        
-     $this->email->subject('You\'ve been invited to the '.$group[0]['name'].' group on Nilai');
-     $this->email->message("Hi $emailaddress,\n\nI assume that you know ".$this->session->userdata('emailaddress')." They have invited you to a group named \"".$group[0]['name']."\" on Nilai - The smartest way to save links for later.\n\nTo accept this invite click this link:\nhttp://nilai.co/\n\nIf you'd rather not accept this invite or if you'd like to verify that this email isn't unsolicited - simply reply to this email and your response will go directly to the person that invited you.\n\nI hope you enjoy Nilai.\nColin Devroe\nhttp://nilai.co");
-        
-     $this->email->send();
-     
-     $this->session->set_flashdata('message', $emailaddress.' has been invited.');
-	   redirect('groups/'.strtoupper($groupuid).'/members');
-	   
-	}
-	
-	
-	public function acceptinvite() {
-	   
-	   $groupuid = $this->uri->segment(3);
-	   $inviteid = $this->uri->segment(4);
-	   
-	   $this->load->database();
-	   
-	   if (!$this->session->userdata('userid')) { // Not logged in
-	     redirect(''); // Redirect to a page that explains they can log in or sign up
-	   } else {
-	     // See if user already belongs to this group
-	     // If not, add them to the group
-	     // Copy all bookmarks
-	     // If so, redirect to group page.
-	     $usergroups = $this->db->query("SELECT *, groups.id as groupid FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid = '".$this->session->userdata('userid')."' AND groups.uid = '".$groupuid."'");
-	     
-	     if ($usergroups->num_rows() > 0) {
-	       $usergroups=$usergroups->result_array();
-	       // User already belongs to this group
-	       $this->session->set_flashdata('message', '<strong>Invitation accepted!</strong> However, you already belonged to this group.');
-	       
-	       // Accept the invite
-	       $this->db->update('groups_invites',array('status'=>'accepted'),array('emailaddress'=>$this->session->userdata('emailaddress'),'groupid'=>$usergroups[0]['groupid']));
-	       
-	       redirect('groups/'.strtoupper($groupuid));
-	     } else {
-	       
-	       // Find more information about the group
-	       $groupinfo = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
-	       $group=$groupinfo->result_array();
-	       
-	       // Add user to this group
-	       $this->db->insert('users_groups',array('userid'=>$this->session->userdata('userid'),'groupid'=>$group[0]['id']));
-	       
-	       	       
-	       // Copy all bookmarks that were in this group to the newly joined user.
-	       $marks = $this->db->query("SELECT * FROM users_marks GROUP BY urlid WHERE groups = '".$group[0]['id']."' ORDER BY id asc");
-	       
-	       if ($marks->num_rows() > 0) {
-	       $marks = $marks->result_array();
-	       
-	       foreach ($marks as $mark) {
-	         $this->db->insert('users_marks',array('userid'=>$this->session->userdata('userid'),'urlid'=>$mark['urlid'],'groups'=>$group[0]['id'],'tags'=>$mark['tags'],'addedby'=>$mark['addedby']));
-	       }
-	       }
-	       
-	       // Accept the invite
-	       $this->db->update('groups_invites',array('status'=>'accepted'),array('emailaddress'=>$this->session->userdata('emailaddress'),'groupid'=>$group[0]['id']));
-	       
-	       $this->session->set_flashdata('message', '<strong>Invitation accepted!</strong> You can now see the links that belong to this group and you can add your own!');
-	       
-	       // Redirect to group!
-	       redirect('groups/'.strtoupper($groupuid));
-	     }
-	     
-	   }
-	
-	}
-	
-	public function edit() {
-	
-	 if (!$this->session->userdata('userid')) { // Not logged in
-	     redirect('');
-	 }
-	   
-	 $groupuid = $this->uri->segment(2);
-	 
-	 $this->load->database();
-   
-   // General group information
-   $group = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
-   if ($group->num_rows() > 0) {
-    
-     $group = $group->result_array();
-     
-     $data['group']['name'] = $group[0]['name'];
-	   $data['group']['description'] = $group[0]['description'];
-	   $data['group']['groupuid'] = $groupuid;
-	   $data['group']['groupid'] = $group[0]['id'];
-	   $data['group']['owner'] = $group[0]['createdby'];
-    
-    $groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = '".$group[0]['id']."'");
-	  $data['group']['member_count'] = $groupmembers->num_rows();
-   
-   } else {
-    show_404();
-   }
-    
-    $data['when'] = '';
-    $data['label'] = '';
-    
-    if ($data['group']['owner'] != $this->session->userdata('userid')) {
-      exit('You do not have permission to manage this group.');
-    }
-	 
-	  $this->load->view('groups_edit',$data);
-	}
-	
-	public function update() {
-	
-	 if (!$this->session->userdata('userid')) { // Not logged in
-	     redirect('');
-	 }
-	 
-	 $this->load->database();
-	
-	 $name = $this->input->post('name',TRUE);
-   $description = $this->input->post('description',TRUE);
-   $uid = $this->input->post('uid');
-   
-   $this->db->update('groups',array('name'=>$name,'description'=>$description),array('uid'=>$uid));
-   
-   
-   $this->session->set_flashdata('message', 'Group information updated.');
-   redirect('groups/'.strtoupper($uid));
+	public function create()
+	{
+		// If user is not logged in, redirect.
+		if (!$this->session->userdata('userid')) { redirect(''); }
+		
+		// Create a 10char unique ID for group
+		$data['uid'] = $this->generate_uid(10);
 
+		// Clear vars
+		$data['label'] = '';
+		$data['when'] = '';
+		$data['group']['groupuid'] = '';
 
+		// Load database
+		$this->load->database();
 
+		// ### I do not remember why I figure out the groups that this person has created, or belongs to. Clean up later.
+
+		// Determine the number of groups this user has created before
+		$createdgroups = $this->db->query('SELECT * FROM groups WHERE createdby = '.$this->session->userdata('userid').' ORDER BY id asc');
+		if ($createdgroups->num_rows() > 0) {
+			$data['groups']['created'] = $createdgroups->result_array();
+		}
+
+		// Determine the number of groups this user belongs to already
+		$belonggroups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid='.$this->session->userdata('userid'));
+		if ($belonggroups->num_rows() > 0) {
+			$data['groups']['belong'] = $belonggroups->result_array();
+		}
+
+		$this->load->view('groups_create',$data);
+
+	}
+	
+	public function add()
+	{
+		// If user is not logged in, redirect
+		if (!$this->session->userdata('userid')) { redirect(''); }
+
+		// Grab the information from the POST
+		$name = $this->input->post('name',TRUE);
+		$description = $this->input->post('description',TRUE);
+		$uid = $this->input->post('uid');
+
+		// No name given, redirect back with error (should move to JavaScript)
+		if ($name == 'Name your group' || $name == '') {
+			$this->session->set_flashdata('message', 'Please type in a name for your group.');
+			redirect('groups/create');
+		}
+
+		// If the description wasnt changed, make it blank
+		if ($description == 'What is the purpose of your group? (optional)') {
+			$description = '';
+		}
+
+		// Load database
+		$this->load->database();
+
+		// On the off-chance this UID was already taken, generate a new one.
+		$existinggroup = $this->db->query('SELECT * FROM groups WHERE uid = "'.$uid.'"');
+		if ($existinggroup->num_rows() > 0) {
+			$uid = $this->generate_uid(10);
+		}
+
+		// Add group to database
+		$this->db->insert('groups',array('name'=>$name,'description'=>$description,'uid'=>$uid,'createdby'=>$this->session->userdata('userid')));
+		$groupid = $this->db->insert_id();
+
+		// Add this user to the group
+		$this->db->insert('users_groups',array('groupid'=>$groupid,'userid'=>$this->session->userdata('userid')));
+		$this->session->set_flashdata('message', 'Your group "'.$name.'" is ready. The next time you add a link to Nilai you can share it with that group!');
+    
+    	
+	    // # Setup Email library to email invites for the group
+	    $this->load->helper('email');
+	    $this->load->library('email');
+	    
+	    // Create an array of the email addresses
+	    $invites=array();
+	    $invites[] = $this->input->post('invite1');
+	    $invites[] = $this->input->post('invite2');
+	    $invites[] = $this->input->post('invite3');
+	    $invites[] = $this->input->post('invite4');
+	    $invites[] = $this->input->post('invite5');
+
+	  	// Loop through emails provided    
+	    for($i=0;$i<count($invites);$i++) {
+	      if ( $invites[$i] != '' && valid_email($invites[$i]) ) {
+	        
+	        // Add record to invites table
+	        $this->db->insert('groups_invites',array('groupid'=>$groupid,'emailaddress'=>$invites[$i],'invitedby'=>$this->session->userdata('userid')));
+	      	
+	      	// Construct and send email.
+	        $this->email->from($this->session->userdata('emailaddress'));
+	        $this->email->to($invites[$i]); 
+	        
+	        $this->email->subject('You\'ve been invited to the '.$name.' group on Nilai');
+	        $this->email->message("Hi $invites[$i],\n\nI assume that you know ".$this->session->userdata('emailaddress')." They have invited you to a group named \"".$name."\" on Nilai - The smartest way to save links for later.\n\nTo accept this invite click this link:\nhttp://nilai.co/\n\nIf you'd rather not accept this invite or if you'd like to verify that this email isn't unsolicited - simply reply to this email and your response will go directly to the person that invited you.\n\nI hope you enjoy Nilai.\nColin Devroe\nhttp://nilai.co");
+	        
+	        $this->email->send();
+	        // Used only to debug $this->email->print_debugger();
+	      }
+	  	}
+
+	  	redirect('home');
+	}
+	
+	// Sends a single invite to a group
+	public function invite()
+	{
+		// Set up variables for group ID, UID, and the invitees email address
+		$groupid = $this->input->post('groupid');
+		$groupuid = $this->input->post('groupuid');
+		$emailaddress = $this->input->post('emailaddress');
+
+		// Load Database and Email Helper/Library
+		$this->load->database();
+	 	$this->load->helper('email');
+	 	$this->load->library('email');
+
+	 	// Do not allow a person to be invited more than once
+	 	$invites = $this->db->query("SELECT * FROM groups_invites WHERE emailaddress = '".$emailaddress."' AND groupid = '".$groupid."'");
+	 	if ($invites->num_rows() > 0) {
+	 		$this->session->set_flashdata('message', $emailaddress.' has already been invited to this group.');
+	 		redirect('groups/'.strtoupper($groupuid).'/members');
+	 		exit;
+	 	}
+
+	 	// Add invite to invites table
+	 	$this->db->insert('groups_invites',array('groupid'=>$groupid,'emailaddress'=>$emailaddress,'invitedby'=>$this->session->userdata('userid')));
+
+	 	// Get Group information for email.
+	 	$group = $this->db->query("SELECT * FROM groups WHERE id = '".$groupid."'");
+	 	$group = $group->result_array();
+
+	 	// Construct and send email
+	 	$this->email->from($this->session->userdata('emailaddress'));
+	 	$this->email->to($emailaddress);
+	 	$this->email->subject('You\'ve been invited to the '.$group[0]['name'].' group on Nilai');
+	 	$this->email->message("Hi $emailaddress,\n\nI assume that you know ".$this->session->userdata('emailaddress')." They have invited you to a group named \"".$group[0]['name']."\" on Nilai - The smartest way to save links for later.\n\nTo accept this invite click this link:\nhttp://nilai.co/\n\nIf you'd rather not accept this invite or if you'd like to verify that this email isn't unsolicited - simply reply to this email and your response will go directly to the person that invited you.\n\nI hope you enjoy Nilai.\nColin Devroe\nhttp://nilai.co");
+	 	$this->email->send();
+
+	 	// Message for user, redirect
+	 	$this->session->set_flashdata('message', $emailaddress.' has been invited.');
+	 	redirect('groups/'.strtoupper($groupuid).'/members');
+	}
+	
+	
+	public function acceptinvite()
+	{
+		// Group UID and Invite ID from URL
+		$groupuid = $this->uri->segment(3);
+		$inviteid = $this->uri->segment(4);
+
+		$this->load->database();
+
+		if (!$this->session->userdata('userid')) { // Not logged in
+			redirect(''); // Redirect to a page that explains they can log in or sign up
+			exit;
+		}
+
+		// See if user already belongs to this group
+		// If not, add them to the group
+		// Copy all bookmarks
+		// If so, redirect to group page.
+		$usergroups = $this->db->query("SELECT *, groups.id as groupid FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid = '".$this->session->userdata('userid')."' AND groups.uid = '".$groupuid."'");
+		
+		if ($usergroups->num_rows() > 0) {
+			$usergroups=$usergroups->result_array();
+			// User already belongs to this group
+			$this->session->set_flashdata('message', '<strong>Invitation accepted!</strong> However, you already belonged to this group.');
+			// Accept the invite
+			$this->db->update('groups_invites',array('status'=>'accepted'),array('emailaddress'=>$this->session->userdata('emailaddress'),'groupid'=>$usergroups[0]['groupid']));
+			redirect('groups/'.strtoupper($groupuid));
+		} else {
+			// Find more information about the group
+			$groupinfo = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
+			$group=$groupinfo->result_array();
+			// Add user to this group
+			$this->db->insert('users_groups',array('userid'=>$this->session->userdata('userid'),'groupid'=>$group[0]['id']));
+			// Copy all bookmarks that were in this group to the newly joined user.
+			$marks = $this->db->query("SELECT * FROM users_marks GROUP BY urlid WHERE groups = '".$group[0]['id']."' ORDER BY id asc");
+			if ($marks->num_rows() > 0) {
+				$marks = $marks->result_array();
+				foreach ($marks as $mark) {
+					$this->db->insert('users_marks',array('userid'=>$this->session->userdata('userid'),'urlid'=>$mark['urlid'],'groups'=>$group[0]['id'],'tags'=>$mark['tags'],'addedby'=>$mark['addedby']));
+				}
+			}
+			// Accept the invite
+			$this->db->update('groups_invites',array('status'=>'accepted'),array('emailaddress'=>$this->session->userdata('emailaddress'),'groupid'=>$group[0]['id']));
+			$this->session->set_flashdata('message', '<strong>Invitation accepted!</strong> You can now see the links that belong to this group and you can add your own!');
+
+			// Redirect to group!
+			redirect('groups/'.strtoupper($groupuid));
+		}
+	}
+	
+	public function edit()
+	{
+		if (!$this->session->userdata('userid')) { // Not logged in
+			redirect('');
+			exit;
+		}
+
+		$groupuid = $this->uri->segment(2);
+
+		$this->load->database();
+
+		// General group information
+		$group = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
+		if ($group->num_rows() > 0) {
+			$group = $group->result_array();
+
+			$data['group']['name'] = $group[0]['name'];
+			$data['group']['description'] = $group[0]['description'];
+			$data['group']['groupuid'] = $groupuid;
+			$data['group']['groupid'] = $group[0]['id'];
+			$data['group']['owner'] = $group[0]['createdby'];
+
+			$groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = '".$group[0]['id']."'");
+			$data['group']['member_count'] = $groupmembers->num_rows();
+		} else {
+			show_404();
+		}
+
+		$data['when'] = '';
+		$data['label'] = '';
+
+		if ($data['group']['owner'] != $this->session->userdata('userid')) {
+			exit('You do not have permission to manage this group.');
+		}
+
+		$this->load->view('groups_edit',$data);
+	}
+	
+	public function update()
+	{
+
+		if (!$this->session->userdata('userid')) { // Not logged in
+			redirect('');
+			exit;
+		}
+
+		$this->load->database();
+
+		$name = $this->input->post('name',TRUE);
+		$description = $this->input->post('description',TRUE);
+		$uid = $this->input->post('uid');
+
+		$this->db->update('groups',array('name'=>$name,'description'=>$description),array('uid'=>$uid));
+
+		$this->session->set_flashdata('message', 'Group information updated.');
+
+		redirect('groups/'.strtoupper($uid));
 	}
 	
 	public function members() {
-	
-	 if (!$this->session->userdata('userid')) { // Not logged in
-	     redirect('');
-	 }
-	   
-	 $groupuid = $this->uri->segment(2);
-	 
-	 $this->load->database();
-   
-   // General group information
-   $group = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
-   if ($group->num_rows() > 0) {
-    
-     $group = $group->result_array();
-     
-     $data['group']['name'] = $group[0]['name'];
-	   $data['group']['description'] = $group[0]['description'];
-	   $data['group']['groupuid'] = $groupuid;
-	   $data['group']['groupid'] = $group[0]['id'];
-	   $data['group']['owner'] = $group[0]['createdby'];
-    
-    $groupmembers = $this->db->query("SELECT * FROM users_groups LEFT JOIN users ON users_groups.userid=users.id WHERE users_groups.groupid = '".$group[0]['id']."'");
-    
-    if ($groupmembers->num_rows() > 0) {
-	     $data['group']['member_count'] = $groupmembers->num_rows();
-	     $data['group']['members'] = $groupmembers->result_array();
-	   }
-	   
-	   
-	  $invites = $this->db->query("SELECT * FROM groups_invites WHERE groupid = '".$group[0]['id']."' AND status = ''");
-   if ($invites->num_rows() > 0) {
-    $data['group']['invites'] = $invites->result_array();
-   }
+		if (!$this->session->userdata('userid')) { // Not logged in
+			redirect('');
+			exit;
+		}
 
-   
-   } else {
-    show_404();
-   }
-    
-    $data['when'] = '';
-    $data['label'] = '';
-    
-    if ($data['group']['owner'] != $this->session->userdata('userid')) {
-      exit('You do not have permission to manage this group.');
-    }
-	 
-	  $this->load->view('groups_members',$data);
+		$groupuid = $this->uri->segment(2);
+		$this->load->database();
+
+		// General group information
+		$group = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
+		if ($group->num_rows() > 0) {
+			$group = $group->result_array();
+			
+			$data['group']['name'] = $group[0]['name'];
+			$data['group']['description'] = $group[0]['description'];
+			$data['group']['groupuid'] = $groupuid;
+			$data['group']['groupid'] = $group[0]['id'];
+			$data['group']['owner'] = $group[0]['createdby'];
+
+			$groupmembers = $this->db->query("SELECT * FROM users_groups LEFT JOIN users ON users_groups.userid=users.id WHERE users_groups.groupid = '".$group[0]['id']."'");
+
+			if ($groupmembers->num_rows() > 0) {
+				$data['group']['member_count'] = $groupmembers->num_rows();
+				$data['group']['members'] = $groupmembers->result_array();
+			}
+
+			$invites = $this->db->query("SELECT * FROM groups_invites WHERE groupid = '".$group[0]['id']."' AND status = ''");
+			if ($invites->num_rows() > 0) {
+				$data['group']['invites'] = $invites->result_array();
+			}
+		} else {
+			show_404();
+		}
+
+		$data['when'] = '';
+		$data['label'] = '';
+
+		if ($data['group']['owner'] != $this->session->userdata('userid')) {
+			exit('You do not have permission to manage this group.');
+		}
+
+		$this->load->view('groups_members',$data);
 	}
 	
 	
