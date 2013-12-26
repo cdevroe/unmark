@@ -2,98 +2,84 @@
 
 class Nilai extends CI_Controller {
   
-  public function __construct() {
-    parent::__construct();
-    
-    $this->load->helper(array('url','form','date','oembed'));
-    $this->load->library('session');
-    
-  }
+  	public function __construct()
+  	{
+  		parent::__construct();
+  		$this->load->helper(array('url','form','date','oembed'));
+  		$this->load->library('session');
+  	}
   
-  // Unused for now.
+  	// Unused for now.
 	public function index()
 	{
-	   
+
 	}
 	
-	public function home($when='') {
-	 
-	 if (!$this->session->userdata('userid')) { redirect(''); }
-	 $this->session->set_flashdata('lasturl', current_url());
-	 
-	 $when = $this->uri->segment(2);
-	 if (!$when) { $when = ''; }
-	 
-	 $this->load->database();
-	 
-	 // Unix timestamps for yesterday and today
-	 $yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
-   $today = mktime(0, 0, 0, date('n'), date('j'));
-	 
-	 if ($when == '') {
-	   $marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users ON users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
-	   
-	   $data['when'] = 'all';
-	   
-	 } elseif ($when == 'today') {
-    	 
-	   $marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(marks.dateadded) > ".$today." AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
-	   
-	   $data['when'] = $when;
-	   
-   } elseif ($when == 'yesterday') {
-   
-    $marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(marks.dateadded) > ".$yesterday." AND UNIX_TIMESTAMP(marks.dateadded) < ".$today." AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
-    
-    $data['when'] = $when;
-    
-	 } elseif ($when == 'archive') {
-	   $marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.status = 'archive' ORDER BY users_marks.id DESC LIMIT 100");
-	   
-	   $data['when'] = 'archive';
-	 
-	 } else {
-	 
-	 }
+	public function home($when='')
+	{
+		if (!$this->session->userdata('userid')) { redirect(''); }
+		$this->session->set_flashdata('lasturl', current_url());
 
-	 if ($marks->num_rows() > 0) {
-	   $data['marks'] = $marks->result_array();
-    } else {
-      $data['marks'] = false;
-    }
-    
-    
-   $groups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid='.$this->session->userdata('userid'));
-   if ($groups->num_rows() > 0) {
-    $data['groups']['belong'] = $groups->result_array();
-   } 
-   
-   $invites = $this->db->query("SELECT groups_invites.*, groups_invites.id as inviteid, groups.*, users.emailaddress as invitedemail, users.id as invitedbyid FROM groups_invites LEFT JOIN groups ON groups_invites.groupid=groups.id LEFT JOIN users ON groups_invites.invitedby=users.id WHERE groups_invites.emailaddress = '".$this->session->userdata('emailaddress')."' AND groups_invites.status = ''");
-   
-   if ($invites->num_rows() > 0) $data['invites'] = $invites->result_array();
-    
-    
-    if ($this->session->userdata('emailaddress') == 'colin@cdevroe.com') { 
-      $usercount = $this->db->query("SELECT COUNT(*) as numusers FROM users WHERE status = 'paid'");
-      $markcount = $this->db->query("SELECT COUNT(*) as nummarks FROM marks");
-      $groupcount = $this->db->query("SELECT COUNT(*) as numgroups FROM groups");
-      $groupmembers = $this->db->query("SELECT COUNT(*) as numgroupmembers from users_groups");
-      
-      $usercount = $usercount->result_array();
-      $markcount = $markcount->result_array();
-      $groupcount = $groupcount->result_array();
-      $groupmembers = $groupmembers->result_array();
-      
-      $data['usercount'] = $usercount[0]['numusers'];
-      $data['markcount'] = $markcount[0]['nummarks'];
-      $data['groupcount'] = $groupcount[0]['numgroups'];
-      $data['groupmemberscount'] = $groupmembers[0]['numgroupmembers'];
-    }
-    
-    $data['label'] = '';
-    $data['group']['groupuid'] = '';
-    
-    $this->load->view('marks',$data);
+		$when = $this->uri->segment(2);
+		if (!$when) { $when = ''; }
+
+		$this->load->database();
+
+		// Unix timestamps for yesterday and today
+		$yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
+		$today = mktime(0, 0, 0, date('n'), date('j'));
+
+		if ( $when == '' ) {
+			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users ON users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+			$data['when'] = 'all';
+		} elseif ( $when == 'today' ) {
+			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(marks.dateadded) > ".$today." AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+			$data['when'] = $when;
+		} elseif ( $when == 'yesterday' ) {
+			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(marks.dateadded) > ".$yesterday." AND UNIX_TIMESTAMP(marks.dateadded) < ".$today." AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+			$data['when'] = $when;
+		} elseif ($when == 'archive') {
+			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.status = 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+			$data['when'] = 'archive';
+		} else {
+			// Nothing, really? Need to figure this out.
+		}
+
+		if ($marks->num_rows() > 0) {
+			$data['marks'] = $marks->result_array();
+		} else {
+			$data['marks'] = false;
+		}
+
+		$groups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid='.$this->session->userdata('userid'));
+		if ( $groups->num_rows() > 0 ) {
+			$data['groups']['belong'] = $groups->result_array();
+		}
+
+		$invites = $this->db->query("SELECT groups_invites.*, groups_invites.id as inviteid, groups.*, users.emailaddress as invitedemail, users.id as invitedbyid FROM groups_invites LEFT JOIN groups ON groups_invites.groupid=groups.id LEFT JOIN users ON groups_invites.invitedby=users.id WHERE groups_invites.emailaddress = '".$this->session->userdata('emailaddress')."' AND groups_invites.status = ''");
+
+		if ($invites->num_rows() > 0) $data['invites'] = $invites->result_array();
+
+		/*if ($this->session->userdata('emailaddress') == 'colin@cdevroe.com') { 
+			$usercount = $this->db->query("SELECT COUNT(*) as numusers FROM users WHERE status = 'paid'");
+			$markcount = $this->db->query("SELECT COUNT(*) as nummarks FROM marks");
+			$groupcount = $this->db->query("SELECT COUNT(*) as numgroups FROM groups");
+			$groupmembers = $this->db->query("SELECT COUNT(*) as numgroupmembers from users_groups");
+
+			$usercount = $usercount->result_array();
+			$markcount = $markcount->result_array();
+			$groupcount = $groupcount->result_array();
+			$groupmembers = $groupmembers->result_array();
+
+			$data['usercount'] = $usercount[0]['numusers'];
+			$data['markcount'] = $markcount[0]['nummarks'];
+			$data['groupcount'] = $groupcount[0]['numgroups'];
+			$data['groupmemberscount'] = $groupmembers[0]['numgroupmembers'];
+		} */
+
+		$data['label'] = '';
+		$data['group']['groupuid'] = '';
+		$this->load->view('marks',$data);
 
 	}
 	

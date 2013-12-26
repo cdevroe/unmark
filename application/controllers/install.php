@@ -38,9 +38,7 @@ class Install extends CI_Controller {
           show_error($this->migration->error_string());
           exit;
         }
-
-
-
+        
     }
     
     // Make sure there is at least one user

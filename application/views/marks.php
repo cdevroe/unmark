@@ -144,11 +144,6 @@
     <hr />
     <p><small>View <strong><a href="/changelog" title="Changelog">the changelog</a></strong> to see what's new or follow <a href="http://twitter.com/nilaico">@nilaico</a> for updates.</small></p>
     
-    <?php if ($this->session->userdata('emailaddress') == 'colin@cdevroe.com' && isset($usercount)) { ?>
-      <hr />
-      <p><small>There are <strong><?=$usercount;?> paying users</strong> who have saved <strong><?=$markcount;?> links</strong> and created <strong><?=$groupcount;?> groups</strong> with <strong><?=$groupmemberscount;?> members</strong>.</small></p>
-    <?php } ?>
-    
   </div>
   
 </div>
