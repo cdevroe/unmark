@@ -24,6 +24,7 @@ class Nilai extends CI_Controller {
 		if (!$when) { $when = ''; }
 
 		$this->load->database();
+		$this->load->model('Groups_model');
 
 		// Unix timestamps for yesterday and today
 		$yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
@@ -51,10 +52,7 @@ class Nilai extends CI_Controller {
 			$data['marks'] = false;
 		}
 
-		$groups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid='.$this->session->userdata('userid'));
-		if ( $groups->num_rows() > 0 ) {
-			$data['groups']['belong'] = $groups->result_array();
-		}
+		$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
 		$invites = $this->db->query("SELECT groups_invites.*, groups_invites.id as inviteid, groups.*, users.emailaddress as invitedemail, users.id as invitedbyid FROM groups_invites LEFT JOIN groups ON groups_invites.groupid=groups.id LEFT JOIN users ON groups_invites.invitedby=users.id WHERE groups_invites.emailaddress = '".$this->session->userdata('emailaddress')."' AND groups_invites.status = ''");
 
@@ -93,6 +91,7 @@ class Nilai extends CI_Controller {
 		if ($label == 'unlabeled') { $label = ''; }
 
 		$this->load->database();
+		$this->load->model('Groups_model');
 
 		// Unix timestamps for yesterday and today
 		$yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
@@ -107,10 +106,8 @@ class Nilai extends CI_Controller {
 			$data['marks'] = false;
 		}
 
-		$groups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid='.$this->session->userdata('userid'));
-		if ($groups->num_rows() > 0) {
-			$data['groups']['belong'] = $groups->result_array();
-		}
+		// Load the groups the user belongs to
+		$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
 		$data['label'] = $label;
 		$data['group']['groupuid'] = '';
@@ -127,12 +124,14 @@ class Nilai extends CI_Controller {
 		$groupuid = $this->uri->segment(2);
 
 		$this->load->database();
+		$this->load->model('Groups_model');
 
 		// Unix timestamps for yesterday and today
 		$yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
 		$today = mktime(0, 0, 0, date('n'), date('j'));
 
 		// General group information
+		// Needs to be moved into the model. Somehow.
 		$group = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
 		if ($group->num_rows() > 0) {
 			$group = $group->result_array();
@@ -141,8 +140,7 @@ class Nilai extends CI_Controller {
 			$data['group']['groupuid'] = $groupuid;
 			$data['group']['owner'] = $group[0]['createdby'];
 
-			$groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = '".$group[0]['id']."'");
-			$data['group']['member_count'] = $groupmembers->num_rows();
+			$data['group']['member_count'] = $this->Groups_model->get_group_members_count($group[0]['id']);
 
 		} else {
 			show_404();
@@ -156,10 +154,8 @@ class Nilai extends CI_Controller {
 			$data['marks'] = false;
 		}
 
-		$groups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid='.$this->session->userdata('userid'));
-		if ($groups->num_rows() > 0) {
-			$data['groups']['belong'] = $groups->result_array();
-		}
+		// Load the groups the user belongs to
+		$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
 		$data['label'] = '';
 		$data['when'] = 'all';
@@ -177,6 +173,7 @@ class Nilai extends CI_Controller {
 		if ($s == '') redirect('home');
 
 		$this->load->database();
+		$this->load->model('Groups_model');
 
 		// Unix timestamps for yesterday and today
 	 	$yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
@@ -190,10 +187,8 @@ class Nilai extends CI_Controller {
 	 		$data['marks'] = false;
 	 	}
 
-	 	$groups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid='.$this->session->userdata('userid'));
-	 	if ($groups->num_rows() > 0) {
-	 		$data['groups']['belong'] = $groups->result_array();
-	 	}
+	 	// Load the groups the user belongs to
+		$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
 	 	$data['search'] = $s;
 	 	$data['label'] = '';
@@ -557,10 +552,8 @@ class Nilai extends CI_Controller {
 				$data['groups']['created'] = $createdgroups->result_array();
 			}
 
-			$belonggroups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid = '.$this->session->userdata('userid'));
-			if ($belonggroups->num_rows() > 0) {
-				$data['groups']['belong'] = $belonggroups->result_array();
-			}
+			// Load the groups the user belongs to
+			$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
 			$data['label'] = '';
 			$data['group']['groupuid'] = '';

@@ -57,7 +57,7 @@ class Groups_model extends CI_Model {
 
     }
 
-    function get_groups_by_user()
+    function get_groups_user_belongs_to()
     {	
 		$user_belongs_to_groups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid='.$this->session->userdata('userid'));
 		
@@ -66,6 +66,16 @@ class Groups_model extends CI_Model {
 		} else {
 			return false;
 		}
+    }
+
+    function get_groups_created_by_user()
+    {
+        $createdgroups = $this->db->query('SELECT * FROM groups WHERE createdby = '.$this->session->userdata('userid').' ORDER BY id asc');
+        if ($createdgroups->num_rows() > 0) {
+            return $createdgroups->result_array();
+        } else {
+            return false;
+        }
     }
 
     function get_group_members()
@@ -80,9 +90,14 @@ class Groups_model extends CI_Model {
         $this->db->insert('users_groups',array('groupid'=>$groupid,'userid'=>$this->session->userdata('userid')));
     }
 
-    function get_group_members_count()
+    function get_group_members_count($id)
     {
+        $groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = '".$id."'");
+        if ($groupmembers->num_rows() > 0) {
+            return $groupmembers->num_rows();
+        }
 
+        return false;
     }
 
     function group_update()

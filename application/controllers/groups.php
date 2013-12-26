@@ -40,13 +40,10 @@ class Groups extends CI_Controller {
 		// ### I do not remember why I figure out the groups that this person has created, or belongs to. Clean up later.
 
 		// Determine the number of groups this user has created before
-		$createdgroups = $this->db->query('SELECT * FROM groups WHERE createdby = '.$this->session->userdata('userid').' ORDER BY id asc');
-		if ($createdgroups->num_rows() > 0) {
-			$data['groups']['created'] = $createdgroups->result_array();
-		}
+		$data['groups']['created'] = $this->Groups_model->get_groups_created_by_user();
 
 		// Determine the number of groups this user belongs to already
-		$belonggroups = $this->Groups_model->get_groups_by_user();
+		$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
 		$this->load->view('groups_create',$data);
 
