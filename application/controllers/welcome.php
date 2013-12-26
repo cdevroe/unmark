@@ -19,15 +19,14 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-	  $this->load->helper(array('url','form'));
-	  $this->load->library('session');
-	  
-	  if ($this->session->flashdata('addurl')) { 
-	   $this->session->keep_flashdata('addurl');
-	  }
-	  
-	  if ($this->session->userdata('status') == 'active') {
-		  redirect('home');
+		$this->load->helper(array('url','form'));
+		$this->load->library('session');
+
+		if ($this->session->flashdata('addurl')) {
+			$this->session->keep_flashdata('addurl');
+		}
+		if ($this->session->userdata('status') == 'active') {
+			redirect('home');
 		} else {
 			// See if there is a users table
     		// Also, be sure there _are_ users.
@@ -41,86 +40,76 @@ class Welcome extends CI_Controller {
 		}
 	}
 	
-	public function sirius() {
-	  $this->load->helper(array('url','form'));
-	  $this->load->library('session');
-	  
-	  if ($this->session->userdata('status') == 'active') {
-		  redirect('home');
+	public function sirius()
+	{
+		$this->load->helper(array('url','form'));
+		$this->load->library('session');
+
+		if ($this->session->userdata('status') == 'active') {
+			redirect('home');
+		}
+
+		$this->load->view('signup',$data);
+	}
+
+	public function helpbookmarklet()
+	{
+		$this->load->helper(array('url','form'));
+		$this->load->library('session');
+		$data['when'] = '';
+		$data['label'] = '';
+		if ($this->session->userdata('status') == 'paid') {
+			$this->load->view('help_bookmarklet',$data);
 		} else {
-		  $this->load->database();
-		  // Determine how many people signed up today.
-		  // Unix timestamps for yesterday and today
-		  $today = mktime(0, 0, 0, date('n'), date('j'));
- 		  $tomorrow = mktime(0, 0, 0, date('n'), date('j') + 1);
-		  
-		  // Only allow 5 people to sign up per day.
-		  $daily = 100;
-		  
-		  $signupsToday = $this->db->query("SELECT * FROM users WHERE UNIX_TIMESTAMP(datejoined) > ".$today." AND UNIX_TIMESTAMP(datejoined) < ".$tomorrow);
-		  
-		  $signupsLeft = ($daily-$signupsToday->num_rows());
-		  
-		  if ($signupsLeft < 0) { $signupsLeft = 0; }
-		
-	    $data['daily'] = $daily;
-	    $data['signupsLeft'] = $signupsLeft;
-		  $this->load->view('signup',$data);
+			redirect('');
 		}
 	}
-	
-  public function helpbookmarklet() {
-    $this->load->helper(array('url','form'));
-	  $this->load->library('session');
-	  $data['when'] = '';
-	  $data['label'] = '';
-    if ($this->session->userdata('status') == 'paid') {
-		  $this->load->view('help_bookmarklet',$data);
+
+	public function faq()
+	{
+		$this->load->helper(array('url','form'));
+		$this->load->library('session');
+		
+		$data['when'] = '';
+		$data['label'] = '';
+
+		if ($this->session->userdata('status') == 'paid') {
+			$this->load->view('help_faq',$data);
 		} else {
-      redirect('');
-    }
-  }
-  
-  public function faq() {
-    $this->load->helper(array('url','form'));
-	  $this->load->library('session');
-	  
-	  $data['when'] = '';
-	  $data['label'] = '';
-	  
-    if ($this->session->userdata('status') == 'paid') {
-		  $this->load->view('help_faq',$data);
+			redirect('');
+		}
+	}
+
+	public function how()
+	{
+		$this->load->helper(array('url','form'));
+		$this->load->library('session');
+
+		$data['when'] = '';
+		$data['label'] = '';
+
+		if ($this->session->userdata('status') == 'active') {
+			$this->load->view('help_how',$data);
 		} else {
-      redirect('');
-    }
-  }
-  
-  public function how() {
-    $this->load->helper(array('url','form'));
-	  $this->load->library('session');
-	  
-	  $data['when'] = '';
-	  $data['label'] = '';
-	  
-    if ($this->session->userdata('status') == 'paid') {
-		  $this->load->view('help_how',$data);
+			redirect('');
+		}
+	}
+
+	public function changelog()
+	{
+		$this->load->helper(array('url','form'));
+		$this->load->library('session');
+		
+		if ($this->session->userdata('status') == 'paid') {
+			$data['label'] = '';
+			$data['group']['groupuid'] = '';
+			$data['when'] = '';
+
+			$this->load->view('changelog',$data);
 		} else {
-      redirect('');
-    }
-  }
-  
-  public function changelog() {
-    $this->load->helper(array('url','form'));
-	  $this->load->library('session');
-    if ($this->session->userdata('status') == 'paid') {
-      $data['label'] = '';
-      $data['group']['groupuid'] = '';
-      $data['when'] = '';
-		  $this->load->view('changelog',$data);
-		} else {
-      redirect('');
-    }
-  }
+			redirect('');
+		}
+	}
 	
 }
 
