@@ -31,6 +31,7 @@ class Groups extends CI_Controller {
 
 		// Load database
 		$this->load->database();
+		$this->load->model('Groups_model');
 
 		// ### I do not remember why I figure out the groups that this person has created, or belongs to. Clean up later.
 
@@ -41,10 +42,7 @@ class Groups extends CI_Controller {
 		}
 
 		// Determine the number of groups this user belongs to already
-		$belonggroups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid='.$this->session->userdata('userid'));
-		if ($belonggroups->num_rows() > 0) {
-			$data['groups']['belong'] = $belonggroups->result_array();
-		}
+		$belonggroups = $this->Groups_model->get_groups_by_user();
 
 		$this->load->view('groups_create',$data);
 
