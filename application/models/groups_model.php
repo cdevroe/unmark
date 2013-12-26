@@ -9,9 +9,35 @@ class Groups_model extends CI_Model {
     }
 
     /* ## CRUD */
-    function group_create()
+    function create_group()
     {
+        $name = $this->input->post('name',TRUE);
+        $description = $this->input->post('description',TRUE);
+        $uid = $this->input->post('uid');
 
+        // Add group to database
+        $this->db->insert('groups',array('name'=>$name,'description'=>$description,'uid'=>$uid,'createdby'=>$this->session->userdata('userid')));
+        
+        $groupid = $this->Groups_model->get_group_id($uid);
+        if (!$groupid) { 
+            exit ('there was a problem creating the group');
+        }
+
+        return $groupid;
+    }
+
+    function get_group_id( $uid ) {
+        
+        if (!$uid) { return false; }
+
+        $group = $this->db->get_where('groups', array('uid' => $uid));
+        
+        if ($group->num_rows() > 0) {
+            $group = $group->result_object();
+            return $group[0]->id;
+        }
+
+        return false;
     }
 
     function get_all_groups()
@@ -33,6 +59,13 @@ class Groups_model extends CI_Model {
     function get_group_members()
     {
 
+    }
+
+    function add_member_to_group($groupid)
+    {
+        if (!$groupid) return false;
+
+        $this->db->insert('users_groups',array('groupid'=>$groupid,'userid'=>$this->session->userdata('userid')));
     }
 
     function get_group_members_count()

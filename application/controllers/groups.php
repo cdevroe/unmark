@@ -53,40 +53,17 @@ class Groups extends CI_Controller {
 		// If user is not logged in, redirect
 		if (!$this->session->userdata('userid')) { redirect(''); }
 
-		// Grab the information from the POST
-		$name = $this->input->post('name',TRUE);
-		$description = $this->input->post('description',TRUE);
-		$uid = $this->input->post('uid');
-
-		// No name given, redirect back with error (should move to JavaScript)
-		if ($name == 'Name your group' || $name == '') {
-			$this->session->set_flashdata('message', 'Please type in a name for your group.');
-			redirect('groups/create');
-		}
-
-		// If the description wasnt changed, make it blank
-		if ($description == 'What is the purpose of your group? (optional)') {
-			$description = '';
-		}
-
 		// Load database
 		$this->load->database();
+		$this->load->model('Groups_model');
 
-		// On the off-chance this UID was already taken, generate a new one.
-		$existinggroup = $this->db->query('SELECT * FROM groups WHERE uid = "'.$uid.'"');
-		if ($existinggroup->num_rows() > 0) {
-			$uid = $this->generate_uid(10);
-		}
-
-		// Add group to database
-		$this->db->insert('groups',array('name'=>$name,'description'=>$description,'uid'=>$uid,'createdby'=>$this->session->userdata('userid')));
-		$groupid = $this->db->insert_id();
+		// Add Group to Database
+		$groupid = $this->Groups_model->create_group();
 
 		// Add this user to the group
-		$this->db->insert('users_groups',array('groupid'=>$groupid,'userid'=>$this->session->userdata('userid')));
-		$this->session->set_flashdata('message', 'Your group "'.$name.'" is ready. The next time you add a link to Nilai you can share it with that group!');
-    
+        $this->Groups_model->add_member_to_group($groupid);
     	
+	    
 	    // # Setup Email library to email invites for the group
 	    $this->load->helper('email');
 	    $this->load->library('email');
