@@ -146,7 +146,7 @@ class Nilai extends CI_Controller {
 	 
 	 // Unix timestamps for yesterday and today
 	 $yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
-   $today = mktime(0, 0, 0, date('n'), date('j'));
+	 $today = mktime(0, 0, 0, date('n'), date('j'));
    
    // General group information
    $group = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
