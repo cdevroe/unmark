@@ -12,6 +12,8 @@ class Users extends CI_Controller {
 
 		// Load what we need for this method
 		$this->load->database();
+		$this->load->model('Users_model');
+
 		$this->load->library('session');
 		$this->load->helper('url');
 
@@ -20,19 +22,18 @@ class Users extends CI_Controller {
 		$password = $this->input->post('password', TRUE);
 
 		// If either are emtpy, exit
-		if ($emailaddress == '' || $password == '') { exit( 'Can not submit a blank username or password.' ); }
+		if ($emailaddress == '' || $password == '') {
+			exit( 'Can not submit a blank username or password.' );
+		}
 
 		// Select user from database
-		$user = $this->db->query("SELECT * FROM users WHERE emailaddress = '$emailaddress' AND password ='".md5($password)."'");
+		$user = $this->Users_model->check_user_credentials();
 
 		// If user found (and password matches)
-		if ($user->num_rows() > 0) {
+		if ( is_array($user) ) {
 			
 			// If they were adding a mark, save the URL before session is destroyed.
 			$addurl = $this->session->flashdata('addurl');
-
-			// Retrieve user information for storing in session
-			$user = $user->row_array();
 
 			// Destroy session
 			$this->session->sess_destroy();
@@ -43,7 +44,7 @@ class Users extends CI_Controller {
 		
 		} else { // User not found, or password didn't match
 
-			exit( 'Incorrect username or password. I really have to pretty up this page soon.' );
+			exit( 'Please supply a valid username or password. Or create an account.' );
 
 		}
 
@@ -77,6 +78,7 @@ class Users extends CI_Controller {
 		
 		// Load everything we need for this method
 		$this->load->database();
+		$this->load->model('Users_model');
 		$this->load->library( 'session' );
 		$this->load->helper( array('url','email') );
 
@@ -90,18 +92,13 @@ class Users extends CI_Controller {
 
 			// Check to see if email address exists already
 			// If email already in use, exit
-			$emailexists = $this->db->get_where( 'users', array( 'emailaddress' => $emailaddress ) );
-			if ($emailexists->num_rows() > 0) { exit( 'This email address is already in use.' ); }
+			$userid = $this->Users_model->create_user();
 
-			// Add user to users table
-			$this->db->insert('users',array('emailaddress'=>$emailaddress,'password'=>md5($password),'status'=>'active'));
-			
-			// Get userid of this user
-			// I wish this was a single line of code, halp?
-			// I used to use $userid = $this->db->insert_id() but that seemed like it wouldn't scale to me
-			$userid = $this->db->get_where( 'users', array( 'emailaddress' => $emailaddress ) );
-			$userid = $userid->result_array();
-			$userid = $userid[0]['id'];
+			if ( !$userid ) {
+				$this->session->set_flashdata('message', 'This email address is already in use.');
+				redirect('');
+				exit;
+			}
 
 			// Destroy old CodeIgniter Session
 			$this->session->sess_destroy();
