@@ -78,7 +78,7 @@ class Groups_model extends CI_Model {
     function get_group_info($groupid)
     {
         // Get Group information for email.
-        $group = $this->db->query("SELECT * FROM groups WHERE id = '".$groupid."'");
+        $group = $this->db->get_where('groups', array('id' => $groupid));
         if ($group->num_rows() > 0) {
             return $group->result_array();
         }
@@ -109,7 +109,9 @@ class Groups_model extends CI_Model {
 
     function get_groups_created_by_user()
     {
-        $createdgroups = $this->db->query('SELECT * FROM groups WHERE createdby = '.$this->session->userdata('userid').' ORDER BY id asc');
+        $createdgroups = $this->db->get_where('groups', array('createdby' => $this->session->userdata('userid')));
+        $this->db->order_by("id", "asc");
+
         if ($createdgroups->num_rows() > 0) {
             return $createdgroups->result_array();
         } else {
@@ -155,7 +157,7 @@ class Groups_model extends CI_Model {
 
     function get_group_members_count($id)
     {
-        $groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = '".$id."'");
+        $groupmembers = $this->db->get_where('users_groups', array('groupid' => $id));
         if ($groupmembers->num_rows() > 0) {
             return $groupmembers->num_rows();
         }
@@ -173,7 +175,7 @@ class Groups_model extends CI_Model {
         $emailaddress = $this->input->post('emailaddress');
 
         // Do not allow a person to be invited more than once
-        $invites = $this->db->query("SELECT * FROM groups_invites WHERE emailaddress = '".$emailaddress."' AND groupid = '".$groupid."'");
+        $invites = $this->db->get_where('groups_invites', array('emailaddress' => $emailaddress, 'groupid' => $groupid));
         
         if ($invites->num_rows() > 0) {
             return false;            
