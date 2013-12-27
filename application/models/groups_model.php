@@ -78,9 +78,15 @@ class Groups_model extends CI_Model {
         }
     }
 
-    function get_group_members()
+    function get_group_members($id)
     {
+        $groupmembers = $this->db->query("SELECT * FROM users_groups LEFT JOIN users ON users_groups.userid=users.id WHERE users_groups.groupid = '".$id."'");
 
+        if ( $groupmembers->num_rows() > 0 ) {
+            return $groupmembers->result_array();
+        }
+
+        return false;
     }
 
     function add_member_to_group($groupid)

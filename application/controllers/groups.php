@@ -141,6 +141,7 @@ class Groups extends CI_Controller {
 		$inviteid = $this->uri->segment(4);
 
 		$this->load->database();
+		$this->load->model('Groups_model');
 
 		if (!$this->session->userdata('userid')) { // Not logged in
 			redirect(''); // Redirect to a page that explains they can log in or sign up
@@ -162,11 +163,13 @@ class Groups extends CI_Controller {
 			redirect('groups/'.strtoupper($groupuid));
 		} else {
 			// Find more information about the group
-			$groupinfo = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
-			$group=$groupinfo->result_array();
+			$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
+			
 			// Add user to this group
-			$this->db->insert('users_groups',array('userid'=>$this->session->userdata('userid'),'groupid'=>$group[0]['id']));
+			$this->Groups_model->add_member_to_group($group[0]['id']);
+			
 			// Copy all bookmarks that were in this group to the newly joined user.
+			// This should probably move to the Groups and or Marks model somehow.
 			$marks = $this->db->query("SELECT * FROM users_marks GROUP BY urlid WHERE groups = '".$group[0]['id']."' ORDER BY id asc");
 			if ($marks->num_rows() > 0) {
 				$marks = $marks->result_array();
@@ -174,6 +177,7 @@ class Groups extends CI_Controller {
 					$this->db->insert('users_marks',array('userid'=>$this->session->userdata('userid'),'urlid'=>$mark['urlid'],'groups'=>$group[0]['id'],'tags'=>$mark['tags'],'addedby'=>$mark['addedby']));
 				}
 			}
+
 			// Accept the invite
 			$this->db->update('groups_invites',array('status'=>'accepted'),array('emailaddress'=>$this->session->userdata('emailaddress'),'groupid'=>$group[0]['id']));
 			$this->session->set_flashdata('message', '<strong>Invitation accepted!</strong> You can now see the links that belong to this group and you can add your own!');
@@ -193,20 +197,19 @@ class Groups extends CI_Controller {
 		$groupuid = $this->uri->segment(2);
 
 		$this->load->database();
+		$this->load->model('Groups_model');
 
 		// General group information
-		$group = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
-		if ($group->num_rows() > 0) {
-			$group = $group->result_array();
+		$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
 
+		if ( is_array($group) ) {
 			$data['group']['name'] = $group[0]['name'];
 			$data['group']['description'] = $group[0]['description'];
 			$data['group']['groupuid'] = $groupuid;
 			$data['group']['groupid'] = $group[0]['id'];
 			$data['group']['owner'] = $group[0]['createdby'];
 
-			$groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = '".$group[0]['id']."'");
-			$data['group']['member_count'] = $groupmembers->num_rows();
+			$data['group']['member_count'] = $this->Groups_model->get_group_members_count($group[0]['id']);
 		} else {
 			show_404();
 		}
@@ -274,11 +277,11 @@ class Groups extends CI_Controller {
 
 		$groupuid = $this->uri->segment(2);
 		$this->load->database();
+		$this->load->model('Groups_model');
 
 		// General group information
-		$group = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
-		if ($group->num_rows() > 0) {
-			$group = $group->result_array();
+		$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
+		if ( is_array($group) ) {
 			
 			$data['group']['name'] = $group[0]['name'];
 			$data['group']['description'] = $group[0]['description'];
@@ -286,12 +289,8 @@ class Groups extends CI_Controller {
 			$data['group']['groupid'] = $group[0]['id'];
 			$data['group']['owner'] = $group[0]['createdby'];
 
-			$groupmembers = $this->db->query("SELECT * FROM users_groups LEFT JOIN users ON users_groups.userid=users.id WHERE users_groups.groupid = '".$group[0]['id']."'");
-
-			if ($groupmembers->num_rows() > 0) {
-				$data['group']['member_count'] = $groupmembers->num_rows();
-				$data['group']['members'] = $groupmembers->result_array();
-			}
+			$data['group']['member_count'] = $this->Groups_model->get_group_members_count($group[0]['id']);
+			$data['group']['members'] = $this->Groups_model->get_group_members($group[0]['id']);
 
 			$invites = $this->db->query("SELECT * FROM groups_invites WHERE groupid = '".$group[0]['id']."' AND status = ''");
 			if ($invites->num_rows() > 0) {
