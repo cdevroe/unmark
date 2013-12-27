@@ -58,7 +58,7 @@ class Welcome extends CI_Controller {
 		$this->load->library('session');
 		$data['when'] = '';
 		$data['label'] = '';
-		if ($this->session->userdata('status') == 'paid') {
+		if ($this->session->userdata('status') == 'active') {
 			$this->load->view('help_bookmarklet',$data);
 		} else {
 			redirect('');
@@ -73,7 +73,7 @@ class Welcome extends CI_Controller {
 		$data['when'] = '';
 		$data['label'] = '';
 
-		if ($this->session->userdata('status') == 'paid') {
+		if ($this->session->userdata('status') == 'active') {
 			$this->load->view('help_faq',$data);
 		} else {
 			redirect('');
@@ -100,7 +100,7 @@ class Welcome extends CI_Controller {
 		$this->load->helper(array('url','form'));
 		$this->load->library('session');
 		
-		if ($this->session->userdata('status') == 'paid') {
+		if ($this->session->userdata('status') == 'active') {
 			$data['label'] = '';
 			$data['group']['groupuid'] = '';
 			$data['when'] = '';

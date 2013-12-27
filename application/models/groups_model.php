@@ -150,7 +150,7 @@ class Groups_model extends CI_Model {
         $this->db->update('users_marks', array('groups' => ''), array('groups' => $groupid, 'userid' => $userid));
 
         // Remove member from group
-        $this->db->delete('users_groups',array('groupid'=>$groupid,'userid'=>$userid));
+        $this->db->delete('users_groups', array('groupid'=>$groupid,'userid'=>$userid));
     }
 
     function get_group_members_count($id)

@@ -101,6 +101,8 @@ class Groups extends CI_Controller {
 
 	public function edit()
 	{
+
+		
 		if (!$this->session->userdata('userid')) { // Not logged in
 			redirect('');
 			exit;
@@ -310,6 +312,7 @@ class Groups extends CI_Controller {
 		$this->load->view('groups_members',$data);
 	}
 
+	// Logged in user can leave a group
 	public function leave()
 	{
 		
@@ -324,12 +327,48 @@ class Groups extends CI_Controller {
 		$this->load->model('Groups_model');
 
 		// Remove member from group
+		// Remove all marks from that group (but keep them around)
         $this->Groups_model->remove_member_from_group($this->Groups_model->get_group_id($groupuid));
 
-        // Remove all marks from that group (but keep them around)
-
-
         $this->session->set_flashdata('message', 'You have left the group. Want back in? Ask for an invite.');
+
+		redirect('home');
+	}
+
+	// Group admin can remove a member from group
+	public function remove()
+	{
+		
+		if (!$this->session->userdata('userid')) { // Not logged in
+			redirect('');
+			exit;
+		}
+
+		$groupuid = $this->uri->segment(2);
+		$userid = $this->uri->segment(4);
+
+		$this->load->database();
+		$this->load->model('Groups_model');
+
+		$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
+
+		// Does the group exist?
+		if ( !is_array($group) ) {
+			 $this->session->set_flashdata('message', 'This group does not exist.');
+			 redirect('home');
+		}
+
+		// If user is not the owner of this group do not allow the action
+		if ( $this->session->userdata('userid') != $group[0]['createdby'] ) {
+			$this->session->set_flashdata('message', 'You must own the group in order to remove a member (other than yourself.)');
+			redirect('home');
+		}
+
+		// OK. All is well. Remove the member from the group
+
+        $this->Groups_model->remove_member_from_group($group[0]['id'],$userid);
+        
+        $this->session->set_flashdata('message', 'You have removed the member from your group. Want them back? Send an invite.');
 
 		redirect('home');
 	}
