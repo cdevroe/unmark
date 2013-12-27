@@ -116,7 +116,7 @@ class Groups extends CI_Controller {
 		// General group information
 		$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
 
-		if ( is_array($group) ) {
+		if ( is_array($group) === true ) {
 			$data['group']['name'] = $group[0]['name'];
 			$data['group']['description'] = $group[0]['description'];
 			$data['group']['groupuid'] = $groupuid;
@@ -174,7 +174,7 @@ class Groups extends CI_Controller {
 		// Check to see if this user owns the current group
         $group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($uid));
 
-        if ( is_array($group) ){
+        if ( is_array($group) === true){
            
             if ( $this->session->userdata('userid') == $group[0]['createdby'] ) {
                 $this->Groups_model->delete_group();
@@ -285,7 +285,7 @@ class Groups extends CI_Controller {
 
 		// General group information
 		$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
-		if ( is_array($group) ) {
+		if ( is_array($group) === true ) {
 			
 			$data['group']['name'] = $group[0]['name'];
 			$data['group']['description'] = $group[0]['description'];
@@ -355,7 +355,7 @@ class Groups extends CI_Controller {
 		$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
 
 		// Does the group exist?
-		if ( !is_array($group) ) {
+		if ( is_array($group) === false ) {
 			 $this->session->set_flashdata('message', 'This group does not exist.');
 			 redirect('home');
 		}

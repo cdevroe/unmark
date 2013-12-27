@@ -19,7 +19,7 @@ class Users_model extends CI_Model {
     	// Check to see if email address exists already
 		// If email already in use, exit
 		$user = $this->Users_model->get_user_by_emailaddress($emailaddress);
-		if ( !is_array($user) ) {
+		if ( is_array($user) ) {
 			return false;
 		}
 

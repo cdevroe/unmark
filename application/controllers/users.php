@@ -30,7 +30,7 @@ class Users extends CI_Controller {
 		$user = $this->Users_model->check_user_credentials();
 
 		// If user found (and password matches)
-		if ( is_array($user) ) {
+		if ( is_array($user) === true ) {
 			
 			// If they were adding a mark, save the URL before session is destroyed.
 			$addurl = $this->session->flashdata('addurl');
