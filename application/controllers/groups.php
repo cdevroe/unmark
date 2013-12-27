@@ -132,7 +132,9 @@ class Groups extends CI_Controller {
 		$data['label'] = '';
 
 		if ($data['group']['owner'] != $this->session->userdata('userid')) {
-			exit('You do not have permission to manage this group.');
+			//$data['heading'] = 'Sorry';
+			//$data['message'] = 'This group does not exist. Or you do not have permission to manage this group. You may never know.';
+			show_404($this->uri->uri_string());
 		}
 
 		$this->load->view('groups_edit',$data);
@@ -299,14 +301,14 @@ class Groups extends CI_Controller {
 				$data['group']['invites'] = $invites->result_array();
 			}
 		} else {
-			show_404();
+			show_404($this->uri->uri_string());
 		}
 
 		$data['when'] = '';
 		$data['label'] = '';
 
 		if ($data['group']['owner'] != $this->session->userdata('userid')) {
-			exit('You do not have permission to manage this group.');
+			show_404($this->uri->uri_string());
 		}
 
 		$this->load->view('groups_members',$data);
