@@ -26,6 +26,40 @@ class Groups_model extends CI_Model {
         return $groupid;
     }
 
+    function update_group()
+    {
+        $name = $this->input->post('name',TRUE);
+        $description = $this->input->post('description',TRUE);
+        $uid = $this->input->post('uid');
+
+        if ( $this->db->update('groups',array('name'=>$name,'description'=>$description),array('uid'=>$uid)) ) {
+            return true;
+        }
+
+    return false;
+    }
+
+    function delete_group()
+    {
+        $uid = $this->input->post('uid');
+        $groupid = $this->Groups_model->get_group_id($uid);
+
+        // Remove all users from group
+        $this->db->delete('users_groups', array('groupid' => $groupid));
+
+        // Remove all invites
+        $this->db->delete('groups_invites', array('groupid' => $groupid));
+
+        // Remove all marks from group
+        // But do not delete the marks themselves for the users
+        $this->db->update('users_marks', array('groups' => ''), array('groups' => $groupid));
+
+        // Delete group
+        $this->db->delete('groups', array('id' => $groupid));
+
+    return true;
+    }
+
     function get_group_id( $uid )
     {
         
@@ -54,7 +88,12 @@ class Groups_model extends CI_Model {
 
     function get_all_groups()
     {
+        $all_groups = $this->db->get('groups');
+        if ( $all_groups->num_rows() > 0 ) {
+            return $all_groups->result_array();
+        }
 
+        return false;
     }
 
     function get_groups_user_belongs_to()
@@ -96,6 +135,24 @@ class Groups_model extends CI_Model {
         $this->db->insert('users_groups',array('groupid'=>$groupid,'userid'=>$this->session->userdata('userid')));
     }
 
+    // Userid is optional. If none given, use current logged in user.
+    // Groupid is not optional.
+    function remove_member_from_group($groupid,$userid)
+    {
+        if (!$groupid) return false;
+
+        if ( !$userid || $userid == '' ) {
+            $userid = $this->session->userdata('userid');
+        }
+
+        // Remove all marks from group
+        // But do not delete the marks themselves for the users
+        $this->db->update('users_marks', array('groups' => ''), array('groups' => $groupid, 'userid' => $userid));
+
+        // Remove member from group
+        $this->db->delete('users_groups',array('groupid'=>$groupid,'userid'=>$userid));
+    }
+
     function get_group_members_count($id)
     {
         $groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = '".$id."'");
@@ -104,40 +161,6 @@ class Groups_model extends CI_Model {
         }
 
         return false;
-    }
-
-    function update_group()
-    {
-        $name = $this->input->post('name',TRUE);
-        $description = $this->input->post('description',TRUE);
-        $uid = $this->input->post('uid');
-
-        if ( $this->db->update('groups',array('name'=>$name,'description'=>$description),array('uid'=>$uid)) ) {
-            return true;
-        }
-
-    return false;
-    }
-
-    function delete_group()
-    {
-        $uid = $this->input->post('uid');
-        $groupid = $this->Groups_model->get_group_id($uid);
-
-        // Remove all users from group
-        $this->db->delete('users_groups', array('groupid' => $groupid));
-
-        // Remove all invites
-        $this->db->delete('groups_invites', array('groupid' => $groupid));
-
-        // Remove all marks from group
-        // But do not delete the marks themselves for the users
-        $this->db->update('users_marks', array('groups' => ''), array('groups' => $groupid));
-
-        // Delete group
-        $this->db->delete('groups', array('id' => $groupid));
-
-    return true;
     }
 
     /* Invites */

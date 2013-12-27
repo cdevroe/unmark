@@ -64,7 +64,6 @@ class Groups extends CI_Controller {
 
 		// Add this user to the group
         $this->Groups_model->add_member_to_group($groupid);
-    	
 	    
 	    // # Setup Email library to email invites for the group
 	    $this->load->helper('email');
@@ -99,94 +98,7 @@ class Groups extends CI_Controller {
 
 	  	redirect('home');
 	}
-	
-	// Sends a single invite to a group
-	public function invite()
-	{
-		// Set up variables for group ID, UID, and the invitees email address
-        $groupid = $this->input->post('groupid');
-        $groupuid = $this->input->post('groupuid');
-        $emailaddress = $this->input->post('emailaddress');
 
-		// Load Database and Email Helper/Library
-		$this->load->database();
-	 	$this->load->helper('email');
-	 	$this->load->library('email');
-	 	$this->load->model('Groups_model');
-
-	 	if ( $this->Groups_model->invite_member_to_group() ) {
-	 		$this->session->set_flashdata('message', $emailaddress.' has been invited.');
-	 	} else {
-	 		$this->session->set_flashdata('message', $emailaddress.' has already been invited to this group.');
-	 	}
-	 	
-	 	// Get Group information for email.
-	 	$group = $this->Groups_model->get_group_info($groupid);
-
-	 	// Construct and send email
-	 	$this->email->from($this->session->userdata('emailaddress'));
-	 	$this->email->to($emailaddress);
-	 	$this->email->subject('You\'ve been invited to the '.$group[0]['name'].' group on Nilai');
-	 	$this->email->message("Hi $emailaddress,\n\nI assume that you know ".$this->session->userdata('emailaddress')." They have invited you to a group named \"".$group[0]['name']."\" on Nilai - The smartest way to save links for later.\n\nTo accept this invite click this link:\nhttp://nilai.co/\n\nIf you'd rather not accept this invite or if you'd like to verify that this email isn't unsolicited - simply reply to this email and your response will go directly to the person that invited you.\n\nI hope you enjoy Nilai.\nColin Devroe\nhttp://nilai.co");
-	 	$this->email->send();
-
-	 	redirect('groups/'.strtoupper($groupuid).'/members');
-	}
-	
-	
-	public function acceptinvite()
-	{
-		// Group UID and Invite ID from URL
-		$groupuid = $this->uri->segment(3);
-		$inviteid = $this->uri->segment(4);
-
-		$this->load->database();
-		$this->load->model('Groups_model');
-
-		if (!$this->session->userdata('userid')) { // Not logged in
-			redirect(''); // Redirect to a page that explains they can log in or sign up
-			exit;
-		}
-
-		// See if user already belongs to this group
-		// If not, add them to the group
-		// Copy all bookmarks
-		// If so, redirect to group page.
-		$usergroups = $this->db->query("SELECT *, groups.id as groupid FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid = '".$this->session->userdata('userid')."' AND groups.uid = '".$groupuid."'");
-		
-		if ($usergroups->num_rows() > 0) {
-			$usergroups=$usergroups->result_array();
-			// User already belongs to this group
-			$this->session->set_flashdata('message', '<strong>Invitation accepted!</strong> However, you already belonged to this group.');
-			// Accept the invite
-			$this->db->update('groups_invites',array('status'=>'accepted'),array('emailaddress'=>$this->session->userdata('emailaddress'),'groupid'=>$usergroups[0]['groupid']));
-			redirect('groups/'.strtoupper($groupuid));
-		} else {
-			// Find more information about the group
-			$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
-			
-			// Add user to this group
-			$this->Groups_model->add_member_to_group($group[0]['id']);
-			
-			// Copy all bookmarks that were in this group to the newly joined user.
-			// This should probably move to the Groups and or Marks model somehow.
-			$marks = $this->db->query("SELECT * FROM users_marks GROUP BY urlid WHERE groups = '".$group[0]['id']."' ORDER BY id asc");
-			if ($marks->num_rows() > 0) {
-				$marks = $marks->result_array();
-				foreach ($marks as $mark) {
-					$this->db->insert('users_marks',array('userid'=>$this->session->userdata('userid'),'urlid'=>$mark['urlid'],'groups'=>$group[0]['id'],'tags'=>$mark['tags'],'addedby'=>$mark['addedby']));
-				}
-			}
-
-			// Accept the invite
-			$this->db->update('groups_invites',array('status'=>'accepted'),array('emailaddress'=>$this->session->userdata('emailaddress'),'groupid'=>$group[0]['id']));
-			$this->session->set_flashdata('message', '<strong>Invitation accepted!</strong> You can now see the links that belong to this group and you can add your own!');
-
-			// Redirect to group!
-			redirect('groups/'.strtoupper($groupuid));
-		}
-	}
-	
 	public function edit()
 	{
 		if (!$this->session->userdata('userid')) { // Not logged in
@@ -269,6 +181,94 @@ class Groups extends CI_Controller {
 		redirect('home');
 	}
 	
+	// Sends a single invite to a group
+	public function invite()
+	{
+		// Set up variables for group ID, UID, and the invitees email address
+        $groupid = $this->input->post('groupid');
+        $groupuid = $this->input->post('groupuid');
+        $emailaddress = $this->input->post('emailaddress');
+
+		// Load Database and Email Helper/Library
+		$this->load->database();
+	 	$this->load->helper('email');
+	 	$this->load->library('email');
+	 	$this->load->model('Groups_model');
+
+	 	if ( $this->Groups_model->invite_member_to_group() ) {
+	 		$this->session->set_flashdata('message', $emailaddress.' has been invited.');
+	 	} else {
+	 		$this->session->set_flashdata('message', $emailaddress.' has already been invited to this group.');
+	 	}
+	 	
+	 	// Get Group information for email.
+	 	$group = $this->Groups_model->get_group_info($groupid);
+
+	 	// Construct and send email
+	 	$this->email->from($this->session->userdata('emailaddress'));
+	 	$this->email->to($emailaddress);
+	 	$this->email->subject('You\'ve been invited to the '.$group[0]['name'].' group on Nilai');
+	 	$this->email->message("Hi $emailaddress,\n\nI assume that you know ".$this->session->userdata('emailaddress')." They have invited you to a group named \"".$group[0]['name']."\" on Nilai - The smartest way to save links for later.\n\nTo accept this invite click this link:\nhttp://nilai.co/\n\nIf you'd rather not accept this invite or if you'd like to verify that this email isn't unsolicited - simply reply to this email and your response will go directly to the person that invited you.\n\nI hope you enjoy Nilai.\nColin Devroe\nhttp://nilai.co");
+	 	$this->email->send();
+
+	 	redirect('groups/'.strtoupper($groupuid).'/members');
+	}
+	
+	
+	public function acceptinvite()
+	{
+		// Group UID and Invite ID from URL
+		$groupuid = $this->uri->segment(3);
+		$inviteid = $this->uri->segment(4);
+
+		$this->load->database();
+		$this->load->model('Groups_model');
+
+		if (!$this->session->userdata('userid')) { // Not logged in
+			redirect(''); // Redirect to a page that explains they can log in or sign up
+			exit;
+		}
+
+		// See if user already belongs to this group
+		// If not, add them to the group
+		// Copy all bookmarks
+		// If so, redirect to group page.
+		$usergroups = $this->db->query("SELECT *, groups.id as groupid FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid = '".$this->session->userdata('userid')."' AND groups.uid = '".$groupuid."'");
+		
+		if ($usergroups->num_rows() > 0) {
+
+			$usergroups=$usergroups->result_array();
+			// User already belongs to this group
+			$this->session->set_flashdata('message', '<strong>Invitation accepted!</strong> However, you already belonged to this group.');
+			// Accept the invite
+			$this->db->update('groups_invites',array('status'=>'accepted'),array('emailaddress'=>$this->session->userdata('emailaddress'),'groupid'=>$usergroups[0]['groupid']));
+			redirect('groups/'.strtoupper($groupuid));
+		} else {
+			// Find more information about the group
+			$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
+			
+			// Add user to this group
+			$this->Groups_model->add_member_to_group($group[0]['id']);
+			
+			// Copy all bookmarks that were in this group to the newly joined user.
+			// This should probably move to the Groups and or Marks model somehow.
+			$marks = $this->db->query("SELECT * FROM users_marks WHERE groups = '".$group[0]['id']."' GROUP BY urlid ORDER BY id asc");
+			if ( $marks->num_rows() > 0 ) {
+				$marks = $marks->result_array();
+				foreach ($marks as $mark) {
+					$this->db->insert('users_marks',array('userid'=>$this->session->userdata('userid'),'urlid'=>$mark['urlid'],'groups'=>$group[0]['id'],'tags'=>$mark['tags'],'addedby'=>$mark['addedby']));
+				}
+			}
+
+			// Accept the invite
+			$this->db->update('groups_invites',array('status'=>'accepted'),array('emailaddress'=>$this->session->userdata('emailaddress'),'groupid'=>$group[0]['id']));
+			$this->session->set_flashdata('message', '<strong>Invitation accepted!</strong> You can now see the links that belong to this group and you can add your own!');
+
+			// Redirect to group!
+			redirect('groups/'.strtoupper($groupuid));
+		}
+	}
+	
 	public function members() {
 		if (!$this->session->userdata('userid')) { // Not logged in
 			redirect('');
@@ -308,6 +308,30 @@ class Groups extends CI_Controller {
 		}
 
 		$this->load->view('groups_members',$data);
+	}
+
+	public function leave()
+	{
+		
+		if (!$this->session->userdata('userid')) { // Not logged in
+			redirect('');
+			exit;
+		}
+
+		$groupuid = $this->uri->segment(2);
+
+		$this->load->database();
+		$this->load->model('Groups_model');
+
+		// Remove member from group
+        $this->Groups_model->remove_member_from_group($this->Groups_model->get_group_id($groupuid));
+
+        // Remove all marks from that group (but keep them around)
+
+
+        $this->session->set_flashdata('message', 'You have left the group. Want back in? Ask for an invite.');
+
+		redirect('home');
 	}
 	
 	

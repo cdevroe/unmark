@@ -63,6 +63,7 @@ $route['groups/invite/(:any)'] = "groups/acceptinvite";
 $route['groups/(:any)/edit'] = "groups/edit";
 $route['groups/(:any)/members'] = "groups/members";
 $route['groups/(:any)/invite_member'] = "groups/invite";
+$route['groups/(:any)/leave'] = "groups/leave";
 $route['groups/(:any)'] = "nilai/bygroup";
 
 

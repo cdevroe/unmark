@@ -31,12 +31,6 @@
     
     if (isset($group['name'])) { $heading = ' : Group : '.$group['name']; } ?>
     
-    <?php if ($this->session->userdata('status') == 'unpaid') { ?>
-    <div class="alert alert-error">
-      <p>It seems as though your account has not been paid for. You can continue to use your account until your first month is up. However, if you'd like to keep your account: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RZERQBDXYPJBU">$1/month</a>  or  <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RPHWTXXUKL638">$10/year</a>.</p>
-    </div>
-    <?php } ?>
-    
     
     <?php if (isset($group['name']) && ($group['owner'] == $this->session->userdata('userid'))) { ?>
     <div class="btn-group groupbuttons">
@@ -44,7 +38,11 @@
       <a class="btn" title="Edit this group" href="/groups/<?=strtoupper($group['groupuid']);?>/edit"><i class="icon-info-sign"></i> Edit</a>
     </div>
     <?php } elseif (isset($group['name']) && ($group['owner'] != $this->session->userdata('userid'))) { ?>
-    <div class="groupinfo"><i class="icon-user"></i> <?=$group['member_count'];?> Members</div>
+    <!-- <div class="groupinfo"><i class="icon-user"></i> <?=$group['member_count'];?> Members</div> -->
+    <div class="btn-group groupbuttons">
+      <a class="btn" title="Members in Group"><i class="icon-user"></i> <?=$group['member_count'];?> Members</a>
+      <a class="btn" title="Leave this group" href="/groups/<?=strtoupper($group['groupuid']);?>/leave"><i class="icon-remove"></i> Leave</a>
+    </div>
     <?php } ?>
     <h2>Links<?=$heading;?></h2>
     <?php if (isset($group['description'])) { ?><p><?=$group['description'];?></p><?php } ?>
