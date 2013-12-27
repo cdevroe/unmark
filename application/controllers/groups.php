@@ -330,7 +330,7 @@ class Groups extends CI_Controller {
 
 		// Remove member from group
 		// Remove all marks from that group (but keep them around)
-        $this->Groups_model->remove_member_from_group($this->Groups_model->get_group_id($groupuid));
+        $this->Groups_model->remove_member_from_group($this->Groups_model->get_group_id($groupuid),'');
 
         $this->session->set_flashdata('message', 'You have left the group. Want back in? Ask for an invite.');
 
