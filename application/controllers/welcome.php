@@ -49,6 +49,8 @@ class Welcome extends CI_Controller {
 			redirect('home');
 		}
 
+		$data = array();
+
 		$this->load->view('signup',$data);
 	}
 
