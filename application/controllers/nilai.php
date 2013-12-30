@@ -107,11 +107,8 @@ class Nilai extends CI_Controller {
 		$this->load->model('Groups_model');
 		$this->load->model('Marks_model');
 
-		// Unix timestamps for yesterday and today
-		$yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
-		$today = mktime(0, 0, 0, date('n'), date('j'));
-
 		// General group information
+		// If Group does not exist, 404
 		// Needs to be moved into the model. Somehow.
 		$group = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
 		if ($group->num_rows() > 0) {
@@ -171,83 +168,25 @@ class Nilai extends CI_Controller {
 		if ( !$this->session->userdata('userid') ) { redirect(''); }
 
 		$this->load->database();
+		$this->load->model('Marks_model');
 
 		$title = $this->input->get('title', TRUE);
 		$url = $this->input->get('url', TRUE);
-
 		if ($url == 'chrome://newtab/') { exit('Whoops! You can not mark this page. But, good on ya for using Chrome.'); }
+		$parsedUrl = parse_url($url); // Parse URL to determine domain
+		if ($title == '') { $title = $parsedUrl['host']; } // Data checks
 
-		// Parse URL to determine domain
-		$parsedUrl = parse_url($url);
+		// Add mark to DB if it doesn't already exist.
+		$urlid = $this->Marks_model->create($title,$url);
 
-		// Data checks
-		if ($title == '') { $title = $parsedUrl['host']; }
-
-		$this->db->insert('marks',array('title'=>$title,'url'=>$url));
-		$urlid = $this->db->insert_id();
-
-		$this->db->insert('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid'),'addedby'=>$this->session->userdata('userid')));
-
-		// First, check for user smart labels
-
-		$smartlabel = $this->db->query("SELECT * FROM users_smartlabels WHERE domain = '".strtolower($parsedUrl['host'])."' AND userid = '".$this->session->userdata('userid')."'");
-
-		if ($smartlabel->num_rows() > 0) {  // smart label found
-			$label = $smartlabel->row();
-			$this->addlabel($urlid,$label->label);
-			$data['labeladded'] = TRUE;
-			$data['userlabeladded'] = TRUE;
-		}
-
-		// Second, if no user smart labels were found,
-		// go through the defaults. B'okay?
-		if (!$this->session->flashdata('labeladded')) { 
-			// Figure out if it matches any default labels
-			// Label accordingly.
-			$smartlabel = $this->checkdefaultsmartlabel($parsedUrl);
-			if ($smartlabel[0] == TRUE) {
-				$this->addlabel($urlid,$smartlabel[1]);
-				$data['labeladded'] = TRUE;
-			}
-		} // end if no user smart label
-
-		$data['markadded'] = TRUE;
-
-		$mark = $this->db->query("SELECT * FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.urlid='".$urlid."'");
-
-		if ($mark->num_rows() > 0) {
-			$mark = $mark->result_array();
-
-			$data['title'] = $mark[0]['title'];
-			$data['url'] = $mark[0]['url'];
-			$data['urlid'] = $mark[0]['urlid'];
-			$data['tags'] = $mark[0]['tags'];
-			$data['group'] = $mark[0]['groups'];
-			$data['note'] = $mark[0]['note'];
-			$data['addedby'] = $mark[0]['addedby'];
-
-			$data['urldomain'] = strtolower($parsedUrl['host']);
-
-			$groups = $this->db->query("SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid=".$this->session->userdata('userid'));
-			if ($groups->num_rows() > 0) {
-				$data['groups']['belong'] = $groups->result_array();
-			}
-
-			// This is a patch I did on December 23 2013. Cuz $data['group']['belong'] was erring locally but not on live. Please fix asap.
-			$data['label'] = '';
-			$data['when'] = '';
-			if ( $data['group'] == '') {
-				$data['group'] = array();
-				$data['group']['belong'] = '';
-				$data['group']['groupuid'] = '';
-			}
-
-			$data['groupid']= '';
-
-			$this->load->view('editpop',$data);
+		if ( $urlid === false ) { // Add mark to the current logged in user
+			exit('Could not add the mark due to an unknown error.');
+			
 		} else {
-			show_404();
+			$user_markid = $this->Marks_model->add_mark_to_user($urlid);
 		}
+
+		redirect('marks/edit/'.$user_markid);
 
 	}
 	
@@ -480,13 +419,14 @@ class Nilai extends CI_Controller {
 
 		$this->load->database();
 		$this->load->model('Groups_model');
+		$this->load->model('Marks_model');
 
-		$urlid = $this->uri->segment(3);
+		$markid = $this->uri->segment(3);
 
-		$mark = $this->db->query("SELECT * FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.id='".$urlid."'");
+		$mark = $this->Marks_model->get_users_mark_by_id($markid);
 
-		if ($mark->num_rows() > 0) {
-			$mark = $mark->result_array();
+		if ( is_array($mark) == true ) {
+			
 			$parsedUrl = parse_url($mark[0]['url']);
 
 			// First, check for user smart labels
@@ -517,10 +457,7 @@ class Nilai extends CI_Controller {
 
 			$data['urldomain'] = strtolower($parsedUrl['host']);
 
-			$createdgroups = $this->db->query('SELECT * FROM groups WHERE createdby = '.$this->session->userdata('userid').' ORDER BY urlname asc');
-			if ($createdgroups->num_rows() > 0) {
-				$data['groups']['created'] = $createdgroups->result_array();
-			}
+			$data['groups']['created'] = $this->Groups_model->get_groups_created_by_user();
 
 			// Load the groups the user belongs to
 			$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();

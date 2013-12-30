@@ -8,9 +8,42 @@ class Marks_model extends CI_Model {
         parent::__construct();
     }
 
-    function create()
+    function create($title='',$url='')
     {
 
+        if ($title == '' || $url == '') return false;
+
+        // Be sure current URL does not exist in database already
+        $mark = $this->db->get_where('marks',array('url'=>$url));
+
+        if ($mark->num_rows() > 0) {
+            $mark = $mark->result_array();
+            return $mark[0]['id'];
+        }
+
+        $this->db->insert('marks',array('title'=>$title,'url'=>$url));
+        
+        // Still unsure if this is the best way to get this ID
+        return $this->db->insert_id();
+
+    }
+
+    function add_mark_to_user($urlid='')
+    {   
+        if ($urlid=='') return false;
+
+        // Lets see if this user has ever added this URL before
+        $mark = $this->db->get_where('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid')));
+        
+        if ($mark->num_rows() > 0) {
+            $mark = $mark->result_array();
+            return $mark[0]['id'];
+        }
+
+        $this->db->insert('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid'),'addedby'=>$this->session->userdata('userid')));
+
+        // Still unsure if this is the best way to get this ID
+        return $this->db->insert_id();
     }
 
     function update()
@@ -22,6 +55,20 @@ class Marks_model extends CI_Model {
     {
 
     }
+
+    function get_users_mark_by_id($markid='')
+    {
+        if ($markid == '') return false;
+
+        $mark = $this->db->query("SELECT * FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.id='".$markid."'");
+
+        if ( $mark->num_rows() > 0 ) {
+            return $mark->result_array();
+        }
+
+        return false;
+    }
+
 
     function get_by_time($time='')
     {
