@@ -39,21 +39,22 @@
   
   <?php if (!$this->session->userdata('userid')) { ?>
   <div class="navigation">
-    <ul class="nav nav-pills">
-      <!-- <li><a class="btn btn-primary" href="/sirius" title="Sign up!"><i class="icon-user"></i> Sign up</a></li> -->
-    </ul>
-  </div>
-  <form method="post" action="users/login" class="form-inline">
+    <!--<ul class="nav nav-pills">
+      <li><a class="btn btn-primary" href="/sirius" title="Create Account"><i class="icon-user"></i> Create Account</a></li>
+    </ul> -->
+    <form method="post" action="users/login" class="form-inline">
       <?=form_input('emailaddress','Email','class="input-small"');?>
       <?=form_password('password','xxxxxxx','class="input-small"');?>
       <input type="submit" value="Log in" name="login" id="login" class="btn" />
     </form>
+  </div>
+  
   <?php } ?>
   
   <?php if ($this->session->userdata('userid') && $when !='') { ?>
   <div class="navigation">
     <ul class="nav nav-pills">
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Labels <b class="caret"></b></a>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Sort <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <li<?php if ($when == 'all') echo ' class="active"';?>>
           <a href="/home">All</a>
