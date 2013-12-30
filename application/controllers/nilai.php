@@ -25,37 +25,28 @@ class Nilai extends CI_Controller {
 
 		$this->load->database();
 		$this->load->model('Groups_model');
+		$this->load->model('Marks_model');
 
-		// Unix timestamps for yesterday and today
-		$yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
-		$today = mktime(0, 0, 0, date('n'), date('j'));
+		// Filter by time or archive
+		if ($when == '') {
 
-		if ( $when == '' ) {
-			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users ON users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+			$data['marks'] = $this->Marks_model->get_by_time($when);
 			$data['when'] = 'all';
-		} elseif ( $when == 'today' ) {
-			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(marks.dateadded) > ".$today." AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
-			$data['when'] = $when;
-		} elseif ( $when == 'yesterday' ) {
-			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(marks.dateadded) > ".$yesterday." AND UNIX_TIMESTAMP(marks.dateadded) < ".$today." AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
-			$data['when'] = $when;
-		} elseif ($when == 'archive') {
-			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.status = 'archive' ORDER BY users_marks.id DESC LIMIT 100");
-			$data['when'] = 'archive';
-		} else {
-			// Nothing, really? Need to figure this out.
-		}
 
-		if ($marks->num_rows() > 0) {
-			$data['marks'] = $marks->result_array();
 		} else {
-			$data['marks'] = false;
+
+			$data['when'] = $when;
+
+			if ($when != 'archive') {
+				$data['marks'] = $this->Marks_model->get_by_time($when);
+			} else {
+				$data['marks'] = $this->Marks_model->get_archived();
+			}
 		}
 
 		$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
 		$invites = $this->db->query("SELECT groups_invites.*, groups_invites.id as inviteid, groups.*, users.emailaddress as invitedemail, users.id as invitedbyid FROM groups_invites LEFT JOIN groups ON groups_invites.groupid=groups.id LEFT JOIN users ON groups_invites.invitedby=users.id WHERE groups_invites.emailaddress = '".$this->session->userdata('emailaddress')."' AND groups_invites.status = ''");
-
 		if ($invites->num_rows() > 0) $data['invites'] = $invites->result_array();
 
 		/*if ($this->session->userdata('emailaddress') == 'colin@cdevroe.com') { 
@@ -86,25 +77,14 @@ class Nilai extends CI_Controller {
 		if (!$this->session->userdata('userid')) { redirect(''); }
 		$this->session->set_flashdata('lasturl', current_url());
 
-		$label = $this->uri->segment(3);
-		if ($label == 'readlater') { $label = 'Read Later'; } // Hack for readlater URLs.
-		if ($label == 'unlabeled') { $label = ''; }
-
 		$this->load->database();
 		$this->load->model('Groups_model');
+		$this->load->model('Marks_model');
 
-		// Unix timestamps for yesterday and today
-		$yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
-		$today = mktime(0, 0, 0, date('n'), date('j'));
+		$label = $this->uri->segment(3);
 		
-		$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id  WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.tags = '".$label."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
-		if ($label == '') { $label = 'unlabeled'; } // switch it back
-
-		if ($marks->num_rows() > 0) {
-			$data['marks'] = $marks->result_array();
-		} else {
-			$data['marks'] = false;
-		}
+		// Retrieve marks.
+		$data['marks'] = $this->Marks_model->get_by_label($label);
 
 		// Load the groups the user belongs to
 		$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
@@ -125,6 +105,7 @@ class Nilai extends CI_Controller {
 
 		$this->load->database();
 		$this->load->model('Groups_model');
+		$this->load->model('Marks_model');
 
 		// Unix timestamps for yesterday and today
 		$yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
@@ -146,13 +127,7 @@ class Nilai extends CI_Controller {
 			show_404();
 		}
 
-		$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded, groups.id as groupid FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users ON users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND groups.uid='".$groupuid."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
-
-		if ($marks->num_rows() > 0) {
-			$data['marks'] = $marks->result_array();
-		} else {
-			$data['marks'] = false;
-		}
+		$data['marks'] = $this->Marks_model->get_by_group($groupuid);
 
 		// Load the groups the user belongs to
 		$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
@@ -174,18 +149,9 @@ class Nilai extends CI_Controller {
 
 		$this->load->database();
 		$this->load->model('Groups_model');
-
-		// Unix timestamps for yesterday and today
-	 	$yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
-	 	$today = mktime(0, 0, 0, date('n'), date('j'));
+		$this->load->model('Marks_model');
 	 
-	 	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id  WHERE users_marks.userid='".$this->session->userdata('userid')."' AND marks.title LIKE '%".$s."%' ORDER BY users_marks.id DESC LIMIT 100");
-
-	 	if ($marks->num_rows() > 0) {
-	 		$data['marks'] = $marks->result_array();
-	 	} else {
-	 		$data['marks'] = false;
-	 	}
+	 	$data['marks'] = $this->Marks_model->search_from_user($s);
 
 	 	// Load the groups the user belongs to
 		$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
