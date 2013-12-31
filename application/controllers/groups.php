@@ -68,6 +68,9 @@ class Groups extends CI_Controller {
 	    // # Setup Email library to email invites for the group
 	    $this->load->helper('email');
 	    $this->load->library('email');
+
+	    // Set the group name variable
+	    $name = $this->input->post('name');
 	    
 	    // Create an array of the email addresses
 	    $invites=array();
