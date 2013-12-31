@@ -56,7 +56,7 @@ class Migration_Create_nilai extends CI_Migration {
 			  `groupid` int(11) NOT NULL,
 			  `userid` int(11) NOT NULL,
 			  `datejoined` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-			  `status` varchar(255) NOT NULL,
+			  `status` varchar(255),
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
 		}
