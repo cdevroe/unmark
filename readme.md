@@ -10,15 +10,11 @@ Open for contributions.
 Installation
 ==
 
-This needs to be filled out better.
-
-- Download the latest version.
+- Download [the latest release](https://github.com/cdevroe/nilai/releases).
+- Unzip the archive.
 - Copy /application/config/database-sample.php to /application/config/database.php (leave database-sample.php)
 - Fill in proper database details in /application/config/database.php
 - Run /install/
-- Follow onscreen instructions for
-	- Running migrations (happens automatically)
-	- Setting up your first user
-
+- Follow onscreen instructions
 
 Enjoy. If you have questions or issues submit them [on GitHub](http://cdevroe.github.com/nilai).
