@@ -494,13 +494,7 @@ class Nilai extends CI_Controller {
 		$id = $this->uri->segment(3);
 		$this->db->update('users_marks',array('status'=>'archive'),array('id' => $id,'userid'=>$this->session->userdata('userid')));
 
-		if ($this->session->flashdata('lasturl')) {
-			echo 'success';
-			//redirect($this->session->flashdata('lasturl'));
-		} else {
-			echo 'success';
-			//redirect('home');
-		}
+		echo 'success';
 	}
 	
 	public function restore()
@@ -513,6 +507,21 @@ class Nilai extends CI_Controller {
 
 		$this->session->set_flashdata('message', 'Your mark has been restored.');
 		$this->session->set_flashdata('restoredurlid',$urlid);
+
+		echo 'success';
+	}
+
+	public function delete()
+	{
+		if (!$this->session->userdata('userid')) { redirect(''); }
+		$this->load->database();
+		$this->load->model('Marks_model');
+
+		$id = $this->uri->segment(3);
+		$this->Marks_model->delete_mark_for_user($id);
+		//$this->db->update('users_marks',array('status'=>''),array('id' => $id,'userid'=>$this->session->userdata('userid')));
+
+		$this->session->set_flashdata('message', 'Your mark has been deleted.');
 
 		redirect('home');
 	}

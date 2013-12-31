@@ -51,9 +51,14 @@ class Marks_model extends CI_Model {
 
     }
 
-    function delete()
+    function delete_mark_for_user($urlid)
     {
+        if ($urlid=='') return false;
 
+        // Lets see if this user has ever added this URL before
+        $mark = $this->db->delete('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid')));
+        
+        return true;
     }
 
     function get_users_mark_by_id($markid='')

@@ -80,6 +80,7 @@ $route['marks/addlabel'] = "nilai/addlabel";
 $route['marks/addgroup'] = "nilai/addgroup";
 $route['marks/savenote'] = "nilai/savenote";
 $route['marks/edit/(:num)'] = "nilai/edit";
+$route['marks/delete/(:num)'] = "nilai/delete";
 $route['marks/search'] = "nilai/search";
 $route['marks/archive/(:num)'] = "nilai/archive";
 $route['marks/restore/(:num)'] = "nilai/restore";
