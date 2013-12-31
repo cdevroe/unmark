@@ -385,11 +385,16 @@ class Nilai extends CI_Controller {
 	{
 		if (!$this->session->userdata('userid')) { redirect('home'); }
 		$this->load->database();
+		$this->load->model('Marks_model');
 
 		if ($this->input->get('urlid') != '') $urlid = $this->input->get('urlid');
 		if ($this->input->get('group') != '') $group = $this->input->get('group');
 
-		$this->db->update('users_marks',array('groups'=>$group),array('urlid' => $urlid,'userid'=>$this->session->userdata('userid')));
+		if ($urlid=='' || $group == '') return 'failure';
+
+		$this->Marks_model->add_mark_to_group($urlid,$group);
+
+		/*$this->db->update('users_marks',array('groups'=>$group),array('urlid' => $urlid,'userid'=>$this->session->userdata('userid')));
 
 		// Duplicate this bookmark for every single person in the group.
 		$groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = ".$group);
@@ -405,7 +410,7 @@ class Nilai extends CI_Controller {
 					}
 				} // end if
 			} // end foreach
-		} // end if
+		} // end if */
 
 	// Success!
 	return;

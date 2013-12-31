@@ -144,6 +144,28 @@ class Marks_model extends CI_Model {
 		return false;
     }
 
+    function add_mark_to_group($urlid='',$groupid='')
+    {
+        if ($urlid=='' || $groupid =='') return false;
+        
+        $this->load->model('Groups_model');
+
+        $this->db->update('users_marks',array('groups'=>$groupid),array('urlid' => $urlid,'userid'=>$this->session->userdata('userid')));
+
+        // Add this mark to for every other user in the group.
+        //$groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = ".$group);
+        $groupmembers = $this->Groups_model->get_group_members($groupid);
+
+        if ( is_array($groupmembers) == true ) {
+            foreach($groupmembers as $member) {
+                if ($member['userid'] == $this->session->userdata('userid')) continue; // No reason to add for current user. We already did that.
+
+                $this->db->insert('users_marks',array('userid'=>$member['userid'],'urlid'=>$urlid,'groups'=>$groupid,'addedby'=>$this->session->userdata('userid')));
+
+            }
+        }
+    }
+
     function search_from_user($search='')
     {
     	if ($search == '') return false;
