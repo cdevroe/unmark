@@ -107,7 +107,7 @@ class Users extends CI_Controller {
 			$this->session->sess_create();
 
 			// Log the user in
-			$this->session->set_userdata(array('userid'=>$userid,'emailaddress'=>$emailaddress,'logged_in'=>true,'status'=>'paid'));
+			$this->session->set_userdata(array('userid'=>$userid,'emailaddress'=>$emailaddress,'logged_in'=>true,'status'=>'active'));
 
 			// Congratulate them
 			$this->session->set_flashdata('message', 'Congratulations. Enjoy using Nilai.');

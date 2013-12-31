@@ -70,7 +70,7 @@ class Migration_Create_nilai extends CI_Migration {
 			  `groups` int(11),
 			  `note` text,
 			  `dateadded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			  `status` varchar(255) NOT NULL,
+			  `status` varchar(255),
 			  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 		}
