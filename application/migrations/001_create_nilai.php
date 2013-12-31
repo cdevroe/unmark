@@ -9,8 +9,8 @@ class Migration_Create_nilai extends CI_Migration {
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `createdby` int(11) NOT NULL,
 			  `name` varchar(255) NOT NULL,
-			  `description` text NOT NULL,
-			  `urlname` varchar(255) NOT NULL,
+			  `description` text,
+			  `urlname` varchar(255),
 			  `uid` text NOT NULL,
 			  `datecreated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
@@ -33,8 +33,8 @@ class Migration_Create_nilai extends CI_Migration {
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `title` text NOT NULL,
 			  `url` text NOT NULL,
-			  `oembed` text NOT NULL,
-			  `recipe` text NOT NULL,
+			  `oembed` text,
+			  `recipe` text,
 			  `dateadded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
@@ -65,10 +65,10 @@ class Migration_Create_nilai extends CI_Migration {
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `userid` int(11) NOT NULL,
 			  `urlid` int(11) NOT NULL,
-			  `tags` text NOT NULL,
+			  `tags` text,
 			  `addedby` int(11) NOT NULL,
-			  `groups` int(11) NOT NULL,
-			  `note` text NOT NULL,
+			  `groups` int(11),
+			  `note` text,
 			  `dateadded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			  `status` varchar(255) NOT NULL,
 			  PRIMARY KEY (`id`)
