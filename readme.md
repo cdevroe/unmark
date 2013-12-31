@@ -13,9 +13,10 @@ Installation
 This needs to be filled out better.
 
 - Download the latest version.
+- Rename /application/config/database-sample.php to /application/config/database.php
+- Fill in proper database details in /application/config/database.php
 - Run /install/
 - Follow onscreen instructions for
-	- Setting up the database
 	- Running migrations (happens automatically)
 	- Setting up your first user
 
