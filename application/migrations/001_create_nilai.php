@@ -24,7 +24,7 @@ class Migration_Create_nilai extends CI_Migration {
 			  `emailaddress` text NOT NULL,
 			  `invitedby` int(11) NOT NULL,
 			  `dateinvited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-			  `status` varchar(255) NOT NULL,
+			  `status` varchar(255),
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
 		}
