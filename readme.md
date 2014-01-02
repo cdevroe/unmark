@@ -17,4 +17,17 @@ Installation
 - Run /install/
 - Follow onscreen instructions
 
-Enjoy. If you have questions or issues submit them [on GitHub](http://cdevroe.github.com/nilai).
+How To Contribute
+==
+
+To contribute by submitting issues; Please submit all issues on Github and be as verbose as possible.
+
+To submit code patches:
+
+- Fork the repository on GitHub.
+- Make updates to your code.
+- Submit a pull request.
+
+I have decided to go the Pull Request route rather than the open contribution route because I'm still running a hosted version of Nilai.
+
+Enjoy. If you have questions or issues submit them [on GitHub](http://github.com/cdevroe/nilai).
