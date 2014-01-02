@@ -277,6 +277,29 @@ class Groups extends CI_Controller {
 			redirect('groups/'.strtoupper($groupuid));
 		}
 	}
+
+	public function rejectinvite()
+	{
+		// Group UID and Invite ID from URL
+		$groupuid = $this->uri->segment(3);
+		$inviteid = $this->uri->segment(4);
+
+		$this->load->database();
+		$this->load->model('Groups_model');
+
+		if (!$this->session->userdata('userid')) { // Not logged in
+			redirect(''); // Redirect to a page that explains they can log in or sign up
+			exit;
+		}
+
+		$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
+
+		$reject = $this->db->update('groups_invites',array('status'=>'rejected'),array('emailaddress'=>$this->session->userdata('emailaddress'),'groupid'=>$group[0]['id']));
+		
+		$this->session->set_flashdata('message', '<strong>Invitation rejected!</strong> If you did this by mistake, you will have to be invited to the group again.');
+
+		redirect('home');
+	}
 	
 	public function members() {
 		if (!$this->session->userdata('userid')) { // Not logged in

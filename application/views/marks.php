@@ -14,7 +14,7 @@
       <!-- <a class="close" data-dismiss="alert">×</a> -->
       <h3>You've been invited to join some groups!</h3>
       <?php foreach ($invites as $invite) { ?>
-      <p><strong>Heads up! <?=$invite['invitedemail'];?></strong> invited you to join the <strong>"<?=$invite['name'];?>"</strong> group! - <a href="/groups/invite/<?=strtoupper($invite['uid']);?>/<?=$invite['inviteid'];?>" title="Accept the invite" class="btn btn-mini btn-primary">Accept</a>  <a href="#" title="Reject the invite" class="btn btn-mini btn-danger">Reject</a></p>
+      <p><strong>Heads up! <?=$invite['invitedemail'];?></strong> invited you to join the <strong>"<?=$invite['name'];?>"</strong> group! - <a href="/groups/invite/<?=strtoupper($invite['uid']);?>/<?=$invite['inviteid'];?>" title="Accept the invite" class="btn btn-mini btn-primary">Accept</a>  <a href="/groups/invite/<?=strtoupper($invite['uid']);?>/<?=$invite['inviteid'];?>/reject" title="Reject the invite" class="btn btn-mini btn-danger">Reject</a></p>
       <?php } ?>
     </div>
     
