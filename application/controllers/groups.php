@@ -55,6 +55,11 @@ class Groups extends CI_Controller {
 		// If user is not logged in, redirect
 		if (!$this->session->userdata('userid')) { redirect(''); }
 
+		// Set the group name variable
+	    $name = $this->input->post('name',TRUE);
+        $description = $this->input->post('description',TRUE);
+        $uid = $this->input->post('uid');
+
 		// Load database
 		$this->load->database();
 		$this->load->model('Groups_model');
@@ -68,9 +73,6 @@ class Groups extends CI_Controller {
 	    // # Setup Email library to email invites for the group
 	    $this->load->helper('email');
 	    $this->load->library('email');
-
-	    // Set the group name variable
-	    $name = $this->input->post('name');
 	    
 	    // Create an array of the email addresses
 	    $invites=array();
