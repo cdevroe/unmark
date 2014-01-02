@@ -9,6 +9,9 @@
 		  <ul>
 		    <li>Update: Added basic archive/saved stats in sidebar.</li>
 		    <li>Update: Remove superfluous JavaScript for input value replacement. Using "placeholder" instead.</li>
+		    <li>Fix: Group invitations can now be rejected.</li>
+		    <li>Update: Added version number to index.php to keep track</li>
+		    <li>Update: Switched logging on production to be far more minimal.</li>
 		  </ul>
 
 		<h4 id="031"><a href="#031">0.3.1 - 2 January 2014</a></h4>
