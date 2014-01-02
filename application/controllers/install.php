@@ -54,4 +54,20 @@ class Install extends CI_Controller {
     return false;
   }
 
+  // Used to update from one version to another.
+  public function upgrade() 
+  {
+    // There is no users table, run migrations to make
+        // sure that database is up-to-date.
+        $this->load->library('migration');
+
+        if ( ! $this->migration->current() )
+        {
+          show_error($this->migration->error_string());
+          exit;
+        }
+
+        exit('Upgraded. Please <a href="/">return home</a>.');
+  }
+
  }

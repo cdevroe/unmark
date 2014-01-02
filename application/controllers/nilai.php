@@ -501,9 +501,10 @@ class Nilai extends CI_Controller {
 		$this->load->database();
 
 		$id = $this->uri->segment(3);
-		$this->db->update('users_marks',array('status'=>'archive'),array('id' => $id,'userid'=>$this->session->userdata('userid')));
+		$this->db->update('users_marks',array('status'=>'archive','datearchived'=>date('Y-m-d H:i:s')),array('id' => $id,'userid'=>$this->session->userdata('userid')));
 
 		echo 'success';
+		exit;
 	}
 	
 	public function restore()
@@ -512,12 +513,13 @@ class Nilai extends CI_Controller {
 		$this->load->database();
 
 		$id = $this->uri->segment(3);
-		$this->db->update('users_marks',array('status'=>''),array('id' => $id,'userid'=>$this->session->userdata('userid')));
+		$this->db->update('users_marks',array('status'=>'','datearchived'=>''),array('id' => $id,'userid'=>$this->session->userdata('userid')));
 
 		$this->session->set_flashdata('message', 'Your mark has been restored.');
 		$this->session->set_flashdata('restoredurlid',$urlid);
 
 		echo 'success';
+		exit;
 	}
 
 	public function delete()
