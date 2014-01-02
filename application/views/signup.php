@@ -15,8 +15,8 @@
     <?php } ?>
     
     <?=form_open('users/add','class="form-inline"');?>
-      <p><?=form_input('emailaddress','Email','class="input"');?></p>
-      <p><?=form_password('password','xxxxxxx','class="input"');?></p>
+      <p><?=form_input('emailaddress','','class="input" placeholder="Email Address"');?></p>
+      <p><?=form_password('password','','class="input" placeholder="Password"');?></p>
       <p><?=form_submit('join','Create Account','class="btn-primary"');?></p>
     <?=form_close();?>
   </div>

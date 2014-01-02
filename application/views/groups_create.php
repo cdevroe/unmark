@@ -15,12 +15,12 @@
 		  <p>Groups can be used to share links with groups of people; family, friends, coworkers. Create a group, invite some people, share some links.</p>
 		  <form id="create_group" method="post" action="/groups/add">
 		<div class="span3">
-  		  <p><input type="text" size="60" class="input-large" id="name" name="name" value="Name your group" /></p>
-  		  <p><textarea id="description" name="description" class="input-large" cols="100" rows="8">What is the purpose of your group? (optional)</textarea><br /><small><strong>Examples:</strong><br />Sharing links for our upcoming vacation.<br />Links my coworkers need.</small></p>
+  		  <p><input type="text" size="60" class="input-large" id="name" name="name" placeholder="Name your group" /></p>
+  		  <p><textarea id="description" name="description" class="input-large" cols="100" rows="8" placeholder="What is the purpose of your group? (optional)"></textarea><br /><small><strong>Examples:</strong><br />Sharing links for our upcoming vacation.<br />Links my coworkers need.</small></p>
   		  <?=form_submit('btn_add_group','Create this group','class="btn-primary"');?>
     </div>
     <div class="span3">
-      <p><input type="text" size="60" class="input-large" id="invite1" name="invite1" value="coworker@job.com" /></p>
+      <p><input type="text" size="60" class="input-large" id="invite1" name="invite1" value="" placeholder="coworker@yourjob.com" /></p>
       <p><input type="text" size="60" class="input-large" id="invite2" name="invite2" value="" /></p>
       <p><input type="text" size="60" class="input-large" id="invite3" name="invite3" value="" /></p>
       <p><input type="text" size="60" class="input-large" id="invite4" name="invite4" value="" /></p>

@@ -43,8 +43,8 @@
       <li><a class="btn btn-primary" href="/sirius" title="Create Account"><i class="icon-user"></i> Create Account</a></li>
     </ul> -->
     <form method="post" action="users/login" class="form-inline">
-      <?=form_input('emailaddress','Email','class="input-small"');?>
-      <?=form_password('password','xxxxxxx','class="input-small"');?>
+      <?=form_input('emailaddress','','class="input-small" placeholder="Email Address"');?>
+      <?=form_password('password','','class="input-small" placeholder="Password"');?>
       <input type="submit" value="Log in" name="login" id="login" class="btn" />
     </form>
   </div>

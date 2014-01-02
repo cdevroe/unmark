@@ -134,8 +134,8 @@
       <p><?=form_input('s',$searchtext,'class="input-small"');?> <?=form_submit('search','Search','class="btn-small"');?>
       <br />
       <small><a href="/home" title="Clear search results">(x) clear results</a></small></p>
-      <?php } else { $searchtext = 'Search';  ?>
-      <p><?=form_input('s',$searchtext,'class="input-small"');?> <?=form_submit('search','Search','class="btn-small"');?></p>
+      <?php } else {  ?>
+      <p><?=form_input('s','','class="input-small" placeholder="Search"');?> <?=form_submit('search','Search','class="btn-small"');?></p>
       <?php } ?>
     <?=form_close();?>
 

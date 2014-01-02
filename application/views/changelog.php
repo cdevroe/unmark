@@ -5,10 +5,16 @@
     <h2>Changelog</h2>
 		<p>A quick list of what's new. Posted immediately upon update.</p>
 
+		<h4 id="032"><a href="#032">0.3.2 - 2 January 2014</a></h4>
+		  <ul>
+		    <li>Update: Added basic archive/saved stats in sidebar.</li>
+		    <li>Update: Remove superfluous JavaScript for input value replacement. Using "placeholder" instead.</li>
+		  </ul>
+
 		<h4 id="031"><a href="#031">0.3.1 - 2 January 2014</a></h4>
 		  <ul>
-		    <li>Update: Added version in sidebar. Easier to keep track.</li>
-		    <li><a href="https://github.com/cdevroe/nilai/issues/3">Fix</a>: Bookmarklet can now be closed.</li>
+		    <li><a href="https://github.com/cdevroe/nilai/issues/13">Update</a>: Added version in sidebar. Easier to keep track.</li>
+		    <li></li>
 		  </ul>
 
 		<h4 id="03"><a href="#03">0.3 - 2 January 2014</a></h4>

@@ -12,42 +12,6 @@
       // !Dropdown
       $('.dropdown-toggle').dropdown()
       
-      /*$('.editmark').hide();
-      $('.archivemark').hide();*/
-      
-      // !Input clearing
-      // Clear emailaddress and password
-      $('[name="emailaddress"]').focus(function(){
-        if ($(this).val() == 'Email Address') { $(this).val(''); }
-      });
-
-      $('[name="emailaddress"]').focus(function(){
-        if ($(this).val() == 'Email') { $(this).val(''); }
-      });
-      
-      $('[name="password"]').focus(function(){
-        if ($(this).val() == 'xxxxxxx') { $(this).val(''); }
-      });
-      
-      // Reset emailaddress and password to Email / Password
-      // only if empty
-      $('[name="emailaddress"]').blur(function(){
-        if ($(this).val() == '') { $(this).val('Email Address'); }
-      });
-      
-      $('[name="emailaddress"]').blur(function(){
-        if ($(this).val() == '') { $(this).val('Email'); }
-      });
-      
-      $('[name="password"]').blur(function(){
-        if ($(this).val() == '') { $(this).val('xxxxxxx'); }
-      });
-
-      $('[name="s"]').focus(function(){
-        if ($(this).val() == 'Search') { $(this).val(''); }
-      });
-      
-      
       // !Add label
       // Add label to mark
       $('.addlabel').click(function(e){

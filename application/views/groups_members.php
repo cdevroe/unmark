@@ -16,10 +16,10 @@
 		  <p>Add or remove members of this group.</p>
 		  
 		  <form id="edit_group" method="post" action="/groups/<?=$group['groupuid'];?>/invite_member">
-    		  <p><input type="text" size="60" class="input-large" id="emailaddress" name="emailaddress" value="coworker@job.com" /> <?=form_submit('btn_invite_member','Invite','class="btn-primary"');?></p>
-      <input type="hidden" id="groupuid" name="groupuid" value="<?=$group['groupuid'];?>" />
-      <input type="hidden" id="groupid" name="groupid" value="<?=$group['groupid'];?>" />
-      </form>
+    		<p><input type="text" size="60" class="input-large" id="emailaddress" name="emailaddress" placeholder="coworker@yourjob.com" /> <?=form_submit('btn_invite_member','Invite','class="btn-primary"');?></p>
+      		<input type="hidden" id="groupuid" name="groupuid" value="<?=$group['groupuid'];?>" />
+      		<input type="hidden" id="groupid" name="groupid" value="<?=$group['groupid'];?>" />
+      	</form>
 		  
 		  <?php if (isset($group['invites'])) { ?>
 		  <h3>Invites</h3>
