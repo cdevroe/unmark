@@ -2,6 +2,20 @@
 
 /*
  *---------------------------------------------------------------
+ * Nilai Version
+ *---------------------------------------------------------------
+ *
+ * Set the current version here. Be sure to follow basic rules
+ * for doing point releases, major releases, etc.
+ * 
+ * Don't forget to update the changelog!
+ * /application/views/changelog.php
+ * 
+ */
+define('NILAI_VERSION','0.3.1');
+
+/*
+ *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
  *---------------------------------------------------------------
  *
@@ -18,7 +32,8 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', 'production');
+define('ENVIRONMENT', 'production');
+
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING

@@ -140,7 +140,7 @@
       </li>
     </ul>
     <hr />
-    <p><small><strong><a href="/changelog" title="Changelog">Version 0.3</a></strong> See what's new by following <a href="http://twitter.com/nilaico">@nilaico</a> for updates.</small></p>
+    <p><small><strong><a href="/changelog" title="Changelog">Version <?=NILAI_VERSION;?></a></strong> See what's new by following <a href="http://twitter.com/nilaico">@nilaico</a> for updates.</small></p>
     
   </div>
   
