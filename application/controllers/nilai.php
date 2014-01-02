@@ -186,7 +186,7 @@ class Nilai extends CI_Controller {
 			$user_markid = $this->Marks_model->add_mark_to_user($urlid);
 		}
 
-		redirect('marks/edit/'.$user_markid);
+		redirect('marks/edit/'.$user_markid.'/?bookmarklet=true');
 
 	}
 	
@@ -470,6 +470,10 @@ class Nilai extends CI_Controller {
 			$data['label'] = '';
 			$data['group']['groupuid'] = '';
 			$data['when'] = 'all';
+
+			if ( isset($_GET['bookmarklet']) && $_GET['bookmarklet'] == true) {
+				$data['markadded'] = true;
+			}
 
 			$this->load->view('editpop',$data);
 		} else {
