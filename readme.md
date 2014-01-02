@@ -17,6 +17,22 @@ Installation
 - Run /install/
 - Follow onscreen instructions
 
+Or, Installation via cloning
+==
+
+- I figure, if you know how to clone this repo, you don't need much more help.
+- Copy /application/config/database-sample.php to /application/config/database.php (leave database-sample.php)
+- Fill in proper database details in /application/config/database.php
+- Run /install/
+- Follow onscreen instructions
+
+Upgrading
+== 
+
+- Download [the latest release](https://github.com/cdevroe/nilai/releases).
+- Replace all files (keeping your local configuration intact.)
+- Run /upgrade/
+
 How To Contribute
 ==
 
