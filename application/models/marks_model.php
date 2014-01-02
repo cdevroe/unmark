@@ -103,6 +103,38 @@ class Marks_model extends CI_Model {
 		return false;
     }
 
+    function get_number_archived_today()
+    {
+        // Unix timestamps for yesterday and today
+        $yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
+        $today = mktime(0, 0, 0, date('n'), date('j'));
+
+        $marks = $this->db->query("SELECT * FROM users_marks WHERE userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(datearchived) > ".$today." AND status = 'archive' ORDER BY id DESC LIMIT 100");
+
+        // Are there any results? If so, return.
+        if ($marks->num_rows() > 0) {
+            return $marks->num_rows();
+        }
+
+        return false;
+    }
+
+    function get_number_saved_today()
+    {
+        // Unix timestamps for yesterday and today
+        $yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
+        $today = mktime(0, 0, 0, date('n'), date('j'));
+
+        $marks = $this->db->query("SELECT * FROM users_marks WHERE userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(dateadded) > ".$today." ORDER BY id DESC LIMIT 100");
+
+        // Are there any results? If so, return.
+        if ($marks->num_rows() > 0) {
+            return $marks->num_rows();
+        }
+
+        return false;
+    }
+
     function get_by_label($label='') 
     {	
     	if ($label == 'unlabeled') $label = '';

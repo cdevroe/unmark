@@ -69,6 +69,9 @@ class Nilai extends CI_Controller {
 		$data['label'] = '';
 		$data['group']['groupuid'] = '';
 
+		$data['marks_saved_today'] = $this->Marks_model->get_number_saved_today();
+		$data['marks_archived_today'] = $this->Marks_model->get_number_archived_today();
+
 		$this->load->view('marks',$data);
 	}
 	

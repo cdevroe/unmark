@@ -112,8 +112,22 @@
   </div>
 
   <div class="well span2 sidebar">
+
+    <?php if ( isset($marks_saved_today) ) { 
+      if (!$marks_saved_today) $marks_saved_today = 0;
+
+      if (!$marks_archived_today) $marks_archived_today = 0;  ?>
+    <p><small>You've <strong>saved <?=$marks_saved_today;?></strong> and <strong>archived <?=$marks_archived_today;?></strong> marks today.
+    <?php if ( $marks_saved_today >= $marks_archived_today ) {
+      echo 'Get busy!';
+    } elseif ( $marks_saved_today < $marks_archived_today ) {
+      echo 'Keep up the good work!';
+    } ?></small></p>
+    <hr>
+    <?php } else { ?>
     <p><a class="btn" href="javascript:(function(){f='<?=site_url();?>marks/add?url='+encodeURIComponent(window.location.href)+'&title='+encodeURIComponent(document.title)+'&v=6&';a=function(){if(!window.open(f+'noui=1&jump=doclose','nilaiv1','location=1,links=0,scrollbars=0,toolbar=0,width=710,height=660'))location.href=f+'jump=yes'};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})()" title="Install bookmarklet">Add to Nilai</a></p><p><small>Drag this bookmarklet to your browser's bookmark bar to get started.</small></p>
     <hr />
+    <?php } ?>
     
     <?=form_open('marks/search','class="form-inline"');?>
       <?php if (isset($search) && $search != '') { $searchtext = $search; ?>
