@@ -11,6 +11,13 @@
             })
       // !Dropdown
       $('.dropdown-toggle').dropdown()
+
+      if ( $('[name="terms"]') ) {
+        $('[name="terms"]').click(function(){ 
+          $('[name="join"]').removeAttr('disabled');
+        });
+
+      }
       
       // !Add label
       // Add label to mark

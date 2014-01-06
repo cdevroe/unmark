@@ -76,6 +76,7 @@ $route['help/faq'] = "welcome/faq";
 $route['help/how'] = "welcome/how";
 
 $route['changelog'] = "welcome/changelog";
+$route['terms'] = "welcome/terms";
 
 $route['marks/add'] = "nilai/add";
 $route['marks/addlabel'] = "nilai/addlabel";

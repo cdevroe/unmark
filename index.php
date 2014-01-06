@@ -32,7 +32,7 @@ define('NILAI_VERSION','0.3.2');
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-define('ENVIRONMENT', 'production');
+define('ENVIRONMENT', 'development');
 
 /*
  *---------------------------------------------------------------

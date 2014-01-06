@@ -112,6 +112,14 @@ class Welcome extends CI_Controller {
 			redirect('');
 		}
 	}
+
+	public function terms()
+	{
+		$this->load->helper(array('url','form'));
+		$this->load->library('session');
+		$data = array();
+		$this->load->view('terms', $data);
+	}
 	
 }
 
