@@ -5,6 +5,11 @@
     <h2>Changelog</h2>
 		<p>A quick list of what's new. Posted immediately upon update.</p>
 
+		<h4 id="033"><a href="#032">0.3.3 - 6 January 2014</a></h4>
+		  <ul>
+		    <li>Updated: Terms and homepage.</li>
+		  </ul>
+
 		<h4 id="032"><a href="#032">0.3.2 - 2 January 2014</a></h4>
 		  <ul>
 		    <li>Update: Added basic archive/saved stats in sidebar.</li>
