@@ -51,7 +51,7 @@
   
   <?php } ?>
   
-  <?php if ($this->session->userdata('userid') && $when !='') { ?>
+  <?php  if (isset($when)) { if ($this->session->userdata('userid') && $when !='') { ?>
   <div class="navigation">
     <ul class="nav nav-pills">
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Sort <b class="caret"></b></a>
@@ -112,5 +112,5 @@
     </ul>
     <hr />
   </div>
-  <?php } ?>
+  <?php } } ?>
 </div>
