@@ -3,7 +3,7 @@
 class Migration_Create_nilai extends CI_Migration {
 
 	public function up()
-	{	
+	{	// Create tables
 		if ( !$this->db->table_exists('groups') ) {
 			$this->db->query("CREATE TABLE `groups` (
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -14,7 +14,7 @@ class Migration_Create_nilai extends CI_Migration {
 			  `uid` text NOT NULL,
 			  `datecreated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 		}
 
 		if ( !$this->db->table_exists('groups_invites') ) {
@@ -26,7 +26,7 @@ class Migration_Create_nilai extends CI_Migration {
 			  `dateinvited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 			  `status` varchar(255),
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 		}
 		if ( !$this->db->table_exists('marks') ) {
 			$this->db->query("CREATE TABLE `marks` (
@@ -37,7 +37,7 @@ class Migration_Create_nilai extends CI_Migration {
 			  `recipe` text,
 			  `dateadded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			  PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 		}
 		if ( !$this->db->table_exists('users') ) {
 			$this->db->query("CREATE TABLE `users` (
@@ -48,7 +48,7 @@ class Migration_Create_nilai extends CI_Migration {
 			  `status` varchar(255) NOT NULL,
 			  PRIMARY KEY (`id`),
 			  UNIQUE KEY `emailaddress` (`emailaddress`)
-			) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 		}
 		if ( !$this->db->table_exists('users_groups') ) {
 			$this->db->query("CREATE TABLE `users_groups` (
@@ -58,7 +58,7 @@ class Migration_Create_nilai extends CI_Migration {
 			  `datejoined` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 			  `status` varchar(255),
 			  PRIMARY KEY (`id`)
-			) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 		}
 		if ( !$this->db->table_exists('users_marks') ) {
 			$this->db->query("CREATE TABLE `users_marks` (
@@ -72,7 +72,7 @@ class Migration_Create_nilai extends CI_Migration {
 			  `dateadded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			  `status` varchar(255),
 			  PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 		}
 		if ( !$this->db->table_exists('users_smartlabels') ) {
 			$this->db->query("CREATE TABLE `users_smartlabels` (
@@ -82,13 +82,20 @@ class Migration_Create_nilai extends CI_Migration {
 			  `path` varchar(255) NOT NULL,
 			  `label` varchar(255) NOT NULL,
 			  PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 		}
 	}
 
 	public function down()
 	{
-		// Why? Nah.
+	    // Drop tables
+	    $this->dbforge->drop_table('groups');
+	    $this->dbforge->drop_table('groups_invites');
+	    $this->dbforge->drop_table('marks');
+	    $this->dbforge->drop_table('users');
+	    $this->dbforge->drop_table('users_groups');
+	    $this->dbforge->drop_table('users_marks');
+	    $this->dbforge->drop_table('users_smartlabels');        
 	}
 }
 
