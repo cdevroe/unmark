@@ -116,13 +116,13 @@ class Users extends CI_Controller {
 
 			// Mark: Read the FAQ
 			// Label: "do"
-			$this->db->insert('marks',array('title'=>'Read Nilai\'s FAQ','url'=>$config['base_url'].'help/faq'));
+			$this->db->insert('marks',array('title'=>'Read Nilai\'s FAQ','url'=>$this->config->item('base_url').'help/faq'));
 			$urlid = $this->db->insert_id();
 			$this->db->insert('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid'),'addedby'=>$this->session->userdata('userid'),'tags'=>'do'));
 
 			// Mark: How to use Nilai
 			// Label: "read"
-			$this->db->insert('marks',array('title'=>'How to use Nilai','url'=>$config['base_url'].'help/how'));
+			$this->db->insert('marks',array('title'=>'How to use Nilai','url'=>$this->config->item('base_url').'help/how'));
 			$urlid = $this->db->insert_id();
 			$this->db->insert('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid'),'addedby'=>$this->session->userdata('userid'),'tags'=>'read'));
 

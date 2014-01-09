@@ -94,7 +94,7 @@ class Groups extends CI_Controller {
 	        $this->email->to($invites[$i]); 
 	        
 	        $this->email->subject('You\'ve been invited to the '.$name.' group on Nilai');
-	        $this->email->message("Hi $invites[$i],\n\nI assume that you know ".$this->session->userdata('emailaddress')." They have invited you to a group named \"".$name."\" on Nilai - The smartest way to save links for later.\n\nTo accept this invite click this link:\n".$config['base_url']."\n\nIf you'd rather not accept this invite or if you'd like to verify that this email isn't unsolicited - simply reply to this email and your response will go directly to the person that invited you.\n\nI hope you enjoy Nilai.\nColin Devroe\n".$config['base_url']);
+	        $this->email->message("Hi $invites[$i],\n\nI assume that you know ".$this->session->userdata('emailaddress')." They have invited you to a group named \"".$name."\" on Nilai - The smartest way to save links for later.\n\nTo accept this invite click this link:\n".$this->config->item('base_url')."\n\nIf you'd rather not accept this invite or if you'd like to verify that this email isn't unsolicited - simply reply to this email and your response will go directly to the person that invited you.\n\nI hope you enjoy Nilai.\nColin Devroe\n".$this->config->item('base_url'));
 	        
 	        $this->email->send();
 	        // Used only to debug $this->email->print_debugger();
@@ -217,7 +217,7 @@ class Groups extends CI_Controller {
 	 	$this->email->from($this->session->userdata('emailaddress'));
 	 	$this->email->to($emailaddress);
 	 	$this->email->subject('You\'ve been invited to the '.$group[0]['name'].' group on Nilai');
-	 	$this->email->message("Hi $emailaddress,\n\nI assume that you know ".$this->session->userdata('emailaddress')." They have invited you to a group named \"".$group[0]['name']."\" on Nilai - The smartest way to save links for later.\n\nTo accept this invite click this link:\n".$config['base_url']."\n\nIf you'd rather not accept this invite or if you'd like to verify that this email isn't unsolicited - simply reply to this email and your response will go directly to the person that invited you.\n\nI hope you enjoy Nilai.\nColin Devroe\n".$config['base_url']);
+	 	$this->email->message("Hi $emailaddress,\n\nI assume that you know ".$this->session->userdata('emailaddress')." They have invited you to a group named \"".$group[0]['name']."\" on Nilai - The smartest way to save links for later.\n\nTo accept this invite click this link:\n".$this->config->item('base_url')."\n\nIf you'd rather not accept this invite or if you'd like to verify that this email isn't unsolicited - simply reply to this email and your response will go directly to the person that invited you.\n\nI hope you enjoy Nilai.\nColin Devroe\n".$this->config->item('base_url'));
 	 	$this->email->send();
 
 	 	redirect('groups/'.strtoupper($groupuid).'/members');
