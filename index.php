@@ -12,7 +12,7 @@
  * /application/views/changelog.php
  * 
  */
-define('NILAI_VERSION','0.3.3');
+define('NILAI_VERSION','0.3.5');
 
 /*
  *---------------------------------------------------------------
