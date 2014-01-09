@@ -5,7 +5,13 @@
     <h2>Changelog</h2>
 		<p>A quick list of what's new. Posted immediately upon update.</p>
 
-		<h4 id="035"><a href="#035">0.3.5 - 9 January 2014</a></h4>
+		<h4 id="036"><a href="#036">0.3.6 - 9 January 2014</a></h4>
+          <ul>
+            <li>Update: Updated DB structure to use unicode and InnoDB storage engine. WARNING: Migrations need to be run from scratch in order to set up properly</li>
+            <li>Fix: Fixed migration definitions to install properly.</li>
+          </ul>
+
+        <h4 id="035"><a href="#035">0.3.5 - 9 January 2014</a></h4>
 		  <ul>
 		    <li>Update: Removed all references to nilai.co from the app and used $config['base_url'] instead.</li>
 		    <li>Fix: Quick patch for retina Macbook Pros.</li>
