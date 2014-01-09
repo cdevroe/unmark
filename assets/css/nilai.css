@@ -74,6 +74,42 @@ a:hover { color: #088562; }
 and (min-device-width : 320px)
 and (max-device-width : 480px) {
 /* Styles */
+body { margin: 0; padding: 3px 0;}
+.container-fluid { width: 98%; margin: 0 auto; padding: 0; }
+
+.marks .mark h3 span.dateadded { display: none; font-size: 0.6em; }
+.marks .mark small { display: none; }
+.marks .mark .mobilefriendly {display:inline;}
+
+.mark .markmeta { margin: 0 0 0 80px; padding: 0; }
+
+.preview-panel img { max-width: 300px; }
+.preview-panel iframe { max-width: 300px; }
+
+.logo { width: 20px; float: left; margin: 0 2px 0 0; padding: 0; }
+  .logo h1 { margin: 0; padding: 0;}
+    .logo h1 img { width: 30px; }
+.navigation { float: left; width: 260px; margin: 0 0 0 5px; }
+  .navigation hr { display: none; }
+
+h2 { clear: both; font-size: 1.4em; }
+h3 { font-size: 1.3em;}
+
+.bookmarklet { display: none; }
+
+.hero-unit, .hero-unit h1, .carousel, .hero-unit.span5 { display: none; }
+
+.mark .preview-button { padding: 0px 8px 2px 8px; }
+
+.note {
+  width: 300px;
+}
+
+/* Groups */
+.groupbuttons {
+  float: inherit;
+  margin: 0 0 0 50px;
+}
 }
 
 /* Smartphones (landscape) ----------- */
@@ -136,42 +172,5 @@ and (min-width : 1824px) {
 only screen and (-webkit-min-device-pixel-ratio : 1.5),
 only screen and (min-device-pixel-ratio : 1.5) {
 /* Styles */
-
-body { margin: 0; padding: 3px 0;}
-.container-fluid { width: 98%; margin: 0 auto; padding: 0; }
-
-.marks .mark h3 span.dateadded { display: none; font-size: 0.6em; }
-.marks .mark small { display: none; }
-.marks .mark .mobilefriendly {display:inline;}
-
-.mark .markmeta { margin: 0 0 0 80px; padding: 0; }
-
-.preview-panel img { max-width: 300px; }
-.preview-panel iframe { max-width: 300px; }
-
-.logo { width: 20px; float: left; margin: 0 2px 0 0; padding: 0; }
-  .logo h1 { margin: 0; padding: 0;}
-    .logo h1 img { width: 30px; }
-.navigation { float: left; width: 260px; margin: 0 0 0 5px; }
-  .navigation hr { display: none; }
-
-h2 { clear: both; font-size: 1.4em; }
-h3 { font-size: 1.3em;}
-
-.bookmarklet { display: none; }
-
-.hero-unit, .hero-unit h1, .carousel, .hero-unit.span5 { display: none; }
-
-.mark .preview-button { padding: 0px 8px 2px 8px; }
-
-.note {
-  width: 300px;
-}
-
-/* Groups */
-.groupbuttons {
-  float: inherit;
-  margin: 0 0 0 50px;
-}
 
 }
