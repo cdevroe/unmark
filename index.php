@@ -7,10 +7,10 @@
  *
  * Set the current version here. Be sure to follow basic rules
  * for doing point releases, major releases, etc.
- * 
+ *
  * Don't forget to update the changelog!
  * /application/views/changelog.php
- * 
+ *
  */
 define('NILAI_VERSION','0.3.5');
 
@@ -50,7 +50,7 @@ if (defined('ENVIRONMENT'))
 		case 'development':
 			error_reporting(E_ALL);
 		break;
-	
+
 		case 'staging':
 		break;
 		case 'production':
