@@ -5,6 +5,11 @@
     <h2>Changelog</h2>
 		<p>A quick list of what's new. Posted immediately upon update.</p>
 
+		<h4 id="037"><a href="#037">0.3.7 - 9 January 2014</a></h4>
+          <ul>
+            <li>Fix: Fixed config usage.</li>
+          </ul>
+		
 		<h4 id="036"><a href="#036">0.3.6 - 9 January 2014</a></h4>
           <ul>
             <li>Update: Updated DB structure to use unicode and InnoDB storage engine. WARNING: Migrations need to be run from scratch in order to set up properly</li>
