@@ -1,3 +1,5 @@
 application/config/database.php
 application/logs/*.php
 .DS_Store
+.buildpath
+.project

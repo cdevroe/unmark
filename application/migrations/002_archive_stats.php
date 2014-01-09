@@ -5,11 +5,8 @@ class Migration_Archive_stats extends CI_Migration {
 	public function up()
 	{	
 		// Add column to track when a mark was archived
-		if ( $this->db->table_exists('users_marks') && !$this->db->field_exists('datearchived','users_marks') ) {
-			$this->dbforge->add_column('users_marks',
+		    $this->dbforge->add_column('users_marks',
 				array('datearchived' => array('type'=>'timestamp') ) );
-		}
-
 	}
 
 	public function down()
