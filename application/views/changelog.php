@@ -5,6 +5,11 @@
     <h2>Changelog</h2>
 		<p>A quick list of what's new. Posted immediately upon update.</p>
 
+		<h4 id="035"><a href="#035">0.3.5 - UNRELEASED</a></h4>
+		  <ul>
+		    <li>Update: Removed all references to nilai.co from the app and used $config['base_url'] instead.</li>
+		  </ul>
+
 		<h4 id="033"><a href="#032">0.3.3 - 6 January 2014</a></h4>
 		  <ul>
 		    <li>Updated: Terms and homepage.</li>
