@@ -8,22 +8,32 @@ function generateCSRF()
 function generateHash($str)
 {
     $token  = generateToken(50);
-    $hashes = array(
-        CRYPT_SHA512   => '$6$rounds=5000$' . $token . '$',
-        CRYPT_SHA256   => '$5$rounds=5000$' . $token . '$',
-        CRYPT_BLOWFISH => '$2a$07$' . $token . '$',
-        CRYPT_MD5      => '$1$' . $token . '$',
-        CRYPT_EXT_DES  => '_J9' . $token,
-        CRYPT_STD_DES  => $token
-    );
 
-    foreach ($hashes as $hash => $salt) {
-        if ($hash == 1) {
-            return crypt($str, $salt);
-        }
+    if (CRYPT_SHA512 == 1) {
+        return crypt($str, '$6$rounds=5000$' . $token . '$');
     }
 
-    return false;
+    if (CRYPT_SHA256 == 1) {
+        return crypt($str, '$5$rounds=5000$' . $token . '$');
+    }
+
+    if (CRYPT_BLOWFISH == 1) {
+        return crypt($str, '$2a$07$' . $token . '$');
+    }
+
+    if (CRYPT_MD5 == 1) {
+        return crypt($str, '$1$' . $token . '$');
+    }
+
+    if (CRYPT_EXT_DES == 1) {
+        return crypt($str, '_J9' . $token);
+    }
+
+    if (CRYPT_STD_DES == 1) {
+        return crypt($str, $token);
+    }
+
+    throw new Exception('No hashing mechanisms not supported.');
 }
 
 function generatePassword($len=12)
