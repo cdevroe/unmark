@@ -22,19 +22,19 @@ class Marks_model extends CI_Model {
         }
 
         $this->db->insert('marks',array('title'=>$title,'url'=>$url));
-        
+
         // Still unsure if this is the best way to get this ID
         return $this->db->insert_id();
 
     }
 
     function add_mark_to_user($urlid='')
-    {   
+    {
         if ($urlid=='') return false;
 
         // Lets see if this user has ever added this URL before
         $mark = $this->db->get_where('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid')));
-        
+
         if ($mark->num_rows() > 0) {
             $mark = $mark->result_array();
             return $mark[0]['id'];
@@ -57,7 +57,7 @@ class Marks_model extends CI_Model {
 
         // Lets see if this user has ever added this URL before
         $mark = $this->db->delete('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid')));
-        
+
         return true;
     }
 
@@ -83,15 +83,15 @@ class Marks_model extends CI_Model {
 
     	switch($time) {
     		case '':
-    			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users ON users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+    			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users ON users_marks.addedby=users.user_id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
     		break;
 
     		case 'today':
-    			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(marks.dateadded) > ".$today." AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+    			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.user_id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(marks.dateadded) > ".$today." AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
     		break;
 
     		case 'yesterday':
-    			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(marks.dateadded) > ".$yesterday." AND UNIX_TIMESTAMP(marks.dateadded) < ".$today." AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+    			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.user_id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(marks.dateadded) > ".$yesterday." AND UNIX_TIMESTAMP(marks.dateadded) < ".$today." AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
     		break;
     	}
 
@@ -135,11 +135,11 @@ class Marks_model extends CI_Model {
         return false;
     }
 
-    function get_by_label($label='') 
-    {	
+    function get_by_label($label='')
+    {
     	if ($label == 'unlabeled') $label = '';
-    	
-    	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id  WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.tags = '".$label."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+
+    	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.user_id  WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.tags = '".$label."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
 
     	// Are there any results? If so, return.
     	if ($marks->num_rows() > 0) {
@@ -151,7 +151,7 @@ class Marks_model extends CI_Model {
 
     function get_archived()
     {
-    	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.status = 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+    	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.user_id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.status = 'archive' ORDER BY users_marks.id DESC LIMIT 100");
 
 
     	// Are there any results? If so, return.
@@ -166,7 +166,7 @@ class Marks_model extends CI_Model {
     {
     	if ($groupuid == '') return false;
 
-    	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded, groups.id as groupid FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users ON users_marks.addedby=users.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND groups.uid='".$groupuid."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+    	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded, groups.id as groupid FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users ON users_marks.addedby=users.user_id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND groups.uid='".$groupuid."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
 
     	// Are there any results? If so, return.
     	if ($marks->num_rows() > 0) {
@@ -179,7 +179,7 @@ class Marks_model extends CI_Model {
     function add_mark_to_group($urlid='',$groupid='')
     {
         if ($urlid=='' || $groupid =='') return false;
-        
+
         $this->load->model('Groups_model');
 
         $this->db->update('users_marks',array('groups'=>$groupid),array('urlid' => $urlid,'userid'=>$this->session->userdata('userid')));
@@ -202,7 +202,7 @@ class Marks_model extends CI_Model {
     {
     	if ($search == '') return false;
 
-    	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.id  WHERE users_marks.userid='".$this->session->userdata('userid')."' AND marks.title LIKE '%".$search."%' ORDER BY users_marks.id DESC LIMIT 100");
+    	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.emailaddress, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.user_id  WHERE users_marks.userid='".$this->session->userdata('userid')."' AND marks.title LIKE '%".$search."%' ORDER BY users_marks.id DESC LIMIT 100");
 
     	// Are there any results? If so, return.
     	if ($marks->num_rows() > 0) {

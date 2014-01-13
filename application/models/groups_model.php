@@ -17,9 +17,9 @@ class Groups_model extends CI_Model {
 
         // Add group to database
         $this->db->insert('groups',array('name'=>$name,'description'=>$description,'uid'=>$uid,'createdby'=>$this->session->userdata('userid')));
-        
+
         $groupid = $this->Groups_model->get_group_id($uid);
-        if (!$groupid) { 
+        if (!$groupid) {
             exit ('there was a problem creating the group');
         }
 
@@ -62,11 +62,11 @@ class Groups_model extends CI_Model {
 
     function get_group_id( $uid )
     {
-        
+
         if (!$uid) { return false; }
 
         $group = $this->db->get_where('groups', array('uid' => $uid));
-        
+
         if ($group->num_rows() > 0) {
             $group = $group->result_object();
             return $group[0]->id;
@@ -82,7 +82,7 @@ class Groups_model extends CI_Model {
         if ($group->num_rows() > 0) {
             return $group->result_array();
         }
-        
+
         return false;
     }
 
@@ -97,9 +97,9 @@ class Groups_model extends CI_Model {
     }
 
     function get_groups_user_belongs_to()
-    {	
+    {
 		$user_belongs_to_groups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid='.$this->session->userdata('userid'));
-		
+
 		if ($user_belongs_to_groups->num_rows() > 0) {
 			return $user_belongs_to_groups->result_array();
 		} else {
@@ -121,7 +121,7 @@ class Groups_model extends CI_Model {
 
     function get_group_members($id)
     {
-        $groupmembers = $this->db->query("SELECT * FROM users_groups LEFT JOIN users ON users_groups.userid=users.id WHERE users_groups.groupid = '".$id."'");
+        $groupmembers = $this->db->query("SELECT * FROM users_groups LEFT JOIN users ON users_groups.userid=users.user_id WHERE users_groups.groupid = '".$id."'");
 
         if ( $groupmembers->num_rows() > 0 ) {
             return $groupmembers->result_array();
@@ -176,9 +176,9 @@ class Groups_model extends CI_Model {
 
         // Do not allow a person to be invited more than once
         $invites = $this->db->get_where('groups_invites', array('emailaddress' => $emailaddress, 'groupid' => $groupid));
-        
+
         if ($invites->num_rows() > 0) {
-            return false;            
+            return false;
         }
 
         // Add invite to invites table
