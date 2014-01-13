@@ -1,20 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Install extends CI_Controller {
-  
+
   public function __construct() {
     parent::__construct();
-    
+
     $this->load->helper(array('url','form'));
     $this->load->library('session');
 
     $this->load->database(); // Load Database for all methods
-    
+
   }
 
   public function index()
   {
-  	
+
     // Step one: See if there is a database
   	$data['install_complete'] = $this->database_install();
 
@@ -24,11 +24,11 @@ class Install extends CI_Controller {
 
   public function database_install()
   {
-    
+
     // See if there is a users table
     // Also, be sure there _are_ users.
     if ( !$this->db->table_exists('users') ) { // No user table
-        
+
         // There is no users table, run migrations to make
         // sure that database is up-to-date.
         $this->load->library('migration');
@@ -38,9 +38,9 @@ class Install extends CI_Controller {
           show_error($this->migration->error_string());
           exit;
         }
-        
+
     }
-    
+
     // Make sure there is at least one user
     $this->db->from('users');
     $number_of_users = $this->db->count_all_results();
@@ -49,13 +49,13 @@ class Install extends CI_Controller {
         return true;
     } else {
         return false;
-    } 
-    
+    }
+
     return false;
   }
 
   // Used to update from one version to another.
-  public function upgrade() 
+  public function upgrade()
   {
     // There is no users table, run migrations to make
         // sure that database is up-to-date.
@@ -68,6 +68,25 @@ class Install extends CI_Controller {
         }
 
         exit('Upgraded. Please <a href="/">return home</a>.');
+  }
+
+  public function downgrade()
+  {
+    $query = $this->db->query('SELECT version FROM migrations');
+
+    if ($query->num_rows() > 0) {
+      $row     = $query->row();
+      $version = $row->version - 1;
+
+      if ($version > 0) {
+        $this->load->library('migration');
+        $this->migration->version($version);
+        exit('Downgraded. Please <a href="/">return home</a>.');
+      }
+
+    }
+    exit('Nothing to Downgrade. Please <a href="/">return home</a>.');
+
   }
 
  }
