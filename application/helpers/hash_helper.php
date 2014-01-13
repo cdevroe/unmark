@@ -33,7 +33,7 @@ function generateHash($str)
         return crypt($str, $token);
     }
 
-    throw new Exception('No hashing mechanisms not supported.');
+    throw new Exception('No hashing mechanisms supported.');
 }
 
 function generatePassword($len=12)
