@@ -11,6 +11,8 @@ class Migration_Users_update extends CI_Migration {
       $this->db->query('ALTER TABLE `users` CHANGE COLUMN `datejoined` `date_joined` datetime NOT NULL DEFAULT \'0000-00-00 00:00:00\'');
       $this->db->query('ALTER TABLE `users` CHANGE COLUMN `status` `status` varchar(25) NOT NULL DEFAULT \'inactive\'');
       $this->db->query('ALTER TABLE `users` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP AFTER `status`');
+      $this->db->query('ALTER TABLE `users` DROP INDEX `emailaddress`');
+      $this->db->query('ALTER TABLE `users` ADD UNIQUE `email`(email)');
     }
 
     public function down()
@@ -23,5 +25,9 @@ class Migration_Users_update extends CI_Migration {
       $this->db->query('ALTER TABLE `users` CHANGE COLUMN `password` `password` varchar(255) NOT NULL');
       $this->db->query('ALTER TABLE `users` CHANGE COLUMN `date_joined` `datejoined` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
       $this->db->query('ALTER TABLE `users` CHANGE COLUMN `status` `status` varchar(255) NOT NULL');
+      $this->db->query('ALTER TABLE `users` DROP INDEX `email`');
+      $this->db->query('ALTER TABLE `users` ADD UNIQUE `emailaddress`(emailaddress)');
     }
+
+    //ALTER TABLE `nilai`.`users` DROP INDEX `emailaddress`, ADD UNIQUE `email`(emailaddress);
 }
