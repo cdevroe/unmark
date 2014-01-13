@@ -45,7 +45,6 @@ $route['sirius'] = "welcome/sirius";
 
 $route['install'] = "install";
 $route['upgrade'] = "install/upgrade";
-$route['downgrade'] = "install/downgrade";
 
 $route['users/login'] = "users/login";
 $route['users/logout'] = "users/logout";

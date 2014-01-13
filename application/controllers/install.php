@@ -70,23 +70,4 @@ class Install extends CI_Controller {
         exit('Upgraded. Please <a href="/">return home</a>.');
   }
 
-  public function downgrade()
-  {
-    $query = $this->db->query('SELECT version FROM migrations');
-
-    if ($query->num_rows() > 0) {
-      $row     = $query->row();
-      $version = $row->version - 1;
-
-      if ($version > 0) {
-        $this->load->library('migration');
-        $this->migration->version($version);
-        exit('Downgraded. Please <a href="/">return home</a>.');
-      }
-
-    }
-    exit('Nothing to Downgrade. Please <a href="/">return home</a>.');
-
-  }
-
  }
