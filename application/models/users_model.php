@@ -105,6 +105,7 @@ class Users_model extends CI_Model {
     {
 
     	// Turn XSS filter on email address and password
+        $this->load->helper('hash_helper');
 		$email     = $this->input->post('emailaddress', true);
 		$password  = $this->input->post('password', true);
         $hash      = generateHash($password);
@@ -119,7 +120,7 @@ class Users_model extends CI_Model {
         $user = $this->db->query("
             SELECT * FROM `users`
             WHERE email = '" . $email . "' AND
-            (password = '" . md5($password) "' OR password = '" . $hash . "')
+            (password = '" . md5($password) . "' OR password = '" . $hash . "')
         ");
 
         return ($user->num_rows() > 0) ? $user->row_array() : false;
