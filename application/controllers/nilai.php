@@ -436,10 +436,10 @@ class Nilai extends CI_Controller {
 		if ( is_array($mark) == true ) {
 
 			$parsedUrl = parse_url($mark[0]['url']);
-			if(empty($parsedUrl)){
+			if(empty($parsedUrl['host'])){
 			    // Use local URL for links without host
 			    // TODO kip9 Decide if that's what we want to do in that case
-			    $parsedUrl = $this->config->item('base_url');
+			    $parsedUrl['host'] = $this->config->item('base_url');
 			}
 
 			// First, check for user smart labels
