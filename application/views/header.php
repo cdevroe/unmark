@@ -98,7 +98,7 @@
         <li<?php if ($group == 'create') echo ' class="active"';?>>
           <a href="/groups/create">Create a group +</a>
         </li>
-        <?php if (isset($groups['belong'])) { ?>
+        <?php if (isset($groups['belong']) && !empty($groups['belong'])) { ?>
         <li class="divider"></li>
         <?php foreach($groups['belong'] as $gb) {  ?>
         <li<?php if ($group['groupuid'] == strtoupper($gb['uid'])) echo ' class="active"';?>>
