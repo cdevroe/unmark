@@ -21,7 +21,7 @@ class Marks_model extends CI_Model {
             return $mark[0]['id'];
         }
 
-        $this->db->insert('marks',array('title'=>$title,'url'=>$url));
+        $this->db->insert('marks',array('title'=>$title,'url'=>$url,'status'=>''));
 
         // Still unsure if this is the best way to get this ID
         return $this->db->insert_id();
