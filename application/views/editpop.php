@@ -45,7 +45,7 @@
 		<div span="span3">
 
 		<h3>Groups</h3>
-		<?php if (isset($groups['belong'])) { ?>
+		<?php if (isset($groups['belong']) && !empty($groups['belong'])) { ?>
 		<p><?php foreach($groups['belong'] as $gb) {  ?>
     <a href="#" class="btn addgroup<?php if ($groupid == $gb['id']) { echo ' btn-success'; } ?>" title="<?php echo $gb['name'];?>" data-group="<?php echo $gb['id'];?>"><?php echo $gb['name'];?></a>
     <?php } ?>
