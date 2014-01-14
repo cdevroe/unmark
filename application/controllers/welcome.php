@@ -30,7 +30,7 @@ class Welcome extends CI_Controller {
 		} else {
 			// See if there is a users table
     		// Also, be sure there _are_ users.
-    		$this->load->database();
+
     		if ( !$this->db->table_exists('users') ) { // No user table
     			print_r('<p>Nilai has not been installed yet. Please <a href="/install/">install</a> before continuing.</p>');
     			exit;

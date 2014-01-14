@@ -11,7 +11,7 @@ class Users extends CI_Controller {
 	public function login() {
 
 		// Load what we need for this method
-		$this->load->database();
+
 		$this->load->model('Users_model');
 
 		$this->load->library('session');
@@ -77,7 +77,7 @@ class Users extends CI_Controller {
 	public function add() {
 
 		// Load everything we need for this method
-		$this->load->database();
+
 		$this->load->model('Users_model');
 		$this->load->library( 'session' );
 		$this->load->helper( array('url','email', 'validation_helper') );

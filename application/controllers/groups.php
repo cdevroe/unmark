@@ -9,13 +9,13 @@ class Groups extends CI_Controller {
     	$this->load->helper(array('url','form'));
     	$this->load->library('session');
     }
-  	
+
   	// Unused for now.
 	public function index()
 	{
 
 	}
-	
+
 	// Just a view for the user
 	// to type in a name, description
 	// and invite some people.
@@ -24,7 +24,7 @@ class Groups extends CI_Controller {
 	{
 		// If user is not logged in, redirect.
 		if (!$this->session->userdata('userid')) { redirect(''); }
-		
+
 		// Create a 10char unique ID for group
 		$data['uid'] = $this->generate_uid(10);
 
@@ -34,7 +34,7 @@ class Groups extends CI_Controller {
 		$data['group']['groupuid'] = '';
 
 		// Load database
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 
 		// ### I do not remember why I figure out the groups that this person has created, or belongs to. Clean up later.
@@ -48,7 +48,7 @@ class Groups extends CI_Controller {
 		$this->load->view('groups_create',$data);
 
 	}
-	
+
 	// Method used to actually add a new group
 	public function add()
 	{
@@ -61,7 +61,7 @@ class Groups extends CI_Controller {
         $uid = $this->input->post('uid');
 
 		// Load database
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 
 		// Add Group to Database
@@ -69,11 +69,11 @@ class Groups extends CI_Controller {
 
 		// Add this user to the group
         $this->Groups_model->add_member_to_group($groupid);
-	    
+
 	    // # Setup Email library to email invites for the group
 	    $this->load->helper('email');
 	    $this->load->library('email');
-	    
+
 	    // Create an array of the email addresses
 	    $invites=array();
 	    $invites[] = $this->input->post('invite1');
@@ -82,20 +82,20 @@ class Groups extends CI_Controller {
 	    $invites[] = $this->input->post('invite4');
 	    $invites[] = $this->input->post('invite5');
 
-	  	// Loop through emails provided    
+	  	// Loop through emails provided
 	    for($i=0;$i<count($invites);$i++) {
 	      if ( $invites[$i] != '' && valid_email($invites[$i]) ) {
-	        
+
 	        // Add record to invites table
 	        $this->db->insert('groups_invites',array('groupid'=>$groupid,'emailaddress'=>$invites[$i],'invitedby'=>$this->session->userdata('userid')));
-	      	
+
 	      	// Construct and send email.
 	        $this->email->from($this->session->userdata('emailaddress'));
-	        $this->email->to($invites[$i]); 
-	        
+	        $this->email->to($invites[$i]);
+
 	        $this->email->subject('You\'ve been invited to the '.$name.' group on Nilai');
 	        $this->email->message("Hi $invites[$i],\n\nI assume that you know ".$this->session->userdata('emailaddress')." They have invited you to a group named \"".$name."\" on Nilai - The smartest way to save links for later.\n\nTo accept this invite click this link:\n".$this->config->item('base_url')."\n\nIf you'd rather not accept this invite or if you'd like to verify that this email isn't unsolicited - simply reply to this email and your response will go directly to the person that invited you.\n\nI hope you enjoy Nilai.\nColin Devroe\n".$this->config->item('base_url'));
-	        
+
 	        $this->email->send();
 	        // Used only to debug $this->email->print_debugger();
 	      }
@@ -107,7 +107,7 @@ class Groups extends CI_Controller {
 	public function edit()
 	{
 
-		
+
 		if (!$this->session->userdata('userid')) { // Not logged in
 			redirect('');
 			exit;
@@ -115,7 +115,7 @@ class Groups extends CI_Controller {
 
 		$groupuid = $this->uri->segment(2);
 
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 
 		// General group information
@@ -144,7 +144,7 @@ class Groups extends CI_Controller {
 
 		$this->load->view('groups_edit',$data);
 	}
-	
+
 	public function update()
 	{
 
@@ -154,7 +154,7 @@ class Groups extends CI_Controller {
 		}
 		$uid = $this->input->post('uid');
 
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 
 		$this->Groups_model->update_group();
@@ -166,21 +166,21 @@ class Groups extends CI_Controller {
 
 	public function delete()
 	{
-		
+
 		if (!$this->session->userdata('userid')) { // Not logged in
 			redirect('');
 			exit;
 		}
 		$uid = $this->input->post('uid');
 
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 
 		// Check to see if this user owns the current group
         $group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($uid));
 
         if ( is_array($group) === true){
-           
+
             if ( $this->session->userdata('userid') == $group[0]['createdby'] ) {
                 $this->Groups_model->delete_group();
                 $this->session->set_flashdata('message', 'All users have been removed from the group, all bookmarks have been removed from the group, all outstanding invitations to the group have been deleted and the group has been deleted. This cannot be undone.');
@@ -189,7 +189,7 @@ class Groups extends CI_Controller {
 
 		redirect('home');
 	}
-	
+
 	// Sends a single invite to a group
 	public function invite()
 	{
@@ -199,7 +199,7 @@ class Groups extends CI_Controller {
         $emailaddress = $this->input->post('emailaddress');
 
 		// Load Database and Email Helper/Library
-		$this->load->database();
+
 	 	$this->load->helper('email');
 	 	$this->load->library('email');
 	 	$this->load->model('Groups_model');
@@ -209,7 +209,7 @@ class Groups extends CI_Controller {
 	 	} else {
 	 		$this->session->set_flashdata('message', $emailaddress.' has already been invited to this group.');
 	 	}
-	 	
+
 	 	// Get Group information for email.
 	 	$group = $this->Groups_model->get_group_info($groupid);
 
@@ -222,15 +222,15 @@ class Groups extends CI_Controller {
 
 	 	redirect('groups/'.strtoupper($groupuid).'/members');
 	}
-	
-	
+
+
 	public function acceptinvite()
 	{
 		// Group UID and Invite ID from URL
 		$groupuid = $this->uri->segment(3);
 		$inviteid = $this->uri->segment(4);
 
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 
 		if (!$this->session->userdata('userid')) { // Not logged in
@@ -243,7 +243,7 @@ class Groups extends CI_Controller {
 		// Copy all bookmarks
 		// If so, redirect to group page.
 		$usergroups = $this->db->query("SELECT *, groups.id as groupid FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid = '".$this->session->userdata('userid')."' AND groups.uid = '".$groupuid."'");
-		
+
 		if ($usergroups->num_rows() > 0) {
 
 			$usergroups=$usergroups->result_array();
@@ -255,10 +255,10 @@ class Groups extends CI_Controller {
 		} else {
 			// Find more information about the group
 			$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
-			
+
 			// Add user to this group
 			$this->Groups_model->add_member_to_group($group[0]['id']);
-			
+
 			// Copy all bookmarks that were in this group to the newly joined user.
 			// This should probably move to the Groups and or Marks model somehow.
 			$marks = $this->db->query("SELECT * FROM users_marks WHERE groups = '".$group[0]['id']."' GROUP BY urlid ORDER BY id asc");
@@ -284,7 +284,7 @@ class Groups extends CI_Controller {
 		$groupuid = $this->uri->segment(3);
 		$inviteid = $this->uri->segment(4);
 
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 
 		if (!$this->session->userdata('userid')) { // Not logged in
@@ -295,12 +295,12 @@ class Groups extends CI_Controller {
 		$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
 
 		$reject = $this->db->update('groups_invites',array('status'=>'rejected'),array('emailaddress'=>$this->session->userdata('emailaddress'),'groupid'=>$group[0]['id']));
-		
+
 		$this->session->set_flashdata('message', '<strong>Invitation rejected!</strong> If you did this by mistake, you will have to be invited to the group again.');
 
 		redirect('home');
 	}
-	
+
 	public function members() {
 		if (!$this->session->userdata('userid')) { // Not logged in
 			redirect('');
@@ -308,13 +308,13 @@ class Groups extends CI_Controller {
 		}
 
 		$groupuid = $this->uri->segment(2);
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 
 		// General group information
 		$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
 		if ( is_array($group) === true ) {
-			
+
 			$data['group']['name'] = $group[0]['name'];
 			$data['group']['description'] = $group[0]['description'];
 			$data['group']['groupuid'] = $groupuid;
@@ -343,7 +343,7 @@ class Groups extends CI_Controller {
 	// Logged in user can leave a group
 	public function leave()
 	{
-		
+
 		if (!$this->session->userdata('userid')) { // Not logged in
 			redirect('');
 			exit;
@@ -351,7 +351,7 @@ class Groups extends CI_Controller {
 
 		$groupuid = $this->uri->segment(2);
 
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 
 		// Remove member from group
@@ -366,7 +366,7 @@ class Groups extends CI_Controller {
 	// Group admin can remove a member from group
 	public function remove()
 	{
-		
+
 		if (!$this->session->userdata('userid')) { // Not logged in
 			redirect('');
 			exit;
@@ -375,7 +375,7 @@ class Groups extends CI_Controller {
 		$groupuid = $this->uri->segment(2);
 		$userid = $this->uri->segment(4);
 
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 
 		$group = $this->Groups_model->get_group_info($this->Groups_model->get_group_id($groupuid));
@@ -395,17 +395,17 @@ class Groups extends CI_Controller {
 		// OK. All is well. Remove the member from the group
 
         $this->Groups_model->remove_member_from_group($group[0]['id'],$userid);
-        
+
         $this->session->set_flashdata('message', 'You have removed the member from your group. Want them back? Send an invite.');
 
 		redirect('home');
 	}
-	
-	
+
+
 	public function generate_uid($length)
 	{
-	  if($length>0) 
-	  { 
+	  if($length>0)
+	  {
 	  $rand_id="";
 	   for($i=1; $i<=$length; $i++)
 	   {
@@ -416,7 +416,7 @@ class Groups extends CI_Controller {
 	  }
 	return $rand_id;
 	}
-	
+
 	public function assign_rand_value($num)
 	{
 	// accepts 1 - 36
@@ -533,8 +533,8 @@ class Groups extends CI_Controller {
 	  }
 	return $rand_value;
 	}
-	
-	
+
+
 }
 
 /* End of file groups.php */

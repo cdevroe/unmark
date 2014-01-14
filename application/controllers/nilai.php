@@ -23,7 +23,7 @@ class Nilai extends CI_Controller {
 		$when = $this->uri->segment(2);
 		if (!$when) { $when = ''; }
 
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 		$this->load->model('Marks_model');
 
@@ -80,7 +80,7 @@ class Nilai extends CI_Controller {
 		if (!$this->session->userdata('userid')) { redirect(''); }
 		$this->session->set_flashdata('lasturl', current_url());
 
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 		$this->load->model('Marks_model');
 
@@ -106,7 +106,7 @@ class Nilai extends CI_Controller {
 
 		$groupuid = $this->uri->segment(2);
 
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 		$this->load->model('Marks_model');
 
@@ -147,7 +147,7 @@ class Nilai extends CI_Controller {
 
 		if ($s == '') redirect('home');
 
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 		$this->load->model('Marks_model');
 
@@ -170,7 +170,7 @@ class Nilai extends CI_Controller {
 
 		if ( !$this->session->userdata('userid') ) { redirect(''); }
 
-		$this->load->database();
+
 		$this->load->model('Marks_model');
 
 		$title = $this->input->get('title', TRUE);
@@ -196,7 +196,7 @@ class Nilai extends CI_Controller {
 	public function addlabel($urlid='',$label='')
 	{
 		if (!$this->session->userdata('userid')) { redirect('home'); }
-		$this->load->database();
+
 
 		if ($this->input->get('urlid') != '') $urlid = $this->input->get('urlid');
 		if ($this->input->get('label') != '') $label = $this->input->get('label');
@@ -210,7 +210,7 @@ class Nilai extends CI_Controller {
 	public function addsmartlabel($domain='',$label='')
 	{
 		if (!$this->session->userdata('userid')) { redirect('home'); }
-		$this->load->database();
+
 
 		if ($this->input->get('domain') != '') $domain = $this->input->get('domain');
 		if ($this->input->get('label') != '') $label = $this->input->get('label');
@@ -229,7 +229,7 @@ class Nilai extends CI_Controller {
 	public function removesmartlabel($domain='',$label='')
 	{
 		if (!$this->session->userdata('userid')) { redirect('home'); }
-		$this->load->database();
+
 
 		if ($this->input->get('domain') != '') $domain = $this->input->get('domain');
 		if ($this->input->get('label') != '') $label = $this->input->get('label');
@@ -389,7 +389,7 @@ class Nilai extends CI_Controller {
 	public function addgroup($urlid='',$group='')
 	{
 		if (!$this->session->userdata('userid')) { redirect('home'); }
-		$this->load->database();
+
 		$this->load->model('Marks_model');
 
 		if ($this->input->get('urlid') != '') $urlid = $this->input->get('urlid');
@@ -427,7 +427,7 @@ class Nilai extends CI_Controller {
 
 		$this->session->set_flashdata('lasturl', current_url());
 
-		$this->load->database();
+
 		$this->load->model('Groups_model');
 		$this->load->model('Marks_model');
 
@@ -447,7 +447,7 @@ class Nilai extends CI_Controller {
     			 if ($smartlabel->num_rows() > 0) {  // smart label found
     			 	$label = $smartlabel->row();
     				$data['userlabeladded'] = TRUE;
-    
+
     			} else {
     				// Figure out if it matches any default labels
     				// Label accordingly.
@@ -494,7 +494,7 @@ class Nilai extends CI_Controller {
 	public function savenote($urlid='',$note='')
 	{
 		if (!$this->session->userdata('userid')) { redirect('home'); }
-		$this->load->database();
+
 
 		if ($this->input->get('urlid') != '') $urlid = $this->input->get('urlid');
 		if ($this->input->get('note') != '') $note = $this->input->get('note');
@@ -508,7 +508,7 @@ class Nilai extends CI_Controller {
 	public function archive()
 	{
 		if (!$this->session->userdata('userid')) { redirect(''); }
-		$this->load->database();
+
 
 		$id = $this->uri->segment(3);
 		$this->db->update('users_marks',array('status'=>'archive','datearchived'=>date('Y-m-d H:i:s')),array('id' => $id,'userid'=>$this->session->userdata('userid')));
@@ -520,7 +520,7 @@ class Nilai extends CI_Controller {
 	public function restore()
 	{
 		if (!$this->session->userdata('userid')) { redirect(''); }
-		$this->load->database();
+
 
 		$id = $this->uri->segment(3);
 		$this->db->update('users_marks',array('status'=>'','datearchived'=>''),array('id' => $id,'userid'=>$this->session->userdata('userid')));
@@ -535,7 +535,7 @@ class Nilai extends CI_Controller {
 	public function delete()
 	{
 		if (!$this->session->userdata('userid')) { redirect(''); }
-		$this->load->database();
+
 		$this->load->model('Marks_model');
 
 		$id = $this->uri->segment(3);
@@ -553,7 +553,7 @@ class Nilai extends CI_Controller {
 	// Every 1 minute
 	public function backprocessOembed()
 	{
-		$this->load->database();
+
 
 		// Unix timestamps for yesterday and today
 		$yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
@@ -593,7 +593,7 @@ class Nilai extends CI_Controller {
 	// Every minute.
 	public function backprocessRecipes()
 	{
-		$this->load->database();
+
 		$this->load->helper('hrecipe');
 
 		// Unix timestamps for yesterday and today
