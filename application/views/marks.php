@@ -74,7 +74,7 @@
 		      echo $mark['title'];
 		    }
 		  } else { echo 'Untitled'; } ?></a></h3>
-        <p><small><?php if ($mark['addedby'] != '0' && $mark['addedby'] != $this->session->userdata('userid')) { echo 'By '.$mark['emailaddress'].' - '; } ?><span class="dateadded"><a href="/marks/edit/<?php echo $mark['usersmarkid'];?>" title="Edit this mark"><?php echo strtolower(timespan(strtotime($mark['dateadded'])));?> ago</a></span> - <?php if ($mark['tags'] != '') { ?><a href="/home/label/<?php echo strtolower(str_replace(' ', '', $mark['tags'])); ?>" rel="tag"><?php echo strtolower($mark['tags']);?></a> - <?php } ?><a href="<?php echo $mark['url'];?>" title="<?php echo $mark['title'];?>"><?php
+        <p><small><?php if ($mark['addedby'] != '0' && $mark['addedby'] != $this->session->userdata('userid')) { echo 'By '.$mark['email'].' - '; } ?><span class="dateadded"><a href="/marks/edit/<?php echo $mark['usersmarkid'];?>" title="Edit this mark"><?php echo strtolower(timespan(strtotime($mark['dateadded'])));?> ago</a></span> - <?php if ($mark['tags'] != '') { ?><a href="/home/label/<?php echo strtolower(str_replace(' ', '', $mark['tags'])); ?>" rel="tag"><?php echo strtolower($mark['tags']);?></a> - <?php } ?><a href="<?php echo $mark['url'];?>" title="<?php echo $mark['title'];?>"><?php
         if (strlen($mark['url']) > 70) {
           echo substr(str_replace('http://','',$mark['url']),0,35).'…';
         } else {
@@ -86,7 +86,7 @@
 		  <?php if ($mark['note'] != '') { ?>
         <div class="note" id="note-<?php echo $mark['usersmarkid'];?>">
             <p><?php echo $mark['note'];?></p>
-            <p><small><?php if ($mark['addedby'] != '0' && $mark['addedby'] != $this->session->userdata('userid')) { echo 'Note written by '.$mark['emailaddress']; } ?></small></p>
+            <p><small><?php if ($mark['addedby'] != '0' && $mark['addedby'] != $this->session->userdata('userid')) { echo 'Note written by '.$mark['email']; } ?></small></p>
         </div>
       <?php } ?>
 		  <?php if ($mark['oembed'] != '' && $mark['oembed'] != 'None') { ?>
