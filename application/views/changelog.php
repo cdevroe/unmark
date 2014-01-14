@@ -5,7 +5,14 @@
     <h2>Changelog</h2>
 		<p>A quick list of what's new. Posted immediately upon update.</p>
 
-        <h4 id="038"><a href="#038">0.3.8 - 13 January 2014</a></h4>
+		<h4 id="039"><a href="#039">0.3.9 - 14 January 2014</a></h4>
+		  <ul>
+            <li>Update: Fix to display group invites.</li>
+            <li>Update: Fix of homepage display for users having no groups defined.</li>
+          </ul>
+		</h4>
+		
+		<h4 id="038"><a href="#038">0.3.8 - 13 January 2014</a></h4>
           <ul>
             <li>Update: Added new migation file for `users` table updates</li>
             <li>Update: Added new validation helper</li>
