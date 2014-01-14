@@ -55,7 +55,7 @@
       </div>
 
 		<input type="hidden" id="urlid" name="urlid" value="<?php echo $urlid;?>" />
-		<input type="hidden" id="domain" name="domain" value="<?php echo $urldomain;?>" />
+		<input type="hidden" id="domain" name="domain" value="<?php echo empty($urldomain) ? '' : $urldomain;?>" />
 		<input type="hidden" id="label" name="label" value="<?php echo $tags;?>" />
 		<input type="hidden" id="group" name="group" value="<?php echo $groupid;?>" />
 
