@@ -46,7 +46,7 @@ class Nilai extends CI_Controller {
 
 		$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
-		$invites = $this->db->query("SELECT groups_invites.*, groups_invites.id as inviteid, groups.*, users.email as invitedemail, users.user_id as invitedbyid FROM groups_invites LEFT JOIN groups ON groups_invites.groupid=groups.id LEFT JOIN users ON groups_invites.invitedby=users.user_id WHERE groups_invites.emailaddress = '".$this->session->userdata('emailaddress')."' AND groups_invites.status = ''");
+		$invites = $this->db->query("SELECT groups_invites.*, groups_invites.id as inviteid, groups.*, users.email as invitedemail, users.user_id as invitedbyid FROM groups_invites LEFT JOIN groups ON groups_invites.groupid=groups.id LEFT JOIN users ON groups_invites.invitedby=users.user_id WHERE groups_invites.emailaddress = '".$this->session->userdata('emailaddress')."' AND groups_invites.status IS NULL");
 		if ($invites->num_rows() > 0) $data['invites'] = $invites->result_array();
 
 		/*if ($this->session->userdata('emailaddress') == 'colin@cdevroe.com') {

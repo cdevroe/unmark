@@ -22,7 +22,6 @@
       	</form>
 
 		  <?php if (isset($group['invites'])) { ?>
-		  <?php // FIXME kip9 This does not work?>
 		  <h3>Invites</h3>
 		  <div class="members">
 		    <?php foreach($group['invites'] as $member) { ?>
