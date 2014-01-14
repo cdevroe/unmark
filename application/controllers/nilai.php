@@ -177,7 +177,7 @@ class Nilai extends CI_Controller {
 		$url = $this->input->get('url', TRUE);
 		if ($url == 'chrome://newtab/') { exit('Whoops! You can not mark this page. But, good on ya for using Chrome.'); }
 		$parsedUrl = parse_url($url); // Parse URL to determine domain
-		if ($title == '') { $title = $parsedUrl['host']; } // Data checks
+		if ($title == '' && !empty($parsedUrl['host'])) { $title = $parsedUrl['host']; } // Data checks
 
 		// Add mark to DB if it doesn't already exist.
 		$urlid = $this->Marks_model->create($title,$url);
@@ -241,6 +241,7 @@ class Nilai extends CI_Controller {
 
 	public function checkdefaultsmartlabel($parsedUrl='')
 	{
+	    if(!empty($parsedUrl['host'])){
 		 switch (str_replace('www.','',$parsedUrl['host'])) {
 		   /* Video web services */
 		   case 'youtube.com':
@@ -381,6 +382,7 @@ class Nilai extends CI_Controller {
 		     //echo 'not adding any label';
 		   break;
 		 }
+	    }
 
 	}
 
@@ -437,20 +439,23 @@ class Nilai extends CI_Controller {
 
 			$parsedUrl = parse_url($mark[0]['url']);
 
-			// First, check for user smart labels
-			$smartlabel = $this->db->query("SELECT * FROM users_smartlabels WHERE domain = '".strtolower($parsedUrl['host'])."' AND userid = '".$this->session->userdata('userid')."'");
+			// Only look for smart labels if host is set
+			if(!empty($parsedUrl['host'])){
+    			// First, check for user smart labels
+	       		$smartlabel = $this->db->query("SELECT * FROM users_smartlabels WHERE domain = '".strtolower($parsedUrl['host'])."' AND userid = '".$this->session->userdata('userid')."'");
 
-			if ($smartlabel->num_rows() > 0) {  // smart label found
-				$label = $smartlabel->row();
-				$data['userlabeladded'] = TRUE;
-
-			} else {
-				// Figure out if it matches any default labels
-				// Label accordingly.
-				$smartlabel = $this->checkdefaultsmartlabel($parsedUrl);
-				if ($smartlabel[0] == TRUE) {
-					$data['labeladded'] = TRUE;
-				}
+    			 if ($smartlabel->num_rows() > 0) {  // smart label found
+    			 	$label = $smartlabel->row();
+    				$data['userlabeladded'] = TRUE;
+    
+    			} else {
+    				// Figure out if it matches any default labels
+    				// Label accordingly.
+    				$smartlabel = $this->checkdefaultsmartlabel($parsedUrl);
+    				if ($smartlabel[0] == TRUE) {
+    					$data['labeladded'] = TRUE;
+    				}
+    			}
 			}
 
 			// I think this part could be reduced to a single line,
@@ -463,7 +468,9 @@ class Nilai extends CI_Controller {
 			$data['addedby'] = $mark[0]['addedby'];
 			$data['groupid'] = $mark[0]['groups'];
 
-			$data['urldomain'] = strtolower($parsedUrl['host']);
+			if(!empty($parsedUrl['host'])){
+			  $data['urldomain'] = strtolower($parsedUrl['host']);
+			}
 
 			$data['groups']['created'] = $this->Groups_model->get_groups_created_by_user();
 
