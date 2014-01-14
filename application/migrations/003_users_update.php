@@ -29,5 +29,4 @@ class Migration_Users_update extends CI_Migration {
       $this->db->query('ALTER TABLE `users` ADD UNIQUE `emailaddress`(emailaddress)');
     }
 
-    //ALTER TABLE `nilai`.`users` DROP INDEX `emailaddress`, ADD UNIQUE `email`(emailaddress);
 }

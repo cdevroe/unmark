@@ -323,8 +323,7 @@ class Groups extends CI_Controller {
 
 			$data['group']['member_count'] = $this->Groups_model->get_group_members_count($group[0]['id']);
 			$data['group']['members'] = $this->Groups_model->get_group_members($group[0]['id']);
-
-			$invites = $this->db->query("SELECT * FROM groups_invites WHERE groupid = '".$group[0]['id']."' AND status = ''");
+			$invites = $this->db->query("SELECT * FROM groups_invites WHERE groupid = '".$group[0]['id']."' AND status IS NULL");
 			if ($invites->num_rows() > 0) {
 				$data['group']['invites'] = $invites->result_array();
 			}
@@ -338,7 +337,6 @@ class Groups extends CI_Controller {
 		if ($data['group']['owner'] != $this->session->userdata('userid')) {
 			show_404($this->uri->uri_string());
 		}
-
 		$this->load->view('groups_members',$data);
 	}
 
