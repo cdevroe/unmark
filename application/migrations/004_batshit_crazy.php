@@ -23,6 +23,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
     {
 
       // Revert groups table
+      $this->db->query("ALTER TABLE `groups` DROP FOREIGN KEY `FK_user_id`");
       $this->db->query("ALTER TABLE `groups` DROP INDEX `user_id`");
       $this->db->query("ALTER TABLE `groups` DROP COLUMN `last_updated`");
       $this->db->query("ALTER TABLE `groups` DROP COLUMN `active`");
