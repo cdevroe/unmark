@@ -33,14 +33,14 @@ class Marks_model extends CI_Model {
         if ($urlid=='') return false;
 
         // Lets see if this user has ever added this URL before
-        $mark = $this->db->get_where('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid'),'status'=>''));
+        $mark = $this->db->get_where('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid')));
 
         if ($mark->num_rows() > 0) {
             $mark = $mark->result_array();
             return $mark[0]['id'];
         }
 
-        $this->db->insert('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid'),'addedby'=>$this->session->userdata('userid')));
+        $this->db->insert('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid'),'addedby'=>$this->session->userdata('userid'),'status'=>''));
 
         // Still unsure if this is the best way to get this ID
         return $this->db->insert_id();
