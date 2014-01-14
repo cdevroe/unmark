@@ -11,28 +11,34 @@ class Users_model extends CI_Model {
 
     function create_user()
     {
-    	
+
     	// Form input data
-		$emailaddress = $this->input->post( 'emailaddress' );
-		$password = $this->input->post( 'password' );
+		$email    = $this->input->post('emailaddress');
+		$password = $this->input->post('password');
 
     	// Check to see if email address exists already
 		// If email already in use, exit
-		$user = $this->Users_model->get_user_by_emailaddress($emailaddress);
+		$user = $this->Users_model->get_user_by_email($email);
 		if ( is_array($user) ) {
 			return false;
 		}
 
 		// Add user to users table
-		$this->db->insert('users',array('emailaddress'=>$emailaddress,'password'=>md5($password),'status'=>'active'));
-			
+        $this->load->helper('hash_helper');
+        $password = generateHash($password);
+
+        if ($password === false) {
+            return false;
+        }
+
+		$this->db->insert('users', array(
+            'email'    => $email,
+            'password' => $password,
+            'status'   => 'active'
+        ));
+
 		// Get userid of this user
-		// I wish this was a single line of code, halp?
-		// I used to use $userid = $this->db->insert_id() but that seemed like it wouldn't scale to me
-		$user = $this->db->get_where( 'users', array( 'emailaddress' => $emailaddress ) );
-		$user = $user->result_array();
-		
-		return $user[0]['id'];
+        return $this->db->insert_id();
     }
 
 
@@ -40,76 +46,85 @@ class Users_model extends CI_Model {
     function update_user()
     {
         // Form input data
-        $userid = $this->input->post( 'userid' );
-        $emailaddress = $this->input->post( 'emailaddress' );
-        $password = $this->input->post( 'password' );
-        $status = $this->input->post( 'status' );
+        $user_id   = $this->input->post('userid');
+        $email     = $this->input->post('emailaddress');
+        $password  = generateHash($this->input->post('password'));
+        $status    = $this->input->post('status');
 
-        // Add user to users table
-        $this->db->update('users',array('emailaddress'=>$emailaddress,'password'=>md5($password),'status'=>$status), array('id'=>$userid));
+        if ($password !== false) {
+
+            // Add user to users table
+            $this->db->update('users',
+                array(
+                    'email'    => $emailaddress,
+                    'password' => $password,
+                    'status'   => $status
+                ),
+                array(
+                    'user_id' => $user_id
+                )
+            );
+        }
     }
 
     // DANGER!
     // Unused yet, however
-    function remove_user($userid='')
+    function remove_user($user_id='')
     {
-        if ( !$userid || $userid == '' ) $userid = $this->session->userdata('userid');
-
-        $this->db->delete('users', array('id'=>$userid));   
+        $userid = (empty($user_id) || ! is_numeric($user_id)) ? $this->session->userdata('userid') : $user_id;
+        $this->db->delete('users', array('user_id'=>$user_id));
     }
 
-    function get_user_by_id($id='')
+    function get_user_by_id($user_id='')
     {
-    	if ( !$id || $id == '' ) return false;
+    	if (empty($user_id)) {
+            return false;
+        }
 
-    	$user = $this->db->get_where( 'users', array( 'id' => $id ) );
-
-    	if ( $user->num_rows() > 0 ) {
-    		return $user->row_array();
-    	}
-
-    	return false;
+    	$user = $this->db->get_where('users', array( 'user_id' => $user_id ) );
+        return ($user->num_rows() > 0) ? $user->row_array() : false;
     }
 
-    function get_user_by_emailaddress($emailaddress='')
+    function get_user_by_email($email='')
     {
-    	if ( !$emailaddress || $emailaddress == '' ) return false;
+    	if (empty($email)) {
+            return false;
+        }
 
-    	$user = $this->db->get_where( 'users', array( 'emailaddress' => $emailaddress ) );
-
-    	if ( $user->num_rows() > 0 ) {
-    		return $user->row_array();
-    	}
-
-    	return false;
+    	$user = $this->db->get_where('users', array( 'email' => $email));
+        return ($user->num_rows() > 0) ? $user->row_array() : false;
     }
 
     function get_all_users($status='active')
     {
         $users = $this->db->get_where('users', array('status' => $status));
-        if ( $users->num_rows() > 0 ) {
-            return $users->result_array();
-        }
-
-        return false;
+        return ($user->num_rows() > 0) ? $user->row_array() : false;
     }
 
     function check_user_credentials()
     {
 
     	// Turn XSS filter on email address and password
-		$emailaddress = $this->input->post('emailaddress', TRUE);
-		$password = $this->input->post('password', TRUE);
+        $this->load->helper('hash_helper');
+		$email     = $this->input->post('emailaddress', true);
+		$password  = $this->input->post('password', true);
+        $hash      = generateHash($password);
+
+        if ($hash === false) {
+            return false;
+        }
 
     	// Select user from database
-		$user = $this->db->get_where('users', array('emailaddress' => $emailaddress, 'password' => md5($password)));
+        // Have to look for both hash types
+        // so we can be backwards compatible with older versions
+        $user = $this->db->query("
+            SELECT * FROM `users`
+            WHERE email = '" . $email . "' AND
+            (password = '" . md5($password) . "' OR password = '" . $hash . "')
+        ");
 
-		if ($user->num_rows() > 0) {
-			return $user->row_array();
-		}
-
-		return false;
+        return ($user->num_rows() > 0) ? $user->row_array() : false;
     }
 
-    
+
 }

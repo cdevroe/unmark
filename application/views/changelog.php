@@ -5,11 +5,22 @@
     <h2>Changelog</h2>
 		<p>A quick list of what's new. Posted immediately upon update.</p>
 
+		<h4 id="038"><a href="#038">0.3.8 - 14 January 2014</a></h4>
+          <ul>
+            <li>Update: Added new migation file for `users` table updates</li>
+            <li>Update: Added new validation helper</li>
+            <li>Update: Added new hash helper</li>
+            <li>Update: Updated md5 password scheme to something more secure. See `hash_helper.generateHash`.</li>
+            <li>Update: Various Updates to update code to new column names for `users` table.</li>
+            <li>Update: Fix to display group invites.</li>
+            <li>Update: Fix of homepage display for users having no groups defined.</li>
+          </ul>
+
 		<h4 id="037"><a href="#037">0.3.7 - 9 January 2014</a></h4>
           <ul>
             <li>Fix: Fixed config usage.</li>
           </ul>
-		
+
 		<h4 id="036"><a href="#036">0.3.6 - 9 January 2014</a></h4>
           <ul>
             <li>Update: Updated DB structure to use unicode and InnoDB storage engine. WARNING: Migrations need to be run from scratch in order to set up properly</li>
@@ -46,23 +57,23 @@
 		  <ul>
 		    <li>Fix: The $name variable for creating a group wasn't being set.</li>
 		  </ul>
-		
+
 		<h4 id="02"><a href="#02">0.2 - 31 December 2013</a></h4>
 		  <ul>
 		    <li>New: Delete marks from the edit mark screen.</li>
 		  </ul>
-		
+
 		<h4 id="01"><a href="#01">0.1 - 31 December 2013</a></h4>
 		  <ul>
 		    <li>Initial official beta release.</li>
 		  </ul>
-		
+
   </div>
-  
+
   <div class="well span3">
     <a href="/home">Back to your marks</a>
   </div>
-  
+
 </div>
 
 <?php $this->load->view('footer'); ?>

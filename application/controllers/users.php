@@ -3,7 +3,7 @@
 class Users extends CI_Controller {
 
 	public function index(){ } // Unused
-	
+
 	// Method: login()
 	// Used to log a user in
 	// Accepts: Nothing
@@ -31,7 +31,7 @@ class Users extends CI_Controller {
 
 		// If user found (and password matches)
 		if ( is_array($user) === true ) {
-			
+
 			// If they were adding a mark, save the URL before session is destroyed.
 			$addurl = $this->session->flashdata('addurl');
 
@@ -40,8 +40,8 @@ class Users extends CI_Controller {
 
 			// Create new session and add new user information to it
 			$this->session->sess_create();
-			$this->session->set_userdata(array('userid'=>$user['id'],'emailaddress'=>$user['emailaddress'],'logged_in'=>true,'status'=>$user['status']));
-		
+			$this->session->set_userdata(array('userid'=>$user['user_id'],'emailaddress'=>$user['email'],'logged_in'=>true,'status'=>$user['status']));
+
 		} else { // User not found, or password didn't match
 
 			exit( 'Please supply a valid username or password. Or create an account.' );
@@ -57,7 +57,7 @@ class Users extends CI_Controller {
 		}
 
 	}
-	
+
 	// Method: logout()
 	// Used to log a user out of Nilai
 	// Accepts: Noething
@@ -68,19 +68,19 @@ class Users extends CI_Controller {
 		$this->session->sess_destroy();
 		redirect('');
 	}
-	
+
 
 	// Method: add()
 	// Used to add a user
 	// Accepts: Nothing
 	// Returns: Redirects to /home/
 	public function add() {
-		
+
 		// Load everything we need for this method
 		$this->load->database();
 		$this->load->model('Users_model');
 		$this->load->library( 'session' );
-		$this->load->helper( array('url','email') );
+		$this->load->helper( array('url','email', 'validation_helper') );
 
 		// Form input data
 		$emailaddress = $this->input->post( 'emailaddress' );
@@ -88,7 +88,7 @@ class Users extends CI_Controller {
 
 		// If emailaddress or password is empty
 		// Or if the email address is not valid, skip
-		if ( $emailaddress != '' && $password != '' && valid_email($emailaddress) ) {
+		if (valid_email($emailaddress) && isValid($password, 'password')) {
 
 			// Check to see if email address exists already
 			// If email already in use, exit
@@ -102,7 +102,7 @@ class Users extends CI_Controller {
 
 			// Destroy old CodeIgniter Session
 			$this->session->sess_destroy();
-			
+
 			// Create brand-new session
 			$this->session->sess_create();
 
@@ -111,7 +111,7 @@ class Users extends CI_Controller {
 
 			// Congratulate them
 			$this->session->set_flashdata('message', 'Congratulations. Enjoy using Nilai.');
-			
+
 			// ### Add some "Starter Links"
 
 			// Mark: Read the FAQ
@@ -128,7 +128,7 @@ class Users extends CI_Controller {
 
 			// All set, take them to their stream
 			redirect('home');
-		
+
 		} else {
 
 			exit( 'Please enter a valid email address and a password.' );
@@ -136,7 +136,7 @@ class Users extends CI_Controller {
 		} // end if emailaddress/password
 
 	} // end add()
-	
+
 }
 
 /* End of file users.php */

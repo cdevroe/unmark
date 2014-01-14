@@ -36,7 +36,7 @@
 		  <div class="members">
 		    <?php foreach($group['members'] as $member) { ?>
 		    <div class="member">
-		      <p><?php if ($member['emailaddress'] == $this->session->userdata('emailaddress')) { ?><?php echo $member['emailaddress']. ' - This is you!'; } else { ?> <a href="<?php echo site_url();?>groups/<?php echo $group['groupuid'];?>/remove/<?php echo $member['id'];?>" class="btn" title="Remove this member"><i class="icon-ban-circle"></i></a> <strong><?php echo $member['emailaddress'];?></strong> <small>member since <?php echo date("d F Y",strtotime($member['datejoined']));?></small><?php } ?></p>
+		      <p><?php if ($member['email'] == $this->session->userdata('email')) { ?><?php echo $member['email']. ' - This is you!'; } else { ?> <a href="<?php echo site_url();?>groups/<?php echo $group['groupuid'];?>/remove/<?php echo $member['id'];?>" class="btn" title="Remove this member"><i class="icon-ban-circle"></i></a> <strong><?php echo $member['email'];?></strong> <small>member since <?php echo date("d F Y",strtotime($member['datejoined']));?></small><?php } ?></p>
 		    </div>
 		    <?php } ?>
 		  </div>

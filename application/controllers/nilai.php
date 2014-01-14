@@ -1,20 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Nilai extends CI_Controller {
-  
+
   	public function __construct()
   	{
   		parent::__construct();
   		$this->load->helper(array('url','form','date','oembed'));
   		$this->load->library('session');
   	}
-  
+
   	// Unused for now.
 	public function index()
 	{
 
 	}
-	
+
 	public function home($when='')
 	{
 		if (!$this->session->userdata('userid')) { redirect(''); }
@@ -46,10 +46,10 @@ class Nilai extends CI_Controller {
 
 		$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
-		$invites = $this->db->query("SELECT groups_invites.*, groups_invites.id as inviteid, groups.*, users.emailaddress as invitedemail, users.id as invitedbyid FROM groups_invites LEFT JOIN groups ON groups_invites.groupid=groups.id LEFT JOIN users ON groups_invites.invitedby=users.id WHERE groups_invites.emailaddress = '".$this->session->userdata('emailaddress')."' AND groups_invites.status = ''");
+		$invites = $this->db->query("SELECT groups_invites.*, groups_invites.id as inviteid, groups.*, users.email as invitedemail, users.user_id as invitedbyid FROM groups_invites LEFT JOIN groups ON groups_invites.groupid=groups.id LEFT JOIN users ON groups_invites.invitedby=users.user_id WHERE groups_invites.emailaddress = '".$this->session->userdata('emailaddress')."' AND groups_invites.status IS NULL");
 		if ($invites->num_rows() > 0) $data['invites'] = $invites->result_array();
 
-		/*if ($this->session->userdata('emailaddress') == 'colin@cdevroe.com') { 
+		/*if ($this->session->userdata('emailaddress') == 'colin@cdevroe.com') {
 			$usercount = $this->db->query("SELECT COUNT(*) as numusers FROM users WHERE status = 'paid'");
 			$markcount = $this->db->query("SELECT COUNT(*) as nummarks FROM marks");
 			$groupcount = $this->db->query("SELECT COUNT(*) as numgroups FROM groups");
@@ -74,7 +74,7 @@ class Nilai extends CI_Controller {
 
 		$this->load->view('marks',$data);
 	}
-	
+
 	public function bylabel()
 	{
 		if (!$this->session->userdata('userid')) { redirect(''); }
@@ -85,7 +85,7 @@ class Nilai extends CI_Controller {
 		$this->load->model('Marks_model');
 
 		$label = $this->uri->segment(3);
-		
+
 		// Retrieve marks.
 		$data['marks'] = $this->Marks_model->get_by_label($label);
 
@@ -98,7 +98,7 @@ class Nilai extends CI_Controller {
 
 		$this->load->view('marks',$data);
 	}
-	
+
 	public function bygroup()
 	{
 		if (!$this->session->userdata('userid')) { redirect(''); }
@@ -150,7 +150,7 @@ class Nilai extends CI_Controller {
 		$this->load->database();
 		$this->load->model('Groups_model');
 		$this->load->model('Marks_model');
-	 
+
 	 	$data['marks'] = $this->Marks_model->search_from_user($s);
 
 	 	// Load the groups the user belongs to
@@ -184,7 +184,7 @@ class Nilai extends CI_Controller {
 
 		if ( $urlid === false ) { // Add mark to the current logged in user
 			exit('Could not add the mark due to an unknown error.');
-			
+
 		} else {
 			$user_markid = $this->Marks_model->add_mark_to_user($urlid);
 		}
@@ -192,7 +192,7 @@ class Nilai extends CI_Controller {
 		redirect('marks/edit/'.$user_markid.'/?bookmarklet=true');
 
 	}
-	
+
 	public function addlabel($urlid='',$label='')
 	{
 		if (!$this->session->userdata('userid')) { redirect('home'); }
@@ -206,7 +206,7 @@ class Nilai extends CI_Controller {
 	// Success!
 	return;
 	}
-	
+
 	public function addsmartlabel($domain='',$label='')
 	{
 		if (!$this->session->userdata('userid')) { redirect('home'); }
@@ -225,7 +225,7 @@ class Nilai extends CI_Controller {
 
 	return;
 	}
-	
+
 	public function removesmartlabel($domain='',$label='')
 	{
 		if (!$this->session->userdata('userid')) { redirect('home'); }
@@ -235,10 +235,10 @@ class Nilai extends CI_Controller {
 		if ($this->input->get('label') != '') $label = $this->input->get('label');
 
 		$this->db->delete('users_smartlabels', array('userid' => $this->session->userdata('userid'),'domain'=>$domain));
-		
+
 	return;
 	}
-	
+
 	public function checkdefaultsmartlabel($parsedUrl='')
 	{
 		 switch (str_replace('www.','',$parsedUrl['host'])) {
@@ -249,32 +249,32 @@ class Nilai extends CI_Controller {
 		       return array(TRUE,'watch');
 		     }
 		   break;
-		   
+
 		   case 'viddler.com':
 		     $pathPos = strpos(strtolower($parsedUrl['path']),'/v');
 		     if ($pathPos !== FALSE) {
 		        return array(TRUE,'watch');
 		     }
 		   break;
-		   
+
 		   case 'devour.com':
 		     $pathPos = strpos(strtolower($parsedUrl['path']),'/video');
 		     if ($pathPos !== FALSE) {
 		        return array(TRUE,'watch');
 		     }
 		   break;
-		   
+
 		   case 'ted.com':
 		     $pathPos = strpos(strtolower($parsedUrl['path']),'/talks');
 		     if ($pathPos !== FALSE) {
 		        return array(TRUE,'watch');
 		     }
 		   break;
-		   
+
 		   case 'vimeo.com':
 		     return array(TRUE,'watch');
 		   break;
-		   
+
 		   /* Documentation URLs */
 		   case 'php.net':
 		     $pathPos = strpos(strtolower($parsedUrl['path']),'/manual');
@@ -282,74 +282,74 @@ class Nilai extends CI_Controller {
 		        return array(TRUE,'read');
 		     }
 		   break;
-		   
+
 		   case 'api.rubyonrails.org':
 		       return array(TRUE,'read');
 		   break;
-		   
+
 		   case 'ruby-doc.org':
 		       return array(TRUE,'read');
 		   break;
-		   
+
 	     case 'docs.jquery.com':
 		       return array(TRUE,'read');
 		   break;
-		   
+
 		   case 'codeigniter.com':
 		     $pathPos = strpos(strtolower($parsedUrl['path']),'/user_guide');
 		     if ($pathPos !== FALSE) {
 		       return array(TRUE,'read');
 		     }
 		   break;
-		   
+
 		   case 'css-tricks.com':
 		     $pathPos = strpos(strtolower($parsedUrl['path']),'/almanac');
 		     if ($pathPos !== FALSE) {
 		       return array(TRUE,'read');
 		     }
 		   break;
-		   
+
 		   case 'developer.apple.com':
 		     $pathPos = strpos(strtolower($parsedUrl['path']),'/library');
 		     if ($pathPos !== FALSE) {
 		       return array(TRUE,'read');
 		     }
 		   break;
-		   
+
 		   /* Recipe URLs */
-		   
+
 		   case 'simplyrecipes.com':
 		     $pathPos = strpos(strtolower($parsedUrl['path']),'/recipes');
 		     if ($pathPos !== FALSE) {
 		       return array(TRUE,'eatdrink');
 		     }
 		   break;
-		   
+
 		   case 'allrecipes.com':
 		     return array(TRUE,'eatdrink');
 		   break;
-		   
+
 		   case 'epicurious.com':
 		     $pathPos = strpos(strtolower($parsedUrl['path']),'/recipes');
 		     if ($pathPos !== FALSE) {
 		       return array(TRUE,'eatdrink');
 		     }
 		   break;
-		   
+
 		   case 'foodnetwork.com':
 		     $pathPos = strpos(strtolower($parsedUrl['path']),'/recipes');
 		     if ($pathPos !== FALSE) {
 		       return array(TRUE,'eatdrink');
 		     }
 		   break;
-		   
+
 		   case 'food.com':
 		     $pathPos = strpos(strtolower($parsedUrl['path']),'/recipe');
 		     if ($pathPos !== FALSE) {
 		       return array(TRUE,'eatdrink');
 		     }
 		   break;
-		   
+
 		   /* Shopping URLs */
 
 		   case 'svpply.com':
@@ -357,7 +357,7 @@ class Nilai extends CI_Controller {
 		     if ($pathPos !== FALSE) {
 		       return array(TRUE,'buy');
 		     }
-		   break;   
+		   break;
 
 		   case 'amazon.com':
 		     $pathPos = strpos(strtolower($parsedUrl['path']),'/gp/product');
@@ -372,18 +372,18 @@ class Nilai extends CI_Controller {
 		       return array(TRUE,'buy');
 		     }
 		   break;
-		   
+
 		   case 'zappos.com':
 		     return array(TRUE,'buy');
-		   break; 
-		   
+		   break;
+
 		   default:
 		     //echo 'not adding any label';
 		   break;
 		 }
-	 
+
 	}
-	
+
 	public function addgroup($urlid='',$group='')
 	{
 		if (!$this->session->userdata('userid')) { redirect('home'); }
@@ -434,7 +434,7 @@ class Nilai extends CI_Controller {
 		$mark = $this->Marks_model->get_users_mark_by_id($markid);
 
 		if ( is_array($mark) == true ) {
-			
+
 			$parsedUrl = parse_url($mark[0]['url']);
 
 			// First, check for user smart labels
@@ -483,7 +483,7 @@ class Nilai extends CI_Controller {
 			show_404();
 		}
 	}
-	
+
 	public function savenote($urlid='',$note='')
 	{
 		if (!$this->session->userdata('userid')) { redirect('home'); }
@@ -497,7 +497,7 @@ class Nilai extends CI_Controller {
 	// Success!
 	return;
 	}
-	
+
 	public function archive()
 	{
 		if (!$this->session->userdata('userid')) { redirect(''); }
@@ -509,7 +509,7 @@ class Nilai extends CI_Controller {
 		echo 'success';
 		exit;
 	}
-	
+
 	public function restore()
 	{
 		if (!$this->session->userdata('userid')) { redirect(''); }
@@ -539,7 +539,7 @@ class Nilai extends CI_Controller {
 
 		redirect('home');
 	}
-	
+
 	// Finds the day's bookmarks
 	// Checks to see if they need oEmbed
 	// Process them.
@@ -579,7 +579,7 @@ class Nilai extends CI_Controller {
 		} // end if
 	return;
 	}
-	
+
 	// Finds the day's bookmarks
 	// Checks to see if they need Recipe Parsing
 	// Process them.
@@ -626,7 +626,7 @@ class Nilai extends CI_Controller {
 
 	return;
 	}
-	
+
 }
 
 /* End of file nilai.php */
