@@ -164,7 +164,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
           INDEX `mark_id`(mark_id),
           INDEX `user_id`(user_id),
           INDEX `group_id`(group_id)
-        ) ENGINE=`InnoDB` AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+        ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
       ");
 
     }
