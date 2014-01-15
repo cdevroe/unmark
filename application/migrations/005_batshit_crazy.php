@@ -150,12 +150,30 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `group_invites` ADD CONSTRAINT `FK_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
 
 
-
+      // Create marks_to_groups table
+      $this->db->query("
+        CREATE TABLE IF NOT EXISTS `marks_to_groups` (
+          `marks_to_group` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.',
+          `mark_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The mark_id from marks.mark_id',
+          `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user_id from users.user_id',
+          `group_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The group_id from groups.group_id',
+          PRIMARY KEY (`marks_to_group`),
+          CONSTRAINT `FK_mtg_mark_id` FOREIGN KEY (`mark_id`) REFERENCES `marks` (`mark_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
+          CONSTRAINT `FK_mtg_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
+          CONSTRAINT `FK_mtg_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
+          INDEX `mark_id`(mark_id),
+          INDEX `user_id`(user_id),
+          INDEX `group_id`(group_id)
+        ) ENGINE=`InnoDB` AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+      ");
 
     }
 
     public function down()
     {
+
+      // Drop marks_to_groups table
+      $this->db->query("DROP TABLE IF EXISTS `marks_to_groups`");
 
       // Revert groups invite table
       $this->db->query("RENAME TABLE `group_invites` TO `groups_invites`");
