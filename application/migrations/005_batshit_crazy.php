@@ -22,17 +22,61 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("
         CREATE TABLE IF NOT EXISTS `labels` (
           `label_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.',
-          `smart_label_id` bigint(20) UNSIGNED COMMENT 'If a smart label, the label_id to use if a match is found.',
-          `name` varchar(50) NOT NULL COMMENT 'The name of the label.',
-          `domain` varchar(255) COMMENT 'The hostname of the domain to match. Keep in all lowercase.',
+          `smart_label_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'If a smart label, the label_id to use if a match is found.',
+          `user_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'If a label but owned by a user, place the users.user_id here.',
+          `name` varchar(50) DEFAULT NULL COMMENT 'The name of the label.',
+          `domain` varchar(255) DEFAULT NULL COMMENT 'The hostname of the domain to match. Keep in all lowercase.',
+          `path` varchar(100) DEFAULT NULL COMMENT 'The path to find to for smartlabels to match. If null, just match host.',
           `active` tinyint NOT NULL DEFAULT '1' COMMENT '1 is active, 0 if not. Defaults to 1.',
           `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
           `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.',
           PRIMARY KEY (`label_id`),
-          CONSTRAINT `FK_smart_label_id` FOREIGN KEY (`smart_label_id`) REFERENCES `labels` (`label_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
-          INDEX `smart_label_id`(smart_label_id)
+          CONSTRAINT `FK_label_smart_label_id` FOREIGN KEY (`smart_label_id`) REFERENCES `labels` (`label_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
+          CONSTRAINT `FK_label_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
+          INDEX `smart_label_id`(smart_label_id),
+          INDEX `user_id`(user_id)
         ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
       ");
+
+      // Add default data to labels
+      // Default: Unlabeled, Read, Watch, Listen, Buy, Eat & Drink, Do
+      // Then add all the smart labels
+      $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('Unlabeled', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('Read', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('Watch', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('Listen', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('Buy', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('Eat & Drink', '" . date('Y-m-d H:i:s') . "')");
+
+      // watch
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('3', 'youtube.com', '/watch', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('3', 'viddler.com', '/v', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('3', 'devour.com', '/video', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('3', 'ted.com', '/talks', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('3', 'vimeo.com', '" . date('Y-m-d H:i:s') . "')");
+
+      // Read
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('2', 'php.net', '/manual', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('2', 'api.rubyonrails.org', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('2', 'ruby-doc.org', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('2', 'docs.jquery.com', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('2', 'codeigniter.com', '/user_guide', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('2', 'css-tricks.com', '/almanac', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('2', 'developer.apple.com', '/library', '" . date('Y-m-d H:i:s') . "')");
+
+      // Eat & Drink
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('6', 'simplyrecipes.com', '/recipes', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('6', 'allrecipes.com', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('6', 'epicurious.com', '/recipes', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('6', 'foodnetwork.com', '/recipes', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('6', 'food.com', '/recipe', '" . date('Y-m-d H:i:s') . "')");
+
+      // Buy
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('5', 'svpply.com', '/item', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('5', 'amazon.com', '/gp/product', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('5', 'fab.com', '/sale', '" . date('Y-m-d H:i:s') . "')");
+      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('5', 'zappos.com', '" . date('Y-m-d H:i:s') . "')");
+
 
       /*
       - Start updates for marks table
@@ -176,6 +220,24 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `users` DROP COLUMN `salt`");
       $this->db->query("ALTER TABLE `users` CHANGE COLUMN `status` `active` tinyint NOT NULL DEFAULT '0' COMMENT '1 = active, 0 = inactive'");
       $this->db->query("ALTER TABLE `users` ADD COLUMN `admin` tinyint NOT NULL DEFAULT '0' COMMENT '1 = yes, 0 = no' AFTER `active`");
+
+      // Update users_smartlabels
+      /*$this->db->query("RENAME TABLE `users_smartlabels` TO `user_smart_labels`");
+      $this->db->query("ALTER TABLE `user_smart_labels` DROP COLUMN `path`");
+      $this->db->query("ALTER TABLE `user_smart_labels` DROP COLUMN `label`");
+      $this->db->query("ALTER TABLE `user_smart_labels` CHANGE COLUMN `id` `user_smart_label_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.'");
+      $this->db->query("ALTER TABLE `user_smart_labels` DROP PRIMARY KEY, ADD PRIMARY KEY (`user_smart_label_id`)");
+      $this->db->query("ALTER TABLE `user_smart_labels` CHANGE COLUMN `userid` `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user_id from users.user_id'");
+      $this->db->query("ALTER TABLE `user_smart_labels` ADD COLUMN `label_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The label_id from labels.label_id' AFTER `user_id`");
+      $this->db->query("ALTER TABLE `user_smart_labels` CHANGE COLUMN `domain` `domain` varchar(255) NOT NULL COMMENT 'The hostname of the domain to match. In all lowercase.'");
+      $this->db->query("ALTER TABLE `user_smart_labels` ADD COLUMN `active` tinyint NOT NULL DEFAULT '1' COMMENT '0 = active, 1 = inactive' AFTER `domain`");
+      $this->db->query("ALTER TABLE `user_smart_labels` ADD COLUMN `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime this record was created.' AFTER `active`");
+      $this->db->query("ALTER TABLE `user_smart_labels` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.' AFTER `created_on`");
+      $this->db->query("ALTER TABLE `user_smart_labels` ADD INDEX `user_id`(user_id)");
+      $this->db->query("ALTER TABLE `user_smart_labels` ADD INDEX `label_id`(label_id)");
+      $this->db->query("ALTER TABLE `user_smart_labels` ADD CONSTRAINT `FK_usl_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
+      $this->db->query("ALTER TABLE `user_smart_labels` ADD CONSTRAINT `FK_usl_label_id` FOREIGN KEY (`label_id`) REFERENCES `labels` (`label_id`)   ON UPDATE CASCADE ON DELETE CASCADE");*/
+
     }
 
     public function down()
@@ -232,6 +294,8 @@ class Migration_Batshit_Crazy extends CI_Migration {
         }
       }
 
+      // Revert user smart labels
+
       // Drop labels table
       $this->db->query("DROP TABLE IF EXISTS `labels`");
 
@@ -242,6 +306,9 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $res = $this->db->query("UPDATE `users` SET status = 'active' WHERE status = '1'");
       $this->db->query("ALTER TABLE `users` DROP COLUMN `admin`");
       $this->db->query("ALTER TABLE `users` ADD COLUMN `salt` varchar(50) DEFAULT NULL COMMENT 'The salt used to generate password.' AFTER `password`");
+
+      // Revert user smart labels
+      //$this->db->query("RENAME TABLE `user_smart_labels` TO `users_smartlabels`");
 
     }
 
