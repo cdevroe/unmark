@@ -132,6 +132,16 @@ class Users_model extends CI_Model {
         }
         else {
             $match = (md5($password) == $encrypted_password) ? true : false;
+
+            // Try to update to new password security since they are on old MD5
+            $hash  = generateHash($password);
+
+            // If hash is valid and match is valid
+            // Upgrade users to new encryption routine
+            if ($hash !== false && $match === true) {
+                $this->db->update('users', array('password' => $hash['encrypted'],'salt' => $hash['salt']), array('email' => $email));
+            }
+
         }
 
         // If a match, return array, else false
