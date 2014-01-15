@@ -33,6 +33,87 @@ class Migration_Batshit_Crazy extends CI_Migration {
         ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
       ");
 
+      // Move all recipes to oembed column
+      // oembed will be renamed embed for all embeddable content
+      $marks = $this->db->query("SELECT id, recipe FROM `marks` WHERE recipe != '' AND LOWER(recipe) != 'none' AND recipe IS NOT NULL");
+      if ($marks->num_rows() >= 1) {
+        foreach ($marks->result() as $mark) {
+          $res = $this->db->query("UPDATE `marks` SET `oembed` = '" . addslashes($mark->recipe) . "' WHERE `id` = '" . $mark->id . "'");
+        }
+      }
+
+      // Update marks table
+      $this->db->query("ALTER TABLE `marks` DROP COLUMN `recipe`");
+      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `id` `mark_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented id for marks.'");
+      $this->db->query("ALTER TABLE `marks` DROP PRIMARY KEY, ADD PRIMARY KEY (`mark_id`)");
+      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `title` `title` varchar(150) NOT NULL COMMENT 'The title from the page being bookmarked.'");
+      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `url` `url` text NOT NULL COMMENT 'The full url from the page being bookmarked.'");
+      $this->db->query("ALTER TABLE `marks` ADD COLUMN `url_key` varchar(32) DEFAULT NULL COMMENT 'The MD5 checksum of the url for lookup purposes.' AFTER `url`");
+      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `oembed` `embed` text DEFAULT NULL COMMENT 'The embedded content that could appear on the mark\'s info page.'");
+      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `dateadded` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime this record was created.'");
+      $this->db->query("ALTER TABLE `marks` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.' AFTER `created_on`");
+
+      // Get all urls from marks table, create MD5 checksum, update record
+      $marks = $this->db->query("SELECT mark_id, url FROM `marks`");
+
+      // If any exists, move on
+      if ($marks->num_rows() >= 1) {
+
+        // Set up empty arrays to hold marks that may get deleted or changed
+        $deleted = array();
+        $changed = array();
+
+        // Loop thru results
+        foreach ($marks->result() as $mark) {
+
+          // If no url, remove it from DB and add to deleted list
+          if (empty($mark->url)) {
+            $res = $this->db->query("DELETE FROM `marks` WHERE `mark_id` = '" . $mark->mark_id . "'");
+            array_push($deleted, $mark->mark_id);
+          }
+          // Else, create checksum from url
+          // See if any records already exist with this checksum
+          // If so, get the current mark id and the one from DB that has matching checksum
+          // Remove the current mark
+          // Add to changed array where key is the current mark's id and the value is the record's mark id that was foun
+          // If no matches, simply add the checksum for the current mark
+          else {
+            $checksum = md5($mark->url);
+            $record = $this->db->query("SELECT mark_id FROM `marks` WHERE `url_key` = '" . $checksum . "' LIMIT 1");
+            if ($record->num_rows() == 1) {
+              $record = $record->row();
+              $changed[$mark->mark_id] = $record->mark_id;
+              $res = $this->db->query("DELETE FROM `marks` WHERE `mark_id` = '" . $mark->mark_id . "'");
+            }
+            else {
+              $res = $this->db->query("UPDATE `marks` SET `url_key` = '" . $checksum . "' WHERE `mark_id` = '" . $mark->mark_id . "'");
+            }
+          }
+        }
+
+        // If the deleted array is not empty
+        // Remove any user marks that are attached to it
+        if (! empty($deleted)) {
+          foreach ($deleted as $mark_id) {
+            $res = $this->db->query("DELETE FROM `users_marks` WHERE `urlid` = '" . $mark_id . "'");
+          }
+        }
+
+        // If the changed array is not empty
+        // Update any user marks from the old mark id to the new one
+        if (! empty($changed)) {
+          foreach ($changed as $old_id => $new_id) {
+            $res = $this->db->query("UPDATE `users_marks` SET `urlid` = '" . $new_id . "' WHERE `urlid` = '" . $old_id . "'");
+          }
+        }
+      }
+
+      // Finally, add a unique index for url key
+      $this->db->query("ALTER TABLE `marks` ADD UNIQUE `url_key`(url_key)");
+
+
+
+
       // Update groups table
       $this->db->query("ALTER TABLE `groups` DROP COLUMN `urlname`");
       $this->db->query("ALTER TABLE `groups` DROP COLUMN `uid`");
@@ -96,6 +177,18 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `groups` ADD COLUMN `urlname` varchar(255) DEFAULT NULL AFTER `description`");
       $this->db->query("ALTER TABLE `groups` ADD COLUMN `uid` text NOT NULL AFTER `urlname`");
       $this->db->query("ALTER TABLE `groups` CHANGE COLUMN `created_on` `datecreated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+
+      // Revert marks table
+      $this->db->query("ALTER TABLE `marks` DROP INDEX `url_key`");
+      $this->db->query("ALTER TABLE `marks` DROP COLUMN `last_updated`");
+      $this->db->query("ALTER TABLE `marks` DROP COLUMN `url_key`");
+      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `mark_id` `id` int(11) NOT NULL AUTO_INCREMENT");
+      $this->db->query("ALTER TABLE `marks` DROP PRIMARY KEY, ADD PRIMARY KEY (`id`)");
+      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `title` `title` text NOT NULL");
+      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `url` `url` text NOT NULL");
+      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `embed` `oembed` text DEFAULT NULL");
+      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `created_on` `dateadded` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+      $this->db->query("ALTER TABLE `marks` ADD COLUMN `recipe` text DEFAULT NULL AFTER `oembed`");
 
       // Drop labels table
       $this->db->query("DROP TABLE IF EXISTS `labels`");
