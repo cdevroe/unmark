@@ -120,7 +120,7 @@ class Users_model extends CI_Model {
         }
 
         // Check passwords
-        $row = $query->row();
+        $row                = $user->row();
         $encrypted_password = $row->password;
         $salt               = $row->salt;
 
