@@ -5,35 +5,35 @@ function generateCSRF()
     return generateToken(50);
 }
 
-function generateHash($str)
+function generateHash($str, $salt=null)
 {
-    $token  = generateToken(50);
+    $salt = (empty($salt)) ? generateToken(50) : $salt;
 
     if (CRYPT_SHA512 == 1) {
-        return crypt($str, '$6$rounds=5000$' . $token . '$');
+        $crypt = crypt($str, '$6$rounds=5000$' . $salt . '$');
+    }
+    elseif (CRYPT_SHA256 == 1) {
+        $crypt = crypt($str, '$5$rounds=5000$' . $salt . '$');
+    }
+    elseif (CRYPT_BLOWFISH == 1) {
+        $crypt = crypt($str, '$2a$07$' . $salt . '$');
+    }
+    elseif(CRYPT_MD5 == 1) {
+        $crypt = crypt($str, '$1$' . $salt . '$');
+    }
+    elseif(CRYPT_EXT_DES == 1) {
+        $crypt = crypt($str, '_J9' . $salt);
+    }
+    elseif(CRYPT_STD_DES == 1) {
+        $crypt = crypt($str, $salt);
     }
 
-    if (CRYPT_SHA256 == 1) {
-        return crypt($str, '$5$rounds=5000$' . $token . '$');
+    if (! isset($crypt)) {
+        return false;
+        // Throw exception once everything is hooked up
     }
 
-    if (CRYPT_BLOWFISH == 1) {
-        return crypt($str, '$2a$07$' . $token . '$');
-    }
-
-    if (CRYPT_MD5 == 1) {
-        return crypt($str, '$1$' . $token . '$');
-    }
-
-    if (CRYPT_EXT_DES == 1) {
-        return crypt($str, '_J9' . $token);
-    }
-
-    if (CRYPT_STD_DES == 1) {
-        return crypt($str, $token);
-    }
-
-    throw new Exception('No hashing mechanisms supported.');
+    return array('salt' => $salt, 'encrypted' => $crypt);
 }
 
 function generatePassword($len=12)
