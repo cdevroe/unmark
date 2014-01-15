@@ -19,7 +19,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
 
       // Create new labels table
       $this->db->query("
-        CREATE TABLE `labels` (
+        CREATE TABLE IF NOT EXISTS `labels` (
           `label_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.',
           `smart_label_id` bigint(20) UNSIGNED COMMENT 'If a smart label, the label_id to use if a match is found.',
           `name` varchar(50) NOT NULL COMMENT 'The name of the label.',
