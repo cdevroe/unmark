@@ -167,6 +167,14 @@ class Migration_Batshit_Crazy extends CI_Migration {
         ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
       ");
 
+
+      // Update users table
+      // We are moving to active = 1 or 0 column, before altering table, switch active = 1, inactive = 0
+      $res = $this->db->query("UPDATE `users` SET status = '0' WHERE status <> 'active'");
+      $res = $this->db->query("UPDATE `users` SET status = '1' WHERE status = 'active'");
+      $this->db->query("ALTER TABLE `users` DROP COLUMN `salt`");
+      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `status` `active` tinyint NOT NULL DEFAULT '0' COMMENT '1 = active, 0 = inactive'");
+      $this->db->query("ALTER TABLE `users` ADD COLUMN `admin` tinyint NOT NULL DEFAULT '0' COMMENT '1 = yes, 0 = no' AFTER `active`");
     }
 
     public function down()
@@ -225,6 +233,14 @@ class Migration_Batshit_Crazy extends CI_Migration {
 
       // Drop labels table
       $this->db->query("DROP TABLE IF EXISTS `labels`");
+
+      // Revert users table
+      // Revert active to status, 0 = inactive, 1 = active
+      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `active` `status` varchar(25) NOT NULL DEFAULT 'inactive'");
+      $res = $this->db->query("UPDATE `users` SET status = 'inactive' WHERE status <> '1'");
+      $res = $this->db->query("UPDATE `users` SET status = 'active' WHERE status = '1'");
+      $this->db->query("ALTER TABLE `users` DROP COLUMN `admin`");
+
     }
 
 }
