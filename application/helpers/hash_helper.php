@@ -10,30 +10,29 @@ function generateHash($str)
     $token  = generateToken(50);
 
     if (CRYPT_SHA512 == 1) {
-        return crypt($str, '$6$rounds=5000$' . $token . '$');
+        $crypt = crypt($str, '$6$rounds=5000$' . $token . '$');
+    }
+    elseif (CRYPT_SHA256 == 1) {
+        $crypt = crypt($str, '$5$rounds=5000$' . $token . '$');
+    }
+    elseif (CRYPT_BLOWFISH == 1) {
+        $crypt = crypt($str, '$2a$07$' . $token . '$');
+    }
+    elseif(CRYPT_MD5 == 1) {
+        $crypt = crypt($str, '$1$' . $token . '$');
+    }
+    elseif(CRYPT_EXT_DES == 1) {
+        $crypt = crypt($str, '_J9' . $token);
+    }
+    elseif(CRYPT_STD_DES == 1) {
+        $crypt = crypt($str, $token);
     }
 
-    if (CRYPT_SHA256 == 1) {
-        return crypt($str, '$5$rounds=5000$' . $token . '$');
+    if (! isset($crypt)) {
+        throw new Exception('No hashing mechanisms supported.');
     }
 
-    if (CRYPT_BLOWFISH == 1) {
-        return crypt($str, '$2a$07$' . $token . '$');
-    }
-
-    if (CRYPT_MD5 == 1) {
-        return crypt($str, '$1$' . $token . '$');
-    }
-
-    if (CRYPT_EXT_DES == 1) {
-        return crypt($str, '_J9' . $token);
-    }
-
-    if (CRYPT_STD_DES == 1) {
-        return crypt($str, $token);
-    }
-
-    throw new Exception('No hashing mechanisms supported.');
+    return array('salt' => $token, 'encrypted' => $crypt);
 }
 
 function generatePassword($len=12)
