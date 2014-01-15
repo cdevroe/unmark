@@ -17,6 +17,21 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `users_marks` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
       $this->db->query("ALTER TABLE `users_smartlabels` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
 
+      // Create new labels table
+      $this->db->query("
+        CREATE TABLE `labels` (
+          `label_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.',
+          `smart_label_id` bigint(20) UNSIGNED COMMENT 'If a smart label, the label_id to use if a match is found.',
+          `name` varchar(50) NOT NULL COMMENT 'The name of the label.',
+          `domain` varchar(255) COMMENT 'The hostname of the domain to match. Keep in all lowercase.',
+          `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+          `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.',
+          PRIMARY KEY (`label_id`),
+          CONSTRAINT `FK_smart_label_id` FOREIGN KEY (`smart_label_id`) REFERENCES `labels` (`label_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
+          INDEX `smart_label_id`(smart_label_id)
+        ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+      ");
+
       // Update groups table
       $this->db->query("ALTER TABLE `groups` DROP COLUMN `urlname`");
       $this->db->query("ALTER TABLE `groups` DROP COLUMN `uid`");
@@ -80,6 +95,9 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `groups` ADD COLUMN `urlname` varchar(255) DEFAULT NULL AFTER `description`");
       $this->db->query("ALTER TABLE `groups` ADD COLUMN `uid` text NOT NULL AFTER `urlname`");
       $this->db->query("ALTER TABLE `groups` CHANGE COLUMN `created_on` `datecreated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+
+      // Drop labels table
+      $this->db->query("DROP TABLE IF EXISTS `labels`");
     }
 
 }
