@@ -25,15 +25,16 @@ class Users_model extends CI_Model {
 
 		// Add user to users table
         $this->load->helper('hash_helper');
-        $password = generateHash($password);
+        $hash = generateHash($password);
 
-        if ($password === false) {
+        if ($hash === false) {
             return false;
         }
 
 		$this->db->insert('users', array(
             'email'    => $email,
-            'password' => $password,
+            'password' => $hash['encrypted'],
+            'salt'     => $hash['salt'],
             'status'   => 'active'
         ));
 
@@ -48,16 +49,17 @@ class Users_model extends CI_Model {
         // Form input data
         $user_id   = $this->input->post('userid');
         $email     = $this->input->post('emailaddress');
-        $password  = generateHash($this->input->post('password'));
+        $hash      = generateHash($this->input->post('password'));
         $status    = $this->input->post('status');
 
-        if ($password !== false) {
+        if ($hash !== false) {
 
             // Add user to users table
             $this->db->update('users',
                 array(
                     'email'    => $emailaddress,
-                    'password' => $password,
+                    'password' => $hash['encrypted'],
+                    'salt'     => $hash['salt'],
                     'status'   => $status
                 ),
                 array(
@@ -108,22 +110,43 @@ class Users_model extends CI_Model {
         $this->load->helper('hash_helper');
 		$email     = $this->input->post('emailaddress', true);
 		$password  = $this->input->post('password', true);
-        $hash      = generateHash($password);
 
-        if ($hash === false) {
+
+        // Get user by email address
+        $user = $this->db->query("SELECT * FROM `users` WHERE email = '" . $email . "' LIMIT 1");
+
+        if ($user->num_rows() < 1) {
             return false;
         }
 
-    	// Select user from database
-        // Have to look for both hash types
-        // so we can be backwards compatible with older versions
-        $user = $this->db->query("
-            SELECT * FROM `users`
-            WHERE email = '" . $email . "' AND
-            (password = '" . md5($password) . "' OR password = '" . $hash . "')
-        ");
+        // Check passwords
+        $row                = $user->row();
+        $encrypted_password = $row->password;
+        $salt               = $row->salt;
 
-        return ($user->num_rows() > 0) ? $user->row_array() : false;
+        // If salt exists, check it
+        // Else check old MD5 checksum
+        if (! empty($salt)) {
+            $hash  = generateHash($password, $salt);
+            $match = (isset($hash['encrypted']) && $encrypted_password == $hash['encrypted']) ? true : false;
+        }
+        else {
+            $match = (md5($password) == $encrypted_password) ? true : false;
+
+            // Try to update to new password security since they are on old MD5
+            $hash  = generateHash($password);
+
+            // If hash is valid and match is valid
+            // Upgrade users to new encryption routine
+            if ($hash !== false && $match === true) {
+                $this->db->update('users', array('password' => $hash['encrypted'],'salt' => $hash['salt']), array('email' => $email));
+            }
+
+        }
+
+        // If a match, return array, else false
+        return ($match === true) ? $user->row_array() : false;
+
     }
 
 
