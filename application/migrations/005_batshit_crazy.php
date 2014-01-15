@@ -33,6 +33,10 @@ class Migration_Batshit_Crazy extends CI_Migration {
         ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
       ");
 
+      /*
+      - Start updates for marks table
+      */
+
       // Move all recipes to oembed column
       // oembed will be renamed embed for all embeddable content
       $marks = $this->db->query("SELECT id, recipe FROM `marks` WHERE recipe != '' AND LOWER(recipe) != 'none' AND recipe IS NOT NULL");
@@ -112,6 +116,9 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `marks` ADD UNIQUE `url_key`(url_key)");
 
 
+      /*
+      - End updates for marks table
+      */
 
 
       // Update groups table
@@ -189,6 +196,14 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `embed` `oembed` text DEFAULT NULL");
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `created_on` `dateadded` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
       $this->db->query("ALTER TABLE `marks` ADD COLUMN `recipe` text DEFAULT NULL AFTER `oembed`");
+
+      // Move recipes back to the recipe column
+      $marks = $this->db->query("SELECT id, oembed FROM `marks` WHERE oembed LIKE '%hrecipe%'");
+      if ($marks->num_rows() >= 1) {
+        foreach ($marks->result() as $mark) {
+          $res = $this->db->query("UPDATE `marks` SET recipe = '" . addslashes($mark->oembed) . "', oembed = NULL WHERE `id` = '" . $mark->id . "'");
+        }
+      }
 
       // Drop labels table
       $this->db->query("DROP TABLE IF EXISTS `labels`");
