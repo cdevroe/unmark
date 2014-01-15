@@ -7,7 +7,7 @@ function generateCSRF()
 
 function generateHash($str, $salt=null)
 {
-    $salt = (empty($salt)) generateToken(50) : $salt;
+    $salt = (empty($salt)) ? generateToken(50) : $salt;
 
     if (CRYPT_SHA512 == 1) {
         $crypt = crypt($str, '$6$rounds=5000$' . $salt . '$');

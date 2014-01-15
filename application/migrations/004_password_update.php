@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Users_update extends CI_Migration {
+class Migration_Password_update extends CI_Migration {
 
     public function up()
     {
