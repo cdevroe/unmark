@@ -5,6 +5,11 @@
     <h2>Changelog</h2>
 		<p>A quick list of what's new. Posted immediately upon update.</p>
 
+        <h4 id="0311"><a href="#0311">0.3.11 - 15 January 2014</a></h4>
+          <ul>
+            <li>Bug: Added date_joined back to being saved on new user accounts.</li>
+          </ul>
+
         <h4 id="0310"><a href="#0310">0.3.10 - 15 January 2014</a></h4>
           <ul>
             <li>Update: Users with old password encryption technique will be update to new encrypted password/salt upon next successful login.</li>

@@ -32,10 +32,11 @@ class Users_model extends CI_Model {
         }
 
 		$this->db->insert('users', array(
-            'email'    => $email,
-            'password' => $hash['encrypted'],
-            'salt'     => $hash['salt'],
-            'status'   => 'active'
+            'email'       => $email,
+            'password'    => $hash['encrypted'],
+            'salt'        => $hash['salt'],
+            'status'      => 'active',
+            'date_joined' => date('Y-m-d H:i:s')
         ));
 
 		// Get userid of this user
