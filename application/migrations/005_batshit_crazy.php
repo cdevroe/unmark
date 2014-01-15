@@ -5,6 +5,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
     public function up()
     {
 
+      set_time_limit(0);
       // Make sure all tables are INNODB, UTF-8
       // Original migration they were not
       // If anyone download that version and ran successfully, some keys may not be created correctly
@@ -179,7 +180,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
 
     public function down()
     {
-
+      set_time_limit(0);
       // Drop marks_to_groups table
       $this->db->query("DROP TABLE IF EXISTS `marks_to_groups`");
 
@@ -240,6 +241,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $res = $this->db->query("UPDATE `users` SET status = 'inactive' WHERE status <> '1'");
       $res = $this->db->query("UPDATE `users` SET status = 'active' WHERE status = '1'");
       $this->db->query("ALTER TABLE `users` DROP COLUMN `admin`");
+      $this->db->query("ALTER TABLE `users` ADD COLUMN `salt` varchar(50) DEFAULT NULL COMMENT 'The salt used to generate password.' AFTER `password`");
 
     }
 
