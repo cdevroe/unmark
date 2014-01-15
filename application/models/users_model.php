@@ -33,8 +33,7 @@ class Users_model extends CI_Model {
 
 		$this->db->insert('users', array(
             'email'       => $email,
-            'password'    => $hash['encrypted'],
-            'salt'        => $hash['salt'],
+            'password'    => $hash,
             'status'      => 'active',
             'date_joined' => date('Y-m-d H:i:s')
         ));
@@ -59,8 +58,7 @@ class Users_model extends CI_Model {
             $this->db->update('users',
                 array(
                     'email'    => $emailaddress,
-                    'password' => $hash['encrypted'],
-                    'salt'     => $hash['salt'],
+                    'password' => $hash,
                     'status'   => $status
                 ),
                 array(
@@ -123,15 +121,8 @@ class Users_model extends CI_Model {
         // Check passwords
         $row                = $user->row();
         $encrypted_password = $row->password;
-        $salt               = $row->salt;
 
-        // If salt exists, check it
-        // Else check old MD5 checksum
-        if (! empty($salt)) {
-            $hash  = generateHash($password, $salt);
-            $match = (isset($hash['encrypted']) && $encrypted_password == $hash['encrypted']) ? true : false;
-        }
-        else {
+        if (strlen($encrypted_password) == 32) {
             $match = (md5($password) == $encrypted_password) ? true : false;
 
             // Try to update to new password security since they are on old MD5
@@ -140,9 +131,11 @@ class Users_model extends CI_Model {
             // If hash is valid and match is valid
             // Upgrade users to new encryption routine
             if ($hash !== false && $match === true) {
-                $this->db->update('users', array('password' => $hash['encrypted'],'salt' => $hash['salt']), array('email' => $email));
+                $this->db->update('users', array('password' => $hash), array('email' => $email));
             }
-
+        }
+        else {
+            $match = (verifyHash($password, $encrypted_password) == $encrypted_password) ? true : false;
         }
 
         // If a match, return array, else false

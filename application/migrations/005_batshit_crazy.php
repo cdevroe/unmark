@@ -24,6 +24,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
           `smart_label_id` bigint(20) UNSIGNED COMMENT 'If a smart label, the label_id to use if a match is found.',
           `name` varchar(50) NOT NULL COMMENT 'The name of the label.',
           `domain` varchar(255) COMMENT 'The hostname of the domain to match. Keep in all lowercase.',
+          `active` tinyint NOT NULL DEFAULT '1' COMMENT '1 is active, 0 if not. Defaults to 1.',
           `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
           `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.',
           PRIMARY KEY (`label_id`),

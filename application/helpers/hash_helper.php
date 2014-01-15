@@ -5,35 +5,36 @@ function generateCSRF()
     return generateToken(50);
 }
 
-function generateHash($str, $salt=null)
+function generateHash($str)
 {
-    $salt = (empty($salt)) ? generateToken(50) : $salt;
+    $salt = generateToken(50);
 
     if (CRYPT_SHA512 == 1) {
-        $crypt = crypt($str, '$6$rounds=5000$' . $salt . '$');
-    }
-    elseif (CRYPT_SHA256 == 1) {
-        $crypt = crypt($str, '$5$rounds=5000$' . $salt . '$');
-    }
-    elseif (CRYPT_BLOWFISH == 1) {
-        $crypt = crypt($str, '$2a$07$' . $salt . '$');
-    }
-    elseif(CRYPT_MD5 == 1) {
-        $crypt = crypt($str, '$1$' . $salt . '$');
-    }
-    elseif(CRYPT_EXT_DES == 1) {
-        $crypt = crypt($str, '_J9' . $salt);
-    }
-    elseif(CRYPT_STD_DES == 1) {
-        $crypt = crypt($str, $salt);
+        return crypt($str, '$6$rounds=5000$' . $salt . '$');
     }
 
-    if (! isset($crypt)) {
-        return false;
-        // Throw exception once everything is hooked up
+    if (CRYPT_SHA256 == 1) {
+        return crypt($str, '$5$rounds=5000$' . $salt . '$');
     }
 
-    return array('salt' => $salt, 'encrypted' => $crypt);
+    if (CRYPT_BLOWFISH == 1) {
+        return crypt($str, '$2a$07$' . $salt . '$');
+    }
+
+    if (CRYPT_MD5 == 1) {
+        return crypt($str, '$1$' . $salt . '$');
+    }
+
+    if (CRYPT_EXT_DES == 1) {
+        return crypt($str, '_J9' . $salt);
+    }
+
+    if (CRYPT_STD_DES == 1) {
+        return crypt($str, $salt);
+    }
+
+    return false;
+    // Throw exception once everything is hooked up
 }
 
 function generatePassword($len=12)
