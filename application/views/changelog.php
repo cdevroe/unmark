@@ -5,7 +5,7 @@
     <h2>Changelog</h2>
 		<p>A quick list of what's new. Posted immediately upon update.</p>
 
-        <h4 id="039"><a href="#039">0.3.8 - 15 January 2014</a></h4>
+        <h4 id="039"><a href="#039">0.3.9 - 15 January 2014</a></h4>
           <ul>
             <li>Bug: Fixing password issue. Forgot to store salt, DERP!</li>
           </ul>
