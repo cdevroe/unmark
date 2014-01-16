@@ -33,6 +33,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
           `name` varchar(50) DEFAULT NULL COMMENT 'The name of the label.',
           `domain` varchar(255) DEFAULT NULL COMMENT 'The hostname of the domain to match. Keep in all lowercase.',
           `path` varchar(100) DEFAULT NULL COMMENT 'The path to find to for smartlabels to match. If null, just match host.',
+          `smart_key` varchar(32) DEFAULT NULL COMMENT 'MD5 checksum of domain and path for lookup purposes.',
           `active` tinyint NOT NULL DEFAULT '1' COMMENT '1 is active, 0 if not. Defaults to 1.',
           `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
           `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.',
@@ -40,7 +41,8 @@ class Migration_Batshit_Crazy extends CI_Migration {
           CONSTRAINT `FK_label_smart_label_id` FOREIGN KEY (`smart_label_id`) REFERENCES `labels` (`label_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
           CONSTRAINT `FK_label_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
           INDEX `smart_label_id`(smart_label_id),
-          INDEX `user_id`(user_id)
+          INDEX `user_id`(user_id),
+          INDEX `smart_key`(smart_key)
         ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
       ");
 
@@ -61,34 +63,45 @@ class Migration_Batshit_Crazy extends CI_Migration {
       }
 
       // Start default system smart labels
-      // Watch
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('3', 'youtube.com', '/watch', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('3', 'viddler.com', '/v', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('3', 'devour.com', '/video', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('3', 'ted.com', '/talks', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('3', 'vimeo.com', '" . date('Y-m-d H:i:s') . "')");
+      $smart_labels = array(
+        // read
+        '2' => array(
+          'domains' = array('php.net', 'api.rubyonrails.org', 'ruby-doc.org', 'docs.jquery.com', 'codeigniter.com', 'css-tricks.com', 'developer.apple.com'),
+          'paths'   = array('/manual', '', '', '', '/user_guide', '/almanac', '/library')
+        ),
+        // watch
+        '3' => array(
+          'domains' = array('youtube.com', 'viddler.com', 'devour.com', 'ted.com', 'vimeo.com'),
+          'paths'   = array('/watch', '/v', '/video', '/talks', '')
+        ),
+        //buy
+        '5' => array(
+          'domains' = array('svpply.com', 'amazon.com', 'fab.com', 'zappos.com'),
+          'paths'   = array('/item', '/gp/product', '/sale', '')
+        ),
+        // eat & drink
+        '6' => array(
+          'domains' = array('simplyrecipes.com', 'allrecipes.com', 'epicurious.com', 'foodnetwork.com', 'food.com'),
+          'paths'   = array('/recipes', '', '/recipes', '/recipes', '/recipe')
+        )
+      );
 
-      // Read
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('2', 'php.net', '/manual', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('2', 'api.rubyonrails.org', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('2', 'ruby-doc.org', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('2', 'docs.jquery.com', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('2', 'codeigniter.com', '/user_guide', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('2', 'css-tricks.com', '/almanac', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('2', 'developer.apple.com', '/library', '" . date('Y-m-d H:i:s') . "')");
-
-      // Eat & Drink
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('6', 'simplyrecipes.com', '/recipes', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('6', 'allrecipes.com', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('6', 'epicurious.com', '/recipes', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('6', 'foodnetwork.com', '/recipes', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('6', 'food.com', '/recipe', '" . date('Y-m-d H:i:s') . "')");
-
-      // Buy
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('5', 'svpply.com', '/item', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('5', 'amazon.com', '/gp/product', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('5', 'fab.com', '/sale', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('5', 'zappos.com', '" . date('Y-m-d H:i:s') . "')");
+      // Loop thru smart labels and add them up
+      foreach ($smart_labels as $label_id => $arr) {
+        foreach ($arr as $k => $arr1) {
+          foreach ($arr1['domains'] as $key => $val) {
+            $domain   = $arr1['domains'][$key];
+            $path     = (empty($arr1['paths'][$key])) ? '' : "'" . $arr1['paths'][$key] . "', ";
+            $path_c   = (empty($arr1['paths'][$key])) ? '' : "`path`, ";
+            $md5      = md5($domain . $path);
+            $this->db->query("
+              INSERT INTO `labels`
+              (`smart_label_id`, `domain`, " . $path_c . "`smart_key`, `created_on`)
+              VALUES ('" . $label_id . "', '" . $domain . "', " . $path . "'" . $md5 . "', '" . date('Y-m-d H:i:s') . "')
+            ");
+          }
+        }
+      }
 
       // Now open users_smartlabels, import into labels
       $labels = $this->db->query("SELECT userid, domain, path, label FROM users_smartlabels");
@@ -102,10 +115,12 @@ class Migration_Batshit_Crazy extends CI_Migration {
             // Make sure it's lowercase
             $domain   = str_replace('www.', '', strtolower($label->domain));
             $label_id = $default_labels[$current_label]['label_id'];
-            $path     = (empty($label->path)) ? null : "'" . $label->path . "'";
+            $path     = (empty($label->path)) ? '' : "'" . $label->path . "', ";
+            $path_c   = (empty($label->path)) ? '' : "`path`, ";
+            $md5      = md5($domain . $path);
 
             // Find an occurences of this record
-            $q        = $this->db->query("
+            $q  = $this->db->query("
               SELECT COUNT(*) FROM labels
               WHERE user_id = '" . $label->userid . "'
               AND domain = '" . $domain . "'
@@ -119,8 +134,8 @@ class Migration_Batshit_Crazy extends CI_Migration {
             if ($total < 1) {
               $res = $this->db->query("
                 INSERT INTO `labels`
-                (`smart_label_id`, `user_id`, `domain`, `path`, `created_on`)
-                VALUES ('" . $label_id . "', '" . $label->userid . "', " . $domain . "', " . $path . ", '" . date('Y-m-d H:i:s') . "')
+                (`smart_label_id`, `user_id`, `domain`, " . $path_c . "`smart_key`, `created_on`)
+                VALUES ('" . $label_id . "', '" . $label->userid . "', '" . $domain . "', " . $path . "'" . $md5 . "', " . date('Y-m-d H:i:s') . "')
               ");
             }
 
