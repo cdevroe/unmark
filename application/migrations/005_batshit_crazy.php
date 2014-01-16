@@ -56,6 +56,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
         'listen'    => array('label_id' => 4, 'name' => 'Listen'),
         'buy'       => array('label_id' => 5, 'name' => 'Buy'),
         'eatdrink'  => array('label_id' => 6, 'name' => 'Eat & Drink'),
+        'do'        => array('label_id' => 7, 'name' => 'Do')
       );
 
       foreach ($default_labels as $label) {
@@ -66,33 +67,33 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $smart_labels = array(
         // read
         '2' => array(
-          'domains' = array('php.net', 'api.rubyonrails.org', 'ruby-doc.org', 'docs.jquery.com', 'codeigniter.com', 'css-tricks.com', 'developer.apple.com'),
-          'paths'   = array('/manual', '', '', '', '/user_guide', '/almanac', '/library')
+          'domains' => array('php.net', 'api.rubyonrails.org', 'ruby-doc.org', 'docs.jquery.com', 'codeigniter.com', 'css-tricks.com', 'developer.apple.com'),
+          'paths'   => array('/manual', '', '', '', '/user_guide', '/almanac', '/library')
         ),
         // watch
         '3' => array(
-          'domains' = array('youtube.com', 'viddler.com', 'devour.com', 'ted.com', 'vimeo.com'),
-          'paths'   = array('/watch', '/v', '/video', '/talks', '')
+          'domains' => array('youtube.com', 'viddler.com', 'devour.com', 'ted.com', 'vimeo.com'),
+          'paths'   => array('/watch', '/v', '/video', '/talks', '')
         ),
         //buy
         '5' => array(
-          'domains' = array('svpply.com', 'amazon.com', 'fab.com', 'zappos.com'),
-          'paths'   = array('/item', '/gp/product', '/sale', '')
+          'domains' => array('svpply.com', 'amazon.com', 'fab.com', 'zappos.com'),
+          'paths'   => array('/item', '/gp/product', '/sale', '')
         ),
         // eat & drink
         '6' => array(
-          'domains' = array('simplyrecipes.com', 'allrecipes.com', 'epicurious.com', 'foodnetwork.com', 'food.com'),
-          'paths'   = array('/recipes', '', '/recipes', '/recipes', '/recipe')
+          'domains' => array('simplyrecipes.com', 'allrecipes.com', 'epicurious.com', 'foodnetwork.com', 'food.com'),
+          'paths'   => array('/recipes', '', '/recipes', '/recipes', '/recipe')
         )
       );
 
       // Loop thru smart labels and add them up
       foreach ($smart_labels as $label_id => $arr) {
         foreach ($arr as $k => $arr1) {
-          foreach ($arr1['domains'] as $key => $val) {
-            $domain   = $arr1['domains'][$key];
-            $path     = (empty($arr1['paths'][$key])) ? '' : "'" . $arr1['paths'][$key] . "', ";
-            $path_c   = (empty($arr1['paths'][$key])) ? '' : "`path`, ";
+          foreach ($arr['domains'] as $key => $val) {
+            $domain   = $arr['domains'][$key];
+            $path     = (empty($arr['paths'][$key])) ? '' : "'" . $arr['paths'][$key] . "', ";
+            $path_c   = (empty($arr['paths'][$key])) ? '' : "`path`, ";
             $md5      = md5($domain . $path);
             $this->db->query("
               INSERT INTO `labels`
@@ -135,7 +136,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
               $res = $this->db->query("
                 INSERT INTO `labels`
                 (`smart_label_id`, `user_id`, `domain`, " . $path_c . "`smart_key`, `created_on`)
-                VALUES ('" . $label_id . "', '" . $label->userid . "', '" . $domain . "', " . $path . "'" . $md5 . "', " . date('Y-m-d H:i:s') . "')
+                VALUES ('" . $label_id . "', '" . $label->userid . "', '" . $domain . "', " . $path . "'" . $md5 . "', '" . date('Y-m-d H:i:s') . "')
               ");
             }
 
@@ -375,7 +376,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
             $res = $this->db->query("
               INSERT INTO `users_smartlabels`
               (`userid`, `domain`, `path`, `label`)
-              VALUES ('" . $label->user_id . "', '" . $label->domain . "', " . $label->path . "', '" . $current_label . "')
+              VALUES ('" . $label->user_id . "', '" . $label->domain . "', '" . $label->path . "', '" . $current_label . "')
             ");
           }
         }
