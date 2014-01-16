@@ -393,9 +393,6 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `users` DROP COLUMN `admin`");
       $this->db->query("ALTER TABLE `users` ADD COLUMN `salt` varchar(50) DEFAULT NULL COMMENT 'The salt used to generate password.' AFTER `password`");
 
-      // Revert user smart labels
-      //$this->db->query("RENAME TABLE `user_smart_labels` TO `users_smartlabels`");
-
     }
 
 }
