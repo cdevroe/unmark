@@ -65,14 +65,15 @@ class Plain_Model extends CI_Model
     }
 
     // Format any errors coming back to standardize them
-    public function formatErrors($obj)
+    public function formatErrors($errors)
     {
-        $messages         = new stdClass;
-        $messages->errors = new stdClass;
-        foreach ($obj as $k => $v) {
-            $messages->errors->{$k} = $v;
+        if (is_string($errors)) {
+            $message = $errors;
+            $errors  = new stdClass;
+            $errors->{'0'} = $message;
         }
-        return $messages;
+
+        return $errors;
     }
 
     protected function getCacheKey($query)
@@ -146,7 +147,7 @@ class Plain_Model extends CI_Model
 
     protected function sendException()
     {
-        $err_msg = $this->db->_error_message();
+        /*$err_msg = $this->db->_error_message();
 
         // Exceptional!
         if (! empty($err_msg)) {
@@ -165,7 +166,8 @@ class Plain_Model extends CI_Model
                 'message'   => $err_msg,
                 'error-num' => $err_no
             ));
-        }
+        }*/
+        // Not used yet
     }
 
 
@@ -189,8 +191,7 @@ class Plain_Model extends CI_Model
                 return $this->read($where);
             }
             else {
-                $this->messages->errors->{'database'} = 'Eek this is akward, sorry. Something went wrong. Please try again.';
-                return $this->messages;
+                return $this->formatErrors('Eek this is akward, sorry. Something went wrong. Please try again.');
             }
         }
 

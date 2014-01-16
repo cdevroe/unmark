@@ -183,7 +183,7 @@ $config['directory_trigger']	= 'd'; // experimental not currently in use
 if (ENVIRONMENT == 'production') {
 	$config['log_threshold'] = 1;
 } else {
-	$config['log_threshold'] = 2;
+	$config['log_threshold'] = 1;
 }
 
 /*
