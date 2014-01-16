@@ -478,7 +478,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
 
         // Loop thru results and update
         foreach ($marks->result() as $mark) {
-          $label_id = $mark->label_id - 1;
+          $label_id = $mark->tags - 1;
           $label    = (array_key_exists($label_id, $default_labels)) ? $default_labels[$label_id] : 'unlabeled';
           $res      = $this->db->query("UPDATE `users_marks` SET tags = '" . $label . "' WHERE id = '" . $mark->id . "'");
         }
