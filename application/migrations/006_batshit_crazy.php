@@ -285,7 +285,9 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $res = $this->db->query("UPDATE `users` SET status = '0' WHERE status <> 'active'");
       $res = $this->db->query("UPDATE `users` SET status = '1' WHERE status = 'active'");
       $this->db->query("ALTER TABLE `users` DROP COLUMN `salt`");
-      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `status` `active` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = active, 0 = inactive'");
+      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `status` `active` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = active, 0 = inactive' AFTER `password`");
+      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `date_joined` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime the account was created'");
+      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `admin` `admin` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = admin, 0 = admin' AFTER `active`");
 
       // Remove the users_smartlabels table
       $this->db->query("DROP TABLE IF EXISTS `users_smartlabels`");
@@ -603,6 +605,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $res = $this->db->query("UPDATE `users` SET status = 'inactive' WHERE status <> '1'");
       $res = $this->db->query("UPDATE `users` SET status = 'active' WHERE status = '1'");
       $this->db->query("ALTER TABLE `users` ADD COLUMN `salt` varchar(50) DEFAULT NULL COMMENT 'The salt used to generate password.' AFTER `password`");
+      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `created_on` `date_joined` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
 
     }
 
