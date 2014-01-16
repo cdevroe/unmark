@@ -325,7 +325,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
           $mark_id   = $mark->id;
 
           // If it was archived, save here to update later
-          if (strtolower($mark->status) == 'archive')) {
+          if (strtolower($mark->status) == 'archive') {
             array_push($archived, $mark_id);
           }
 
@@ -350,6 +350,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
 
             if ($total < 1) {
               $res = $this->db->query("INSERT INTO `user_marks_to_groups` (`user_mark_id`, `group_id`) VALUES ('" . $mark_id . "', '" . $group_id . "')");
+            }
           }
         }
       }
