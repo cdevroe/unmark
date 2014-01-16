@@ -267,18 +267,14 @@ class Migration_Batshit_Crazy extends CI_Migration {
 
 
       // Create marks_to_groups table
+      // FKs will be added later after the data has been moved
       $this->db->query("
-        CREATE TABLE IF NOT EXISTS `marks_to_groups` (
-          `marks_to_group` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.',
-          `mark_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The mark_id from marks.mark_id',
-          `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user_id from users.user_id',
+        CREATE TABLE IF NOT EXISTS `user_marks_to_groups` (
+          `user_marks_to_group_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.',
+          `user_mark_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The mark_id from users_to_marks.users_to_mark_id',
           `group_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The group_id from groups.group_id',
-          PRIMARY KEY (`marks_to_group`),
-          CONSTRAINT `FK_mtg_mark_id` FOREIGN KEY (`mark_id`) REFERENCES `marks` (`mark_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
-          CONSTRAINT `FK_mtg_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
-          CONSTRAINT `FK_mtg_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
-          INDEX `mark_id`(mark_id),
-          INDEX `user_id`(user_id),
+          PRIMARY KEY (`user_marks_to_group_id`),
+          INDEX `user_mark_id`(user_mark_id),
           INDEX `group_id`(group_id)
         ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
       ");
@@ -309,13 +305,184 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `users_to_groups` ADD INDEX `user_id`(user_id)");
       $this->db->query("ALTER TABLE `users_to_groups` ADD CONSTRAINT `FK_utg_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
       $this->db->query("ALTER TABLE `users_to_groups` ADD CONSTRAINT `FK_utg_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
+
+      /*
+      - Start users_to_marks transistion
+      */
+
+      // Update `tags` field to a single numeric in order to translate to a FK for labels
+      // Move group id to user_marks_to_groups table
+
+      $marks = $this->db->query("SELECT id, tags, groups, status FROM `users_marks`");
+      $archived = array();
+      if ($marks->num_rows() >= 1) {
+
+        // Loop thru results
+        foreach ($marks->result() as $mark) {
+          $tags      = explode(',', $mark->tags);
+          $label_id  = 1;
+          $group_id  = $mark->groups;
+          $mark_id   = $mark->id;
+
+          // If it was archived, save here to update later
+          if (strtolower($mark->status) == 'archive')) {
+            array_push($archived, $mark_id);
+          }
+
+          foreach ($tags as $tag) {
+            $tag = trim(strtolower($tag));
+            if (array_key_exists($tag, $default_labels)) {
+              $label_id = $default_labels[$tag]['label_id'];
+              break;
+            }
+          }
+
+          // Update tags
+          $res = $this->db->query("UPDATE `users_marks` SET tags = '" . $label_id . "' WHERE id = '" . $mark_id . "'");
+
+          // Update groups to user_marks_to_groups table
+          if (! empty($group_id) && is_numeric($group_id)) {
+
+            // Check if this mark is in marks_to_groups table already
+            $q     = $this->db->query("SELECT COUNT(*) FROM `user_marks_to_groups` WHERE user_mark_id = '" . $mark_id . "' AND group_id = '" . $group_id . "'");
+            $row   = $q->row();
+            $total = (integer) $row->{'COUNT(*)'};
+
+            if ($total < 1) {
+              $res = $this->db->query("INSERT INTO `user_marks_to_groups` (`user_mark_id`, `group_id`) VALUES ('" . $mark_id . "', '" . $group_id . "')");
+          }
+        }
+      }
+
+
+      // Update table name & structure
+      $this->db->query("RENAME TABLE `users_marks` TO `users_to_marks`");
+      $this->db->query("ALTER TABLE `users_to_marks` DROP COLUMN `addedby`");
+      $this->db->query("ALTER TABLE `users_to_marks` DROP COLUMN `groups`");
+      $this->db->query("ALTER TABLE `users_to_marks` DROP COLUMN `status`");
+      $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `id` `users_to_mark_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.'");
+      $this->db->query("ALTER TABLE `users_to_marks` DROP PRIMARY KEY, ADD PRIMARY KEY (`users_to_mark_id`)");
+      $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `urlid` `mark_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The mark_id from marks.mark_id.' AFTER `users_to_mark_id`");
+      $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `userid` `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user_id from users.user_id' AFTER `mark_id`");
+      $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `tags` `label_id` bigint(20) UNSIGNED NOT NULL DEFAULT NULL COMMENT 'The label_id from labels.label_id.'");
+      $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `note` `notes` text DEFAULT NULL");
+      $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `dateadded` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime this record was created.'");
+      $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `datearchived` `archived_on` datetime DEFAULT NULL COMMENT 'The datetime this mark was archived. NULL = not archived.'");
+      $this->db->query("ALTER TABLE `users_to_marks` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.' AFTER `archived_on`");
+      $this->db->query("ALTER TABLE `users_to_marks` ADD INDEX `mark_id`(mark_id)");
+      $this->db->query("ALTER TABLE `users_to_marks` ADD INDEX `user_id`(user_id)");
+      $this->db->query("ALTER TABLE `users_to_marks` ADD INDEX `label_id`(label_id)");
+      $this->db->query("ALTER TABLE `users_to_marks` ADD CONSTRAINT `FK_utm_mark_id` FOREIGN KEY (`mark_id`) REFERENCES `marks` (`mark_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
+      $this->db->query("ALTER TABLE `users_to_marks` ADD CONSTRAINT `FK_utm_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
+      $this->db->query("ALTER TABLE `users_to_marks` ADD CONSTRAINT `FK_utm_label_id` FOREIGN KEY (`label_id`) REFERENCES `labels` (`label_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
+
+      // Fix archived marks
+      // First set all date_archived fields to NULL properly
+      $res = $this->db->query("UPDATE `users_to_marks` SET archived_on = NULL WHERE archived_on IS NOT NULL");
+      if (! empty($archived)) {
+        foreach ($archived as $users_to_mark_id) {
+          $res = $this->db->query("UPDATE `users_to_marks` SET archived_on = '" . date('Y-m-d H:i:s') . "' WHERE users_to_mark_id = '" . $users_to_mark_id . "'");
+        }
+      }
+
+      // Now add FKs to marks_to_groups table
+      $this->db->query("ALTER TABLE `user_marks_to_groups` ADD CONSTRAINT `FK_umtg_user_mark_id` FOREIGN KEY (`user_mark_id`) REFERENCES `users_to_marks` (`users_to_mark_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
+      $this->db->query("ALTER TABLE `user_marks_to_groups` ADD CONSTRAINT `FK_umtg_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
+
+      /*
+      - End users_to_marks transistion
+      */
     }
 
     public function down()
     {
       set_time_limit(0);
+
+      // Set default label/tags
+      $default_labels = array('unlabeled', 'read', 'watch', 'listen', 'buy', 'eatdrink', 'do');
+
+      // Drop FKs from user_marks_to_groups table
+      // Don't want them to interfere with reverting to the users_marks table with no indexes
+      $this->db->query("ALTER TABLE `user_marks_to_groups` DROP FOREIGN KEY `FK_umtg_user_mark_id`");
+      $this->db->query("ALTER TABLE `user_marks_to_groups` DROP FOREIGN KEY `FK_umtg_group_id`");
+
+      /*
+      - Start users_marks transistion
+      */
+
+      // Find any archived marks and save id for later use
+      $archived = array();
+      $marks = $this->db->query("SELECT users_to_mark_id FROM `users_to_marks` WHERE archived_on IS NOT NULL");
+      if ($marks->num_rows() >= 1) {
+
+        // Loop thru results
+        foreach ($marks->result() as $mark) {
+          array_push($archived, $mark->users_to_mark_id);
+        }
+      }
+
+      // Change all date_archived back to 0000-00-00 00:00:00 like they were originally
+      $res = $this->db->query("UPDATE `users_to_marks` SET archived_on = '0000-00-00 00:00:00' WHERE archived_on IS NULL");
+
+      // Revert users_marks table
+      $this->db->query("RENAME TABLE `users_to_marks` TO `users_marks`");
+      $this->db->query("ALTER TABLE `users_marks` DROP FOREIGN KEY `FK_utm_mark_id`");
+      $this->db->query("ALTER TABLE `users_marks` DROP FOREIGN KEY `FK_utm_user_id`");
+      $this->db->query("ALTER TABLE `users_marks` DROP FOREIGN KEY `FK_utm_label_id`");
+      $this->db->query("ALTER TABLE `users_marks` DROP INDEX `mark_id`");
+      $this->db->query("ALTER TABLE `users_marks` DROP INDEX `label_id`");
+      $this->db->query("ALTER TABLE `users_marks` DROP INDEX `user_id`");
+      $this->db->query("ALTER TABLE `users_marks` DROP COLUMN `last_updated`");
+      $this->db->query("ALTER TABLE `users_marks` CHANGE COLUMN `users_to_mark_id` `id` int(11) NOT NULL AUTO_INCREMENT");
+      $this->db->query("ALTER TABLE `users_marks` DROP PRIMARY KEY, ADD PRIMARY KEY (`id`)");
+      $this->db->query("ALTER TABLE `users_marks` CHANGE COLUMN `mark_id` `urlid` int(11) NOT NULL");
+      $this->db->query("ALTER TABLE `users_marks` CHANGE COLUMN `user_id` `userid` int(11) NOT NULL AFTER `id`");
+      $this->db->query("ALTER TABLE `users_marks` CHANGE COLUMN `label_id` `tags` text DEFAULT NULL");
+      $this->db->query("ALTER TABLE `users_marks` CHANGE COLUMN `notes` `note` text DEFAULT NULL");
+      $this->db->query("ALTER TABLE `users_marks` CHANGE COLUMN `created_on` `dateadded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP");
+      $this->db->query("ALTER TABLE `users_marks` CHANGE COLUMN `archived_on` `datearchived` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'");
+      $this->db->query("ALTER TABLE `users_marks` ADD COLUMN `status` varchar(255) DEFAULT NULL AFTER `dateadded`");
+      $this->db->query("ALTER TABLE `users_marks` ADD COLUMN `addedby` int(11) NOT NULL AFTER `tags`");
+      $this->db->query("ALTER TABLE `users_marks` ADD COLUMN `groups` int(11) NOT NULL AFTER `addedby`");
+
+
+      // Revert archived marks
+      $res = $this->db->query("UPDATE `users_marks` SET status = NULL WHERE status IS NOT NULL");
+      if (! empty($archived)) {
+        foreach ($archived as $id) {
+          $res = $this->db->query("UPDATE `users_marks` SET status = 'archive' WHERE id = '" . $id . "'");
+        }
+      }
+
+      // Add tags back
+      $marks = $this->db->query("SELECT id, tags FROM `users_marks`");
+      if ($marks->num_rows() >= 1) {
+
+        // Loop thru results and update
+        foreach ($marks->result() as $mark) {
+          $label_id = $mark->label_id - 1;
+          $label    = (array_key_exists($label_id, $default_labels)) ? $default_labels[$label_id] : 'unlabeled';
+          $res      = $this->db->query("UPDATE `users_marks` SET tags = '" . $label . "' WHERE id = '" . $mark->id . "'");
+        }
+      }
+
+      // Add groups back to users_mark table
+      $marks = $this->db->query("SELECT user_mark_id, group_id FROM `user_marks_to_groups`");
+      if ($marks->num_rows() >= 1) {
+
+        // Loop thru results and update
+        foreach ($marks->result() as $mark) {
+          $res = $this->db->query("UPDATE `users_marks` SET groups = '" . $mark->group_id . "' WHERE id = '" . $mark->user_mark_id . "'");
+        }
+      }
+
+      /*
+      - End users_marks transistion
+      */
+
+
       // Drop marks_to_groups table
-      $this->db->query("DROP TABLE IF EXISTS `marks_to_groups`");
+      $this->db->query("DROP TABLE IF EXISTS `user_marks_to_groups`");
 
       // Revert groups invite table
       $this->db->query("RENAME TABLE `group_invites` TO `groups_invites`");
@@ -393,7 +560,6 @@ class Migration_Batshit_Crazy extends CI_Migration {
       ");
 
       // Get all user smart labels from labels table and add back to users_smartlabels
-      $default_labels = array('unlabeled', 'read', 'watch', 'listen', 'buy', 'eatdrink', 'do');
       $labels = $this->db->query("SELECT smart_label_id, user_id, domain, path FROM `labels` WHERE smart_label_id IS NOT NULL AND user_id IS NOT NULL");
       if ($labels->num_rows() >= 1) {
         foreach ($labels->result() as $label) {
