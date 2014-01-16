@@ -328,7 +328,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
           // Figure if we should delete this mark
           $res = $this->db->query("SELECT mark_id FROM marks WHERE mark_id = '" . $mark->urlid . "' LIMIT 1");
           if ($res->num_rows() < 1) {
-            array_push($delete, $id);
+            array_push($delete, $mark_id);
           }
 
           // If it was archived, save here to update later
