@@ -56,18 +56,44 @@ class Install extends CI_Controller {
 
   // Used to update from one version to another.
   public function upgrade()
+  { 
+      // Logged in user id
+      $userId = $this->session->userdata('userid');
+      if (!empty($userId)) {
+          $userFromDb = $this->db->get_where('users',array('user_id' => $userId));
+          if($userFromDb->num_rows() > 0){
+              if($this->is_admin($userFromDb->row())){
+                  // Admin user logged in - run migrations if needed
+                  $this->load->library('migration');
+              
+                  if ( ! $this->migration->current() )
+                  {
+                    show_error($this->migration->error_string());
+                    exit;
+                  }
+                  exit('Upgraded. Please <a href="/">return home</a>.');
+              }
+          }
+        exit('You need to be logged in as admin to upgrade');
+      } else {
+          // No logged user - redirect
+          redirect('/');
+      }
+  }
+  
+  /**
+   * Checks if given user is an admin
+   * TODO Move function to more proper place (model? helper?)
+   * @param unknown $user
+   */
+  public function is_admin($user)
   {
-    // There is no users table, run migrations to make
-        // sure that database is up-to-date.
-        $this->load->library('migration');
-
-        if ( ! $this->migration->current() )
-        {
-          show_error($this->migration->error_string());
-          exit;
-        }
-
-        exit('Upgraded. Please <a href="/">return home</a>.');
+      // TODO Add admin flag in DB to handle this
+      if(property_exists($user, 'admin')) {
+          return $user->admin;
+      } else {
+        return $user->user_id == 1;
+      }      
   }
 
  }

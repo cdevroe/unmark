@@ -551,6 +551,7 @@ class Nilai extends CI_Controller {
 	// Checks to see if they need oEmbed
 	// Process them.
 	// Every 1 minute
+	// FIXME kip9 Remove oembed = '' conditions - backwards compatibility only
 	public function backprocessOembed()
 	{
 
@@ -560,9 +561,9 @@ class Nilai extends CI_Controller {
 		$today = mktime(0, 0, 0, date('n'), date('j'));
 
 		if (isset($_GET['all']) && $_GET['all'] == 'yes') {
-			$marks = $this->db->query("SELECT * FROM marks WHERE oembed = ''ORDER BY id ASC LIMIT 100");
+			$marks = $this->db->query("SELECT * FROM marks WHERE ( oembed = '' or oembed is null ) ORDER BY id ASC LIMIT 100");
 		} else {
-			$marks = $this->db->query("SELECT * FROM marks WHERE UNIX_TIMESTAMP(dateadded) > ".$today." AND oembed = '' ORDER BY id ASC");
+			$marks = $this->db->query("SELECT * FROM marks WHERE UNIX_TIMESTAMP(dateadded) > ".$today." AND ( oembed = '' or oembed is null ) ORDER BY id ASC");
 		}
 
 		if ($marks->num_rows() > 0) {
@@ -591,6 +592,7 @@ class Nilai extends CI_Controller {
 	// Checks to see if they need Recipe Parsing
 	// Process them.
 	// Every minute.
+	// FIXME kip9 Remove recipe = '' conditions - backwards compatibility only
 	public function backprocessRecipes()
 	{
 
@@ -601,9 +603,9 @@ class Nilai extends CI_Controller {
 		$today = mktime(0, 0, 0, date('n'), date('j'));
 
 		if (isset($_GET['all']) && $_GET['all'] == 'yes') {
-			$marks = $this->db->query("SELECT * FROM marks WHERE recipe = '' ORDER BY id ASC LIMIT 100");
+			$marks = $this->db->query("SELECT * FROM marks WHERE ( recipe = '' or recipe is null ) ORDER BY id ASC LIMIT 100");
 		} else {
-			$marks = $this->db->query("SELECT * FROM marks WHERE UNIX_TIMESTAMP(dateadded) > ".$today." AND recipe = '' ORDER BY id ASC");
+			$marks = $this->db->query("SELECT * FROM marks WHERE UNIX_TIMESTAMP(dateadded) > ".$today." AND ( recipe = '' or recipe is null ) ORDER BY id ASC");
 		}
 
 		if ($marks->num_rows() > 0) {
