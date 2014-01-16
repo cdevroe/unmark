@@ -295,6 +295,20 @@ class Migration_Batshit_Crazy extends CI_Migration {
       // Remove the users_smartlabels table
       $this->db->query("DROP TABLE IF EXISTS `users_smartlabels`");
 
+      // Update users_groups table
+      $this->db->query("RENAME TABLE `users_groups` TO `users_to_groups`");
+      $this->db->query("ALTER TABLE `users_to_groups` DROP COLUMN `status`");
+      $this->db->query("ALTER TABLE `users_to_groups` CHANGE COLUMN `id` `users_to_group_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.'");
+      $this->db->query("ALTER TABLE `users_to_groups` DROP PRIMARY KEY, ADD PRIMARY KEY (`users_to_group_id`)");
+      $this->db->query("ALTER TABLE `users_to_groups` CHANGE COLUMN `groupid` `group_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The group id from groups.group_id'");
+      $this->db->query("ALTER TABLE `users_to_groups` CHANGE COLUMN `userid` `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user_id from users.user_id'");
+      $this->db->query("ALTER TABLE `users_to_groups` ADD COLUMN `active` tinyint NOT NULL DEFAULT '1' COMMENT '1 = active, 0 = not active' AFTER `user_id`");
+      $this->db->query("ALTER TABLE `users_to_groups` CHANGE COLUMN `datejoined` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime the user has joined this group.'");
+      $this->db->query("ALTER TABLE `users_to_groups` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.' AFTER `created_on`");
+      $this->db->query("ALTER TABLE `users_to_groups` ADD INDEX `group_id`(group_id)");
+      $this->db->query("ALTER TABLE `users_to_groups` ADD INDEX `user_id`(user_id)");
+      $this->db->query("ALTER TABLE `users_to_groups` ADD CONSTRAINT `FK_utg_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
+      $this->db->query("ALTER TABLE `users_to_groups` ADD CONSTRAINT `FK_utg_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
     }
 
     public function down()
@@ -316,6 +330,21 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `groups_invites` ADD COLUMN `invitedby` int(11) NOT NULL AFTER `emailaddress`");
       $this->db->query("ALTER TABLE `groups_invites` CHANGE COLUMN `created_on` `dateinvited` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
       $this->db->query("ALTER TABLE `groups_invites` ADD COLUMN `status` varchar(255) DEFAULT NULL AFTER `dateinvited`");
+
+      // Revert users_to_groups table
+      $this->db->query("RENAME TABLE `users_to_groups` TO `users_groups`");
+      $this->db->query("ALTER TABLE `users_groups` DROP FOREIGN KEY `FK_utg_group_id`");
+      $this->db->query("ALTER TABLE `users_groups` DROP FOREIGN KEY `FK_utg_user_id`");
+      $this->db->query("ALTER TABLE `users_groups` DROP INDEX `group_id`");
+      $this->db->query("ALTER TABLE `users_groups` DROP INDEX `user_id`");
+      $this->db->query("ALTER TABLE `users_groups` DROP COLUMN `active`");
+      $this->db->query("ALTER TABLE `users_groups` DROP COLUMN `last_updated`");
+      $this->db->query("ALTER TABLE `users_groups` CHANGE COLUMN `users_to_group_id` `id` int(11) NOT NULL AUTO_INCREMENT");
+      $this->db->query("ALTER TABLE `users_groups` DROP PRIMARY KEY, ADD PRIMARY KEY (`id`)");
+      $this->db->query("ALTER TABLE `users_groups` CHANGE COLUMN `group_id` `groupid` int(11) NOT NULL");
+      $this->db->query("ALTER TABLE `users_groups` CHANGE COLUMN `user_id` `userid` int(11) NOT NULL");
+      $this->db->query("ALTER TABLE `users_groups` CHANGE COLUMN `created_on` `datejoined` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+      $this->db->query("ALTER TABLE `users_groups` ADD COLUMN `status` varchar(255) DEFAULT NULL AFTER `datejoined`");
 
       // Revert groups table
       $this->db->query("ALTER TABLE `groups` DROP FOREIGN KEY `FK_user_id`");
