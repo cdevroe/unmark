@@ -364,7 +364,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
       ");
 
       // Get all user smart labels from labels table and add back to users_smartlabels
-      $default_labels = array('unlabeled', 'read', 'watch', 'listen', 'buy', 'eatdrink');
+      $default_labels = array('unlabeled', 'read', 'watch', 'listen', 'buy', 'eatdrink', 'do');
       $labels = $this->db->query("SELECT smart_label_id, user_id, domain, path FROM `labels` WHERE smart_label_id IS NOT NULL AND user_id IS NOT NULL");
       if ($labels->num_rows() >= 1) {
         foreach ($labels->result() as $label) {
