@@ -313,8 +313,9 @@ class Migration_Batshit_Crazy extends CI_Migration {
       // Update `tags` field to a single numeric in order to translate to a FK for labels
       // Move group id to user_marks_to_groups table
 
-      $marks = $this->db->query("SELECT id, tags, groups, status FROM `users_marks`");
+      $marks = $this->db->query("SELECT id, urlid, tags, groups, status FROM `users_marks`");
       $archived = array();
+      $delete   = array();
       if ($marks->num_rows() >= 1) {
 
         // Loop thru results
@@ -323,6 +324,12 @@ class Migration_Batshit_Crazy extends CI_Migration {
           $label_id  = 1;
           $group_id  = $mark->groups;
           $mark_id   = $mark->id;
+
+          // Figure if we should delete this mark
+          $res = $this->db->query("SELECT mark_id FROM marks WHERE mark_id = '" . $mark->urlid . "' LIMIT 1");
+          if ($res->num_rows() < 1) {
+            array_push($delete, $id);
+          }
 
           // If it was archived, save here to update later
           if (strtolower($mark->status) == 'archive') {
@@ -355,6 +362,16 @@ class Migration_Batshit_Crazy extends CI_Migration {
         }
       }
 
+      // Remove any urlids in users_marks that do NOT exist in marks table
+      // If we skip this step the FK creation will fail
+      // Data is a bit dirty because when marks were deleted, it never deleted their children, leaving little orphan annies
+      // Fix it!
+      if (! empty($delete)) {
+        foreach ($delete as $id) {
+          $res = $this->db->query("DELETE FROM `users_marks` WHERE id = '" . $id . "'");
+        }
+      }
+
 
       // Update table name & structure
       $this->db->query("RENAME TABLE `users_marks` TO `users_to_marks`");
@@ -365,7 +382,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `users_to_marks` DROP PRIMARY KEY, ADD PRIMARY KEY (`users_to_mark_id`)");
       $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `urlid` `mark_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The mark_id from marks.mark_id.' AFTER `users_to_mark_id`");
       $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `userid` `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user_id from users.user_id' AFTER `mark_id`");
-      $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `tags` `label_id` bigint(20) UNSIGNED NOT NULL DEFAULT NULL COMMENT 'The label_id from labels.label_id.'");
+      $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `tags` `label_id` bigint(20) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'The label_id from labels.label_id.'");
       $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `note` `notes` text DEFAULT NULL");
       $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `dateadded` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime this record was created.'");
       $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `datearchived` `archived_on` datetime DEFAULT NULL COMMENT 'The datetime this mark was archived. NULL = not archived.'");
