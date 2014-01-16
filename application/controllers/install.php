@@ -89,9 +89,9 @@ class Install extends CI_Controller {
   public function is_admin($user)
   {
       // TODO Add admin flag in DB to handle this
-      if(property_exists($user, 'admin')){
+      if(property_exists($user, 'admin')) {
           return $user->admin;
-      } else{
+      } else {
         return $user->user_id == 1;
       }      
   }
