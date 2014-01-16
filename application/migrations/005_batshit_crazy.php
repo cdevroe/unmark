@@ -18,6 +18,12 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `users_marks` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
       $this->db->query("ALTER TABLE `users_smartlabels` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
 
+       /*
+      - Start updates for labels table
+      - Import default system labels
+      - Import any user smart labels
+      */
+
       // Create new labels table
       $this->db->query("
         CREATE TABLE IF NOT EXISTS `labels` (
@@ -41,14 +47,21 @@ class Migration_Batshit_Crazy extends CI_Migration {
       // Add default data to labels
       // Default: Unlabeled, Read, Watch, Listen, Buy, Eat & Drink, Do
       // Then add all the smart labels
-      $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('Unlabeled', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('Read', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('Watch', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('Listen', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('Buy', '" . date('Y-m-d H:i:s') . "')");
-      $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('Eat & Drink', '" . date('Y-m-d H:i:s') . "')");
+      $default_labels = array(
+        'unlabeled' => array('label_id' => 1, 'name' => 'Unlabeled'),
+        'read'      => array('label_id' => 2, 'name' => 'Read'),
+        'watch'     => array('label_id' => 3, 'name' => 'Watch'),
+        'listen'    => array('label_id' => 4, 'name' => 'Listen'),
+        'buy'       => array('label_id' => 5, 'name' => 'Buy'),
+        'eatdrink'  => array('label_id' => 6, 'name' => 'Eat & Drink'),
+      );
 
-      // watch
+      foreach ($default_labels as $label) {
+        $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('" . $label['name'] . "', '" . date('Y-m-d H:i:s') . "')");
+      }
+
+      // Start default system smart labels
+      // Watch
       $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('3', 'youtube.com', '/watch', '" . date('Y-m-d H:i:s') . "')");
       $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('3', 'viddler.com', '/v', '" . date('Y-m-d H:i:s') . "')");
       $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('3', 'devour.com', '/video', '" . date('Y-m-d H:i:s') . "')");
@@ -76,6 +89,48 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('5', 'amazon.com', '/gp/product', '" . date('Y-m-d H:i:s') . "')");
       $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `path`, `created_on`) VALUES ('5', 'fab.com', '/sale', '" . date('Y-m-d H:i:s') . "')");
       $this->db->query("INSERT INTO `labels` (`smart_label_id`, `domain`, `created_on`) VALUES ('5', 'zappos.com', '" . date('Y-m-d H:i:s') . "')");
+
+      // Now open users_smartlabels, import into labels
+      $labels = $this->db->query("SELECT userid, domain, path, label FROM users_smartlabels");
+      if ($labels->num_rows() >= 1) {
+        foreach ($labels->result() as $label) {
+
+          // Proceed only if domain is not empty
+          $current_label = strtolower($label->label);
+          if (! empty($label->domain) && ! empty($label->userid) && is_numeric($label->userid) && ! empty($current_label) && array_key_exists($current_label, $default_labels)) {
+            // Clean up host (remove www.)
+            // Make sure it's lowercase
+            $domain   = str_replace('www.', '', strtolower($label->domain));
+            $label_id = $default_labels[$current_label]['label_id'];
+            $path     = (empty($label->path)) ? null : "'" . $label->path . "'";
+
+            // Find an occurences of this record
+            $q        = $this->db->query("
+              SELECT COUNT(*) FROM labels
+              WHERE user_id = '" . $label->userid . "'
+              AND domain = '" . $domain . "'
+              AND smart_label_id = '" . $label_id . "'
+            ");
+
+            $row   = $q->row();
+            $total = (integer) $row->{'COUNT(*)'};
+
+            // If not found, add it
+            if ($total < 1) {
+              $res = $this->db->query("
+                INSERT INTO `labels`
+                (`smart_label_id`, `user_id`, `domain`, `path`, `created_on`)
+                VALUES ('" . $label_id . "', '" . $label->userid . "', " . $domain . "', " . $path . ", '" . date('Y-m-d H:i:s') . "')
+              ");
+            }
+
+          }
+        }
+      }
+
+       /*
+      - End labels import
+      */
 
 
       /*
@@ -221,22 +276,8 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `users` CHANGE COLUMN `status` `active` tinyint NOT NULL DEFAULT '0' COMMENT '1 = active, 0 = inactive'");
       $this->db->query("ALTER TABLE `users` ADD COLUMN `admin` tinyint NOT NULL DEFAULT '0' COMMENT '1 = yes, 0 = no' AFTER `active`");
 
-      // Update users_smartlabels
-      /*$this->db->query("RENAME TABLE `users_smartlabels` TO `user_smart_labels`");
-      $this->db->query("ALTER TABLE `user_smart_labels` DROP COLUMN `path`");
-      $this->db->query("ALTER TABLE `user_smart_labels` DROP COLUMN `label`");
-      $this->db->query("ALTER TABLE `user_smart_labels` CHANGE COLUMN `id` `user_smart_label_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.'");
-      $this->db->query("ALTER TABLE `user_smart_labels` DROP PRIMARY KEY, ADD PRIMARY KEY (`user_smart_label_id`)");
-      $this->db->query("ALTER TABLE `user_smart_labels` CHANGE COLUMN `userid` `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user_id from users.user_id'");
-      $this->db->query("ALTER TABLE `user_smart_labels` ADD COLUMN `label_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The label_id from labels.label_id' AFTER `user_id`");
-      $this->db->query("ALTER TABLE `user_smart_labels` CHANGE COLUMN `domain` `domain` varchar(255) NOT NULL COMMENT 'The hostname of the domain to match. In all lowercase.'");
-      $this->db->query("ALTER TABLE `user_smart_labels` ADD COLUMN `active` tinyint NOT NULL DEFAULT '1' COMMENT '0 = active, 1 = inactive' AFTER `domain`");
-      $this->db->query("ALTER TABLE `user_smart_labels` ADD COLUMN `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime this record was created.' AFTER `active`");
-      $this->db->query("ALTER TABLE `user_smart_labels` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.' AFTER `created_on`");
-      $this->db->query("ALTER TABLE `user_smart_labels` ADD INDEX `user_id`(user_id)");
-      $this->db->query("ALTER TABLE `user_smart_labels` ADD INDEX `label_id`(label_id)");
-      $this->db->query("ALTER TABLE `user_smart_labels` ADD CONSTRAINT `FK_usl_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
-      $this->db->query("ALTER TABLE `user_smart_labels` ADD CONSTRAINT `FK_usl_label_id` FOREIGN KEY (`label_id`) REFERENCES `labels` (`label_id`)   ON UPDATE CASCADE ON DELETE CASCADE");*/
+      // Remove the users_smartlabels table
+      $this->db->query("DROP TABLE IF EXISTS `users_smartlabels`");
 
     }
 
@@ -295,6 +336,35 @@ class Migration_Batshit_Crazy extends CI_Migration {
       }
 
       // Revert user smart labels
+      $this->db->query("
+        CREATE TABLE IF NOT EXISTS `users_smartlabels` (
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `userid` int(11) NOT NULL,
+          `domain` varchar(255) NOT NULL,
+          `path` varchar(255) NOT NULL,
+          `label` varchar(255) NOT NULL,
+          PRIMARY KEY (`id`)
+        ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+      ");
+
+      // Get all user smart labels from labels table and add back to users_smartlabels
+      $default_labels = array('unlabeled', 'read', 'watch', 'listen', 'buy', 'eatdrink');
+      $labels = $this->db->query("SELECT smart_label_id, user_id, domain, path FROM `labels` WHERE smart_label_id IS NOT NULL AND user_id IS NOT NULL");
+      if ($labels->num_rows() >= 1) {
+        foreach ($labels->result() as $label) {
+
+          // Proceed only if domain is not empty
+          $label_id      = $label->smart_label_id - 1;
+          $current_label = (isset($default_labels[$label_id])) ? $default_labels[$label_id] : null;
+          if (! empty($current_label)) {
+            $res = $this->db->query("
+              INSERT INTO `users_smartlabels`
+              (`userid`, `domain`, `path`, `label`)
+              VALUES ('" . $label->user_id . "', '" . $label->domain . "', " . $label->path . "', '" . $current_label . "')
+            ");
+          }
+        }
+      }
 
       // Drop labels table
       $this->db->query("DROP TABLE IF EXISTS `labels`");
