@@ -5,6 +5,21 @@
     <h2>Changelog</h2>
 		<p>A quick list of what's new. Posted immediately upon update.</p>
 
+        <h4 id="0312"><a href="#0312">0.3.12 - 16 January 2014</a></h4>
+          <ul>
+            <li>Bug: Fixed processing of recipes and oembeds.</li>
+          </ul>
+        
+        <h4 id="0311"><a href="#0311">0.3.11 - 15 January 2014</a></h4>
+          <ul>
+            <li>Bug: Added date_joined back to being saved on new user accounts.</li>
+          </ul>
+
+        <h4 id="0310"><a href="#0310">0.3.10 - 15 January 2014</a></h4>
+          <ul>
+            <li>Update: Users with old password encryption technique will be update to new encrypted password/salt upon next successful login.</li>
+          </ul>
+
         <h4 id="039"><a href="#039">0.3.9 - 15 January 2014</a></h4>
           <ul>
             <li>Bug: Fixing password issue. Forgot to store salt, DERP!</li>
