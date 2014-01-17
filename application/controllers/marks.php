@@ -23,31 +23,7 @@ class Marks extends Plain_Controller {
         $where_time    = ($data['when'] == 'yesterday') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $yesterday . "' AND UNIX_TIMESTAMP(marks.created_on) < '" . $today . "' AND " : $where_time;
         $archived      = ($data['when'] == 'archive') ? 'IS NOT NULL' : 'IS NULL';
         $data['marks'] = $this->user_marks->readComplete("users_to_marks.user_id='". $_SESSION['user']['user_id'] . "' AND" . $where_time . " users_to_marks.archived_on " . $archived, 100, 1);
-
-
-
-        //$this->load->model('Groups_model');
-        //$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
-        $data['groups']['belong'] = array();
-
-       /* $invites = $this->db->query("
-            SELECT
-            group_invites.*,
-            group_invites.group_invite_id as inviteid,
-            groups.*,
-            FROM group_invites
-            LEFT JOIN groups ON group_invites.group_id = groups.group_id
-            WHERE group_invites.email = '". $_SESSION['user']['email'] . "'
-            AND
-            group_invites.active = '0'
-        ");
-
-        if ($invites->num_rows() > 0) $data['invites'] = $invites->result_array();*/
-        $data['invites'] = array();
-
-
         $data['label'] = '';
-        $data['group']['groupuid'] = '';
 
         $data['marks_saved_today'] = $this->user_marks->get_number_saved_today();
         $data['marks_archived_today'] = $this->user_marks->get_number_archived_today();
@@ -61,7 +37,6 @@ class Marks extends Plain_Controller {
         $this->session->set_flashdata('lasturl', current_url());
 
 
-        $this->load->model('Groups_model');
         $this->load->model('Marks_model');
 
         $label = $this->uri->segment(3);
@@ -69,50 +44,9 @@ class Marks extends Plain_Controller {
         // Retrieve marks.
         $data['marks'] = $this->Marks_model->get_by_label($label);
 
-        // Load the groups the user belongs to
-        $data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
         $data['label'] = $label;
         $data['group']['groupuid'] = '';
-        $data['when'] = 'all';
-
-        $this->load->view('marks',$data);
-    }
-
-    public function bygroup()
-    {
-        if (!$_SESSION['user']['user_id']) { redirect(''); }
-        $this->session->set_flashdata('lasturl', current_url());
-
-        $groupuid = $this->uri->segment(2);
-
-
-        $this->load->model('Groups_model');
-        $this->load->model('Marks_model');
-
-        // General group information
-        // If Group does not exist, 404
-        // Needs to be moved into the model. Somehow.
-        $group = $this->db->query("SELECT * FROM groups WHERE uid = '".$groupuid."'");
-        if ($group->num_rows() > 0) {
-            $group = $group->result_array();
-            $data['group']['name'] = $group[0]['name'];
-            $data['group']['description'] = $group[0]['description'];
-            $data['group']['groupuid'] = $groupuid;
-            $data['group']['owner'] = $group[0]['createdby'];
-
-            $data['group']['member_count'] = $this->Groups_model->get_group_members_count($group[0]['id']);
-
-        } else {
-            show_404();
-        }
-
-        $data['marks'] = $this->Marks_model->get_by_group($groupuid);
-
-        // Load the groups the user belongs to
-        $data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
-
-        $data['label'] = '';
         $data['when'] = 'all';
 
         $this->load->view('marks',$data);
@@ -127,18 +61,13 @@ class Marks extends Plain_Controller {
 
         if ($s == '') redirect('home');
 
-
-        $this->load->model('Groups_model');
         $this->load->model('Marks_model');
 
         $data['marks'] = $this->Marks_model->search_from_user($s);
 
-        // Load the groups the user belongs to
-        $data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
         $data['search'] = $s;
         $data['label'] = '';
-        $data['group']['groupuid'] = '';
         $data['when'] = 'all';
 
         $this->load->view('marks',$data);
