@@ -48,6 +48,16 @@ function isValid($val, $type)
         // Slugs can only contain letters, numbers and dashes
         return (preg_match('/^[a-z0-9\-\/]+$/i', $val)) ? true : false;
     }
+    elseif ($type == 'md5') {
+        // just check the string length for MD5
+        return (strlen($val) == 32) ? true : false;
+    }
+    elseif ($type == 'url') {
+        // Use parse_url
+        // If it has a scheme and a host, it's good to go
+        $url   = parse_url($url);
+        return (isset($url['scheme']) && ! empty($url['scheme']) && isset($url['host']) && ! empty($url['host'])) ? true : false;
+    }
     return false;
 }
 
