@@ -41,21 +41,27 @@
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
 
+// Marks
+$route['marks/edit/(:num)']    = "marks/edit";
+$route['marks/delete/(:num)']  = "marks/delete";
+$route['marks/archive/(:num)'] = "marks/archive";
+$route['marks/restore/(:num)'] = "marks/restore";
+$route['marks/label/(:any)']   = "marks/byLabel";
+$route['marks/(:any)']         = "marks/index";
+
+// Registration
 $route['sirius'] = "welcome/sirius";
 
+// Installation & Upgrades
 $route['install'] = "install";
 $route['upgrade'] = "install/upgrade";
 
-$route['users/login'] = "users/login";
-$route['users/logout'] = "users/logout";
+// User shiz
 $route['users/add'] = "users/add";
 $route['users/paymentsuccess'] = "users/paymentsuccess";
 $route['users/paymentcancelled'] = "users/paymentcancelled";
 
-$route['home'] = "nilai/home";
-$route['home/label/(:any)'] = "nilai/bylabel";
-$route['home/(:any)'] = "nilai/home";
-
+// groups
 $route['groups/create'] = "groups/create";
 $route['groups/add'] = "groups/add";
 $route['groups/update'] = "groups/update";
@@ -69,30 +75,15 @@ $route['groups/(:any)/leave'] = "groups/leave";
 $route['groups/(:any)/remove/(:any)'] = "groups/remove";
 $route['groups/(:any)'] = "nilai/bygroup";
 
-
-
+// help
 $route['help/bookmarklet'] = "welcome/helpbookmarklet";
 $route['help/faq'] = "welcome/faq";
 $route['help/how'] = "welcome/how";
 
+// one offs
 $route['changelog'] = "welcome/changelog";
 $route['terms'] = "welcome/terms";
 
-$route['marks/add'] = "nilai/add";
-$route['marks/addlabel'] = "nilai/addlabel";
-$route['marks/addgroup'] = "nilai/addgroup";
-$route['marks/savenote'] = "nilai/savenote";
-$route['marks/edit/(:num)'] = "nilai/edit";
-$route['marks/delete/(:num)'] = "nilai/delete";
-$route['marks/search'] = "nilai/search";
-$route['marks/archive/(:num)'] = "nilai/archive";
-$route['marks/restore/(:num)'] = "nilai/restore";
-
-$route['marks/addsmartlabel'] = "nilai/addsmartlabel";
-$route['marks/removesmartlabel'] = "nilai/removesmartlabel";
-
-$route['marks/backprocessOembed'] = "nilai/backprocessOembed";
-$route['marks/backprocessRecipes'] = "nilai/backprocessRecipes";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
