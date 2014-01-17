@@ -5,6 +5,7 @@ class Plain_Controller extends CI_Controller {
     public $clean          = null;
     public $csrf_valid     = false;
     public $db_clean       = null;
+    public $flash_message  = array();
     public $footer         = 'partials/shared/footer';
     public $header         = 'partials/shared/header';
     public $html_clean     = null;
@@ -20,6 +21,9 @@ class Plain_Controller extends CI_Controller {
 
         // Generate CSRF token per user
         $this->generateCSRF();
+
+        // Get any flash messages
+        $this->getFlashMessages();
 
     }
 
@@ -60,6 +64,15 @@ class Plain_Controller extends CI_Controller {
 
         if (! isset($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = generateCSRF();
+        }
+    }
+
+    protected function getFlashMessages()
+    {
+        if (isset($_SESSION['flash_message']['message']) && ! empty($_SESSION['flash_message']['message'])) {
+            $this->flash_message['type']    = $_SESSION['flash_message']['type'];
+            $this->flash_message['message'] = $_SESSION['flash_message']['message'];
+            unset($_SESSION['flash_message']);
         }
     }
 
@@ -106,9 +119,11 @@ class Plain_Controller extends CI_Controller {
         ));
     }
 
-    protected function setFlashMessage($message)
+    protected function setFlashMessage($message, $type='error')
     {
-        // TO DO - set to constant variable to be used in views for errors
+        $_SESSION['flash_message']            = array();
+        $_SESSION['flash_message']['type']    = $type;
+        $_SESSION['flash_message']['message'] = $message;
     }
 
     // Process a view
