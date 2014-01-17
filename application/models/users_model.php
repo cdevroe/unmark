@@ -31,7 +31,7 @@ class Users_model extends Plain_Model
             // Make sure email does not exist already
             $total = $this->count("email = '" . $options['email'] . "'");
             if ($total > 0) {
-                $this->formatErrors('This email address already exists in the system.');
+                return $this->formatErrors('This email address already exists in the system.');
             }
 
             // If you made it this far, we need to add the record to the DB
@@ -48,7 +48,7 @@ class Users_model extends Plain_Model
                 return $this->read($user_id);
             }
             else {
-                $this->formatErrors('Eek this is akward, sorry. Something went wrong. Please try again.');
+                return $this->formatErrors('Eek this is akward, sorry. Something went wrong. Please try again.');
             }
         }
 

@@ -5,9 +5,6 @@ class Users_To_Marks_model extends Plain_Model
 
     public $sort = 'created_on DESC';
 
-    // Overwrite automatic table name
-    // The majort
-    const TABLE  = 'users_to_marks';
 
 	public function __construct()
     {
@@ -16,38 +13,77 @@ class Users_To_Marks_model extends Plain_Model
 
         // Set data types
         $this->data_types = array(
+            'mark_id'     =>  'numeric',
             'user_id'     =>  'numeric',
-            'email'       =>  'email',
-            'password'    =>  'password',
-            'active'      =>  'bool',
-            'admin'       =>  'bool',
-            'created_on'  =>  'datetime'
+            'label_id'    =>  'numeric',
+            'notes'       =>  'string',
+            'created_on'  =>  'datetime',
+            'archived_on' =>  'datetime',
+            'title'       =>  'string',
+            'url'         =>  'url'
         );
 
-        // Overwrite
-        $this->id_column = 'users_to_mark_id';
     }
 
-    function create($options=array())
+    public function create($options=array())
     {
+        $valid  = validate($options, $this->data_types, array('title', 'url', 'user_id', 'label_id'));
 
+        // Make sure all the options are valid
+        if ($valid === true) {
 
-        if ($title == '' || $url == '') return false;
+            // Load marks model
+            $this->load->model('marks_model', 'marks');
+            $mark_options = array('title' => $options['title'], 'url' => $options['url']);
+            $mark_id = $this->marks->create($mark_options);
 
-        // Be sure current URL does not exist in database already
-        $mark = $this->db->get_where('marks',array('url'=>$url));
+            // Remove title and  url from options array
+            unset($options['title']);
+            unset($options['url']);
 
-        if ($mark->num_rows() > 0) {
-            $mark = $mark->result_array();
-            return $mark[0]['id'];
+            // If no mark_id, return error
+            if ($mark_id === false) {
+                return $this->formatErrors('The mark could not be created please try again.');
+            }
+
+            // Check if this mark_id/user_id already exists
+            // If so, update it, else add it new
+            $total = $this->count("user_id = '" . $options['user_id'] . "' AND mark_id = '" . $mark_id . "'");
+
+            // If groups exist, save and remove them for later
+            //$groups        = (isset($options['groups'] && ! empty($options['groups']) && is_array($options['groups']))) ? $options['groups'] : array();
+            //$update_groups = (isset($options['update_groups'] && ! empty($options['update_groups']))) ? true : false;
+
+            // Unset some options
+            //if (isset($options['groups']) { unset($options['groups']); }
+            //if (isset($options['update_groups']) { unset($options['update_groups']); }
+
+            // Add it new
+            if ($total < 1) {
+                $options['created_on'] = date('Y-m-d H:i:s');
+                $q   = $this->db->insert_string('users_to_marks', $options);
+                $res = $this->db->query($q);
+
+                // Check for errors
+                $this->sendException();
+
+                if ($res === true) {
+                    $user_mark_id = $this->db->insert_id();
+                    //self::updateGroups($user_mark_id, $groups, $update_groups);
+                    return $this->readComplete($user_mark_id);
+                }
+                else {
+                    return $this->formatErrors('The mark could not be created. Please try again.');
+                }
+            }
+
+            return $this->formatErrors('You have already saved this mark. [Click here to view it].');
+
         }
 
-        $this->db->insert('marks',array('title'=>$title,'url'=>$url));
-
-        // Still unsure if this is the best way to get this ID
-        return $this->db->insert_id();
-
+        return $this->formatErrors($valid);
     }
+
 
     function add_mark_to_user($urlid='')
     {
@@ -67,10 +103,6 @@ class Users_To_Marks_model extends Plain_Model
         return $this->db->insert_id();
     }
 
-    function update()
-    {
-
-    }
 
     function delete_mark_for_user($urlid)
     {
@@ -140,6 +172,8 @@ class Users_To_Marks_model extends Plain_Model
             WHERE " . $where . " GROUP BY users_to_marks.users_to_mark_id" . $sort . $q_limit
         );
 
+        // Check for errors
+        $this->sendException();
 
         // Now format the group names and ids
         if ($marks->num_rows() > 0) {
@@ -256,6 +290,43 @@ class Users_To_Marks_model extends Plain_Model
 		}
 
 		return false;
+    }
+
+    public function update($where, $options)
+    {
+
+        // If groups exist, save and remove them for later
+        $groups        = (isset($options['groups'] && ! empty($options['groups']) && is_array($options['groups']))) ? $options['groups'] : array();
+        $update_groups = (isset($options['update_groups'] && ! empty($options['update_groups']))) ? true : false;
+
+        // Unset some options
+        if (isset($options['groups']) { unset($options['groups']); }
+        if (isset($options['update_groups']) { unset($options['update_groups']); }
+
+        $mark = parent::update($where, $options);
+
+        if (isset($mark->users_to_mark_id)) {
+            self::updateGroups($mark->users_to_mark_id, $groups, $update_groups);
+            return $this->readComplete($mark->users_to_mark_id);
+        }
+
+        return $mark;
+    }
+
+    protected function updateGroups($user_mark_id, $groups=array(), $update_groups=false)
+    {
+        if ((! empty($groups) || ! empty($update_groups)) && is_numeric($user_mark_id)) {
+            $this->load->model('user_marks_to_groups', 'to_groups');
+            $res = $this->to_groups->delete("user_mark_id = '" . $user_mark_id . "'");
+
+            if (! empty($groups)) {
+                foreach ($groups as $group_id) {
+                    if (is_numeric($group_id)) {
+                        $res = $this->to_groups->create(array('user_mark_id' => $user_mark_id, 'group_id' => $group_id));
+                    }
+                }
+            }
+        }
     }
 
 

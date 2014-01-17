@@ -24,17 +24,19 @@ class Marks_model extends Plain_Model
 
     public function create($options=array())
     {
-        $valid  = validate($options, $this->data_types, array('title','url', 'url_key'));
+        $valid  = validate($options, $this->data_types, array('title', 'url'));
 
         // Make sure all the options are valid
         if ($valid === true) {
 
             // Make sure url doesn't already exist
-            $mark = $this->read("url_key = '" . md5($options['url']) . "'", 1, 1, 'mark_id');
+            $md5  = md5($options['url']);
+            $mark = $this->read("url_key = '" . $md5 . "'", 1, 1, 'mark_id');
 
             // If not found, add it
             if (! isset($mark->mark_id)) {
                 $options['created_on'] = date('Y-m-d H:i:s');
+                $options['url_key']    = $md5;
                 $q   = $this->db->insert_string('marks', $options);
                 $res = $this->db->query($q);
 
@@ -42,11 +44,11 @@ class Marks_model extends Plain_Model
                 $this->sendException();
 
                 // Return mark_id
-                return ($res === true) ? $this->db->insert_id() : false;
+                return ($res === true) ? $this->db->insert_id() : $this->formatErrors('Mark could not be added. Please try again.');
             }
         }
 
-        return false;
+        return $this->formatErrors($valid);
     }
 
 }
