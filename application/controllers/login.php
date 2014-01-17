@@ -60,7 +60,7 @@ class Login extends Plain_Controller {
         // Set session variables and send user on their way
         $user->email = $this->clean->email;
         $this->sessionAddUser($user);
-        header('Location: /home');
+        header('Location: /marks');
         exit;
     }
 }

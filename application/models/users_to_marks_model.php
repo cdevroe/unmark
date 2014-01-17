@@ -245,12 +245,12 @@ class Users_To_Marks_model extends Plain_Model
     {
 
         // If groups exist, save and remove them for later
-        $groups        = (isset($options['groups'] && ! empty($options['groups']) && is_array($options['groups']))) ? $options['groups'] : array();
-        $update_groups = (isset($options['update_groups'] && ! empty($options['update_groups']))) ? true : false;
+        $groups        = (isset($options['groups']) && ! empty($options['groups']) && is_array($options['groups'])) ? $options['groups'] : array();
+        $update_groups = (isset($options['update_groups']) && ! empty($options['update_groups'])) ? true : false;
 
         // Unset some options
-        if (isset($options['groups']) { unset($options['groups']); }
-        if (isset($options['update_groups']) { unset($options['update_groups']); }
+        if (isset($options['groups'])) { unset($options['groups']); }
+        if (isset($options['update_groups'])) { unset($options['update_groups']); }
 
         $mark = parent::update($where, $options);
 
