@@ -61,46 +61,58 @@
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Sort <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <li<?php if ($when == 'all') echo ' class="active"';?>>
-          <a href="/home">All</a>
+          <a href="/marks">All</a>
         </li>
         <li<?php if ($when == 'today') echo ' class="active"';?>>
-          <a href="/home/today">Today</a>
+          <a href="/marks/today">Today</a>
         </li>
         <li<?php if ($when == 'yesterday') echo ' class="active"';?>>
-          <a href="/home/yesterday">Yesterday</a>
+          <a href="/marks/yesterday">Yesterday</a>
         </li>
         <li class="divider"></li>
         <li<?php if ($label == 'read') echo ' class="active"';?>>
-          <a href="/home/label/read">Read</a>
+          <a href="/marks/label/read">Read</a>
         </li>
         <li<?php if ($label == 'watch') echo ' class="active"';?>>
-          <a href="/home/label/watch">Watch</a>
+          <a href="/marks/label/watch">Watch</a>
         </li>
         <li<?php if ($label == 'listen') echo ' class="active"';?>>
-          <a href="/home/label/listen">Listen</a>
+          <a href="/marks/label/listen">Listen</a>
         </li>
         <li<?php if ($label == 'buy') echo ' class="active"';?>>
-          <a href="/home/label/buy">Buy</a>
+          <a href="/marks/label/buy">Buy</a>
         </li>
         <li<?php if ($label == 'eatdrink') echo ' class="active"';?>>
-          <a href="/home/label/eatdrink">Eat & Drink</a>
+          <a href="/marks/label/eatdrink">Eat & Drink</a>
         </li>
         <li<?php if ($label == 'do') echo ' class="active"';?>>
-          <a href="/home/label/do">Do</a>
+          <a href="/marks/label/do">Do</a>
         </li>
         <li class="divider"></li>
         <li<?php if ($label == 'unlabeled') echo ' class="active"';?>>
-          <a href="/home/label/unlabeled">Unlabeled</a>
+          <a href="/marks/label/unlabeled">Unlabeled</a>
         </li>
         <li<?php if ($when == 'archive') echo ' class="active"';?>>
-          <a href="/home/archive">Archive</a>
+          <a href="/marks/archive">Archive</a>
         </li>
       </ul>
       </li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Groups <b class="caret"></b></a>
-
+      <ul class="dropdown-menu">
+        <li<?php if ($group == 'create') echo ' class="active"';?>>
+          <a href="/groups/create">Create a group +</a>
+        </li>
+        <?php if (isset($groups['belong']) && !empty($groups['belong'])) { ?>
+        <li class="divider"></li>
+        <?php //foreach($groups['belong'] as $gb) {  ?>
+        <li<?php //if ($groups['groupuid'] == strtoupper($gb['uid'])) echo ' class="active"';?>>
+          <a href="/groups/<?php //echo strtoupper($gb['uid']);?>"><?php //echo $gb['name'];?></a>
+        </li>
+        <?php //} ?>
+        <?php } ?>
+      </ul>
       </li>
-      <li><a href="/users/logout"><i class="icon-off"></i> Out</a></li>
+      <li><a href="/logout"><i class="icon-off"></i> Out</a></li>
     </ul>
     <hr />
   </div>

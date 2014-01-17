@@ -26,8 +26,9 @@ class Marks extends Plain_Controller {
 
 
 
-        $this->load->model('Groups_model');
-        $data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
+        //$this->load->model('Groups_model');
+        //$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
+        $data['groups']['belong'] = array();
 
        /* $invites = $this->db->query("
             SELECT

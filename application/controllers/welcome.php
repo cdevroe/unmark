@@ -15,7 +15,7 @@ class Welcome extends Plain_Controller {
 			exit;
 		}
 
-		$this->view('marks');
+		$this->view('home');
 
 		/*
 		- Not sure what this is about so leaving for now
