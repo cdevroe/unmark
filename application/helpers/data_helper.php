@@ -5,6 +5,18 @@ function decodeValue($str)
     return (is_string($str) && ! empty($str)) ? stripslashes(html_entity_decode(rawurldecode(trim($str)), ENT_QUOTES, 'UTF-8')) : $str;
 }
 
+// Format any errors coming back to standardize them
+function formatErrors($errors)
+{
+    if (is_string($errors)) {
+        $message = $errors;
+        $errors  = new stdClass;
+        $errors->{'0'} = $message;
+    }
+
+    return $errors;
+}
+
 function getLastJsonError()
 {
     switch (json_last_error()) {

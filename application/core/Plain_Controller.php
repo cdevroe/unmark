@@ -3,6 +3,7 @@
 class Plain_Controller extends CI_Controller {
 
     public $clean          = null;
+    public $csrf_valid     = false;
     public $db_clean       = null;
     public $footer         = 'partials/shared/footer';
     public $header         = 'partials/shared/header';
@@ -16,6 +17,9 @@ class Plain_Controller extends CI_Controller {
 
         // Clean incoming variables in a variety of ways
         $this->clean();
+
+        // Generate CSRF token per user
+        $this->generateCSRF();
 
     }
 
@@ -41,6 +45,24 @@ class Plain_Controller extends CI_Controller {
 
     }
 
+    // Check and generate CRSF tokens
+    protected function generateCSRF()
+    {
+        if (isset($this->clean->csrf_token)) {
+            if (isset($_SESSION['csrf_token']) && ! empty($_SESSION['csrf_token'])) {
+                $this->csrf_valid = ($_SESSION['csrf_token'] == $this->clean->csrf_token) ? true : false;
+            }
+
+            if ($this->csrf_valid === false) {
+                $this->setFlashMessage('We could not locate the correct security token. Please try again.');
+            }
+        }
+
+        if (! isset($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = generateCSRF();
+        }
+    }
+
     protected function render($arr)
     {
         $json         = json_encode($arr, JSON_FORCE_OBJECT);
@@ -55,6 +77,11 @@ class Plain_Controller extends CI_Controller {
             'no_header'    => true,
             'no_footer'    => true
         ));
+    }
+
+    protected function setFlashMessage($message)
+    {
+        // TO DO - set to constant variable to be used in views for errors
     }
 
     // Process a view

@@ -64,18 +64,6 @@ class Plain_Model extends CI_Model
         return self::update($where, array('active'=>'0'));
     }
 
-    // Format any errors coming back to standardize them
-    public function formatErrors($errors)
-    {
-        if (is_string($errors)) {
-            $message = $errors;
-            $errors  = new stdClass;
-            $errors->{'0'} = $message;
-        }
-
-        return $errors;
-    }
-
     protected function getCacheKey($query)
     {
         // Set the tables not to cache results for
