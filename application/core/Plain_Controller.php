@@ -13,6 +13,11 @@ class Plain_Controller extends CI_Controller {
 
     public function __construct()
     {
+        // Start session
+        // Will switch this up once we have proper session handlers in place
+        // For now using native PHP sessions & removing CI sessions
+        session_start();
+
         // Call home
         parent::__construct();
 
@@ -97,7 +102,7 @@ class Plain_Controller extends CI_Controller {
     // If not an admin, redirect
     protected function redirectIfNotAdmin($url='/')
     {
-        if (! isset($_SESSION['account']['admin']) || empty($_SESSION['account']['admin'])) {
+        if (! isset($_SESSION['user']['admin']) || empty($_SESSION['user']['admin'])) {
             header('Location: ' . $url);
             exit;
         }
@@ -117,6 +122,15 @@ class Plain_Controller extends CI_Controller {
             'no_header'    => true,
             'no_footer'    => true
         ));
+    }
+
+    protected function sessionSetUser($user)
+    {
+        $_SESSION['logged_in'] = true;
+        $_SESSION['user']      = array();
+        foreach ($user as $k => $v) {
+            $_SESSION['user'][$k] = $v;
+        }
     }
 
     protected function setFlashMessage($message, $type='error')

@@ -10,51 +10,57 @@ class Login extends Plain_Controller {
 
     public function index()
     {
-
-    }
-
-    public function process()
-    {
-
         //$this->redirectIfInvalidCSRF();
-        $this->load->model('accounts_model', 'account');
-        if (isset)
-        $email = $this->db_clean->email;
 
-        // Turn XSS filter on email address and password
-        $this->load->helper('hash_helper');
-        $email     = $this->input->post('emailaddress', true);
-        $password  = $this->input->post('password', true);
+        // Get redirect page for error
+        $redirect = (isset($this->clean->redirect) && ! empty($this->clean->redirect)) ? $this->clean->redirect : '/';
 
+        // Find user
+        $this->load->model('users_model', 'user');
+        $user = $this->user->read("email = '" . $this->db_clean->email . "'", 1, 1, 'user_id, password, active, admin');
 
-        // Get user by email address
-        $user = $this->db->query("SELECT * FROM `users` WHERE email = '" . $this-> . "' LIMIT 1");
-
-        if ($user->num_rows() < 1) {
-            return false;
+        if (! isset($user->user_id)) {
+            $this->setFlashMessage('The email address `' . $this->clean->email . '` was not found.');
+            header('Location: ' . $redirect);
+            exit;
         }
 
-        // Check passwords
-        $row                = $user->row();
-        $encrypted_password = $row->password;
+        // Check if active
+        if (! isset($user->active) || empty($user->active)) {
+            $this->setFlashMessage('Your account is no longer active. Please contact support.');
+            header('Location: ' . $redirect);
+            exit;
+        }
 
-        if (strlen($encrypted_password) == 32) {
-            $match = (md5($password) == $encrypted_password) ? true : false;
+        // Check proper password
+        if (strlen($user->password) == 32) {
+            $match = (md5($this->clean->password) == $user->password) ? true : false;
 
             // Try to update to new password security since they are on old MD5
-            $hash  = generateHash($password);
+            $hash  = generateHash($this->clean->password);
 
             // If hash is valid and match is valid
             // Upgrade users to new encryption routine
             if ($hash !== false && $match === true) {
-                $this->db->update('users', array('password' => $hash), array('email' => $email));
+                $res = $this->users->update("user_id = '" . $user->user_id . "'", array('password' => $hash));
             }
         }
         else {
-            $match = (verifyHash($password, $encrypted_password) == $encrypted_password) ? true : false;
+            $match = (verifyHash($this->clean->password, $user->password) == $user->password) ? true : false;
         }
 
-        // If a match, return array, else false
-        return ($match === true) ? $user->row_array() : false;
+        // Check if passwords match
+        if ($match === false) {
+            $this->setFlashMessage('Your password is incorrect. Please try again.');
+            header('Location: ' . $redirect);
+            exit;
+        }
+
+        // At this point we are clear for takeoff
+        // Set session variables and send user on their way
+        $user->email = $this->clean->email;
+        $this->sessionAddUser($user);
+        header('Location: /home');
+        exit;
     }
 }
