@@ -3,17 +3,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=50, initial-scale=1.0, user-scalable=no">
-	<title>Nilai<?php if (!$this->session->userdata('userid')) { echo ': Save your links for later.'; } ?></title>
+	<title>Nilai<?php if (! isset($_SESSION['logged_in'])) { echo ': Save your links for later.'; } ?></title>
 
-	<link rel="stylesheet" href="<?php echo site_url();?>assets/bootstrap/compiled/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="<?php echo site_url();?>assets/css/nilai.css" />
+	<link rel="stylesheet" href="/assets/bootstrap/compiled/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/nilai.css">
 
-  <link rel="icon" type="image/ico" href="<?php echo site_url();?>favicon.ico" />
+  <link rel="icon" type="image/ico" href="/favicon.ico">
 
-  <script src="<?php echo site_url();?>assets/jquery/jquery-1.7.1.min.js"></script>
-  <script src="<?php echo site_url();?>assets/jquery/jquery.scrollTo-1.4.2-min.js"></script>
-  <script src="<?php echo site_url();?>assets/bootstrap/compiled/js/bootstrap.min.js"></script>
-  <script src="<?php echo site_url();?>assets/js/nilai.js"></script>
+  <script src="/assets/jquery/jquery-1.7.1.min.js"></script>
+  <script src="/assets/jquery/jquery.scrollTo-1.4.2-min.js"></script>
+  <script src="/assets/bootstrap/compiled/js/bootstrap.min.js"></script>
+  <script src="/assets/js/nilai.js"></script>
 
   <script type="text/javascript">
 
@@ -34,7 +34,7 @@
 <div class="container-fluid">
 <div class="row-fluid">
   <div class="logo">
-    <h1><a href="/home"><img src="<?php echo site_url();?>assets/images/logo-60.png" alt="logo-60" width="60" height="60" /></a><?php if (! isset($_SESSION['logged_in'])) { ?> Nilai<?php } ?></h1>
+    <h1><a href="/home"><img src="/assets/images/logo-60.png" alt="logo-60" width="60" height="60" /></a><?php if (! isset($_SESSION['logged_in'])) { ?> Nilai<?php } ?></h1>
   </div>
 
   <?php if (! isset($_SESSION['logged_in'])) { ?>
@@ -48,11 +48,8 @@
       <input type="password" class="input-small" name="password" id="password" placeholder="Password">
       <input type="submit" value="Log in" name="login" id="login" class="btn">
     </form>
-    <?php if (isset($_SESSION['flash_message']) && ! empty($_SESSION['flash_message'])): ?>
-      <pre>
-      <?php print_r($_SESSION['flash_message']); ?>
-      <?php unset($_SESSION['flash_message']); ?>
-      </pre>
+    <?php if (isset($flash_message['message']) && ! empty($flash_message['message'])): ?>
+      <?php print $flash_message['message']; ?>
     <?php endif; ?>
   </div>
 

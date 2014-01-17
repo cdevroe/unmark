@@ -77,7 +77,7 @@ class Plain_Controller extends CI_Controller {
         if (isset($_SESSION['flash_message']['message']) && ! empty($_SESSION['flash_message']['message'])) {
             $this->flash_message['type']    = $_SESSION['flash_message']['type'];
             $this->flash_message['message'] = $_SESSION['flash_message']['message'];
-            //unset($_SESSION['flash_message']);
+            unset($_SESSION['flash_message']);
         }
     }
 
@@ -167,7 +167,8 @@ class Plain_Controller extends CI_Controller {
     // This is used so that we can easily add partials to all views
     protected function view($view, $data=array())
     {
-        $data['csrf_token'] = $_SESSION['csrf_token'];
+        $data['csrf_token']    = $_SESSION['csrf_token'];
+        $data['flash_message'] = $this->flash_message;
 
         // Strip tags from page_title
         if (isset($data['page_title'])) {
