@@ -34,6 +34,7 @@ class Marks_model extends Plain_Model
 
             // If not found, add it
             if (! isset($mark->mark_id)) {
+                $options['created_on'] = date('Y-m-d H:i:s');
                 $q   = $this->db->insert_string('marks', $options);
                 $res = $this->db->query($q);
 
