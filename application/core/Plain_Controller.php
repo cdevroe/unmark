@@ -63,6 +63,33 @@ class Plain_Controller extends CI_Controller {
         }
     }
 
+    // If logged in, redirect
+    protected function redirectIfLoggedIn($url='/')
+    {
+        if (isset($_SESSION['logged_in'])) {
+            header('Location: ' . $url);
+            exit;
+        }
+    }
+
+    // If logged out, redirect
+    protected function redirectIfLoggedOut($url='/')
+    {
+        if (! isset($_SESSION['logged_in'])) {
+            header('Location: ' . $url);
+            exit;
+        }
+    }
+
+    // If not an admin, redirect
+    protected function redirectIfNotAdmin($url='/')
+    {
+        if (! isset($_SESSION['account']['admin']) || empty($_SESSION['account']['admin'])) {
+            header('Location: ' . $url);
+            exit;
+        }
+    }
+
     protected function render($arr)
     {
         $json         = json_encode($arr, JSON_FORCE_OBJECT);
