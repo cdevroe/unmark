@@ -27,80 +27,29 @@ class Users_To_Marks_model extends Plain_Model
 
     public function create($options=array())
     {
-        $valid  = validate($options, $this->data_types, array('title', 'url', 'user_id', 'label_id'));
+        $valid  = validate($options, $this->data_types, array('user_id', 'mark_id'));
 
         // Make sure all the options are valid
         if ($valid === true) {
 
-            // Load marks model
-            $this->load->model('marks_model', 'marks');
-            $mark_options = array('title' => $options['title'], 'url' => $options['url']);
-            $mark_id = $this->marks->create($mark_options);
+            $options['created_on'] = date('Y-m-d H:i:s');
+            $q   = $this->db->insert_string('users_to_marks', $options);
+            $res = $this->db->query($q);
 
-            // Remove title and  url from options array
-            unset($options['title']);
-            unset($options['url']);
+            // Check for errors
+            $this->sendException();
 
-            // If no mark_id, return error
-            if ($mark_id === false) {
-                return $this->formatErrors('The mark could not be created please try again.');
+            if ($res === true) {
+                $user_mark_id = $this->db->insert_id();
+                return $this->read($user_mark_id);
             }
-
-            // Check if this mark_id/user_id already exists
-            // If so, update it, else add it new
-            $total = $this->count("user_id = '" . $options['user_id'] . "' AND mark_id = '" . $mark_id . "'");
-
-            // If groups exist, save and remove them for later
-            //$groups        = (isset($options['groups'] && ! empty($options['groups']) && is_array($options['groups']))) ? $options['groups'] : array();
-            //$update_groups = (isset($options['update_groups'] && ! empty($options['update_groups']))) ? true : false;
-
-            // Unset some options
-            //if (isset($options['groups']) { unset($options['groups']); }
-            //if (isset($options['update_groups']) { unset($options['update_groups']); }
-
-            // Add it new
-            if ($total < 1) {
-                $options['created_on'] = date('Y-m-d H:i:s');
-                $q   = $this->db->insert_string('users_to_marks', $options);
-                $res = $this->db->query($q);
-
-                // Check for errors
-                $this->sendException();
-
-                if ($res === true) {
-                    $user_mark_id = $this->db->insert_id();
-                    //self::updateGroups($user_mark_id, $groups, $update_groups);
-                    return $this->readComplete($user_mark_id);
-                }
-                else {
-                    return $this->formatErrors('The mark could not be created. Please try again.');
-                }
+            else {
+                return $this->formatErrors('The mark could not be created. Please try again.');
             }
-
-            return $this->formatErrors('You have already saved this mark. [Click here to view it].');
 
         }
 
         return $this->formatErrors($valid);
-    }
-
-
-    function add_mark_to_user($urlid='')
-    {
-        if ($urlid=='') return false;
-
-        // Lets see if this user has ever added this URL before
-        $mark = $this->db->get_where('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid')));
-
-        if ($mark->num_rows() > 0) {
-            $mark = $mark->result_array();
-            return $mark[0]['id'];
-        }
-
-        $this->db->insert('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid'),'addedby'=>$this->session->userdata('userid'),'status'=>''));
-
-        // Still unsure if this is the best way to get this ID
-        return $this->db->insert_id();
     }
 
 

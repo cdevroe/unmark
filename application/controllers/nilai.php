@@ -150,30 +150,48 @@ class Nilai extends Plain_Controller {
 
 	public function add()
 	{
-		$this->session->set_flashdata('addurl', current_url());
+		$this->redirectIfLoggedOut('/');
 
-		if ( !$this->session->userdata('userid') ) { redirect(''); }
+		// Not sure what this is for
+		// Commenting out for now
+		// $this->session->set_flashdata('addurl', current_url());
 
 
-		$this->load->model('Marks_model');
+		// Add mark to marks table
+		$this->load->model('marks_model', 'mark');
+		$mark = $this->mark->create(array(
+			'title' => $this->db_clean->title,
+			'url'   => $this->db_clean->url
+		));
 
-		$title = $this->input->get('title', TRUE);
-		$url = $this->input->get('url', TRUE);
-		if ($url == 'chrome://newtab/') { exit('Whoops! You can not mark this page. But, good on ya for using Chrome.'); }
-		$parsedUrl = parse_url($url); // Parse URL to determine domain
-		if ($title == '' && !empty($parsedUrl['host'])) { $title = $parsedUrl['host']; } // Data checks
+		// If successful
+		// Check if user already has this mark
+		// If not add it
+		// If so, redirect to it
+		if (isset($mark->mark_id)) {
+			$this->load->model('user_to_marks_model', 'user_mark');
+			$user_mark = $this->user_mark->read("user_id = '" . $_SESSION['user']['user_id'] . "' AND mark_id = '" . $mark->mark_id . "'");
 
-		// Add mark to DB if it doesn't already exist.
-		$urlid = $this->Marks_model->create($title,$url);
+			// Add
+			if (! isset($user_mark->users_to_mark_id)) {
+				$user_mark = $this->user_mark->create(array(
+					'user_id' => $_SESSION['user']['user_id'],
+					'mark_id' => $mark->mark_id
+				));
+			}
 
-		if ( $urlid === false ) { // Add mark to the current logged in user
-			exit('Could not add the mark due to an unknown error.');
-
-		} else {
-			$user_markid = $this->Marks_model->add_mark_to_user($urlid);
+			// If still no user mark id, error out
+			// We need a better way to handle/show errors here
+			if (! isset($user_mark->users_to_mark_id)) {
+				foreach ($mark as $error) {
+					print '<p>Error: ' . $error . '</p>';
+				}
+			}
+			else {
+				header('Location: /marks/edit/' . $user_mark->users_to_mark_id . '?bookmarklet=true');
+				exit;
+			}
 		}
-
-		redirect('marks/edit/'.$user_markid.'/?bookmarklet=true');
 
 	}
 

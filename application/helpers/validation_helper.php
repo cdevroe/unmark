@@ -55,8 +55,9 @@ function isValid($val, $type)
     elseif ($type == 'url') {
         // Use parse_url
         // If it has a scheme and a host, it's good to go
-        $url   = parse_url($url);
-        return (isset($url['scheme']) && ! empty($url['scheme']) && isset($url['host']) && ! empty($url['host'])) ? true : false;
+        $failed_schemes = array('chrome');
+        $url            = parse_url($url);
+        return (isset($url['scheme']) && ! empty($url['scheme']) && ! in_array($url['scheme'], $failed_schemes) && isset($url['host']) && ! empty($url['host'])) ? true : false;
     }
     return false;
 }
