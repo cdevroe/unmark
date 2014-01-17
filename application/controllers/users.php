@@ -118,13 +118,13 @@ class Users extends CI_Controller {
 			// Label: "do"
 			$this->db->insert('marks',array('title'=>'Read Nilai\'s FAQ','url'=>$this->config->item('base_url').'help/faq'));
 			$urlid = $this->db->insert_id();
-			$this->db->insert('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid'),'addedby'=>$this->session->userdata('userid'),'tags'=>'do'));
+			$this->db->insert('users_marks',array('urlid'=>$urlid,'userid'=>$_SESSION['user']['user_id'],'addedby'=>$_SESSION['user']['user_id'],'tags'=>'do'));
 
 			// Mark: How to use Nilai
 			// Label: "read"
 			$this->db->insert('marks',array('title'=>'How to use Nilai','url'=>$this->config->item('base_url').'help/how'));
 			$urlid = $this->db->insert_id();
-			$this->db->insert('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid'),'addedby'=>$this->session->userdata('userid'),'tags'=>'read'));
+			$this->db->insert('users_marks',array('urlid'=>$urlid,'userid'=>$_SESSION['user']['user_id'],'addedby'=>$_SESSION['user']['user_id'],'tags'=>'read'));
 
 			// All set, take them to their stream
 			redirect('home');

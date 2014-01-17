@@ -23,7 +23,7 @@ class Groups extends CI_Controller {
 	public function create()
 	{
 		// If user is not logged in, redirect.
-		if (!$this->session->userdata('userid')) { redirect(''); }
+		if (!$_SESSION['user']['user_id']) { redirect(''); }
 
 		// Create a 10char unique ID for group
 		$data['uid'] = $this->generate_uid(10);
@@ -53,7 +53,7 @@ class Groups extends CI_Controller {
 	public function add()
 	{
 		// If user is not logged in, redirect
-		if (!$this->session->userdata('userid')) { redirect(''); }
+		if (!$_SESSION['user']['user_id']) { redirect(''); }
 
 		// Set the group name variable
 	    $name = $this->input->post('name',TRUE);
@@ -87,7 +87,7 @@ class Groups extends CI_Controller {
 	      if ( $invites[$i] != '' && valid_email($invites[$i]) ) {
 
 	        // Add record to invites table
-	        $this->db->insert('groups_invites',array('groupid'=>$groupid,'emailaddress'=>$invites[$i],'invitedby'=>$this->session->userdata('userid')));
+	        $this->db->insert('groups_invites',array('groupid'=>$groupid,'emailaddress'=>$invites[$i],'invitedby'=>$_SESSION['user']['user_id']));
 
 	      	// Construct and send email.
 	        $this->email->from($this->session->userdata('emailaddress'));
@@ -108,7 +108,7 @@ class Groups extends CI_Controller {
 	{
 
 
-		if (!$this->session->userdata('userid')) { // Not logged in
+		if (!$_SESSION['user']['user_id']) { // Not logged in
 			redirect('');
 			exit;
 		}
@@ -136,7 +136,7 @@ class Groups extends CI_Controller {
 		$data['when'] = '';
 		$data['label'] = '';
 
-		if ($data['group']['owner'] != $this->session->userdata('userid')) {
+		if ($data['group']['owner'] != $_SESSION['user']['user_id']) {
 			//$data['heading'] = 'Sorry';
 			//$data['message'] = 'This group does not exist. Or you do not have permission to manage this group. You may never know.';
 			show_404($this->uri->uri_string());
@@ -148,7 +148,7 @@ class Groups extends CI_Controller {
 	public function update()
 	{
 
-		if (!$this->session->userdata('userid')) { // Not logged in
+		if (!$_SESSION['user']['user_id']) { // Not logged in
 			redirect('');
 			exit;
 		}
@@ -167,7 +167,7 @@ class Groups extends CI_Controller {
 	public function delete()
 	{
 
-		if (!$this->session->userdata('userid')) { // Not logged in
+		if (!$_SESSION['user']['user_id']) { // Not logged in
 			redirect('');
 			exit;
 		}
@@ -181,7 +181,7 @@ class Groups extends CI_Controller {
 
         if ( is_array($group) === true){
 
-            if ( $this->session->userdata('userid') == $group[0]['createdby'] ) {
+            if ( $_SESSION['user']['user_id'] == $group[0]['createdby'] ) {
                 $this->Groups_model->delete_group();
                 $this->session->set_flashdata('message', 'All users have been removed from the group, all bookmarks have been removed from the group, all outstanding invitations to the group have been deleted and the group has been deleted. This cannot be undone.');
             }
@@ -233,7 +233,7 @@ class Groups extends CI_Controller {
 
 		$this->load->model('Groups_model');
 
-		if (!$this->session->userdata('userid')) { // Not logged in
+		if (!$_SESSION['user']['user_id']) { // Not logged in
 			redirect(''); // Redirect to a page that explains they can log in or sign up
 			exit;
 		}
@@ -242,7 +242,7 @@ class Groups extends CI_Controller {
 		// If not, add them to the group
 		// Copy all bookmarks
 		// If so, redirect to group page.
-		$usergroups = $this->db->query("SELECT *, groups.id as groupid FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid = '".$this->session->userdata('userid')."' AND groups.uid = '".$groupuid."'");
+		$usergroups = $this->db->query("SELECT *, groups.id as groupid FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid = '".$_SESSION['user']['user_id']."' AND groups.uid = '".$groupuid."'");
 
 		if ($usergroups->num_rows() > 0) {
 
@@ -265,7 +265,7 @@ class Groups extends CI_Controller {
 			if ( $marks->num_rows() > 0 ) {
 				$marks = $marks->result_array();
 				foreach ($marks as $mark) {
-					$this->db->insert('users_marks',array('userid'=>$this->session->userdata('userid'),'urlid'=>$mark['urlid'],'groups'=>$group[0]['id'],'tags'=>$mark['tags'],'addedby'=>$mark['addedby']));
+					$this->db->insert('users_marks',array('userid'=>$_SESSION['user']['user_id'],'urlid'=>$mark['urlid'],'groups'=>$group[0]['id'],'tags'=>$mark['tags'],'addedby'=>$mark['addedby']));
 				}
 			}
 
@@ -287,7 +287,7 @@ class Groups extends CI_Controller {
 
 		$this->load->model('Groups_model');
 
-		if (!$this->session->userdata('userid')) { // Not logged in
+		if (!$_SESSION['user']['user_id']) { // Not logged in
 			redirect(''); // Redirect to a page that explains they can log in or sign up
 			exit;
 		}
@@ -302,7 +302,7 @@ class Groups extends CI_Controller {
 	}
 
 	public function members() {
-		if (!$this->session->userdata('userid')) { // Not logged in
+		if (!$_SESSION['user']['user_id']) { // Not logged in
 			redirect('');
 			exit;
 		}
@@ -334,7 +334,7 @@ class Groups extends CI_Controller {
 		$data['when'] = '';
 		$data['label'] = '';
 
-		if ($data['group']['owner'] != $this->session->userdata('userid')) {
+		if ($data['group']['owner'] != $_SESSION['user']['user_id']) {
 			show_404($this->uri->uri_string());
 		}
 		$this->load->view('groups_members',$data);
@@ -344,7 +344,7 @@ class Groups extends CI_Controller {
 	public function leave()
 	{
 
-		if (!$this->session->userdata('userid')) { // Not logged in
+		if (!$_SESSION['user']['user_id']) { // Not logged in
 			redirect('');
 			exit;
 		}
@@ -367,7 +367,7 @@ class Groups extends CI_Controller {
 	public function remove()
 	{
 
-		if (!$this->session->userdata('userid')) { // Not logged in
+		if (!$_SESSION['user']['user_id']) { // Not logged in
 			redirect('');
 			exit;
 		}
@@ -387,7 +387,7 @@ class Groups extends CI_Controller {
 		}
 
 		// If user is not the owner of this group do not allow the action
-		if ( $this->session->userdata('userid') != $group[0]['createdby'] ) {
+		if ( $_SESSION['user']['user_id'] != $group[0]['createdby'] ) {
 			$this->session->set_flashdata('message', 'You must own the group in order to remove a member (other than yourself.)');
 			redirect('home');
 		}

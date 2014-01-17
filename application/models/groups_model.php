@@ -16,7 +16,7 @@ class Groups_model extends CI_Model {
         $uid = $this->input->post('uid');
 
         // Add group to database
-        $this->db->insert('groups',array('name'=>$name,'description'=>$description,'uid'=>$uid,'createdby'=>$this->session->userdata('userid')));
+        $this->db->insert('groups',array('name'=>$name,'description'=>$description,'uid'=>$uid,'createdby'=>$_SESSION['user']['user_id']));
 
         $groupid = $this->Groups_model->get_group_id($uid);
         if (!$groupid) {
@@ -45,7 +45,7 @@ class Groups_model extends CI_Model {
         $groupid = $this->Groups_model->get_group_id($uid);
 
         // Remove all users from group
-        $this->db->delete('users_groups', array('groupid' => $groupid));
+        $this->db->delete('users_to_groups', array('groupid' => $groupid));
 
         // Remove all invites
         $this->db->delete('groups_invites', array('groupid' => $groupid));
@@ -98,7 +98,7 @@ class Groups_model extends CI_Model {
 
     function get_groups_user_belongs_to()
     {
-		$user_belongs_to_groups = $this->db->query('SELECT * FROM users_groups LEFT JOIN groups ON users_groups.groupid=groups.id WHERE users_groups.userid='.$this->session->userdata('userid'));
+		$user_belongs_to_groups = $this->db->query('SELECT * FROM users_to_groups LEFT JOIN groups ON users_to_groups.group_id=groups.group_id WHERE users_to_groups.user_id='.$_SESSION['user']['user_id']);
 
 		if ($user_belongs_to_groups->num_rows() > 0) {
 			return $user_belongs_to_groups->result_array();
@@ -109,7 +109,7 @@ class Groups_model extends CI_Model {
 
     function get_groups_created_by_user()
     {
-        $createdgroups = $this->db->get_where('groups', array('createdby' => $this->session->userdata('userid')));
+        $createdgroups = $this->db->get_where('groups', array('createdby' => $_SESSION['user']['user_id']));
         $this->db->order_by("id", "asc");
 
         if ($createdgroups->num_rows() > 0) {
@@ -121,7 +121,7 @@ class Groups_model extends CI_Model {
 
     function get_group_members($id)
     {
-        $groupmembers = $this->db->query("SELECT * FROM users_groups LEFT JOIN users ON users_groups.userid=users.user_id WHERE users_groups.groupid = '".$id."'");
+        $groupmembers = $this->db->query("SELECT * FROM users_to_groups LEFT JOIN users ON users_to_groups.user_id=users.user_id WHERE users_to_groups.group_id = '".$id."'");
 
         if ( $groupmembers->num_rows() > 0 ) {
             return $groupmembers->result_array();
@@ -134,7 +134,7 @@ class Groups_model extends CI_Model {
     {
         if (!$groupid) return false;
 
-        $this->db->insert('users_groups',array('groupid'=>$groupid,'userid'=>$this->session->userdata('userid')));
+        $this->db->insert('users_to_groups',array('groupid'=>$groupid,'userid'=>$_SESSION['user']['user_id']));
     }
 
     // Userid is optional. If none given, use current logged in user.
@@ -144,7 +144,7 @@ class Groups_model extends CI_Model {
         if (!$groupid) return false;
 
         if ( !$userid || $userid == '' ) {
-            $userid = $this->session->userdata('userid');
+            $userid = $_SESSION['user']['user_id'];
         }
 
         // Remove all marks from group
@@ -152,12 +152,12 @@ class Groups_model extends CI_Model {
         $this->db->update('users_marks', array('groups' => ''), array('groups' => $groupid, 'userid' => $userid));
 
         // Remove member from group
-        $this->db->delete('users_groups', array('groupid'=>$groupid,'userid'=>$userid));
+        $this->db->delete('users_to_groups', array('groupid'=>$groupid,'userid'=>$userid));
     }
 
     function get_group_members_count($id)
     {
-        $groupmembers = $this->db->get_where('users_groups', array('groupid' => $id));
+        $groupmembers = $this->db->get_where('users_to_groups', array('groupid' => $id));
         if ($groupmembers->num_rows() > 0) {
             return $groupmembers->num_rows();
         }
@@ -182,7 +182,7 @@ class Groups_model extends CI_Model {
         }
 
         // Add invite to invites table
-        $this->db->insert('groups_invites',array('groupid'=>$groupid,'emailaddress'=>$emailaddress,'invitedby'=>$this->session->userdata('userid')));
+        $this->db->insert('groups_invites',array('groupid'=>$groupid,'emailaddress'=>$emailaddress,'invitedby'=>$_SESSION['user']['user_id']));
 
     return true;
     }

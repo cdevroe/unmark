@@ -5,7 +5,7 @@ class Welcome extends Plain_Controller {
 
 	public function index()
 	{
-		$this->redirectIfLoggedIn('/home');
+		$this->redirectIfLoggedIn('/marks');
 
 		// No user table
 		// Needs to be installed
@@ -15,7 +15,7 @@ class Welcome extends Plain_Controller {
 			exit;
 		}
 
-		$this->view('home');
+		$this->view('marks');
 
 		/*
 		- Not sure what this is about so leaving for now

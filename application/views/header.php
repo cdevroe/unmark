@@ -98,19 +98,7 @@
       </ul>
       </li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Groups <b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <li<?php if ($group == 'create') echo ' class="active"';?>>
-          <a href="/groups/create">Create a group +</a>
-        </li>
-        <?php if (isset($groups['belong']) && !empty($groups['belong'])) { ?>
-        <li class="divider"></li>
-        <?php foreach($groups['belong'] as $gb) {  ?>
-        <li<?php if ($group['groupuid'] == strtoupper($gb['uid'])) echo ' class="active"';?>>
-          <a href="/groups/<?php echo strtoupper($gb['uid']);?>"><?php echo $gb['name'];?></a>
-        </li>
-        <?php }
-        } ?>
-      </ul>
+
       </li>
       <li><a href="/users/logout"><i class="icon-off"></i> Out</a></li>
     </ul>

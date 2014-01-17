@@ -56,16 +56,16 @@ class Install extends CI_Controller {
 
   // Used to update from one version to another.
   public function upgrade()
-  { 
+  {
       // Logged in user id
-      $userId = $this->session->userdata('userid');
+      $userId = $_SESSION['user']['user_id'];
       if (!empty($userId)) {
           $userFromDb = $this->db->get_where('users',array('user_id' => $userId));
           if($userFromDb->num_rows() > 0){
               if($this->is_admin($userFromDb->row())){
                   // Admin user logged in - run migrations if needed
                   $this->load->library('migration');
-              
+
                   if ( ! $this->migration->current() )
                   {
                     show_error($this->migration->error_string());
@@ -80,7 +80,7 @@ class Install extends CI_Controller {
           redirect('/');
       }
   }
-  
+
   /**
    * Checks if given user is an admin
    * TODO Move function to more proper place (model? helper?)
@@ -93,7 +93,7 @@ class Install extends CI_Controller {
           return $user->admin;
       } else {
         return $user->user_id == 1;
-      }      
+      }
   }
 
  }

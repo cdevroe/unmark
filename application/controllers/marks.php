@@ -29,7 +29,7 @@ class Marks extends Plain_Controller {
         $this->load->model('Groups_model');
         $data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
-        $invites = $this->db->query("
+       /* $invites = $this->db->query("
             SELECT
             group_invites.*,
             group_invites.group_invite_id as inviteid,
@@ -41,21 +41,22 @@ class Marks extends Plain_Controller {
             group_invites.active = '0'
         ");
 
-        if ($invites->num_rows() > 0) $data['invites'] = $invites->result_array();
+        if ($invites->num_rows() > 0) $data['invites'] = $invites->result_array();*/
+        $data['invites'] = array();
 
 
         $data['label'] = '';
         $data['group']['groupuid'] = '';
 
-        $data['marks_saved_today'] = $this->Marks_model->get_number_saved_today();
-        $data['marks_archived_today'] = $this->Marks_model->get_number_archived_today();
+        $data['marks_saved_today'] = $this->user_marks->get_number_saved_today();
+        $data['marks_archived_today'] = $this->user_marks->get_number_archived_today();
 
         $this->view('marks', $data);
     }
 
     public function bylabel()
     {
-        if (!$this->session->userdata('userid')) { redirect(''); }
+        if (!$_SESSION['user']['user_id']) { redirect(''); }
         $this->session->set_flashdata('lasturl', current_url());
 
 
@@ -79,7 +80,7 @@ class Marks extends Plain_Controller {
 
     public function bygroup()
     {
-        if (!$this->session->userdata('userid')) { redirect(''); }
+        if (!$_SESSION['user']['user_id']) { redirect(''); }
         $this->session->set_flashdata('lasturl', current_url());
 
         $groupuid = $this->uri->segment(2);
@@ -118,7 +119,7 @@ class Marks extends Plain_Controller {
 
     public function search()
     {
-        if (!$this->session->userdata('userid')) { redirect(''); }
+        if (!$_SESSION['user']['user_id']) { redirect(''); }
         $this->session->set_flashdata('lasturl', current_url());
 
         $s = $this->input->post('s');
@@ -191,13 +192,13 @@ class Marks extends Plain_Controller {
 
     public function addlabel($urlid='',$label='')
     {
-        if (!$this->session->userdata('userid')) { redirect('home'); }
+        if (!$_SESSION['user']['user_id']) { redirect('home'); }
 
 
         if ($this->input->get('urlid') != '') $urlid = $this->input->get('urlid');
         if ($this->input->get('label') != '') $label = $this->input->get('label');
 
-        $this->db->update('users_marks',array('tags'=>strtolower($label)),array('urlid' => $urlid,'userid'=>$this->session->userdata('userid')));
+        $this->db->update('users_marks',array('tags'=>strtolower($label)),array('urlid' => $urlid,'userid'=>$_SESSION['user']['user_id']));
 
     // Success!
     return;
@@ -205,18 +206,18 @@ class Marks extends Plain_Controller {
 
     public function addsmartlabel($domain='',$label='')
     {
-        if (!$this->session->userdata('userid')) { redirect('home'); }
+        if (!$_SESSION['user']['user_id']) { redirect('home'); }
 
 
         if ($this->input->get('domain') != '') $domain = $this->input->get('domain');
         if ($this->input->get('label') != '') $label = $this->input->get('label');
 
-        $noduplicates = $this->db->query("SELECT * FROM users_smartlabels WHERE userid = ".$this->session->userdata('userid')." AND domain = '".$domain."'");
+        $noduplicates = $this->db->query("SELECT * FROM users_smartlabels WHERE userid = ".$_SESSION['user']['user_id']." AND domain = '".$domain."'");
 
         if ($noduplicates->num_rows() > 0) { // Update record
-            $this->db->update('users_smartlabels',array('label'=>$label),array('domain'=>$domain,'userid'=>$this->session->userdata('userid')));
+            $this->db->update('users_smartlabels',array('label'=>$label),array('domain'=>$domain,'userid'=>$_SESSION['user']['user_id']));
         } else { // Add new record
-            $this->db->insert('users_smartlabels',array('userid'=>$this->session->userdata('userid'),'domain'=>$domain,'label'=>$label));
+            $this->db->insert('users_smartlabels',array('userid'=>$_SESSION['user']['user_id'],'domain'=>$domain,'label'=>$label));
         }
 
     return;
@@ -224,13 +225,13 @@ class Marks extends Plain_Controller {
 
     public function removesmartlabel($domain='',$label='')
     {
-        if (!$this->session->userdata('userid')) { redirect('home'); }
+        if (!$_SESSION['user']['user_id']) { redirect('home'); }
 
 
         if ($this->input->get('domain') != '') $domain = $this->input->get('domain');
         if ($this->input->get('label') != '') $label = $this->input->get('label');
 
-        $this->db->delete('users_smartlabels', array('userid' => $this->session->userdata('userid'),'domain'=>$domain));
+        $this->db->delete('users_smartlabels', array('userid' => $_SESSION['user']['user_id'],'domain'=>$domain));
 
     return;
     }
@@ -384,7 +385,7 @@ class Marks extends Plain_Controller {
 
     public function addgroup($urlid='',$group='')
     {
-        if (!$this->session->userdata('userid')) { redirect('home'); }
+        if (!$_SESSION['user']['user_id']) { redirect('home'); }
 
         $this->load->model('Marks_model');
 
@@ -395,19 +396,19 @@ class Marks extends Plain_Controller {
 
         $this->Marks_model->add_mark_to_group($urlid,$group);
 
-        /*$this->db->update('users_marks',array('groups'=>$group),array('urlid' => $urlid,'userid'=>$this->session->userdata('userid')));
+        /*$this->db->update('users_marks',array('groups'=>$group),array('urlid' => $urlid,'userid'=>$_SESSION['user']['user_id']));
 
         // Duplicate this bookmark for every single person in the group.
         $groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = ".$group);
 
         if ($groupmembers->num_rows() > 0) {
             foreach($groupmembers->result_array() as $member) {
-                if ($member['userid'] != $this->session->userdata('userid')) {
+                if ($member['userid'] != $_SESSION['user']['user_id']) {
 
                     // No reason to duplicate the link. But, if the link is not yet in the group add it.
                     $link = $this->db->query("SELECT * FROM users_marks WHERE urlid = '".$urlid."' AND groups = '".$group."' AND userid = '".$member['userid']."'");
                     if ($link->num_rows() < 1) {
-                        $this->db->insert('users_marks',array('userid'=>$member['userid'],'urlid'=>$urlid,'groups'=>$group,'addedby'=>$this->session->userdata('userid')));
+                        $this->db->insert('users_marks',array('userid'=>$member['userid'],'urlid'=>$urlid,'groups'=>$group,'addedby'=>$_SESSION['user']['user_id']));
                     }
                 } // end if
             } // end foreach
@@ -419,7 +420,7 @@ class Marks extends Plain_Controller {
 
     public function edit()
     {
-        if (!$this->session->userdata('userid')) { redirect(''); }
+        if (!$_SESSION['user']['user_id']) { redirect(''); }
 
         $this->session->set_flashdata('lasturl', current_url());
 
@@ -438,7 +439,7 @@ class Marks extends Plain_Controller {
             // Only look for smart labels if host is set
             if(!empty($parsedUrl['host'])){
                 // First, check for user smart labels
-                $smartlabel = $this->db->query("SELECT * FROM users_smartlabels WHERE domain = '".strtolower($parsedUrl['host'])."' AND userid = '".$this->session->userdata('userid')."'");
+                $smartlabel = $this->db->query("SELECT * FROM users_smartlabels WHERE domain = '".strtolower($parsedUrl['host'])."' AND userid = '".$_SESSION['user']['user_id']."'");
 
                  if ($smartlabel->num_rows() > 0) {  // smart label found
                     $label = $smartlabel->row();
@@ -489,7 +490,7 @@ class Marks extends Plain_Controller {
 
     public function savenote($urlid='',$note='')
     {
-        if (!$this->session->userdata('userid')) { redirect('home'); }
+        if (!$_SESSION['user']['user_id']) { redirect('home'); }
 
 
         if ($this->input->get('urlid') != '') $urlid = $this->input->get('urlid');
@@ -503,11 +504,11 @@ class Marks extends Plain_Controller {
 
     public function archive()
     {
-        if (!$this->session->userdata('userid')) { redirect(''); }
+        if (!$_SESSION['user']['user_id']) { redirect(''); }
 
 
         $id = $this->uri->segment(3);
-        $this->db->update('users_marks',array('status'=>'archive','datearchived'=>date('Y-m-d H:i:s')),array('id' => $id,'userid'=>$this->session->userdata('userid')));
+        $this->db->update('users_marks',array('status'=>'archive','archived_on'=>date('Y-m-d H:i:s')),array('id' => $id,'userid'=>$_SESSION['user']['user_id']));
 
         echo 'success';
         exit;
@@ -515,11 +516,11 @@ class Marks extends Plain_Controller {
 
     public function restore()
     {
-        if (!$this->session->userdata('userid')) { redirect(''); }
+        if (!$_SESSION['user']['user_id']) { redirect(''); }
 
 
         $id = $this->uri->segment(3);
-        $this->db->update('users_marks',array('status'=>'','datearchived'=>''),array('id' => $id,'userid'=>$this->session->userdata('userid')));
+        $this->db->update('users_marks',array('status'=>'','archived_on'=>''),array('id' => $id,'userid'=>$_SESSION['user']['user_id']));
 
         $this->session->set_flashdata('message', 'Your mark has been restored.');
         $this->session->set_flashdata('restoredurlid',$urlid);
@@ -530,13 +531,13 @@ class Marks extends Plain_Controller {
 
     public function delete()
     {
-        if (!$this->session->userdata('userid')) { redirect(''); }
+        if (!$_SESSION['user']['user_id']) { redirect(''); }
 
         $this->load->model('Marks_model');
 
         $id = $this->uri->segment(3);
         $this->Marks_model->delete_mark_for_user($id);
-        //$this->db->update('users_marks',array('status'=>''),array('id' => $id,'userid'=>$this->session->userdata('userid')));
+        //$this->db->update('users_marks',array('status'=>''),array('id' => $id,'userid'=>$_SESSION['user']['user_id']));
 
         $this->session->set_flashdata('message', 'Your mark has been deleted.');
 

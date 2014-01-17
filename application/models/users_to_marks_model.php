@@ -58,7 +58,7 @@ class Users_To_Marks_model extends Plain_Model
         if ($urlid=='') return false;
 
         // Lets see if this user has ever added this URL before
-        $mark = $this->db->delete('users_marks',array('urlid'=>$urlid,'userid'=>$this->session->userdata('userid')));
+        $mark = $this->db->delete('users_to_marks',array('urlid'=>$urlid,'user_id'=>$_SESSION['user']['user_id']));
 
         return true;
     }
@@ -67,7 +67,7 @@ class Users_To_Marks_model extends Plain_Model
     {
         if ($markid == '') return false;
 
-        $mark = $this->db->query("SELECT * FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.id='".$markid."'");
+        $mark = $this->db->query("SELECT * FROM users_to_marks LEFT JOIN marks ON users_to_marks.urlid=marks.id WHERE users_to_marks.user_id='".$_SESSION['user']['user_id']."' AND users_to_marks.id='".$markid."'");
 
         if ( $mark->num_rows() > 0 ) {
             return $mark->result_array();
@@ -138,7 +138,7 @@ class Users_To_Marks_model extends Plain_Model
         $yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
         $today = mktime(0, 0, 0, date('n'), date('j'));
 
-        $marks = $this->db->query("SELECT * FROM users_marks WHERE userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(datearchived) > ".$today." AND status = 'archive' ORDER BY id DESC LIMIT 100");
+        $marks = $this->db->query("SELECT * FROM users_to_marks WHERE user_id='".$_SESSION['user']['user_id']."' AND UNIX_TIMESTAMP(archived_on) > ".$today." AND archived_on = 'archive' ORDER BY users_to_mark_id DESC LIMIT 100");
 
         // Are there any results? If so, return.
         if ($marks->num_rows() > 0) {
@@ -154,7 +154,7 @@ class Users_To_Marks_model extends Plain_Model
         $yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
         $today = mktime(0, 0, 0, date('n'), date('j'));
 
-        $marks = $this->db->query("SELECT * FROM users_marks WHERE userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(dateadded) > ".$today." ORDER BY id DESC LIMIT 100");
+        $marks = $this->db->query("SELECT * FROM users_to_marks WHERE user_id='".$_SESSION['user']['user_id']."' AND UNIX_TIMESTAMP(created_on) > ".$today." ORDER BY users_to_mark_id DESC LIMIT 100");
 
         // Are there any results? If so, return.
         if ($marks->num_rows() > 0) {
@@ -168,7 +168,7 @@ class Users_To_Marks_model extends Plain_Model
     {
     	if ($label == 'unlabeled') $label = '';
 
-    	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.email, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.user_id  WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.tags = '".$label."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+    	$marks = $this->db->query("SELECT users_to_marks.*, marks.*, groups.*, users.user_id, users.email, users_to_marks.id as usersmarkid, users_to_marks.created_on as created_on FROM users_to_marks LEFT JOIN marks ON users_to_marks.urlid=marks.id LEFT JOIN groups ON users_to_marks.groups=groups.id LEFT JOIN users on users_to_marks.addedby=users.user_id  WHERE users_to_marks.user_id='".$_SESSION['user']['user_id']."' AND users_to_marks.tags = '".$label."' AND users_to_marks.archived_on != 'archive' ORDER BY users_to_marks.id DESC LIMIT 100");
 
     	// Are there any results? If so, return.
     	if ($marks->num_rows() > 0) {
@@ -180,7 +180,7 @@ class Users_To_Marks_model extends Plain_Model
 
     function get_archived()
     {
-    	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.email, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.user_id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.status = 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+    	$marks = $this->db->query("SELECT users_to_marks.*, marks.*, groups.*, users.user_id, users.email, users_to_marks.id as usersmarkid, users_to_marks.created_on as created_on FROM users_to_marks LEFT JOIN marks ON users_to_marks.urlid=marks.id LEFT JOIN groups ON users_to_marks.groups=groups.id LEFT JOIN users on users_to_marks.addedby=users.user_id WHERE users_to_marks.user_id='".$_SESSION['user']['user_id']."' AND users_to_marks.archived_on = 'archive' ORDER BY users_to_marks.id DESC LIMIT 100");
 
 
     	// Are there any results? If so, return.
@@ -195,7 +195,7 @@ class Users_To_Marks_model extends Plain_Model
     {
     	if ($groupuid == '') return false;
 
-    	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.email, users_marks.id as usersmarkid, users_marks.dateadded as dateadded, groups.id as groupid FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users ON users_marks.addedby=users.user_id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND groups.uid='".$groupuid."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
+    	$marks = $this->db->query("SELECT users_to_marks.*, marks.*, groups.*, users.user_id, users.email, users_to_marks.id as usersmarkid, users_to_marks.created_on as created_on, groups.id as groupid FROM users_to_marks LEFT JOIN marks ON users_to_marks.urlid=marks.id LEFT JOIN groups ON users_to_marks.groups=groups.id LEFT JOIN users ON users_to_marks.addedby=users.user_id WHERE users_to_marks.user_id='".$_SESSION['user']['user_id']."' AND groups.uid='".$groupuid."' AND users_to_marks.archived_on != 'archive' ORDER BY users_to_marks.id DESC LIMIT 100");
 
     	// Are there any results? If so, return.
     	if ($marks->num_rows() > 0) {
@@ -211,7 +211,7 @@ class Users_To_Marks_model extends Plain_Model
 
         $this->load->model('Groups_model');
 
-        $this->db->update('users_marks',array('groups'=>$groupid),array('urlid' => $urlid,'userid'=>$this->session->userdata('userid')));
+        $this->db->update('users_to_marks',array('groups'=>$groupid),array('urlid' => $urlid,'user_id'=>$_SESSION['user']['user_id']));
 
         // Add this mark to for every other user in the group.
         //$groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = ".$group);
@@ -219,9 +219,9 @@ class Users_To_Marks_model extends Plain_Model
 
         if ( is_array($groupmembers) == true ) {
             foreach($groupmembers as $member) {
-                if ($member['userid'] == $this->session->userdata('userid')) continue; // No reason to add for current user. We already did that.
+                if ($member['user_id'] == $_SESSION['user']['user_id']) continue; // No reason to add for current user. We already did that.
 
-                $this->db->insert('users_marks',array('userid'=>$member['userid'],'urlid'=>$urlid,'groups'=>$groupid,'addedby'=>$this->session->userdata('userid')));
+                $this->db->insert('users_to_marks',array('user_id'=>$member['user_id'],'urlid'=>$urlid,'groups'=>$groupid,'addedby'=>$_SESSION['user']['user_id']));
 
             }
         }
@@ -231,7 +231,7 @@ class Users_To_Marks_model extends Plain_Model
     {
     	if ($search == '') return false;
 
-    	$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.email, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.user_id  WHERE users_marks.userid='".$this->session->userdata('userid')."' AND marks.title LIKE '%".$search."%' ORDER BY users_marks.id DESC LIMIT 100");
+    	$marks = $this->db->query("SELECT users_to_marks.*, marks.*, groups.*, users.user_id, users.email, users_to_marks.id as usersmarkid, users_to_marks.created_on as created_on FROM users_to_marks LEFT JOIN marks ON users_to_marks.urlid=marks.id LEFT JOIN groups ON users_to_marks.groups=groups.id LEFT JOIN users on users_to_marks.addedby=users.user_id  WHERE users_to_marks.user_id='".$_SESSION['user']['user_id']."' AND marks.title LIKE '%".$search."%' ORDER BY users_to_marks.id DESC LIMIT 100");
 
     	// Are there any results? If so, return.
     	if ($marks->num_rows() > 0) {
