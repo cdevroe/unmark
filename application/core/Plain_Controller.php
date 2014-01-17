@@ -6,8 +6,8 @@ class Plain_Controller extends CI_Controller {
     public $csrf_valid     = false;
     public $db_clean       = null;
     public $flash_message  = array();
-    public $footer         = 'partials/shared/footer';
-    public $header         = 'partials/shared/header';
+    public $footer         = 'footer';
+    public $header         = 'header';
     public $html_clean     = null;
     public $original       = null;
 
@@ -77,7 +77,16 @@ class Plain_Controller extends CI_Controller {
         if (isset($_SESSION['flash_message']['message']) && ! empty($_SESSION['flash_message']['message'])) {
             $this->flash_message['type']    = $_SESSION['flash_message']['type'];
             $this->flash_message['message'] = $_SESSION['flash_message']['message'];
-            unset($_SESSION['flash_message']);
+            //unset($_SESSION['flash_message']);
+        }
+    }
+
+    // If logged if invalid CSRF token is not valid
+    protected function redirectIfInvalidCSRF()
+    {
+        if (empty($this->csrf_valid)) {
+            header('Location: /');
+            exit;
         }
     }
 
@@ -124,13 +133,27 @@ class Plain_Controller extends CI_Controller {
         ));
     }
 
-    protected function sessionSetUser($user)
+    // Add user info to session
+    protected function sessionAddUser($user)
     {
         $_SESSION['logged_in'] = true;
         $_SESSION['user']      = array();
         foreach ($user as $k => $v) {
             $_SESSION['user'][$k] = $v;
         }
+    }
+
+    // Clear all session variables and cookies
+    protected function sessionClear()
+    {
+        // Remove phpsessid
+        // Remove ci_session (legacy)
+        // destroy session
+        // set global back to empty array
+        setcookie('PHPSESSID', '', time()-31557600, '/', $_SERVER['HTTP_HOST']);
+        setcookie('ci_session', '', time()-31557600, '/', $_SERVER['HTTP_HOST']);
+        session_destroy();
+        $_SESSION = array();
     }
 
     protected function setFlashMessage($message, $type='error')
@@ -144,6 +167,8 @@ class Plain_Controller extends CI_Controller {
     // This is used so that we can easily add partials to all views
     protected function view($view, $data=array())
     {
+        $data['csrf_token'] = $_SESSION['csrf_token'];
+
         // Strip tags from page_title
         if (isset($data['page_title'])) {
             $data['page_title'] = strip_tags($data['page_title']);

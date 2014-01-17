@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Nilai extends CI_Controller {
+class Nilai extends Plain_Controller {
 
   	public function __construct()
   	{
@@ -72,7 +72,8 @@ class Nilai extends CI_Controller {
 		$data['marks_saved_today'] = $this->Marks_model->get_number_saved_today();
 		$data['marks_archived_today'] = $this->Marks_model->get_number_archived_today();
 
-		$this->load->view('marks',$data);
+		$this->view('marks', $data);
+		//$this->load->view('marks',$data);
 	}
 
 	public function bylabel()

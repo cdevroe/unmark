@@ -1,4 +1,3 @@
-<?php $this->load->view('header'); ?>
 <div class="row-fluid">
   <div class="span8 marks">
     <?php if ($this->session->flashdata('message')) { ?>
@@ -159,5 +158,3 @@
   </div>
 
 </div>
-
-<?php $this->load->view('footer'); ?>

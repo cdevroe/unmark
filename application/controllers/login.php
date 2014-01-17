@@ -10,7 +10,7 @@ class Login extends Plain_Controller {
 
     public function index()
     {
-        //$this->redirectIfInvalidCSRF();
+        $this->redirectIfInvalidCSRF();
 
         // Get redirect page for error
         $redirect = (isset($this->clean->redirect) && ! empty($this->clean->redirect)) ? $this->clean->redirect : '/';

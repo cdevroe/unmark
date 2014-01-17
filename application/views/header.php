@@ -34,24 +34,31 @@
 <div class="container-fluid">
 <div class="row-fluid">
   <div class="logo">
-    <h1><a href="/home"><img src="<?php echo site_url();?>assets/images/logo-60.png" alt="logo-60" width="60" height="60" /></a><?php if (!$this->session->userdata('userid')) { ?> Nilai<?php } ?></h1>
+    <h1><a href="/home"><img src="<?php echo site_url();?>assets/images/logo-60.png" alt="logo-60" width="60" height="60" /></a><?php if (! isset($_SESSION['logged_in'])) { ?> Nilai<?php } ?></h1>
   </div>
 
-  <?php if (!$this->session->userdata('userid')) { ?>
+  <?php if (! isset($_SESSION['logged_in'])) { ?>
   <div class="navigation">
     <!--<ul class="nav nav-pills">
       <li><a class="btn btn-primary" href="/sirius" title="Create Account"><i class="icon-user"></i> Create Account</a></li>
     </ul> -->
-    <form method="post" action="users/login" class="form-inline">
-      <?php echo form_input('emailaddress','','class="input-small" placeholder="Email Address"');?>
-      <?php echo form_password('password','','class="input-small" placeholder="Password"');?>
-      <input type="submit" value="Log in" name="login" id="login" class="btn" />
+    <form method="post" action="/login" class="form-inline">
+      <input type="hidden" name="csrf_token" id="csrf_token" value="<?php print $csrf_token; ?>">
+      <input type="text" class="input-small" name="email" id="email" placeholder="Email Address">
+      <input type="password" class="input-small" name="password" id="password" placeholder="Password">
+      <input type="submit" value="Log in" name="login" id="login" class="btn">
     </form>
+    <?php if (isset($_SESSION['flash_message']) && ! empty($_SESSION['flash_message'])): ?>
+      <pre>
+      <?php print_r($_SESSION['flash_message']); ?>
+      <?php unset($_SESSION['flash_message']); ?>
+      </pre>
+    <?php endif; ?>
   </div>
 
   <?php } ?>
 
-  <?php  if (isset($when)) { if ($this->session->userdata('userid') && $when !='') { ?>
+  <?php  if (isset($when)) { if (isset($_SESSION['logged_in']) && $when !='') { ?>
   <div class="navigation">
     <ul class="nav nav-pills">
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Sort <b class="caret"></b></a>
