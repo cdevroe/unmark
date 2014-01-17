@@ -22,13 +22,13 @@ class Nilai extends Plain_Controller {
 		//$this->session->set_flashdata('lasturl', current_url());
 
 
-		$this->load->model('marks_model', 'marks');
+		$this->load->model('users_to_marks_model', 'user_marks');
 		$data['when']  = $this->uri->segment(2);
 		$data['when']  = (! empty($data['when'])) ? $data['when'] : 'all';
 		$where_time    = ($data['when'] == 'today') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $today . "' AND " : '';
         $where_time    = ($data['when'] == 'yesterday') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $yesterday . "' AND UNIX_TIMESTAMP(marks.created_on) < '" . $today . "' AND " : $where_time;
         $archived      = ($data['when'] == 'archive') ? 'IS NOT NULL' : 'IS NULL';
-		$data['marks'] = $this->marks->readComplete("users_to_marks.user_id='". $_SESSION['user']['user_id'] . "' AND" . $where_time . " users_to_marks.archived_on " . $archived, 100, 1);
+		$data['marks'] = $this->user_marks->readComplete("users_to_marks.user_id='". $_SESSION['user']['user_id'] . "' AND" . $where_time . " users_to_marks.archived_on " . $archived, 100, 1);
 
 
 
