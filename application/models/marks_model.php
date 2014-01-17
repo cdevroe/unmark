@@ -1,8 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Marks_model extends CI_Model {
+class Marks_model extends Plain_Model
+{
 
-	function __construct()
+    public $sort = 'users_to_mark_id DESC';
+
+	public function __construct()
     {
         // Call the Model constructor
         parent::__construct();
@@ -74,33 +77,58 @@ class Marks_model extends CI_Model {
         return false;
     }
 
-
-    function get_by_time($time='')
+    protected function formatGroups($marks)
     {
-    	// Unix timestamps for yesterday and today
-		$yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
-		$today = mktime(0, 0, 0, date('n'), date('j'));
+        foreach ($marks as $k => $mark) {
+            $marks[$k]->groups = array();
+            if (isset($mark->group_ids) && ! empty($mark->group_ids)) {
+                $ids  = explode($this->delimiter, $mark->group_ids);
+                $names = explode($this->delimiter, $mark->group_names);
+                foreach ($ids as $kk => $id) {
+                    $marks[$k]->groups[$id] = $names[$kk];
+                }
+            }
+            unset($marks[$k]->group_ids);
+            unset($marks[$k]->group_names);
+        }
+        return $marks;
+    }
 
-    	switch($time) {
-    		case '':
-    			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.email, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users ON users_marks.addedby=users.user_id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
-    		break;
 
-    		case 'today':
-    			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.email, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.user_id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(marks.dateadded) > ".$today." AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
-    		break;
+    public function readComplete($where, $limit=1, $page=1, $start=null)
+    {
+        $id         = (is_numeric($where)) ? $where : null;
+        $where      = (is_numeric($where)) ? 'contents.' . $this->id_column . " = '$where'" : trim($where);
+        $page       = (is_numeric($page) && $page > 0) ? $page : 1;
+        $limit      = ((is_numeric($limit) && $limit > 0) || $limit == 'all') ? $limit : 1;
+        $start      = (! is_null($start)) ? $start : $limit * ($page - 1);
+        $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
+        $sort       = (! empty($this->sort)) ? ' ORDER BY users_to_marks.' . $this->sort : null;
 
-    		case 'yesterday':
-    			$marks = $this->db->query("SELECT users_marks.*, marks.*, groups.*, users.user_id, users.email, users_marks.id as usersmarkid, users_marks.dateadded as dateadded FROM users_marks LEFT JOIN marks ON users_marks.urlid=marks.id LEFT JOIN groups ON users_marks.groups=groups.id LEFT JOIN users on users_marks.addedby=users.user_id WHERE users_marks.userid='".$this->session->userdata('userid')."' AND UNIX_TIMESTAMP(marks.dateadded) > ".$yesterday." AND UNIX_TIMESTAMP(marks.dateadded) < ".$today." AND users_marks.status != 'archive' ORDER BY users_marks.id DESC LIMIT 100");
-    		break;
-    	}
+        // Stop, query time
+        $q     = $this->db->query('SET SESSION group_concat_max_len = 10000');
+		$marks = $this->db->query("
+            SELECT
+            users_to_marks.users_to_mark_id, users_to_marks.notes, users_to_marks.created_on,
+            marks.mark_id, marks.title, marks.url,
+            GROUP_CONCAT(groups.group_id SEPARATOR '" . $this->delimiter . "') AS group_ids,
+            GROUP_CONCAT(groups.name SEPARATOR '" . $this->delimiter . "') AS group_names,
+            labels.label_id, labels.name AS label_name
+            FROM users_to_marks
+            LEFT JOIN marks ON users_to_marks.mark_id = marks.mark_id
+            LEFT JOIN user_marks_to_groups ON users_to_marks.mark_id = user_marks_to_groups.user_mark_id
+            LEFT JOIN labels ON users_to_marks.label_id = labels.label_id
+            LEFT JOIN groups ON user_marks_to_groups.group_id = groups.group_id
+            WHERE " . $where . " GROUP BY users_to_marks.users_to_mark_id" . $sort . $q_limit
+        );
 
-    	// Are there any results? If so, return.
-    	if ($marks->num_rows() > 0) {
-			return $marks->result_array();
-		}
 
-		return false;
+        // Now format the group names and ids
+        if ($marks->num_rows() > 0) {
+            return $this->formatGroups($marks->result());
+        }
+
+        return false;
     }
 
     function get_number_archived_today()

@@ -6,7 +6,6 @@ class Nilai extends Plain_Controller {
   	{
   		parent::__construct();
   		$this->load->helper(array('url','form','date','oembed'));
-  		$this->load->library('session');
   	}
 
   	// Unused for now.
@@ -17,54 +16,39 @@ class Nilai extends Plain_Controller {
 
 	public function home($when='')
 	{
-		if (!$this->session->userdata('userid')) { redirect(''); }
-		$this->session->set_flashdata('lasturl', current_url());
+		$this->redirectIfLoggedOut();
 
-		$when = $this->uri->segment(2);
-		if (!$when) { $when = ''; }
+
+		//$this->session->set_flashdata('lasturl', current_url());
+
+
+		$this->load->model('marks_model', 'marks');
+		$data['when']  = $this->uri->segment(2);
+		$data['when']  = (! empty($data['when'])) ? $data['when'] : 'all';
+		$where_time    = ($data['when'] == 'today') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $today . "' AND " : '';
+        $where_time    = ($data['when'] == 'yesterday') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $yesterday . "' AND UNIX_TIMESTAMP(marks.created_on) < '" . $today . "' AND " : $where_time;
+        $archived      = ($data['when'] == 'archive') ? 'IS NOT NULL' : 'IS NULL';
+		$data['marks'] = $this->marks->readComplete("users_to_marks.user_id='". $_SESSION['user']['user_id'] . "' AND" . $where_time . " users_to_marks.archived_on " . $archived, 100, 1);
+
 
 
 		$this->load->model('Groups_model');
-		$this->load->model('Marks_model');
-
-		// Filter by time or archive
-		if ($when == '') {
-
-			$data['marks'] = $this->Marks_model->get_by_time($when);
-			$data['when'] = 'all';
-
-		} else {
-
-			$data['when'] = $when;
-
-			if ($when != 'archive') {
-				$data['marks'] = $this->Marks_model->get_by_time($when);
-			} else {
-				$data['marks'] = $this->Marks_model->get_archived();
-			}
-		}
-
 		$data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
 
-		$invites = $this->db->query("SELECT groups_invites.*, groups_invites.id as inviteid, groups.*, users.email as invitedemail, users.user_id as invitedbyid FROM groups_invites LEFT JOIN groups ON groups_invites.groupid=groups.id LEFT JOIN users ON groups_invites.invitedby=users.user_id WHERE groups_invites.emailaddress = '".$this->session->userdata('emailaddress')."' AND groups_invites.status IS NULL");
+		$invites = $this->db->query("
+			SELECT
+			group_invites.*,
+			group_invites.group_invite_id as inviteid,
+			groups.*,
+			FROM group_invites
+			LEFT JOIN groups ON group_invites.group_id = groups.group_id
+			WHERE group_invites.email = '". $_SESSION['user']['email'] . "'
+			AND
+			group_invites.active = '0'
+		");
+
 		if ($invites->num_rows() > 0) $data['invites'] = $invites->result_array();
 
-		/*if ($this->session->userdata('emailaddress') == 'colin@cdevroe.com') {
-			$usercount = $this->db->query("SELECT COUNT(*) as numusers FROM users WHERE status = 'paid'");
-			$markcount = $this->db->query("SELECT COUNT(*) as nummarks FROM marks");
-			$groupcount = $this->db->query("SELECT COUNT(*) as numgroups FROM groups");
-			$groupmembers = $this->db->query("SELECT COUNT(*) as numgroupmembers from users_groups");
-
-			$usercount = $usercount->result_array();
-			$markcount = $markcount->result_array();
-			$groupcount = $groupcount->result_array();
-			$groupmembers = $groupmembers->result_array();
-
-			$data['usercount'] = $usercount[0]['numusers'];
-			$data['markcount'] = $markcount[0]['nummarks'];
-			$data['groupcount'] = $groupcount[0]['numgroups'];
-			$data['groupmemberscount'] = $groupmembers[0]['numgroupmembers'];
-		} */
 
 		$data['label'] = '';
 		$data['group']['groupuid'] = '';
@@ -73,7 +57,6 @@ class Nilai extends Plain_Controller {
 		$data['marks_archived_today'] = $this->Marks_model->get_number_archived_today();
 
 		$this->view('marks', $data);
-		//$this->load->view('marks',$data);
 	}
 
 	public function bylabel()
