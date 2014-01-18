@@ -18,6 +18,11 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `users_marks` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
       $this->db->query("ALTER TABLE `users_smartlabels` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
 
+      // Drop all group releated tables
+      $this->db->query("DROP TABLE IF EXISTS `groups`");
+      $this->db->query("DROP TABLE IF EXISTS `groups_invites`");
+      $this->db->query("DROP TABLE IF EXISTS `users_groups`");
+
        /*
       - Start updates for labels table
       - Import default system labels
@@ -173,6 +178,9 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `dateadded` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime this record was created.'");
       $this->db->query("ALTER TABLE `marks` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.' AFTER `created_on`");
 
+      // Update embed column to NULL if 'None'
+      $res = $this->db->query("UPDATE `marks` SET embed = NULL WHERE LOWER(embed) = 'none'");
+
       // Get all urls from marks table, create MD5 checksum, update record
       $marks = $this->db->query("SELECT mark_id, url FROM `marks`");
 
@@ -237,48 +245,6 @@ class Migration_Batshit_Crazy extends CI_Migration {
       */
 
 
-      // Update groups table
-      $this->db->query("ALTER TABLE `groups` DROP COLUMN `urlname`");
-      $this->db->query("ALTER TABLE `groups` DROP COLUMN `uid`");
-      $this->db->query("ALTER TABLE `groups` CHANGE COLUMN `id` `group_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented primary key for groups.'");
-      $this->db->query("ALTER TABLE `groups` DROP PRIMARY KEY, ADD PRIMARY KEY (`group_id`)");
-      $this->db->query("ALTER TABLE `groups` CHANGE COLUMN `createdby` `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user id that coorelates to an account in users.user_id'");
-      $this->db->query("ALTER TABLE `groups` CHANGE COLUMN `name` `name` varchar(50) NOT NULL COMMENT 'The group name.'");
-      $this->db->query("ALTER TABLE `groups` CHANGE COLUMN `description` `description` varchar(255) DEFAULT NULL COMMENT 'The optional description for this group.'");
-      $this->db->query("ALTER TABLE `groups` ADD COLUMN `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1 if group is active, 0 if not. Defaults to 1.' AFTER `description`");
-      $this->db->query("ALTER TABLE `groups` CHANGE COLUMN `datecreated` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime this record was created.' AFTER `active`");
-      $this->db->query("ALTER TABLE `groups` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.' AFTER `created_on`");
-      $this->db->query("ALTER TABLE `groups` ADD INDEX `user_id`(user_id)");
-      $this->db->query("ALTER TABLE `groups` ADD CONSTRAINT `FK_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
-
-      // Update group_invties table
-      $this->db->query("RENAME TABLE `groups_invites` TO `group_invites`");
-      $this->db->query("ALTER TABLE `group_invites` DROP COLUMN `invitedby`");
-      $this->db->query("ALTER TABLE `group_invites` DROP COLUMN `status`");
-      $this->db->query("ALTER TABLE `group_invites` CHANGE COLUMN `id` `group_invite_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.'");
-      $this->db->query("ALTER TABLE `group_invites` DROP PRIMARY KEY, ADD PRIMARY KEY (`group_invite_id`)");
-      $this->db->query("ALTER TABLE `group_invites` CHANGE COLUMN `groupid` `group_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The group_id it from groups.group_id'");
-      $this->db->query("ALTER TABLE `group_invites` CHANGE COLUMN `emailaddress` `email` varchar(150) NOT NULL COMMENT 'The email address of the invited user.'");
-      $this->db->query("ALTER TABLE `group_invites` ADD COLUMN `accepted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = yes, 0 =no' AFTER `email`");
-      $this->db->query("ALTER TABLE `group_invites` CHANGE COLUMN `dateinvited` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime the record was created' AFTER `accepted`");
-      $this->db->query("ALTER TABLE `group_invites` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The datetime the record was last updated.' AFTER `created_on`");
-      $this->db->query("ALTER TABLE `group_invites` ADD INDEX `group_id`(group_id)");
-      $this->db->query("ALTER TABLE `group_invites` ADD CONSTRAINT `FK_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
-
-
-      // Create marks_to_groups table
-      // FKs will be added later after the data has been moved
-      $this->db->query("
-        CREATE TABLE IF NOT EXISTS `user_marks_to_groups` (
-          `user_marks_to_group_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.',
-          `user_mark_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The mark_id from users_to_marks.users_to_mark_id',
-          `group_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The group_id from groups.group_id',
-          PRIMARY KEY (`user_marks_to_group_id`),
-          INDEX `user_mark_id`(user_mark_id),
-          INDEX `group_id`(group_id)
-        ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-      ");
-
 
       // Update users table
       // We are moving to active = 1 or 0 column, before altering table, switch active = 1, inactive = 0
@@ -291,21 +257,6 @@ class Migration_Batshit_Crazy extends CI_Migration {
 
       // Remove the users_smartlabels table
       $this->db->query("DROP TABLE IF EXISTS `users_smartlabels`");
-
-      // Update users_groups table
-      $this->db->query("RENAME TABLE `users_groups` TO `users_to_groups`");
-      $this->db->query("ALTER TABLE `users_to_groups` DROP COLUMN `status`");
-      $this->db->query("ALTER TABLE `users_to_groups` CHANGE COLUMN `id` `users_to_group_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.'");
-      $this->db->query("ALTER TABLE `users_to_groups` DROP PRIMARY KEY, ADD PRIMARY KEY (`users_to_group_id`)");
-      $this->db->query("ALTER TABLE `users_to_groups` CHANGE COLUMN `groupid` `group_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The group id from groups.group_id'");
-      $this->db->query("ALTER TABLE `users_to_groups` CHANGE COLUMN `userid` `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user_id from users.user_id'");
-      $this->db->query("ALTER TABLE `users_to_groups` ADD COLUMN `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1 = active, 0 = not active' AFTER `user_id`");
-      $this->db->query("ALTER TABLE `users_to_groups` CHANGE COLUMN `datejoined` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime the user has joined this group.'");
-      $this->db->query("ALTER TABLE `users_to_groups` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.' AFTER `created_on`");
-      $this->db->query("ALTER TABLE `users_to_groups` ADD INDEX `group_id`(group_id)");
-      $this->db->query("ALTER TABLE `users_to_groups` ADD INDEX `user_id`(user_id)");
-      $this->db->query("ALTER TABLE `users_to_groups` ADD CONSTRAINT `FK_utg_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
-      $this->db->query("ALTER TABLE `users_to_groups` ADD CONSTRAINT `FK_utg_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
 
       /*
       - Start users_to_marks transistion
@@ -347,19 +298,6 @@ class Migration_Batshit_Crazy extends CI_Migration {
 
           // Update tags
           $res = $this->db->query("UPDATE `users_marks` SET tags = '" . $label_id . "' WHERE id = '" . $mark_id . "'");
-
-          // Update groups to user_marks_to_groups table
-          if (! empty($group_id) && is_numeric($group_id)) {
-
-            // Check if this mark is in marks_to_groups table already
-            $q     = $this->db->query("SELECT COUNT(*) FROM `user_marks_to_groups` WHERE user_mark_id = '" . $mark_id . "' AND group_id = '" . $group_id . "'");
-            $row   = $q->row();
-            $total = (integer) $row->{'COUNT(*)'};
-
-            if ($total < 1) {
-              $res = $this->db->query("INSERT INTO `user_marks_to_groups` (`user_mark_id`, `group_id`) VALUES ('" . $mark_id . "', '" . $group_id . "')");
-            }
-          }
         }
       }
 
@@ -404,13 +342,33 @@ class Migration_Batshit_Crazy extends CI_Migration {
         }
       }
 
-      // Now add FKs to marks_to_groups table
-      $this->db->query("ALTER TABLE `user_marks_to_groups` ADD CONSTRAINT `FK_umtg_user_mark_id` FOREIGN KEY (`user_mark_id`) REFERENCES `users_to_marks` (`users_to_mark_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
-      $this->db->query("ALTER TABLE `user_marks_to_groups` ADD CONSTRAINT `FK_umtg_group_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`)   ON UPDATE CASCADE ON DELETE CASCADE");
-
       /*
       - End users_to_marks transistion
       */
+
+      // Create new tags table
+      $this->db->query("
+        CREATE TABLE `tags` (
+          `tag_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key fro tags.',
+          `name` varchar(100) NOT NULL COMMENT 'The tag name (all lowercase, no spaces)',
+          PRIMARY KEY (`tag_id`),
+          UNIQUE `name`(name)
+        ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+      ");
+
+      // Create new user_marks_to_tags table
+      $this->db->query("
+        CREATE TABLE `user_marks_to_tags` (
+          `user_marks_to_tag_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.',
+          `tag_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The tag id from tags.tag_id',
+          `users_to_mark_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user mark id from users_to_marks.users_to_mark_id',
+          PRIMARY KEY (`user_marks_to_tag_id`),
+          INDEX `users_to_mark_id`(users_to_mark_id),
+          INDEX `tag_id`(tag_id),
+          CONSTRAINT `FK_umtt_tag_id` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`tag_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
+          CONSTRAINT `FK_umtt_mark_id` FOREIGN KEY (`users_to_mark_id`) REFERENCES `users_to_marks` (`users_to_mark_id`)   ON UPDATE CASCADE ON DELETE CASCADE
+        ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+      ");
     }
 
     public function down()
@@ -420,10 +378,11 @@ class Migration_Batshit_Crazy extends CI_Migration {
       // Set default label/tags
       $default_labels = array('unlabeled', 'read', 'watch', 'listen', 'buy', 'eatdrink', 'do');
 
-      // Drop FKs from user_marks_to_groups table
-      // Don't want them to interfere with reverting to the users_marks table with no indexes
-      $this->db->query("ALTER TABLE `user_marks_to_groups` DROP FOREIGN KEY `FK_umtg_user_mark_id`");
-      $this->db->query("ALTER TABLE `user_marks_to_groups` DROP FOREIGN KEY `FK_umtg_group_id`");
+      // Drop user_marks_to_tags
+      $this->db->query("DROP TABLE IF EXISTS `user_marks_to_tags`");
+
+      // Drop tags
+      $this->db->query("DROP TABLE IF EXISTS `tags`");
 
       /*
       - Start users_marks transistion
@@ -485,66 +444,51 @@ class Migration_Batshit_Crazy extends CI_Migration {
         }
       }
 
-      // Add groups back to users_mark table
-      $marks = $this->db->query("SELECT user_mark_id, group_id FROM `user_marks_to_groups`");
-      if ($marks->num_rows() >= 1) {
-
-        // Loop thru results and update
-        foreach ($marks->result() as $mark) {
-          $res = $this->db->query("UPDATE `users_marks` SET groups = '" . $mark->group_id . "' WHERE id = '" . $mark->user_mark_id . "'");
-        }
-      }
-
       /*
       - End users_marks transistion
       */
 
 
-      // Drop marks_to_groups table
-      $this->db->query("DROP TABLE IF EXISTS `user_marks_to_groups`");
 
-      // Revert groups invite table
-      $this->db->query("RENAME TABLE `group_invites` TO `groups_invites`");
-      $this->db->query("ALTER TABLE `groups_invites` DROP FOREIGN KEY `FK_group_id`");
-      $this->db->query("ALTER TABLE `groups_invites` DROP INDEX `group_id`");
-      $this->db->query("ALTER TABLE `groups_invites` DROP COLUMN `accepted`");
-      $this->db->query("ALTER TABLE `groups_invites` DROP COLUMN `last_updated`");
-      $this->db->query("ALTER TABLE `groups_invites` CHANGE COLUMN `group_invite_id` `id` int(11) NOT NULL AUTO_INCREMENT");
-      $this->db->query("ALTER TABLE `groups_invites` DROP PRIMARY KEY, ADD PRIMARY KEY (`id`)");
-      $this->db->query("ALTER TABLE `groups_invites` CHANGE COLUMN `group_id` `groupid` int(11) NOT NULL");
-      $this->db->query("ALTER TABLE `groups_invites` CHANGE COLUMN `email` `emailaddress` text NOT NULL");
-      $this->db->query("ALTER TABLE `groups_invites` ADD COLUMN `invitedby` int(11) NOT NULL AFTER `emailaddress`");
-      $this->db->query("ALTER TABLE `groups_invites` CHANGE COLUMN `created_on` `dateinvited` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
-      $this->db->query("ALTER TABLE `groups_invites` ADD COLUMN `status` varchar(255) DEFAULT NULL AFTER `dateinvited`");
+      // Add groups_invites table back
+      $this->db->query("
+        CREATE TABLE IF NOT EXISTS `groups_invites` (
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `groupid` int(11) NOT NULL,
+          `emailaddress` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+          `invitedby` int(11) NOT NULL,
+          `dateinvited` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+          PRIMARY KEY (`id`)
+        ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+      ");
 
-      // Revert users_to_groups table
-      $this->db->query("RENAME TABLE `users_to_groups` TO `users_groups`");
-      $this->db->query("ALTER TABLE `users_groups` DROP FOREIGN KEY `FK_utg_group_id`");
-      $this->db->query("ALTER TABLE `users_groups` DROP FOREIGN KEY `FK_utg_user_id`");
-      $this->db->query("ALTER TABLE `users_groups` DROP INDEX `group_id`");
-      $this->db->query("ALTER TABLE `users_groups` DROP INDEX `user_id`");
-      $this->db->query("ALTER TABLE `users_groups` DROP COLUMN `active`");
-      $this->db->query("ALTER TABLE `users_groups` DROP COLUMN `last_updated`");
-      $this->db->query("ALTER TABLE `users_groups` CHANGE COLUMN `users_to_group_id` `id` int(11) NOT NULL AUTO_INCREMENT");
-      $this->db->query("ALTER TABLE `users_groups` DROP PRIMARY KEY, ADD PRIMARY KEY (`id`)");
-      $this->db->query("ALTER TABLE `users_groups` CHANGE COLUMN `group_id` `groupid` int(11) NOT NULL");
-      $this->db->query("ALTER TABLE `users_groups` CHANGE COLUMN `user_id` `userid` int(11) NOT NULL");
-      $this->db->query("ALTER TABLE `users_groups` CHANGE COLUMN `created_on` `datejoined` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
-      $this->db->query("ALTER TABLE `users_groups` ADD COLUMN `status` varchar(255) DEFAULT NULL AFTER `datejoined`");
+      // Add groups table back
+      $this->db->query("
+        CREATE TABLE IF NOT EXISTS `groups` (
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `createdby` int(11) NOT NULL,
+          `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+          `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+          `urlname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+          `uid` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+          `datecreated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          PRIMARY KEY (`id`)
+        ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+      ");
 
-      // Revert groups table
-      $this->db->query("ALTER TABLE `groups` DROP FOREIGN KEY `FK_user_id`");
-      $this->db->query("ALTER TABLE `groups` DROP INDEX `user_id`");
-      $this->db->query("ALTER TABLE `groups` DROP COLUMN `last_updated`");
-      $this->db->query("ALTER TABLE `groups` DROP COLUMN `active`");
-      $this->db->query("ALTER TABLE `groups` CHANGE COLUMN `group_id` `id` int(11) NOT NULL AUTO_INCREMENT");
-      $this->db->query("ALTER TABLE `groups` DROP PRIMARY KEY, ADD PRIMARY KEY (`id`)");
-      $this->db->query("ALTER TABLE `groups` CHANGE COLUMN `user_id` `createdby` int(11) NOT NULL");
-      $this->db->query("ALTER TABLE `groups` CHANGE COLUMN `name` `name` varchar(255) NOT NULL");
-      $this->db->query("ALTER TABLE `groups` CHANGE COLUMN `description` `description` text DEFAULT NULL ");
-      $this->db->query("ALTER TABLE `groups` ADD COLUMN `urlname` varchar(255) DEFAULT NULL AFTER `description`");
-      $this->db->query("ALTER TABLE `groups` ADD COLUMN `uid` text NOT NULL AFTER `urlname`");
-      $this->db->query("ALTER TABLE `groups` CHANGE COLUMN `created_on` `datecreated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+      // Add users_groups table back
+      $this->db->query("
+        CREATE TABLE `users_groups` (
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `groupid` int(11) NOT NULL,
+          `userid` int(11) NOT NULL,
+          `datejoined` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+          PRIMARY KEY (`id`)
+        ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+      ");
+
 
       // Revert marks table
       $this->db->query("ALTER TABLE `marks` DROP INDEX `url_key`");
@@ -557,6 +501,8 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `embed` `oembed` text DEFAULT NULL");
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `created_on` `dateadded` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
       $this->db->query("ALTER TABLE `marks` ADD COLUMN `recipe` text DEFAULT NULL AFTER `oembed`");
+
+      $res = $this->db->query("UPDATE `marks` SET oembed = 'None' WHERE oembed IS NULL");
 
       // Move recipes back to the recipe column
       $marks = $this->db->query("SELECT id, oembed FROM `marks` WHERE oembed LIKE '%hrecipe%'");
