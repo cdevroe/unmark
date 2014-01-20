@@ -53,42 +53,21 @@ class Users_To_Marks_model extends Plain_Model
     }
 
 
-    function delete_mark_for_user($urlid)
-    {
-        if ($urlid=='') return false;
 
-        // Lets see if this user has ever added this URL before
-        $mark = $this->db->delete('users_to_marks',array('urlid'=>$urlid,'user_id'=>$_SESSION['user']['user_id']));
 
-        return true;
-    }
-
-    function get_users_mark_by_id($markid='')
-    {
-        if ($markid == '') return false;
-
-        $mark = $this->db->query("SELECT * FROM users_to_marks LEFT JOIN marks ON users_to_marks.urlid=marks.id WHERE users_to_marks.user_id='".$_SESSION['user']['user_id']."' AND users_to_marks.id='".$markid."'");
-
-        if ( $mark->num_rows() > 0 ) {
-            return $mark->result_array();
-        }
-
-        return false;
-    }
-
-    protected function formatGroups($marks)
+    protected function formatTags($marks)
     {
         foreach ($marks as $k => $mark) {
-            $marks[$k]->groups = array();
-            if (isset($mark->group_ids) && ! empty($mark->group_ids)) {
-                $ids  = explode($this->delimiter, $mark->group_ids);
-                $names = explode($this->delimiter, $mark->group_names);
+            $marks[$k]->tags = array();
+            if (isset($mark->tag_ids) && ! empty($mark->tags_ids)) {
+                $ids   = explode($this->delimiter, $mark->tags_ids);
+                $names = explode($this->delimiter, $mark->tag_names);
                 foreach ($ids as $kk => $id) {
-                    $marks[$k]->groups[$id] = $names[$kk];
+                    $marks[$k]->tags[$id] = $names[$kk];
                 }
             }
-            unset($marks[$k]->group_ids);
-            unset($marks[$k]->group_names);
+            unset($marks[$k]->tag_ids);
+            unset($marks[$k]->tag_names);
         }
         return $marks;
     }
@@ -110,14 +89,14 @@ class Users_To_Marks_model extends Plain_Model
             SELECT
             users_to_marks.users_to_mark_id, users_to_marks.notes, users_to_marks.created_on,
             marks.mark_id, marks.title, marks.url,
-            GROUP_CONCAT(groups.group_id SEPARATOR '" . $this->delimiter . "') AS group_ids,
-            GROUP_CONCAT(groups.name SEPARATOR '" . $this->delimiter . "') AS group_names,
+            GROUP_CONCAT(tags.tag_id SEPARATOR '" . $this->delimiter . "') AS tag_ids,
+            GROUP_CONCAT(tags.name SEPARATOR '" . $this->delimiter . "') AS tag_names,
             labels.label_id, labels.name AS label_name
             FROM users_to_marks
             LEFT JOIN marks ON users_to_marks.mark_id = marks.mark_id
-            LEFT JOIN user_marks_to_groups ON users_to_marks.mark_id = user_marks_to_groups.user_mark_id
+            LEFT JOIN user_marks_to_tags ON users_to_marks.mark_id = user_marks_to_tags.users_to_mark_id
             LEFT JOIN labels ON users_to_marks.label_id = labels.label_id
-            LEFT JOIN groups ON user_marks_to_groups.group_id = groups.group_id
+            LEFT JOIN tags ON user_marks_to_tags.tag_id = tags.tag_id
             WHERE " . $where . " GROUP BY users_to_marks.users_to_mark_id" . $sort . $q_limit
         );
 
@@ -126,157 +105,10 @@ class Users_To_Marks_model extends Plain_Model
 
         // Now format the group names and ids
         if ($marks->num_rows() > 0) {
-            return $this->formatGroups($marks->result());
+            return $this->formatTags($marks->result());
         }
 
         return false;
     }
-
-    function get_number_archived_today()
-    {
-        // Unix timestamps for yesterday and today
-        $yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
-        $today = mktime(0, 0, 0, date('n'), date('j'));
-
-        $marks = $this->db->query("SELECT * FROM users_to_marks WHERE user_id='".$_SESSION['user']['user_id']."' AND UNIX_TIMESTAMP(archived_on) > ".$today." AND archived_on = 'archive' ORDER BY users_to_mark_id DESC LIMIT 100");
-
-        // Are there any results? If so, return.
-        if ($marks->num_rows() > 0) {
-            return $marks->num_rows();
-        }
-
-        return false;
-    }
-
-    function get_number_saved_today()
-    {
-        // Unix timestamps for yesterday and today
-        $yesterday = mktime(0, 0, 0, date('n'), date('j') - 1);
-        $today = mktime(0, 0, 0, date('n'), date('j'));
-
-        $marks = $this->db->query("SELECT * FROM users_to_marks WHERE user_id='".$_SESSION['user']['user_id']."' AND UNIX_TIMESTAMP(created_on) > ".$today." ORDER BY users_to_mark_id DESC LIMIT 100");
-
-        // Are there any results? If so, return.
-        if ($marks->num_rows() > 0) {
-            return $marks->num_rows();
-        }
-
-        return false;
-    }
-
-    function get_by_label($label='')
-    {
-    	if ($label == 'unlabeled') $label = '';
-
-    	$marks = $this->db->query("SELECT users_to_marks.*, marks.*, groups.*, users.user_id, users.email, users_to_marks.id as usersmarkid, users_to_marks.created_on as created_on FROM users_to_marks LEFT JOIN marks ON users_to_marks.urlid=marks.id LEFT JOIN groups ON users_to_marks.groups=groups.id LEFT JOIN users on users_to_marks.addedby=users.user_id  WHERE users_to_marks.user_id='".$_SESSION['user']['user_id']."' AND users_to_marks.tags = '".$label."' AND users_to_marks.archived_on != 'archive' ORDER BY users_to_marks.id DESC LIMIT 100");
-
-    	// Are there any results? If so, return.
-    	if ($marks->num_rows() > 0) {
-			return $marks->result_array();
-		}
-
-		return false;
-    }
-
-    function get_archived()
-    {
-    	$marks = $this->db->query("SELECT users_to_marks.*, marks.*, groups.*, users.user_id, users.email, users_to_marks.id as usersmarkid, users_to_marks.created_on as created_on FROM users_to_marks LEFT JOIN marks ON users_to_marks.urlid=marks.id LEFT JOIN groups ON users_to_marks.groups=groups.id LEFT JOIN users on users_to_marks.addedby=users.user_id WHERE users_to_marks.user_id='".$_SESSION['user']['user_id']."' AND users_to_marks.archived_on = 'archive' ORDER BY users_to_marks.id DESC LIMIT 100");
-
-
-    	// Are there any results? If so, return.
-    	if ($marks->num_rows() > 0) {
-			return $marks->result_array();
-		}
-
-		return false;
-    }
-
-    function get_by_group($groupuid='')
-    {
-    	if ($groupuid == '') return false;
-
-    	$marks = $this->db->query("SELECT users_to_marks.*, marks.*, groups.*, users.user_id, users.email, users_to_marks.id as usersmarkid, users_to_marks.created_on as created_on, groups.id as groupid FROM users_to_marks LEFT JOIN marks ON users_to_marks.urlid=marks.id LEFT JOIN groups ON users_to_marks.groups=groups.id LEFT JOIN users ON users_to_marks.addedby=users.user_id WHERE users_to_marks.user_id='".$_SESSION['user']['user_id']."' AND groups.uid='".$groupuid."' AND users_to_marks.archived_on != 'archive' ORDER BY users_to_marks.id DESC LIMIT 100");
-
-    	// Are there any results? If so, return.
-    	if ($marks->num_rows() > 0) {
-			return $marks->result_array();
-		}
-
-		return false;
-    }
-
-    function add_mark_to_group($urlid='',$groupid='')
-    {
-        if ($urlid=='' || $groupid =='') return false;
-
-        $this->load->model('Groups_model');
-
-        $this->db->update('users_to_marks',array('groups'=>$groupid),array('urlid' => $urlid,'user_id'=>$_SESSION['user']['user_id']));
-
-        // Add this mark to for every other user in the group.
-        //$groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = ".$group);
-        $groupmembers = $this->Groups_model->get_group_members($groupid);
-
-        if ( is_array($groupmembers) == true ) {
-            foreach($groupmembers as $member) {
-                if ($member['user_id'] == $_SESSION['user']['user_id']) continue; // No reason to add for current user. We already did that.
-
-                $this->db->insert('users_to_marks',array('user_id'=>$member['user_id'],'urlid'=>$urlid,'groups'=>$groupid,'addedby'=>$_SESSION['user']['user_id']));
-
-            }
-        }
-    }
-
-    function search_from_user($search='')
-    {
-    	if ($search == '') return false;
-
-    	$marks = $this->db->query("SELECT users_to_marks.*, marks.*, groups.*, users.user_id, users.email, users_to_marks.id as usersmarkid, users_to_marks.created_on as created_on FROM users_to_marks LEFT JOIN marks ON users_to_marks.urlid=marks.id LEFT JOIN groups ON users_to_marks.groups=groups.id LEFT JOIN users on users_to_marks.addedby=users.user_id  WHERE users_to_marks.user_id='".$_SESSION['user']['user_id']."' AND marks.title LIKE '%".$search."%' ORDER BY users_to_marks.id DESC LIMIT 100");
-
-    	// Are there any results? If so, return.
-    	if ($marks->num_rows() > 0) {
-			return $marks->result_array();
-		}
-
-		return false;
-    }
-
-    public function update($where, $options)
-    {
-
-        // If groups exist, save and remove them for later
-        $groups        = (isset($options['groups']) && ! empty($options['groups']) && is_array($options['groups'])) ? $options['groups'] : array();
-        $update_groups = (isset($options['update_groups']) && ! empty($options['update_groups'])) ? true : false;
-
-        // Unset some options
-        if (isset($options['groups'])) { unset($options['groups']); }
-        if (isset($options['update_groups'])) { unset($options['update_groups']); }
-
-        $mark = parent::update($where, $options);
-
-        if (isset($mark->users_to_mark_id)) {
-            self::updateGroups($mark->users_to_mark_id, $groups, $update_groups);
-            return $this->readComplete($mark->users_to_mark_id);
-        }
-
-        return $mark;
-    }
-
-    protected function updateGroups($user_mark_id, $groups=array(), $update_groups=false)
-    {
-        if ((! empty($groups) || ! empty($update_groups)) && is_numeric($user_mark_id)) {
-            $this->load->model('user_marks_to_groups', 'to_groups');
-            $res = $this->to_groups->delete("user_mark_id = '" . $user_mark_id . "'");
-
-            if (! empty($groups)) {
-                foreach ($groups as $group_id) {
-                    if (is_numeric($group_id)) {
-                        $res = $this->to_groups->create(array('user_mark_id' => $user_mark_id, 'group_id' => $group_id));
-                    }
-                }
-            }
-        }
-    }
-
 
 }
