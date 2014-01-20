@@ -69,7 +69,7 @@ class Plain_Controller extends CI_Controller
 
         // If api, return JSON
         if ($this->isAPI() === true) {
-            $this->renderJSON($this->data);
+            $this->renderJSON();
         }
 
         // If user to be redirected
@@ -138,6 +138,11 @@ class Plain_Controller extends CI_Controller
         $this->user_admin = (isset($_SESSION['user']['admin']) && ! empty($_SESSION['user']['admin'])) ? true : $this->user_admin;
     }
 
+    protected function isAdmin()
+    {
+        return $this->user_admin;
+    }
+
     protected function isAPI()
     {
         $segment = $this->uri->segment(1);
@@ -203,9 +208,9 @@ class Plain_Controller extends CI_Controller
         }
     }
 
-    protected function renderJSON($arr)
+    protected function renderJSON()
     {
-        $json         = json_encode($arr, JSON_FORCE_OBJECT);
+        $json         = json_encode($this->data, JSON_FORCE_OBJECT);
         $callback     = (isset($this->clean->callback)) ? $this->clean->callback : null;
         $json         = (isset($this->clean->content_type) && strtolower($this->clean->content_type) == 'jsonp') ? $callback . '(' . $json . ');' : $json;
         $content_type = (isset($this->clean->content_type) && strtolower($this->clean->content_type) == 'jsonp') ? 'application/javascript' : 'application/json';
@@ -265,6 +270,8 @@ class Plain_Controller extends CI_Controller
     // This is used so that we can easily add partials to all views
     protected function view($view, $data=array())
     {
+        $data = (empty($data)) ? $this->data : $data;
+
         $data['csrf_token']    = $_SESSION['csrf_token'];
         $data['flash_message'] = $this->flash_message;
 

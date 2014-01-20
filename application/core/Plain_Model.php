@@ -121,7 +121,7 @@ class Plain_Model extends CI_Model
                 return false;
             }
 
-            $result = ($limit == 1) ? $q->row() : toObject($q->result());
+            $result = ($limit == 1) ? $q->row() : (array) $q->result();
             if ($this->dont_cache === false) {
                 $this->cache->add($cache_key, serialize($result), true);
             }

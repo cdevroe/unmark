@@ -49,6 +49,8 @@ $route['upgrade'] = 'install/upgrade';
 $route['api/label/add']         = 'label/add';
 $route['api/label/edit/(:num)'] = 'label/edit/$1';
 $route['api/label/info(.*?)']   = 'label/info$1';
+$route['api/labels(.*?)']       = 'labels/index$1';
+$route['api/label(.*?)']        = 'labels/index$1';
 
 // Marks
 $route['(api/)?marks/edit/(:num)']     = 'marks/edit/$2';
