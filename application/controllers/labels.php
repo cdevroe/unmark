@@ -42,6 +42,18 @@ class Labels extends Plain_Controller
 
     }
 
+    // Add a new label (smart or regular)
+    public function activate($label_id=0)
+    {
+
+    }
+
+    // Add a new label (smart or regular)
+    public function deactivate($label_id=0)
+    {
+
+    }
+
     // Edit an existing label
     public function edit($label_id=0)
     {
