@@ -10,4 +10,13 @@ class Labels extends Plain_Controller
         $this->redirectIfNotAPI();
     }
 
+    // Redirect for now
+    public function index()
+    {
+        header('Location: /');
+        exit;
+    }
+
+
+
 }

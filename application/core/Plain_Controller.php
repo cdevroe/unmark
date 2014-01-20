@@ -1,6 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Plain_Controller extends CI_Controller {
+class Plain_Controller extends CI_Controller
+{
 
     public $clean          = null;
     public $csrf_valid     = false;
@@ -13,6 +14,7 @@ class Plain_Controller extends CI_Controller {
     public $limit          = 100;
     public $is_api         = false;
     public $original       = null;
+    public $user_admin     = false;
     public $user_id        = 0;
     public $user_token     = 0;
 
@@ -126,12 +128,14 @@ class Plain_Controller extends CI_Controller {
         // If API call, get the user id
         if (self::isAPI() === true && ! empty($this->user_token) && empty($this->user_id)) {
             $this->load->model('users_model', 'user');
-            $user = $this->user->read("users.user_token = '" . $this->user_token . "'", 1, 1, 'user_id');
-            $this->user_id = (isset($user->user_id)) ? $user->user_id : $this->user_id;
+            $user = $this->user->read("users.user_token = '" . $this->user_token . "'", 1, 1, 'user_id, admin');
+            $this->user_id    = (isset($user->user_id)) ? $user->user_id : $this->user_id;
+            $this->user_admin = (isset($user->admin) && ! empty($user->admin)) ? true : $this->user_admin;
         }
 
-        // User ID
-        $this->user_id = (isset($_SESSION['user']['user_id']) && ! empty($_SESSION['user']['user_id'])) ? $_SESSION['user']['user_id'] : $this->user_id;
+        // User ID & admin
+        $this->user_id    = (isset($_SESSION['user']['user_id']) && ! empty($_SESSION['user']['user_id'])) ? $_SESSION['user']['user_id'] : $this->user_id;
+        $this->user_admin = (isset($_SESSION['user']['admin']) && ! empty($_SESSION['user']['admin'])) ? true : $this->user_admin;
     }
 
     protected function isAPI()
