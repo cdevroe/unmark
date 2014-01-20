@@ -10,10 +10,9 @@ function formatErrors($errors)
 {
     if (is_string($errors)) {
         $message = $errors;
-        $errors  = new stdClass;
-        $errors->{'0'} = $message;
+        $errors  = array();
+        array_push($errors, $message);
     }
-
     return $errors;
 }
 

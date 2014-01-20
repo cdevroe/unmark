@@ -65,13 +65,13 @@ function isValid($val, $type)
 function validate($options=array(), $data_types=array(), $required=array())
 {
     $meets_reqs = true;
-    $errors     = new stdClass;
+    $errors     = array();
 
     //Check required fields
     if (! empty($required)) {
         foreach ($required as $column) {
             if (! isset($options[$column]) || $options[$column] == '') {
-                $errors->{$column} = ucwords(strtolower(str_replace('_', ' ', $column))) . ' is required.';
+                $errors[$column] = ucwords(strtolower(str_replace('_', ' ', $column))) . ' is required.';
                 $meets_reqs = false;
             }
         }
@@ -81,7 +81,7 @@ function validate($options=array(), $data_types=array(), $required=array())
     if (! empty($data_types)) {
         foreach ($data_types as $column => $type) {
             if (isset($options[$column]) && ! isValid($options[$column], $type)) {
-                $errors->{$column} = ucwords(strtolower(str_replace('_', ' ', $column))) . ' is not valid.';
+                $errors[$column] = ucwords(strtolower(str_replace('_', ' ', $column))) . ' is not valid.';
                 $meets_reqs = false;
             }
         }

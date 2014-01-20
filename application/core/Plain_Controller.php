@@ -14,13 +14,19 @@ class Plain_Controller extends CI_Controller {
 
     public function __construct()
     {
+        // Call home
+        parent::__construct();
+
+        // Figure if request if from API path or not
+        $this->isAPI();
+
         // Start session
         // Will switch this up once we have proper session handlers in place
         // For now using native PHP sessions & removing CI sessions
-        session_start();
-
-        // Call home
-        parent::__construct();
+        // For now only start for non-API calls
+        if ($this->is_api === false) {
+            session_start();
+        }
 
         // Clean incoming variables in a variety of ways
         $this->clean();
@@ -30,9 +36,6 @@ class Plain_Controller extends CI_Controller {
 
         // Get any flash messages
         $this->getFlashMessages();
-
-        // Figure if request if from API path or not
-        $this->isAPI();
 
     }
 
