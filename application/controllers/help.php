@@ -12,22 +12,22 @@ class Help extends Plain_Controller
     public function index()
     {
         header('Location: /help/how');
-        exit
+        exit;
     }
 
     public function bookmarklet()
     {
-        $this->view('bookmarklet');
+        $this->view('help/bookmarklet');
     }
 
     public function faq()
     {
-        $this->view('faq');
+        $this->view('help/faq');
     }
 
-    public function how())
+    public function how()
     {
-        $this->view('how');
+        $this->view('help/how');
     }
 
 }
