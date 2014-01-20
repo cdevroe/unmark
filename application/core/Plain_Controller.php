@@ -181,6 +181,15 @@ class Plain_Controller extends CI_Controller {
         }
     }
 
+    // If not an API url
+    protected function redirectIfNotAPI($url='/')
+    {
+        if (self::isAPI() === false) {
+            header('Location: ' . $url);
+            exit;
+        }
+    }
+
     // Redirect if not terminal
     protected function redirectIfNotCommandLine()
     {

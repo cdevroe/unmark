@@ -11,7 +11,7 @@ class Singletons extends Plain_Controller
     // Changelog
     public function changelog()
     {
-        $this->view('changelog');
+        $this->view('singletons/changelog');
     }
 
     // Redirect folks awayz
@@ -24,7 +24,7 @@ class Singletons extends Plain_Controller
     // TOS
     public function terms()
     {
-        $this->load->view('terms');
+        $this->view('singletons/terms');
     }
 
 }

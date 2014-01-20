@@ -7,6 +7,7 @@ class Labels extends Plain_Controller
     {
         parent::__construct();
         $this->redirectIfLoggedOut();
+        $this->redirectIfNotAPI();
     }
 
 }
