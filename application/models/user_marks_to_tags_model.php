@@ -22,14 +22,14 @@ class User_Marks_To_Tags_model extends Plain_Model
     public function create($options=array())
     {
 
-        $valid  = validate($options, $this->data_types, array('tag_id', 'users_to_mark_id'));
+        $valid  = validate($options, $this->data_types, array('tag_id', 'user_id', 'users_to_mark_id'));
 
         // Make sure all the options are valid
         if ($valid === true) {
 
 
             // See if this record already exists
-            $total = $this->count("tag_id = '" . $options['tag_id'] . "' AND users_to_mark_id = '" . $options['users_to_mark_id'] . "'");
+            $total = $this->count("tag_id = '" . $options['tag_id'] . "' AND user_id = '" . $options['user_id'] . "' AND users_to_mark_id = '" . $options['users_to_mark_id'] . "'");
 
             // If not, add it
             if ($total < 1) {
@@ -57,18 +57,20 @@ class User_Marks_To_Tags_model extends Plain_Model
     public function delete($options=array())
     {
 
-        $valid  = validate($options, $this->data_types, array('tag_id', 'users_to_mark_id'));
+        $valid  = validate($options, $this->data_types, array('tag_id', 'user_id', 'users_to_mark_id'));
 
         // Make sure all the options are valid
         if ($valid === true) {
 
+            // Set where
+            $where = "tag_id = '" . $options['tag_id'] . "' AND user_id = '" . $options['user_id'] . "'' AND users_to_mark_id = '" . $options['users_to_mark_id'] . "'";
 
             // See if this record already exists
-            $total = $this->count("tag_id = '" . $options['tag_id'] . "' AND users_to_mark_id = '" . $options['users_to_mark_id'] . "'");
+            $total = $this->count($where);
 
             // If not, add it
             if ($total > 0) {
-                $res  = $this->db->query("DELETE FROM `user_marks_to_tags` WHERE tag_id = '" . $options['tag_id'] . "' AND users_to_mark_id = '" . $options['users_to_mark_id'] . "'");
+                $res  = $this->db->query("DELETE FROM `user_marks_to_tags` WHERE " . $where);
 
                 // Check for errors
                 $this->sendException();

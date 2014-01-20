@@ -119,6 +119,85 @@ class Marks extends Plain_Controller
         $this->figureView('marks/index');
     }
 
+    // Edit a mark
+    // Both API and web view
+    public function edit($mark_id=0)
+    {
+        // Figure correct way to handle if no mark id
+        if (empty($mark_id) || ! is_numeric($mark_id)) {
+            header('Location: /');
+            exit;
+        }
+
+        // Figure what options to send for update
+        $options = array();
+
+        // If label ID is found, attach it
+        if (isset($this->clean->label_id) && is_numeric($this->label_id)) {
+            $options['label_id'] = $this->clean->label_id;
+        }
+
+        // If notes are present set them
+        if (isset($this->db_clean->notes)) {
+            $options['notes'] = $this->db_clean->notes;
+        }
+
+        // If tags are present, handle differentlu
+        // Need to add to tags table first
+        // Then create association
+        // If notes are present set them
+        if (isset($this->db_clean->tags) || isset($this->clean->delete_tags)) {
+            // Update users_to_marks record
+            $this->load->model('tags_model', 'tag');
+            $this->load->model('user_marks_to_tags_model', 'mark_to_tag');
+
+            // Add/Update tags
+            if (isset($this->db_clean->tags)) {
+                $tags = explode(',', $this->db_clean->tags);
+                foreach ($tags as $k => $tag) {
+                    $tag  = trim($tag);
+                    $slug = generateSlug($tag);
+                    if (! empty($slug)) {
+                        $tag = $this->tag->read("slug == '" . $slug . "'", 1, 1, 'tag_id');
+                        if (! isset($tag->tag_id)) {
+                            $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
+                        }
+
+                        // Add tag to mark
+                        if (isset($tag->tag_id)) {
+                            $res = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $_SESSION['user']['user_id']));
+                        }
+                    }
+                }
+            }
+
+            // Delete tags
+            if (isset($this->clean->delete_tags)) {
+                $tag_ids = explode(',', $this->clean->delete_tags);
+                foreach ($tag_ids as $tag_id) {
+                    if (is_numeric($tag_id)) {
+                        $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
+
+                        // Add tag to mark
+                        if (isset($tag->tag_id)) {
+                            $res = $this->mark_to_tags->delete(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $_SESSION['user']['user_id']));
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // Update users_to_marks record
+        $this->load->model('users_to_marks_model', 'user_mark');
+        $user_mark = $this->user_mark->update("user_id = '" . $_SESSION['user']['user_id'] . "' AND mark_id = '" . $mark->mark_id . "'", $options);
+
+
+        // Figure what to do here (api, redirect or generate view)
+        $this->figureView('marks/edit');
+
+    }
+
     // Mark detail view
     // Both API and web view
     public function info($mark_id=0)

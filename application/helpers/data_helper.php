@@ -16,6 +16,13 @@ function formatErrors($errors)
     return $errors;
 }
 
+function generateSlug($str)
+{
+    $str  = strip_tags(html_entity_decode($str, ENT_QUOTES, 'UTF-8'));
+    $slug = strtolower(trim(str_replace('--', '-', preg_replace('/\W+/','-', $str)), '-'));
+    return (empty($slug)) ? false : $slug;
+}
+
 function getLastJsonError()
 {
     switch (json_last_error()) {

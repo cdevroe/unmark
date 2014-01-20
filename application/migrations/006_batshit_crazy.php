@@ -36,6 +36,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
           `smart_label_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'If a smart label, the label_id to use if a match is found.',
           `user_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'If a label but owned by a user, place the users.user_id here.',
           `name` varchar(50) DEFAULT NULL COMMENT 'The name of the label.',
+          `slug` varchar(50) DEFAULT NULL COMMENT 'The slug of the label.',
           `domain` varchar(255) DEFAULT NULL COMMENT 'The hostname of the domain to match. Keep in all lowercase.',
           `path` varchar(100) DEFAULT NULL COMMENT 'The path to find to for smartlabels to match. If null, just match host.',
           `smart_key` varchar(32) DEFAULT NULL COMMENT 'MD5 checksum of domain and path for lookup purposes.',
@@ -45,6 +46,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
           PRIMARY KEY (`label_id`),
           CONSTRAINT `FK_label_smart_label_id` FOREIGN KEY (`smart_label_id`) REFERENCES `labels` (`label_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
           CONSTRAINT `FK_label_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
+          UNIQUE `slug`(slug),
           INDEX `smart_label_id`(smart_label_id),
           INDEX `user_id`(user_id),
           INDEX `smart_key`(smart_key)
@@ -65,7 +67,8 @@ class Migration_Batshit_Crazy extends CI_Migration {
       );
 
       foreach ($default_labels as $label) {
-        $this->db->query("INSERT INTO `labels` (`name`, `created_on`) VALUES ('" . $label['name'] . "', '" . date('Y-m-d H:i:s') . "')");
+        $slug = generateSlug($label['name']);
+        $this->db->query("INSERT INTO `labels` (`name`, `slug`, `created_on`) VALUES ('" . $label['name'] . "', '" . $slug . "', '" . date('Y-m-d H:i:s') . "')");
       }
 
       // Start default system smart labels
@@ -350,9 +353,11 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("
         CREATE TABLE `tags` (
           `tag_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key fro tags.',
-          `name` varchar(100) NOT NULL COMMENT 'The tag name (all lowercase, no spaces)',
+          `name` varchar(100) NOT NULL COMMENT 'The tag name.',
+          `slug` varchar(100) NOT NULL COMMENT 'The tag slug name.',
           PRIMARY KEY (`tag_id`),
-          UNIQUE `name`(name)
+          INDEX `name`(name),
+          UNIQUE `slug`(slug),
         ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
       ");
 
@@ -361,11 +366,14 @@ class Migration_Batshit_Crazy extends CI_Migration {
         CREATE TABLE `user_marks_to_tags` (
           `user_marks_to_tag_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The auto-incremented key.',
           `tag_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The tag id from tags.tag_id',
+          `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user id from users.user_id',
           `users_to_mark_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user mark id from users_to_marks.users_to_mark_id',
           PRIMARY KEY (`user_marks_to_tag_id`),
           INDEX `users_to_mark_id`(users_to_mark_id),
           INDEX `tag_id`(tag_id),
+          INDEX `user_id`(user_id),
           CONSTRAINT `FK_umtt_tag_id` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`tag_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
+          CONSTRAINT `FK_umtt_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
           CONSTRAINT `FK_umtt_mark_id` FOREIGN KEY (`users_to_mark_id`) REFERENCES `users_to_marks` (`users_to_mark_id`)   ON UPDATE CASCADE ON DELETE CASCADE
         ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
       ");
