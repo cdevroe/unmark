@@ -257,6 +257,28 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `users` CHANGE COLUMN `status` `active` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = active, 0 = inactive' AFTER `password`");
       $this->db->query("ALTER TABLE `users` CHANGE COLUMN `date_joined` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime the account was created'");
       $this->db->query("ALTER TABLE `users` CHANGE COLUMN `admin` `admin` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = admin, 0 = admin' AFTER `active`");
+      $this->db->query("ALTER TABLE `users` ADD COLUMN `user_token` varchar(30) NOT NULL DEFAULT '0' COMMENT 'Unique user token.' AFTER `password`");
+
+      // Add user tokens
+      // Must check if they exist already
+      $users = $this->db->query("SELECT user_id FROM `users`");
+      if ($users->num_rows() >= 1) {
+        foreach ($users->result() as $obj) {
+          do {
+                $user_token = generateToken(30);
+                $res = $this->db->query("SELECT user_id FROM `users` WHERE user_token = '" . $user_token . "'");
+          } while (isset($res->user_id));
+
+          // Update user record
+          $res = $this->db->query("UPDATE `users` SET user_token = '" . $user_token . "' WHERE user_id = '" . $obj->user_id . "'");
+        }
+      }
+
+      // Update user token column to be no default
+      // Add unique index
+      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `user_token` `user_token` varchar(30) NOT NULL COMMENT 'Unique user token.'");
+      $this->db->query("ALTER TABLE `users` ADD UNIQUE `user_token`(user_token)");
+
 
       // Remove the users_smartlabels table
       $this->db->query("DROP TABLE IF EXISTS `users_smartlabels`");
@@ -560,6 +582,8 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $res = $this->db->query("UPDATE `users` SET status = 'active' WHERE status = '1'");
       $this->db->query("ALTER TABLE `users` ADD COLUMN `salt` varchar(50) DEFAULT NULL COMMENT 'The salt used to generate password.' AFTER `password`");
       $this->db->query("ALTER TABLE `users` CHANGE COLUMN `created_on` `date_joined` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+      $this->db->query("ALTER TABLE `users` DROP INDEX `user_token`");
+      $this->db->query("ALTER TABLE `users` DROP COLUMN `user_token`");
 
     }
 

@@ -17,7 +17,7 @@ class Login extends Plain_Controller {
 
         // Find user
         $this->load->model('users_model', 'user');
-        $user = $this->user->read("email = '" . $this->db_clean->email . "'", 1, 1, 'user_id, password, active, admin');
+        $user = $this->user->read("email = '" . $this->db_clean->email . "'", 1, 1, 'user_id, password, user_token, active, admin');
 
         if (! isset($user->user_id)) {
             $this->setFlashMessage('The email address `' . $this->clean->email . '` was not found.');
