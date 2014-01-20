@@ -4,6 +4,7 @@ class Plain_Controller extends CI_Controller {
 
     public $clean          = null;
     public $csrf_valid     = false;
+    public $data           = array();
     public $db_clean       = null;
     public $flash_message  = array();
     public $footer         = 'footer';
@@ -17,16 +18,8 @@ class Plain_Controller extends CI_Controller {
         // Call home
         parent::__construct();
 
-        // Figure if request if from API path or not
-        $this->isAPI();
-
         // Start session
-        // Will switch this up once we have proper session handlers in place
-        // For now using native PHP sessions & removing CI sessions
-        // For now only start for non-API calls
-        if ($this->is_api === false) {
-            session_start();
-        }
+        $this->sessionStart();
 
         // Clean incoming variables in a variety of ways
         $this->clean();
@@ -61,6 +54,34 @@ class Plain_Controller extends CI_Controller {
 
     }
 
+    protected function figureView($view=null, $redirect=null)
+    {
+        // Sort main data keys from A-Z
+        ksort($this->data);
+
+        // If api, return JSON
+        if ($this->isAPI() === true) {
+            $this->renderJSON($this->data);
+        }
+
+        // If user to be redirected
+        // do it
+        elseif (! empty($redirect)) {
+            header('Location: ' . $redirect);
+            exit;
+        }
+
+        // Else return array for view
+        // This will change to show view when ready
+        else {
+
+            $this->data['view'] = $view;
+            print '<pre>';
+            print_r($this->data);
+            print '</pre>';
+        }
+    }
+
     // Check and generate CRSF tokens
     protected function generateCSRF()
     {
@@ -90,8 +111,8 @@ class Plain_Controller extends CI_Controller {
 
     protected function isAPI()
     {
-        $segment      = $this->uri->segment(1);
-        $this->is_api = (! empty($segment) && strtolower($segment) == 'api') ? true : false;
+        $segment = $this->uri->segment(1);
+        return (! empty($segment) && strtolower($segment) == 'api') ? true : false;
     }
 
     // If logged if invalid CSRF token is not valid
@@ -130,7 +151,7 @@ class Plain_Controller extends CI_Controller {
         }
     }
 
-    protected function render($arr)
+    protected function renderJSON($arr)
     {
         $json         = json_encode($arr, JSON_FORCE_OBJECT);
         $callback     = (isset($this->clean->callback)) ? $this->clean->callback : null;
@@ -167,6 +188,14 @@ class Plain_Controller extends CI_Controller {
         setcookie('ci_session', '', time()-31557600, '/', $_SERVER['HTTP_HOST']);
         session_destroy();
         $_SESSION = array();
+    }
+
+    // Start session
+    protected function sessionStart()
+    {
+        //if ($this->isAPI() === false) {
+            session_start();
+        //}
     }
 
     protected function setFlashMessage($message, $type='error')

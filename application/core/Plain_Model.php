@@ -13,6 +13,7 @@ class Plain_Model extends CI_Model
     protected $delimiter    = '~*~';
     protected $dont_cache   = false;
     protected $id_column    = null;
+    protected $read_method  = false;
 
     public function __construct()
     {
@@ -20,8 +21,9 @@ class Plain_Model extends CI_Model
 
         // Reflect
         // Get constants
-        $model      = new ReflectionClass($this);
-        $constants  = $model->getConstants();
+        $model             = new ReflectionClass($this);
+        $constants         = $model->getConstants();
+        $this->read_method = ($model->hasMethod('readComplete')) ? 'readComplete' : 'read';
 
         // Figure the correct table to use
         // If table constant is found, set it
@@ -78,6 +80,18 @@ class Plain_Model extends CI_Model
 
         // Will add caching later
         return null;
+    }
+
+    public function getTotals($where, $page, $limit, $data=array())
+    {
+        $total            = $this->count($where);
+        $total_pages      = ($total > 0) ? ceil($total / $limit) : 0;
+        $data['total']    = $total;
+        $data['page']     = $page;
+        $data['per_page'] = $limit;
+        $data['pages']    = $total_pages;
+
+        return $data;
     }
 
     public function read($where, $limit=1, $page=1, $select='*')
@@ -176,7 +190,8 @@ class Plain_Model extends CI_Model
                 $cache_key = $this->getCacheKey($q);
                 $this->removeCacheKey($cache_key);
                 $this->dont_cache = true;
-                return $this->read($where);
+                $method = $this->read_method;
+                return $this->{$method}($where);
             }
             else {
                 return $this->formatErrors('Eek this is akward, sorry. Something went wrong. Please try again.');

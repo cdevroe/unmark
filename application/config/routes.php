@@ -42,12 +42,11 @@ $route['default_controller'] = "welcome";
 $route['404_override'] = '';
 
 // Marks
-$route['marks/edit/(:num)']    = "marks/edit";
-$route['marks/delete/(:num)']  = "marks/delete";
-$route['marks/archive/(:num)'] = "marks/archive";
-$route['marks/restore/(:num)'] = "marks/restore";
-$route['marks/label/(:any)']   = "marks/byLabel";
-$route['marks/(:any)']         = "marks/index";
+$route['(api/)?marks/info/(:num)']     = "marks/info/$2";
+$route['(api/)?marks/archive/(:num)'] = "marks/archive/$2";
+$route['(api/)?marks/restore/(:num)'] = "marks/restore/$2";
+$route['(api/)?marks/label(.*?)']     = "marks/label$2";
+$route['(api/)?marks(.*?)']           = "marks/index";
 
 // Registration
 $route['sirius'] = "welcome/sirius";

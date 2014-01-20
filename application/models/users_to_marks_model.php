@@ -42,7 +42,7 @@ class Users_To_Marks_model extends Plain_Model
             // If good, return full record
             if ($res === true) {
                 $user_mark_id = $this->db->insert_id();
-                return $this->read($user_mark_id);
+                return $this->readComplete($user_mark_id);
             }
 
             // Else return error
@@ -51,9 +51,6 @@ class Users_To_Marks_model extends Plain_Model
 
         return $this->formatErrors($valid);
     }
-
-
-
 
     protected function formatTags($marks)
     {
@@ -72,6 +69,39 @@ class Users_To_Marks_model extends Plain_Model
         return $marks;
     }
 
+    public function getTotal($type, $user_id, $from=null, $to=null)
+    {
+        $type  = trim(strtolower($type));
+        $types = array('archived' => 'archived_on', 'saved' => 'created_on');
+
+        // If type not found, return 0
+        if (! array_key_exists($type, $types)) {
+            return 0;
+        }
+
+        // Set column from type
+        $column = $types[$type];
+
+        // Figure date range
+        $when = null;
+
+        // If from is not empty, figure timestamp
+        if (! empty($from)) {
+            $when .= " AND UNIX_TIMESTAMP(" . $column . ") >= '" . strtotime($from) . "'";
+        }
+
+        // if to is not empty, figure timestamp
+        if (! empty($to)) {
+            $when .= " AND UNIX_TIMESTAMP(" . $column . ") <= '" . strtotime($to) . "'";
+        }
+
+        // If when is empty, set to IS NOT NULL
+        if (empty($when)) {
+            $when .= " AND " . $column . " IS NOT NULL";
+        }
+
+        return $this->count("user_id='". $user_id . "'" . $when);
+    }
 
     public function readComplete($where, $limit=1, $page=1, $start=null)
     {
@@ -82,12 +112,13 @@ class Users_To_Marks_model extends Plain_Model
         $start      = (! is_null($start)) ? $start : $limit * ($page - 1);
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
         $sort       = (! empty($this->sort)) ? ' ORDER BY users_to_marks.' . $this->sort : null;
+        $total      = $this->count($where);
 
         // Stop, query time
         $q     = $this->db->query('SET SESSION group_concat_max_len = 10000');
 		$marks = $this->db->query("
             SELECT
-            users_to_marks.users_to_mark_id, users_to_marks.notes, users_to_marks.created_on,
+            users_to_marks.users_to_mark_id, users_to_marks.notes, users_to_marks.created_on, users_to_marks.archived_on,
             marks.mark_id, marks.title, marks.url,
             GROUP_CONCAT(tags.tag_id SEPARATOR '" . $this->delimiter . "') AS tag_ids,
             GROUP_CONCAT(tags.name SEPARATOR '" . $this->delimiter . "') AS tag_names,
@@ -105,7 +136,8 @@ class Users_To_Marks_model extends Plain_Model
 
         // Now format the group names and ids
         if ($marks->num_rows() > 0) {
-            return $this->formatTags($marks->result());
+            $marks = $this->formatTags($marks->result());
+            return ($limit == 1) ? $marks[0] : $marks;
         }
 
         return false;

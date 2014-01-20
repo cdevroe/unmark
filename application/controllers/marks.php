@@ -1,6 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Marks extends Plain_Controller {
+class Marks extends Plain_Controller
+{
+
+    public $limit = 100;
 
     public function __construct()
     {
@@ -9,78 +12,78 @@ class Marks extends Plain_Controller {
         $this->load->helper('oembed');
     }
 
-    // Unused for now.
-    public function index($when='')
+    // The index of the marks page
+    public function index($when=null, $page=1)
     {
-
-        //$this->session->set_flashdata('lasturl', current_url());
-
-
+        // Load user marks model
         $this->load->model('users_to_marks_model', 'user_marks');
-        $data['when']  = $this->uri->segment(2);
-        $data['when']  = (! empty($data['when'])) ? $data['when'] : 'all';
-        $where_time    = ($data['when'] == 'today') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $today . "' AND " : '';
-        $where_time    = ($data['when'] == 'yesterday') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $yesterday . "' AND UNIX_TIMESTAMP(marks.created_on) < '" . $today . "' AND " : $where_time;
-        $archived      = ($data['when'] == 'archive') ? 'IS NOT NULL' : 'IS NULL';
-        $data['marks'] = $this->user_marks->readComplete("users_to_marks.user_id='". $_SESSION['user']['user_id'] . "' AND" . $where_time . " users_to_marks.archived_on " . $archived, 100, 1);
-        $data['label'] = '';
 
-        $data['marks_saved_today'] = $this->user_marks->get_number_saved_today();
-        $data['marks_archived_today'] = $this->user_marks->get_number_archived_today();
+        // Figure when to pull marks from
+        $this->data['when'] = $this->uri->segment(2);
+        $this->data['when'] = (! empty($data['when'])) ? $data['when'] : 'all';
+        $where_time         = ($this->data['when'] == 'today') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $today . "' AND " : '';
+        $where_time         = ($this->data['when'] == 'yesterday') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $yesterday . "' AND UNIX_TIMESTAMP(marks.created_on) < '" . $today . "' AND " : $where_time;
+        $archived           = ($this->data['when'] == 'archive') ? 'IS NOT NULL' : 'IS NULL';
 
-        $this->view('marks', $data);
+        // Figure the correct starting page
+        $page = (! is_numeric($page) || $page < 0) ? 1 : $page;
+
+        // Set where
+        $where = "users_to_marks.user_id='". $_SESSION['user']['user_id'] . "' AND" . $where_time . " users_to_marks.archived_on " . $archived;
+
+        // Get current page, total pages and total records
+        $this->data = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
+
+        // Read the complete user marks records
+        $this->data['marks'] = $this->user_marks->readComplete($where, $this->limit, $page);
+
+        // Get the total saved and archived today
+        $this->data['saved_today']    = $this->user_marks->getTotal('saved', $_SESSION['user']['user_id'], 'today');
+        $this->data['archived_today'] = $this->user_marks->getTotal('archived', $_SESSION['user']['user_id'], 'today');
+
+        // Figure if web or API view
+        $this->figureView('marks/index');
     }
 
-    public function bylabel()
+    public function label($label_id=0, $page=1)
     {
-        if (!$_SESSION['user']['user_id']) { redirect(''); }
-        $this->session->set_flashdata('lasturl', current_url());
+        // Set default marks
+        $this->data['marks'] = false;
+        $this->data['total'] = 0;
 
+        // If label id is numeric, proceed
+        if (! empty($label_id) && is_numeric($label_id)) {
 
-        $this->load->model('Marks_model');
+            // Load user marks model
+            $this->load->model('users_to_marks_model', 'user_marks');
 
-        $label = $this->uri->segment(3);
+            // Figure the correct starting page
+            $page = (! is_numeric($page) || $page < 0) ? 1 : $page;
 
-        // Retrieve marks.
-        $data['marks'] = $this->Marks_model->get_by_label($label);
+            // Set where
+            $where = "users_to_marks.user_id='". $_SESSION['user']['user_id'] . "' AND users_to_marks.label_id = '" . $label_id . "'";
 
+            // Get current page, total pages and total records
+            $this->data = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
 
-        $data['label'] = $label;
-        $data['group']['groupuid'] = '';
-        $data['when'] = 'all';
+            // Get the marks by label id
+            $this->data['marks'] = $this->user_marks->readComplete($where, $this->limit, $page);
+        }
 
-        $this->load->view('marks',$data);
+        // Figure if web or API view
+        $this->figureView('marks/label');
     }
 
     public function search()
     {
-        if (!$_SESSION['user']['user_id']) { redirect(''); }
-        $this->session->set_flashdata('lasturl', current_url());
-
-        $s = $this->input->post('s');
-
-        if ($s == '') redirect('home');
-
-        $this->load->model('Marks_model');
-
-        $data['marks'] = $this->Marks_model->search_from_user($s);
-
-
-        $data['search'] = $s;
-        $data['label'] = '';
-        $data['when'] = 'all';
-
-        $this->load->view('marks',$data);
+        // Not sure how to tackle this one yet
     }
 
     public function add()
     {
-        $this->redirectIfLoggedOut('/');
-
-        // Not sure what this is for
-        // Commenting out for now
-        // $this->session->set_flashdata('addurl', current_url());
-
+        // Set default view & redirect
+        $view    = null;
+        $redirect = null;
 
         // Add mark to marks table
         $this->load->model('marks_model', 'mark');
@@ -94,7 +97,7 @@ class Marks extends Plain_Controller {
         // If not add it
         // If so, redirect to it
         if (isset($mark->mark_id)) {
-            $this->load->model('user_to_marks_model', 'user_mark');
+            $this->load->model('users_to_marks_model', 'user_mark');
             $user_mark = $this->user_mark->read("user_id = '" . $_SESSION['user']['user_id'] . "' AND mark_id = '" . $mark->mark_id . "'");
 
             // Add
@@ -108,370 +111,76 @@ class Marks extends Plain_Controller {
             // If still no user mark id, error out
             // We need a better way to handle/show errors here
             if (! isset($user_mark->users_to_mark_id)) {
-                foreach ($mark as $error) {
-                    print '<p>Error: ' . $error . '</p>';
-                }
+                $data = array();
+                $this->data['mark']   = false;
+                $this->data['errors'] = $user_mark;
+                $view                 = 'marks/add';
             }
             else {
-                header('Location: /marks/edit/' . $user_mark->users_to_mark_id . '?bookmarklet=true');
-                exit;
+                $this->data['mark'] = $user_mark;
+                $redirect           = '/marks/edit/' . $user_mark->users_to_mark_id . '?bookmarklet=true';
             }
         }
-
-    }
-
-    public function addlabel($urlid='',$label='')
-    {
-        if (!$_SESSION['user']['user_id']) { redirect('home'); }
-
-
-        if ($this->input->get('urlid') != '') $urlid = $this->input->get('urlid');
-        if ($this->input->get('label') != '') $label = $this->input->get('label');
-
-        $this->db->update('users_marks',array('tags'=>strtolower($label)),array('urlid' => $urlid,'userid'=>$_SESSION['user']['user_id']));
-
-    // Success!
-    return;
-    }
-
-    public function addsmartlabel($domain='',$label='')
-    {
-        if (!$_SESSION['user']['user_id']) { redirect('home'); }
-
-
-        if ($this->input->get('domain') != '') $domain = $this->input->get('domain');
-        if ($this->input->get('label') != '') $label = $this->input->get('label');
-
-        $noduplicates = $this->db->query("SELECT * FROM users_smartlabels WHERE userid = ".$_SESSION['user']['user_id']." AND domain = '".$domain."'");
-
-        if ($noduplicates->num_rows() > 0) { // Update record
-            $this->db->update('users_smartlabels',array('label'=>$label),array('domain'=>$domain,'userid'=>$_SESSION['user']['user_id']));
-        } else { // Add new record
-            $this->db->insert('users_smartlabels',array('userid'=>$_SESSION['user']['user_id'],'domain'=>$domain,'label'=>$label));
+        else {
+            $this->data['mark']   = false;
+            $this->data['errors'] = $mark;
+            $view                 = 'marks/add';
         }
 
-    return;
+        // Figure what to do here (api, redirect or generate view)
+        $this->figureView($view, $redirect);
+
     }
 
-    public function removesmartlabel($domain='',$label='')
+    public function info($mark_id=0)
     {
-        if (!$_SESSION['user']['user_id']) { redirect('home'); }
 
-
-        if ($this->input->get('domain') != '') $domain = $this->input->get('domain');
-        if ($this->input->get('label') != '') $label = $this->input->get('label');
-
-        $this->db->delete('users_smartlabels', array('userid' => $_SESSION['user']['user_id'],'domain'=>$domain));
-
-    return;
-    }
-
-    public function checkdefaultsmartlabel($parsedUrl='')
-    {
-        if(!empty($parsedUrl['host'])){
-         switch (str_replace('www.','',$parsedUrl['host'])) {
-           /* Video web services */
-           case 'youtube.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/watch');
-             if ($pathPos !== FALSE) {
-               return array(TRUE,'watch');
-             }
-           break;
-
-           case 'viddler.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/v');
-             if ($pathPos !== FALSE) {
-                return array(TRUE,'watch');
-             }
-           break;
-
-           case 'devour.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/video');
-             if ($pathPos !== FALSE) {
-                return array(TRUE,'watch');
-             }
-           break;
-
-           case 'ted.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/talks');
-             if ($pathPos !== FALSE) {
-                return array(TRUE,'watch');
-             }
-           break;
-
-           case 'vimeo.com':
-             return array(TRUE,'watch');
-           break;
-
-           /* Documentation URLs */
-           case 'php.net':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/manual');
-             if ($pathPos !== FALSE) {
-                return array(TRUE,'read');
-             }
-           break;
-
-           case 'api.rubyonrails.org':
-               return array(TRUE,'read');
-           break;
-
-           case 'ruby-doc.org':
-               return array(TRUE,'read');
-           break;
-
-         case 'docs.jquery.com':
-               return array(TRUE,'read');
-           break;
-
-           case 'codeigniter.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/user_guide');
-             if ($pathPos !== FALSE) {
-               return array(TRUE,'read');
-             }
-           break;
-
-           case 'css-tricks.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/almanac');
-             if ($pathPos !== FALSE) {
-               return array(TRUE,'read');
-             }
-           break;
-
-           case 'developer.apple.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/library');
-             if ($pathPos !== FALSE) {
-               return array(TRUE,'read');
-             }
-           break;
-
-           /* Recipe URLs */
-
-           case 'simplyrecipes.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/recipes');
-             if ($pathPos !== FALSE) {
-               return array(TRUE,'eatdrink');
-             }
-           break;
-
-           case 'allrecipes.com':
-             return array(TRUE,'eatdrink');
-           break;
-
-           case 'epicurious.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/recipes');
-             if ($pathPos !== FALSE) {
-               return array(TRUE,'eatdrink');
-             }
-           break;
-
-           case 'foodnetwork.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/recipes');
-             if ($pathPos !== FALSE) {
-               return array(TRUE,'eatdrink');
-             }
-           break;
-
-           case 'food.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/recipe');
-             if ($pathPos !== FALSE) {
-               return array(TRUE,'eatdrink');
-             }
-           break;
-
-           /* Shopping URLs */
-
-           case 'svpply.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/item');
-             if ($pathPos !== FALSE) {
-               return array(TRUE,'buy');
-             }
-           break;
-
-           case 'amazon.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/gp/product');
-             if ($pathPos !== FALSE) {
-               return array(TRUE,'buy');
-             }
-           break;
-
-        case 'fab.com':
-             $pathPos = strpos(strtolower($parsedUrl['path']),'/sale');
-             if ($pathPos !== FALSE) {
-               return array(TRUE,'buy');
-             }
-           break;
-
-           case 'zappos.com':
-             return array(TRUE,'buy');
-           break;
-
-           default:
-             //echo 'not adding any label';
-           break;
-         }
+        // Figure correct way to handle if no mark id
+        if (empty($mark_id) || ! is_numeric($mark_id)) {
+            header('Location: /');
+            exit;
         }
 
+        // Load correct model
+        $this->load->model('users_to_marks_model', 'user_mark');
+        $this->data['mark'] = $this->user_mark->readComplete("users_to_marks.user_id = '" . $_SESSION['user']['user_id'] . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", 1);
+
+        // Figure view
+        $this->figureView('marks/info');
     }
 
-    public function addgroup($urlid='',$group='')
+    public function archive($mark_id=0)
     {
-        if (!$_SESSION['user']['user_id']) { redirect('home'); }
 
-        $this->load->model('Marks_model');
-
-        if ($this->input->get('urlid') != '') $urlid = $this->input->get('urlid');
-        if ($this->input->get('group') != '') $group = $this->input->get('group');
-
-        if ($urlid=='' || $group == '') return 'failure';
-
-        $this->Marks_model->add_mark_to_group($urlid,$group);
-
-        /*$this->db->update('users_marks',array('groups'=>$group),array('urlid' => $urlid,'userid'=>$_SESSION['user']['user_id']));
-
-        // Duplicate this bookmark for every single person in the group.
-        $groupmembers = $this->db->query("SELECT * FROM users_groups WHERE groupid = ".$group);
-
-        if ($groupmembers->num_rows() > 0) {
-            foreach($groupmembers->result_array() as $member) {
-                if ($member['userid'] != $_SESSION['user']['user_id']) {
-
-                    // No reason to duplicate the link. But, if the link is not yet in the group add it.
-                    $link = $this->db->query("SELECT * FROM users_marks WHERE urlid = '".$urlid."' AND groups = '".$group."' AND userid = '".$member['userid']."'");
-                    if ($link->num_rows() < 1) {
-                        $this->db->insert('users_marks',array('userid'=>$member['userid'],'urlid'=>$urlid,'groups'=>$group,'addedby'=>$_SESSION['user']['user_id']));
-                    }
-                } // end if
-            } // end foreach
-        } // end if */
-
-    // Success!
-    return;
-    }
-
-    public function edit()
-    {
-        if (!$_SESSION['user']['user_id']) { redirect(''); }
-
-        $this->session->set_flashdata('lasturl', current_url());
-
-
-        $this->load->model('Groups_model');
-        $this->load->model('Marks_model');
-
-        $markid = $this->uri->segment(3);
-
-        $mark = $this->Marks_model->get_users_mark_by_id($markid);
-
-        if ( is_array($mark) == true ) {
-
-            $parsedUrl = parse_url($mark[0]['url']);
-
-            // Only look for smart labels if host is set
-            if(!empty($parsedUrl['host'])){
-                // First, check for user smart labels
-                $smartlabel = $this->db->query("SELECT * FROM users_smartlabels WHERE domain = '".strtolower($parsedUrl['host'])."' AND userid = '".$_SESSION['user']['user_id']."'");
-
-                 if ($smartlabel->num_rows() > 0) {  // smart label found
-                    $label = $smartlabel->row();
-                    $data['userlabeladded'] = TRUE;
-
-                } else {
-                    // Figure out if it matches any default labels
-                    // Label accordingly.
-                    $smartlabel = $this->checkdefaultsmartlabel($parsedUrl);
-                    if ($smartlabel[0] == TRUE) {
-                        $data['labeladded'] = TRUE;
-                    }
-                }
-            }
-
-            // I think this part could be reduced to a single line,
-            // such as array_merge(). But I havent be able to do it.
-            $data['title'] = $mark[0]['title'];
-            $data['url'] = $mark[0]['url'];
-            $data['urlid'] = $mark[0]['urlid'];
-            $data['tags'] = $mark[0]['tags'];
-            $data['note'] = $mark[0]['note'];
-            $data['addedby'] = $mark[0]['addedby'];
-            $data['groupid'] = $mark[0]['groups'];
-
-            if(!empty($parsedUrl['host'])){
-              $data['urldomain'] = strtolower($parsedUrl['host']);
-            }
-
-            $data['groups']['created'] = $this->Groups_model->get_groups_created_by_user();
-
-            // Load the groups the user belongs to
-            $data['groups']['belong'] = $this->Groups_model->get_groups_user_belongs_to();
-
-            $data['label'] = '';
-            $data['group']['groupuid'] = '';
-            $data['when'] = 'all';
-
-            if ( isset($_GET['bookmarklet']) && $_GET['bookmarklet'] == true) {
-                $data['markadded'] = true;
-            }
-
-            $this->load->view('editpop',$data);
-        } else {
-            show_404();
+        // Figure correct way to handle if no mark id
+        if (empty($mark_id) || ! is_numeric($mark_id)) {
+            header('Location: /');
+            exit;
         }
+
+        // Load correct model
+        $this->load->model('users_to_marks_model', 'user_mark');
+        $this->data['mark'] = $this->user_mark->update("users_to_marks.user_id = '" . $_SESSION['user']['user_id'] . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
+
+        // Figure view
+        $this->figureView('marks/archive');
     }
 
-    public function savenote($urlid='',$note='')
+    public function restore($mark_id=0)
     {
-        if (!$_SESSION['user']['user_id']) { redirect('home'); }
 
+        // Figure correct way to handle if no mark id
+        if (empty($mark_id) || ! is_numeric($mark_id)) {
+            header('Location: /');
+            exit;
+        }
 
-        if ($this->input->get('urlid') != '') $urlid = $this->input->get('urlid');
-        if ($this->input->get('note') != '') $note = $this->input->get('note');
+        // Load correct model
+        $this->load->model('users_to_marks_model', 'user_mark');
+        $this->data['mark'] = $this->user_mark->update("users_to_marks.user_id = '" . $_SESSION['user']['user_id'] . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => NULL));
 
-        $this->db->update('users_marks',array('note'=>$note),"urlid = ".$urlid);
-
-    // Success!
-    return;
-    }
-
-    public function archive()
-    {
-        if (!$_SESSION['user']['user_id']) { redirect(''); }
-
-
-        $id = $this->uri->segment(3);
-        $this->db->update('users_marks',array('status'=>'archive','archived_on'=>date('Y-m-d H:i:s')),array('id' => $id,'userid'=>$_SESSION['user']['user_id']));
-
-        echo 'success';
-        exit;
-    }
-
-    public function restore()
-    {
-        if (!$_SESSION['user']['user_id']) { redirect(''); }
-
-
-        $id = $this->uri->segment(3);
-        $this->db->update('users_marks',array('status'=>'','archived_on'=>''),array('id' => $id,'userid'=>$_SESSION['user']['user_id']));
-
-        $this->session->set_flashdata('message', 'Your mark has been restored.');
-        $this->session->set_flashdata('restoredurlid',$urlid);
-
-        echo 'success';
-        exit;
-    }
-
-    public function delete()
-    {
-        if (!$_SESSION['user']['user_id']) { redirect(''); }
-
-        $this->load->model('Marks_model');
-
-        $id = $this->uri->segment(3);
-        $this->Marks_model->delete_mark_for_user($id);
-        //$this->db->update('users_marks',array('status'=>''),array('id' => $id,'userid'=>$_SESSION['user']['user_id']));
-
-        $this->session->set_flashdata('message', 'Your mark has been deleted.');
-
-        redirect('home');
+        // Figure view
+        $this->figureView('marks/restore');
     }
 
     // Finds the day's bookmarks
@@ -564,6 +273,3 @@ class Marks extends Plain_Controller {
     }
 
 }
-
-/* End of file nilai.php */
-/* Location: ./application/controllers/nilai.php */
