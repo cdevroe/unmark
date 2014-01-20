@@ -20,6 +20,7 @@ class Labels_model extends Plain_Model
             'path'            =>  'string',
             'smart_key'       => 'md5',
             'active'          => 'bool',
+            'slug'            => 'string',
             'created_on'      => 'datetime'
         );
 
@@ -49,7 +50,8 @@ class Labels_model extends Plain_Model
                 $options['smart_key'] = $md5;
             }
             else {
-                $where = "labels.name = '" . $options['name'] . "' labels.user_id IS NULL";
+                $options['slug'] = generateSlug($options['name']);
+                $where           = "labels.slug = '" . $options['slug'] . "' labels.user_id IS NULL";
             }
 
             // See if this record already exists

@@ -14,7 +14,8 @@ class User_Marks_To_Tags_model extends Plain_Model
         // Set data types
         $this->data_types = array(
             'tag_id'           => 'numeric',
-            'users_to_mark_id' => 'numeric'
+            'users_to_mark_id' => 'numeric',
+            'user_id'          => 'numeric'
         );
 
     }

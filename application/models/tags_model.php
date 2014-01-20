@@ -13,7 +13,8 @@ class Tags_model extends Plain_Model
 
         // Set data types
         $this->data_types = array(
-            'name' => 'string'
+            'name' => 'string',
+            'slug' => 'string'
         );
 
     }
@@ -28,7 +29,8 @@ class Tags_model extends Plain_Model
 
 
             // See if this record already exists
-            $tag = $this->read("LOWER(tags.name) = '" . $options['name'] . "'", 1, 1);
+            $options['slug'] = generateSlug($options['name']);
+            $tag = $this->read("tags.slug = '" . $options['slug'] . "'", 1, 1);
 
             // If not, add it
             if (! isset($tag->tag_id)) {

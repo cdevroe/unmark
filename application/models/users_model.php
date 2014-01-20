@@ -37,6 +37,14 @@ class Users_model extends Plain_Model
             // If you made it this far, we need to add the record to the DB
             $options['password']    = generateHash($options['password']);
             $options['created_on']  = date("Y-m-d H:i:s");
+
+            // Create user token
+            do {
+                $options['user_token'] = generateToken(30);
+                $total = $this->count("user_token = '" . $options['user_token'] . "'");
+            } while ($total > 0);
+
+            // Add record
             $q   = $this->db->insert_string('users', $options);
             $res = $this->db->query($q);
 
