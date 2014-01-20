@@ -31,7 +31,7 @@ class Marks_model extends Plain_Model
 
             // Make sure url doesn't already exist
             $md5  = md5($options['url']);
-            $mark = $this->read("url_key = '" . $md5 . "'", 1, 1, 'mark_id');
+            $mark = $this->read("url_key = '" . $md5 . "'", 1, 1);
 
             // If not found, add it
             if (! isset($mark->mark_id)) {
@@ -51,6 +51,9 @@ class Marks_model extends Plain_Model
 
                 return $this->formatErrors('Mark could not be added. Please try again.');
             }
+
+            // If already exists, just return it
+            return $mark;
         }
 
         return $this->formatErrors($valid);

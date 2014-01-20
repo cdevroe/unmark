@@ -53,10 +53,10 @@ class Labels_model extends Plain_Model
             }
 
             // See if this record already exists
-            $total = $this->count($where);
+            $label = $this->read($where, 1, 1);
 
             // If not, add it
-            if ($total < 1) {
+            if (! isset($label->label_id)) {
                 $options['created_on'] = date('Y-m-d H:i:s');
                 $q                     = $this->db->insert_string($this->table, $options);
                 $res                   = $this->db->query($q);
@@ -73,6 +73,9 @@ class Labels_model extends Plain_Model
                 // Else return error
                 return $this->formatErrors('Label could not be added. Please try again.');
             }
+
+            // If already exists, just return it
+            return $label;
 
         }
 

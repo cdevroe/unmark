@@ -31,7 +31,7 @@ class Tags_model extends Plain_Model
             $tag = $this->read("LOWER(tags.name) = '" . $options['name'] . "'", 1, 1);
 
             // If not, add it
-            if ($total < 1) {
+            if (! isset($tag->tag_id)) {
                 $q    = $this->db->insert_string($this->table, $options);
                 $res  = $this->db->query($q);
 
@@ -48,6 +48,7 @@ class Tags_model extends Plain_Model
                 return $this->formatErrors('Tag could not be added. Please try again.');
             }
 
+            // If already exists, just return it
             return $tag;
 
         }
