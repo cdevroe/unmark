@@ -190,7 +190,7 @@ class Marks extends Plain_Controller
 
         // Update users_to_marks record
         $this->load->model('users_to_marks_model', 'user_mark');
-        $user_mark = $this->user_mark->update("user_id = '" . $_SESSION['user']['user_id'] . "' AND mark_id = '" . $mark->mark_id . "'", $options);
+        $this->data['mark'] = $this->user_mark->update("user_id = '" . $_SESSION['user']['user_id'] . "' AND mark_id = '" . $mark->mark_id . "'", $options);
 
 
         // Figure what to do here (api, redirect or generate view)
