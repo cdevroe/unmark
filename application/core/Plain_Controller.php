@@ -115,6 +115,11 @@ class Plain_Controller extends CI_Controller {
         return (! empty($segment) && strtolower($segment) == 'api') ? true : false;
     }
 
+    protected function isCommandLine()
+    {
+        return (php_sapi_name() === 'cli') ? true : false;
+    }
+
     // If logged if invalid CSRF token is not valid
     protected function redirectIfInvalidCSRF()
     {
@@ -147,6 +152,15 @@ class Plain_Controller extends CI_Controller {
     {
         if (! isset($_SESSION['user']['admin']) || empty($_SESSION['user']['admin'])) {
             header('Location: ' . $url);
+            exit;
+        }
+    }
+
+    // Redirect if not terminal
+    protected function redirectIfNotTerminal()
+    {
+        if (self::isCommandLine() === false) {
+            header('Location: /');
             exit;
         }
     }
@@ -193,9 +207,9 @@ class Plain_Controller extends CI_Controller {
     // Start session
     protected function sessionStart()
     {
-        //if ($this->isAPI() === false) {
+        if (self::isCommandLine() === false) {
             session_start();
-        //}
+        }
     }
 
     protected function setFlashMessage($message, $type='error')
