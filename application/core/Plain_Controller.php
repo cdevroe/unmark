@@ -9,6 +9,7 @@ class Plain_Controller extends CI_Controller {
     public $footer         = 'footer';
     public $header         = 'header';
     public $html_clean     = null;
+    public $is_api         = false;
     public $original       = null;
 
     public function __construct()
@@ -29,6 +30,9 @@ class Plain_Controller extends CI_Controller {
 
         // Get any flash messages
         $this->getFlashMessages();
+
+        // Figure if request if from API path or not
+        $this->isAPI();
 
     }
 
@@ -79,6 +83,12 @@ class Plain_Controller extends CI_Controller {
             $this->flash_message['message'] = $_SESSION['flash_message']['message'];
             unset($_SESSION['flash_message']);
         }
+    }
+
+    protected function isAPI()
+    {
+        $segment      = $this->uri->segment(1);
+        $this->is_api = (! empty($segment) && strtolower($segment) == 'api') ? true : false;
     }
 
     // If logged if invalid CSRF token is not valid

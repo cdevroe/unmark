@@ -1,73 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Users extends CI_Controller {
+class Users extends Plain_Controller {
 
 	public function index(){ } // Unused
 
-	// Method: login()
-	// Used to log a user in
-	// Accepts: Nothing
-	// Returns: User goes to home page or URL or fails
-	public function login() {
 
-		// Load what we need for this method
-
-		$this->load->model('Users_model');
-
-		$this->load->library('session');
-		$this->load->helper('url');
-
-		// Turn XSS filter on email address and password
-		$emailaddress = $this->input->post('emailaddress', TRUE);
-		$password = $this->input->post('password', TRUE);
-
-		// If either are emtpy, exit
-		if ($emailaddress == '' || $password == '') {
-			exit( 'Can not submit a blank username or password.' );
-		}
-
-		// Select user from database
-		$user = $this->Users_model->check_user_credentials();
-
-		// If user found (and password matches)
-		if ( is_array($user) === true ) {
-
-			// If they were adding a mark, save the URL before session is destroyed.
-			$addurl = $this->session->flashdata('addurl');
-
-			// Destroy session
-			$this->session->sess_destroy();
-
-			// Create new session and add new user information to it
-			$this->session->sess_create();
-			$this->session->set_userdata(array('userid'=>$user['user_id'],'emailaddress'=>$user['email'],'logged_in'=>true,'status'=>$user['status']));
-
-		} else { // User not found, or password didn't match
-
-			exit( 'Please supply a valid username or password. Or create an account.' );
-
-		}
-
-		// If adding a new mark redirect to that,
-		// Else just redirect home
-		if ($addurl) {
-			redirect($addurl);
-		} else {
-			redirect('home');
-		}
-
-	}
-
-	// Method: logout()
-	// Used to log a user out of Nilai
-	// Accepts: Noething
-	// Returns: Destroys current session, redirects to home page.
-	public function logout() {
-		$this->load->library('session');
-		$this->load->helper('url');
-		$this->session->sess_destroy();
-		redirect('');
-	}
 
 
 	// Method: add()
