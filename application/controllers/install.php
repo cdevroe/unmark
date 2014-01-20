@@ -58,11 +58,11 @@ class Install extends CI_Controller {
   public function upgrade()
   {
       // Logged in user id
-      $userId = $_SESSION['user']['user_id'];
-      if (!empty($userId)) {
-          $userFromDb = $this->db->get_where('users',array('user_id' => $userId));
-          if($userFromDb->num_rows() > 0){
-              if($this->is_admin($userFromDb->row())){
+      //$userId = $_SESSION['user']['user_id'];
+      //if (!empty($userId)) {
+         // $userFromDb = $this->db->get_where('users',array('user_id' => $userId));
+          //if($userFromDb->num_rows() > 0){
+              //if($this->is_admin($userFromDb->row())){
                   // Admin user logged in - run migrations if needed
                   $this->load->library('migration');
 
@@ -72,13 +72,13 @@ class Install extends CI_Controller {
                     exit;
                   }
                   exit('Upgraded. Please <a href="/">return home</a>.');
-              }
-          }
-        exit('You need to be logged in as admin to upgrade');
-      } else {
+              //}
+          //}
+        //exit('You need to be logged in as admin to upgrade');
+     // } else {
           // No logged user - redirect
-          redirect('/');
-      }
+          //redirect('/');
+     // }
   }
 
   /**

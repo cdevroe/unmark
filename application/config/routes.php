@@ -41,6 +41,10 @@
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
 
+// Installation & Upgrades
+$route['install'] = "install";
+$route['upgrade'] = "install/upgrade";
+
 // Marks
 $route['(api/)?marks/info/(:num)']     = "marks/info/$2";
 $route['(api/)?marks/archive/(:num)'] = "marks/archive/$2";
@@ -50,10 +54,6 @@ $route['(api/)?marks(.*?)']           = "marks/index";
 
 // Registration
 $route['sirius'] = "welcome/sirius";
-
-// Installation & Upgrades
-$route['install'] = "install";
-$route['upgrade'] = "install/upgrade";
 
 // User shiz
 $route['users/add'] = "users/add";

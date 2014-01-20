@@ -357,7 +357,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
           `slug` varchar(100) NOT NULL COMMENT 'The tag slug name.',
           PRIMARY KEY (`tag_id`),
           INDEX `name`(name),
-          UNIQUE `slug`(slug),
+          UNIQUE `slug`(slug)
         ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
       ");
 
