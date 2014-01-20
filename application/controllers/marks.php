@@ -9,7 +9,6 @@ class Marks extends Plain_Controller
     {
         parent::__construct();
         $this->redirectIfLoggedOut();
-        $this->load->helper('oembed');
     }
 
     // Add a mark
@@ -33,12 +32,12 @@ class Marks extends Plain_Controller
         // If so, redirect to it
         if (isset($mark->mark_id)) {
             $this->load->model('users_to_marks_model', 'user_mark');
-            $user_mark = $this->user_mark->read("user_id = '" . $_SESSION['user']['user_id'] . "' AND mark_id = '" . $mark->mark_id . "'");
+            $user_mark = $this->user_mark->read("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'");
 
             // Add
             if (! isset($user_mark->users_to_mark_id)) {
                 $user_mark = $this->user_mark->create(array(
-                    'user_id' => $_SESSION['user']['user_id'],
+                    'user_id' => $this->user_id,
                     'mark_id' => $mark->mark_id
                 ));
             }
@@ -80,7 +79,7 @@ class Marks extends Plain_Controller
 
         // Load correct model
         $this->load->model('users_to_marks_model', 'user_mark');
-        $this->data['mark'] = $this->user_mark->update("users_to_marks.user_id = '" . $_SESSION['user']['user_id'] . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
+        $this->data['mark'] = $this->user_mark->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
 
         // Figure view
         $this->figureView('marks/archive');
@@ -103,7 +102,7 @@ class Marks extends Plain_Controller
         $page = (! is_numeric($page) || $page < 0) ? 1 : $page;
 
         // Set where
-        $where = "users_to_marks.user_id='". $_SESSION['user']['user_id'] . "' AND" . $where_time . " users_to_marks.archived_on " . $archived;
+        $where = "users_to_marks.user_id='". $this->user_id . "' AND" . $where_time . " users_to_marks.archived_on " . $archived;
 
         // Get current page, total pages and total records
         $this->data = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
@@ -112,8 +111,8 @@ class Marks extends Plain_Controller
         $this->data['marks'] = $this->user_marks->readComplete($where, $this->limit, $page);
 
         // Get the total saved and archived today
-        $this->data['saved_today']    = $this->user_marks->getTotal('saved', $_SESSION['user']['user_id'], 'today');
-        $this->data['archived_today'] = $this->user_marks->getTotal('archived', $_SESSION['user']['user_id'], 'today');
+        $this->data['saved_today']    = $this->user_marks->getTotal('saved', $this->user_id, 'today');
+        $this->data['archived_today'] = $this->user_marks->getTotal('archived', $this->user_id, 'today');
 
         // Figure if web or API view
         $this->figureView('marks/index');
@@ -165,7 +164,7 @@ class Marks extends Plain_Controller
 
                         // Add tag to mark
                         if (isset($tag->tag_id)) {
-                            $res = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $_SESSION['user']['user_id']));
+                            $res = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
                         }
                     }
                 }
@@ -180,7 +179,7 @@ class Marks extends Plain_Controller
 
                         // Add tag to mark
                         if (isset($tag->tag_id)) {
-                            $res = $this->mark_to_tags->delete(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $_SESSION['user']['user_id']));
+                            $res = $this->mark_to_tags->delete(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
                         }
                     }
                 }
@@ -190,7 +189,7 @@ class Marks extends Plain_Controller
 
         // Update users_to_marks record
         $this->load->model('users_to_marks_model', 'user_mark');
-        $this->data['mark'] = $this->user_mark->update("user_id = '" . $_SESSION['user']['user_id'] . "' AND mark_id = '" . $mark->mark_id . "'", $options);
+        $this->data['mark'] = $this->user_mark->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
 
 
         // Figure what to do here (api, redirect or generate view)
@@ -211,7 +210,7 @@ class Marks extends Plain_Controller
 
         // Load correct model
         $this->load->model('users_to_marks_model', 'user_mark');
-        $this->data['mark'] = $this->user_mark->readComplete("users_to_marks.user_id = '" . $_SESSION['user']['user_id'] . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", 1);
+        $this->data['mark'] = $this->user_mark->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", 1);
 
         // Figure view
         $this->figureView('marks/info');
@@ -235,7 +234,7 @@ class Marks extends Plain_Controller
             $page = (! is_numeric($page) || $page < 0) ? 1 : $page;
 
             // Set where
-            $where = "users_to_marks.user_id='". $_SESSION['user']['user_id'] . "' AND users_to_marks.label_id = '" . $label_id . "'";
+            $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.label_id = '" . $label_id . "'";
 
             // Get current page, total pages and total records
             $this->data = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
@@ -261,7 +260,7 @@ class Marks extends Plain_Controller
 
         // Load correct model
         $this->load->model('users_to_marks_model', 'user_mark');
-        $this->data['mark'] = $this->user_mark->update("users_to_marks.user_id = '" . $_SESSION['user']['user_id'] . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => NULL));
+        $this->data['mark'] = $this->user_mark->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => NULL));
 
         // Figure view
         $this->figureView('marks/restore');

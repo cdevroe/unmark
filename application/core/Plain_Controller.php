@@ -12,6 +12,8 @@ class Plain_Controller extends CI_Controller {
     public $html_clean     = null;
     public $is_api         = false;
     public $original       = null;
+    public $user_id        = 0;
+    public $user_token     = 0;
 
     public function __construct()
     {
@@ -23,6 +25,9 @@ class Plain_Controller extends CI_Controller {
 
         // Clean incoming variables in a variety of ways
         $this->clean();
+
+        // Get user token
+        $this->getUserInfo();
 
         // Generate CSRF token per user
         $this->generateCSRF();
@@ -109,6 +114,25 @@ class Plain_Controller extends CI_Controller {
         }
     }
 
+    protected function getUserInfo()
+    {
+        // If the request sent the user token, or it's in the session
+        // Set it
+        if (isset($this->clean->user_token) || isset($_SESSION['user']['user_token'])) {
+            $this->user_token = (isset($this->clean->user_token)) ? $this->clean->user_token : $_SESSION['user']['user_token'];
+        }
+
+        // If API call, get the user id
+        if (self::isAPI() === true && ! empty($this->user_token) && empty($this->user_id)) {
+            $this->load->model('users_model', 'user');
+            $user = $this->user->read("users.user_token = '" . $this->user_token . "'", 1, 1, 'user_id');
+            $this->user_id = (isset($user->user_id)) ? $user->user_id : $this->user_id;
+        }
+
+        // User ID
+        $this->user_id = (isset($_SESSION['user']['user_id']) && ! empty($_SESSION['user']['user_id'])) ? $_SESSION['user']['user_id'] : $this->user_id;
+    }
+
     protected function isAPI()
     {
         $segment = $this->uri->segment(1);
@@ -141,7 +165,7 @@ class Plain_Controller extends CI_Controller {
     // If logged out, redirect
     protected function redirectIfLoggedOut($url='/')
     {
-        if (! isset($_SESSION['logged_in'])) {
+        if (! isset($_SESSION['logged_in']) && empty($this->user_id)) {
             header('Location: ' . $url);
             exit;
         }
@@ -189,6 +213,10 @@ class Plain_Controller extends CI_Controller {
         foreach ($user as $k => $v) {
             $_SESSION['user'][$k] = $v;
         }
+
+        // Set user id and token
+        $this->user_id    = (isset($user->user_id)) ? $user->user_id : $this->user_id;
+        $this->user_token = (isset($user->user_token)) ? $user->user_token : $this->user_token;
     }
 
     // Clear all session variables and cookies
@@ -207,7 +235,7 @@ class Plain_Controller extends CI_Controller {
     // Start session
     protected function sessionStart()
     {
-        if (self::isCommandLine() === false) {
+        if (self::isCommandLine() === false && self::isAPI() === false) {
             session_start();
         }
     }
