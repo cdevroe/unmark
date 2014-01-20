@@ -1,16 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Users extends Plain_Controller {
+class Users extends Plain_Controller
+{
 
-	public function index(){ } // Unused
+	// No base /users url in use
+	// redirect to homepage
+	public function index()
+	{
+		header('Location: /');
+		exit;
+	}
 
 
 
-
-	// Method: add()
-	// Used to add a user
-	// Accepts: Nothing
-	// Returns: Redirects to /home/
 	public function add() {
 
 		// Load everything we need for this method
