@@ -3,8 +3,6 @@
 class Marks extends Plain_Controller
 {
 
-    public $limit = 100;
-
     public function __construct()
     {
         parent::__construct();
@@ -223,6 +221,14 @@ class Marks extends Plain_Controller
         // Set default marks
         $this->data['marks'] = false;
         $this->data['total'] = 0;
+
+        // If label id is string, find label_id
+        // Need to write this as ONE query
+        if (! is_numeric($label_id)) {
+            $this->load->model('labels_model', 'label');
+            $label    = $this->label->read("slug = '" . mysqli_real_escape_string($this->db->conn_id, $label_id) . "'", 1, 1, 'label_id');
+            $label_id = (isset($label->label_id)) ? $label->label_id : 0;
+        }
 
         // If label id is numeric, proceed
         if (! empty($label_id) && is_numeric($label_id)) {

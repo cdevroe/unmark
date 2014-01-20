@@ -59,12 +59,14 @@ class Users_To_Marks_model extends Plain_Model
             if (isset($mark->tag_ids) && ! empty($mark->tags_ids)) {
                 $ids   = explode($this->delimiter, $mark->tags_ids);
                 $names = explode($this->delimiter, $mark->tag_names);
+                $slugs = explode($this->delimiter, $mark->tag_slugs);
                 foreach ($ids as $kk => $id) {
-                    $marks[$k]->tags[$id] = $names[$kk];
+                    $marks[$k]->tags[$id] = array('name' => $names[$kk], 'slug' => $slugs[$kk]);
                 }
             }
             unset($marks[$k]->tag_ids);
             unset($marks[$k]->tag_names);
+            unset($marks[$k]->tag_slugs);
         }
         return $marks;
     }
@@ -122,6 +124,7 @@ class Users_To_Marks_model extends Plain_Model
             marks.mark_id, marks.title, marks.url,
             GROUP_CONCAT(tags.tag_id SEPARATOR '" . $this->delimiter . "') AS tag_ids,
             GROUP_CONCAT(tags.name SEPARATOR '" . $this->delimiter . "') AS tag_names,
+            GROUP_CONCAT(tags.slug SEPARATOR '" . $this->delimiter . "') AS tag_slugs,
             labels.label_id, labels.name AS label_name
             FROM users_to_marks
             LEFT JOIN marks ON users_to_marks.mark_id = marks.mark_id

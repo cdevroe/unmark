@@ -28,7 +28,7 @@
 |	$route['default_controller'] = 'welcome';
 |
 | This route indicates which controller class should be loaded if the
-| URI contains no data. In the above example, the "welcome" class
+| URI contains no data. In the above example, the 'welcome' class
 | would be loaded.
 |
 |	$route['404_override'] = 'errors/page_missing';
@@ -38,50 +38,40 @@
 |
 */
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 
 // Installation & Upgrades
-$route['install'] = "install";
-$route['upgrade'] = "install/upgrade";
+$route['install'] = 'install';
+$route['upgrade'] = 'install/upgrade';
+
+// Labels (API ONLY)
+$route['api/label/add']         = 'label/add';
+$route['api/label/edit/(:num)'] = 'label/edit/$1';
+$route['api/label/info(.*?)']   = 'label/info$1';
 
 // Marks
-$route['(api/)?marks/info/(:num)']     = "marks/info/$2";
-$route['(api/)?marks/archive/(:num)'] = "marks/archive/$2";
-$route['(api/)?marks/restore/(:num)'] = "marks/restore/$2";
-$route['(api/)?marks/label(.*?)']     = "marks/label$2";
-$route['(api/)?marks(.*?)']           = "marks/index";
+$route['(api/)?marks/edit/(:num)']     = 'marks/edit/$2';
+$route['(api/)?marks/info/(:num)']     = 'marks/info/$2';
+$route['(api/)?marks/archive/(:num)']  = 'marks/archive/$2';
+$route['(api/)?marks/restore/(:num)']  = 'marks/restore/$2';
+$route['(api/)?marks/label(.*?)']      = 'marks/label$2';
+$route['(api/)?marks(.*?)']            = 'marks/index';
+
 
 // Registration
-$route['sirius'] = "welcome/sirius";
+$route['register']      = 'register/index';
+$route['register/user'] = 'register/user';
 
-// User shiz
-$route['users/add'] = "users/add";
-$route['users/paymentsuccess'] = "users/paymentsuccess";
-$route['users/paymentcancelled'] = "users/paymentcancelled";
-
-// groups
-$route['groups/create'] = "groups/create";
-$route['groups/add'] = "groups/add";
-$route['groups/update'] = "groups/update";
-$route['groups/delete'] = "groups/delete";
-$route['groups/invite/(:any)/(:any)/reject'] = "groups/rejectinvite";
-$route['groups/invite/(:any)/(:any)'] = "groups/acceptinvite";
-$route['groups/(:any)/edit'] = "groups/edit";
-$route['groups/(:any)/members'] = "groups/members";
-$route['groups/(:any)/invite_member'] = "groups/invite";
-$route['groups/(:any)/leave'] = "groups/leave";
-$route['groups/(:any)/remove/(:any)'] = "groups/remove";
-$route['groups/(:any)'] = "nilai/bygroup";
 
 // help
-$route['help/bookmarklet'] = "welcome/helpbookmarklet";
-$route['help/faq'] = "welcome/faq";
-$route['help/how'] = "welcome/how";
+$route['help/bookmarklet'] = 'help/bookmarklet';
+$route['help/faq']         = 'help/faq';
+$route['help/how']         = 'help/how';
 
 // one offs
-$route['changelog'] = "welcome/changelog";
-$route['terms'] = "welcome/terms";
+$route['changelog'] = 'singletons/changelog';
+$route['terms']     = 'singletons/terms';
 
 
 /* End of file routes.php */

@@ -10,6 +10,7 @@ class Plain_Controller extends CI_Controller {
     public $footer         = 'footer';
     public $header         = 'header';
     public $html_clean     = null;
+    public $limit          = 100;
     public $is_api         = false;
     public $original       = null;
     public $user_id        = 0;
