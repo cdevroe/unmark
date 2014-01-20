@@ -7,7 +7,7 @@ class Cron extends Plain_Controller
     public function __construct()
     {
         parent::__construct();
-        redirectIfNotTerminal();
+        parent::redirectIfNotCommandLine();
     }
 
     public function index()
@@ -22,11 +22,9 @@ class Cron extends Plain_Controller
 
         // Get any new marks in the last ten minutes that are embeds of NULL
         $this->load->model('users_to_marks_model', 'user_mark');
-        $marks   = $this->user_mark->read("UNIX_TIMESTAMP(created_on) >= '" . strtotime('-10 minutes') . "'' AND embed is NULL ORDER BY id ASC", 'all', 1, 'users_to_mark_id, url');
-        $total   = $marks->num_rows();
-        $updated = 0;
+        $marks   = $this->user_mark->read("embed_processed = '0'", 'all', 1, 'users_to_mark_id, url');
 
-        if ($total > 0) {
+        if ($marks->num_rows() > 0) {
             $this->load->helper('oembed');
             $this->load->helper('hrecipe');
 
@@ -36,15 +34,21 @@ class Cron extends Plain_Controller
                 $embed = oembed($mark->url);
                 $embed = (empty($embed)) ? parse_hrecipe($mark->url) : $embed;
 
+                // Set options
+                // Set embed processed = 1
+                $options                    = array();
+                $options['embed_processed'] = 1;
+
+                // If embed is found
+                // Set it in options
                 if (! empty($embed)) {
-                    $updated += 1;
-                    $res = $this->user_mark->update($mark->users_to_mark_id, array('embed' => $embed));
-                    $this->db->update('marks',array('oembed'=>$oembed),array('id'=>$mark['id']));
+                    $options['embed'] = $embed;
                 }
+
+                $res = $this->user_mark->update($mark->users_to_mark_id, $options);
+
             }
         }
-
-        print 'Records processed: ' . $numberofrecords . "\n" . 'Embeds added: ' . $updated;
     }
 
 }

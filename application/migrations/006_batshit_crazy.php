@@ -179,10 +179,14 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `marks` ADD COLUMN `url_key` varchar(32) DEFAULT NULL COMMENT 'The MD5 checksum of the url for lookup purposes.' AFTER `url`");
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `oembed` `embed` text DEFAULT NULL COMMENT 'The embedded content that could appear on the mark\'s info page.'");
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `dateadded` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime this record was created.'");
+      $this->db->query("ALTER TABLE `marks` ADD COLUMN `embed_processed` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = yes, 0 if not. Defaults to 0.' AFTER `embed`");
       $this->db->query("ALTER TABLE `marks` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.' AFTER `created_on`");
 
       // Update embed column to NULL if 'None'
       $res = $this->db->query("UPDATE `marks` SET embed = NULL WHERE LOWER(embed) = 'none'");
+
+      // Set embed to processed if NOT NULL OR isn't in LAST DAY
+      $res = $this->db->query("UPDATE `marks` SET embed_processed = '1' WHERE embed IS NOT NULL OR UNIX_TIMESTAMP(created_on) < '" . strtotime('today') . "'");
 
       // Get all urls from marks table, create MD5 checksum, update record
       $marks = $this->db->query("SELECT mark_id, url FROM `marks`");
@@ -531,6 +535,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `embed` `oembed` text DEFAULT NULL");
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `created_on` `dateadded` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
       $this->db->query("ALTER TABLE `marks` ADD COLUMN `recipe` text DEFAULT NULL AFTER `oembed`");
+      $this->db->query("ALTER TABLE `marks` DROP COLUMN `embed_processed`");
 
       $res = $this->db->query("UPDATE `marks` SET oembed = 'None' WHERE oembed IS NULL");
 

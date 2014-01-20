@@ -181,7 +181,7 @@ class Plain_Controller extends CI_Controller {
     }
 
     // Redirect if not terminal
-    protected function redirectIfNotTerminal()
+    protected function redirectIfNotCommandLine()
     {
         if (self::isCommandLine() === false) {
             header('Location: /');
