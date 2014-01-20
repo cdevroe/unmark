@@ -1,18 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Users extends Plain_Controller
+class Register extends Plain_Controller
 {
 	// NO API ROUTE
 
-	// No base /users url in use
-	// redirect to homepage
 	public function index()
 	{
-		header('Location: /');
-		exit;
+		$this->view('register');
 	}
 
-	public function add()
+	public function user()
 	{
 
 		$email    = (isset($this->db_clean->email)) ? $this->db_clean->email : null;
@@ -39,7 +36,7 @@ class Users extends Plain_Controller
 		// Set to flash message
 		// set redirect to root
 		else {
-			$redirect = '/';
+			$redirect = '/register';
 			$this->setFlashMessage('<p>' . implode('</p><p>', $user) , '</p>');
 		}
 
