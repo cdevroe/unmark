@@ -44,7 +44,12 @@ class Marks_model extends Plain_Model
                 $this->sendException();
 
                 // Return mark_id
-                return ($res === true) ? $this->db->insert_id() : $this->formatErrors('Mark could not be added. Please try again.');
+                if ($res === true) {
+                    $mark_id = $this->db->insert_id();
+                    return $this->read($mark_id);
+                }
+
+                return $this->formatErrors('Mark could not be added. Please try again.');
             }
         }
 

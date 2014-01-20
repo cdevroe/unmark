@@ -39,14 +39,14 @@ class Users_To_Marks_model extends Plain_Model
             // Check for errors
             $this->sendException();
 
+            // If good, return full record
             if ($res === true) {
                 $user_mark_id = $this->db->insert_id();
                 return $this->read($user_mark_id);
             }
-            else {
-                return $this->formatErrors('The mark could not be created. Please try again.');
-            }
 
+            // Else return error
+            return $this->formatErrors('The mark could not be created. Please try again.');
         }
 
         return $this->formatErrors($valid);
