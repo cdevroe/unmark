@@ -351,7 +351,14 @@ class Labels extends Plain_Controller
         }
         else {
             $where = (parent::isAdmin() === true) ? "(labels.user_id IS NULL OR labels.user_id = '" . $this->user_id . "')" : "labels.user_id = '" . $this->user_id . "'";
-            $this->data['label'] = $this->labels->update($where . " AND labels.label_id= '" . $label_id . "'", array('active' => $active));
+            $label = $this->labels->update($where . " AND labels.label_id= '" . $label_id . "'", array('active' => $active));
+
+            if ($label === false) {
+                $this->data['errors'] = formatErrors('Issue updating label.', 28);
+            }
+            else {
+                $this->data['label'] = $label;
+            }
         }
 
         // Figure view
