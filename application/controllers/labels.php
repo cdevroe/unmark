@@ -91,81 +91,82 @@ class Labels extends Plain_Controller
     */
     public function add()
     {
-        // Figure correct way to handle if no mark id
-        if (empty($label_id) || ! is_numeric($label_id)) {
-            $this->data['errors'] = formatErrors('No `label_id` was found.', 20);
+
+        // Set the columns that CAN be updated
+        $columns = array(
+            'label' => array('name', 'active'),
+            'smart' => array('domain', 'path', 'active', 'label_id', 'user_id')
+        );
+
+        // Declare options
+        $options = array();
+
+        // Figure type
+        $type = (isset($this->clean->domain)) ? 'smart' : 'label';
+
+        // Figure user id
+        if ($type == 'smart' && (parent::isAdmin() === false || ! isset($this->clean->admin) || empty($this->clean->admin))) {
+            $options['user_id'] = $this->user_id;
+        }
+
+        // Figure the user where statement
+        $user_where = (parent::isAdmin() === true && isset($this->clean->admin) && ! empty($this->clean->admin)) ? "labels.user_id IS NULL" : "labels.user_id = '" . $this->user_id . "'";
+
+        // Figure what to check, slug or smart_key
+        if ($type == 'smart') {
+            $domain    = (isset($this->db_clean->domain)) ? $this->db_clean->domain : null;
+            $path      = (isset($this->db_clean->path)) ? $this->db_clean->path : null;
+            $total     = (! empty($domain)) ? $this->labels->count($user_where . " AND labels.smart_key = '" . md5($domain . $path) . "'") : 0;
+
         }
         else {
+            $slug = (isset($this->clean->name)) ? generateSlug($this->db_clean->name) : null;
+            $total = (! empty($slug)) ? $this->labels->count("labels.user_id IS NULL AND labels.slug = '" . $slug . "'") : 0;
+        }
 
-            // Set the columns that CAN be updated
-            $columns = array(
-                'label' => array('name', 'active'),
-                'smart' => array('domain', 'path', 'active', 'label_id', 'user_id')
-            );
+        // If a record is found
+        // Stop
+        if ($total > 0) {
+            $this->data['errors'] = formatErrors('Label already exists for this account.', 24);
+        }
+        elseif ($type == 'label' && parent::isAdmin() === false) {
+            $this->data['errors'] = formatErrors('You do not have access to create a system level label.', 27);
+        }
+        // Else, try and add it
+        else {
 
-            // Figure type
-            $type = (isset($this->clean->domain)) ? 'smart' : 'label';
-
-            // Figure user id
-            if ($type == 'smart' && (parent::isAdmin() === false || ! isset($this->clean->admin) || empty($this->clean->admin))) {
-                $options['user_id'] = $this->user_id;
+            // figure options
+            foreach ($this->db_clean as $k => $v) {
+                $k = strtolower($k);
+                if (in_array($k, $columns[$type])) {
+                    $options[$k] = $v;
+                }
             }
 
-            // Figure the user where statement
-            $user_where = (parent::isAdmin() === true && isset($this->clean->admin) && ! empty($this->clean->admin)) ? "labels.user_id IS NULL" : "labels.user_id = '" . $this->user_id . "'";
-
-            // Figure what to check, slug or smart_key
-            if ($type == 'smart') {
-                $domain    = (isset($this->db_clean->domain)) ? $this->db_clean->domain : null;
-                $path      = (isset($this->db_clean->path)) ? $this->db_clean->path : null;
-                $total     = (! empty($domain)) ? $this->labels->count($user_where . " AND labels.smart_key = '" . md5($domain . $path) . "'") : 0;
+            // Switch label_id with smart_label_id for smart labels
+            if (isset($options['label_id'])) {
+                $options['smart_label_id'] = $options['label_id'];
+                unset($options['label_id']);
             }
+
+            // Format Domain
+            if (isset($options['domain'])) {
+                $options['domain'] = formatDomain($options['domain']);
+            }
+
+            // Format Path
+            $options['path'] = (isset($options['path'])) ? formatDomain($options['path']) : '';
+
+            // Attempt to create the label
+            $label = $this->labels->create($options);
+
+            // If update failed, tell the user
+            if ($label === false) {
+                $this->data['errors'] = formatErrors('Label could not be created.', 26);
+            }
+            // Return updated label
             else {
-                $slug = (isset($this->clean->name)) ? generateSlug($this->db_clean->name) : null;
-                $total = (! empty($slug)) ? $this->labels->total("labels.user_id IS NULL AND labels.slug = '" . $slug . "'") : 0;
-            }
-
-            // If a record is found
-            // Stop
-            if ($total > 0) {
-                $this->data['errors'] = formatErrors('Label already exists for this account.', 24);
-            }
-            // Else, try and add it
-            else {
-
-                // figure options
-                foreach ($this->db_clean as $k => $v) {
-                    $k = strtolower($k);
-                    if (in_array($k, $columns)) {
-                        $options[$k] = $v;
-                    }
-                }
-
-                // Switch label_id with smart_label_id for smart labels
-                if (isset($options['label_id'])) {
-                    $options['smart_label_id'] = $options['label_id'];
-                    unset($options['label_id']);
-                }
-
-                // Format Domain
-                if (isset($options['domain'])) {
-                    $options['domain'] = formatDomain($options['domain']);
-                }
-
-                // Format Path
-                $options['path'] ? (isset($options['path'])) ? formatDomain($options['path']) : null;
-
-                // Attempt to create the label
-                $label = $this->labels->create($options);
-
-                // If update failed, tell the user
-                if ($label === false) {
-                    $this->data['errors'] = formatErrors('Label could not be created.', 26);
-                }
-                // Return updated label
-                else {
-                    $this->data['label'] = $label;
-                }
+                $this->data['label'] = $label;
             }
         }
 
@@ -237,6 +238,10 @@ class Labels extends Plain_Controller
             // If no type found, there was no label for this id/user combo
             if (! isset($label->type)) {
                 $this->data['errors'] = formatErrors('No label found using label id of `' . $label_id . '` for your account.', 21);
+            }
+            // If type == label and not admin, leave
+            elseif ($label->type == 'label' && parent::isAdmin() === false) {
+                $this->data['errors'] = formatErrors('You do not have access to create a system level label.', 27);
             }
             // If no type was found in above array, something was drastically wrong
             elseif (! array_key_exists($label->type, $types)) {
