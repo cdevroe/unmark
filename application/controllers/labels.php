@@ -21,6 +21,7 @@ class Labels extends Plain_Controller
         $page = (! is_numeric($page) || $page < 0) ? 1 : $page;
 
         // Set where
+        // If admin account, get system labels
         $where = "labels.user_id='". $this->user_id . "'";
         if (parent::isAdmin() === true) {
             $where .= " OR labels.user_id IS NULL";
@@ -30,7 +31,7 @@ class Labels extends Plain_Controller
         $this->data = $this->labels->getTotals($where, $page, $this->limit, $this->data);
 
         // Read the complete user marks records
-        $this->data['labels'] = $this->labels->read($where, $this->limit, $page);
+        $this->data['labels'] = $this->labels->readComplete($where, $this->limit, $page);
 
         // Figure if web or API view
         $this->figureView();

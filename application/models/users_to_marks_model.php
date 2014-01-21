@@ -114,7 +114,6 @@ class Users_To_Marks_model extends Plain_Model
         $start      = (! is_null($start)) ? $start : $limit * ($page - 1);
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
         $sort       = (! empty($this->sort)) ? ' ORDER BY users_to_marks.' . $this->sort : null;
-        $total      = $this->count($where);
 
         // Stop, query time
         $q     = $this->db->query('SET SESSION group_concat_max_len = 10000');
