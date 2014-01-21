@@ -13,11 +13,11 @@ class Labels_model extends Plain_Model
 
         // Set data types
         $this->data_types = array(
-            'smart_label_id'  =>  'numeric',
-            'user_id'         =>  'numeric',
-            'name'            =>  'string',
-            'domain'          =>  'domain',
-            'path'            =>  'string',
+            'smart_label_id'  => 'numeric',
+            'user_id'         => 'numeric',
+            'name'            => 'string',
+            'domain'          => 'domain',
+            'path'            => 'string',
             'smart_key'       => 'md5',
             'active'          => 'bool',
             'slug'            => 'string',
@@ -28,57 +28,45 @@ class Labels_model extends Plain_Model
 
     public function create($options=array())
     {
-        $smart_label = (isset($options['smart_label']) && ! empty($options['smart_label'])) ? true : false;
+        $smart_label = (isset($options['domain'])) ? true : false;
 
         // If a smart label, set the required fields
         if ($smart_label === true) {
-            $required = array('smart_label_id', 'user_id', 'name', 'domain');
+            $required = array('smart_label_id', 'domain');
         }
         else {
             $required = array('name');
         }
 
-        $valid  = validate($options, $this->data_types, $required);
+        $valid = validate($options, $this->data_types, $required);
 
         // Make sure all the options are valid
         if ($valid === true) {
 
             // If smart label, create MD5 hash of domain and path
             if ($smart_label == true) {
-                $md5                  = md5($options['domain'] . $options['path']);
-                $where                = "labels.smart_key = '" . $md5 . "' AND labels.user_id = '" . $options['user_id'] . "'";
-                $options['smart_key'] = $md5;
+                $options['smart_key'] = md5($options['domain'] . $options['path']);
             }
             else {
                 $options['slug'] = generateSlug($options['name']);
-                $where           = "labels.slug = '" . $options['slug'] . "' labels.user_id IS NULL";
             }
-
-            // See if this record already exists
-            $label = $this->read($where, 1, 1);
 
             // If not, add it
-            if (! isset($label->label_id)) {
-                $options['created_on'] = date('Y-m-d H:i:s');
-                $q                     = $this->db->insert_string($this->table, $options);
-                $res                   = $this->db->query($q);
+            $options['created_on'] = date('Y-m-d H:i:s');
+            $q                     = $this->db->insert_string($this->table, $options);
+            $res                   = $this->db->query($q);
 
-                // Check for errors
-                $this->sendException();
+            // Check for errors
+            $this->sendException();
 
-                // If good, return full label
-                if ($res === true) {
-                    $label_id = $this->db->insert_id();
-                    return $this->read($label_id);
-                }
-
-                // Else return error
-                return $this->formatErrors('Label could not be added. Please try again.');
+            // If good, return full label
+            if ($res === true) {
+                $label_id = $this->db->insert_id();
+                return $this->readComplete($label_id);
             }
 
-            // If already exists, just return it
-            return $label;
-
+            // Else return error
+            return false;
         }
 
         return $this->formatErrors($valid);
