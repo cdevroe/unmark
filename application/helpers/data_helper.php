@@ -5,15 +5,26 @@ function decodeValue($str)
     return (is_string($str) && ! empty($str)) ? stripslashes(html_entity_decode(rawurldecode(trim($str)), ENT_QUOTES, 'UTF-8')) : $str;
 }
 
+function formatDomain($domain)
+{
+    return str_replace('www.', '', strtolower($domain));
+}
+
 // Format any errors coming back to standardize them
-function formatErrors($errors)
+function formatErrors($errors, $errno=0)
 {
     if (is_string($errors)) {
-        $message = $errors;
-        $errors  = array();
-        array_push($errors, $message);
+        $message        = $errors;
+        $errors         = array();
+        $errors[$errno] = $message;
     }
     return $errors;
+}
+
+function formatPath($path='/')
+{
+    $path = (substr($path, 0, 1) != '/') ? '/' . $path : $path;
+    return ($path == '/') ? '' : $path;
 }
 
 function generateSlug($str)
