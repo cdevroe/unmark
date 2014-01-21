@@ -46,21 +46,20 @@ $route['install'] = 'install';
 $route['upgrade'] = 'install/upgrade';
 
 // Labels (API ONLY)
-$route['api/label/activate(.*?)']    = 'label/activate$1';
-$route['api/label/add(.*?)']         = 'label/add';
-$route['api/label/deactivate(.*?)']  = 'label/deactivate$1';
-$route['api/label/edit(.*?)']        = 'label/edit$1';
-$route['api/label/info(.*?)']        = 'label/info$1';
-$route['api/labels(.*?)']            = 'labels/index$1';
-$route['api/label(.*?)']             = 'labels/index$1';
+$route['api/labels?/activate(.*?)']    = 'labels/activate$1';
+$route['api/labels?/add(.*?)']         = 'labels/add';
+$route['api/labels?/deactivate(.*?)']  = 'labels/deactivate$1';
+$route['api/labels?/edit(.*?)']        = 'labels/edit$1';
+$route['api/labels?/info(.*?)']        = 'labels/info$1';
+$route['api/labels?(.*?)']             = 'labels/index$1';
 
 // Marks
-$route['(api/)?marks/edit(.*?)']     = 'marks/edit$2';
-$route['(api/)?marks/info(.*?)']     = 'marks/info/$2';
-$route['(api/)?marks/archive(.*?)']  = 'marks/archive/$2';
-$route['(api/)?marks/restore(.*?)']  = 'marks/restore/$2';
-$route['(api/)?marks/label(.*?)']    = 'marks/label$2';
-$route['(api/)?marks(.*?)']          = 'marks/index';
+$route['(api/)?marks?/edit(.*?)']     = 'marks/edit$2';
+$route['(api/)?marks?/info(.*?)']     = 'marks/info/$2';
+$route['(api/)?marks?/archive(.*?)']  = 'marks/archive/$2';
+$route['(api/)?marks?/restore(.*?)']  = 'marks/restore/$2';
+$route['(api/)?marks?/label(.*?)']    = 'marks/label$2';
+$route['(api/)?marks?(.*?)']          = 'marks/index';
 
 
 // Registration
