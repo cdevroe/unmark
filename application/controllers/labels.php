@@ -244,7 +244,7 @@ class Labels extends Plain_Controller
 
             // Lookup label_id to get type
             $user_where = (parent::isAdmin() === true && isset($this->clean->admin) && ! empty($this->clean->admin)) ? "labels.user_id IS NULL" : "labels.user_id = '" . $this->user_id . "'";
-            $where      = $user_where . " AND labels.label_id= '" . $label_id . "'";
+            $where      = "(labels.user_id IS NULL AND labels.label_id= '" . $label_id . "' AND labels.smart_label_id IS NULL) OR (" . $user_where . " AND labels.label_id= '" . $label_id . "' AND labels.smart_label_id IS NOT NULL)";
             $label      = $this->labels->readComplete($where, 1);
 
             // If no type found, there was no label for this id/user combo
@@ -283,7 +283,7 @@ class Labels extends Plain_Controller
                 // create a new slug
                 if (isset($options['name'])) {
                     $options['slug'] = generateSlug($options['name']);
-                    $total           = $this->labels->count($user_where . " AND labels.slug = '" . $options['slug'] . "'");
+                    $total           = $this->labels->count("labels.user_id IS NULL AND labels.slug = '" . $options['slug'] . "'");
                 }
 
                 // smart keys for domain/path
