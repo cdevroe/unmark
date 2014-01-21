@@ -71,13 +71,33 @@ class Labels extends Plain_Controller
     // Add a new label (smart or regular)
     public function activate($label_id=0)
     {
+        // Figure correct way to handle if no mark id
+        if (empty($label_id) || ! is_numeric($label_id)) {
+            $this->data['errors'] = formatErrors('No `label_id` was found.');
+        }
+        else {
+            $where = (parent::isAdmin() === true) ? '' : "labels.user_id = '" . $this->user_id . "' AND ";
+            $this->data['label'] = $this->labels->update($where . "labels.label_id= '" . $label_id . "'", array('active' => 1));
+        }
 
+        // Figure view
+        $this->figureView();
     }
 
     // Add a new label (smart or regular)
     public function deactivate($label_id=0)
     {
+        // Figure correct way to handle if no mark id
+        if (empty($label_id) || ! is_numeric($label_id)) {
+            $this->data['errors'] = formatErrors('No `label_id` was found.');
+        }
+        else {
+            $where = (parent::isAdmin() === true) ? '' : "labels.user_id = '" . $this->user_id . "' AND ";
+            $this->data['label'] = $this->labels->update($where . "labels.label_id= '" . $label_id . "'", array('active' => 0));
+        }
 
+        // Figure view
+        $this->figureView();
     }
 
     // Edit an existing label
@@ -85,8 +105,6 @@ class Labels extends Plain_Controller
     {
 
     }
-
-    // Get all normal or smart labels
 
     // Lookup info for a label
     public function info($label_id=0)
