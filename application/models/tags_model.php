@@ -47,7 +47,7 @@ class Tags_model extends Plain_Model
                 }
 
                 // Else return error
-                return $this->formatErrors('Tag could not be added. Please try again.');
+                return false;
             }
 
             // If already exists, just return it

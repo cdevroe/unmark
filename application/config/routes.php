@@ -61,6 +61,10 @@ $route['(api/)?marks?/restore(.*?)']  = 'marks/restore/$2';
 $route['(api/)?marks?/label(.*?)']    = 'marks/label$2';
 $route['(api/)?marks?(.*?)']          = 'marks/index';
 
+// Tags
+$route['api/tags?/add(.*?)']         = 'tags/add';
+$route['api/tags?(.*?)']             = 'tags/index$1';
+
 
 // Registration
 $route['register']      = 'register/index';
