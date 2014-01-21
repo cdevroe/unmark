@@ -27,9 +27,6 @@ class Tags extends Plain_Controller
         // Where
         $where = "tags.tag_id > 0";
 
-        // Get current page, total pages and total records
-        $this->data = $this->tags->getTotals($where, $page, $this->limit, $this->data);
-
         // Read the complete user marks records
         $tags = $this->tags->read($where, $this->limit, $page);
 
@@ -40,6 +37,7 @@ class Tags extends Plain_Controller
         }
         else {
             $this->data['tags'] = $tags;
+            $this->data         = $this->tags->getTotals($where, $page, $this->limit, $this->data);
         }
 
         // Figure if web or API view

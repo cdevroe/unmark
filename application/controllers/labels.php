@@ -52,9 +52,6 @@ class Labels extends Plain_Controller
         // Set final where
         $where = (empty($where)) ? $user_where : $where . ' AND (' . $user_where . ')';
 
-        // Get current page, total pages and total records
-        $this->data = $this->labels->getTotals($where, $page, $this->limit, $this->data);
-
         // Read the complete user marks records
         $labels = $this->labels->readComplete($where, $this->limit, $page);
 
@@ -65,6 +62,7 @@ class Labels extends Plain_Controller
         }
         else {
             $this->data['labels'] = $labels;
+            $this->data           = $this->labels->getTotals($where, $page, $this->limit, $this->data);
         }
 
         // Figure if web or API view

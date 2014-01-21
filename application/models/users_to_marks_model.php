@@ -46,7 +46,7 @@ class Users_To_Marks_model extends Plain_Model
             }
 
             // Else return error
-            return false
+            return false;
         }
 
         return $this->formatErrors($valid);
