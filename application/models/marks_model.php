@@ -49,7 +49,7 @@ class Marks_model extends Plain_Model
                     return $this->read($mark_id);
                 }
 
-                return $this->formatErrors('Mark could not be added. Please try again.');
+                return false;
             }
 
             // If already exists, just return it

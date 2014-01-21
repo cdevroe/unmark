@@ -46,7 +46,7 @@ class Users_To_Marks_model extends Plain_Model
             }
 
             // Else return error
-            return $this->formatErrors('The mark could not be created. Please try again.');
+            return false
         }
 
         return $this->formatErrors($valid);

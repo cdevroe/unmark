@@ -9,8 +9,17 @@ class Marks extends Plain_Controller
         $this->redirectIfLoggedOut();
     }
 
-    // Add a mark
-    // Both API and web view
+     /*
+        - Add a mark
+        - URLS
+            /mark/add
+            /api/mark/add
+
+        // Query variables
+         - title : Required
+         - url   : Required
+         -
+    */
     public function add()
     {
         // Set default view & redirect
@@ -24,11 +33,16 @@ class Marks extends Plain_Controller
             'url'   => $this->db_clean->url
         ));
 
-        // If successful
-        // Check if user already has this mark
-        // If not add it
-        // If so, redirect to it
-        if (isset($mark->mark_id)) {
+        if ($mark === false) {
+            $this->data['errors'] = formatErrors('Could not add mark.', 10);
+            $view                 = 'marks/add';
+        }
+        elseif (! isset($mark->mark_id)) {
+            $this->data['errors'] = $mark;
+            $view                 = 'marks/add';
+        }
+        else {
+
             $this->load->model('users_to_marks_model', 'user_mark');
             $user_mark = $this->user_mark->read("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'");
 
@@ -40,11 +54,11 @@ class Marks extends Plain_Controller
                 ));
             }
 
-            // If still no user mark id, error out
-            // We need a better way to handle/show errors here
+            if ($user_mark === false) {
+                $this->data['errors'] = formatErrors('Could not add mark.', 10);
+                $view                 = 'marks/add';
+            }
             if (! isset($user_mark->users_to_mark_id)) {
-                $data = array();
-                $this->data['mark']   = false;
                 $this->data['errors'] = $user_mark;
                 $view                 = 'marks/add';
             }
@@ -52,11 +66,6 @@ class Marks extends Plain_Controller
                 $this->data['mark'] = $user_mark;
                 $redirect           = '/marks/info/' . $user_mark->users_to_mark_id . '?bookmarklet=true';
             }
-        }
-        else {
-            $this->data['mark']   = false;
-            $this->data['errors'] = $mark;
-            $view                 = 'marks/add';
         }
 
         // Figure what to do here (api, redirect or generate view)
@@ -77,7 +86,14 @@ class Marks extends Plain_Controller
 
         // Load correct model
         $this->load->model('users_to_marks_model', 'user_mark');
-        $this->data['mark'] = $this->user_mark->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
+        $mark = $this->user_mark->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
+
+        if ($mark === false) {
+            $this->data['errors'] = formatErrors('Mark could not be archived.', 11);
+        }
+        else {
+            $this->data['mark'] = $mark;
+        }
 
         // Figure view
         $this->figureView('marks/archive');
@@ -106,7 +122,15 @@ class Marks extends Plain_Controller
         $this->data = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
 
         // Read the complete user marks records
-        $this->data['marks'] = $this->user_marks->readComplete($where, $this->limit, $page);
+        $marks = $this->user_marks->readComplete($where, $this->limit, $page);
+
+        // Check for marks
+        if ($marks === false) {
+            $this->data['errors'] = formatErrors('No marks found for your account.', 12);
+        }
+        else {
+            $this->data['marks'] = $marks;
+        }
 
         // Get the total saved and archived today
         $this->data['saved_today']    = $this->user_marks->getTotal('saved', $this->user_id, 'today');
@@ -187,8 +211,15 @@ class Marks extends Plain_Controller
 
         // Update users_to_marks record
         $this->load->model('users_to_marks_model', 'user_mark');
-        $this->data['mark'] = $this->user_mark->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
+        $mark = $this->user_mark->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
 
+        // Check if it was updated
+        if ($mark === false) {
+            $this->data['errors'] = formatErrors('Mark could not be updated.', 13);
+        }
+        else {
+            $this->data['mark'] = $mark;
+        }
 
         // Figure what to do here (api, redirect or generate view)
         $this->figureView('marks/edit');
@@ -208,7 +239,15 @@ class Marks extends Plain_Controller
 
         // Load correct model
         $this->load->model('users_to_marks_model', 'user_mark');
-        $this->data['mark'] = $this->user_mark->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", 1);
+        $mark = $this->user_mark->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", 1);
+
+        // Check for mark
+        if ($mark === false) {
+            $this->data['errors'] = formatErrors('Mark with id of `' . $mark_id . '` could not be found for this account.', 14);
+        }
+        else {
+            $this->data['mark'] = $mark;
+        }
 
         // Figure view
         $this->figureView('marks/info');
@@ -246,7 +285,18 @@ class Marks extends Plain_Controller
             $this->data = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
 
             // Get the marks by label id
-            $this->data['marks'] = $this->user_marks->readComplete($where, $this->limit, $page);
+            $marks = $this->user_marks->readComplete($where, $this->limit, $page);
+
+            // Check for marks
+            if ($marks === false) {
+                $this->data['errors'] = formatErrors('No marks found for your account.', 12);
+            }
+            else {
+                $this->data['marks'] = $marks;
+            }
+        }
+        else {
+            $this->data['errors'] = formatErrors('No label found for mark lookup.', 15);
         }
 
         // Figure if web or API view
@@ -266,7 +316,15 @@ class Marks extends Plain_Controller
 
         // Load correct model
         $this->load->model('users_to_marks_model', 'user_mark');
-        $this->data['mark'] = $this->user_mark->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => NULL));
+        $mark = $this->user_mark->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => NULL));
+
+        // Check if it was updated
+        if ($mark === false) {
+            $this->data['errors'] = formatErrors('Mark could not be restored.', 16);
+        }
+        else {
+            $this->data['mark'] = $mark;
+        }
 
         // Figure view
         $this->figureView('marks/restore');
