@@ -119,7 +119,7 @@ class Marks extends Plain_Controller
         $where = "users_to_marks.user_id='". $this->user_id . "' AND" . $where_time . " users_to_marks.archived_on " . $archived;
 
         // Get current page, total pages and total records
-        $this->data = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
+        $marks = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
 
         // Check for marks
         if ($marks === false) {
