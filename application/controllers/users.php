@@ -14,7 +14,7 @@ class Users extends CI_Controller {
 		$this->load->database();
 		$this->load->model('Users_model');
 
-		$this->load->library('session');
+		$this->load->library('plain_session', '', 'session');
 		$this->load->helper('url');
 
 		// Turn XSS filter on email address and password
@@ -63,7 +63,7 @@ class Users extends CI_Controller {
 	// Accepts: Noething
 	// Returns: Destroys current session, redirects to home page.
 	public function logout() {
-		$this->load->library('session');
+		$this->load->library('plain_session', '', 'session');
 		$this->load->helper('url');
 		$this->session->sess_destroy();
 		redirect('');
@@ -79,7 +79,7 @@ class Users extends CI_Controller {
 		// Load everything we need for this method
 		$this->load->database();
 		$this->load->model('Users_model');
-		$this->load->library( 'session' );
+		$this->load->library('plain_session', '', 'session');
 		$this->load->helper( array('url','email', 'validation_helper') );
 
 		// Form input data

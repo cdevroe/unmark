@@ -20,7 +20,7 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		$this->load->helper(array('url','form'));
-		$this->load->library('session');
+        $this->load->library('plain_session', '', 'session');
 
 		if ($this->session->flashdata('addurl')) {
 			$this->session->keep_flashdata('addurl');
@@ -43,7 +43,7 @@ class Welcome extends CI_Controller {
 	public function sirius()
 	{
 		$this->load->helper(array('url','form'));
-		$this->load->library('session');
+		$this->load->library('plain_session', '', 'session');
 
 		if ($this->session->userdata('status') == 'active') {
 			redirect('home');
@@ -57,7 +57,7 @@ class Welcome extends CI_Controller {
 	public function helpbookmarklet()
 	{
 		$this->load->helper(array('url','form'));
-		$this->load->library('session');
+		$this->load->library('plain_session', '', 'session');
 		$data['when'] = '';
 		$data['label'] = '';
 		if ($this->session->userdata('status') == 'active') {
@@ -70,7 +70,7 @@ class Welcome extends CI_Controller {
 	public function faq()
 	{
 		$this->load->helper(array('url','form'));
-		$this->load->library('session');
+		$this->load->library('plain_session', '', 'session');
 
 		$data['when'] = '';
 		$data['label'] = '';
@@ -85,7 +85,7 @@ class Welcome extends CI_Controller {
 	public function how()
 	{
 		$this->load->helper(array('url','form'));
-		$this->load->library('session');
+		$this->load->library('plain_session', '', 'session');
 
 		$data['when'] = '';
 		$data['label'] = '';
@@ -100,7 +100,7 @@ class Welcome extends CI_Controller {
 	public function changelog()
 	{
 		$this->load->helper(array('url','form'));
-		$this->load->library('session');
+		$this->load->library('plain_session', '', 'session');
 
 		if ($this->session->userdata('status') == 'active') {
 			$data['label'] = '';
@@ -116,7 +116,7 @@ class Welcome extends CI_Controller {
 	public function terms()
 	{
 		$this->load->helper(array('url','form'));
-		$this->load->library('session');
+		$this->load->library('plain_session', '', 'session');
 		$data = array();
 		$this->load->view('terms', $data);
 	}

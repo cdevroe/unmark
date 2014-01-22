@@ -6,7 +6,7 @@ class Nilai extends CI_Controller {
   	{
   		parent::__construct();
   		$this->load->helper(array('url','form','date','oembed'));
-  		$this->load->library('session');
+  		$this->load->library('plain_session', '', 'session');
   	}
 
   	// Unused for now.
@@ -523,7 +523,7 @@ class Nilai extends CI_Controller {
 		$this->load->database();
 
 		$id = $this->uri->segment(3);
-		$this->db->update('users_marks',array('status'=>'','datearchived'=>''),array('id' => $id,'userid'=>$this->session->userdata('userid')));
+		$this->db->update('users_marks',array('status'=>'','datearchived'=>null),array('id' => $id,'userid'=>$this->session->userdata('userid')));
 
 		$this->session->set_flashdata('message', 'Your mark has been restored.');
 		$this->session->set_flashdata('restoredurlid',$urlid);

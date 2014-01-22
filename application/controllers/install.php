@@ -6,7 +6,7 @@ class Install extends CI_Controller {
     parent::__construct();
 
     $this->load->helper(array('url','form'));
-    $this->load->library('session');
+    $this->load->library('plain_session', '', 'session');
 
     $this->load->database(); // Load Database for all methods
 
