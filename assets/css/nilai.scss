@@ -13,13 +13,22 @@
 @import "barlicons";
 
 
-// Variables
-$greenColor: #009B86; // Nilai Green
-$greyColor: #EBEBEB; // Grey Color
-$darkGreyColor: #BBBBBD; // Dark Grey Color
-$shadedGreyColor: #F1F3F2; // Lighter Grey
-$darkColor: #737373; // Dark Color
-$redColor: #BD362F; // Red Color
+// Color Variables for Layouts (greyscale)
+$color_dark     : #3D3D3D;
+$color_darker   : #222222;
+$color_light    : #BEBCBD;
+$color_lighter  : #F2F0F1;
+$color_white    : #FFFFFF;
+$color_black    : #000000;
+
+// Color Variables for labels
+$color_orange : #DA6D46;
+$color_blue   : #2D96C5;
+$color_yellow : #EAC863;
+$color_purple : #8E75A6;
+$color_green  : #19A59B;
+$color_red    : #DB5B73;
+$color_grey   : #A5A6AA;
 
 /* normalize.css v2.1.3 | MIT License | git.io/normalize */article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background:0 0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
 
@@ -28,14 +37,14 @@ $redColor: #BD362F; // Red Color
 body, html{ height:100%; }
 body {
     font-family: "MuliRegular", "Muli", sans-serif;
-    border-left:55px solid $greyColor;
+    border-left:55px solid $color_dark;
     * {
         @include box-sizing(border-box);
     }
     min-height: 100%;
-    color:$darkColor;
+    color:$color_dark;
     a {
-        color:$greenColor;
+        color:$color_green;
         text-decoration:none;
     }
 }
@@ -54,7 +63,7 @@ body {
     @include outer-container;
     height:50px;
     width:100%;
-    background: $darkGreyColor;
+    background: $color_darker;
     ul.navigation-left {
         margin:0;
         list-style: none;
@@ -63,7 +72,7 @@ body {
         li {
             display: inline-block;
             padding: 10px 25px;
-            background-color: $shadedGreyColor;
+            background-color: $color_lighter;
             margin-right: 5px;
             margin-top: 8px; 
             position: relative;
@@ -99,7 +108,7 @@ body {
 }
 
 .menu-activator {
-    background-color: $darkGreyColor;
+    background-color: $color_darker;
     width: 55px;
     height: inherit;
     text-align: center;
@@ -117,7 +126,7 @@ body {
 // ================ Main Content
 .main-content {
     @include span-columns(7);
-    @include pad();
+    @include omega();
 }
 
 .clipboardCopy, #note {
@@ -140,7 +149,7 @@ body {
     color: #FFF;
     border: 1px solid #999; // PICK COLOR
     border: 0 rgba(0,0,0,0);
-    background-color: $darkGreyColor;  // PICK COLOR
+    background-color: $color_darker;  // PICK COLOR
     text-decoration: none;
     border-radius: 2px;
     @include transition-property (box-shadow);
@@ -152,15 +161,15 @@ body {
 }
 
 .btn.active {
-    background-color: $greenColor;
+    background-color: $color_green;
     color:#FFF;   
 }
 .btn.danger {
-    background-color: $redColor;
+    background-color: $color_red;
     color:#FFF;
 }
 .btn.disabled {
-    color: $greyColor;
+    color: $color_dark;
 }
 
 // Label Styles
@@ -173,7 +182,7 @@ a.label {
 
 // Alert Styles
 .alert {
-    background-color: $darkGreyColor;
+    background-color: $color_darker;
     border-radius: 4px;
     margin: 0 0 15px 0;
     padding: 10px;
@@ -184,28 +193,67 @@ a.label {
 // Marks Area
 .marks_list {
     .mark {
-        @include outer-container;
-        display:block;
-        border-bottom:1px solid $darkGreyColor;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-        .markbuttons {
-            @include span-columns(1);
-            .btn-group {
-                display:inline-block;
-                a {
-                    padding: 1px 0;
-                    margin-right: 5px;
-                    width: 24px;
-                }
+        border-bottom:1px solid $color_lighter;
+        padding: 25px 15px 25px 25px;
+        position:relative;
+        h2 {
+            margin:0 0 5px 0;
+        }
+        .mark-meta {
+            font-style: italic;
+            font-size: 12px;
+            color:$color_light;
+            .mark-sep {
+                padding: 0 5px; 
+            }
+            .mark-link a {
+                text-decoration: none;
+                color: $color_light;
             }
         }
-        .markmeta {
-            @include span-columns(11);
-            @include omega();
-            h3 {
-                margin-top:0;
+        .mark-corner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-top: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-left: 10px solid $color_lighter;
+            border-bottom: 10px solid $color_lighter;
+            box-shadow: -1px 2px 4px $color_light;
+            &:after {
+                content: "";
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                border-top: 10px solid $color_blue;
+                border-right: 10px solid $color_blue;
+                border-left: 10px solid transparent;
+                border-bottom: 10px solid transparent;
             }
+        }
+        &.orange .mark-corner:after {
+            border-top: 10px solid $color_orange;
+            border-right: 10px solid $color_orange;           
+        }
+        &.yellow .mark-corner:after {
+            border-top: 10px solid $color_yellow;
+            border-right: 10px solid $color_yellow;           
+        }
+        &.purple .mark-corner:after {
+            border-top: 10px solid $color_purple;
+            border-right: 10px solid $color_purple;           
+        }
+        &.green .mark-corner:after {
+            border-top: 10px solid $color_green;
+            border-right: 10px solid $color_green;           
+        }
+        &.red .mark-corner:after {
+            border-top: 10px solid $color_red;
+            border-right: 10px solid $color_red;           
+        }
+        &.grey .mark-corner:after {
+            border-top: 10px solid $color_grey;
+            border-right: 10px solid $color_grey;           
         }
     }
 }
@@ -215,14 +263,12 @@ a.label {
     display: none;
 }
 
-
-
 // ================ Right Content
 
 .sidebar-content {
     @include span-columns(5);
     @include pad();  
-    background-color: $greyColor;
+    background-color: $color_dark;
     min-height: 100%;
     height: 100%; 
 }
@@ -273,7 +319,7 @@ a.label {
         width: 4px;
         height: 100%;
         margin-left: -2px;
-        background-color: $darkGreyColor;
+        background-color: $color_darker;
         z-index: 5;
     }
 }
@@ -296,12 +342,12 @@ a.label {
         margin-left: -10px;
         background: #fff;
         border-radius: 10px;
-        border: 4px solid $darkGreyColor;
+        border: 4px solid $color_darker;
         z-index: 10;       
     }
 }
 .timeline-dot-small:before {
-    background: $darkGreyColor;
+    background: $color_darker;
     width: 6px;
     height: 6px;
     margin-left: -7px;

@@ -6,10 +6,5 @@
         <li class="timeline-dot-small"></li>
         <li class="timeline-dot-small"></li>
         <li class="timeline-dot"></li>
-        <li class="timeline-dot"></li>
-        <li class="timeline-dot-small"></li>
-        <li class="timeline-dot-small"></li>
-        <li class="timeline-dot"></li>
-        <li class="timeline-dot"></li>
     </ul>
 </div>

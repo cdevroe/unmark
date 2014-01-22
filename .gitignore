@@ -4,3 +4,4 @@ application/controllers/test.php
 .DS_Store
 .buildpath
 .project
+.sass-cache/
