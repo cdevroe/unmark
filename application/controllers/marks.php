@@ -135,7 +135,11 @@ class Marks extends Plain_Controller
         $this->data['archived_today'] = $this->user_marks->getTotal('archived', $this->user_id, 'today');
 
         // Figure if web or API view
-        $this->figureView('marks/index');
+        //$this->figureView('marks/index');
+
+        // Put in by Tim | 1.22.14 | To test views 
+        $this->data['yield'] = 'marks';
+        $this->load->view('layouts/application', $this->data);
     }
 
     // Edit a mark

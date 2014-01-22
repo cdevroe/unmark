@@ -1,4 +1,6 @@
-<div class="row-fluid">
+<?php $this->load->view('header'); ?>
+
+<div class="main-content">
   <div class="span4">
     <h2>Sign Up For Free</h2>
 		<hr />
@@ -6,21 +8,21 @@
   </div>
 
   <div class="well span4">
-    <?php if (isset($flash_message['message'])) { ?>
+    <?php if (isset($_GET['message'])) { ?>
     <div class="alert">
       <a class="close" data-dismiss="alert">×</a>
-      <strong>Warning!</strong> <?php echo $flash_message['message'];?>
+      <strong>Warning!</strong> <?php echo $_GET['message'];?>
     </div>
     <?php } ?>
 
-    <form method="post" action="/users/add" class="form-inline">
-      <input type="hidden" name="csrf_token" id="csrf_token" value="<?php print $csrf_token; ?>">
-      <p><input type="text" class="input-small" name="email" id="email" placeholder="Email Address"></p>
-      <p><input type="password" class="input-small" name="password" id="password" placeholder="Password"></p>
-      <p><input type="checkbox" name="terms" id="terms" value="accept"> I accept the <a href="/terms">terms of use</a>.</p>
-      <p><input type="submit" value="Complete Sign Up" name="join" id="join" disabled class="btn-primary"></p>
-    </form>
-
+    <?php echo form_open('users/add','class="form-inline"');?>
+      <p><?php echo form_input('emailaddress','','class="input" placeholder="Email Address"');?></p>
+      <p><?php echo form_password('password','','class="input" placeholder="Password"');?></p>
+      <p><?php echo form_checkbox('terms', 'accept');?> I accept the <a href="/terms">terms of use</a>.</p>
+      <p><?php echo form_submit('join','Complete Sign Up','disabled class="btn-primary"');?></p>
+    <?php echo form_close();?>
   </div>
 
 </div>
+
+<?php $this->load->view('footer'); ?>

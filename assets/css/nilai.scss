@@ -1,0 +1,308 @@
+/*!
+    Main stylesheet for Nilai.co
+    Copyright 2014 - Plain - http://plainmade.com
+*/
+
+// First include Bourbon & Neat
+@import "../bourbon/bourbon";
+@import "grid-settings";
+@import "../neat/neat";
+
+// Import fonts and font icons created by Plain
+@import "barley-fonts";
+@import "barlicons";
+
+
+// Variables
+$greenColor: #009B86; // Nilai Green
+$greyColor: #EBEBEB; // Grey Color
+$darkGreyColor: #BBBBBD; // Dark Grey Color
+$shadedGreyColor: #F1F3F2; // Lighter Grey
+$darkColor: #737373; // Dark Color
+$redColor: #BD362F; // Red Color
+
+/* normalize.css v2.1.3 | MIT License | git.io/normalize */article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background:0 0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
+
+
+// ================ Body
+body, html{ height:100%; }
+body {
+    font-family: "MuliRegular", "Muli", sans-serif;
+    border-left:55px solid $greyColor;
+    * {
+        @include box-sizing(border-box);
+    }
+    min-height: 100%;
+    color:$darkColor;
+    a {
+        color:$greenColor;
+        text-decoration:none;
+    }
+}
+
+
+// ================ Site Wrapper
+.main-wrapper {
+    @include outer-container;
+    height:100%;
+
+}
+
+
+// ================ Site Navigation
+.navigation-content {
+    @include outer-container;
+    height:50px;
+    width:100%;
+    background: $darkGreyColor;
+    ul.navigation-left {
+        margin:0;
+        list-style: none;
+        @include span-columns(6);
+        padding-left:0;
+        li {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: $shadedGreyColor;
+            margin-right: 5px;
+            margin-top: 8px; 
+            position: relative;
+            ul.dropdown {
+                display:none;
+                position: absolute;
+                background-color: #F1F3F2;
+                width: 500px;
+                top: 42px;
+                left: 0;
+                padding: 10px 0 10px 10px;
+                li {
+                    display:block;
+                    padding: 0 10px 5px;
+                }
+                ul.sub-divider {
+                    float: left;
+                    padding-left: 0;
+                }
+            }
+        }
+    }
+    ul.navigation-right {
+        margin:0;
+        list-style: none;
+        @include span-columns(6);
+        text-align:right;
+    }
+    #logoutBtn {
+        margin: 8px 9px 0 0;
+        padding: 4px 14px 6px;
+    }
+}
+
+.menu-activator {
+    background-color: $darkGreyColor;
+    width: 55px;
+    height: inherit;
+    text-align: center;
+    padding: 6px 0 10px 0;
+    a {
+        color:#fff;
+        text-decoration:none;
+        i {
+            font-size: 27px;
+        }
+    }
+}
+
+
+// ================ Main Content
+.main-content {
+    @include span-columns(7);
+    @include pad();
+}
+
+.clipboardCopy, #note {
+    width: 85%;
+    height: 150px;
+}
+
+// Button Styles (class caried over from BootStrap)
+.btn {
+    display: inline-block;
+    zoom: 1;
+    line-height: normal;
+    white-space: nowrap;
+    vertical-align: baseline;
+    text-align: center;
+    cursor: pointer;
+    @include user-select(none);
+    font-size: 100%;
+    padding: .5em 1.5em;
+    color: #FFF;
+    border: 1px solid #999; // PICK COLOR
+    border: 0 rgba(0,0,0,0);
+    background-color: $darkGreyColor;  // PICK COLOR
+    text-decoration: none;
+    border-radius: 2px;
+    @include transition-property (box-shadow);
+    @include transition-duration(.1s);
+    @include transition-timing-function(linear); 
+    &:hover {
+        @include background-image(linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1)));
+    }  
+}
+
+.btn.active {
+    background-color: $greenColor;
+    color:#FFF;   
+}
+.btn.danger {
+    background-color: $redColor;
+    color:#FFF;
+}
+.btn.disabled {
+    color: $greyColor;
+}
+
+// Label Styles
+a.label {
+    @extend .btn;
+    padding: 3px 7px;
+    font-size: 12px;
+}
+
+
+// Alert Styles
+.alert {
+    background-color: $darkGreyColor;
+    border-radius: 4px;
+    margin: 0 0 15px 0;
+    padding: 10px;
+    color: #FFF;
+}
+
+
+// Marks Area
+.marks_list {
+    .mark {
+        @include outer-container;
+        display:block;
+        border-bottom:1px solid $darkGreyColor;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        .markbuttons {
+            @include span-columns(1);
+            .btn-group {
+                display:inline-block;
+                a {
+                    padding: 1px 0;
+                    margin-right: 5px;
+                    width: 24px;
+                }
+            }
+        }
+        .markmeta {
+            @include span-columns(11);
+            @include omega();
+            h3 {
+                margin-top:0;
+            }
+        }
+    }
+}
+
+// Preview Panel
+.preview-panel {
+    display: none;
+}
+
+
+
+// ================ Right Content
+
+.sidebar-content {
+    @include span-columns(5);
+    @include pad();  
+    background-color: $greyColor;
+    min-height: 100%;
+    height: 100%; 
+}
+
+.nav-header {
+    list-style: none;
+    padding-left: 0;
+    margin-left: -18px;
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+.mobilefriendly {
+    display: none;
+}
+
+// Sidbear Preview Pane
+#sidebar-preview {
+    display: none;
+}
+
+
+
+// ================ Timeline Rail
+
+.timeline_wrapper {
+    position: absolute;
+    left: 0px;
+    top: 0;
+    width: 55px;
+}
+
+.timeline {
+    position: relative;
+    width: 660px;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 1em 0;
+    list-style-type: none;
+    width: 100%;
+    padding: 4em 0 1em 0;
+    &:before {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        content: ' ';
+        display: block;
+        width: 4px;
+        height: 100%;
+        margin-left: -2px;
+        background-color: $darkGreyColor;
+        z-index: 5;
+    }
+}
+.timeline-dot, .timeline-dot-small {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    padding: 2em 0;
+    &:before {
+         background: rgb(255,255,255);
+        z-index: 15;
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        content: ' ';
+        display: block;
+        width: 12px;
+        height: 12px;
+        margin-left: -10px;
+        background: #fff;
+        border-radius: 10px;
+        border: 4px solid $darkGreyColor;
+        z-index: 10;       
+    }
+}
+.timeline-dot-small:before {
+    background: $darkGreyColor;
+    width: 6px;
+    height: 6px;
+    margin-left: -7px;
+}

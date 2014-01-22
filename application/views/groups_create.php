@@ -1,7 +1,6 @@
 <?php $this->load->view('header'); ?>
 
-<div class="row-fluid">
-  <div class="span7">
+<div class="main-content">
     <h2>Create a group</h2>
 
     <?php if ($this->session->flashdata('message')) { ?>
@@ -30,13 +29,6 @@
     <input type="hidden" id="uid" name="uid" value="<?php echo $uid;?>" />
     </form>
 		</div>
-
-  </div>
-
-  <div class="well span3">
-
-    <a href="/home">Back to your marks</a>
-  </div>
 
 </div>
 

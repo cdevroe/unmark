@@ -5,7 +5,7 @@
 		<h2>Your mark has been saved!</h2>
 		<h3><a href="<?php echo $url;?>"><?php if ($title != '' || strlen($title) > 0) { echo $title; } else { echo 'Untitled'; } ?></a></h3>
 		<p><small><?php echo $url?></small></p>
-		<p><a href="javascript:window.close();" class="btn btn-success">Save and close</a></p>
+		<p><a href="javascript:window.close();" class="btn active">Save and close</a></p>
 		<hr />
 		<h3>Label your mark</h3>
 		<p><a href="#" class="btn addlabel" title="Read Later">Read Later</a> <a href="#" class="btn addlabel" title="Video">Video</a> <a href="#" class="btn addlabel" title="Recipe">Recipe</a></p>
