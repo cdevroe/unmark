@@ -5,9 +5,22 @@ function decodeValue($str)
     return (is_string($str) && ! empty($str)) ? stripslashes(html_entity_decode(rawurldecode(trim($str)), ENT_QUOTES, 'UTF-8')) : $str;
 }
 
-function formatDomain($domain)
+function getSmartLabelInfo($url)
 {
-    return str_replace('www.', '', strtolower($domain));
+    $url    = strtolower($url);
+    $scheme = parse_url($url, PHP_URL_SCHEME);
+    $url    = (empty($scheme)) ? 'http://' . $url : $url;
+    $parse  = parse_url($url);
+    $domain = (isset($parse['host']) && ! empty($parse['host'])) ? $parse['host'] : $url;
+    $path   = (isset($parse['path']) && ! empty($parse['path'])) ? $parse['path'] : '';
+    $path   = ($path == '/') ? '' : $path;
+
+    return array(
+        'domain' => $domain,
+        'path'   => $path,
+        'key'    => md5($domain . $path)
+    );
+
 }
 
 // Format any errors coming back to standardize them
