@@ -65,7 +65,7 @@ function getSmartLabelInfo($url)
     return array(
         'domain' => $domain,
         'path'   => $path,
-        'key'    => md5($domain . $path)
+        'key'    => md5(str_replace('www.', '', $domain) . $path)
     );
 
 }
