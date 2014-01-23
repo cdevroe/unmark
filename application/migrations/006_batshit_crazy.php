@@ -120,8 +120,8 @@ class Migration_Batshit_Crazy extends CI_Migration {
           // Proceed only if domain is not empty
           $current_label = strtolower($label->label);
           if (! empty($label->domain) && ! empty($label->userid) && is_numeric($label->userid) && ! empty($current_label) && array_key_exists($current_label, $default_labels)) {
-            // Clean up host (remove www.)
-            // Make sure it's lowercase
+
+            // Standardize label domain, path and smart key
             $smart_info = getSmartLabelInfo($label->domain . $label->path);
             $domain     = $smart_info['domain'];
             $path       = $smart_info['path'];

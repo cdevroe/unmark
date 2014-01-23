@@ -13,6 +13,7 @@ function getSmartLabelInfo($url)
     $parse  = parse_url($url);
     $domain = (isset($parse['host']) && ! empty($parse['host'])) ? $parse['host'] : $url;
     $path   = (isset($parse['path']) && ! empty($parse['path'])) ? $parse['path'] : '';
+    $path   = (substr($path, strlen($path) - 1) == '/') ? substr($path, 0, strlen($path) - 1) : $path;
     $path   = ($path == '/') ? '' : $path;
 
     return array(

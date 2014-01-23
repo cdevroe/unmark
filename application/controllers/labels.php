@@ -90,17 +90,11 @@ class Labels extends Plain_Controller
     public function add()
     {
 
-        // Set the columns that CAN be updated
-        $columns = array(
-            'label' => array('name', 'active'),
-            'smart' => array('domain', 'path', 'active', 'label_id', 'user_id')
-        );
-
         // Declare options
         $options = array();
 
         // Figure type
-        $type = (isset($this->clean->domain)) ? 'smart' : 'label';
+        $type = (isset($this->clean->url)) ? 'smart' : 'label';
 
         // Figure user id
         if ($type == 'smart' && (parent::isAdmin() === false || ! isset($this->clean->admin) || empty($this->clean->admin))) {
@@ -112,14 +106,27 @@ class Labels extends Plain_Controller
 
         // Figure what to check, slug or smart_key
         if ($type == 'smart') {
-            $domain    = (isset($this->db_clean->domain)) ? $this->db_clean->domain : null;
-            $path      = (isset($this->db_clean->path)) ? $this->db_clean->path : null;
-            $total     = (! empty($domain)) ? $this->labels->count($user_where . " AND labels.smart_key = '" . md5($domain . $path) . "'") : 0;
+            $smart_info             = getSmartLabelInfo($this->db_clean->url);
+            $options['domain']      = $smart_info['domain'];
+            $options['path']        = $smart_info['path'];
+            $options['smart_key']   = $smart_info['key'];
+
+            if (isset($this->db_clean->label_id) && ! is_numeric($this->db_clean->label_id)) {
+                $options['smart_label_id'] = $this->db_clean->label_id;
+            }
+
+            $total  = $this->labels->count($user_where . " AND labels.smart_key = '" . $options['smart_key'] . "'");
 
         }
         else {
-            $slug = (isset($this->clean->name)) ? generateSlug($this->db_clean->name) : null;
-            $total = (! empty($slug)) ? $this->labels->count("labels.user_id IS NULL AND labels.slug = '" . $slug . "'") : 0;
+            $options['name'] = (isset($this->clean->name) && ! empty($options['name'])) ? $options['name'] : null;
+            $options['slug'] = (! empty($options['name'])) ? generateSlug($options['name']) : null;
+            $total           = (! empty($slug)) ? $this->labels->count("labels.user_id IS NULL AND labels.slug = '" . $options['slug'] . "'") : 0;
+        }
+
+        // Figure if there was an active state passed
+        if (isset($this->db_clean->active) && ($this->db_clean->active == 0 || $this->db_clean->active == 1)) {
+            $options['active'] = $this->db_clean->active;
         }
 
         // If a record is found
@@ -132,28 +139,6 @@ class Labels extends Plain_Controller
         }
         // Else, try and add it
         else {
-
-            // figure options
-            foreach ($this->db_clean as $k => $v) {
-                $k = strtolower($k);
-                if (in_array($k, $columns[$type])) {
-                    $options[$k] = $v;
-                }
-            }
-
-            // Switch label_id with smart_label_id for smart labels
-            if (isset($options['label_id'])) {
-                $options['smart_label_id'] = $options['label_id'];
-                unset($options['label_id']);
-            }
-
-            // Format Domain
-            if (isset($options['domain'])) {
-                $options['domain'] = formatDomain($options['domain']);
-            }
-
-            // Format Path
-            $options['path'] = (isset($options['path'])) ? formatDomain($options['path']) : '';
 
             // Attempt to create the label
             $label = $this->labels->create($options);
@@ -225,7 +210,7 @@ class Labels extends Plain_Controller
             // Set the columns that CAN be updated
             $types = array(
                 'label' => array('name', 'active'),
-                'smart' => array('domain', 'path', 'active', 'label_id')
+                'smart' => array('url', 'active', 'label_id')
             );
 
             // Lookup label_id to get type
@@ -245,43 +230,36 @@ class Labels extends Plain_Controller
             elseif (! array_key_exists($label->type, $types)) {
                 $this->data['errors'] = formatErrors('This type of label `' . $label->type . '` could not be found.', 22);
             }
-            // Update
+            // Update label (if it doesn't exist)
             else {
-                // Find options to update
-                $options = array();
-                foreach ($types[$label->type] as $k => $column) {
-                    if (isset($this->db_clean->{$column})) {
-                        $options[$column] = $this->db_clean->{$column};
 
-                        // If label_id, switch to match internal column
-                        if ($column == 'label_id') {
-                            $options['smart_label_id'] = $options[$column];
-                            unset($options[$column]);
-                        }
+                $total = 0;
 
-                        // If domain or path, standardize them
-                        if ($column == 'domain') {
-                            $options[$column] = formatDomain($options[$column]);
-                        }
-                        elseif ($column == 'path') {
-                            $options[$column] = formatPath($options[$column]);
-                        }
+                // Figure options per label type
+                if ($label->type == 'smart') {
+                    if (isset($this->db_clean->url) && ! empty($this->db_clean->url)) {
+                        $smart_info             = getSmartLabelInfo($this->db_clean->url);
+                        $options['domain']      = $smart_info['domain'];
+                        $options['path']        = $smart_info['path'];
+                        $options['smart_key']   = $smart_info['key'];
+                        $total                  = $this->labels->count($user_where . " AND labels.smart_key = '" . $options['smart_key'] . "'");
+                    }
+
+                    if (isset($this->db_clean->label_id) && ! is_numeric($this->db_clean->label_id)) {
+                        $options['smart_label_id'] = $this->db_clean->label_id;
+                    }
+                }
+                else {
+                    if (isset($this->db_clean->name) && ! empty($this->db_clean->name)) {
+                        $options['name'] = $this->db_clean->name
+                        $options['slug'] = generateSlug($options['name']);
+                        $total           = $this->labels->count("labels.user_id IS NULL AND labels.slug = '" . $options['slug'] . "'");
                     }
                 }
 
-                // If updating name
-                // create a new slug
-                if (isset($options['name'])) {
-                    $options['slug'] = generateSlug($options['name']);
-                    $total           = $this->labels->count("labels.user_id IS NULL AND labels.slug = '" . $options['slug'] . "'");
-                }
-
-                // smart keys for domain/path
-                if (isset($options['domain']) || isset($options['path'])) {
-                    $domain               = (isset($options['domain'])) ? $options['domain'] : $label->settings->domain;
-                    $path                 = (isset($options['path'])) ? $options['path'] : $label->settings->path;
-                    $options['smart_key'] = md5($domain . $path);
-                    $total                = $this->labels->count($user_where . " AND labels.smart_key = '" . $options['smart_key'] . "'");
+                // Figure if there was an active state passed
+                if (isset($this->db_clean->active) && ($this->db_clean->active == 0 || $this->db_clean->active == 1)) {
+                    $options['active'] = $this->db_clean->active;
                 }
 
 
@@ -291,7 +269,7 @@ class Labels extends Plain_Controller
                 }
                 // If label slug or smart key exists already
                 // Error out
-                elseif (isset($total) && $total > 0) {
+                elseif ($total > 0) {
                     $this->data['errors'] = formatErrors('Label already exists for this account.', 24);
                 }
                 // Send update
