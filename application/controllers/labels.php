@@ -208,10 +208,7 @@ class Labels extends Plain_Controller
         else {
 
             // Set the columns that CAN be updated
-            $types = array(
-                'label' => array('name', 'active'),
-                'smart' => array('url', 'active', 'label_id')
-            );
+            $types = array('label', 'smart');
 
             // Lookup label_id to get type
             $user_where = (parent::isAdmin() === true && isset($this->clean->admin) && ! empty($this->clean->admin)) ? "labels.user_id IS NULL" : "labels.user_id = '" . $this->user_id . "'";
@@ -233,7 +230,8 @@ class Labels extends Plain_Controller
             // Update label (if it doesn't exist)
             else {
 
-                $total = 0;
+                $options = array();
+                $total   = 0;
 
                 // Figure options per label type
                 if ($label->type == 'smart') {
@@ -245,6 +243,7 @@ class Labels extends Plain_Controller
                         $total                  = $this->labels->count($user_where . " AND labels.smart_key = '" . $options['smart_key'] . "'");
                     }
 
+                    // If label is sent, add to options
                     if (isset($this->db_clean->label_id) && ! is_numeric($this->db_clean->label_id)) {
                         $options['smart_label_id'] = $this->db_clean->label_id;
                     }
