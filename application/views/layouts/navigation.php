@@ -1,37 +1,11 @@
-    <div class="navigation-content">
-        <ul class="navigation-left">
-            <li>
-                <a href="#" class="nilai_main_link"><i class="barley-icon-sort"></i> Sort Link</a>
-                <ul class="dropdown">
-                    <li>
-                        <ul class="sub-divider">
-                            <li><a href="/">All</a></li>
-                            <li><a href="/marks/today">Today</a></li>
-                            <li><a href="/marks/yesterday">Yesterday</a></li>
-                        </ul>
-                        <ul class="sub-divider">
-                            <li><a href="/marks/label/read">Read</a></li>
-                            <li><a href="/marks/label/watch">Watch</a></li>
-                            <li><a href="/marks/label/listen">Listen</a></li>
-                            <li><a href="/marks/label/buy">Buy</a></li>
-                            <li><a href="/marks/label/eatdrink">Eat &amp; Drink</a></li>
-                            <li><a href="/marks/label/do">Do</a></li>
-                        </ul>
-                        <ul class="sub-divider">
-                            <li><a href="/marks/label/unlabeled">Unlabeled</a></li>
-                            <li><a href="/marks/archive">Archive</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="nilai_main_link"><i class="barley-icon-th"></i> Link Categories</a>
-                <ul class="dropdown">
-                    <li><a href="/groups/create">Create a group +</a></li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="navigation-right">
-            <li><a href="/users/logout" class="nilai_main_link btn" id="logoutBtn"><i class="barley-icon-off"></i> Log Out</a></li>
-        </ul>
-    </div>
+<div class="navigation-content">
+    <div class="menu-activator menu-item"><a href="#"><i class="barley-icon-reorder"></i></a></div>
+    <div class="menu-labels menu-item"><a href="#"><i class="barley-icon-bookmark"></i></a></div>
+    <div class="menu-timeline menu-item"><a href="#"><i class="barley-icon-time"></i></a></div>
+    <div class="menu-search menu-item"><a href="#"><i class="barley-icon-search"></i></a></div>
+    <div class="menu-marks menu-item"><a href="#"><i class="barley-icon-link"></i></a></div>
+</div>
+
+<div class="navigation-pane">
+    <p>Yo We are the navition pane!</p>
+</div>

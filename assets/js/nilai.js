@@ -222,6 +222,27 @@ if (nilai === undefined) { var nilai = {}; }
 
 
     // Get this baby in action
-    $(document).ready(function(){ nilai.init(); });
+    //$(document).ready(function(){ nilai.init(); });
 
 }(window.jQuery));
+
+
+
+
+$(document).ready(function(){ 
+
+    $(".menu-activator a").on('click', function (e) {
+
+        var nav_panel = $('.navigation-pane'), main_panel = $('.main-wrapper');
+
+        if (nav_panel.is(':visible')) {
+            nav_panel.hide();
+            main_panel.css('left', 65);
+        } else {
+            nav_panel.show();
+            main_panel.css('left', 323);
+        }
+
+    });
+
+});

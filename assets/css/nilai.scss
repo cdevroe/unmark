@@ -4,13 +4,12 @@
 */
 
 // First include Bourbon & Neat
-@import "../bourbon/bourbon";
-@import "grid-settings";
-@import "../neat/neat";
+@import "../libraries/bourbon/bourbon";
+@import "partials/grid-settings";
+@import "../libraries/neat/neat";
 
 // Import fonts and font icons created by Plain
-@import "barley-fonts";
-@import "barlicons";
+@import "partials/barlicons";
 
 
 // Color Variables for Layouts (greyscale)
@@ -18,6 +17,7 @@ $color_dark     : #3D3D3D;
 $color_darker   : #222222;
 $color_light    : #BEBCBD;
 $color_lighter  : #F2F0F1;
+$color_lightest : #474747;
 $color_white    : #FFFFFF;
 $color_black    : #000000;
 
@@ -30,14 +30,19 @@ $color_green  : #19A59B;
 $color_red    : #DB5B73;
 $color_grey   : #A5A6AA;
 
+
+// Font Variables
+$serif      : 'Merriweather', serif;
+$sans-serif : 'Lato', sans-serif;
+
 /* normalize.css v2.1.3 | MIT License | git.io/normalize */article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background:0 0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
 
 
 // ================ Body
 body, html{ height:100%; }
 body {
-    font-family: "MuliRegular", "Muli", sans-serif;
-    border-left:55px solid $color_dark;
+    font-family: $sans-serif;
+    border-left:65px solid $color_dark;
     * {
         @include box-sizing(border-box);
     }
@@ -49,144 +54,69 @@ body {
     }
 }
 
+// ================ Element Styles
+@import "partials/element-settings";
+
 
 // ================ Site Wrapper
 .main-wrapper {
     @include outer-container;
+    position: relative;
+    min-height: 100%;
     height:100%;
-
+    position: absolute;
+    top: 0;
+    left: 65px;
+    .inner-wrapper {
+        @include span-columns(12);
+        @include row(table);
+        min-height: 100%;
+        height:100%;
+    }
 }
 
 
 // ================ Site Navigation
 .navigation-content {
-    @include outer-container;
-    height:50px;
-    width:100%;
-    background: $color_darker;
-    ul.navigation-left {
-        margin:0;
-        list-style: none;
-        @include span-columns(6);
-        padding-left:0;
-        li {
-            display: inline-block;
-            padding: 10px 25px;
-            background-color: $color_lighter;
-            margin-right: 5px;
-            margin-top: 8px; 
-            position: relative;
-            ul.dropdown {
-                display:none;
-                position: absolute;
-                background-color: #F1F3F2;
-                width: 500px;
-                top: 42px;
-                left: 0;
-                padding: 10px 0 10px 10px;
-                li {
-                    display:block;
-                    padding: 0 10px 5px;
-                }
-                ul.sub-divider {
-                    float: left;
-                    padding-left: 0;
-                }
+    position: absolute;
+    left: 0px;
+    top: 0;
+    width: 65px;
+    .menu-item {
+        width: 65px;
+        height: inherit;
+        text-align: center;
+        padding: 8px 0 15px 0;
+        border-bottom:1px solid $color_lightest;
+        a {
+            color:#fff;
+            text-decoration:none;
+            i {
+                font-size: 27px;
             }
-        }
+        }    
     }
-    ul.navigation-right {
-        margin:0;
-        list-style: none;
-        @include span-columns(6);
-        text-align:right;
-    }
-    #logoutBtn {
-        margin: 8px 9px 0 0;
-        padding: 4px 14px 6px;
+    .menu-activator {
+        background-color: $color_darker;
     }
 }
 
-.menu-activator {
-    background-color: $color_darker;
-    width: 55px;
-    height: inherit;
-    text-align: center;
-    padding: 6px 0 10px 0;
-    a {
-        color:#fff;
-        text-decoration:none;
-        i {
-            font-size: 27px;
-        }
-    }
+.navigation-pane {
+    width:258px;
+    background-color: $color_dark;
+    min-height: 100%;
+    height: 100%;
+    position:absolute;
+    top:0;
+    left:65px;
+    display:none;
 }
 
 
 // ================ Main Content
 .main-content {
     @include span-columns(7);
-    @include omega();
-}
-
-.clipboardCopy, #note {
-    width: 85%;
-    height: 150px;
-}
-
-// Button Styles (class caried over from BootStrap)
-.btn {
-    display: inline-block;
-    zoom: 1;
-    line-height: normal;
-    white-space: nowrap;
-    vertical-align: baseline;
-    text-align: center;
-    cursor: pointer;
-    @include user-select(none);
-    font-size: 100%;
-    padding: .5em 1.5em;
-    color: #FFF;
-    border: 1px solid #999; // PICK COLOR
-    border: 0 rgba(0,0,0,0);
-    background-color: $color_darker;  // PICK COLOR
-    text-decoration: none;
-    border-radius: 2px;
-    @include transition-property (box-shadow);
-    @include transition-duration(.1s);
-    @include transition-timing-function(linear); 
-    &:hover {
-        @include background-image(linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1)));
-    }  
-}
-
-.btn.active {
-    background-color: $color_green;
-    color:#FFF;   
-}
-.btn.danger {
-    background-color: $color_red;
-    color:#FFF;
-}
-.btn.disabled {
-    color: $color_dark;
-}
-
-// Label Styles
-a.label {
-    @extend .btn;
-    padding: 3px 7px;
-    font-size: 12px;
-}
-
-
-// Alert Styles
-.alert {
-    background-color: $color_darker;
-    border-radius: 4px;
-    margin: 0 0 15px 0;
-    padding: 10px;
-    color: #FFF;
+    padding-right:0;
 }
 
 
@@ -197,7 +127,8 @@ a.label {
         padding: 25px 15px 25px 25px;
         position:relative;
         h2 {
-            margin:0 0 5px 0;
+            margin:0 0 9px 0;
+            font-weight: 300;
         }
         .mark-meta {
             font-style: italic;
@@ -258,16 +189,11 @@ a.label {
     }
 }
 
-// Preview Panel
-.preview-panel {
-    display: none;
-}
-
 // ================ Right Content
 
 .sidebar-content {
     @include span-columns(5);
-    @include pad();  
+    @include reset-display;  
     background-color: $color_dark;
     min-height: 100%;
     height: 100%; 
