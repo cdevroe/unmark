@@ -55,8 +55,8 @@ class Plain_Controller extends CI_Controller
                 $this->original->{$k}   = $v;
                 $v                      = trim(decodeValue($v));
                 $this->clean->{$k}      = strip_tags($v);
-                $this->db_clean->{$k}   = mysqli_real_escape_string($this->db->conn_id, $this->clean->{$k});
-                $this->html_clean->{$k} = mysqli_real_escape_string($this->db->conn_id, purifyHTML($v));
+                $this->db_clean->{$k}   = $this->db->escape($this->clean->{$k});
+                $this->html_clean->{$k} = $this->db->escape(purifyHTML($v));
             }
         }
 
@@ -151,7 +151,7 @@ class Plain_Controller extends CI_Controller
 
     protected function isCommandLine()
     {
-        return (php_sapi_name() === 'cli') ? true : false;
+        return $this->input->is_cli_request();
     }
 
     // If logged if invalid CSRF token is not valid
