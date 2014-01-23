@@ -55,8 +55,8 @@ class Plain_Controller extends CI_Controller
                 $this->original->{$k}   = $v;
                 $v                      = trim(decodeValue($v));
                 $this->clean->{$k}      = strip_tags($v);
-                $this->db_clean->{$k}   = $this->db->escape($this->clean->{$k});
-                $this->html_clean->{$k} = $this->db->escape(purifyHTML($v));
+                $this->db_clean->{$k}   = $this->db->escape_str($this->clean->{$k});
+                $this->html_clean->{$k} = $this->db->escape_str(purifyHTML($v));
             }
         }
 
