@@ -48,10 +48,30 @@ class Marks extends Plain_Controller
 
             // Add
             if (! isset($user_mark->users_to_mark_id)) {
-                $user_mark = $this->user_mark->create(array(
-                    'user_id' => $this->user_id,
-                    'mark_id' => $mark->mark_id
-                ));
+
+                // Set default options
+                $options = array('user_id' => $this->user_id, 'mark_id' => $mark->mark_id);
+
+                // Figure if any automatic labels should be applied
+                $smart_info = getSmartLabelInfo($this->clean->url);
+                if (isset($smart_info['key']) && ! empty($smart_info['key'])) {
+
+                    // Load labels model
+                    // Sort by user_id DESC (if user has same rule as system, use the user's rule)
+                    // Try to extract label
+                    $this->load->model('labels_model', 'labels');
+                    $this->labels->sort = 'user_id DESC';
+                    $label = $this->labels->readComplete("labels.user_id IS NULL OR labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "'", 1);
+
+                    // If a label id is found
+                    // Set it to options to save
+                    if (isset($label->settings->label->id)) {
+                        $options['label_id'] = $label->settings->label->id;
+                    }
+                }
+
+                // Create the mark
+                $user_mark = $this->user_mark->create($options);
             }
 
             if ($user_mark === false) {

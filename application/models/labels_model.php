@@ -86,7 +86,7 @@ class Labels_model extends Plain_Model
                 $labels[$k]->settings->label        = new stdClass;
                 $labels[$k]->settings->label->name  = $labels[$k]->smart_label_name;
                 $labels[$k]->settings->label->slug  = $labels[$k]->smart_label_slug;
-                $labels[$k]->settings->label->id   = $labels[$k]->smart_label_id;
+                $labels[$k]->settings->label->id    = $labels[$k]->smart_label_id;
 
                 // Unset some shiz
                 unset($labels[$k]->name);
