@@ -28,26 +28,10 @@ require_once(BASEPATH.'/libraries/Session.php');
  */
 class Plain_Session extends CI_Session {
 
-	var $sess_encrypt_cookie		= FALSE;
-	var $sess_use_database			= FALSE;
-	var $sess_table_name			= '';
-	var $sess_expiration			= 7200;
-	var $sess_expire_on_close		= FALSE;
-	var $sess_match_ip				= FALSE;
-	var $sess_match_useragent		= TRUE;
-	var $sess_cookie_name			= 'ci_session';
-	var $cookie_prefix				= '';
-	var $cookie_path				= '';
-	var $cookie_domain				= '';
-	var $cookie_secure				= FALSE;
-	var $sess_time_to_update		= 300;
-	var $encryption_key				= '';
-	var $flashdata_key				= 'flash';
-	var $time_reference				= 'time';
-	var $gc_probability				= 5;
-	var $userdata					= array();
-	var $CI;
-	var $now;
+	public $sess_encrypt_cookie	     = TRUE; // Overwritten default value to TRUE
+	public $sess_cookie_name         = 'plain_session'; // Overwritten default value to TRUE
+	public $plain_sess_storage       = 'files';
+	public $plain_sess_memcache_addr = 'localhost';
 
 	/**
 	 * Session Constructor
@@ -57,7 +41,6 @@ class Plain_Session extends CI_Session {
 	 */
 	public function __construct($params = array())
 	{
-	    session_start();
 		log_message('debug', "Session Class Initialized");
 
 		// Set the super object to a local variable for use throughout the class
@@ -65,7 +48,7 @@ class Plain_Session extends CI_Session {
 
 		// Set all the session preferences, which can either be set
 		// manually via the $params array above or via the config file
-		foreach (array('sess_encrypt_cookie', 'sess_use_database', 'sess_table_name', 'sess_expiration', 'sess_expire_on_close', 'sess_match_ip', 'sess_match_useragent', 'sess_cookie_name', 'cookie_path', 'cookie_domain', 'cookie_secure', 'sess_time_to_update', 'time_reference', 'cookie_prefix', 'encryption_key') as $key)
+		foreach (array('sess_encrypt_cookie', 'sess_expiration', 'sess_expire_on_close', 'sess_match_ip', 'sess_match_useragent', 'sess_cookie_name', 'cookie_path', 'cookie_domain', 'cookie_secure', 'sess_time_to_update', 'time_reference', 'cookie_prefix', 'encryption_key') as $key)
 		{
 			$this->$key = (isset($params[$key])) ? $params[$key] : $this->CI->config->item($key);
 		}
@@ -85,7 +68,7 @@ class Plain_Session extends CI_Session {
 		}
 
 		// Are we using a database?  If so, load it
-		if ($this->sess_use_database === TRUE AND $this->sess_table_name != '')
+		if ($this->plain_sess_storage == 'database')
 		{
 			$this->CI->load->database();
 		}
@@ -103,6 +86,9 @@ class Plain_Session extends CI_Session {
 
 		// Set the cookie name
 		$this->sess_cookie_name = $this->cookie_prefix.$this->sess_cookie_name;
+		
+		// Initialize session
+		$this->_start_session();
 
 		// Run the Session routine. If a session doesn't exist we'll
 		// create a new one.  If it does, we'll update it.
@@ -195,46 +181,6 @@ class Plain_Session extends CI_Session {
 			return FALSE;
 		}
 
-		// Is there a corresponding session in the DB?
-		if ($this->sess_use_database === TRUE)
-		{
-			$this->CI->db->where('session_id', $session['session_id']);
-
-			if ($this->sess_match_ip == TRUE)
-			{
-				$this->CI->db->where('ip_address', $session['ip_address']);
-			}
-
-			if ($this->sess_match_useragent == TRUE)
-			{
-				$this->CI->db->where('user_agent', $session['user_agent']);
-			}
-
-			$query = $this->CI->db->get($this->sess_table_name);
-
-			// No result?  Kill it!
-			if ($query->num_rows() == 0)
-			{
-				$this->sess_destroy();
-				return FALSE;
-			}
-
-			// Is there custom data?  If so, add it to the main session array
-			$row = $query->row();
-			if (isset($row->user_data) AND $row->user_data != '')
-			{
-				$custom_data = $this->_unserialize($row->user_data);
-
-				if (is_array($custom_data))
-				{
-					foreach ($custom_data as $key => $val)
-					{
-						$session[$key] = $val;
-					}
-				}
-			}
-		}
-
 		// Session is valid!
 		$this->userdata = $session;
 		
@@ -252,12 +198,12 @@ class Plain_Session extends CI_Session {
 	function sess_write()
 	{
 		// Are we saving custom data to the DB?  If not, all we do is update the cookie
-		if ($this->sess_use_database === FALSE)
+		if ($this->plain_sess_storage != 'database')
 		{
 			$this->_save_into_session();
 			return;
 		}
-
+        // FIXME kip9 Check that part if it's even required
 		// set the custom userdata, the session data we will set in a second
 		$custom_userdata = $this->userdata;
 		$cookie_userdata = array();
@@ -307,7 +253,7 @@ class Plain_Session extends CI_Session {
 	    $sessionId = session_id();
 	    if(empty($sessionId)){
 	        // No session exists - need to create new one
-	        session_start();
+	        $this->_start_session();
 	        $sessionId = session_id();
 	    }
 	    $this->userdata = array(
@@ -318,12 +264,6 @@ class Plain_Session extends CI_Session {
 							'user_data'		=> ''
 							);
 
-
-		// Save the data to the DB if needed
-		if ($this->sess_use_database === TRUE)
-		{
-			$this->CI->db->query($this->CI->db->insert_string($this->sess_table_name, $this->userdata));
-		}
 
 		// Write the cookie
 		$this->_save_into_session();
@@ -359,19 +299,6 @@ class Plain_Session extends CI_Session {
 		// by pushing all userdata to the cookie.
 		$cookie_data = NULL;
 
-		// Update the session ID and last_activity field in the DB if needed
-		if ($this->sess_use_database === TRUE)
-		{
-			// set cookie explicitly to only have our session data
-			$cookie_data = array();
-			foreach (array('session_id','ip_address','user_agent','last_activity') as $val)
-			{
-				$cookie_data[$val] = $this->userdata[$val];
-			}
-
-			$this->CI->db->query($this->CI->db->update_string($this->sess_table_name, array('last_activity' => $this->now, 'session_id' => $new_sessid), array('session_id' => $old_sessid)));
-		}
-
 		// Write the cookie
 		$this->_save_into_session($cookie_data);
 	}
@@ -386,13 +313,7 @@ class Plain_Session extends CI_Session {
 	 */
 	function sess_destroy()
 	{
-		// Kill the session DB row
-		if ($this->sess_use_database === TRUE && isset($this->userdata['session_id']))
-		{
-			$this->CI->db->where('session_id', $this->userdata['session_id']);
-			$this->CI->db->delete($this->sess_table_name);
-		}
-
+	    
 		// Remove session
 		session_destroy();
 
@@ -431,6 +352,48 @@ class Plain_Session extends CI_Session {
 		
 		$_SESSION['ci_data'] = $cookie_data;
 		
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Set session cookie parameters and invoke session_start to generate session data
+	 */
+	protected function _start_session(){
+	    session_name($this->sess_cookie_name);
+	    session_set_cookie_params($this->sess_expiration, $this->cookie_path, $this->cookie_domain, $this->cookie_secure);
+	    session_start();
+	}
+	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Garbage collection
+	 *
+	 * This deletes expired session rows from database
+	 * if the probability percentage is met
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	function _sess_gc()
+	{
+	    // FIXME kip9 New _gc logic
+	    if ($this->sess_use_database != TRUE)
+	    {
+	        return;
+	    }
+	
+	    srand(time());
+	    if ((rand() % 100) < $this->gc_probability)
+	    {
+	        $expire = $this->now - $this->sess_expiration;
+	
+	        $this->CI->db->where("last_activity < {$expire}");
+	        $this->CI->db->delete($this->sess_table_name);
+	
+	        log_message('debug', 'Session garbage collection performed.');
+	    }
 	}
 
 }
