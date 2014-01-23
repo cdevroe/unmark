@@ -1,0 +1,46 @@
+// Button Styles (class caried over from BootStrap)
+.btn {
+    display: inline-block;
+    zoom: 1;
+    line-height: normal;
+    white-space: nowrap;
+    vertical-align: baseline;
+    text-align: center;
+    cursor: pointer;
+    @include user-select(none);
+    font-size: 100%;
+    padding: .5em 1.5em;
+    color: #FFF;
+    border: 1px solid #999; // PICK COLOR
+    border: 0 rgba(0,0,0,0);
+    background-color: $color_darker;  // PICK COLOR
+    text-decoration: none;
+    border-radius: 2px;
+    @include transition-property (box-shadow);
+    @include transition-duration(.1s);
+    @include transition-timing-function(linear); 
+    &:hover {
+        @include background-image(linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1)));
+    }  
+}
+
+.btn.active {
+    background-color: $color_green;
+    color:#FFF;   
+}
+.btn.danger {
+    background-color: $color_red;
+    color:#FFF;
+}
+.btn.disabled {
+    color: $color_dark;
+}
+
+// Alert Styles
+.alert {
+    background-color: $color_darker;
+    border-radius: 4px;
+    margin: 0 0 15px 0;
+    padding: 10px;
+    color: #FFF;
+}
