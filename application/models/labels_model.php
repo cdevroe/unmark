@@ -64,7 +64,7 @@ class Labels_model extends Plain_Model
         return formatErrors($valid);
     }
 
-    protected function formatResults($labels)
+    private function formatResults($labels)
     {
         foreach ($labels as $k => $label) {
             $labels[$k]->type = (empty($label->smart_label_id)) ? 'label' : 'smart';
