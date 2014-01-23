@@ -5,25 +5,6 @@ function decodeValue($str)
     return (is_string($str) && ! empty($str)) ? stripslashes(html_entity_decode(rawurldecode(trim($str)), ENT_QUOTES, 'UTF-8')) : $str;
 }
 
-function getSmartLabelInfo($url)
-{
-    $url    = strtolower($url);
-    $scheme = parse_url($url, PHP_URL_SCHEME);
-    $url    = (empty($scheme)) ? 'http://' . $url : $url;
-    $parse  = parse_url($url);
-    $domain = (isset($parse['host']) && ! empty($parse['host'])) ? $parse['host'] : $url;
-    $path   = (isset($parse['path']) && ! empty($parse['path'])) ? $parse['path'] : '';
-    $path   = (substr($path, strlen($path) - 1) == '/') ? substr($path, 0, strlen($path) - 1) : $path;
-    $path   = ($path == '/') ? '' : $path;
-
-    return array(
-        'domain' => $domain,
-        'path'   => $path,
-        'key'    => md5($domain . $path)
-    );
-
-}
-
 // Format any errors coming back to standardize them
 function formatErrors($errors, $errno=0)
 {
@@ -33,12 +14,6 @@ function formatErrors($errors, $errno=0)
         $errors[$errno] = $message;
     }
     return $errors;
-}
-
-function formatPath($path='/')
-{
-    $path = (substr($path, 0, 1) != '/') ? '/' . $path : $path;
-    return ($path == '/') ? '' : $path;
 }
 
 function generateSlug($str)
@@ -74,6 +49,25 @@ function getLastJsonError()
         break;
     }
     return $e;
+}
+
+function getSmartLabelInfo($url)
+{
+    $url    = strtolower($url);
+    $scheme = parse_url($url, PHP_URL_SCHEME);
+    $url    = (empty($scheme)) ? 'http://' . $url : $url;
+    $parse  = parse_url($url);
+    $domain = (isset($parse['host']) && ! empty($parse['host'])) ? $parse['host'] : $url;
+    $path   = (isset($parse['path']) && ! empty($parse['path'])) ? $parse['path'] : '';
+    $path   = (substr($path, strlen($path) - 1) == '/') ? substr($path, 0, strlen($path) - 1) : $path;
+    $path   = ($path == '/') ? '' : $path;
+
+    return array(
+        'domain' => $domain,
+        'path'   => $path,
+        'key'    => md5($domain . $path)
+    );
+
 }
 
 function purifyHTML($str, $exceptions=array())
