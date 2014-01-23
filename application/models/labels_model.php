@@ -32,24 +32,16 @@ class Labels_model extends Plain_Model
 
         // If a smart label, set the required fields
         if ($smart_label === true) {
-            $required = array('smart_label_id', 'domain');
+            $required = array('smart_label_id', 'domain', 'smart_key');
         }
         else {
-            $required = array('name');
+            $required = array('name', 'slug');
         }
 
         $valid = validate($options, $this->data_types, $required);
 
         // Make sure all the options are valid
         if ($valid === true) {
-
-            // If smart label, create MD5 hash of domain and path
-            if ($smart_label == true) {
-                $options['smart_key'] = md5($options['domain'] . $options['path']);
-            }
-            else {
-                $options['slug'] = generateSlug($options['name']);
-            }
 
             // If not, add it
             $options['created_on'] = date('Y-m-d H:i:s');
