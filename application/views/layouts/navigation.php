@@ -7,5 +7,10 @@
 </div>
 
 <div class="navigation-pane">
-    <p>Yo We are the navition pane!</p>
+    <ul>
+        <li><a href="#">Labels</a></li>
+        <li><a href="#">Timeline</a></li>
+        <li><a href="#">Search</a></li>
+        <li><a href="#">All Links</a></li>
+    </ul>
 </div>

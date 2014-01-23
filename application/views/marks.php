@@ -7,6 +7,10 @@
                 <span class="mark-sep">&bull;</span>
                 <span class="mark-link"><a href="#">medium.com/sappy_title</a></span>
             </div>
+            <div class="mark-actions">
+                <a href="#" class="mark-more"><i class="barley-icon-elipsis"></i></a>
+                <a href="#" class="mark-archive"><i class="barley-icon-ok"></i></a>
+            </div>
             <div class="mark-corner"></div>
         </div>
         <div id="mark-12345" class="mark orange">
@@ -15,6 +19,10 @@
                 <span class="mark-date">4 days, 21 hours, 18 minutes ago</span>
                 <span class="mark-sep">&bull;</span>
                 <span class="mark-link"><a href="#">medium.com/sappy_title</a></span>
+            </div>
+            <div class="mark-actions">
+                <a href="#" class="mark-more"><i class="barley-icon-elipsis"></i></a>
+                <a href="#" class="mark-archive"><i class="barley-icon-ok"></i></a>
             </div>
             <div class="mark-corner"></div>
         </div>
@@ -25,6 +33,10 @@
                 <span class="mark-sep">&bull;</span>
                 <span class="mark-link"><a href="#">medium.com/sappy_title</a></span>
             </div>
+            <div class="mark-actions">
+                <a href="#" class="mark-more"><i class="barley-icon-elipsis"></i></a>
+                <a href="#" class="mark-archive"><i class="barley-icon-ok"></i></a>
+            </div>
             <div class="mark-corner"></div>
         </div>
         <div id="mark-12345" class="mark purple">
@@ -33,6 +45,10 @@
                 <span class="mark-date">4 days, 21 hours, 18 minutes ago</span>
                 <span class="mark-sep">&bull;</span>
                 <span class="mark-link"><a href="#">medium.com/sappy_title</a></span>
+            </div>
+            <div class="mark-actions">
+                <a href="#" class="mark-more"><i class="barley-icon-elipsis"></i></a>
+                <a href="#" class="mark-archive"><i class="barley-icon-ok"></i></a>
             </div>
             <div class="mark-corner"></div>
         </div>
@@ -43,6 +59,10 @@
                 <span class="mark-sep">&bull;</span>
                 <span class="mark-link"><a href="#">medium.com/sappy_title</a></span>
             </div>
+            <div class="mark-actions">
+                <a href="#" class="mark-more"><i class="barley-icon-elipsis"></i></a>
+                <a href="#" class="mark-archive"><i class="barley-icon-ok"></i></a>
+            </div>
             <div class="mark-corner"></div>
         </div>
         <div id="mark-12345" class="mark red">
@@ -52,6 +72,10 @@
                 <span class="mark-sep">&bull;</span>
                 <span class="mark-link"><a href="#">medium.com/sappy_title</a></span>
             </div>
+            <div class="mark-actions">
+                <a href="#" class="mark-more"><i class="barley-icon-elipsis"></i></a>
+                <a href="#" class="mark-archive"><i class="barley-icon-ok"></i></a>
+            </div>
             <div class="mark-corner"></div>
         </div>
         <div id="mark-12345" class="mark grey">
@@ -60,6 +84,10 @@
                 <span class="mark-date">4 days, 21 hours, 18 minutes ago</span>
                 <span class="mark-sep">&bull;</span>
                 <span class="mark-link"><a href="#">medium.com/sappy_title</a></span>
+            </div>
+            <div class="mark-actions">
+                <a href="#" class="mark-more"><i class="barley-icon-elipsis"></i></a>
+                <a href="#" class="mark-archive"><i class="barley-icon-ok"></i></a>
             </div>
             <div class="mark-corner"></div>
         </div>

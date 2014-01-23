@@ -231,18 +231,25 @@ if (nilai === undefined) { var nilai = {}; }
 
 $(document).ready(function(){ 
 
+    // Main Panel Navigation
     $(".menu-activator a").on('click', function (e) {
-
         var nav_panel = $('.navigation-pane'), main_panel = $('.main-wrapper');
-
-        if (nav_panel.is(':visible')) {
-            nav_panel.hide();
-            main_panel.css('left', 65);
+        if (nav_panel.css('left') === "65px") {
+            nav_panel.animate({ left: -258 }, { duration: 200, queue: false });
+            main_panel.animate({ left: 65 }, { duration: 200, queue: false });
         } else {
-            nav_panel.show();
-            main_panel.css('left', 323);
+            nav_panel.animate({ left: 65 }, { duration: 200, queue: false });
+            main_panel.animate({ left: 323 }, { duration: 200, queue: false });
         }
+    });
 
+    // Hover Action on Marks List
+    $(".mark").hoverIntent(function () {
+        $(this).find('.mark-corner').toggle();
+        $(this).find('.mark-actions').toggle();
+    }, function () {
+        $(this).find('.mark-corner').toggle();
+        $(this).find('.mark-actions').toggle();
     });
 
 });

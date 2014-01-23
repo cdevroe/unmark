@@ -30,7 +30,6 @@ $color_green  : #19A59B;
 $color_red    : #DB5B73;
 $color_grey   : #A5A6AA;
 
-
 // Font Variables
 $serif      : 'Merriweather', serif;
 $sans-serif : 'Lato', sans-serif;
@@ -43,13 +42,14 @@ body, html{ height:100%; }
 body {
     font-family: $sans-serif;
     border-left:65px solid $color_dark;
+    border-top: 8px solid $color_darker;
     * {
         @include box-sizing(border-box);
     }
     min-height: 100%;
     color:$color_dark;
     a {
-        color:$color_green;
+        color: $color_white;
         text-decoration:none;
     }
 }
@@ -65,7 +65,7 @@ body {
     min-height: 100%;
     height:100%;
     position: absolute;
-    top: 0;
+    top: 8px;
     left: 65px;
     .inner-wrapper {
         @include span-columns(12);
@@ -82,6 +82,8 @@ body {
     left: 0px;
     top: 0;
     width: 65px;
+    z-index: 200;
+    background-color: $color_dark;
     .menu-item {
         width: 65px;
         height: inherit;
@@ -89,12 +91,15 @@ body {
         padding: 8px 0 15px 0;
         border-bottom:1px solid $color_lightest;
         a {
-            color:#fff;
+            color: $color_white;
             text-decoration:none;
             i {
                 font-size: 27px;
             }
         }    
+    }
+    .menu-item:first-child {
+        border-bottom:none;
     }
     .menu-activator {
         background-color: $color_darker;
@@ -108,8 +113,25 @@ body {
     height: 100%;
     position:absolute;
     top:0;
-    left:65px;
-    display:none;
+    left:-193px;
+    z-index: 100;
+    border-top: 56px solid $color_darker;
+    ul {
+        margin:0;
+        padding:0;
+        li {
+            list-style: none;
+            a {
+                display: block;
+                color: $color_white;
+                border-bottom:1px solid $color_lightest;
+                font-weight: 300;
+                text-transform: uppercase;
+                font-size: 13px;
+                padding: 20px 0 20px 10px;
+            }
+        }
+    }
 }
 
 
@@ -162,29 +184,96 @@ body {
                 border-bottom: 10px solid transparent;
             }
         }
-        &.orange .mark-corner:after {
-            border-top: 10px solid $color_orange;
-            border-right: 10px solid $color_orange;           
+        .mark-actions {
+            display:none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            a {
+                background: $color_blue;
+                display: block;
+                text-align: center;
+                width: 52px;
+                padding: 15px 0;
+                i {
+                    font-size: 19px;
+                }
+                &.mark-archive {
+                    background: lighten( $color_blue, 10% )
+                }
+            }
         }
-        &.yellow .mark-corner:after {
-            border-top: 10px solid $color_yellow;
-            border-right: 10px solid $color_yellow;           
+        &.orange {
+            .mark-corner:after {
+                border-top: 10px solid $color_orange;
+                border-right: 10px solid $color_orange;           
+            }
+            .mark-actions a {
+                background: $color_orange;
+                &.mark-archive {
+                    background: lighten( $color_orange, 10% )
+                }
+            }
         }
-        &.purple .mark-corner:after {
-            border-top: 10px solid $color_purple;
-            border-right: 10px solid $color_purple;           
+        &.yellow {
+            .mark-corner:after {
+                border-top: 10px solid $color_yellow;
+                border-right: 10px solid $color_yellow;           
+            }
+            .mark-actions a {
+                background: $color_yellow;
+                &.mark-archive {
+                    background: lighten( $color_yellow, 10% )
+                }
+            }
         }
-        &.green .mark-corner:after {
-            border-top: 10px solid $color_green;
-            border-right: 10px solid $color_green;           
+        &.purple {
+            .mark-corner:after {
+                border-top: 10px solid $color_purple;
+                border-right: 10px solid $color_purple;           
+            }
+            .mark-actions a {
+                background: $color_purple;
+                &.mark-archive {
+                    background: lighten( $color_purple, 10% )
+                }
+            }
         }
-        &.red .mark-corner:after {
-            border-top: 10px solid $color_red;
-            border-right: 10px solid $color_red;           
+        &.green {
+            .mark-corner:after {
+                border-top: 10px solid $color_green;
+                border-right: 10px solid $color_green;           
+            }
+            .mark-actions a {
+                background: $color_green;
+                &.mark-archive {
+                    background: lighten( $color_green, 10% )
+                }
+            }
         }
-        &.grey .mark-corner:after {
-            border-top: 10px solid $color_grey;
-            border-right: 10px solid $color_grey;           
+        &.red {
+            .mark-corner:after {
+                border-top: 10px solid $color_red;
+                border-right: 10px solid $color_red;           
+            }
+            .mark-actions a {
+                background: $color_red;
+                &.mark-archive {
+                    background: lighten( $color_red, 10% )
+                }
+            }
+        }
+        &.grey {
+            .mark-corner:after {
+                border-top: 10px solid $color_grey;
+                border-right: 10px solid $color_grey;           
+            }
+            .mark-actions a {
+                background: $color_grey;
+                &.mark-archive {
+                    background: lighten( $color_grey, 10% )
+                }
+            }
         }
     }
 }
@@ -266,7 +355,7 @@ body {
         width: 12px;
         height: 12px;
         margin-left: -10px;
-        background: #fff;
+        background: $color_white;
         border-radius: 10px;
         border: 4px solid $color_darker;
         z-index: 10;       
