@@ -126,6 +126,7 @@ class Marks extends Plain_Controller
         // Set allowable textual starts
         $valid_lookups = array(
             'all'               => array('start' => null, 'finish' => null),
+            'archives'          => array('start' => null, 'finish' => null),
             'today'             => array('start' => strtotime('today'), 'finish' => strtotime('today')),
             'yesterday'         => array('start' => strtotime('yesterday'), 'finish' => strtotime('yesterday')),
             'last-week'         => array('start' => strtotime('-1 week'), 'finish' => strtotime('today')),
@@ -143,8 +144,8 @@ class Marks extends Plain_Controller
         // Figure when
         $where_time = null;
         if (array_key_exists($start, $valid_lookups)) {
-            $where_time .= ($start != 'all') ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $valid_lookups[$start]['start'] . "'" : '';
-            $where_time .= ($start != 'all') ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $valid_lookups[$start]['finish'] . "'" : '';
+            $where_time .= ($start != 'all' && $start != 'archives') ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $valid_lookups[$start]['start'] . "'" : '';
+            $where_time .= ($start != 'all' && $start != 'archives') ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $valid_lookups[$start]['finish'] . "'" : '';
         }
         else {
             // Check for valid dates
@@ -156,8 +157,11 @@ class Marks extends Plain_Controller
         // Figure the page number
         $page = findPage();
 
+        // Archives
+        $archive = ($start == 'archives') ? 'IS NULL' : 'IS NOT NULL';
+
         // Set where
-        $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on IS NULL" . $where_time;
+        $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on " . $archive . $where_time;
 
         // Get all the marks
         $marks = $this->user_marks->readComplete($where, $this->limit, $page);
