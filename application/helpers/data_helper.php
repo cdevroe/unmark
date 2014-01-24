@@ -10,7 +10,7 @@ function findPage()
     $uri  = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
     $uri  = explode('?', $uri);
     $uri  = explode('/', $uri[0]);
-    $page = end($uri);
+    $page = (count($uri) > 1) ? end($uri) : 1;
     return (! is_numeric($page) && empty($page)) ? 1 : $page;
 }
 
@@ -21,12 +21,6 @@ function findStartFinish($start, $finish)
     $finish  = trim(urldecode($finish));
     $finish  = (isValid($finish, 'date') === false && isValid($finish, 'year') === false) ? preg_replace('/\b\-\b/', ' ', $finish) : $finish;
 
-   /*print $start . "<BR>";
-    print strtotime($start) . "<BR>";
-    print date('Y-m-d', strtotime($start)) . "<BR>";
-    print $finish . "<BR>";
-    print strtotime($finish) . "<BR>";
-    print date('Y-m-d', strtotime($finish)) . "<BR>";*/
 
     // check for single year
     if (isValid($start, 'year') === true && isValid($finish, 'year') !== true) {
@@ -44,6 +38,12 @@ function findStartFinish($start, $finish)
     elseif (isValid($start, 'date') === true && isValid($finish, 'date') !== true) {
         $finish = $start;
     }
+
+    /*print strtotime($start) . "<BR>";
+    print date('Y-m-d', strtotime($start)) . "<BR>";
+    print $finish . "<BR>";
+    print strtotime($finish) . "<BR>";
+    print date('Y-m-d', strtotime($finish)) . "<BR>";*/
 
     // Figure start/finish timestamps
     // If empty, assign to today
