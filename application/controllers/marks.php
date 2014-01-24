@@ -98,6 +98,8 @@ class Marks extends Plain_Controller
     // both api and web view
     public function archive($mark_id=0)
     {
+        // Only allow ajax and API
+        parent::redirectIfWebView();
 
         // Figure correct way to handle if no mark id
         if (empty($mark_id) || ! is_numeric($mark_id)) {
@@ -341,6 +343,8 @@ class Marks extends Plain_Controller
     // Both API and web view
     public function info($mark_id=0)
     {
+        // Only allow ajax and API
+        parent::redirectIfWebView();
 
         // Figure correct way to handle if no mark id
         if (empty($mark_id) || ! is_numeric($mark_id)) {
@@ -411,6 +415,9 @@ class Marks extends Plain_Controller
     // Both API and webview
     public function restore($mark_id=0)
     {
+
+        // Only allow ajax and API
+        parent::redirectIfWebView();
 
         // Figure correct way to handle if no mark id
         if (empty($mark_id) || ! is_numeric($mark_id)) {
