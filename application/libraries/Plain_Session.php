@@ -16,6 +16,7 @@
 // ------------------------------------------------------------------------
 
 require_once(BASEPATH.'/libraries/Session.php');
+require_once(APPPATH.'/libraries/CIDatabaseSessionHandler.php');
 
 /**
  * Session Class
@@ -48,14 +49,14 @@ class Plain_Session extends CI_Session {
 
 		// Set all the session preferences, which can either be set
 		// manually via the $params array above or via the config file
-		foreach (array('sess_encrypt_cookie', 'sess_expiration', 'sess_expire_on_close', 'sess_match_ip', 'sess_match_useragent', 'sess_cookie_name', 'cookie_path', 'cookie_domain', 'cookie_secure', 'sess_time_to_update', 'time_reference', 'cookie_prefix', 'encryption_key') as $key)
+		foreach (array('plain_sess_storage','plain_sess_memcache_addr','sess_encrypt_cookie', 'sess_expiration', 'sess_expire_on_close', 'sess_match_ip', 'sess_match_useragent', 'sess_cookie_name', 'cookie_path', 'cookie_domain', 'cookie_secure', 'sess_time_to_update', 'time_reference', 'cookie_prefix', 'encryption_key') as $key)
 		{
 			$this->$key = (isset($params[$key])) ? $params[$key] : $this->CI->config->item($key);
 		}
 
 		if ($this->encryption_key == '')
 		{
-			show_error('In order to use the Session class you are required to set an encryption key in your config file.');
+			show_error('In order to use the Plain Session class you are required to set an encryption key in your config file.');
 		}
 
 		// Load the string helper so we can use the strip_slashes() function
@@ -70,7 +71,9 @@ class Plain_Session extends CI_Session {
 		// Are we using a database?  If so, load it
 		if ($this->plain_sess_storage == 'database')
 		{
-			$this->CI->load->database();
+		    $this->CI->load->database();
+			$dbSessionHandler = new CIDatabaseSessionHandler($this->CI->db);
+			session_set_save_handler($dbSessionHandler, true);
 		}
 
 		// Set the "now" time.  Can either be GMT or server time, based on the
@@ -230,8 +233,8 @@ class Plain_Session extends CI_Session {
 		}
 
 		// Run the update query
-		$this->CI->db->where('session_id', $this->userdata['session_id']);
-		$this->CI->db->update($this->sess_table_name, array('last_activity' => $this->userdata['last_activity'], 'user_data' => $custom_userdata));
+// 		$this->CI->db->where('session_id', $this->userdata['session_id']);
+// 		$this->CI->db->update($this->sess_table_name, array('last_activity' => $this->userdata['last_activity'], 'user_data' => $custom_userdata));
 
 		// Write the cookie.  Notice that we manually pass the cookie data array to the
 		// _save_into_session() function. Normally that function will store $this->userdata, but
