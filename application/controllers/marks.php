@@ -127,6 +127,7 @@ class Marks extends Plain_Controller
         $valid_lookups = array(
             'all'               => array('start' => null, 'finish' => null),
             'archive'           => array('start' => null, 'finish' => null),
+            'search'            => array('start' => null, 'finish' => null),
             'today'             => array('start' => strtotime('today'), 'finish' => strtotime('today')),
             'yesterday'         => array('start' => strtotime('yesterday'), 'finish' => strtotime('yesterday')),
             'last-week'         => array('start' => strtotime('-1 week'), 'finish' => strtotime('today')),
@@ -137,6 +138,9 @@ class Marks extends Plain_Controller
             'ages-ago'          => array('start' => strtotime('-20 years'), 'finish' => strtotime('-1 year'))
         );
 
+        // If $start is one of the following, search by time is disabled
+        $no_time = array('all', 'archive', 'search');
+
         // Figure start, end and page
         $start = strtolower(trim(urldecode($start)));
 
@@ -144,8 +148,8 @@ class Marks extends Plain_Controller
         // Figure when
         $where_time = null;
         if (array_key_exists($start, $valid_lookups)) {
-            $where_time .= ($start != 'all' && $start != 'archive') ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $valid_lookups[$start]['start'] . "'" : '';
-            $where_time .= ($start != 'all' && $start != 'archive') ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $valid_lookups[$start]['finish'] . "'" : '';
+            $where_time .= (! in_array($start, $no_time)) ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $valid_lookups[$start]['start'] . "'" : '';
+            $where_time .= (! in_array($start, $no_time)) ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $valid_lookups[$start]['finish'] . "'" : '';
         }
         else {
             // Check for valid dates
@@ -160,8 +164,11 @@ class Marks extends Plain_Controller
         // Archives
         $archive = ($start == 'archive') ? 'IS NOT NULL' : 'IS NULL';
 
+        // Search it up
+        $search = (isset($this->db_clean->q) && ! empty($this->db_clean->q)) ? " AND users_to_marks.notes LIKE '%" . $this->db_clean->q . "%'" :  null;
+
         // Set where
-        $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on " . $archive . $where_time;
+        $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on " . $archive . $where_time . $search;
 
         // Get all the marks
         $marks = $this->user_marks->readComplete($where, $this->limit, $page);
@@ -415,6 +422,13 @@ class Marks extends Plain_Controller
             $this->data['errors'] = formatErrors('No label found for mark lookup.', 16);
         }
 
+        // Only grab these stats for web view (on site)
+        if (parent::isWebView() === true) {
+            self::getStats();
+            self::getLabels();
+            self::getTags();
+        }
+
         // Figure if web or API view
         $this->figureView('marks/label');
     }
@@ -446,12 +460,6 @@ class Marks extends Plain_Controller
 
         // Figure view
         $this->figureView('marks/restore');
-    }
-
-    // search, not sure hwo to handle yet
-    public function search()
-    {
-        // Not sure how to tackle this one yet
     }
 
     public function total($what='marks', $start='today', $finish=null)
