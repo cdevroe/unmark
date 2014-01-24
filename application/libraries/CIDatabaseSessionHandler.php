@@ -1,6 +1,7 @@
 <?php
 class CIDatabaseSessionHandler implements SessionHandlerInterface {
     
+    private $CI;
     private $db;
     
     private $dbTable = 'ci_sessions';
@@ -21,8 +22,9 @@ class CIDatabaseSessionHandler implements SessionHandlerInterface {
      * Requires CodeIgniter database library object reference
      * @param unknown $CodeIgniter
      */
-    public function __construct(& $db){
-        $this->db = $db;
+    public function __construct(){
+        $this->CI = & get_instance();
+        $this->db = $this->CI->load->database('default', true);
     }
     
     public function close(){
@@ -31,6 +33,8 @@ class CIDatabaseSessionHandler implements SessionHandlerInterface {
     
     public function destroy ( $session_id ){
         $this->_log('Destroy called');
+        $this->db->where($this->idColumn, $session_id);
+        $this->db->delete($this->dbTable);
     }
     
     public function gc ( $maxlifetime ){
@@ -63,6 +67,10 @@ class CIDatabaseSessionHandler implements SessionHandlerInterface {
         } else{
             $this->db->insert($this->dbTable, array($this->idColumn => $session_id, $this->dataColumn => $session_data));
         }
+    }
+    
+    public function __destruct(){
+        session_write_close();
     }
     
     private function _log($message, $level = 'debug'){
