@@ -96,6 +96,13 @@ class Labels_model extends Plain_Model
         return $labels;
     }
 
+    public function getSystemLabels($type='label')
+    {
+        $and = ($type == 'label') ? ' AND labels.smart_key IS NULL' : ' AND labels.smart_key IS NOT NULL';
+        $and = ($type == 'all') ? '' : $and;
+        return self::readComplete('labels.user_id IS NULL' . $and, 'all');
+    }
+
     public function readComplete($where, $limit=1, $page=1, $start=null)
     {
         $id         = (is_numeric($where)) ? $where : null;

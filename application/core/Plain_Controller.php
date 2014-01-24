@@ -171,6 +171,11 @@ class Plain_Controller extends CI_Controller
         return (! empty($origin) && ! empty($host) && $host == $origin) ? true : false;
     }
 
+    protected function isWebView()
+    {
+        return (self::isInternalAJAX() === false && self::isAPI() === false) ? true : false;
+    }
+
     // If logged if invalid CSRF token is not valid
     protected function redirectIfInvalidCSRF()
     {
@@ -220,6 +225,15 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotCommandLine()
     {
         if (self::isCommandLine() === false) {
+            header('Location: /');
+            exit;
+        }
+    }
+
+    // If webview, redirect away
+    protected function redirectIfWebView()
+    {
+        if (self::isWebView() === true) {
             header('Location: /');
             exit;
         }

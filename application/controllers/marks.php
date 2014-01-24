@@ -9,6 +9,7 @@ class Marks extends Plain_Controller
         $this->redirectIfLoggedOut();
 
         $this->user_id = 5;
+        $this->load->model('users_to_marks_model', 'user_mark');
     }
 
      /*
@@ -44,8 +45,6 @@ class Marks extends Plain_Controller
             $view                 = 'marks/add';
         }
         else {
-
-            $this->load->model('users_to_marks_model', 'user_mark');
             $user_mark = $this->user_mark->read("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'");
 
             // Add
@@ -106,8 +105,7 @@ class Marks extends Plain_Controller
             exit;
         }
 
-        // Load correct model
-        $this->load->model('users_to_marks_model', 'user_mark');
+        // Update
         $mark = $this->user_mark->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
 
         if ($mark === false) {
@@ -153,38 +151,9 @@ class Marks extends Plain_Controller
         }
 
         // Only grab these stats for web view (on site)
-        if (parent::isInternalAJAX() === false && parent::isAPI() === false) {
-            $this->data['stats'] = array();
-
-            // Get total marks saved over the last 5 days
-            $this->data['stats']['saved'] = array(
-                'today'      => self::totalSaved('today'),
-                'yesterday'  => self::totalSaved('yesterday'),
-                '2 days ago' => self::totalSaved('-2 days'),
-                '3 days ago' => self::totalSaved('-3 days'),
-                '4 days ago' => self::totalSaved('-4 days')
-            );
-
-            // Get the total marks archived over the last 5 days
-            $this->data['stats']['archived'] = array(
-                'today'      => self::totalArchived('today'),
-                'yesterday'  => self::totalArchived('yesterday'),
-                '2 days ago' => self::totalArchived('-2 days'),
-                '3 days ago' => self::totalArchived('-3 days'),
-                '4 days ago' => self::totalArchived('-4 days')
-            );
-
-            // Get total marks for a series of ranges
-            $this->data['stats']['marks'] = array(
-                'today'         => self::totalMarks('today'),
-                'yesterday'     => self::totalMarks('yesterday'),
-                'last week'     => self::totalMarks('-7 days', 'today'),
-                'last_month'    => self::totalMarks('-1 month', 'today'),
-                'last 3 months' => self::totalMarks('-3 months', 'today'),
-                'last 6 months' => self::totalMarks('-6 months', 'today'),
-                'last year'     => self::totalMarks('-1 year', 'today'),
-                'ages ago'      => self::totalMarks('-20 years', '-1 year')
-            );
+        if (parent::isWebView() === true) {
+            self::getStats();
+            self::getLabels();
         }
 
         // Figure if web or API view
@@ -261,7 +230,6 @@ class Marks extends Plain_Controller
 
 
         // Update users_to_marks record
-        $this->load->model('users_to_marks_model', 'user_mark');
         $mark = $this->user_mark->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
 
         // Check if it was updated
@@ -277,27 +245,86 @@ class Marks extends Plain_Controller
 
     }
 
-    public function total($what='saved', $start='today', $finish=null)
+    public function get($what='stats')
     {
-        $result = array();
-        $method = 'total' . ucwords($what);
+        parent::redirectIfWebView();
+        $method = 'get' . ucwords($what);
         if (method_exists($this, $method)) {
-            $start  = (empty($start)) ? 'today' : strtolower($start);
-            $finish = (empty($finish)) ? 'today' : strtolower($finish);
-            $total = $this->$method($start, $finish);
+            $total = $this->$method();
+            parent::renderJSON();
         }
         else {
             header('Location: /');
             exit;
         }
 
-        // If API, return JSON
-        // else return result to caller
-        if (self::isAPI() === true || self::isInternalAJAX() === true) {
-            $this->renderJSON(array('total' => $total));
+    }
+
+    private function getLabels()
+    {
+        $this->load->model('labels_model', 'labels');
+        $this->data['labels'] = $this->labels->getSystemLabels();
+
+        if ($this->data['labels'] !== false) {
+            $this->load->model('labels_model', 'labels');
+            foreach($this->data['labels'] as $k => $label) {
+                $this->data['labels'][$k]->total = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "'");
+            }
+        }
+
+    }
+
+
+    private function getStats()
+    {
+        $this->data['stats'] = array();
+
+        // Get total marks saved over the last 5 days
+        $this->data['stats']['saved'] = array(
+            'today'      => self::totalSaved('today'),
+            'yesterday'  => self::totalSaved('yesterday'),
+            '2 days ago' => self::totalSaved('-2 days'),
+            '3 days ago' => self::totalSaved('-3 days'),
+            '4 days ago' => self::totalSaved('-4 days')
+        );
+
+        // Get the total marks archived over the last 5 days
+        $this->data['stats']['archived'] = array(
+            'today'      => self::totalArchived('today'),
+            'yesterday'  => self::totalArchived('yesterday'),
+            '2 days ago' => self::totalArchived('-2 days'),
+            '3 days ago' => self::totalArchived('-3 days'),
+            '4 days ago' => self::totalArchived('-4 days')
+        );
+
+        // Get total marks for a series of ranges
+        $this->data['stats']['marks'] = array(
+            'today'         => self::totalMarks('today'),
+            'yesterday'     => self::totalMarks('yesterday'),
+            'last week'     => self::totalMarks('-7 days', 'today'),
+            'last_month'    => self::totalMarks('-1 month', 'today'),
+            'last 3 months' => self::totalMarks('-3 months', 'today'),
+            'last 6 months' => self::totalMarks('-6 months', 'today'),
+            'last year'     => self::totalMarks('-1 year', 'today'),
+            'ages ago'      => self::totalMarks('-20 years', '-1 year')
+        );
+
+    }
+
+    public function total($what='saved', $start='today', $finish=null)
+    {
+        parent::redirectIfWebView();
+
+        $method = 'total' . ucwords($what);
+        if (method_exists($this, $method)) {
+            $start  = (empty($start)) ? 'today' : strtolower($start);
+            $finish = (empty($finish)) ? 'today' : strtolower($finish);
+            $this->data['total'] = $this->$method($start, $finish);
+            parent::renderJSON();
         }
         else {
-            return $result;
+            header('Location: /');
+            exit;
         }
     }
 
@@ -328,7 +355,6 @@ class Marks extends Plain_Controller
         }
 
         // Load correct model
-        $this->load->model('users_to_marks_model', 'user_mark');
         $mark = $this->user_mark->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", 1);
 
         // Check for mark
@@ -399,7 +425,6 @@ class Marks extends Plain_Controller
         }
 
         // Load correct model
-        $this->load->model('users_to_marks_model', 'user_mark');
         $mark = $this->user_mark->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => NULL));
 
         // Check if it was updated
