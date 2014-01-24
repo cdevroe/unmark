@@ -38,12 +38,12 @@
 |
 */
 
-$route['default_controller'] = 'welcome';
-$route['404_override'] = '';
+$route['default_controller']      = 'marks';
+$route['404_override']            = '';
 
 // Installation & Upgrades
-$route['install'] = 'install';
-$route['upgrade'] = 'install/upgrade';
+$route['install']                = 'install';
+$route['upgrade']                = 'install/upgrade';
 
 // Labels (API ONLY)
 $route['label/activate(.*?)']    = 'labels/activate$1';
@@ -54,33 +54,35 @@ $route['label/info(.*?)']        = 'labels/info$1';
 $route['labels?(.*?)']           = 'labels/index$1';
 
 // Single Mark Actions
-$route['mark/add(.*?)']       = 'marks/add$1';
-$route['mark/archive(.*?)']   = 'marks/archive$1';
-$route['mark/edit(.*?)']      = 'marks/edit$1';
-$route['mark/info(.*?)']      = 'marks/info$1';
-$route['mark/restore(.*?)']   = 'marks/restore$1';
+$route['mark/add(.*?)']          = 'marks/add$1';
+$route['mark/archive(.*?)']      = 'marks/archive$1';
+$route['mark/edit(.*?)']         = 'marks/edit$1';
+$route['mark/info(.*?)']         = 'marks/info$1';
+$route['mark/restore(.*?)']      = 'marks/restore$1';
 
 // Plural Marks
-$route['marks/archive(.*?)']  = 'marks/index/archive$1';
-$route['marks/label(.*?)']    = 'marks/label$1';
-$route['marks/get(.*?)']      = 'marks/get$1';
-$route['marks/total(.*?)']    = 'marks/total$1';
-$route['marks?(.*?)']         = 'marks/index$1';
+$route['marks/archive(.*?)']     = 'marks/index/archive$1';
+$route['marks/label(.*?)']       = 'marks/label$1';
+$route['marks/get(.*?)']         = 'marks/get$1';
+$route['marks/total(.*?)']       = 'marks/total$1';
+
+// Marks catch all
+$route['marks?(.*?)']            = 'marks/index$1';
 
 // Tags
-$route['tag/add(.*?)']        = 'tags/add';
-$route['tags?(.*?)']          = 'tags/index$1';
+$route['tag/add(.*?)']           = 'tags/add';
+$route['tags?(.*?)']             = 'tags/index$1';
 
 // Registration
-$route['register']      = 'register/index';
-$route['register/user'] = 'register/user';
+$route['register']               = 'register/index';
+$route['register/user']          = 'register/user';
 
 // help
-$route['help(.*?)'] = 'help$1';
+$route['help(.*?)']              = 'help$1';
 
 // one offs
-$route['changelog'] = 'singletons/changelog';
-$route['terms']     = 'singletons/terms';
+$route['changelog']              = 'singletons/changelog';
+$route['terms']                  = 'singletons/terms';
 
 
 /* End of file routes.php */
