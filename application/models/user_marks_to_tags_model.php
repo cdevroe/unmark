@@ -89,4 +89,41 @@ class User_Marks_To_Tags_model extends Plain_Model
         return false;
     }
 
+    public function getMostRecent($user_id, $limit=10)
+    {
+        $q = $this->db->query("
+            SELECT
+            user_marks_to_tags.tag_id,
+            tags.name
+            FROM `user_marks_to_tags`
+            LEFT JOIN `tags` ON user_marks_to_tags.tag_id = tags.tag_id
+            GROUP BY user_marks_to_tags.tag_id ORDER BY user_marks_to_tags.user_marks_to_tag_id DESC LIMIT " . $limit
+        );
+
+        // If errors report
+        $this->sendException();
+
+        // Return that ish
+        return ($q->num_rows() > 0) ? $q->result() : false;
+    }
+
+    public function getPopular($user_id, $limit=10)
+    {
+        $q = $this->db->query("
+            SELECT
+            user_marks_to_tags.tag_id,
+            COUNT(user_marks_to_tags.tag_id) as total,
+            tags.name
+            FROM `user_marks_to_tags`
+            LEFT JOIN `tags` ON user_marks_to_tags.tag_id = tags.tag_id
+            GROUP BY user_marks_to_tags.tag_id ORDER BY total DESC LIMIT " . $limit
+        );
+
+        // If errors report
+        $this->sendException();
+
+        // Return that ish
+        return ($q->num_rows() > 0) ? $q->result() : false;
+    }
+
 }

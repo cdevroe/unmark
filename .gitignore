@@ -1,6 +1,7 @@
 application/config/database.php
 application/logs/*.php
 application/controllers/test.php
+application/views/test.php
 .DS_Store
 .buildpath
 .project
