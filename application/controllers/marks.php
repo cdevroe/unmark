@@ -7,6 +7,9 @@ class Marks extends Plain_Controller
     {
         parent::__construct();
         $this->redirectIfLoggedOut();
+
+        //$this->user_id = 5;
+        $this->load->model('users_to_marks_model', 'user_marks');
     }
 
      /*
@@ -23,7 +26,7 @@ class Marks extends Plain_Controller
     public function add()
     {
         // Set default view & redirect
-        $view    = null;
+        $view     = null;
         $redirect = null;
 
         // Add mark to marks table
@@ -42,16 +45,34 @@ class Marks extends Plain_Controller
             $view                 = 'marks/add';
         }
         else {
-
-            $this->load->model('users_to_marks_model', 'user_mark');
-            $user_mark = $this->user_mark->read("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'");
+            $user_mark = $this->user_marks->read("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'");
 
             // Add
             if (! isset($user_mark->users_to_mark_id)) {
-                $user_mark = $this->user_mark->create(array(
-                    'user_id' => $this->user_id,
-                    'mark_id' => $mark->mark_id
-                ));
+
+                // Set default options
+                $options = array('user_id' => $this->user_id, 'mark_id' => $mark->mark_id);
+
+                // Figure if any automatic labels should be applied
+                $smart_info = getSmartLabelInfo($this->clean->url);
+                if (isset($smart_info['key']) && ! empty($smart_info['key'])) {
+
+                    // Load labels model
+                    // Sort by user_id DESC (if user has same rule as system, use the user's rule)
+                    // Try to extract label
+                    $this->load->model('labels_model', 'labels');
+                    $this->labels->sort = 'user_id DESC';
+                    $label = $this->labels->readComplete("labels.user_id IS NULL OR labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "'", 1);
+
+                    // If a label id is found
+                    // Set it to options to save
+                    if (isset($label->settings->label->id)) {
+                        $options['label_id'] = $label->settings->label->id;
+                    }
+                }
+
+                // Create the mark
+                $user_mark = $this->user_marks->create($options);
             }
 
             if ($user_mark === false) {
@@ -84,9 +105,8 @@ class Marks extends Plain_Controller
             exit;
         }
 
-        // Load correct model
-        $this->load->model('users_to_marks_model', 'user_mark');
-        $mark = $this->user_mark->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
+        // Update
+        $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
 
         if ($mark === false) {
             $this->data['errors'] = formatErrors('Mark could not be archived.', 11);
@@ -100,39 +120,67 @@ class Marks extends Plain_Controller
     }
 
     // The index of the marks page
-    public function index($when=null, $page=1)
+    public function index($start='all', $finish=null, $page=1)
     {
-        // Load user marks model
-        $this->load->model('users_to_marks_model', 'user_marks');
 
-        // Figure when to pull marks from
-        $this->data['when'] = $this->uri->segment(2);
-        $this->data['when'] = (! empty($data['when'])) ? $data['when'] : 'all';
-        $where_time         = ($this->data['when'] == 'today') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $today . "' AND " : '';
-        $where_time         = ($this->data['when'] == 'yesterday') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $yesterday . "' AND UNIX_TIMESTAMP(marks.created_on) < '" . $today . "' AND " : $where_time;
-        $archived           = ($this->data['when'] == 'archive') ? 'IS NOT NULL' : 'IS NULL';
+        // Set allowable textual starts
+        $valid_lookups = array(
+            'all'               => array('start' => null, 'finish' => null),
+            'archive'           => array('start' => null, 'finish' => null),
+            'today'             => array('start' => strtotime('today'), 'finish' => strtotime('today')),
+            'yesterday'         => array('start' => strtotime('yesterday'), 'finish' => strtotime('yesterday')),
+            'last-week'         => array('start' => strtotime('-1 week'), 'finish' => strtotime('today')),
+            'last-month'        => array('start' => strtotime('-1 month'), 'finish' => strtotime('today')),
+            'last-three-months' => array('start' => strtotime('-3 months'), 'finish' => strtotime('today')),
+            'last-six-months'   => array('start' => strtotime('-6 months'), 'finish' => strtotime('today')),
+            'last-year'         => array('start' => strtotime('-1 year'), 'finish' => strtotime('today')),
+            'ages-ago'          => array('start' => strtotime('-20 years'), 'finish' => strtotime('-1 year'))
+        );
 
-        // Figure the correct starting page
-        $page = (! is_numeric($page) || $page < 0) ? 1 : $page;
+        // Figure start, end and page
+        $start = strtolower(trim(urldecode($start)));
+
+
+        // Figure when
+        $where_time = null;
+        if (array_key_exists($start, $valid_lookups)) {
+            $where_time .= ($start != 'all' && $start != 'archive') ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $valid_lookups[$start]['start'] . "'" : '';
+            $where_time .= ($start != 'all' && $start != 'archive') ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $valid_lookups[$start]['finish'] . "'" : '';
+        }
+        else {
+            // Check for valid dates
+            $dates       = findStartFinish($start, $finish);
+            $where_time .= " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $dates['start'] . "'";
+            $where_time .= " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $dates['finish'] . "'";
+        }
+
+        // Figure the page number
+        $page = findPage();
+
+        // Archives
+        $archive = ($start == 'archive') ? 'IS NOT NULL' : 'IS NULL';
 
         // Set where
-        $where = "users_to_marks.user_id='". $this->user_id . "' AND" . $where_time . " users_to_marks.archived_on " . $archived;
+        $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on " . $archive . $where_time;
 
-        // Get current page, total pages and total records
-        $marks = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
+        // Get all the marks
+        $marks = $this->user_marks->readComplete($where, $this->limit, $page);
 
         // Check for marks
         if ($marks === false) {
-            $this->data['errors'] = formatErrors('No marks found for your account.', 12);
+            $this->data['errors'] = formatErrors('No marks found.', 12);
+            $this->data['total']  = 0;
         }
         else {
             $this->data['marks'] = $marks;
             $this->data          = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
         }
 
-        // Get the total saved and archived today
-        $this->data['saved_today']    = $this->user_marks->getTotal('saved', $this->user_id, 'today');
-        $this->data['archived_today'] = $this->user_marks->getTotal('archived', $this->user_id, 'today');
+        // Only grab these stats for web view (on site)
+        if (parent::isWebView() === true) {
+            self::getStats();
+            self::getLabels();
+        }
 
         // Figure if web or API view
         //$this->figureView('marks/index');
@@ -212,8 +260,7 @@ class Marks extends Plain_Controller
 
 
         // Update users_to_marks record
-        $this->load->model('users_to_marks_model', 'user_mark');
-        $mark = $this->user_mark->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
+        $mark = $this->user_marks->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
 
         // Check if it was updated
         if ($mark === false) {
@@ -225,6 +272,72 @@ class Marks extends Plain_Controller
 
         // Figure what to do here (api, redirect or generate view)
         $this->figureView('marks/edit');
+
+    }
+
+    public function get($what='stats')
+    {
+        parent::redirectIfWebView();
+        $method = 'get' . ucwords($what);
+        if (method_exists($this, $method)) {
+            $total = $this->$method();
+            parent::renderJSON();
+        }
+        else {
+            header('Location: /');
+            exit;
+        }
+
+    }
+
+    private function getLabels()
+    {
+        $this->load->model('labels_model', 'labels');
+        $this->data['labels'] = $this->labels->getSystemLabels();
+
+        if ($this->data['labels'] !== false) {
+            $this->load->model('labels_model', 'labels');
+            foreach($this->data['labels'] as $k => $label) {
+                $this->data['labels'][$k]->total_marks = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "'");
+            }
+        }
+
+    }
+
+
+    private function getStats()
+    {
+        $this->data['stats'] = array();
+
+        // Get total marks saved over the last 5 days
+        $this->data['stats']['saved'] = array(
+            'today'      => self::totalSaved('today'),
+            'yesterday'  => self::totalSaved('yesterday'),
+            '2 days ago' => self::totalSaved('-2 days'),
+            '3 days ago' => self::totalSaved('-3 days'),
+            '4 days ago' => self::totalSaved('-4 days')
+        );
+
+        // Get the total marks archived over the last 5 days
+        $this->data['stats']['archived'] = array(
+            'today'      => self::totalArchived('today'),
+            'yesterday'  => self::totalArchived('yesterday'),
+            '2 days ago' => self::totalArchived('-2 days'),
+            '3 days ago' => self::totalArchived('-3 days'),
+            '4 days ago' => self::totalArchived('-4 days')
+        );
+
+        // Get total marks for a series of ranges
+        $this->data['stats']['marks'] = array(
+            'today'         => self::totalMarks('today'),
+            'yesterday'     => self::totalMarks('yesterday'),
+            'last week'     => self::totalMarks('-7 days', 'today'),
+            'last_month'    => self::totalMarks('-1 month', 'today'),
+            'last 3 months' => self::totalMarks('-3 months', 'today'),
+            'last 6 months' => self::totalMarks('-6 months', 'today'),
+            'last year'     => self::totalMarks('-1 year', 'today'),
+            'ages ago'      => self::totalMarks('-20 years', '-1 year')
+        );
 
     }
 
@@ -240,8 +353,7 @@ class Marks extends Plain_Controller
         }
 
         // Load correct model
-        $this->load->model('users_to_marks_model', 'user_mark');
-        $mark = $this->user_mark->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", 1);
+        $mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", 1);
 
         // Check for mark
         if ($mark === false) {
@@ -311,8 +423,7 @@ class Marks extends Plain_Controller
         }
 
         // Load correct model
-        $this->load->model('users_to_marks_model', 'user_mark');
-        $mark = $this->user_mark->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => NULL));
+        $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => NULL));
 
         // Check if it was updated
         if ($mark === false) {
@@ -330,6 +441,37 @@ class Marks extends Plain_Controller
     public function search()
     {
         // Not sure how to tackle this one yet
+    }
+
+    public function total($what='marks', $start='today', $finish=null)
+    {
+        parent::redirectIfWebView();
+        $method = 'total' . ucwords($what);
+        if (method_exists($this, $method)) {
+            $start  = (empty($start)) ? 'today' : strtolower($start);
+            $finish = (empty($finish)) ? 'today' : strtolower($finish);
+            $this->data['total'] = $this->$method($start, $finish);
+            parent::renderJSON();
+        }
+        else {
+            header('Location: /');
+            exit;
+        }
+    }
+
+    private function totalArchived($start='today', $finish=null)
+    {
+        return $this->user_marks->getTotal('archived', $this->user_id, $start, $finish);
+    }
+
+    private function totalMarks($start='today', $finish=null)
+    {
+        return $this->user_marks->getTotal('marks', $this->user_id, $start, $finish);
+    }
+
+    private function totalSaved($start='today', $finish=null)
+    {
+        return $this->user_marks->getTotal('saved', $this->user_id, $start, $finish);
     }
 
 }

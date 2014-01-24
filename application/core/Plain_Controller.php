@@ -11,7 +11,7 @@ class Plain_Controller extends CI_Controller
     public $footer         = 'footer';
     public $header         = 'header';
     public $html_clean     = null;
-    public $limit          = 100;
+    public $limit          = 30;
     public $is_api         = false;
     public $original       = null;
     public $user_admin     = false;
@@ -55,8 +55,8 @@ class Plain_Controller extends CI_Controller
                 $this->original->{$k}   = $v;
                 $v                      = trim(decodeValue($v));
                 $this->clean->{$k}      = strip_tags($v);
-                $this->db_clean->{$k}   = mysqli_real_escape_string($this->db->conn_id, $this->clean->{$k});
-                $this->html_clean->{$k} = mysqli_real_escape_string($this->db->conn_id, purifyHTML($v));
+                $this->db_clean->{$k}   = $this->db->escape_str($this->clean->{$k});
+                $this->html_clean->{$k} = $this->db->escape_str(purifyHTML($v));
             }
         }
 
@@ -68,7 +68,7 @@ class Plain_Controller extends CI_Controller
         ksort($this->data);
 
         // If api, return JSON
-        if ($this->isAPI() === true) {
+        if (self::isAPI() === true || self::isInternalAJAX() === true) {
             $this->renderJSON();
         }
 
@@ -143,15 +143,38 @@ class Plain_Controller extends CI_Controller
         return $this->user_admin;
     }
 
+    protected function isAJAX()
+    {
+        return $this->input->is_ajax_request();
+    }
+
     protected function isAPI()
     {
         $segment = $this->uri->segment(1);
-        return (! empty($segment) && strtolower($segment) == 'api') ? true : false;
+        return ((! empty($segment) && strtolower($segment) == 'api') || isset($this->clean->user_token)) ? true : false;
     }
 
     protected function isCommandLine()
     {
-        return (php_sapi_name() === 'cli') ? true : false;
+        return $this->input->is_cli_request();
+    }
+
+    protected function isInternalAJAX()
+    {
+        return (self::isAJAX() === true && self::isSameHost() === true) ? true : false;
+    }
+
+    protected function isSameHost()
+    {
+        // Going to execute this better, need to think about it
+        $host   = (isset($_SERVER['HTTP_HOST'])) ? strtolower($_SERVER['HTTP_HOST']) : null;
+        $origin = (isset($_SERVER['HTTP_REFERER'])) ? strtolower(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST)) : null;
+        return (! empty($origin) && ! empty($host) && $host == $origin) ? true : false;
+    }
+
+    protected function isWebView()
+    {
+        return (self::isInternalAJAX() === false && self::isAPI() === false) ? true : false;
     }
 
     // If logged if invalid CSRF token is not valid
@@ -208,6 +231,15 @@ class Plain_Controller extends CI_Controller
         }
     }
 
+    // If webview, redirect away
+    protected function redirectIfWebView()
+    {
+        if (self::isWebView() === true) {
+            header('Location: /');
+            exit;
+        }
+    }
+
     protected function renderJSON()
     {
         $json         = json_encode($this->data, JSON_FORCE_OBJECT);
@@ -254,7 +286,8 @@ class Plain_Controller extends CI_Controller
     // Start session
     protected function sessionStart()
     {
-        if (self::isCommandLine() === false && self::isAPI() === false) {
+        // If request is not coming from command line & is not an API URL OR it is an internal ajax call, start the session
+        if ((self::isCommandLine() === false && self::isAPI() === false) || self::isInternalAJAX() === true) {
             session_start();
         }
     }

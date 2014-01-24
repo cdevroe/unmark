@@ -71,10 +71,10 @@ class Users_To_Marks_model extends Plain_Model
         return $marks;
     }
 
-    public function getTotal($type, $user_id, $from=null, $to=null)
+    public function getTotal($type, $user_id, $start='today', $finish=null)
     {
         $type  = trim(strtolower($type));
-        $types = array('archived' => 'archived_on', 'saved' => 'created_on');
+        $types = array('archived' => 'archived_on', 'saved' => 'created_on', 'marks' => 'created_on');
 
         // If type not found, return 0
         if (! array_key_exists($type, $types)) {
@@ -84,22 +84,25 @@ class Users_To_Marks_model extends Plain_Model
         // Set column from type
         $column = $types[$type];
 
+        // Figure start & finish
+        $dates = findStartFinish($start, $finish);
+
         // Figure date range
         $when = null;
 
         // If from is not empty, figure timestamp
-        if (! empty($from)) {
-            $when .= " AND UNIX_TIMESTAMP(" . $column . ") >= '" . strtotime($from) . "'";
+        if (! empty($dates['start'])) {
+            $when .= " AND UNIX_TIMESTAMP(" . $column . ") >= '" . $dates['start'] . "'";
         }
 
         // if to is not empty, figure timestamp
-        if (! empty($to)) {
-            $when .= " AND UNIX_TIMESTAMP(" . $column . ") <= '" . strtotime($to) . "'";
+        if (! empty($dates['finish'])) {
+            $when .= " AND UNIX_TIMESTAMP(" . $column . ") <= '" . $dates['finish'] . "'";
         }
 
         // If when is empty, set to IS NOT NULL
-        if (empty($when)) {
-            $when .= " AND " . $column . " IS NOT NULL";
+        if ($type == 'marks') {
+            $when .= " AND archived_on IS NULL";
         }
 
         return $this->count("user_id='". $user_id . "'" . $when);
@@ -120,7 +123,7 @@ class Users_To_Marks_model extends Plain_Model
 		$marks = $this->db->query("
             SELECT
             users_to_marks.users_to_mark_id, users_to_marks.notes, users_to_marks.created_on, users_to_marks.archived_on,
-            marks.mark_id, marks.title, marks.url,
+            marks.mark_id, marks.title, marks.url, marks.embed,
             GROUP_CONCAT(tags.tag_id SEPARATOR '" . $this->delimiter . "') AS tag_ids,
             GROUP_CONCAT(tags.name SEPARATOR '" . $this->delimiter . "') AS tag_names,
             GROUP_CONCAT(tags.slug SEPARATOR '" . $this->delimiter . "') AS tag_slugs,

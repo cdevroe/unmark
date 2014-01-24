@@ -32,24 +32,16 @@ class Labels_model extends Plain_Model
 
         // If a smart label, set the required fields
         if ($smart_label === true) {
-            $required = array('smart_label_id', 'domain');
+            $required = array('smart_label_id', 'domain', 'smart_key');
         }
         else {
-            $required = array('name');
+            $required = array('name', 'slug');
         }
 
         $valid = validate($options, $this->data_types, $required);
 
         // Make sure all the options are valid
         if ($valid === true) {
-
-            // If smart label, create MD5 hash of domain and path
-            if ($smart_label == true) {
-                $options['smart_key'] = md5($options['domain'] . $options['path']);
-            }
-            else {
-                $options['slug'] = generateSlug($options['name']);
-            }
 
             // If not, add it
             $options['created_on'] = date('Y-m-d H:i:s');
@@ -72,7 +64,7 @@ class Labels_model extends Plain_Model
         return formatErrors($valid);
     }
 
-    protected function formatResults($labels)
+    private function formatResults($labels)
     {
         foreach ($labels as $k => $label) {
             $labels[$k]->type = (empty($label->smart_label_id)) ? 'label' : 'smart';
@@ -86,7 +78,7 @@ class Labels_model extends Plain_Model
                 $labels[$k]->settings->label        = new stdClass;
                 $labels[$k]->settings->label->name  = $labels[$k]->smart_label_name;
                 $labels[$k]->settings->label->slug  = $labels[$k]->smart_label_slug;
-                $labels[$k]->settings->label->id   = $labels[$k]->smart_label_id;
+                $labels[$k]->settings->label->id    = $labels[$k]->smart_label_id;
 
                 // Unset some shiz
                 unset($labels[$k]->name);
@@ -102,6 +94,13 @@ class Labels_model extends Plain_Model
         }
 
         return $labels;
+    }
+
+    public function getSystemLabels($type='label')
+    {
+        $and = ($type == 'label') ? ' AND labels.smart_key IS NULL' : ' AND labels.smart_key IS NOT NULL';
+        $and = ($type == 'all') ? '' : $and;
+        return self::readComplete('labels.user_id IS NULL' . $and, 'all');
     }
 
     public function readComplete($where, $limit=1, $page=1, $start=null)

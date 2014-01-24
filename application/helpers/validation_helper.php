@@ -23,7 +23,10 @@ function isValid($val, $type)
         return (preg_match('/([0-9]{4}-[0-9]{2}-[0-9]{2})\s([0-9]{2}:[0-9]{2}:[0-9]{2})/', $val)) ? true : false;
     }
     elseif ($type == 'date') {
-        return (preg_match('/([0-9]{4}-[0-9]{2}-[0-9]{2})/', $val)) ? true : false;
+        return (preg_match('/([0-9]{4}-[0-9]{2}-[0-9]{2}|[0-9]{2}-[0-9]{2}-[0-9]{4})/', $val)) ? true : false;
+    }
+    elseif ($type == 'year') {
+        return (preg_match('/([0-9]{4})/', $val)) ? true : false;
     }
     elseif ($type == 'time') {
         return (preg_match('/([0-9]{2}:[0-9]{2}:[0-9]{2})/', $val)) ? true : false;
@@ -56,7 +59,7 @@ function isValid($val, $type)
         // Use parse_url
         // If it has a scheme and a host, it's good to go
         $failed_schemes = array('chrome');
-        $url            = parse_url($url);
+        $url            = parse_url($val);
         return (isset($url['scheme']) && ! empty($url['scheme']) && ! in_array($url['scheme'], $failed_schemes) && isset($url['host']) && ! empty($url['host'])) ? true : false;
     }
     return false;
