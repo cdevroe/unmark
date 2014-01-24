@@ -154,10 +154,7 @@ class Marks extends Plain_Controller
         }
 
         // Figure the page number
-        //$page = findPage();
-        $page = 1;
-
-        print 'PAGE: ' . $page . "<BR>";
+        $page = findPage();
 
         // Set where
         $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on IS NULL" . $where_time;

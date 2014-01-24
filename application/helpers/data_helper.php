@@ -10,8 +10,8 @@ function findPage()
     $uri  = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
     $uri  = explode('?', $uri);
     $uri  = explode('/', $uri[0]);
-    $page = (count($uri) > 1) ? end($uri) : 1;
-    return (! is_numeric($page) && empty($page)) ? 1 : $page;
+    $uri  = end($uri);
+    return (! is_numeric($uri) || empty($uri) || isValid($uri, 'date') === true || isValid($uri, 'year')) ? 1 : $uri;
 }
 
 function findStartFinish($start, $finish)
