@@ -250,7 +250,7 @@ class Labels extends Plain_Controller
                 }
                 else {
                     if (isset($this->db_clean->name) && ! empty($this->db_clean->name)) {
-                        $options['name'] = $this->db_clean->name
+                        $options['name'] = $this->db_clean->name;
                         $options['slug'] = generateSlug($options['name']);
                         $total           = $this->labels->count("labels.user_id IS NULL AND labels.slug = '" . $options['slug'] . "'");
                     }
