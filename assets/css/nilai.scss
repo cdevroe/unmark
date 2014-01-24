@@ -169,6 +169,49 @@ body {
     }
 }
 
+ul.label-list {
+    margin: 25px 0;
+    padding: 0;
+    text-align: right;
+    li {
+        list-style: none;
+        margin-bottom: 25px;
+        position: relative;
+        padding-right: 50px;
+        a {
+            color: $color_white;
+            display: block;
+            border-bottom: none;
+            padding: 0;
+            font-size: 12px;
+        }
+        span {
+            display: block;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 12px;
+            color: $color_light;
+            margin-top: 5px;
+        }
+        &:after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            right: 10px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: $color_grey;
+        }
+        &.label-2:after { background: $color_orange; }
+        &.label-3:after { background: $color_blue; }
+        &.label-4:after { background: $color_yellow; }
+        &.label-5:after { background: $color_purple; }
+        &.label-6:after { background: $color_green; }
+        &.label-7:after { background: $color_red; }
+    }
+}
+
 
 // ================ Main Content
 .main-content {

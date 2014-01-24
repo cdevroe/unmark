@@ -259,16 +259,17 @@ $(document).ready(function(){
 
     // Vertical Tabs
     $('.navigation-content a, .navigation-pane-links a').on('click', function (e) {
-
-        e.preventDefault();
-
+        
         var panel_to_show = $(this).attr('href');
 
-        if (panel_to_show === "#show-menu") {
-            return;
-        } else if (panel_to_show === "#panel-marks") {
-            // do something here
+        if (panel_to_show === "/") {
+            return true;
+        } else if (panel_to_show === "#show-menu") {
+            // Do somethign else
+            e.preventDefault();
+            return false;
         } else {
+            e.preventDefault();
             $('.navigation-pane-links').hide();
             $('.nav-panel').not(panel_to_show).hide();
             $(panel_to_show).show();       
