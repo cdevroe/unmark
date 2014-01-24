@@ -85,23 +85,19 @@ class Users_To_Marks_model extends Plain_Model
         $column = $types[$type];
 
         // Figure start & finish
-        $start  = (empty($start)) ? strtotime('today') : strtotime($start);
-        $start  = (! empty($start)) ? $start : strtotime('today');
-        $finish = (empty($finish)) ? $start : strtotime($finish);
-        $finish  = (! empty($finish)) ? $finish : $start;
-        $start  = ($start > $finish) ? $finish : $start;
+        $dates = findStartFinish($start, $finish);
 
         // Figure date range
         $when = null;
 
         // If from is not empty, figure timestamp
-        if (! empty($start)) {
-            $when .= " AND UNIX_TIMESTAMP(" . $column . ") >= '" . $start . "'";
+        if (! empty($dates['start'])) {
+            $when .= " AND UNIX_TIMESTAMP(" . $column . ") >= '" . $dates['start'] . "'";
         }
 
         // if to is not empty, figure timestamp
-        if (! empty($finish)) {
-            $when .= " AND UNIX_TIMESTAMP(" . $column . ") <= '" . $finish . "'";
+        if (! empty($dates['finish'])) {
+            $when .= " AND UNIX_TIMESTAMP(" . $column . ") <= '" . $dates['finish'] . "'";
         }
 
         // If when is empty, set to IS NOT NULL

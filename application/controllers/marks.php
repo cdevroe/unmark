@@ -8,7 +8,7 @@ class Marks extends Plain_Controller
         parent::__construct();
         $this->redirectIfLoggedOut();
 
-        //$this->user_id = 5;
+        $this->user_id = 5;
         $this->load->model('users_to_marks_model', 'user_marks');
     }
 
@@ -120,28 +120,54 @@ class Marks extends Plain_Controller
     }
 
     // The index of the marks page
-    public function index($when=null, $page=1)
+    public function index($start='all', $finish=null, $page=1)
     {
 
-        // Figure when to pull marks from
-        $this->data['when'] = $this->uri->segment(2);
-        $this->data['when'] = (! empty($data['when'])) ? $data['when'] : 'all';
-        $where_time         = ($this->data['when'] == 'today') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $today . "' AND " : '';
-        $where_time         = ($this->data['when'] == 'yesterday') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $yesterday . "' AND UNIX_TIMESTAMP(marks.created_on) < '" . $today . "' AND " : $where_time;
-        $archived           = ($this->data['when'] == 'archive') ? 'IS NOT NULL' : 'IS NULL';
+        // Set allowable textual starts
+        $valid_lookups = array(
+            'all'               => array('start' => null, 'finish' => null),
+            'today'             => array('start' => strtotime('today'), 'finish' => strtotime('today')),
+            'yesterday'         => array('start' => strtotime('yesterday'), 'finish' => strtotime('yesterday')),
+            'last-week'         => array('start' => strtotime('-1 week'), 'finish' => strtotime('today')),
+            'last-month'        => array('start' => strtotime('-1 month'), 'finish' => strtotime('today')),
+            'last-three-months' => array('start' => strtotime('-3 months'), 'finish' => strtotime('today')),
+            'last-six-months'   => array('start' => strtotime('-6 months'), 'finish' => strtotime('today')),
+            'last-year'         => array('start' => strtotime('-1 year'), 'finish' => strtotime('today')),
+            'ages-ago'          => array('start' => strtotime('-20 years'), 'finish' => strtotime('-1 year'))
+        );
 
-        // Figure the correct starting page
-        $page = (! is_numeric($page) || $page < 0) ? 1 : $page;
+        // Figure start, end and page
+        $start = strtolower(trim(urldecode($start)));
+
+
+        // Figure when
+        $where_time = null;
+        if (array_key_exists($start, $valid_lookups)) {
+            $where_time .= ($start != 'all') ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $valid_lookups[$start]['start'] . "'" : '';
+            $where_time .= ($start != 'all') ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $valid_lookups[$start]['finish'] . "'" : '';
+        }
+        else {
+            // Check for valid dates
+            $dates       = findStartFinish($start, $finish);
+            $where_time .= " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $dates['start'] . "'";
+            $where_time .= " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $dates['finish'] . "'";
+        }
+
+        // Figure the page number
+        $page = findPage(array($start, $finish, $page));
+
+        print 'PAGE: ' . $page . "<BR>";
 
         // Set where
-        $where = "users_to_marks.user_id='". $this->user_id . "' AND" . $where_time . " users_to_marks.archived_on " . $archived;
+        $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on IS NULL" . $where_time;
 
         // Get all the marks
         $marks = $this->user_marks->readComplete($where, $this->limit, $page);
 
         // Check for marks
         if ($marks === false) {
-            $this->data['errors'] = formatErrors('No marks found for your account.', 12);
+            $this->data['errors'] = formatErrors('No marks found.', 12);
+            $this->data['total']  = 0;
         }
         else {
             $this->data['marks'] = $marks;

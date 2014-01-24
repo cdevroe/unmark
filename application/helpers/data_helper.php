@@ -5,6 +5,64 @@ function decodeValue($str)
     return (is_string($str) && ! empty($str)) ? stripslashes(html_entity_decode(rawurldecode(trim($str)), ENT_QUOTES, 'UTF-8')) : $str;
 }
 
+function findPage()
+{
+    $uri  = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
+    $uri  = explode('?', $uri);
+    $uri  = explode('/', $uri[0]);
+    $page = end($uri);
+    return (! is_numeric($page) && empty($page)) ? 1 : $page;
+}
+
+function findStartFinish($start, $finish)
+{
+    $start   = trim(urldecode($start));
+    $start   = (isValid($start, 'date') === false && isValid($start, 'year') === false) ? preg_replace('/\b\-\b/', ' ', $start) : $start;
+    $finish  = trim(urldecode($finish));
+    $finish  = (isValid($finish, 'date') === false && isValid($finish, 'year') === false) ? preg_replace('/\b\-\b/', ' ', $finish) : $finish;
+
+   /*print $start . "<BR>";
+    print strtotime($start) . "<BR>";
+    print date('Y-m-d', strtotime($start)) . "<BR>";
+    print $finish . "<BR>";
+    print strtotime($finish) . "<BR>";
+    print date('Y-m-d', strtotime($finish)) . "<BR>";*/
+
+    // check for single year
+    if (isValid($start, 'year') === true && isValid($finish, 'year') !== true) {
+        $finish = $start . '-12-31';
+        $start  = $start . '-01-01';
+    }
+    // Check for both ranges being years
+    elseif (isValid($start, 'year') === true && isValid($finish, 'year') === true) {
+        $finish = ($finish > $start) ? ($finish - 1) . '-12-31' : $finish . '-12-31';
+        $start  = $start . '-01-01';
+    }
+    // Check for start as date, nothing as finish
+    // Set finish to start
+    // Single lookup
+    elseif (isValid($start, 'date') === true && isValid($finish, 'date') !== true) {
+        $finish = $start;
+    }
+
+    // Figure start/finish timestamps
+    // If empty, assign to today
+    $start  = strtotime($start);
+    $start  = (empty($start)) ? strtotime('today') : $start;
+    $finish = strtotime($finish);
+    $finish = (empty($finish)) ? $start : $finish;
+
+    // Fix ordering if need be
+    if ($start > $finish) {
+        $s      = $start;
+        $finish = $start;
+        $start  = $s;
+    }
+
+    // Return
+    return array('start' => $start, 'finish' => $finish);
+}
+
 // Format any errors coming back to standardize them
 function formatErrors($errors, $errno=0)
 {

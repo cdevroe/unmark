@@ -151,7 +151,7 @@ class Plain_Controller extends CI_Controller
     protected function isAPI()
     {
         $segment = $this->uri->segment(1);
-        return ((! empty($segment) && strtolower($segment) == 'api' || isset($this->clean->user_token)) ? true : false;
+        return ((! empty($segment) && strtolower($segment) == 'api') || isset($this->clean->user_token)) ? true : false;
     }
 
     protected function isCommandLine()

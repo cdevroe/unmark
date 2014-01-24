@@ -23,7 +23,10 @@ function isValid($val, $type)
         return (preg_match('/([0-9]{4}-[0-9]{2}-[0-9]{2})\s([0-9]{2}:[0-9]{2}:[0-9]{2})/', $val)) ? true : false;
     }
     elseif ($type == 'date') {
-        return (preg_match('/([0-9]{4}-[0-9]{2}-[0-9]{2})/', $val)) ? true : false;
+        return (preg_match('/([0-9]{4}-[0-9]{2}-[0-9]{2}|[0-9]{2}-[0-9]{2}-[0-9]{4})/', $val)) ? true : false;
+    }
+    elseif ($type == 'year') {
+        return (preg_match('/([0-9]{4})/', $val)) ? true : false;
     }
     elseif ($type == 'time') {
         return (preg_match('/([0-9]{2}:[0-9]{2}:[0-9]{2})/', $val)) ? true : false;
