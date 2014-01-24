@@ -4,7 +4,7 @@ class CIDatabaseSessionHandler implements SessionHandlerInterface {
     private $CI;
     private $db;
     
-    private $dbTable = 'ci_sessions';
+    private $dbTable = 'plain_sessions';
     private $idColumn = 'session_id';
     private $dataColumn = 'session_data';
     
@@ -25,6 +25,7 @@ class CIDatabaseSessionHandler implements SessionHandlerInterface {
     public function __construct(){
         $this->CI = & get_instance();
         $this->db = $this->CI->load->database('default', true);
+        // TODO kip9 Add configuration of table name and fields
     }
     
     public function close(){
