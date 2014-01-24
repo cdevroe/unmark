@@ -9,7 +9,7 @@ class Marks extends Plain_Controller
         $this->redirectIfLoggedOut();
 
         //$this->user_id = 5;
-        $this->load->model('users_to_marks_model', 'user_mark');
+        $this->load->model('users_to_marks_model', 'user_marks');
     }
 
      /*
@@ -45,7 +45,7 @@ class Marks extends Plain_Controller
             $view                 = 'marks/add';
         }
         else {
-            $user_mark = $this->user_mark->read("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'");
+            $user_mark = $this->user_marks->read("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'");
 
             // Add
             if (! isset($user_mark->users_to_mark_id)) {
@@ -72,7 +72,7 @@ class Marks extends Plain_Controller
                 }
 
                 // Create the mark
-                $user_mark = $this->user_mark->create($options);
+                $user_mark = $this->user_marks->create($options);
             }
 
             if ($user_mark === false) {
@@ -106,7 +106,7 @@ class Marks extends Plain_Controller
         }
 
         // Update
-        $mark = $this->user_mark->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
+        $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
 
         if ($mark === false) {
             $this->data['errors'] = formatErrors('Mark could not be archived.', 11);
@@ -122,8 +122,6 @@ class Marks extends Plain_Controller
     // The index of the marks page
     public function index($when=null, $page=1)
     {
-        // Load user marks model
-        $this->load->model('users_to_marks_model', 'user_marks');
 
         // Figure when to pull marks from
         $this->data['when'] = $this->uri->segment(2);
@@ -132,12 +130,8 @@ class Marks extends Plain_Controller
         $where_time         = ($this->data['when'] == 'yesterday') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $yesterday . "' AND UNIX_TIMESTAMP(marks.created_on) < '" . $today . "' AND " : $where_time;
         $archived           = ($this->data['when'] == 'archive') ? 'IS NOT NULL' : 'IS NULL';
 
-        print $page . "<BR>";
-
         // Figure the correct starting page
         $page = (! is_numeric($page) || $page < 0) ? 1 : $page;
-
-        print $page . "<BR>";
 
         // Set where
         $where = "users_to_marks.user_id='". $this->user_id . "' AND" . $where_time . " users_to_marks.archived_on " . $archived;
@@ -234,7 +228,7 @@ class Marks extends Plain_Controller
 
 
         // Update users_to_marks record
-        $mark = $this->user_mark->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
+        $mark = $this->user_marks->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
 
         // Check if it was updated
         if ($mark === false) {
@@ -272,7 +266,7 @@ class Marks extends Plain_Controller
         if ($this->data['labels'] !== false) {
             $this->load->model('labels_model', 'labels');
             foreach($this->data['labels'] as $k => $label) {
-                $this->data['labels'][$k]->total = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "'");
+                $this->data['labels'][$k]->total_marks = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "'");
             }
         }
 
@@ -315,10 +309,9 @@ class Marks extends Plain_Controller
 
     }
 
-    public function total($what='saved', $start='today', $finish=null)
+    public function total($what='marks', $start='today', $finish=null)
     {
         parent::redirectIfWebView();
-
         $method = 'total' . ucwords($what);
         if (method_exists($this, $method)) {
             $start  = (empty($start)) ? 'today' : strtolower($start);
@@ -359,7 +352,7 @@ class Marks extends Plain_Controller
         }
 
         // Load correct model
-        $mark = $this->user_mark->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", 1);
+        $mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", 1);
 
         // Check for mark
         if ($mark === false) {
@@ -429,7 +422,7 @@ class Marks extends Plain_Controller
         }
 
         // Load correct model
-        $mark = $this->user_mark->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => NULL));
+        $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => NULL));
 
         // Check if it was updated
         if ($mark === false) {
