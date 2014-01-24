@@ -23,7 +23,7 @@ class Marks extends Plain_Controller
     public function add()
     {
         // Set default view & redirect
-        $view    = null;
+        $view     = null;
         $redirect = null;
 
         // Add mark to marks table
@@ -151,8 +151,22 @@ class Marks extends Plain_Controller
         }
 
         // Get the total saved and archived today
-        $this->data['saved_today']    = $this->user_marks->getTotal('saved', $this->user_id, 'today');
-        $this->data['archived_today'] = $this->user_marks->getTotal('archived', $this->user_id, 'today');
+        $this->data['saved'] = array(
+            'today'      => self::getSaved('today'),
+            'yesterday'  => self::getSaved('yesterday'),
+            '2 days ago' => self::getSaved('-2 days'),
+            '3 days ago' => self::getSaved('-3 days'),
+            '4 days ago' => self::getSaved('-4 days'),
+        );
+
+        $this->data['archived'] = array(
+            'today'      => self::getArchived('today'),
+            'yesterday'  => self::getArchived('yesterday'),
+            '2 days ago' => self::getArchived('-2 days'),
+            '3 days ago' => self::getArchived('-3 days'),
+            '4 days ago' => self::getArchived('-4 days'),
+        );
+
 
         // Figure if web or API view
         $this->figureView('marks/index');
@@ -242,6 +256,36 @@ class Marks extends Plain_Controller
         // Figure what to do here (api, redirect or generate view)
         $this->figureView('marks/edit');
 
+    }
+
+    public function get($what='saved', $start='today', $finish='today')
+    {
+        $result = array();
+        $method = 'get' . ucwords($what);
+        if (method_exists($this, $method)) {
+            $when   = (empty($when)) ? 'today' : strtolower($when);
+            $result = $this->$method($when);
+        }
+
+        // If API, return JSON
+        // else return result to caller
+        if (self::isAPI() === true || self::isInternalAJAX() === true) {
+            $result = (is_string($result)) ? array('result' => $result) : $result;
+            $this->renderJSON($result);
+        }
+        else {
+            return $result;
+        }
+    }
+
+    private function getArchived($when)
+    {
+        return $this->user_marks->getTotal('archived', $this->user_id, $when);
+    }
+
+    private function getSaved($when)
+    {
+        return $this->user_marks->getTotal('saved', $this->user_id, $when);
     }
 
     // Mark detail view

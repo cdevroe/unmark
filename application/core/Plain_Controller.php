@@ -11,7 +11,7 @@ class Plain_Controller extends CI_Controller
     public $footer         = 'footer';
     public $header         = 'header';
     public $html_clean     = null;
-    public $limit          = 100;
+    public $limit          = 30;
     public $is_api         = false;
     public $original       = null;
     public $user_admin     = false;
@@ -143,6 +143,11 @@ class Plain_Controller extends CI_Controller
         return $this->user_admin;
     }
 
+    protected function isAJAX()
+    {
+        return $this->input->is_ajax_request();
+    }
+
     protected function isAPI()
     {
         $segment = $this->uri->segment(1);
@@ -152,6 +157,18 @@ class Plain_Controller extends CI_Controller
     protected function isCommandLine()
     {
         return $this->input->is_cli_request();
+    }
+
+    protected function isInternalAJAX()
+    {
+        return (self::isAJAX() === true && self::isSameHost() === true) ? true : false;
+    }
+
+    protected function isSameHost()
+    {
+        $host   = (isset($_SERVER['HTTP_HOST'])) ? strtolower($_SERVER['HTTP_HOST']) : null;
+        $origin = (isset($_SERVER['HTTP_REFERER'])) ? strtolower(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST)) : null;
+        return (! empty($origin) && ! empty($host) && $host == $origin) ? true : false;
     }
 
     // If logged if invalid CSRF token is not valid
@@ -254,7 +271,8 @@ class Plain_Controller extends CI_Controller
     // Start session
     protected function sessionStart()
     {
-        if (self::isCommandLine() === false && self::isAPI() === false) {
+        // If request is not coming from command line & is not an API URL OR it is an internal ajax call, start the session
+        if ((self::isCommandLine() === false && self::isAPI() === false) || self::isInternalAJAX() === true) {
             session_start();
         }
     }
