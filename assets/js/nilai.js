@@ -223,6 +223,16 @@ if (nilai === undefined) { var nilai = {}; }
             $(this).find('.mark-actions').toggle();
         });
 
+        // Archive a Mark
+        // Sends ajax request to archive a mark.
+        $('a.mark-archive').on('click', function (e) {
+            e.preventDefault();
+            //nilai.archive_mark($(this));
+            alert('Archiving');
+        });
+
+
+
     };
 
 

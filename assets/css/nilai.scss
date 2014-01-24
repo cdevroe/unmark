@@ -223,6 +223,7 @@ ul.label-list {
 // Marks Area
 .marks_list {
     .mark {
+        cursor: pointer;
         border-bottom:1px solid $color_lighter;
         padding: 25px 15px 25px 25px;
         position:relative;
