@@ -38,7 +38,10 @@ $sans-serif : 'Lato', sans-serif;
 
 
 // ================ Body
-body, html{ height:100%; }
+body, html{
+    min-height: 100%; 
+    height:100%; 
+}
 body {
     font-family: $sans-serif;
     border-left:65px solid $color_dark;
@@ -84,6 +87,7 @@ body {
     width: 65px;
     z-index: 200;
     background-color: $color_dark;
+    min-height: 100%;
     .menu-item {
         width: 65px;
         height: inherit;
@@ -103,6 +107,13 @@ body {
     }
     .menu-activator {
         background-color: $color_darker;
+    }
+    .menu-settings {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-top:1px solid $color_lightest;
+        border-bottom:none;
     }
 }
 
@@ -130,6 +141,30 @@ body {
                 font-size: 13px;
                 padding: 20px 0 20px 10px;
             }
+        }
+        li.panel-settings {
+            position: absolute;
+            bottom:0;
+            width:258px;
+            a {
+                border-bottom: 0;
+                border-top:1px solid $color_lightest;
+            }
+        }
+    }
+    .navigation-panel-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-height: 100%;
+        .nav-panel {
+            position: absolute;
+            display:none;
+            color: #FFF;
+            background-color: #303030;
+            min-height: 100%;
+            width: 258px;
+            padding: 10px 15px;
         }
     }
 }
