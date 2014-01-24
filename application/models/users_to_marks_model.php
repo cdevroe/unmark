@@ -71,7 +71,7 @@ class Users_To_Marks_model extends Plain_Model
         return $marks;
     }
 
-    public function getTotal($type, $user_id, $from=null, $to=null)
+    public function getTotal($type, $user_id, $start='today', $finish=null)
     {
         $type  = trim(strtolower($type));
         $types = array('archived' => 'archived_on', 'saved' => 'created_on');
@@ -87,14 +87,22 @@ class Users_To_Marks_model extends Plain_Model
         // Figure date range
         $when = null;
 
+        // Figure start & finish
+        $start  = (empty($start)) ? strtotime('today') : strtotime($start);
+        $start  = (isValid($start, 'timestamp')) ? $start : strtotime('today');
+        $finish = (empty($finish)) ? $start : strtotime($finish);
+        $finish  = (isValid($finish, 'timestamp')) ? $finish : $start;
+        $start  = ($start > $finish) ? $finish : $start;
+
+
         // If from is not empty, figure timestamp
-        if (! empty($from)) {
-            $when .= " AND UNIX_TIMESTAMP(" . $column . ") >= '" . strtotime($from) . "'";
+        if (! empty($start)) {
+            $when .= " AND UNIX_TIMESTAMP(" . $column . ") >= '" . $start . "'";
         }
 
         // if to is not empty, figure timestamp
-        if (! empty($to)) {
-            $when .= " AND UNIX_TIMESTAMP(" . $column . ") <= '" . strtotime($to) . "'";
+        if (! empty($finish)) {
+            $when .= " AND UNIX_TIMESTAMP(" . $column . ") <= '" . $finish . "'";
         }
 
         // If when is empty, set to IS NOT NULL

@@ -258,12 +258,13 @@ class Marks extends Plain_Controller
 
     }
 
-    public function get($what='saved', $start='today', $finish='today')
+    public function get($what='saved', $start='today', $finish=null)
     {
         $result = array();
         $method = 'get' . ucwords($what);
         if (method_exists($this, $method)) {
-            $when   = (empty($when)) ? 'today' : strtolower($when);
+            $start  = (empty($start)) ? 'today' : strtolower($start);
+            $finish = (empty($finish)) ? 'today' : strtolower($finish);
             $result = $this->$method($when);
         }
 
@@ -278,14 +279,14 @@ class Marks extends Plain_Controller
         }
     }
 
-    private function getArchived($when)
+    private function getArchived($start='today', $finish=null)
     {
-        return $this->user_marks->getTotal('archived', $this->user_id, $when);
+        return $this->user_marks->getTotal('archived', $this->user_id, $start, $finish);
     }
 
-    private function getSaved($when)
+    private function getSaved($start='today', $finish=null)
     {
-        return $this->user_marks->getTotal('saved', $this->user_id, $when);
+        return $this->user_marks->getTotal('saved', $this->user_id, $start, $finish);
     }
 
     // Mark detail view
