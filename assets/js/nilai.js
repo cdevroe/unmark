@@ -172,6 +172,66 @@ if (nilai === undefined) { var nilai = {}; }
     // Main Init Script
     nilai.init = function () {
 
+        // Define some re-usable elements 
+        var nav_panel = $('.navigation-pane'), main_panel = $('.main-wrapper');
+
+
+        // Main Panel Navigation
+        // Determins when to slide out/in
+        $(".menu-activator a").on('click', function (e) {
+            
+            if (nav_panel.css('left') === "65px") {
+                nav_panel.animate({ left: -258 }, { duration: 200, queue: false });
+                main_panel.animate({ left: 65 }, { duration: 200, queue: false });
+                $('.nav-panel').hide();
+                $('.navigation-pane-links').show();
+            } else {
+                nav_panel.animate({ left: 65 }, { duration: 200, queue: false });
+                main_panel.animate({ left: 323 }, { duration: 200, queue: false });
+            }
+        });
+
+        // Vertical Tabs
+        // Shows and Tabs the Vertical navigition inside the Navigation Panel
+        $('.navigation-content a, .navigation-pane-links a').on('click', function (e) {
+            var panel_to_show = $(this).attr('href');
+            if (nav_panel.css('left') !== "65px") {
+                nav_panel.animate({ left: 65 }, { duration: 200, queue: false });
+                main_panel.animate({ left: 323 }, { duration: 200, queue: false });
+            }
+            if (panel_to_show === "/") {
+                return true;
+            } else if (panel_to_show === "#show-menu") {
+                // Do somethign else
+                e.preventDefault();
+                return false;
+            } else {
+                e.preventDefault();
+                $('.navigation-pane-links').hide();
+                $('.nav-panel').not(panel_to_show).hide();
+                $(panel_to_show).show();       
+            }
+        });
+
+        // Hover Action on Marks List
+        // Shows the Archive and More Buttons
+        $(".mark").hoverIntent(function () {
+            $(this).find('.mark-corner').toggle();
+            $(this).find('.mark-actions').toggle();
+        }, function () {
+            $(this).find('.mark-corner').toggle();
+            $(this).find('.mark-actions').toggle();
+        });
+
+    };
+
+
+    // Get this baby in action
+    $(document).ready(function(){ nilai.init(); });
+
+}(window.jQuery));
+
+/* Old Init 
         // Show / Hide Top Navigation
         $('.navigation-content').hide();
         $('.menu-activator a').on('click', function (e) {
@@ -217,64 +277,4 @@ if (nilai === undefined) { var nilai = {}; }
             e.preventDefault();
             nilai.show_data($(this));
         });
-
-    };
-
-
-    // Get this baby in action
-    //$(document).ready(function(){ nilai.init(); });
-
-}(window.jQuery));
-
-
-
-
-$(document).ready(function(){ 
-
-    var nav_panel = $('.navigation-pane'), main_panel = $('.main-wrapper');
-
-
-    // Main Panel Navigation
-    $(".menu-activator a").on('click', function (e) {
-        
-        if (nav_panel.css('left') === "65px") {
-            nav_panel.animate({ left: -258 }, { duration: 200, queue: false });
-            main_panel.animate({ left: 65 }, { duration: 200, queue: false });
-            $('.nav-panel').hide();
-            $('.navigation-pane-links').show();
-        } else {
-            nav_panel.animate({ left: 65 }, { duration: 200, queue: false });
-            main_panel.animate({ left: 323 }, { duration: 200, queue: false });
-        }
-    });
-
-    // Hover Action on Marks List
-    $(".mark").hoverIntent(function () {
-        $(this).find('.mark-corner').toggle();
-        $(this).find('.mark-actions').toggle();
-    }, function () {
-        $(this).find('.mark-corner').toggle();
-        $(this).find('.mark-actions').toggle();
-    });
-
-    // Vertical Tabs
-    $('.navigation-content a, .navigation-pane-links a').on('click', function (e) {
-        
-        var panel_to_show = $(this).attr('href');
-
-        if (panel_to_show === "/") {
-            return true;
-        } else if (panel_to_show === "#show-menu") {
-            // Do somethign else
-            e.preventDefault();
-            return false;
-        } else {
-            e.preventDefault();
-            $('.navigation-pane-links').hide();
-            $('.nav-panel').not(panel_to_show).hide();
-            $(panel_to_show).show();       
-        }
-
-    });
-
-});
+*/
