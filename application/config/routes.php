@@ -64,6 +64,7 @@ $route['mark/restore(.*?)']      = 'marks/restore$1';
 $route['marks/archive(.*?)']     = 'marks/index/archive$1';
 $route['marks/label(.*?)']       = 'marks/label$1';
 $route['marks/get(.*?)']         = 'marks/get$1';
+$route['marks/search(.*?)']      = 'marks/index/search$1';
 $route['marks/total(.*?)']       = 'marks/total$1';
 
 // Marks catch all
