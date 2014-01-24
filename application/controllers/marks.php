@@ -180,6 +180,7 @@ class Marks extends Plain_Controller
         if (parent::isWebView() === true) {
             self::getStats();
             self::getLabels();
+            self::getTags();
         }
 
         // Figure if web or API view
@@ -335,6 +336,15 @@ class Marks extends Plain_Controller
             'ages ago'      => self::totalMarks('-20 years', '-1 year')
         );
 
+    }
+
+    // Get the 10 most used tags for a user
+    private function getTags()
+    {
+        $this->data['tags'] = array();
+        $this->load->model('user_marks_to_tags_model', 'user_tags');
+        $this->data['tags']['popular'] = $this->user_tags->getPopular($this->user_id);
+        $this->data['tags']['recent']  = $this->user_tags->getMostRecent($this->user_id);
     }
 
     // Mark detail view
