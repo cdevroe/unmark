@@ -16,7 +16,16 @@
         <li class="panel-settings"><a href="#panel-settings">Settings</a></li>
     </ul>
     <div class="navigation-panel-wrapper">
-        <div id="panel-label" class="nav-panel">Labels</div>
+        <div id="panel-label" class="nav-panel">
+            <ul class="label-list">
+                <?php foreach ($labels as $label) : ?>
+                    <li class="label-<?php print $label->label_id ?>">
+                        <a href="/label/<?php print $label->slug; ?>"><?php print $label->name; ?></a>
+                        <span><?php print $label->total_marks; ?> links</span>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
         <div id="panel-timeline" class="nav-panel">Timeline</div>
         <div id="panel-search" class="nav-panel">Search</div>
         <div id="panel-settings" class="nav-panel">Settings</div>

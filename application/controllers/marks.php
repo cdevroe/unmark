@@ -183,11 +183,7 @@ class Marks extends Plain_Controller
         }
 
         // Figure if web or API view
-        //$this->figureView('marks/index');
-
-        // Put in by Tim | 1.22.14 | To test views 
-        $this->data['yield'] = 'marks';
-        $this->load->view('layouts/application', $this->data);
+        $this->figureView('marks/index');
     }
 
     // Edit a mark

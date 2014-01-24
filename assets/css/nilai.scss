@@ -213,8 +213,8 @@ body {
                 position: absolute;
                 top: -10px;
                 right: -10px;
-                border-top: 10px solid $color_blue;
-                border-right: 10px solid $color_blue;
+                border-top: 10px solid $color_grey;
+                border-right: 10px solid $color_grey;
                 border-left: 10px solid transparent;
                 border-bottom: 10px solid transparent;
             }
@@ -225,7 +225,7 @@ body {
             top: 0;
             right: 0;
             a {
-                background: $color_blue;
+                background: $color_grey;
                 display: block;
                 text-align: center;
                 width: 52px;
@@ -234,11 +234,11 @@ body {
                     font-size: 19px;
                 }
                 &.mark-archive {
-                    background: lighten( $color_blue, 10% )
+                    background: lighten( $color_grey, 10% )
                 }
             }
         }
-        &.orange {
+        &.label-2 {
             .mark-corner:after {
                 border-top: 10px solid $color_orange;
                 border-right: 10px solid $color_orange;           
@@ -250,7 +250,19 @@ body {
                 }
             }
         }
-        &.yellow {
+        &.label-3 {
+            .mark-corner:after {
+                border-top: 10px solid $color_blue;
+                border-right: 10px solid $color_blue;           
+            }
+            .mark-actions a {
+                background: $color_blue;
+                &.mark-archive {
+                    background: lighten( $color_blue, 10% )
+                }
+            }
+        }
+        &.label-4 {
             .mark-corner:after {
                 border-top: 10px solid $color_yellow;
                 border-right: 10px solid $color_yellow;           
@@ -262,7 +274,7 @@ body {
                 }
             }
         }
-        &.purple {
+        &.label-5 {
             .mark-corner:after {
                 border-top: 10px solid $color_purple;
                 border-right: 10px solid $color_purple;           
@@ -274,7 +286,7 @@ body {
                 }
             }
         }
-        &.green {
+        &.label-6 {
             .mark-corner:after {
                 border-top: 10px solid $color_green;
                 border-right: 10px solid $color_green;           
@@ -286,7 +298,7 @@ body {
                 }
             }
         }
-        &.red {
+        &.label-7 {
             .mark-corner:after {
                 border-top: 10px solid $color_red;
                 border-right: 10px solid $color_red;           
@@ -295,18 +307,6 @@ body {
                 background: $color_red;
                 &.mark-archive {
                     background: lighten( $color_red, 10% )
-                }
-            }
-        }
-        &.grey {
-            .mark-corner:after {
-                border-top: 10px solid $color_grey;
-                border-right: 10px solid $color_grey;           
-            }
-            .mark-actions a {
-                background: $color_grey;
-                &.mark-archive {
-                    background: lighten( $color_grey, 10% )
                 }
             }
         }
