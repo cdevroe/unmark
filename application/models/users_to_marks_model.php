@@ -52,7 +52,7 @@ class Users_To_Marks_model extends Plain_Model
         return $this->formatErrors($valid);
     }
 
-    protected function formatTags($marks)
+    protected function format($marks)
     {
         foreach ($marks as $k => $mark) {
             $marks[$k]->tags = array();
@@ -122,8 +122,8 @@ class Users_To_Marks_model extends Plain_Model
         $q     = $this->db->query('SET SESSION group_concat_max_len = 10000');
 		$marks = $this->db->query("
             SELECT
-            users_to_marks.users_to_mark_id, users_to_marks.notes, users_to_marks.created_on, users_to_marks.archived_on,
-            marks.mark_id, marks.title, marks.url, marks.embed,
+            users_to_marks.users_to_mark_id AS mark_id, users_to_marks.notes, users_to_marks.created_on, users_to_marks.archived_on,
+            marks.title, marks.url, marks.embed,
             GROUP_CONCAT(tags.tag_id SEPARATOR '" . $this->delimiter . "') AS tag_ids,
             GROUP_CONCAT(tags.name SEPARATOR '" . $this->delimiter . "') AS tag_names,
             GROUP_CONCAT(tags.slug SEPARATOR '" . $this->delimiter . "') AS tag_slugs,
@@ -141,7 +141,7 @@ class Users_To_Marks_model extends Plain_Model
 
         // Now format the group names and ids
         if ($marks->num_rows() > 0) {
-            $marks = $this->formatTags($marks->result());
+            $marks = $this->format($marks->result());
             return ($limit == 1) ? $marks[0] : $marks;
         }
 
