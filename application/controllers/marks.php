@@ -7,8 +7,6 @@ class Marks extends Plain_Controller
     {
         parent::__construct();
         $this->redirectIfLoggedOut();
-
-        //$this->user_id = 5;
         $this->load->model('users_to_marks_model', 'user_marks');
     }
 
