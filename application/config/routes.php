@@ -56,8 +56,9 @@ $route['api/labels?(.*?)']             = 'labels/index$1';
 // Marks
 $route['(api/)?marks?/edit(.*?)']     = 'marks/edit$2';
 $route['(api/)?marks?/info(.*?)']     = 'marks/info/$2';
-$route['(api/)?marks?/archive(.*?)']  = 'marks/archive/$2';
-$route['(api/)?marks?/restore(.*?)']  = 'marks/restore/$2';
+$route['(api/)?marks/archive(.*?)']   = 'marks/index/archive$2';
+$route['(api/)?mark/archive(.*?)']    = 'marks/archive/$2';
+$route['(api/)?mark/restore(.*?)']    = 'marks/restore/$2';
 $route['(api/)?marks?/label(.*?)']    = 'marks/label$2';
 $route['(api/)?marks?/get(.*?)']      = 'marks/get$2';
 $route['(api/)?marks?/total(.*?)']    = 'marks/total$2';
