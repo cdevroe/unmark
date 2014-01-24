@@ -84,6 +84,7 @@ class Plain_Controller extends CI_Controller
         else {
 
             $this->data['view'] = $view;
+            
             /*print '<pre>';
             print_r($this->data);
             print '</pre>';*/

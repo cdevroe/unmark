@@ -445,3 +445,33 @@ ul.label-list {
     height: 6px;
     margin-left: -7px;
 }
+
+
+// ==============  Site Label Color Scheme ========
+
+// Body Top Border
+body.label-1 { border-top: 8px solid $color_grey; }
+body.label-2 { border-top: 8px solid $color_orange; }
+body.label-3 { border-top: 8px solid $color_blue; }
+body.label-4 { border-top: 8px solid $color_yellow; }
+body.label-5 { border-top: 8px solid $color_purple; }
+body.label-6 { border-top: 8px solid $color_green; }
+body.label-7 { border-top: 8px solid $color_red; }
+
+// Menu Activator Settigns
+body.label-1 .menu-activator { background-color: $color_grey; }
+body.label-2 .menu-activator { background-color: $color_orange; }
+body.label-3 .menu-activator { background-color: $color_blue; }
+body.label-4 .menu-activator { background-color: $color_yellow; }
+body.label-5 .menu-activator { background-color: $color_purple; }
+body.label-6 .menu-activator { background-color: $color_green; }
+body.label-7 .menu-activator { background-color: $color_red; }
+
+// Navigation Pane
+body.label-1 .navigation-pane { border-top: 56px solid $color_grey; }
+body.label-2 .navigation-pane { border-top: 56px solid $color_orange; }
+body.label-3 .navigation-pane { border-top: 56px solid $color_blue; }
+body.label-4 .navigation-pane { border-top: 56px solid $color_yellow; }
+body.label-5 .navigation-pane { border-top: 56px solid $color_purple; }
+body.label-6 .navigation-pane { border-top: 56px solid $color_green; }
+body.label-7 .navigation-pane { border-top: 56px solid $color_red; }

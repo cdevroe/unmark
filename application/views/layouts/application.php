@@ -8,7 +8,16 @@
     <link rel="stylesheet" href="/assets/css/nilai.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
 </head>
-<body>
+
+<?php 
+    if (isset($marks)) {
+        if ($view == 'marks/label') {
+            print "<body class='label-" . $marks[0]->label_id . "'>";
+        }
+    } else {
+        print "<body>";
+    }
+?>
 
     <?php include('navigation.php'); ?>
 
