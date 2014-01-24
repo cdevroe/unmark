@@ -74,7 +74,7 @@ class Users_To_Marks_model extends Plain_Model
     public function getTotal($type, $user_id, $start='today', $finish=null)
     {
         $type  = trim(strtolower($type));
-        $types = array('archived' => 'archived_on', 'saved' => 'created_on');
+        $types = array('archived' => 'archived_on', 'saved' => 'created_on', 'marks' => 'created_on');
 
         // If type not found, return 0
         if (! array_key_exists($type, $types)) {
@@ -84,16 +84,15 @@ class Users_To_Marks_model extends Plain_Model
         // Set column from type
         $column = $types[$type];
 
-        // Figure date range
-        $when = null;
-
         // Figure start & finish
         $start  = (empty($start)) ? strtotime('today') : strtotime($start);
-        $start  = (isValid($start, 'timestamp')) ? $start : strtotime('today');
+        $start  = (! empty($start)) ? $start : strtotime('today');
         $finish = (empty($finish)) ? $start : strtotime($finish);
-        $finish  = (isValid($finish, 'timestamp')) ? $finish : $start;
+        $finish  = (! empty($finish)) ? $finish : $start;
         $start  = ($start > $finish) ? $finish : $start;
 
+        // Figure date range
+        $when = null;
 
         // If from is not empty, figure timestamp
         if (! empty($start)) {
@@ -106,8 +105,8 @@ class Users_To_Marks_model extends Plain_Model
         }
 
         // If when is empty, set to IS NOT NULL
-        if (empty($when)) {
-            $when .= " AND " . $column . " IS NOT NULL";
+        if ($type == 'marks') {
+            $when .= " AND archived_on IS NULL";
         }
 
         return $this->count("user_id='". $user_id . "'" . $when);
@@ -128,7 +127,7 @@ class Users_To_Marks_model extends Plain_Model
 		$marks = $this->db->query("
             SELECT
             users_to_marks.users_to_mark_id, users_to_marks.notes, users_to_marks.created_on, users_to_marks.archived_on,
-            marks.mark_id, marks.title, marks.url,
+            marks.mark_id, marks.title, marks.url, marks.embed,
             GROUP_CONCAT(tags.tag_id SEPARATOR '" . $this->delimiter . "') AS tag_ids,
             GROUP_CONCAT(tags.name SEPARATOR '" . $this->delimiter . "') AS tag_names,
             GROUP_CONCAT(tags.slug SEPARATOR '" . $this->delimiter . "') AS tag_slugs,

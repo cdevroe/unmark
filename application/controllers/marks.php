@@ -7,6 +7,8 @@ class Marks extends Plain_Controller
     {
         parent::__construct();
         $this->redirectIfLoggedOut();
+
+        $this->user_id = 5;
     }
 
      /*
@@ -138,8 +140,8 @@ class Marks extends Plain_Controller
         // Set where
         $where = "users_to_marks.user_id='". $this->user_id . "' AND" . $where_time . " users_to_marks.archived_on " . $archived;
 
-        // Get current page, total pages and total records
-        $marks = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
+        // Get all the marks
+        $marks = $this->user_marks->readComplete($where, $this->limit, $page);
 
         // Check for marks
         if ($marks === false) {
@@ -150,23 +152,40 @@ class Marks extends Plain_Controller
             $this->data          = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
         }
 
-        // Get the total saved and archived today
-        $this->data['saved'] = array(
-            'today'      => self::getSaved('today'),
-            'yesterday'  => self::getSaved('yesterday'),
-            '2 days ago' => self::getSaved('-2 days'),
-            '3 days ago' => self::getSaved('-3 days'),
-            '4 days ago' => self::getSaved('-4 days'),
-        );
+        // Only grab these stats for web view (on site)
+        if (parent::isInternalAJAX() === false && parent::isAPI() === false) {
+            $this->data['stats'] = array();
 
-        $this->data['archived'] = array(
-            'today'      => self::getArchived('today'),
-            'yesterday'  => self::getArchived('yesterday'),
-            '2 days ago' => self::getArchived('-2 days'),
-            '3 days ago' => self::getArchived('-3 days'),
-            '4 days ago' => self::getArchived('-4 days'),
-        );
+            // Get total marks saved over the last 5 days
+            $this->data['stats']['saved'] = array(
+                'today'      => self::totalSaved('today'),
+                'yesterday'  => self::totalSaved('yesterday'),
+                '2 days ago' => self::totalSaved('-2 days'),
+                '3 days ago' => self::totalSaved('-3 days'),
+                '4 days ago' => self::totalSaved('-4 days')
+            );
 
+            // Get the total marks archived over the last 5 days
+            $this->data['stats']['archived'] = array(
+                'today'      => self::totalArchived('today'),
+                'yesterday'  => self::totalArchived('yesterday'),
+                '2 days ago' => self::totalArchived('-2 days'),
+                '3 days ago' => self::totalArchived('-3 days'),
+                '4 days ago' => self::totalArchived('-4 days')
+            );
+
+            // Get total marks for a series of ranges
+            $this->data['stats']['marks'] = array(
+                'today'         => self::totalMarks('today'),
+                'yesterday'     => self::totalMarks('yesterday'),
+                'last week'     => self::totalMarks('-7 days', 'today'),
+                'last_month'    => self::totalMarks('-1 month', 'today'),
+                'last 3 months' => self::totalMarks('-3 months', 'today'),
+                'last 6 months' => self::totalMarks('-6 months', 'today'),
+                'last year'     => self::totalMarks('-1 year', 'today'),
+                'ages ago'      => self::totalMarks('-20 years', '-1 year')
+            );
+        }
 
         // Figure if web or API view
         $this->figureView('marks/index');
@@ -258,33 +277,41 @@ class Marks extends Plain_Controller
 
     }
 
-    public function get($what='saved', $start='today', $finish=null)
+    public function total($what='saved', $start='today', $finish=null)
     {
         $result = array();
-        $method = 'get' . ucwords($what);
+        $method = 'total' . ucwords($what);
         if (method_exists($this, $method)) {
             $start  = (empty($start)) ? 'today' : strtolower($start);
             $finish = (empty($finish)) ? 'today' : strtolower($finish);
-            $result = $this->$method($when);
+            $total = $this->$method($start, $finish);
+        }
+        else {
+            header('Location: /');
+            exit;
         }
 
         // If API, return JSON
         // else return result to caller
         if (self::isAPI() === true || self::isInternalAJAX() === true) {
-            $result = (is_string($result)) ? array('result' => $result) : $result;
-            $this->renderJSON($result);
+            $this->renderJSON(array('total' => $total));
         }
         else {
             return $result;
         }
     }
 
-    private function getArchived($start='today', $finish=null)
+    private function totalArchived($start='today', $finish=null)
     {
         return $this->user_marks->getTotal('archived', $this->user_id, $start, $finish);
     }
 
-    private function getSaved($start='today', $finish=null)
+    private function totalMarks($start='today', $finish=null)
+    {
+        return $this->user_marks->getTotal('marks', $this->user_id, $start, $finish);
+    }
+
+    private function totalSaved($start='today', $finish=null)
     {
         return $this->user_marks->getTotal('saved', $this->user_id, $start, $finish);
     }

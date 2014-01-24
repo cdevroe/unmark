@@ -59,9 +59,6 @@ function isValid($val, $type)
         $url            = parse_url($val);
         return (isset($url['scheme']) && ! empty($url['scheme']) && ! in_array($url['scheme'], $failed_schemes) && isset($url['host']) && ! empty($url['host'])) ? true : false;
     }
-    elseif ($type == 'timestamp') {
-        return (($timestamp = strtotime($val)) === false || (($timestamp = strtotime($val)) < 0)) ? false : true;
-    }
     return false;
 }
 

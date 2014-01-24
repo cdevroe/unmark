@@ -68,7 +68,7 @@ class Plain_Controller extends CI_Controller
         ksort($this->data);
 
         // If api, return JSON
-        if ($this->isAPI() === true) {
+        if (self::isAPI() === true || self::isInternalAJAX() === true) {
             $this->renderJSON();
         }
 
