@@ -8,7 +8,7 @@ class Marks extends Plain_Controller
         parent::__construct();
         $this->redirectIfLoggedOut();
 
-        $this->user_id = 5;
+        //$this->user_id = 5;
         $this->load->model('users_to_marks_model', 'user_mark');
     }
 
@@ -132,8 +132,12 @@ class Marks extends Plain_Controller
         $where_time         = ($this->data['when'] == 'yesterday') ? "UNIX_TIMESTAMP(marks.created_on) > '" . $yesterday . "' AND UNIX_TIMESTAMP(marks.created_on) < '" . $today . "' AND " : $where_time;
         $archived           = ($this->data['when'] == 'archive') ? 'IS NOT NULL' : 'IS NULL';
 
+        print $page . "<BR>";
+
         // Figure the correct starting page
         $page = (! is_numeric($page) || $page < 0) ? 1 : $page;
+
+        print $page . "<BR>";
 
         // Set where
         $where = "users_to_marks.user_id='". $this->user_id . "' AND" . $where_time . " users_to_marks.archived_on " . $archived;
