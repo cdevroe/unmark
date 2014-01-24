@@ -333,37 +333,6 @@ class Marks extends Plain_Controller
 
     }
 
-    public function total($what='marks', $start='today', $finish=null)
-    {
-        parent::redirectIfWebView();
-        $method = 'total' . ucwords($what);
-        if (method_exists($this, $method)) {
-            $start  = (empty($start)) ? 'today' : strtolower($start);
-            $finish = (empty($finish)) ? 'today' : strtolower($finish);
-            $this->data['total'] = $this->$method($start, $finish);
-            parent::renderJSON();
-        }
-        else {
-            header('Location: /');
-            exit;
-        }
-    }
-
-    private function totalArchived($start='today', $finish=null)
-    {
-        return $this->user_marks->getTotal('archived', $this->user_id, $start, $finish);
-    }
-
-    private function totalMarks($start='today', $finish=null)
-    {
-        return $this->user_marks->getTotal('marks', $this->user_id, $start, $finish);
-    }
-
-    private function totalSaved($start='today', $finish=null)
-    {
-        return $this->user_marks->getTotal('saved', $this->user_id, $start, $finish);
-    }
-
     // Mark detail view
     // Both API and web view
     public function info($mark_id=0)
@@ -464,6 +433,37 @@ class Marks extends Plain_Controller
     public function search()
     {
         // Not sure how to tackle this one yet
+    }
+
+    public function total($what='marks', $start='today', $finish=null)
+    {
+        parent::redirectIfWebView();
+        $method = 'total' . ucwords($what);
+        if (method_exists($this, $method)) {
+            $start  = (empty($start)) ? 'today' : strtolower($start);
+            $finish = (empty($finish)) ? 'today' : strtolower($finish);
+            $this->data['total'] = $this->$method($start, $finish);
+            parent::renderJSON();
+        }
+        else {
+            header('Location: /');
+            exit;
+        }
+    }
+
+    private function totalArchived($start='today', $finish=null)
+    {
+        return $this->user_marks->getTotal('archived', $this->user_id, $start, $finish);
+    }
+
+    private function totalMarks($start='today', $finish=null)
+    {
+        return $this->user_marks->getTotal('marks', $this->user_id, $start, $finish);
+    }
+
+    private function totalSaved($start='today', $finish=null)
+    {
+        return $this->user_marks->getTotal('saved', $this->user_id, $start, $finish);
     }
 
 }
