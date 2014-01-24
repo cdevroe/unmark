@@ -165,7 +165,7 @@ class Marks extends Plain_Controller
         $archive = ($start == 'archive') ? 'IS NOT NULL' : 'IS NULL';
 
         // Search it up
-        $search = (isset($this->db_clean->q) && ! empty($this->db_clean->q)) ? " AND users_to_marks.notes LIKE '%" . $this->db_clean->q . "%'" :  '';
+        $search = (isset($this->db_clean->q) && ! empty($this->db_clean->q)) ? " AND users_to_marks.notes LIKE '%" . $this->db_clean->q . "%'" :  null;
 
         // Set where
         $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on " . $archive . $where_time . $search;
@@ -420,6 +420,13 @@ class Marks extends Plain_Controller
         }
         else {
             $this->data['errors'] = formatErrors('No label found for mark lookup.', 16);
+        }
+
+        // Only grab these stats for web view (on site)
+        if (parent::isWebView() === true) {
+            self::getStats();
+            self::getLabels();
+            self::getTags();
         }
 
         // Figure if web or API view

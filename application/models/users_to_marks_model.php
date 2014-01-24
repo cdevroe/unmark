@@ -108,7 +108,7 @@ class Users_To_Marks_model extends Plain_Model
         return $this->count("user_id='". $user_id . "'" . $when);
     }
 
-    public function readComplete($where, $limit=1, $page=1, $start=null)
+    public function readComplete($where, $limit=1, $page=1, $start=null, $search=null)
     {
         $id         = (is_numeric($where)) ? $where : null;
         $where      = (is_numeric($where)) ? 'users_to_marks.' . $this->id_column . " = '$where'" : trim($where);
