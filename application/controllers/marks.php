@@ -427,6 +427,10 @@ class Marks extends Plain_Controller
             self::getStats();
             self::getLabels();
             self::getTags();
+
+            foreach ($this->data['labels'] as $k => $label) {
+                $this->data['labels'][$k]->current = ($label->label_id == $label_id) ? '1' : '0';
+            }
         }
 
         // Figure if web or API view
