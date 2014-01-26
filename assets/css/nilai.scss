@@ -358,14 +358,23 @@ ul.label-list {
 }
 
 // ================ Right Content
-
 .sidebar-content {
     @include span-columns(5);
     @include reset-display;  
-    background-color: $color_dark;
+    background-color: $color_lighter;
     min-height: 100%;
-    height: 100%; 
+    height: 100%;
+    padding-right:0;
+    .sidebar-block {
+        border-bottom:1px solid $color_light;
+        box-shadow: 1px 3px 2px 0 rgba(0,0,0,0.08);
+        padding: 15px 0;
+        .sidebar-inner {
+            padding:0 25px;
+        }
+    }
 }
+
 
 .nav-header {
     list-style: none;

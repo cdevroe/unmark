@@ -9,8 +9,12 @@
                     <span class="mark-link"><a href="#"><?php print $mark->url; ?></a></span>
                 </div>
                 <div class="mark-actions">
-                    <a href="#" class="mark-more"><i class="barley-icon-elipsis"></i></a>
-                    <a href="#" class="mark-archive"><i class="barley-icon-ok"></i></a>
+                    <a href="#show-more" data-mark-id="<?php print $mark->mark_id; ?>" class="mark-more">
+                        <i class="barley-icon-elipsis"></i>
+                    </a>
+                    <a href="/marks/archive/<?php print $mark->mark_id; ?>" class="mark-archive">
+                        <i class="barley-icon-ok"></i>
+                    </a>
                 </div>
                 <div class="mark-corner"></div>
             </div>

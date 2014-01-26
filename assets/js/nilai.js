@@ -15,28 +15,23 @@ if (nilai === undefined) { var nilai = {}; }
 (function ($) {
 
     // Archive & Restore Mark
-    nilai.archive_mark = function (mark) {
+    nilai.mark_archive = function (archive_link) {
 
-        var url, markid, preview, note;
-
-        url = mark.attr("href");
-        
-        markid = mark.attr("data-mark");
-        preview = $('#preview-'+markid);
-        note = $('#note-'+markid);
-        
-        if (preview && !$(preview).is(':hidden')) { preview.toggle(); }
-        
-        if (note && !$(note).is(':hidden')) { note.toggle(); }
+        var url = archive_link.attr("href");
         
         $.ajax({
-          url: url,
-          success: function(){}
+            url: url,
+            success: function() {
+                archive_link.parent().parent().fadeOut();
+            }
         });
-        
-        mark.parent().parent().parent().hide(800);
+
     };
 
+    // Show Mark Info in Sidebar
+    nilai.mark_more = function (more_link) {
+
+    };
 
     nilai.label_mark = function (btn) {
 
@@ -173,7 +168,14 @@ if (nilai === undefined) { var nilai = {}; }
     nilai.init = function () {
 
         // Define some re-usable elements 
-        var nav_panel = $('.navigation-pane'), main_panel = $('.main-wrapper');
+        var nav_panel = $('.navigation-pane'), 
+            main_panel = $('.main-wrapper'),
+            main_panel_width = main_panel.width(),
+            body_height = $('body').height();
+
+        // Basic Page Setup
+        main_panel.width(main_panel_width);
+        //$('body').height(body_height);
 
 
         // Main Panel Navigation
@@ -227,11 +229,15 @@ if (nilai === undefined) { var nilai = {}; }
         // Sends ajax request to archive a mark.
         $('a.mark-archive').on('click', function (e) {
             e.preventDefault();
-            //nilai.archive_mark($(this));
-            alert('Archiving');
+            nilai.mark_archive($(this));
         });
 
-
+        // View Mark Details
+        // Shows info about mark and actions
+        $('a.mark-more').on('click', function (e) {
+            e.preventDefault();
+            nilai.mark_more($(this));
+        });
 
     };
 
