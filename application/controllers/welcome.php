@@ -16,7 +16,8 @@ class Welcome extends Plain_Controller
 			exit;
 		}
 
-		$this->view('home');
+		//$this->view('home');
+		$this->figureView('home');
 
 	}
 
