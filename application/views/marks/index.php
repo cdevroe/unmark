@@ -16,7 +16,6 @@
                         <i class="barley-icon-ok"></i>
                     </a>
                 </div>
-                <div class="mark-corner"></div>
                 <div class="mark-info">
                     <div class="mark-data-notes"><?php print $mark->notes; ?></div>
                     <div class="mark-data-preview"><?php print $mark->embed; ?></div>

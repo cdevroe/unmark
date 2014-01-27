@@ -9,14 +9,20 @@
     <link rel="icon" type="image/ico" href="/favicon.ico" />
 </head>
 
+<body>
+
 <?php 
-    if (isset($marks)) {
-        if ($view == 'marks/label') {
-            print "<body class='label-" . $marks[0]->label_id . "'>";
+    $active_label = 0;
+    if (isset($labels)){
+        foreach ($labels as $label) {
+            if (isset($label->current)) {
+                if ($label->current == 1) {
+                    $active_label = $label->label_id;
+                }
+            }
         }
-    } else {
-        print "<body>";
     }
+    print "<body class='label-" . $active_label . "'>";
 ?>
 
     <?php include('navigation.php'); ?>

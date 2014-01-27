@@ -17,7 +17,15 @@ if (nilai === undefined) { var nilai = {}; }
     // Show Mark Info in Sidebar
     // Grabs relavaent info and shows the sidebar actions with info
     nilai.show_mark_info = function (mark_clicked) {
-        console.log('Congrats, suuper awesome');
+        
+        // Get the id and the mark element
+        var mark_id = mark_clicked.data('mark-id'),
+            mark = $(mark_id);
+
+        // Start building the template.
+
+
+
     };
 
     // Archive & Restore Mark
@@ -177,12 +185,14 @@ if (nilai === undefined) { var nilai = {}; }
         var nav_panel = $('.navigation-pane'), 
             main_panel = $('.main-wrapper'),
             main_content = $('.main-content'),
+            sidebar_content = $('.sidebar-content'),
             main_panel_width = main_panel.width(),
             body_height = $('body').height();
 
         // Basic Page Setup
         main_panel.width(main_panel_width);
         main_content.height(body_height);
+        sidebar_content.height(body_height);
         $('body').height(body_height);
 
 
@@ -226,11 +236,11 @@ if (nilai === undefined) { var nilai = {}; }
         // Hover Action on Marks List
         // Shows the Archive and More Buttons
         $(".mark").hoverIntent(function () {
-            $(this).find('.mark-corner').toggle();
-            $(this).find('.mark-actions').toggle();
+            $(this).addClass('hide-dot');
+            $(this).find('.mark-actions').show();
         }, function () {
-            $(this).find('.mark-corner').toggle();
-            $(this).find('.mark-actions').toggle();
+            $(this).removeClass('hide-dot');
+            $(this).find('.mark-actions').hide();
         });
 
         // Archive a Mark
@@ -257,11 +267,25 @@ if (nilai === undefined) { var nilai = {}; }
             funct($(this)); // Run it with passed in object
         });
 
+        // Slide Toggle the Sidebar Info Blocks
+        $('.sidebar-info-panel h4').on('click', function (e) {
+            e.preventDefault();
+            var section = $(this).next('section'), arrow = $(this).find('i');
+
+            if (section.is(':visible')) {
+                arrow.removeClass('barley-icon-chevron-up');
+                arrow.addClass('barley-icon-chevron-down');
+                section.slideUp();
+            } else {
+                arrow.removeClass('barley-icon-chevron-down');
+                arrow.addClass('barley-icon-chevron-up');
+                section.slideDown();                
+            }
 
 
+        });
 
     };
-
 
     // Get this baby in action
     $(document).ready(function(){ nilai.init(); });

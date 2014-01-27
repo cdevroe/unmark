@@ -45,6 +45,7 @@ body, html{
 body {
     overflow:hidden;
     font-family: $sans-serif;
+    font-weight: 300;
     border-left:65px solid $color_dark;
     border-top: 8px solid $color_darker;
     * {
@@ -246,25 +247,15 @@ ul.label-list {
                 color: $color_light;
             }
         }
-        .mark-corner {
+        &:after {
+            content: "";
             position: absolute;
-            top: 0;
-            right: 0;
-            border-top: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-left: 10px solid $color_lighter;
-            border-bottom: 10px solid $color_lighter;
-            box-shadow: -1px 2px 4px $color_light;
-            &:after {
-                content: "";
-                position: absolute;
-                top: -10px;
-                right: -10px;
-                border-top: 10px solid $color_grey;
-                border-right: 10px solid $color_grey;
-                border-left: 10px solid transparent;
-                border-bottom: 10px solid transparent;
-            }
+            top: 39%;
+            right: 2%;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: $color_grey;
         }
         .mark-actions {
             display:none;
@@ -286,9 +277,8 @@ ul.label-list {
             }
         }
         &.label-2 {
-            .mark-corner:after {
-                border-top: 10px solid $color_orange;
-                border-right: 10px solid $color_orange;           
+            &:after {
+                background: $color_orange;           
             }
             .mark-actions a {
                 background: $color_orange;
@@ -298,9 +288,8 @@ ul.label-list {
             }
         }
         &.label-3 {
-            .mark-corner:after {
-                border-top: 10px solid $color_blue;
-                border-right: 10px solid $color_blue;           
+            &:after {
+                background: $color_blue;         
             }
             .mark-actions a {
                 background: $color_blue;
@@ -310,9 +299,8 @@ ul.label-list {
             }
         }
         &.label-4 {
-            .mark-corner:after {
-                border-top: 10px solid $color_yellow;
-                border-right: 10px solid $color_yellow;           
+            &:after {
+                background: $color_yellow;           
             }
             .mark-actions a {
                 background: $color_yellow;
@@ -322,9 +310,8 @@ ul.label-list {
             }
         }
         &.label-5 {
-            .mark-corner:after {
-                border-top: 10px solid $color_purple;
-                border-right: 10px solid $color_purple;           
+            &:after {
+                background: $color_purple;           
             }
             .mark-actions a {
                 background: $color_purple;
@@ -334,9 +321,8 @@ ul.label-list {
             }
         }
         &.label-6 {
-            .mark-corner:after {
-                border-top: 10px solid $color_green;
-                border-right: 10px solid $color_green;           
+            &:after {
+                background: $color_green;          
             }
             .mark-actions a {
                 background: $color_green;
@@ -346,9 +332,8 @@ ul.label-list {
             }
         }
         &.label-7 {
-            .mark-corner:after {
-                border-top: 10px solid $color_red;
-                border-right: 10px solid $color_red;           
+            &:after {
+                background: $color_red;        
             }
             .mark-actions a {
                 background: $color_red;
@@ -356,6 +341,9 @@ ul.label-list {
                     background: lighten( $color_red, 10% )
                 }
             }
+        }
+        &.hide-dot:after {
+            display:none;
         }
         .mark-info { display: none; visibility: hidden; }
     }
@@ -371,15 +359,116 @@ ul.label-list {
     padding-right:0;
     position: absolute;
     right: -1.5%;
+    overflow:scroll;
     .sidebar-block {
-        border-bottom:1px solid $color_light;
-        box-shadow: 1px 3px 2px 0 rgba(0,0,0,0.08);
+        @include drop-shadow-border();
         padding: 15px 0;
         .sidebar-inner {
             padding:0 25px;
         }
     }
     .sidebar-default { display: none; }
+    //.sidebar-mark-info { display: none; }
+}
+
+.sidebar-mark-info {
+    .sidebar-action {
+        @include drop-shadow-border();
+        position: relative;
+        height: 50px;
+        a {
+            position: absolute;
+            left: 15px;
+            top: 10px;
+            &:last-child {
+                right: 30px;
+                top: 10px;
+                left: inherit;
+            }
+            i {
+                color: $color_light;
+                font-size: 20px;
+            }
+        }
+    }
+    .sidebar-label {
+        background: lighten($color_blue, 44%);
+        position: relative;
+        @include drop-shadow-border();
+        &:before {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: $color_blue;            
+        }
+        h3 {
+            margin: 0;
+            padding: 21px 0 21px 50px;
+            font-weight: 300;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: $color_blue;
+        }
+        a {
+            position: absolute;
+            top: 19px;
+            right: 30px;
+            i {
+                color: $color_light;
+                font-size: 15px;
+            }
+        }
+    } 
+    .sidebar-info-panel {
+        padding:10px 25px;
+        h4 {
+            border-bottom: 1px solid $color_light;
+            padding: 0 0 10px 0;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: 400;
+            position: relative;
+            color: $color_dark;
+            cursor: pointer;
+            i {
+                position: absolute;
+                right: 5px;
+                top: 0px;
+                color: $color_dark;
+            }
+        }
+        section {
+            margin-bottom: 45px;
+            font-size: 14px;
+            line-height: 20px;
+            a.social-link {
+                float:left;
+                border: 1px solid $color_light;
+                border-right: none;
+                background: $color_white;
+                text-align: center;
+                padding: 8px 11px;
+                i {
+                    color: $color_dark;
+                    font-size: 15px;
+                }
+                &:last-child {
+                    border-right: 1px solid $color_light;
+                }
+            }
+        }
+    }
+    button {
+        clear: both;
+        margin: 25px;
+        width: 89%;
+        padding: 17px 0;
+        font-size: 16px;
+    }
 }
 
 
