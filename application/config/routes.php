@@ -62,9 +62,10 @@ $route['mark/restore(.*?)']      = 'marks/restore$1';
 
 // Plural Marks
 $route['marks/archive(.*?)']     = 'marks/index/archive$1';
-$route['marks/label(.*?)']       = 'marks/label$1';
+$route['marks/label(.*?)']       = 'marks/index/label$1';
 $route['marks/get(.*?)']         = 'marks/get$1';
 $route['marks/search(.*?)']      = 'marks/index/search$1';
+$route['marks/tag(.*?)']         = 'marks/index/tag$1';
 $route['marks/total(.*?)']       = 'marks/total$1';
 
 // Marks catch all
