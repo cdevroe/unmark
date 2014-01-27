@@ -183,7 +183,6 @@ if (nilai === undefined) { var nilai = {}; }
         // Main Panel Navigation
         // Determins when to slide out/in
         $(".menu-activator a").on('click', function (e) {
-            
             if (nav_panel.css('left') === "65px") {
                 nav_panel.animate({ left: -258 }, { duration: 200, queue: false });
                 main_panel.animate({ left: 65 }, { duration: 200, queue: false });
@@ -199,13 +198,14 @@ if (nilai === undefined) { var nilai = {}; }
         // Shows and Tabs the Vertical navigition inside the Navigation Panel
         $('.navigation-content a, .navigation-pane-links a').on('click', function (e) {
             var panel_to_show = $(this).attr('href');
+
+            if (panel_to_show === "/") { return true; }
+
             if (nav_panel.css('left') !== "65px") {
                 nav_panel.animate({ left: 65 }, { duration: 200, queue: false });
                 main_panel.animate({ left: 323 }, { duration: 200, queue: false });
             }
-            if (panel_to_show === "/") {
-                return true;
-            } else if (panel_to_show === "#show-menu") {
+            if (panel_to_show === "#show-menu") {
                 // Do somethign else
                 e.preventDefault();
                 return false;
@@ -241,6 +241,19 @@ if (nilai === undefined) { var nilai = {}; }
             nilai.mark_more($(this));
         });
 
+
+        // Global Buton / Action Link Run
+        $('button, a.action').on('click', function (e) {
+
+            e.preventDefault();
+
+            console.log($(this).data('action'));
+
+        });
+
+
+
+
     };
 
 
@@ -248,51 +261,3 @@ if (nilai === undefined) { var nilai = {}; }
     $(document).ready(function(){ nilai.init(); });
 
 }(window.jQuery));
-
-/* Old Init 
-        // Show / Hide Top Navigation
-        $('.navigation-content').hide();
-        $('.menu-activator a').on('click', function (e) {
-            e.preventDefault();
-            $('.navigation-content').toggle();
-        });
-
-
-        // Show/Hide Navigation Items
-        $('ul.navigation-left li').hoverIntent(function () {
-            $(this).find('ul.dropdown').slideDown();
-        }, function () {
-            $(this).find('ul.dropdown').slideUp();
-        });
-        $('ul.navigation-left a.nilai_main_link').on('click', function (e) { e.preventDefault(); });
-
-        // Archive Link
-        $('a.archivemark').on('click', function (e) {
-            e.preventDefault();
-            nilai.archive_mark($(this));
-        });
-
-        // Label Mark
-        $('.addlabel').click(function (e) {
-            e.preventDefault();
-            nilai.label_mark($(this));
-        });
-
-        // Add to Group
-        $('.addgroup').click(function (e) {
-            e.preventDefault();
-            nilai.add_to_group($(this));
-        });
-
-        // Smart Label
-        $('#smartlabelbutton').click(function (e) {
-            e.preventDefault();
-            nilai.smart_label($(this));
-        });
-
-        // Preview Data
-        $('.preview-button').click(function (e) {
-            e.preventDefault();
-            nilai.show_data($(this));
-        });
-*/

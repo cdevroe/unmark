@@ -12,11 +12,17 @@
                     <a href="#show-more" data-mark-id="<?php print $mark->mark_id; ?>" class="mark-more">
                         <i class="barley-icon-elipsis"></i>
                     </a>
-                    <a href="/marks/archive/<?php print $mark->mark_id; ?>" class="mark-archive">
+                    <a href="/mark/archive/<?php print $mark->mark_id; ?>" class="mark-archive">
                         <i class="barley-icon-ok"></i>
                     </a>
                 </div>
                 <div class="mark-corner"></div>
+                <div class="mark-info">
+                    <div class="mark-data-notes"><?php print $mark->notes; ?></div>
+                    <div class="mark-data-preview"><?php print $mark->embed; ?></div>
+                    <div class="mark-data-label"><?php print $mark->label_id; ?></div>
+                    <div class="mark-data-label-name"><?php print $mark->label_name; ?></div>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>
