@@ -133,9 +133,9 @@ class Marks extends Plain_Controller
                 /marks/VALID_LOOKUP_KEY
                 /marks/DATE(/DATE)?
                 /marks/archive
-                /marks/search
-                /marks/tag
-                /marks/label
+                /marks/search*?q=QUERY
+                /marks/tag*
+                /marks/label*
         */
 
         // Get URI segments
