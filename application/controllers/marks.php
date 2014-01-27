@@ -170,6 +170,10 @@ class Marks extends Plain_Controller
             $where_time .= (! in_array($lookup, $no_time)) ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $valid_lookups[$lookup]['finish'] . "'" : '';
             $this->data['lookup_type'] = 'date_range';
         }
+
+        // Label Lookups
+        // Get label ID if need be
+        // Set where and lookup type
         elseif ($lookup == 'label') {
 
             // Get label ID
@@ -185,6 +189,12 @@ class Marks extends Plain_Controller
             $where_time                = " AND users_to_marks.label_id = '" . $label_id . "'";
             $this->data['lookup_type'] = 'label';
         }
+
+        // Tag lookups
+        // Get tag id if need be
+        // Set lookup type
+        // Set options to pass to readComplete
+        // readComplete will see that tag_id was sent and add an additional INNER JOIN
         elseif ($lookup == 'tag') {
             // Get label ID
             $tag_id = $finish;
@@ -200,6 +210,8 @@ class Marks extends Plain_Controller
             $this->data['lookup_type'] = 'tag';
             $options['tag_id'] = $tag_id;
         }
+
+        // Date Range Search
         else {
             // Check for valid dates
             $dates       = findStartFinish($lookup, $finish);
@@ -215,7 +227,12 @@ class Marks extends Plain_Controller
         $archive = ($lookup == 'archive') ? 'IS NOT NULL' : 'IS NULL';
 
         // Search it up
-        $search = (isset($this->db_clean->q) && ! empty($this->db_clean->q)) ? " AND users_to_marks.notes LIKE '%" . $this->db_clean->q . "%'" :  null;
+        $search = null;
+        if (isset($this->db_clean->q) && ! empty($this->db_clean->q)) {
+            $search = " AND users_to_marks.notes LIKE '%" . $this->db_clean->q . "%'";
+            $options['search']  = $this->db_clean->q;
+            $options['user_id'] = $this->user_id;
+        }
 
         // Set where
         $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on " . $archive . $where_time . $search;
@@ -224,17 +241,30 @@ class Marks extends Plain_Controller
         $marks = $this->user_marks->readComplete($where, $this->limit, $page, null, $options);
 
         // Check for marks
+        // If false, return error; set total to 0
         if ($marks === false) {
             $this->data['errors'] = formatErrors('No marks found.', 12);
             $this->data['total']  = 0;
         }
+        // If not false
+        // Set the marks
+        // Check for a JOIN to send to the getTotals call
+        // Get the totals
         else {
             $this->data['marks'] = $marks;
             $join                = (isset($options['tag_id']) && ! empty($options['tag_id'])) ? "INNER JOIN user_marks_to_tags UMTT ON users_to_marks.users_to_mark_id = UMTT.users_to_mark_id AND UMTT.tag_id = '" . $options['tag_id'] . "'" : null;
-            $this->data          = $this->user_marks->getTotals($where, $page, $this->limit, $this->data, $join);
+
+            if (isset($options['search'])) {
+                $this->data = $this->user_marks->getTotalsSearch($page, $this->limit, $this->data, $options['search'], $options['user_id']);
+            }
+            else {
+                $this->data = $this->user_marks->getTotals($where, $page, $this->limit, $this->data, $join);
+            }
         }
 
-        // Only grab these stats for web view (on site)
+        // If web view
+        // Get stats, labels and tags
+        // else skip this section and just return the marks
         if (parent::isWebView() === true) {
             self::getStats();
             self::getLabels();
@@ -258,7 +288,7 @@ class Marks extends Plain_Controller
             }
         }
 
-        // Figure if web or API view
+        // Figure if web, redirect, internal ajax call or API
         $this->figureView('marks/index');
     }
 
