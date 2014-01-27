@@ -14,6 +14,12 @@ if (nilai === undefined) { var nilai = {}; }
 
 (function ($) {
 
+    // Show Mark Info in Sidebar
+    // Grabs relavaent info and shows the sidebar actions with info
+    nilai.show_mark_info = function (mark_clicked) {
+        console.log('Congrats, suuper awesome');
+    };
+
     // Archive & Restore Mark
     nilai.mark_archive = function (archive_link) {
 
@@ -243,12 +249,12 @@ if (nilai === undefined) { var nilai = {}; }
 
 
         // Global Buton / Action Link Run
+        // Create a Function from a string
         $('button, a.action').on('click', function (e) {
-
             e.preventDefault();
-
-            console.log($(this).data('action'));
-
+            var action = $(this).data('action'), funct; // Get Data Action Attribute
+            funct = eval('nilai.' + action); // Convert it to an executable function
+            funct($(this)); // Run it with passed in object
         });
 
 
