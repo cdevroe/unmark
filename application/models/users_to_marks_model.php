@@ -155,6 +155,7 @@ class Users_To_Marks_model extends Plain_Model
 
     public function readComplete($where, $limit=1, $page=1, $start=null, $options=array())
     {
+        $is_search  = (isset($options['search']) && ! empty($options['search']) && isset($options['user_id']) && ! empty($options['user_id'])) ? true : false;
         $id         = (is_numeric($where)) ? $where : null;
         $where      = (is_numeric($where)) ? 'users_to_marks.' . $this->id_column . " = '$where'" : trim($where);
         $page       = (is_numeric($page) && $page > 0) ? $page : 1;
@@ -162,6 +163,7 @@ class Users_To_Marks_model extends Plain_Model
         $start      = (! is_null($start)) ? $start : $limit * ($page - 1);
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
         $sort       = (! empty($this->sort)) ? ' ORDER BY users_to_marks.' . $this->sort : null;
+        $sort       = (! empty($sort) && $is_search === true) ? ' ORDER BY ' . $this->sort : $sort;
         $tag_id     = (isset($options['tag_id']) && ! empty($options['tag_id'])) ? " INNER JOIN user_marks_to_tags UMTT ON users_to_marks.users_to_mark_id = UMTT.users_to_mark_id AND UMTT.tag_id = '" . $options['tag_id'] . "'" : null;
 
         // Default fields
@@ -181,20 +183,28 @@ class Users_To_Marks_model extends Plain_Model
             LEFT JOIN tags ON user_marks_to_tags.tag_id = tags.tag_id
         ";
 
+        // Group By
+        $group_by = " GROUP BY users_to_marks.users_to_mark_id";
+
         // Default Query
-        $query = "SELECT " . $fields . " FROM users_to_marks" . $tag_id . " INNER JOIN marks ON users_to_marks.mark_id = marks.mark_id " . $joins . " WHERE " . $where . " GROUP BY users_to_marks.users_to_mark_id" . $sort . $q_limit;
+        $query = "SELECT " . $fields . " FROM users_to_marks" . $tag_id . " INNER JOIN marks ON users_to_marks.mark_id = marks.mark_id " . $joins . " WHERE " . $where . $group_by;
+
+        // Order By
+        $order_by = " GROUP BY users_to_marks.users_to_mark_id";
 
         // Check for search
-        if (isset($options['search']) && ! empty($options['search']) && isset($options['user_id']) && ! empty($options['user_id'])) {
+        if ($is_search === true) {
             $search_query = "
                 SELECT " . $fields . "
                 FROM marks
                 INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $options['user_id'] . "' AND users_to_marks.archived_on IS NULL " . $joins . "
-                WHERE marks.title LIKE '%" . $options['search'] . "%' OR marks.url LIKE '%" . $options['search'] . "%'
-                GROUP BY users_to_marks.users_to_mark_id" . $sort . $q_limit;
+                WHERE marks.title LIKE '%" . $options['search'] . "%' OR marks.url LIKE '%" . $options['search'] . "%'" . $group_by;
 
             $query = '(' . $query . ') UNION DISTINCT (' . $search_query . ')';
         }
+
+        // Add order by
+        $query = $query . $sort . $q_limit;
 
         // Stop, query time
         $q     = $this->db->query('SET SESSION group_concat_max_len = 10000');
