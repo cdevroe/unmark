@@ -170,12 +170,14 @@ if (nilai === undefined) { var nilai = {}; }
         // Define some re-usable elements 
         var nav_panel = $('.navigation-pane'), 
             main_panel = $('.main-wrapper'),
+            main_content = $('.main-content'),
             main_panel_width = main_panel.width(),
             body_height = $('body').height();
 
         // Basic Page Setup
         main_panel.width(main_panel_width);
-        //$('body').height(body_height);
+        main_content.height(body_height);
+        $('body').height(body_height);
 
 
         // Main Panel Navigation

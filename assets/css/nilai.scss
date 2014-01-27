@@ -43,6 +43,7 @@ body, html{
     height:100%; 
 }
 body {
+    overflow:hidden;
     font-family: $sans-serif;
     border-left:65px solid $color_dark;
     border-top: 8px solid $color_darker;
@@ -217,6 +218,8 @@ ul.label-list {
 .main-content {
     @include span-columns(7);
     padding-right:0;
+    overflow: scroll;
+    position: absolute;
 }
 
 
@@ -365,6 +368,8 @@ ul.label-list {
     min-height: 100%;
     height: 100%;
     padding-right:0;
+    position: absolute;
+    right: -1.5%;
     .sidebar-block {
         border-bottom:1px solid $color_light;
         box-shadow: 1px 3px 2px 0 rgba(0,0,0,0.08);
