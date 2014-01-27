@@ -252,15 +252,17 @@ $config['encryption_key'] = 'nilai1will2make3money!';
 $config['sess_cookie_name']		= 'plain_session';
 $config['sess_expiration']		= 1209600;
 $config['sess_expire_on_close']	= FALSE;
+// Also enables encryption for data in case of using other storage mechanisms than cookies
 $config['sess_encrypt_cookie']	= FALSE;
 $config['sess_match_ip']		= FALSE;
 $config['sess_match_useragent']	= TRUE;
 $config['sess_time_to_update']	= 300;
+// FOR database storage only
+$config['sess_table_name']		= 'plain_sessions';
 
 
 // WARNING: Session settings below refer to CodeIgniter session library which is not being used in Nilai
 $config['sess_use_database']	= FALSE;
-$config['sess_table_name']		= 'plain_sessions';
 
 
 /*

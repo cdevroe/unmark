@@ -158,6 +158,7 @@ class Plain_Session extends CI_Session {
 		// Is the session data we unserialized an array with the correct format?
 		if ( ! is_array($session) OR ! isset($session['session_id']) OR ! isset($session['ip_address']) OR ! isset($session['user_agent']) OR ! isset($session['last_activity']))
 		{
+		    $this->_log('Invalid session data format', 'debug');
 			$this->sess_destroy();
 			return FALSE;
 		}
@@ -165,6 +166,7 @@ class Plain_Session extends CI_Session {
 		// Is the session current?
 		if (($session['last_activity'] + $this->sess_expiration) < $this->now)
 		{
+		    $this->_log('Session data expired', 'info');
 			$this->sess_destroy();
 			return FALSE;
 		}
@@ -172,14 +174,16 @@ class Plain_Session extends CI_Session {
 		// Does the IP Match?
 		if ($this->sess_match_ip == TRUE AND $session['ip_address'] != $this->CI->input->ip_address())
 		{
-			$this->sess_destroy();
+		    $this->_log('Not matching user IP - possible session hijacking', 'info');
+			session_regenerate_id(false);
 			return FALSE;
 		}
 
 		// Does the User Agent Match?
 		if ($this->sess_match_useragent == TRUE AND trim($session['user_agent']) != trim(substr($this->CI->input->user_agent(), 0, 120)))
 		{
-			$this->sess_destroy();
+		    $this->_log('Not matching user agent - possible session hijacking', 'info');
+		    session_regenerate_id(false);
 			return FALSE;
 		}
 
@@ -276,10 +280,9 @@ class Plain_Session extends CI_Session {
 	 */
 	function sess_destroy()
 	{
-	    
-		// Remove session
-		session_destroy();
-
+	    // Remove session but do not regenerate ID
+	    session_destroy();
+		    
 		// Kill session data
 		$this->userdata = array();
 	}
@@ -357,6 +360,10 @@ class Plain_Session extends CI_Session {
 	
 	        log_message('debug', 'Session garbage collection performed.');
 	    }
+	}
+	
+	private function _log($message, $level = 'debug'){
+	    @log_message($level, '[PlainSession] '.$message);
 	}
 
 }
