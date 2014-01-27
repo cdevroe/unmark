@@ -243,6 +243,16 @@ class Marks extends Plain_Controller
                     $this->data['labels'][$k]->current = ($label->label_id == $label_id) ? '1' : '0';
                 }
             }
+
+            // If looking up by tag, set the current tag if applicable
+            if ($lookup == 'tag') {
+                $tag_keys = array('popular', 'recent');
+                foreach ($tag_keys as $key) {
+                    foreach ($this->data['tags'][$key] as $k => $tag) {
+                        $this->data['tags'][$key][$k]->current = ($tag->tag_id == $tag_id) ? '1' : '0';
+                    }
+                }
+            }
         }
 
         // Figure if web or API view
