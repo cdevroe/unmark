@@ -45,20 +45,22 @@ class Plain_Model extends CI_Model
         $this->dont_cache = false;
     }
 
-    public function count($where=null)
+    public function count($where=null, $join=null)
     {
         $where = (! empty($where)) ? ' WHERE ' . $where : null;
+        $join  = (! empty($join)) ? ' ' . $join : null;
+
         $q = $this->db->query("
             SELECT
-            COUNT(" . $this->id_column . ")
-            FROM `" . $this->table . "`" . $where
+            COUNT(" . $this->table . '.' . $this->id_column . ")
+            FROM `" . $this->table . "`" . $join . $where
         );
 
         // Check for errors
         $this->sendException();
 
         $row = $q->row();
-        return (integer) $row->{'COUNT(' . $this->id_column . ')'};
+        return (integer) $row->{'COUNT(' . $this->table . '.' . $this->id_column. ')'};
     }
 
     public function delete($where)
@@ -82,9 +84,9 @@ class Plain_Model extends CI_Model
         return null;
     }
 
-    public function getTotals($where, $page, $limit, $data=array())
+    public function getTotals($where, $page, $limit, $data=array(), $join=null)
     {
-        $total            = $this->count($where);
+        $total            = $this->count($where, $join);
         $total_pages      = ($total > 0) ? ceil($total / $limit) : 0;
         $data['total']    = $total;
         $data['page']     = $page;

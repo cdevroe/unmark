@@ -120,8 +120,25 @@ class Marks extends Plain_Controller
     }
 
     // The index of the marks page
-    public function index($start='all', $finish=null, $page=1)
+    public function index()
     {
+
+        /*
+        - Figure the state of things by URL
+            URLS:
+                /marks
+                /marks/VALID_LOOKUP_KEY
+                /marks/DATE(/DATE)?
+                /marks/archive
+                /marks/search
+                /marks/tag
+                /marks/label
+        */
+
+        // Get URI segments
+        $segments = $this->uri->segment_array();
+        $lookup   = (isset($segments[2]) && ! empty($segments[2])) ? strtolower(trim(urldecode($segments[2]))) : 'all';
+        $finish   = (isset($segments[3]) && ! empty($segments[3])) ? strtolower(trim(urldecode($segments[3]))) : null;
 
         // Set allowable textual starts
         $valid_lookups = array(
@@ -138,31 +155,61 @@ class Marks extends Plain_Controller
             'ages-ago'          => array('start' => strtotime('-20 years'), 'finish' => strtotime('-1 year'))
         );
 
-        // If $start is one of the following, search by time is disabled
+        // If $lookup is one of the following, search by time is disabled
         $no_time = array('all', 'archive', 'search');
 
-        // Figure start, end and page
-        $start = strtolower(trim(urldecode($start)));
-
+        $options = array();
 
         // Figure when
         $where_time = null;
-        if (array_key_exists($start, $valid_lookups)) {
-            $where_time .= (! in_array($start, $no_time)) ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $valid_lookups[$start]['start'] . "'" : '';
-            $where_time .= (! in_array($start, $no_time)) ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $valid_lookups[$start]['finish'] . "'" : '';
+        if (array_key_exists($lookup, $valid_lookups)) {
+            $where_time .= (! in_array($lookup, $no_time)) ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $valid_lookups[$lookup]['start'] . "'" : '';
+            $where_time .= (! in_array($lookup, $no_time)) ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $valid_lookups[$lookup]['finish'] . "'" : '';
+            $this->data['lookup_type'] = 'date_range';
+        }
+        elseif ($lookup == 'label') {
+
+            // Get label ID
+            $label_id = $finish;
+            if (! is_numeric($label_id)) {
+                $this->load->model('labels_model', 'label');
+                $label    = $this->label->read("slug = '" . $this->db->escape_str($label_id) . "'", 1, 1, 'label_id');
+                $label_id = (isset($label->label_id)) ? $label->label_id : 0;
+            }
+
+            // Set the new where clause
+            // Set lookup type
+            $where_time                = " AND users_to_marks.label_id = '" . $label_id . "'";
+            $this->data['lookup_type'] = 'label';
+        }
+        elseif ($lookup == 'tag') {
+            // Get label ID
+            $tag_id = $finish;
+            if (! is_numeric($tag_id)) {
+                $this->load->model('tags_model', 'tag');
+                $tag      = $this->tag->read("slug = '" . $this->db->escape_str($tag_id) . "'", 1, 1, '*');
+                $tag_id   = (isset($tag->tag_id)) ? $tag->tag_id : 0;
+                $tag_slug = (isset($tag->slug)) ? $tag->slug : null;
+            }
+
+            // Set the new where clause
+            // Set lookup type
+            $this->data['lookup_type'] = 'tag';
+            $options['tag_id'] = $tag_id;
         }
         else {
             // Check for valid dates
-            $dates       = findStartFinish($start, $finish);
+            $dates       = findStartFinish($lookup, $finish);
             $where_time .= " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $dates['start'] . "'";
             $where_time .= " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $dates['finish'] . "'";
+            $this->data['lookup_type'] = 'custom_date';
         }
 
         // Figure the page number
         $page = findPage();
 
         // Archives
-        $archive = ($start == 'archive') ? 'IS NOT NULL' : 'IS NULL';
+        $archive = ($lookup == 'archive') ? 'IS NOT NULL' : 'IS NULL';
 
         // Search it up
         $search = (isset($this->db_clean->q) && ! empty($this->db_clean->q)) ? " AND users_to_marks.notes LIKE '%" . $this->db_clean->q . "%'" :  null;
@@ -171,7 +218,7 @@ class Marks extends Plain_Controller
         $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on " . $archive . $where_time . $search;
 
         // Get all the marks
-        $marks = $this->user_marks->readComplete($where, $this->limit, $page);
+        $marks = $this->user_marks->readComplete($where, $this->limit, $page, null, $options);
 
         // Check for marks
         if ($marks === false) {
@@ -180,7 +227,8 @@ class Marks extends Plain_Controller
         }
         else {
             $this->data['marks'] = $marks;
-            $this->data          = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
+            $join                = (isset($options['tag_id']) && ! empty($options['tag_id'])) ? "INNER JOIN user_marks_to_tags UMTT ON users_to_marks.users_to_mark_id = UMTT.users_to_mark_id AND UMTT.tag_id = '" . $options['tag_id'] . "'" : null;
+            $this->data          = $this->user_marks->getTotals($where, $page, $this->limit, $this->data, $join);
         }
 
         // Only grab these stats for web view (on site)
@@ -188,6 +236,23 @@ class Marks extends Plain_Controller
             self::getStats();
             self::getLabels();
             self::getTags();
+
+            // If looking up by label, set the current label
+            if ($lookup == 'label') {
+                foreach ($this->data['labels'] as $k => $label) {
+                    $this->data['labels'][$k]->current = ($label->label_id == $label_id) ? '1' : '0';
+                }
+            }
+
+            // If looking up by tag, set the current tag if applicable
+            if ($lookup == 'tag') {
+                $tag_keys = array('popular', 'recent');
+                foreach ($tag_keys as $key) {
+                    foreach ($this->data['tags'][$key] as $k => $tag) {
+                        $this->data['tags'][$key][$k]->current = ($tag->tag_id == $tag_id) ? '1' : '0';
+                    }
+                }
+            }
         }
 
         // Figure if web or API view
@@ -380,61 +445,6 @@ class Marks extends Plain_Controller
 
         // Figure view
         $this->figureView('marks/info');
-    }
-
-    // Lookup by label
-    // Both api and web view
-    public function label($label_id=0, $page=1)
-    {
-        // If label id is string, find label_id
-        // Need to write this as ONE query
-        if (! is_numeric($label_id)) {
-            $this->load->model('labels_model', 'label');
-            $label    = $this->label->read("slug = '" . mysqli_real_escape_string($this->db->conn_id, $label_id) . "'", 1, 1, 'label_id');
-            $label_id = (isset($label->label_id)) ? $label->label_id : 0;
-        }
-
-        // If label id is numeric, proceed
-        if (! empty($label_id) && is_numeric($label_id)) {
-
-            // Load user marks model
-            $this->load->model('users_to_marks_model', 'user_marks');
-
-            // Figure the correct starting page
-            $page = (! is_numeric($page) || $page < 0) ? 1 : $page;
-
-            // Set where
-            $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.label_id = '" . $label_id . "'";
-
-            // Get the marks by label id
-            $marks = $this->user_marks->readComplete($where, $this->limit, $page);
-
-            // Check for marks
-            if ($marks === false) {
-                $this->data['errors'] = formatErrors('No marks found for your account for this label.', 13);
-            }
-            else {
-                $this->data['marks'] = $marks;
-                $this->data          = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
-            }
-        }
-        else {
-            $this->data['errors'] = formatErrors('No label found for mark lookup.', 16);
-        }
-
-        // Only grab these stats for web view (on site)
-        if (parent::isWebView() === true) {
-            self::getStats();
-            self::getLabels();
-            self::getTags();
-
-            foreach ($this->data['labels'] as $k => $label) {
-                $this->data['labels'][$k]->current = ($label->label_id == $label_id) ? '1' : '0';
-            }
-        }
-
-        // Figure if web or API view
-        $this->figureView('marks/label');
     }
 
     // Restore a bookmark from archived
