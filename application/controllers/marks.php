@@ -140,9 +140,6 @@ class Marks extends Plain_Controller
         $lookup   = (isset($segments[2]) && ! empty($segments[2])) ? strtolower(trim(urldecode($segments[2]))) : 'all';
         $finish   = (isset($segments[3]) && ! empty($segments[3])) ? strtolower(trim(urldecode($segments[3]))) : null;
 
-        // Set the default lookup method
-        $lookup_method = 'readComplete';
-
         // Set allowable textual starts
         $valid_lookups = array(
             'all'               => array('start' => null, 'finish' => null),
@@ -160,6 +157,8 @@ class Marks extends Plain_Controller
 
         // If $lookup is one of the following, search by time is disabled
         $no_time = array('all', 'archive', 'search');
+
+        $options = array();
 
         // Figure when
         $where_time = null;
@@ -190,13 +189,13 @@ class Marks extends Plain_Controller
                 $this->load->model('tags_model', 'tag');
                 $tag      = $this->tag->read("slug = '" . $this->db->escape_str($tag_id) . "'", 1, 1, '*');
                 $tag_id   = (isset($tag->tag_id)) ? $tag->tag_id : 0;
+                $tag_slug = (isset($tag->slug)) ? $tag->slug : null;
             }
 
             // Set the new where clause
             // Set lookup type
-            $where_time                = " AND users_to_marks.label_id = '" . $label_id . "'";
             $this->data['lookup_type'] = 'tag';
-            $lookup_method             = 'readCompleteByTag';
+            $options['tag_id'] = $tag_id;
         }
         else {
             // Check for valid dates
@@ -219,7 +218,7 @@ class Marks extends Plain_Controller
         $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on " . $archive . $where_time . $search;
 
         // Get all the marks
-        $marks = $this->user_marks->{$lookup_method}($where, $this->limit, $page);
+        $marks = $this->user_marks->readComplete($where, $this->limit, $page, null, $options);
 
         // Check for marks
         if ($marks === false) {

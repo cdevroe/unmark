@@ -56,13 +56,14 @@ class Users_To_Marks_model extends Plain_Model
     {
         foreach ($marks as $k => $mark) {
             $marks[$k]->tags = array();
-            if (isset($mark->tag_ids) && ! empty($mark->tags_ids)) {
-                $ids   = explode($this->delimiter, $mark->tags_ids);
+            if (isset($mark->tag_ids) && ! empty($mark->tag_ids)) {
+                $ids   = explode($this->delimiter, $mark->tag_ids);
                 $names = explode($this->delimiter, $mark->tag_names);
                 $slugs = explode($this->delimiter, $mark->tag_slugs);
                 foreach ($ids as $kk => $id) {
-                    $marks[$k]->tags[$id] = array('name' => $names[$kk], 'slug' => $slugs[$kk]);
+                    $marks[$k]->tags[$slugs[$kk]] = array('tag_id' => $ids[$kk], 'name' => $names[$kk], 'slug' => $slugs[$kk]);
                 }
+                ksort($marks[$k]->tags);
             }
             unset($marks[$k]->tag_ids);
             unset($marks[$k]->tag_names);
@@ -108,7 +109,7 @@ class Users_To_Marks_model extends Plain_Model
         return $this->count("user_id='". $user_id . "'" . $when);
     }
 
-    public function readComplete($where, $limit=1, $page=1, $start=null, $search=null)
+    public function readComplete($where, $limit=1, $page=1, $start=null, $options=array())
     {
         $id         = (is_numeric($where)) ? $where : null;
         $where      = (is_numeric($where)) ? 'users_to_marks.' . $this->id_column . " = '$where'" : trim($where);
@@ -117,6 +118,7 @@ class Users_To_Marks_model extends Plain_Model
         $start      = (! is_null($start)) ? $start : $limit * ($page - 1);
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
         $sort       = (! empty($this->sort)) ? ' ORDER BY users_to_marks.' . $this->sort : null;
+        $tag_id     = (isset($options['tag_id']) && ! empty($options['tag_id'])) ? " INNER JOIN user_marks_to_tags UMTT ON users_to_marks.users_to_mark_id = UMTT.users_to_mark_id AND UMTT.tag_id = '" . $options['tag_id'] . "'" : null;
 
         // Stop, query time
         $q     = $this->db->query('SET SESSION group_concat_max_len = 10000');
@@ -128,12 +130,13 @@ class Users_To_Marks_model extends Plain_Model
             GROUP_CONCAT(tags.name SEPARATOR '" . $this->delimiter . "') AS tag_names,
             GROUP_CONCAT(tags.slug SEPARATOR '" . $this->delimiter . "') AS tag_slugs,
             labels.label_id, labels.name AS label_name
-            FROM users_to_marks
-            LEFT JOIN marks ON users_to_marks.mark_id = marks.mark_id
-            LEFT JOIN user_marks_to_tags ON users_to_marks.mark_id = user_marks_to_tags.users_to_mark_id
+            FROM users_to_marks" . $tag_id . "
+            INNER JOIN marks ON users_to_marks.mark_id = marks.mark_id
+            LEFT JOIN user_marks_to_tags ON users_to_marks.users_to_mark_id = user_marks_to_tags.users_to_mark_id
             LEFT JOIN labels ON users_to_marks.label_id = labels.label_id
             LEFT JOIN tags ON user_marks_to_tags.tag_id = tags.tag_id
-            WHERE " . $where . " GROUP BY users_to_marks.users_to_mark_id" . $sort . $q_limit
+            WHERE " . $where . "
+            GROUP BY users_to_marks.users_to_mark_id" . $sort . $q_limit
         );
 
         // Check for errors
