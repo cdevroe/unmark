@@ -227,7 +227,8 @@ class Marks extends Plain_Controller
         }
         else {
             $this->data['marks'] = $marks;
-            $this->data          = $this->user_marks->getTotals($where, $page, $this->limit, $this->data);
+            $join                = (isset($options['tag_id']) && ! empty($options['tag_id'])) ? "INNER JOIN user_marks_to_tags UMTT ON users_to_marks.users_to_mark_id = UMTT.users_to_mark_id AND UMTT.tag_id = '" . $options['tag_id'] . "'" : null;
+            $this->data          = $this->user_marks->getTotals($where, $page, $this->limit, $this->data, $join);
         }
 
         // Only grab these stats for web view (on site)
