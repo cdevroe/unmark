@@ -93,18 +93,32 @@ class Plain_Controller extends CI_Controller
     // Check and generate CRSF tokens
     protected function generateCSRF()
     {
-        if (isset($this->clean->csrf_token)) {
-            if (isset($_SESSION['csrf_token']) && ! empty($_SESSION['csrf_token'])) {
-                $this->csrf_valid = ($_SESSION['csrf_token'] == $this->clean->csrf_token) ? true : false;
-            }
 
-            if ($this->csrf_valid === false) {
-                $this->setFlashMessage('We could not locate the correct security token. Please try again.');
-            }
+        // IF API call, CSRF is not used
+        // Set to true
+        // All calls will require a user_token to validate instead
+        if (self::isAPI() === true) {
+            $this->csrf_valid = true;
         }
+        else {
 
-        if (! isset($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = generateCSRF();
+            // If set, validate it
+            if (isset($this->clean->csrf_token)) {
+                if (isset($_SESSION['csrf_token']) && ! empty($_SESSION['csrf_token'])) {
+                    $this->csrf_valid = ($_SESSION['csrf_token'] == $this->clean->csrf_token) ? true : false;
+                }
+
+                // If false, set a flash message and data error
+                if ($this->csrf_valid === false) {
+                    $this->setFlashMessage('We could not locate the correct security token. Please try again.');
+                    $this->data['errors'] = formatErrors('Security token is invalid.', 100);
+                }
+            }
+
+            // If not set, set it
+            if (! isset($_SESSION['csrf_token'])) {
+                $_SESSION['csrf_token'] = generateCSRF();
+            }
         }
     }
 
@@ -179,7 +193,7 @@ class Plain_Controller extends CI_Controller
     // If logged if invalid CSRF token is not valid
     protected function redirectIfInvalidCSRF()
     {
-        if (empty($this->csrf_valid)) {
+        if (empty($this->csrf_valid) && self::isAPI() === false) {
             header('Location: /');
             exit;
         }

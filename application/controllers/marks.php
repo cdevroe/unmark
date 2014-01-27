@@ -105,14 +105,17 @@ class Marks extends Plain_Controller
             exit;
         }
 
-        // Update
-        $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
+        // Check for CSRF
+        if ($this->csrf_valid === true) {
+            // Update
+            $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
 
-        if ($mark === false) {
-            $this->data['errors'] = formatErrors('Mark could not be archived.', 11);
-        }
-        else {
-            $this->data['mark'] = $mark;
+            if ($mark === false) {
+                $this->data['errors'] = formatErrors('Mark could not be archived.', 11);
+            }
+            else {
+                $this->data['mark'] = $mark;
+            }
         }
 
         // Figure view
@@ -269,74 +272,79 @@ class Marks extends Plain_Controller
             exit;
         }
 
-        // Figure what options to send for update
-        $options = array();
+        // Check for CSRF
+        if ($this->csrf_valid === true) {
 
-        // If label ID is found, attach it
-        if (isset($this->clean->label_id) && is_numeric($this->label_id)) {
-            $options['label_id'] = $this->clean->label_id;
-        }
+            // Figure what options to send for update
+            $options = array();
 
-        // If notes are present set them
-        if (isset($this->db_clean->notes)) {
-            $options['notes'] = $this->db_clean->notes;
-        }
+            // If label ID is found, attach it
+            if (isset($this->clean->label_id) && is_numeric($this->label_id)) {
+                $options['label_id'] = $this->clean->label_id;
+            }
 
-        // If tags are present, handle differentlu
-        // Need to add to tags table first
-        // Then create association
-        // If notes are present set them
-        if (isset($this->db_clean->tags) || isset($this->clean->delete_tags)) {
-            // Update users_to_marks record
-            $this->load->model('tags_model', 'tag');
-            $this->load->model('user_marks_to_tags_model', 'mark_to_tag');
+            // If notes are present set them
+            if (isset($this->db_clean->notes)) {
+                $options['notes'] = $this->db_clean->notes;
+            }
 
-            // Add/Update tags
-            if (isset($this->db_clean->tags)) {
-                $tags = explode(',', $this->db_clean->tags);
-                foreach ($tags as $k => $tag) {
-                    $tag  = trim($tag);
-                    $slug = generateSlug($tag);
-                    if (! empty($slug)) {
-                        $tag = $this->tag->read("slug == '" . $slug . "'", 1, 1, 'tag_id');
-                        if (! isset($tag->tag_id)) {
+            // If tags are present, handle differentlu
+            // Need to add to tags table first
+            // Then create association
+            // If notes are present set them
+            if (isset($this->db_clean->tags) || isset($this->clean->delete_tags)) {
+                // Update users_to_marks record
+                $this->load->model('tags_model', 'tag');
+                $this->load->model('user_marks_to_tags_model', 'mark_to_tag');
+
+                // Add/Update tags
+                if (isset($this->db_clean->tags)) {
+                    $tags = explode(',', $this->db_clean->tags);
+                    foreach ($tags as $k => $tag) {
+                        $tag  = trim($tag);
+                        $slug = generateSlug($tag);
+                        if (! empty($slug)) {
+                            $tag = $this->tag->read("slug == '" . $slug . "'", 1, 1, 'tag_id');
+                            if (! isset($tag->tag_id)) {
+                                $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
+                            }
+
+                            // Add tag to mark
+                            if (isset($tag->tag_id)) {
+                                $res = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
+                            }
+                        }
+                    }
+                }
+
+                // Delete tags
+                if (isset($this->clean->delete_tags)) {
+                    $tag_ids = explode(',', $this->clean->delete_tags);
+                    foreach ($tag_ids as $tag_id) {
+                        if (is_numeric($tag_id)) {
                             $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
-                        }
 
-                        // Add tag to mark
-                        if (isset($tag->tag_id)) {
-                            $res = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
-                        }
-                    }
-                }
-            }
-
-            // Delete tags
-            if (isset($this->clean->delete_tags)) {
-                $tag_ids = explode(',', $this->clean->delete_tags);
-                foreach ($tag_ids as $tag_id) {
-                    if (is_numeric($tag_id)) {
-                        $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
-
-                        // Add tag to mark
-                        if (isset($tag->tag_id)) {
-                            $res = $this->mark_to_tags->delete(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
+                            // Add tag to mark
+                            if (isset($tag->tag_id)) {
+                                $res = $this->mark_to_tags->delete(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
+                            }
                         }
                     }
                 }
             }
-        }
 
 
-        // Update users_to_marks record
-        $mark = $this->user_marks->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
+            // Update users_to_marks record
+            $mark = $this->user_marks->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
 
-        // Check if it was updated
-        if ($mark === false) {
-            $this->data['errors'] = formatErrors('Mark could not be updated.', 14);
-        }
-        else {
-            $this->data['mark'] = $mark;
+            // Check if it was updated
+            if ($mark === false) {
+                $this->data['errors'] = formatErrors('Mark could not be updated.', 14);
+            }
+            else {
+                $this->data['mark'] = $mark;
+            }
+
         }
 
         // Figure what to do here (api, redirect or generate view)
@@ -461,15 +469,18 @@ class Marks extends Plain_Controller
             exit;
         }
 
-        // Load correct model
-        $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => NULL));
+        // Check for CSRF
+        if ($this->csrf_valid === true) {
+            // Load correct model
+            $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => NULL));
 
-        // Check if it was updated
-        if ($mark === false) {
-            $this->data['errors'] = formatErrors('Mark could not be restored.', 17);
-        }
-        else {
-            $this->data['mark'] = $mark;
+            // Check if it was updated
+            if ($mark === false) {
+                $this->data['errors'] = formatErrors('Mark could not be restored.', 17);
+            }
+            else {
+                $this->data['mark'] = $mark;
+            }
         }
 
         // Figure view
