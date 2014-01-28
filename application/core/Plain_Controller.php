@@ -301,7 +301,7 @@ class Plain_Controller extends CI_Controller
     {
         // If request is not coming from command line & is not an API URL OR it is an internal ajax call, start the session
         if ((self::isCommandLine() === false && self::isAPI() === false) || self::isInternalAJAX() === true) {
-            session_start();
+            $this->load->library('session');
         }
     }
 

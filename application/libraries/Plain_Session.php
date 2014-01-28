@@ -42,7 +42,7 @@ class Plain_Session extends CI_Session {
 	 */
 	public function __construct($params = array())
 	{
-		log_message('debug', "Session Class Initialized");
+		log_message('debug', "Plain Session Class Initialized");
 
 		// Set the super object to a local variable for use throughout the class
 		$this->CI =& get_instance();
@@ -81,7 +81,7 @@ class Plain_Session extends CI_Session {
 
 		// Set the cookie name
 		$this->sess_cookie_name = $this->cookie_prefix.$this->sess_cookie_name;
-		
+
 		// Initialize session
 		$this->_start_session();
 
@@ -147,7 +147,7 @@ class Plain_Session extends CI_Session {
 
 		// Unserialize the session array
 		$session = $this->_unserialize($session);
-		
+
 		// Is the session data we unserialized an array with the correct format?
 		if ( ! is_array($session) OR ! isset($session['session_id']) OR ! isset($session['ip_address']) OR ! isset($session['user_agent']) OR ! isset($session['last_activity']))
 		{
@@ -182,7 +182,7 @@ class Plain_Session extends CI_Session {
 
 		// Session is valid!
 		$this->userdata = $session;
-		
+
 		return TRUE;
 	}
 
@@ -275,7 +275,7 @@ class Plain_Session extends CI_Session {
 	{
 	    // Remove session but do not regenerate ID
 	    session_destroy();
-		    
+
 		// Kill session data
 		$this->userdata = array();
 	}
@@ -294,7 +294,7 @@ class Plain_Session extends CI_Session {
 		{
 			$cookie_data = $this->userdata;
 		}
-		
+
 
 		// Serialize the userdata for the cookie
 		$cookie_data = $this->_serialize($cookie_data);
@@ -308,13 +308,13 @@ class Plain_Session extends CI_Session {
 			// if encryption is not used, we provide an md5 hash to prevent userside tampering
 			$cookie_data = $cookie_data.md5($cookie_data.$this->encryption_key);
 		}
-		
+
 		$_SESSION['ci_data'] = $cookie_data;
-		
+
 	}
-	
+
 	// --------------------------------------------------------------------
-	
+
 	/**
 	 * Set session cookie parameters and invoke session_start to generate session data
 	 */
@@ -329,14 +329,14 @@ class Plain_Session extends CI_Session {
 	        ini_set('session.save_handler', 'memcached');
 	        ini_set('session.save_path', $this->plain_sess_memcache_addr);
 	    }
-	     
+
 	    session_name($this->sess_cookie_name);
-	    session_set_cookie_params($this->sess_expiration, $this->cookie_path, $this->cookie_domain, $this->cookie_secure);	     
+	    session_set_cookie_params($this->sess_expiration, $this->cookie_path, $this->cookie_domain, $this->cookie_secure);
 	    session_start();
 	}
-	
+
 	// --------------------------------------------------------------------
-	
+
 	/**
 	 * Garbage collection
 	 *
@@ -353,19 +353,19 @@ class Plain_Session extends CI_Session {
 	    {
 	        return;
 	    }
-	
+
 	    srand(time());
 	    if ((rand() % 100) < $this->gc_probability)
 	    {
 	        $expire = $this->now - $this->sess_expiration;
-	
+
 	        $this->CI->db->where("last_activity < {$expire}");
 	        $this->CI->db->delete($this->sess_table_name);
-	
+
 	        log_message('debug', 'Session garbage collection performed.');
 	    }
 	}
-	
+
 	private function _log($message, $level = 'debug'){
 	    @log_message($level, '[PlainSession] '.$message);
 	}
