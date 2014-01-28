@@ -65,6 +65,13 @@ class Users_To_Marks_model extends Plain_Model
                 }
                 ksort($marks[$k]->tags);
             }
+
+            // Figure the nice time
+            $marks[$k]->nice_time = '';
+            if (isset($mark->created_on) && ! empty($mark->created_on)) {
+                $marks[$k]->nice_time = generateTimeSpan($mark->created_on);
+            }
+
             unset($marks[$k]->tag_ids);
             unset($marks[$k]->tag_names);
             unset($marks[$k]->tag_slugs);
