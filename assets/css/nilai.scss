@@ -170,7 +170,7 @@ body {
             background-color: #303030;
             min-height: 100%;
             width: 200px;
-            padding: 10px 15px;
+            padding: 10px 20px;
         }
     }
 }
@@ -215,6 +215,50 @@ ul.label-list {
         &.label-5:after { background: $color_purple; }
         &.label-6:after { background: $color_green; }
         &.label-7:after { background: $color_red; }
+    }
+}
+
+#panel-search {
+    #search-form {
+        margin-top: 15px;
+        position: relative;
+        input {
+            background: $color_white;
+            width: 310px;
+            padding: 8px 15px;
+            font-size: 12px;
+            letter-spacing: .1em;
+        }
+        i {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            color: $color_darker;
+            font-size: 13px;
+        }
+    }
+    h4 {
+        font-weight: 300;
+        text-transform: uppercase;
+        font-size: 12px;
+        border-bottom: 1px solid $color_light;
+        padding: 0 0 10px 0;
+        margin-top: 50px;
+        color: $color_light;
+    }
+    ul.tag-list {
+        margin: 0;
+        padding:0;
+        li {
+            list-style: none;
+            color: $color_light;
+            a {
+                color: $color_light;
+                border-bottom: none;
+                padding: 10px;
+                text-transform: inherit;
+            }
+        }
     }
 }
 

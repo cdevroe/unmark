@@ -27,7 +27,29 @@
             </ul>
         </div>
         <div id="panel-timeline" class="nav-panel">Timeline</div>
-        <div id="panel-search" class="nav-panel">Search</div>
+        <div id="panel-search" class="nav-panel">
+            <form method="post" action="#" id="search-form">
+                <input type="text" name="search" id="search-input" placeholder="SEARCH...">
+                <i class="barley-icon-chevron-right"></i>
+            </form>
+            
+            <h4>Most-Used Tags</h4>
+            <ul class="tag-list">
+                <?php if ($tags->popular != "") : ?>
+                    <?php foreach ($tags as $tag) : ?>
+                        <li><a href="#">#Tags</a></li>
+                        <li><a href="#">#Tags</a></li>
+                        <li><a href="#">#Tags</a></li>
+                        <li><a href="#">#Tags</a></li>
+                        <li><a href="#">#Tags</a></li>
+                        <li><a href="#">#Tags</a></li>
+                        <li><a href="#">#Tags</a></li>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                <li>No Tags Found</li>
+                <?php endif; ?>
+            </ul>
+        </div>
         <div id="panel-settings" class="nav-panel">Settings</div>
     </div>
 </div>
