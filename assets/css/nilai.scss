@@ -27,7 +27,8 @@ $color_blue   : #2D96C5;
 $color_yellow : #EAC863;
 $color_purple : #8E75A6;
 $color_green  : #19A59B;
-$color_red    : #DB5B73;
+$color_red    : #EB5556;
+$color_pink   : #DB5B73;
 $color_grey   : #A5A6AA;
 
 // Font Variables
@@ -133,7 +134,7 @@ body {
     left:-193px;
     z-index: 100;
     border-top: 56px solid $color_darker;
-    ul {
+    ul.navigation-pane-links {
         margin:0;
         padding:0;
         li {
@@ -214,7 +215,33 @@ ul.label-list {
         &.label-4:after { background: $color_yellow; }
         &.label-5:after { background: $color_purple; }
         &.label-6:after { background: $color_green; }
-        &.label-7:after { background: $color_red; }
+        &.label-7:after { background: $color_pink; }
+    }
+}
+
+h4.nav-heading {
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 12px;
+    border-bottom: 1px solid $color_light;
+    padding: 0 0 10px 0;
+    margin-top: 50px;
+    color: $color_light;    
+}
+
+ul.nav-list {
+    margin:0;
+    padding:0;
+    li {
+        list-style: none;
+        color: $color_light;
+        margin-bottom: 15px;
+        font-size: 14px;
+        a {
+            font-size: 13px;
+            display: block;
+            color: $color_light;
+        }
     }
 }
 
@@ -237,15 +264,6 @@ ul.label-list {
             font-size: 13px;
         }
     }
-    h4 {
-        font-weight: 300;
-        text-transform: uppercase;
-        font-size: 12px;
-        border-bottom: 1px solid $color_light;
-        padding: 0 0 10px 0;
-        margin-top: 50px;
-        color: $color_light;
-    }
     ul.tag-list {
         margin: 0;
         padding:0;
@@ -259,6 +277,15 @@ ul.label-list {
                 text-transform: inherit;
             }
         }
+    }
+}
+
+#panel-settings {
+    button#logout-btn {
+        width: 310px;
+        margin-top: 15px;
+        padding: 13px 0;
+        font-size: 14px;
     }
 }
 
@@ -381,12 +408,12 @@ ul.label-list {
         }
         &.label-7 {
             &:after {
-                background: $color_red;        
+                background: $color_pink;        
             }
             .mark-actions a {
-                background: $color_red;
+                background: $color_pink;
                 &.mark-archive {
-                    background: lighten( $color_red, 10% )
+                    background: lighten( $color_pink, 10% )
                 }
             }
         }
@@ -495,9 +522,9 @@ ul.label-list {
             h3 { color: $color_green; }
         }
         &.label-7 {
-            background: lighten($color_red, 35%);
-            &:before { background: $color_red; }
-            h3 { color: $color_red; }
+            background: lighten($color_pink, 35%);
+            &:before { background: $color_pink; }
+            h3 { color: $color_pink; }
         }
     } 
     .sidebar-info-panel {
@@ -640,7 +667,7 @@ body.label-3 { border-top: 8px solid $color_blue; }
 body.label-4 { border-top: 8px solid $color_yellow; }
 body.label-5 { border-top: 8px solid $color_purple; }
 body.label-6 { border-top: 8px solid $color_green; }
-body.label-7 { border-top: 8px solid $color_red; }
+body.label-7 { border-top: 8px solid $color_pink; }
 
 // Menu Activator Settigns
 body.label-1 .menu-activator { background-color: $color_grey; }
@@ -649,7 +676,7 @@ body.label-3 .menu-activator { background-color: $color_blue; }
 body.label-4 .menu-activator { background-color: $color_yellow; }
 body.label-5 .menu-activator { background-color: $color_purple; }
 body.label-6 .menu-activator { background-color: $color_green; }
-body.label-7 .menu-activator { background-color: $color_red; }
+body.label-7 .menu-activator { background-color: $color_pink; }
 
 // Navigation Pane
 body.label-1 .navigation-pane { border-top: 56px solid $color_grey; }
@@ -658,4 +685,4 @@ body.label-3 .navigation-pane { border-top: 56px solid $color_blue; }
 body.label-4 .navigation-pane { border-top: 56px solid $color_yellow; }
 body.label-5 .navigation-pane { border-top: 56px solid $color_purple; }
 body.label-6 .navigation-pane { border-top: 56px solid $color_green; }
-body.label-7 .navigation-pane { border-top: 56px solid $color_red; }
+body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }

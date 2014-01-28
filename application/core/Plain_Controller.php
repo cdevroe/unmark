@@ -84,10 +84,6 @@ class Plain_Controller extends CI_Controller
         // This will change to show view when ready
         else {
 
-            /*print '<pre>';
-            print_r($this->data);
-            print '</pre>';*/
-
             $this->view($view);
 
         }

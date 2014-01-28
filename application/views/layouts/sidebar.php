@@ -7,9 +7,9 @@
     <div class="sidebar-block">
         <div class="sidebar-inner">
             <p>You have <?php print $stats['marks']['last year']; ?> links that are over 1 year old. Want to tidy up a bit?</p>
-            <button data-action="view-links">View Links</button>
-            <button data-action="dismiss">Do Nothing</button>
-            <button data-action="delete">Delete All</button>
+            <button data-action="view-this">View Links</button>
+            <button data-action="dismiss-this">Do Nothing</button>
+            <button data-action="delete-mark">Delete All</button>
         </div>
     </div>
 </div>

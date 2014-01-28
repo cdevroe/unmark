@@ -33,9 +33,9 @@
                 <i class="barley-icon-chevron-right"></i>
             </form>
             
-            <h4>Most-Used Tags</h4>
+            <h4 class="nav-heading">Most-Used Tags</h4>
             <ul class="tag-list">
-                <?php if ($tags->popular != "") : ?>
+                <?php if ($tags[popular] != "") : ?>
                     <?php foreach ($tags as $tag) : ?>
                         <li><a href="#">#Tags</a></li>
                         <li><a href="#">#Tags</a></li>
@@ -50,6 +50,19 @@
                 <?php endif; ?>
             </ul>
         </div>
-        <div id="panel-settings" class="nav-panel">Settings</div>
+        <div id="panel-settings" class="nav-panel">
+            <button id="logout-btn" class="danger" data-action="logout">Sign Out</button>
+            <h4 class="nav-heading">Settings</h4>
+            <ul class="nav-list">
+                <li>Email: <?php print $user[email]; ?></li>
+            </ul>
+            <h4 class="nav-heading">Help</h4>
+            <ul class="nav-list">
+                <li><a href="#">How to Use Nilai</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Get the Bookmarklet</a></li>
+                <li><a href="#">Get the Chrome Extension</a></li>
+            </ul>
+        </div>
     </div>
 </div>
