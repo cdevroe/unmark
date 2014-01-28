@@ -6,7 +6,6 @@ class Install extends CI_Controller {
     parent::__construct();
 
     $this->load->helper(array('url','form'));
-    $this->load->library('plain_session', '', 'session');
 
     $this->load->database(); // Load Database for all methods
 
@@ -40,7 +39,8 @@ class Install extends CI_Controller {
         }
 
     }
-
+    $this->load->library('plain_session', '', 'session');
+    
     // Make sure there is at least one user
     $this->db->from('users');
     $number_of_users = $this->db->count_all_results();
@@ -57,6 +57,7 @@ class Install extends CI_Controller {
   // Used to update from one version to another.
   public function upgrade()
   { 
+      $this->load->library('plain_session', '', 'session');
       // Logged in user id
       $userId = $this->session->userdata('userid');
       if (!empty($userId)) {
