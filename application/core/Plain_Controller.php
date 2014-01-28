@@ -130,11 +130,13 @@ class Plain_Controller extends CI_Controller
 
     protected function getFlashMessages()
     {
-        $flash_message = $this->session->userdata('flash_message');
-        if (isset($flash_message['message']) && ! empty($flash_message['message'])) {
-            $this->flash_message['type']    = $flash_message['type'];
-            $this->flash_message['message'] = $flash_message['message'];
-            $this->session->unset_userdata('flash_message');
+        if (isset($this->session)) {
+            $flash_message = $this->session->userdata('flash_message');
+            if (isset($flash_message['message']) && ! empty($flash_message['message'])) {
+                $this->flash_message['type']    = $flash_message['type'];
+                $this->flash_message['message'] = $flash_message['message'];
+                $this->session->unset_userdata('flash_message');
+            }
         }
     }
 
