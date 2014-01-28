@@ -68,13 +68,6 @@ class Plain_Session extends CI_Session {
 			$this->CI->load->library('encrypt');
 		}
 
-		// Are we using a database?  If so, load it
-		if ($this->plain_sess_storage == 'database')
-		{
-			$dbSessionHandler = new CIDatabaseSessionHandler();
-			session_set_save_handler($dbSessionHandler, true);
-		}
-
 		// Set the "now" time.  Can either be GMT or server time, based on the
 		// config prefs.  We use this to set the "last activity" time
 		$this->now = $this->_get_time();
@@ -326,8 +319,19 @@ class Plain_Session extends CI_Session {
 	 * Set session cookie parameters and invoke session_start to generate session data
 	 */
 	protected function _start_session(){
+	    // Are we using a database?  If so, load it
+	    if ($this->plain_sess_storage == 'database')
+	    {
+	        $dbSessionHandler = new CIDatabaseSessionHandler();
+	        session_set_save_handler($dbSessionHandler, true);
+	    } else if($this->plain_sess_storage == 'memcached'){
+	        // Memcache session storage
+	        ini_set('session.save_handler', 'memcached');
+	        ini_set('session.save_path', $this->plain_sess_memcache_addr);
+	    }
+	     
 	    session_name($this->sess_cookie_name);
-	    session_set_cookie_params($this->sess_expiration, $this->cookie_path, $this->cookie_domain, $this->cookie_secure);
+	    session_set_cookie_params($this->sess_expiration, $this->cookie_path, $this->cookie_domain, $this->cookie_secure);	     
 	    session_start();
 	}
 	
