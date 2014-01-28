@@ -16,7 +16,7 @@ class Register extends Plain_Controller
 		$password = (isset($this->clean->password)) ? $this->clean->password : null;
 
 		$this->load->model('users_model', 'user');
-		$user = $this->user->create(array('email' => $email, 'password' => $password));
+		$user = $this->user->create(array('email' => $email, 'password' => $password, 'active' => '1'));
 
 		// If good
 		// Add user data to session
