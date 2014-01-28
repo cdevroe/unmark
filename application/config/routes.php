@@ -28,7 +28,7 @@
 |	$route['default_controller'] = 'welcome';
 |
 | This route indicates which controller class should be loaded if the
-| URI contains no data. In the above example, the "welcome" class
+| URI contains no data. In the above example, the 'welcome' class
 | would be loaded.
 |
 |	$route['404_override'] = 'errors/page_missing';
@@ -38,61 +38,54 @@
 |
 */
 
-$route['default_controller'] = "welcome";
-$route['404_override'] = '';
+$route['default_controller']      = 'welcome';
+$route['404_override']            = '';
 
-$route['sirius'] = "welcome/sirius";
+// Installation & Upgrades
+$route['install']                = 'install';
+$route['upgrade']                = 'install/upgrade';
 
-$route['install'] = "install";
-$route['upgrade'] = "install/upgrade";
+// Labels (API ONLY)
+$route['label/activate(.*?)']    = 'labels/activate$1';
+$route['label/add(.*?)']         = 'labels/add';
+$route['label/deactivate(.*?)']  = 'labels/deactivate$1';
+$route['label/edit(.*?)']        = 'labels/edit$1';
+$route['label/info(.*?)']        = 'labels/info$1';
+$route['labels?(.*?)']           = 'labels/index$1';
 
-$route['users/login'] = "users/login";
-$route['users/logout'] = "users/logout";
-$route['users/add'] = "users/add";
-$route['users/paymentsuccess'] = "users/paymentsuccess";
-$route['users/paymentcancelled'] = "users/paymentcancelled";
+// Single Mark Actions
+$route['mark/add(.*?)']          = 'marks/add$1';
+$route['mark/archive(.*?)']      = 'marks/archive$1';
+$route['mark/edit(.*?)']         = 'marks/edit$1';
+$route['mark/info(.*?)']         = 'marks/info$1';
+$route['mark/restore(.*?)']      = 'marks/restore$1';
 
-$route['home'] = "nilai/home";
-$route['home/label/(:any)'] = "nilai/bylabel";
-$route['home/(:any)'] = "nilai/home";
+// Plural Marks
+$route['marks/archive(.*?)']     = 'marks/index/archive$1';
+$route['marks/label(.*?)']       = 'marks/index/label$1';
+$route['marks/get(.*?)']         = 'marks/get$1';
+$route['marks/search(.*?)']      = 'marks/index/search$1';
+$route['marks/tag(.*?)']         = 'marks/index/tag$1';
+$route['marks/total(.*?)']       = 'marks/total$1';
 
-$route['groups/create'] = "groups/create";
-$route['groups/add'] = "groups/add";
-$route['groups/update'] = "groups/update";
-$route['groups/delete'] = "groups/delete";
-$route['groups/invite/(:any)/(:any)/reject'] = "groups/rejectinvite";
-$route['groups/invite/(:any)/(:any)'] = "groups/acceptinvite";
-$route['groups/(:any)/edit'] = "groups/edit";
-$route['groups/(:any)/members'] = "groups/members";
-$route['groups/(:any)/invite_member'] = "groups/invite";
-$route['groups/(:any)/leave'] = "groups/leave";
-$route['groups/(:any)/remove/(:any)'] = "groups/remove";
-$route['groups/(:any)'] = "nilai/bygroup";
+// Marks catch all
+$route['marks?(.*?)']            = 'marks/index$1';
 
+// Tags
+$route['tag/add(.*?)']           = 'tags/add';
+$route['tags?(.*?)']             = 'tags/index$1';
 
+// Registration
+$route['register']               = 'register/index';
+$route['register/user']          = 'register/user';
 
-$route['help/bookmarklet'] = "welcome/helpbookmarklet";
-$route['help/faq'] = "welcome/faq";
-$route['help/how'] = "welcome/how";
+// help
+$route['help(.*?)']              = 'help$1';
 
-$route['changelog'] = "welcome/changelog";
-$route['terms'] = "welcome/terms";
+// one offs
+$route['changelog']              = 'singletons/changelog';
+$route['terms']                  = 'singletons/terms';
 
-$route['marks/add'] = "nilai/add";
-$route['marks/addlabel'] = "nilai/addlabel";
-$route['marks/addgroup'] = "nilai/addgroup";
-$route['marks/savenote'] = "nilai/savenote";
-$route['marks/edit/(:num)'] = "nilai/edit";
-$route['marks/delete/(:num)'] = "nilai/delete";
-$route['marks/search'] = "nilai/search";
-$route['marks/archive/(:num)'] = "nilai/archive";
-$route['marks/restore/(:num)'] = "nilai/restore";
-
-$route['marks/addsmartlabel'] = "nilai/addsmartlabel";
-$route['marks/removesmartlabel'] = "nilai/removesmartlabel";
-
-$route['marks/backprocessOembed'] = "nilai/backprocessOembed";
-$route['marks/backprocessRecipes'] = "nilai/backprocessRecipes";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

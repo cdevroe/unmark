@@ -106,7 +106,7 @@ $config['enable_hooks'] = FALSE;
 | http://codeigniter.com/user_guide/general/creating_libraries.html
 |
 */
-$config['subclass_prefix'] = 'MY_';
+$config['subclass_prefix'] = 'Plain_';
 
 
 /*
@@ -183,7 +183,7 @@ $config['directory_trigger']	= 'd'; // experimental not currently in use
 if (ENVIRONMENT == 'production') {
 	$config['log_threshold'] = 1;
 } else {
-	$config['log_threshold'] = 2;
+	$config['log_threshold'] = 1;
 }
 
 /*

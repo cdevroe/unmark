@@ -1,13 +1,12 @@
-<?php $this->load->view('header'); ?>
 <div class="row-fluid">
   <div class="span8 marks">
-    <?php if ($this->session->flashdata('message')) { ?>
+    <?php if (isset($flash_message['message']) && ! empty($flash_message['message'])): ?>
     <div class="alert alert-success">
       <a class="close" data-dismiss="alert">×</a>
-      <?php echo $this->session->flashdata('message');?>
+      <?php echo $flash_message['message'];?>
     </div>
 
-    <?php } ?>
+    <?php endif; ?>
 
     <?php if (isset($invites)) { ?>
     <div class="alert alert-info">
@@ -32,12 +31,12 @@
     if (isset($group['name'])) { $heading = ' : Group : '.$group['name']; } ?>
 
 
-    <?php if (isset($group['name']) && ($group['owner'] == $this->session->userdata('userid'))) { ?>
+    <?php if (isset($group['name']) && ($group['owner'] == $_SESSION['user']['user_id'])) { ?>
     <div class="btn-group groupbuttons">
       <a class="btn" title="Manage this group's members" href="/groups/<?php echo strtoupper($group['groupuid']);?>/members"><i class="icon-user"></i> <?php echo $group['member_count'];?> Members</a>
       <a class="btn" title="Edit this group" href="/groups/<?php echo strtoupper($group['groupuid']);?>/edit"><i class="icon-info-sign"></i> Edit</a>
     </div>
-    <?php } elseif (isset($group['name']) && ($group['owner'] != $this->session->userdata('userid'))) { ?>
+    <?php } elseif (isset($group['name']) && ($group['owner'] != $_SESSION['user']['user_id'])) { ?>
     <!-- <div class="groupinfo"><i class="icon-user"></i> <?php echo $group['member_count'];?> Members</div> -->
     <div class="btn-group groupbuttons">
       <a class="btn" title="Members in Group"><i class="icon-user"></i> <?php echo $group['member_count'];?> Members</a>
@@ -58,9 +57,9 @@
 		<?php foreach ($marks as $mark) {
 //		print_r($mark);
 		        // Parse URL to determine domain
-	         $parsedUrl = parse_url($mark['url']);
+	         $parsedUrl = parse_url($mark->url);
 
-		        if ($this->session->flashdata('restoredid') && $this->session->flashdata('restoredid') == $mark['usersmarkid']) { $restored = ' restored'; } else { $restored = ''; }	?>
+		        //if ($this->session->flashdata('restoredid') && $this->session->flashdata('restoredid') == $mark['usersmarkid']) { $restored = ' restored'; } else { $restored = ''; }	?>
 		  <div id="mark-<?php echo $mark['usersmarkid'];?>" class="row-fluid mark<?php echo $restored;?> xfolkentry">
 		    <div class="markbuttons"><div class="btn-group"><a href="/marks/<?php if ($mark['status'] == 'archive') { echo 'restore'; } else { echo 'archive'; }?>/<?php echo $mark['usersmarkid'];?>" data-mark="<?php echo $mark['usersmarkid']?>" title="<?php if ($mark['status'] == 'archive') { echo 'Restore'; } else { echo 'Archive'; }?> this mark" class="btn btn-small archivemark"><i class="icon-<?php if ($mark['status'] == 'archive') { echo 'refresh'; } else { echo 'ok'; }?>"></i></a><a href="/marks/edit/<?php echo $mark['usersmarkid'];?>" title="Edit this mark" class="btn btn-small editmark"><i class="icon-info-sign"></i></a></div>
 		    <?php if ($mark['tags'] != 'watch' && $mark['tags'] != 'listen') { ?><p style="text-align: center;"><a class="btn btn-mini mobilefriendly" href="http://www.google.com/gwt/x?u=<?php echo $mark['url'];?>" target="_blank" title="Mobile friendly version">text-only</a></p><?php } ?>
@@ -74,7 +73,7 @@
 		      echo $mark['title'];
 		    }
 		  } else { echo 'Untitled'; } ?></a></h3>
-        <p><small><?php if ($mark['addedby'] != '0' && $mark['addedby'] != $this->session->userdata('userid')) { echo 'By '.$mark['email'].' - '; } ?><span class="dateadded"><a href="/marks/edit/<?php echo $mark['usersmarkid'];?>" title="Edit this mark"><?php echo strtolower(timespan(strtotime($mark['dateadded'])));?> ago</a></span> - <?php if ($mark['tags'] != '') { ?><a href="/home/label/<?php echo strtolower(str_replace(' ', '', $mark['tags'])); ?>" rel="tag"><?php echo strtolower($mark['tags']);?></a> - <?php } ?><a href="<?php echo $mark['url'];?>" title="<?php echo $mark['title'];?>"><?php
+        <p><small><?php if ($mark['addedby'] != '0' && $mark['addedby'] != $_SESSION['user']['user_id']) { echo 'By '.$mark['email'].' - '; } ?><span class="dateadded"><a href="/marks/edit/<?php echo $mark['usersmarkid'];?>" title="Edit this mark"><?php echo strtolower(timespan(strtotime($mark['dateadded'])));?> ago</a></span> - <?php if ($mark['tags'] != '') { ?><a href="/home/label/<?php echo strtolower(str_replace(' ', '', $mark['tags'])); ?>" rel="tag"><?php echo strtolower($mark['tags']);?></a> - <?php } ?><a href="<?php echo $mark['url'];?>" title="<?php echo $mark['title'];?>"><?php
         if (strlen($mark['url']) > 70) {
           echo substr(str_replace('http://','',$mark['url']),0,35).'…';
         } else {
@@ -86,7 +85,7 @@
 		  <?php if ($mark['note'] != '') { ?>
         <div class="note" id="note-<?php echo $mark['usersmarkid'];?>">
             <p><?php echo $mark['note'];?></p>
-            <p><small><?php if ($mark['addedby'] != '0' && $mark['addedby'] != $this->session->userdata('userid')) { echo 'Note written by '.$mark['email']; } ?></small></p>
+            <p><small><?php if ($mark['addedby'] != '0' && $mark['addedby'] != $_SESSION['user']['user_id']) { echo 'Note written by '.$mark['email']; } ?></small></p>
         </div>
       <?php } ?>
 		  <?php if ($mark['oembed'] != '' && $mark['oembed'] != 'None') { ?>
@@ -159,5 +158,3 @@
   </div>
 
 </div>
-
-<?php $this->load->view('footer'); ?>

@@ -23,7 +23,10 @@ function isValid($val, $type)
         return (preg_match('/([0-9]{4}-[0-9]{2}-[0-9]{2})\s([0-9]{2}:[0-9]{2}:[0-9]{2})/', $val)) ? true : false;
     }
     elseif ($type == 'date') {
-        return (preg_match('/([0-9]{4}-[0-9]{2}-[0-9]{2})/', $val)) ? true : false;
+        return (preg_match('/([0-9]{4}-[0-9]{2}-[0-9]{2}|[0-9]{2}-[0-9]{2}-[0-9]{4})/', $val)) ? true : false;
+    }
+    elseif ($type == 'year') {
+        return (preg_match('/([0-9]{4})/', $val)) ? true : false;
     }
     elseif ($type == 'time') {
         return (preg_match('/([0-9]{2}:[0-9]{2}:[0-9]{2})/', $val)) ? true : false;
@@ -48,19 +51,30 @@ function isValid($val, $type)
         // Slugs can only contain letters, numbers and dashes
         return (preg_match('/^[a-z0-9\-\/]+$/i', $val)) ? true : false;
     }
+    elseif ($type == 'md5') {
+        // just check the string length for MD5
+        return (strlen($val) == 32) ? true : false;
+    }
+    elseif ($type == 'url') {
+        // Use parse_url
+        // If it has a scheme and a host, it's good to go
+        $failed_schemes = array('chrome');
+        $url            = parse_url($val);
+        return (isset($url['scheme']) && ! empty($url['scheme']) && ! in_array($url['scheme'], $failed_schemes) && isset($url['host']) && ! empty($url['host'])) ? true : false;
+    }
     return false;
 }
 
 function validate($options=array(), $data_types=array(), $required=array())
 {
     $meets_reqs = true;
-    $errors     = new stdClass;
+    $errors     = array();
 
     //Check required fields
     if (! empty($required)) {
         foreach ($required as $column) {
             if (! isset($options[$column]) || $options[$column] == '') {
-                $errors->{$column} = ucwords(strtolower(str_replace('_', ' ', $column))) . ' is required.';
+                $errors[$column] = ucwords(strtolower(str_replace('_', ' ', $column))) . ' is required.';
                 $meets_reqs = false;
             }
         }
@@ -70,7 +84,7 @@ function validate($options=array(), $data_types=array(), $required=array())
     if (! empty($data_types)) {
         foreach ($data_types as $column => $type) {
             if (isset($options[$column]) && ! isValid($options[$column], $type)) {
-                $errors->{$column} = ucwords(strtolower(str_replace('_', ' ', $column))) . ' is not valid.';
+                $errors[$column] = ucwords(strtolower(str_replace('_', ' ', $column))) . ' is not valid.';
                 $meets_reqs = false;
             }
         }
