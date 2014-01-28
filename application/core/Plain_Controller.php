@@ -290,7 +290,9 @@ class Plain_Controller extends CI_Controller
         // Remove ci_session (legacy)
         // destroy session
         // set global back to empty array
-        setcookie('PHPSESSID', '', time()-31557600, '/', $_SERVER['HTTP_HOST']);
+        $cookie_name = $this->config->item('sess_cookie_name');
+        $cookie_name = (empty($cookie_name)) ? 'PHPSESSID' : $cookie_name;
+        setcookie($cookie_name, '', time()-31557600, '/', $_SERVER['HTTP_HOST']);
         setcookie('ci_session', '', time()-31557600, '/', $_SERVER['HTTP_HOST']);
         session_destroy();
         $_SESSION = array();
