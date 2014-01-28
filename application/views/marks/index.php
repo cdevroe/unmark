@@ -1,6 +1,18 @@
 <div class="marks">
     <div class="marks_list">
-        <?php foreach ($marks as $mark) : ?>
+        <?php foreach ($marks as $mark) :
+
+                $notes = ($mark->notes == "" ? 0 : $mark->notes);
+                $preview = ($mark->embed == "" ? 0 : $mark->embed);
+
+                $marks_data = array(
+                    "mark_id"       => $mark->mark_id,
+                    "label_id"      => $mark->label_id,
+                    "label_name"    => $mark->label_name,
+                    "notes"         => $notes,
+                    "preview"       => $preview
+                );
+            ?>
             <div id="mark-<?php print $mark->mark_id; ?>" class="mark label-<?php print $mark->label_id; ?>">
                 <h2><?php print $mark->title; ?></h2>
                 <div class="mark-meta">
@@ -16,7 +28,7 @@
                         <i class="barley-icon-ok"></i>
                     </a>
                 </div>
-                <script id="mark-data-<?php print $mark->mark_id; ?>" type="application/json">{ "label_id": "<?php print addslashes($mark->label_id); ?>", "label_name": "<?php print addslashes($mark->label_name); ?>", "mark_id": "<?php print addslashes($mark->mark_id); ?>", "notes": "<?php print addslashes($mark->notes); ?>", "preview": "<?php print addslashes($mark->embed); ?>" }</script>
+                <script id="mark-data-<?php print $mark->mark_id; ?>" type="application/json"><?php echo json_encode($marks_data); ?></script>
             </div>
         <?php endforeach; ?>
     </div>
