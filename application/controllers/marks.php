@@ -168,7 +168,7 @@ class Marks extends Plain_Controller
         if (array_key_exists($lookup, $valid_lookups)) {
             $where_time .= (! in_array($lookup, $no_time)) ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $valid_lookups[$lookup]['start'] . "'" : '';
             $where_time .= (! in_array($lookup, $no_time)) ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $valid_lookups[$lookup]['finish'] . "'" : '';
-            $this->data['lookup_type'] = 'date_range';
+            $this->data['lookup_type'] = $lookup;
         }
 
         // Label Lookups
