@@ -42,7 +42,7 @@ class Login extends Plain_Controller {
             // If hash is valid and match is valid
             // Upgrade users to new encryption routine
             if ($hash !== false && $match === true) {
-                $res = $this->users->update("user_id = '" . $user->user_id . "'", array('password' => $hash));
+                $res = $this->user->update("user_id = '" . $user->user_id . "'", array('password' => $hash));
             }
         }
         else {
