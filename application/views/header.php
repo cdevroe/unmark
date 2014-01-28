@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=50, initial-scale=1.0, user-scalable=no">
-	<title>Nilai<?php if (! isset($_SESSION['logged_in'])) { echo ': Save your links for later.'; } ?></title>
+	<title>Nilai<?php if (empty($logged_in)) { echo ': Save your links for later.'; } ?></title>
 
 	<link rel="stylesheet" href="/assets/bootstrap/compiled/css/bootstrap.min.css">
   <link rel="stylesheet" href="/assets/css/nilai.css">
@@ -34,10 +34,10 @@
 <div class="container-fluid">
 <div class="row-fluid">
   <div class="logo">
-    <h1><a href="/home"><img src="/assets/images/logo-60.png" alt="logo-60" width="60" height="60" /></a><?php if (! isset($_SESSION['logged_in'])) { ?> Nilai<?php } ?></h1>
+    <h1><a href="/home"><img src="/assets/images/logo-60.png" alt="logo-60" width="60" height="60" /></a><?php if (empty($logged_in)) { ?> Nilai<?php } ?></h1>
   </div>
 
-  <?php if (! isset($_SESSION['logged_in'])) { ?>
+  <?php if (empty($logged_in)) { ?>
   <div class="navigation">
     <!--<ul class="nav nav-pills">
       <li><a class="btn btn-primary" href="/sirius" title="Create Account"><i class="icon-user"></i> Create Account</a></li>
@@ -55,7 +55,7 @@
 
   <?php } ?>
 
-  <?php  if (isset($when)) { if (isset($_SESSION['logged_in']) && $when !='') { ?>
+  <?php  if (isset($when)) { if (! empty($logged_in) && $when !='') { ?>
   <div class="navigation">
     <ul class="nav nav-pills">
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Sort <b class="caret"></b></a>

@@ -11,7 +11,7 @@
           echo str_replace('http://','',$url);
         } ?>
 		</small></p>
-		<?php if ($addedby == $_SESSION['user']['user_id']) { ?>
+		<?php if (isset($user['user_id']) && $addedby == $user['user_id']) { ?>
 		<textarea id="note" cols="10" rows="3" placeholder="Write a small note. Perhaps a reminder of why you're saving this."><?php echo $note;?></textarea>
 		<?php } ?>
 		<p><a href="<?php if (isset($markadded)) { echo 'javascript:window.close();'; } else { echo '/home'; } ?>" class="btn btn-primary">Save and close</a> <a href="/marks/delete/<?php echo $urlid;?>" class="btn btn-danger">Delete</a></p>
