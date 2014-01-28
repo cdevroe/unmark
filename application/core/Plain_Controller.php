@@ -100,7 +100,7 @@ class Plain_Controller extends CI_Controller
         // IF API call, CSRF is not used
         // Set to true
         // All calls will require a user_token to validate instead
-        if (self::isAPI() === true) {
+        if (self::isAPI() === true || self::isCommandLine() === true) {
             $this->csrf_valid = true;
         }
         else {
@@ -128,11 +128,13 @@ class Plain_Controller extends CI_Controller
 
     protected function getFlashMessages()
     {
-        $flash_message = $this->session->userdata('flash_message');
-        if (isset($flash_message['message']) && ! empty($flash_message['message'])) {
-            $this->flash_message['type']    = $flash_message['type'];
-            $this->flash_message['message'] = $flash_message['message'];
-            $this->session->unset_userdata('flash_message');
+        if (isset($this->session)) {
+            $flash_message = $this->session->userdata('flash_message');
+            if (isset($flash_message['message']) && ! empty($flash_message['message'])) {
+                $this->flash_message['type']    = $flash_message['type'];
+                $this->flash_message['message'] = $flash_message['message'];
+                $this->session->unset_userdata('flash_message');
+            }
         }
     }
 
@@ -140,7 +142,9 @@ class Plain_Controller extends CI_Controller
     {
         // If the request sent the user token, or it's in the session
         // Set it
-        $user_session = $this->session->userdata('user');
+        $user_session = (isset($this->session)) ? $this->session->userdata('user') : array();
+
+        // Check for user token
         if (isset($this->clean->user_token) || isset($user_session['user_token'])) {
             $this->user_token = (isset($this->clean->user_token)) ? $this->clean->user_token : $user_session['user_token'];
         }
@@ -156,7 +160,7 @@ class Plain_Controller extends CI_Controller
         // User ID & admin
         $this->user_id    = (isset($user_session['user_id']) && ! empty($user_session['user_id'])) ? $user_session['user_id'] : $this->user_id;
         $this->user_admin = (isset($user_session['admin']) && ! empty($user_session['admin'])) ? true : $this->user_admin;
-        $this->logged_in  = $this->session->userdata('logged_in');
+        $this->logged_in  = (isset($this->session)) ? $this->session->userdata('logged_in') : false;
     }
 
     protected function isAdmin()
@@ -321,7 +325,9 @@ class Plain_Controller extends CI_Controller
 
     protected function setFlashMessage($message, $type='error')
     {
-        $this->session->set_userdata('flash_message', array('type' => $type, 'message' => $message));
+        if (isset($this->session)) {
+            $this->session->set_userdata('flash_message', array('type' => $type, 'message' => $message));
+        }
     }
 
     // Process a view
@@ -356,10 +362,11 @@ class Plain_Controller extends CI_Controller
         }
 
         //If the template is asking to debug, load it
-        /*if (isset($this->clean->debug) && ((isset($_SESSION['account']['admin']) && ! empty($_SESSION['account']['admin'])) || ENVIRONMENT != 'production')) {
+        if (isset($this->clean->debug) && $this->user_admin === true) {
             $data['page_data']      = $data;
-            $this->load->view('partials/internal/debug', $data);
-        }*/
+            $data['session']        = $this->session->all_userdata();
+            $this->load->view('partials/debug', $data);
+        }
     }
 
 }

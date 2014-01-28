@@ -375,6 +375,31 @@ class Marks extends Plain_Controller
             }
             else {
                 $this->data['mark'] = $mark;
+
+                // Check if label id was set
+                // if so get the parent mark id
+                // Then add a smart label for this domain
+                if (isset($options['label_id']) && ! empty($options['label_id'])) {
+                    $this->load->model('labels_model', 'labels');
+                    $smart_info = getSmartLabelInfo($mark->url);
+                    $total      = $this->labels->count("labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "'");
+
+                    // If not found, create it with label
+                    // Else update current
+                    if ($total < 1) {
+                        $label = $this->labels->create(array(
+                            'smart_label_id' => $options['label_id'],
+                            'domain'         => $smart_info['domain'],
+                            'smart_key'      => $smart_info['key'],
+                            'user_id'        => $this->user_id
+                        ));
+                    }
+                    else {
+                        $label = $this->labels->update("labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "'", array(
+                            'smart_label_id' => $options['label_id']
+                        ));
+                    }
+                }
             }
 
         }
