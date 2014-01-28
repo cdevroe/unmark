@@ -361,7 +361,7 @@ class Plain_Controller extends CI_Controller
         if (isset($this->clean->debug) && $this->user_admin === true) {
             $data['page_data']      = $data;
             $data['session']        = $this->session->all_userdata();
-            $this->load->view('partials/internal/debug', $data);
+            $this->load->view('partials/debug', $data);
         }
     }
 
