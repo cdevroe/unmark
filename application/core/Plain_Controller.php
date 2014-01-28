@@ -102,7 +102,7 @@ class Plain_Controller extends CI_Controller
         // IF API call, CSRF is not used
         // Set to true
         // All calls will require a user_token to validate instead
-        if (self::isAPI() === true) {
+        if (self::isAPI() === true || self::isCommandLine() === true) {
             $this->csrf_valid = true;
         }
         else {
