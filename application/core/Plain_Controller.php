@@ -142,7 +142,9 @@ class Plain_Controller extends CI_Controller
     {
         // If the request sent the user token, or it's in the session
         // Set it
-        $user_session = $this->session->userdata('user');
+        $user_session = (isset($this->session)) ? $this->session->userdata('user') : array();
+
+        // Check for user token
         if (isset($this->clean->user_token) || isset($user_session['user_token'])) {
             $this->user_token = (isset($this->clean->user_token)) ? $this->clean->user_token : $user_session['user_token'];
         }
@@ -158,7 +160,7 @@ class Plain_Controller extends CI_Controller
         // User ID & admin
         $this->user_id    = (isset($user_session['user_id']) && ! empty($user_session['user_id'])) ? $user_session['user_id'] : $this->user_id;
         $this->user_admin = (isset($user_session['admin']) && ! empty($user_session['admin'])) ? true : $this->user_admin;
-        $this->logged_in  = $this->session->userdata('logged_in');
+        $this->logged_in  = (isset($this->session)) ? $this->session->userdata('logged_in') : false;
     }
 
     protected function isAdmin()
@@ -323,7 +325,9 @@ class Plain_Controller extends CI_Controller
 
     protected function setFlashMessage($message, $type='error')
     {
-        $this->session->set_userdata('flash_message', array('type' => $type, 'message' => $message));
+        if (isset($this->session)) {
+            $this->session->set_userdata('flash_message', array('type' => $type, 'message' => $message));
+        }
     }
 
     // Process a view
