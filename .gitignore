@@ -5,4 +5,5 @@ application/views/test.php
 .DS_Store
 .buildpath
 .project
+application/config/*/**
 .sass-cache/

@@ -109,8 +109,53 @@ class Users_To_Marks_model extends Plain_Model
         return $this->count("user_id='". $user_id . "'" . $when);
     }
 
+    public function getTotalsSearch($page, $limit, $data=array(), $keyword, $user_id)
+    {
+
+        $q = $this->db->query("
+            SELECT COUNT(*) AS total FROM (
+                (
+                    SELECT users_to_marks.users_to_mark_id
+                    FROM users_to_marks
+                    WHERE
+                    users_to_marks.user_id='" . $user_id . "'
+                    AND users_to_marks.archived_on IS NULL
+                    AND users_to_marks.notes LIKE '%" . $keyword . "%'
+                )
+                UNION DISTINCT
+                (
+                    SELECT users_to_marks.users_to_mark_id
+                    FROM marks
+                    INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $user_id . "' AND users_to_marks.archived_on IS NULL
+                    WHERE
+                    marks.title LIKE '%" . $keyword . "%'
+                    OR marks.url LIKE '%" . $keyword . "%'
+                )
+            ) as t1
+        ");
+
+
+        // Check for errors
+        $this->sendException();
+
+        // Get total
+        $row = $q->row();
+        $total = (integer) $row->{'total'};
+
+        // Figure shiz
+        $total_pages      = ($total > 0) ? ceil($total / $limit) : 0;
+        $data['total']    = $total;
+        $data['page']     = $page;
+        $data['per_page'] = $limit;
+        $data['pages']    = $total_pages;
+
+        // Return it all
+        return $data;
+    }
+
     public function readComplete($where, $limit=1, $page=1, $start=null, $options=array())
     {
+        $is_search  = (isset($options['search']) && ! empty($options['search']) && isset($options['user_id']) && ! empty($options['user_id'])) ? true : false;
         $id         = (is_numeric($where)) ? $where : null;
         $where      = (is_numeric($where)) ? 'users_to_marks.' . $this->id_column . " = '$where'" : trim($where);
         $page       = (is_numeric($page) && $page > 0) ? $page : 1;
@@ -118,26 +163,52 @@ class Users_To_Marks_model extends Plain_Model
         $start      = (! is_null($start)) ? $start : $limit * ($page - 1);
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
         $sort       = (! empty($this->sort)) ? ' ORDER BY users_to_marks.' . $this->sort : null;
+        $sort       = (! empty($sort) && $is_search === true) ? ' ORDER BY ' . $this->sort : $sort;
         $tag_id     = (isset($options['tag_id']) && ! empty($options['tag_id'])) ? " INNER JOIN user_marks_to_tags UMTT ON users_to_marks.users_to_mark_id = UMTT.users_to_mark_id AND UMTT.tag_id = '" . $options['tag_id'] . "'" : null;
 
-        // Stop, query time
-        $q     = $this->db->query('SET SESSION group_concat_max_len = 10000');
-		$marks = $this->db->query("
-            SELECT
+        // Default fields
+        $fields = "
             users_to_marks.users_to_mark_id AS mark_id, users_to_marks.notes, users_to_marks.created_on, users_to_marks.archived_on,
             marks.title, marks.url, marks.embed,
             GROUP_CONCAT(tags.tag_id SEPARATOR '" . $this->delimiter . "') AS tag_ids,
             GROUP_CONCAT(tags.name SEPARATOR '" . $this->delimiter . "') AS tag_names,
             GROUP_CONCAT(tags.slug SEPARATOR '" . $this->delimiter . "') AS tag_slugs,
             labels.label_id, labels.name AS label_name
-            FROM users_to_marks" . $tag_id . "
-            INNER JOIN marks ON users_to_marks.mark_id = marks.mark_id
+        ";
+
+        // Default joins
+        $joins = "
             LEFT JOIN user_marks_to_tags ON users_to_marks.users_to_mark_id = user_marks_to_tags.users_to_mark_id
             LEFT JOIN labels ON users_to_marks.label_id = labels.label_id
             LEFT JOIN tags ON user_marks_to_tags.tag_id = tags.tag_id
-            WHERE " . $where . "
-            GROUP BY users_to_marks.users_to_mark_id" . $sort . $q_limit
-        );
+        ";
+
+        // Group By
+        $group_by = " GROUP BY users_to_marks.users_to_mark_id";
+
+        // Default Query
+        $query = "SELECT " . $fields . " FROM users_to_marks" . $tag_id . " INNER JOIN marks ON users_to_marks.mark_id = marks.mark_id " . $joins . " WHERE " . $where . $group_by;
+
+        // Order By
+        $order_by = " GROUP BY users_to_marks.users_to_mark_id";
+
+        // Check for search
+        if ($is_search === true) {
+            $search_query = "
+                SELECT " . $fields . "
+                FROM marks
+                INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $options['user_id'] . "' AND users_to_marks.archived_on IS NULL " . $joins . "
+                WHERE marks.title LIKE '%" . $options['search'] . "%' OR marks.url LIKE '%" . $options['search'] . "%'" . $group_by;
+
+            $query = '(' . $query . ') UNION DISTINCT (' . $search_query . ')';
+        }
+
+        // Add order by
+        $query = $query . $sort . $q_limit;
+
+        // Stop, query time
+        $q     = $this->db->query('SET SESSION group_concat_max_len = 10000');
+		$marks = $this->db->query($query);
 
         // Check for errors
         $this->sendException();

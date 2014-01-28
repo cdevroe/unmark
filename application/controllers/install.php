@@ -1,12 +1,19 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Install extends Plain_Controller
+class Install extends CI_Controller
 {
 
   public function __construct()
   {
     parent::__construct();
-    parent::redirectIfNotAdmin();
+    $this->load->library('session');
+    $user = $this->session->userdata('user');
+
+    if (! isset($user['admin']) || empty($user['admin'])) {
+      header('Location: /');
+      exit;
+    }
+
   }
 
   public function index()
@@ -14,7 +21,6 @@ class Install extends Plain_Controller
 
     // Step one: See if there is a database
   	$data['install_complete'] = $this->database_install();
-
   	$this->load->view( 'install', $data );
 
   }

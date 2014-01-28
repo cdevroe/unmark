@@ -247,16 +247,35 @@ $config['encryption_key'] = 'nilai1will2make3money!';
 | 'sess_match_useragent'	= Whether to match the User Agent when reading the session data
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
+|
 */
-$config['sess_cookie_name']		= 'ci_session';
+$config['sess_cookie_name']		= 'BookEmDanno';
 $config['sess_expiration']		= 1209600;
 $config['sess_expire_on_close']	= FALSE;
+// Also enables encryption for data in case of using other storage mechanisms than cookies
 $config['sess_encrypt_cookie']	= FALSE;
-$config['sess_use_database']	= FALSE;
-$config['sess_table_name']		= 'ci_sessions';
 $config['sess_match_ip']		= FALSE;
 $config['sess_match_useragent']	= TRUE;
 $config['sess_time_to_update']	= 300;
+// FOR database storage only
+$config['sess_table_name']		= 'plain_sessions';
+
+
+// WARNING: Session settings below refer to CodeIgniter session library which is not being used in Nilai
+$config['sess_use_database']	= FALSE;
+
+
+/*
+|--------------------------------------------------------------------------
+| Plain Session Variables
+|--------------------------------------------------------------------------
+|
+| 'plain_sess_storage'        = storage mechanism for sessions (files, memcached, database)
+| 'plain_sess_memcache_addr'  = address of memcache server (valid for memchached session storage only)
+*/
+
+$config['plain_sess_storage']		= 'database';
+$config['plain_sess_memcache_addr'] = 'localhost';
 
 /*
 |--------------------------------------------------------------------------

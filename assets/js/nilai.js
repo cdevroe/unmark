@@ -214,6 +214,10 @@ if (nilai === undefined) { var nilai = {}; }
             // Otherwise prevent click default
             e.preventDefault();
 
+            // Add / Remove Class for current navigation
+            $('.menu-item').removeClass('active-menu');
+            $('.navigation-content').find("[data-menu='" + panel_name + "']").addClass('active-menu');
+
             // Check for close action on and open panel
             if (panel_to_show === "#panel-menu") {
                 if (panel_position > 0) {
@@ -224,10 +228,6 @@ if (nilai === undefined) { var nilai = {}; }
                     return;
                 }
             }
-
-            // Add / Remove Class for current navigation
-            $('.menu-item').removeClass('active-menu');
-            $('.navigation-content').find("[data-menu='" + panel_name + "']").addClass('active-menu');
 
             // Check which panel to show
             nilai.nav_panel.animate({ left: 65 }, { duration: 200, queue: false });

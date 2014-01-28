@@ -52,7 +52,7 @@ class Plain_Model extends CI_Model
 
         $q = $this->db->query("
             SELECT
-            COUNT(" . $this->table . '.' . $this->id_column . ")
+            COUNT(" . $this->table . '.' . $this->id_column . ") AS total
             FROM `" . $this->table . "`" . $join . $where
         );
 
@@ -60,7 +60,7 @@ class Plain_Model extends CI_Model
         $this->sendException();
 
         $row = $q->row();
-        return (integer) $row->{'COUNT(' . $this->table . '.' . $this->id_column. ')'};
+        return (integer) $row->{'total'};
     }
 
     public function delete($where)
