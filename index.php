@@ -32,7 +32,25 @@ define('NILAI_VERSION','0.3.5');
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-define('ENVIRONMENT', 'development');
+
+// Looking for local environment configuration under application/config/environment.php
+$appDir = dirname(__FILE__);
+if(file_exists($appDir)){
+    $localEnvConfigFile = $appDir.'/application/config/environment.php';
+    if(file_exists($localEnvConfigFile)){
+        include_once($localEnvConfigFile);
+    }
+}
+// Looking for global environment configuration under /etc/nilai/environment.php
+const NILAI_ENV_CONFIG_GLOBAL = '/etc/nilai/environment.php';
+if(!defined('ENVIRONMENT')){    
+    if(file_exists(NILAI_ENV_CONFIG_GLOBAL)){
+        include_once(NILAI_ENV_CONFIG_GLOBAL);
+    }
+}
+if(!defined('ENVIRONMENT')){
+    define('ENVIRONMENT', 'production');
+}
 
 /*
  *---------------------------------------------------------------
@@ -40,25 +58,21 @@ define('ENVIRONMENT', 'development');
  *---------------------------------------------------------------
  *
  * Different environments will require different levels of error reporting.
- * By default development will show errors but testing and live will hide them.
+ * All environments report lots of info except of production
  */
 
 if (defined('ENVIRONMENT'))
 {
 	switch (ENVIRONMENT)
 	{
-		case 'development':
-			error_reporting(E_ALL);
-		break;
-
-		case 'staging':
-		break;
 		case 'production':
 			error_reporting(0);
 		break;
 
 		default:
-			exit('The application environment is not set correctly.');
+			error_reporting(E_ALL);
+		break;
+		
 	}
 }
 
