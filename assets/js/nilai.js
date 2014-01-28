@@ -21,8 +21,6 @@ if (nilai === undefined) { var nilai = {}; }
             mark_string = $('#' + mark_obj_ref).html();
             mark_obj = jQuery.parseJSON(mark_string);
 
-            console.log(mark_obj);
-
         // Compile and Render the template
         template = Hogan.compile(sidebar_template);
         output = template.render(mark_obj);
@@ -51,6 +49,7 @@ if (nilai === undefined) { var nilai = {}; }
         var url = archive_link.attr("href");
         $.ajax({
             url: url,
+
             success: function() {
                 archive_link.parent().parent().fadeOut();
             }
