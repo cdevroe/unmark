@@ -12,6 +12,7 @@ class Plain_Controller extends CI_Controller
     public $header         = 'header';
     public $html_clean     = null;
     public $limit          = 30;
+    public $logged_in      = false;
     public $is_api         = false;
     public $original       = null;
     public $user_admin     = false;
@@ -83,6 +84,10 @@ class Plain_Controller extends CI_Controller
         // This will change to show view when ready
         else {
 
+            $this->data['csrf_token']    = $this->session->userdata('csrf_token');
+            $this->data['flash_message'] = $this->flash_message;
+            $this->data['user']          = $this->session->userdata('user');
+            $this->data['logged_in']     = $this->session->userdata('logged_in');
             $this->data['view'] = $view;
             print '<pre>';
             print_r($this->data);
@@ -102,10 +107,11 @@ class Plain_Controller extends CI_Controller
         }
         else {
 
+            $csrf_token = $this->session->userdata('csrf_token');
             // If set, validate it
             if (isset($this->clean->csrf_token)) {
-                if (isset($_SESSION['csrf_token']) && ! empty($_SESSION['csrf_token'])) {
-                    $this->csrf_valid = ($_SESSION['csrf_token'] == $this->clean->csrf_token) ? true : false;
+                if (! empty($csrf_token)) {
+                    $this->csrf_valid = ($csrf_token == $this->clean->csrf_token) ? true : false;
                 }
 
                 // If false, set a flash message and data error
@@ -116,18 +122,19 @@ class Plain_Controller extends CI_Controller
             }
 
             // If not set, set it
-            if (! isset($_SESSION['csrf_token'])) {
-                $_SESSION['csrf_token'] = generateCSRF();
+            if (empty($csrf_token)) {
+                $this->session->set_userdata('csrf_token', generateCSRF());
             }
         }
     }
 
     protected function getFlashMessages()
     {
-        if (isset($_SESSION['flash_message']['message']) && ! empty($_SESSION['flash_message']['message'])) {
-            $this->flash_message['type']    = $_SESSION['flash_message']['type'];
-            $this->flash_message['message'] = $_SESSION['flash_message']['message'];
-            unset($_SESSION['flash_message']);
+        $flash_message = $this->session->userdata('flash_message');
+        if (isset($flash_message['message']) && ! empty($flash_message['message'])) {
+            $this->flash_message['type']    = $flash_message['type'];
+            $this->flash_message['message'] = $flash_message['message'];
+            $this->session->unset_userdata('flash_message');
         }
     }
 
@@ -135,8 +142,9 @@ class Plain_Controller extends CI_Controller
     {
         // If the request sent the user token, or it's in the session
         // Set it
-        if (isset($this->clean->user_token) || isset($_SESSION['user']['user_token'])) {
-            $this->user_token = (isset($this->clean->user_token)) ? $this->clean->user_token : $_SESSION['user']['user_token'];
+        $user_session = $this->session->userdata('user');
+        if (isset($this->clean->user_token) || isset($user_session['user_token'])) {
+            $this->user_token = (isset($this->clean->user_token)) ? $this->clean->user_token : $user_session['user_token'];
         }
 
         // If API call, get the user id
@@ -148,8 +156,9 @@ class Plain_Controller extends CI_Controller
         }
 
         // User ID & admin
-        $this->user_id    = (isset($_SESSION['user']['user_id']) && ! empty($_SESSION['user']['user_id'])) ? $_SESSION['user']['user_id'] : $this->user_id;
-        $this->user_admin = (isset($_SESSION['user']['admin']) && ! empty($_SESSION['user']['admin'])) ? true : $this->user_admin;
+        $this->user_id    = (isset($user_session['user_id']) && ! empty($user_session['user_id'])) ? $user_session['user_id'] : $this->user_id;
+        $this->user_admin = (isset($user_session['admin']) && ! empty($user_session['admin'])) ? true : $this->user_admin;
+        $this->logged_in  = $this->session->userdata('logged_in');
     }
 
     protected function isAdmin()
@@ -202,7 +211,7 @@ class Plain_Controller extends CI_Controller
     // If logged in, redirect
     protected function redirectIfLoggedIn($url='/')
     {
-        if (isset($_SESSION['logged_in'])) {
+        if (! empty($this->logged_in)) {
             header('Location: ' . $url);
             exit;
         }
@@ -211,7 +220,7 @@ class Plain_Controller extends CI_Controller
     // If logged out, redirect
     protected function redirectIfLoggedOut($url='/')
     {
-        if (! isset($_SESSION['logged_in']) && empty($this->user_id)) {
+        if (empty($this->logged_in) && empty($this->user_id)) {
             header('Location: ' . $url);
             exit;
         }
@@ -220,7 +229,7 @@ class Plain_Controller extends CI_Controller
     // If not an admin, redirect
     protected function redirectIfNotAdmin($url='/')
     {
-        if (! isset($_SESSION['user']['admin']) || empty($_SESSION['user']['admin'])) {
+        if (empty($this->user_admin)) {
             header('Location: ' . $url);
             exit;
         }
@@ -272,11 +281,17 @@ class Plain_Controller extends CI_Controller
     // Add user info to session
     protected function sessionAddUser($user)
     {
-        $_SESSION['logged_in'] = true;
-        $_SESSION['user']      = array();
+        // Set logged in
+        $this->session->set_userdata('logged_in', true);
+
+        // Set user shiz
+        $user_array = array();
         foreach ($user as $k => $v) {
-            $_SESSION['user'][$k] = $v;
+            if ($k != 'password') {
+                $user_array[$k] = $v;
+            }
         }
+        $this->session->set_userdata('user', $user_array);
 
         // Set user id and token
         $this->user_id    = (isset($user->user_id)) ? $user->user_id : $this->user_id;
@@ -290,10 +305,11 @@ class Plain_Controller extends CI_Controller
         // Remove ci_session (legacy)
         // destroy session
         // set global back to empty array
-        setcookie('PHPSESSID', '', time()-31557600, '/', $_SERVER['HTTP_HOST']);
+        $cookie_name = $this->config->item('sess_cookie_name');
+        $cookie_name = (empty($cookie_name)) ? 'PHPSESSID' : $cookie_name;
+        setcookie($cookie_name, '', time()-31557600, '/', $_SERVER['HTTP_HOST']);
         setcookie('ci_session', '', time()-31557600, '/', $_SERVER['HTTP_HOST']);
-        session_destroy();
-        $_SESSION = array();
+        $this->session->sess_destroy();
     }
 
     // Start session
@@ -307,19 +323,18 @@ class Plain_Controller extends CI_Controller
 
     protected function setFlashMessage($message, $type='error')
     {
-        $_SESSION['flash_message']            = array();
-        $_SESSION['flash_message']['type']    = $type;
-        $_SESSION['flash_message']['message'] = $message;
+        $this->session->set_userdata('flash_message', array('type' => $type, 'message' => $message));
     }
 
     // Process a view
     // This is used so that we can easily add partials to all views
     protected function view($view, $data=array())
     {
-        $data = (empty($data)) ? $this->data : $data;
-
-        $data['csrf_token']    = $_SESSION['csrf_token'];
+        $data                  = (empty($data)) ? $this->data : $data;
+        $data['csrf_token']    = $this->session->userdata('csrf_token');
         $data['flash_message'] = $this->flash_message;
+        $data['user']          = $this->session->userdata('user');
+        $data['logged_in']     = $this->session->userdata('logged_in');
 
         // Strip tags from page_title
         if (isset($data['page_title'])) {

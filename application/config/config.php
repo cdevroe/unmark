@@ -249,7 +249,7 @@ $config['encryption_key'] = 'nilai1will2make3money!';
 |
 |
 */
-$config['sess_cookie_name']		= 'plain_session';
+$config['sess_cookie_name']		= 'BookEmDanno';
 $config['sess_expiration']		= 1209600;
 $config['sess_expire_on_close']	= FALSE;
 // Also enables encryption for data in case of using other storage mechanisms than cookies
@@ -271,7 +271,7 @@ $config['sess_use_database']	= FALSE;
 |--------------------------------------------------------------------------
 |
 | 'plain_sess_storage'        = storage mechanism for sessions (files, memcached, database)
-| 'plain_sess_memcache_addr'  = address of memcache server (valid for memchached session storage only) 
+| 'plain_sess_memcache_addr'  = address of memcache server (valid for memchached session storage only)
 */
 
 $config['plain_sess_storage']		= 'database';

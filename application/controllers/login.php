@@ -57,8 +57,10 @@ class Login extends Plain_Controller {
         }
 
         // At this point we are clear for takeoff
+        // Regenerate session
         // Set session variables and send user on their way
         $user->email = $this->clean->email;
+        $this->session->sess_update(true);
         $this->sessionAddUser($user);
         header('Location: /marks');
         exit;

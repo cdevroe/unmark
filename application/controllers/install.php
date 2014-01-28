@@ -7,7 +7,13 @@ class Install extends CI_Controller
   {
     parent::__construct();
     $this->load->library('session');
-    //parent::redirectIfNotAdmin();
+    $user = $this->session->userdata('user');
+
+    if (! isset($user['admin']) || empty($user['admin'])) {
+      header('Location: /');
+      exit;
+    }
+
   }
 
   public function index()
@@ -15,7 +21,6 @@ class Install extends CI_Controller
 
     // Step one: See if there is a database
   	$data['install_complete'] = $this->database_install();
-
   	$this->load->view( 'install', $data );
 
   }
@@ -38,7 +43,6 @@ class Install extends CI_Controller
         }
 
     }
-    $this->load->library('plain_session', '', 'session');
 
     // Make sure there is at least one user
     $this->db->from('users');
