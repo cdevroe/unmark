@@ -19,8 +19,10 @@ class Welcome extends Plain_Controller
 			exit;
 		}
 
-		//$this->view('home');
-		$this->figureView('home');
+		$data['no_header'] = true;
+		$data['no_footer'] = true;
+
+		$this->view('home', $data);
 
 	}
 

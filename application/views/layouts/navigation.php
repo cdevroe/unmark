@@ -35,7 +35,7 @@
             
             <h4 class="nav-heading">Most-Used Tags</h4>
             <ul class="tag-list">
-                <?php if ($tags[popular] != "") : ?>
+                <?php if ($tags['popular'] != "") : ?>
                     <?php foreach ($tags as $tag) : ?>
                         <li><a href="#">#Tags</a></li>
                         <li><a href="#">#Tags</a></li>
@@ -54,7 +54,7 @@
             <button id="logout-btn" class="danger" data-action="logout">Sign Out</button>
             <h4 class="nav-heading">Settings</h4>
             <ul class="nav-list">
-                <li>Email: <?php print $user[email]; ?></li>
+                <li>Email: <?php print $user['email']; ?></li>
             </ul>
             <h4 class="nav-heading">Help</h4>
             <ul class="nav-list">

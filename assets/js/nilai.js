@@ -38,7 +38,6 @@ if (nilai === undefined) { var nilai = {}; }
         });
     };
 
-
     // Collapse Marks Info Sidebar
     // Hides the marks info and re-displays the default sidebar
     nilai.sidebar_collapse = function () {
@@ -58,124 +57,9 @@ if (nilai === undefined) { var nilai = {}; }
         });
     };
 
-    // Show Mark Info in Sidebar
-    nilai.mark_more = function (more_link) {
-
-    };
-
-    // Set A Label
-    nilai.label_mark = function (btn) {
-
-        var label, urlid;
-
-        if (btn.hasClass('active')) { return; } // Do nothing if clicking on a label that is already chosen
-
-        label = btn.attr("title");
-        urlid = $("#urlid").val();
-
-        $.ajax({
-            url: "/marks/addlabel?urlid="+urlid+"&label="+label,
-            success: function(){}
-        });
-
-        $('.addlabel').removeClass('active');
-        btn.addClass("active");
-
-        $('#label').val(label);
-
-        if ($('#clearlabelbutton').hasClass('disabled')) { // Make clear label and add smart label button active
-
-            $('#clearlabelbutton').removeClass('disabled');
-            $('#smartlabelbutton').removeClass('disabled');
-
-        } else { // De-activate?
-
-            if ($('#smartlabelbutton').hasClass('danger')) { // Just deactivate clearlabel, not smart label
-                $('#clearlabelbutton').removeClass('active');
-                $('#clearlabelbutton').addClass('disabled');
-                return; 
-            }
-
-            if (label == '') { // if label is nothing, disable both buttons
-                $('#clearlabelbutton').removeClass('active');
-                $('#smartlabelbutton').removeClass('danger');
-                $('#clearlabelbutton').addClass('disabled');
-                $('#smartlabelbutton').addClass('disabled');
-            }
-        }
-    };
-
-    nilai.smart_label = function (btn) {
-
-        var label, domain;
-
-        if (btn.hasClass('disabled')) { return; } // If button is disabled do nothing.
-
-        if (btn.hasClass('btn-danger')) {
-            // Remove the smart label
-            // Add the smart label
-            label = $('#label').val();
-            domain = $('#domain').val();
-
-            $.ajax({
-                url: "/marks/removesmartlabel?domain="+domain+"&label="+label,
-                success: function(){}
-            });
-
-            btn.removeClass('btn-danger');
-            btn.html('Add Smart Label?');
-
-            if (label == '') btn.addClass('disabled');
-
-            $('#smartlabelmessage').html('');
-        } else {
-            // Add the smart label
-            label = $('#label').val();
-            domain = $('#domain').val();
-
-            $.ajax({
-                url: "/marks/addsmartlabel?domain="+domain+"&label="+label,
-                success: function(){}
-            });
-
-            btn.addClass('btn-danger');
-            btn.html('Stop using Smart Label?');
-            $('#smartlabelmessage').html('<small>All future marks from <strong>'+domain+'</strong> will be labeled <strong>'+label+'</strong> automatically.</small>');
-        }
-    };
-
-
-    nilai.add_to_group = function (btn) {
-
-        var urlid, currentgroup, newgroup, note;
-
-        urlid = $("#urlid").val();
-        currentgroup = $('#group').val();
-        newgroup = btn.attr("data-group");
-
-        if (btn.hasClass('active')) {
-            // Remove from group
-            $.ajax({
-                url: "/marks/addgroup?urlid="+urlid+"&group=",
-                success: function(){}
-            });
-            btn.removeClass('active');
-        } else {
-            // Add to group
-            $('.addgroup').removeClass('active');
-            $.ajax({
-                url: "/marks/addgroup?urlid="+urlid+"&group="+newgroup,
-                success: function(){}
-            });
-            $('#group').val(newgroup);
-            btn.addClass("active");
-        }
-
-        note = $('#note').val();
-        $.ajax({
-            url: "/marks/savenote?urlid="+urlid+"&note="+encodeURIComponent(note),
-            success: function(){}
-        });
+    // Logout Method
+    nilai.logout = function () {
+        window.location = "/logout";
     };
 
     // Main Init Script
