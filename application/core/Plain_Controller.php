@@ -358,10 +358,11 @@ class Plain_Controller extends CI_Controller
         }
 
         //If the template is asking to debug, load it
-        /*if (isset($this->clean->debug) && ((isset($_SESSION['account']['admin']) && ! empty($_SESSION['account']['admin'])) || ENVIRONMENT != 'production')) {
+        if (isset($this->clean->debug) && $this->user_admin === true) {
             $data['page_data']      = $data;
+            $data['session']        = $this->session->all_userdata();
             $this->load->view('partials/internal/debug', $data);
-        }*/
+        }
     }
 
 }
