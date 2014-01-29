@@ -10,21 +10,11 @@
 </head>
 
 <body>
-
-<?php 
-    global $active_label;
-    $active_label = 0;
-    if (isset($labels)){
-        foreach ($labels as $label) {
-            if (isset($label->current)) {
-                if ($label->current == 1) {
-                    $active_label = $label->label_id;
-                }
-            }
-        }
-    }
-    print "<body class='label-" . $active_label . "'>";
-?>
+<?php if (isset($active_label)) : ?>
+<body class="label-<?php print $active_label['label_id']; ?>">
+<?php else : ?>
+<body>
+<?php endif; ?>
 
     <?php include('navigation.php'); ?>
 
