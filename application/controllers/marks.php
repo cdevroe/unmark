@@ -180,8 +180,9 @@ class Marks extends Plain_Controller
             $label_id = $finish;
             if (! is_numeric($label_id)) {
                 $this->load->model('labels_model', 'label');
-                $label    = $this->label->read("slug = '" . $this->db->escape_str($label_id) . "'", 1, 1, 'label_id');
+                $label    = $this->label->read("slug = '" . $this->db->escape_str($label_id) . "'", 1, 1, 'label_id, name');
                 $label_id = (isset($label->label_id)) ? $label->label_id : 0;
+                $label_name = (isset($label->name)) ? $label->name : 0;
             }
 
             // Set the new where clause
@@ -236,6 +237,9 @@ class Marks extends Plain_Controller
 
         // Set where
         $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on " . $archive . $where_time . $search;
+
+        // Give Tim Tim his Active Label Array already!
+        if (isset($label_id)) $this->data['active_label'] = array('label_id'=>$label_id, 'label_name'=>$label_name);
 
         // Get all the marks
         $marks = $this->user_marks->readComplete($where, $this->limit, $page, null, $options);
