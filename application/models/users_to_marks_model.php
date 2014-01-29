@@ -176,6 +176,7 @@ class Users_To_Marks_model extends Plain_Model
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
         $sort       = (! empty($this->sort)) ? ' ORDER BY users_to_marks.' . $this->sort : null;
         $sort       = (! empty($sort) && $is_search === true) ? ' ORDER BY ' . $this->sort : $sort;
+        $sort       = (stristr($sort, 'RAND()')) ? ' ORDER BY ' . $this->sort : $sort;
         $tag_id     = (isset($options['tag_id']) && ! empty($options['tag_id'])) ? " INNER JOIN user_marks_to_tags UMTT ON users_to_marks.users_to_mark_id = UMTT.users_to_mark_id AND UMTT.tag_id = '" . $options['tag_id'] . "'" : null;
 
         // Default fields
