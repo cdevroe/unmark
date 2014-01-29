@@ -412,7 +412,8 @@ class Marks extends Plain_Controller
             'yesterday'  => self::totalSaved('yesterday'),
             '2 days ago' => self::totalSaved('-2 days'),
             '3 days ago' => self::totalSaved('-3 days'),
-            '4 days ago' => self::totalSaved('-4 days')
+            '4 days ago' => self::totalSaved('-4 days'),
+            'total'      => self::totalSaved(),
         );
 
         // Get the total marks archived over the last 5 days
@@ -421,7 +422,8 @@ class Marks extends Plain_Controller
             'yesterday'  => self::totalArchived('yesterday'),
             '2 days ago' => self::totalArchived('-2 days'),
             '3 days ago' => self::totalArchived('-3 days'),
-            '4 days ago' => self::totalArchived('-4 days')
+            '4 days ago' => self::totalArchived('-4 days'),
+            'total'      => self::totalArchived()
         );
 
         // Get total marks for a series of ranges
@@ -433,7 +435,8 @@ class Marks extends Plain_Controller
             'last 3 months' => self::totalMarks('-3 months', 'today'),
             'last 6 months' => self::totalMarks('-6 months', 'today'),
             'last year'     => self::totalMarks('-1 year', 'today'),
-            'ages ago'      => self::totalMarks('-20 years', '-1 year')
+            'ages ago'      => self::totalMarks('-20 years', '-1 year'),
+            'total'         => $this->data['stats']['saved']['total']
         );
 
     }
@@ -507,7 +510,7 @@ class Marks extends Plain_Controller
         $this->figureView('marks/restore');
     }
 
-    public function total($what='marks', $start='today', $finish=null)
+    public function total($what='marks', $start=null, $finish=null)
     {
         parent::redirectIfWebView();
         $method = 'total' . ucwords($what);
@@ -523,17 +526,17 @@ class Marks extends Plain_Controller
         }
     }
 
-    private function totalArchived($start='today', $finish=null)
+    private function totalArchived($start=null, $finish=null)
     {
         return $this->user_marks->getTotal('archived', $this->user_id, $start, $finish);
     }
 
-    private function totalMarks($start='today', $finish=null)
+    private function totalMarks($start=null, $finish=null)
     {
         return $this->user_marks->getTotal('marks', $this->user_id, $start, $finish);
     }
 
-    private function totalSaved($start='today', $finish=null)
+    private function totalSaved($start=null, $finish=null)
     {
         return $this->user_marks->getTotal('saved', $this->user_id, $start, $finish);
     }
