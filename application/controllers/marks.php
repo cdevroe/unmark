@@ -60,7 +60,7 @@ class Marks extends Plain_Controller
                     // Try to extract label
                     $this->load->model('labels_model', 'labels');
                     $this->labels->sort = 'user_id DESC';
-                    $label = $this->labels->readComplete("labels.user_id IS NULL OR labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "'", 1);
+                    $label = $this->labels->readComplete("(labels.user_id IS NULL OR labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "') AND labels.active = '1'", 1);
 
                     // If a label id is found
                     // Set it to options to save
@@ -386,7 +386,8 @@ class Marks extends Plain_Controller
 
                     // If not found, create it with label
                     // Else update current
-                    if ($total < 1) {
+                    $
+                    if ($total < 1 && $options['label_id'] != '1') {
                         $label = $this->labels->create(array(
                             'smart_label_id' => $options['label_id'],
                             'domain'         => $smart_info['domain'],
@@ -395,8 +396,10 @@ class Marks extends Plain_Controller
                         ));
                     }
                     else {
+                        $active = ($options['label_id'] == '1') ? '0' : '1';
                         $label = $this->labels->update("labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "'", array(
-                            'smart_label_id' => $options['label_id']
+                            'smart_label_id' => $options['label_id'],
+                            'active'         => $active
                         ));
                     }
                 }
