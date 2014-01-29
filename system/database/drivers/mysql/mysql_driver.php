@@ -70,7 +70,16 @@ class CI_DB_mysql_driver extends CI_DB {
 			$this->hostname .= ':'.$this->port;
 		}
 
-		return @mysql_connect($this->hostname, $this->username, $this->password, TRUE);
+		$result = @mysql_connect($this->hostname, $this->username, $this->password, TRUE);
+		
+        // If no timezone passed - use local one
+	    if(empty($this->timezone)){
+            $this->timezone = date('P');		
+        }
+        // Set timezone
+	    mysqli_query($result, "SET time_zone = '".$this->timezone."'");
+		
+		return $result;
 	}
 
 	// --------------------------------------------------------------------
@@ -88,7 +97,16 @@ class CI_DB_mysql_driver extends CI_DB {
 			$this->hostname .= ':'.$this->port;
 		}
 
-		return @mysql_pconnect($this->hostname, $this->username, $this->password);
+		$result = @mysql_pconnect($this->hostname, $this->username, $this->password);
+		
+		// If no timezone passed - use local one
+	    if(empty($this->timezone)){
+            $this->timezone = date('P');		
+        }
+        // Set timezone
+	    mysqli_query($result, "SET time_zone = '".$this->timezone."'");
+		
+	    return $result;
 	}
 
 	// --------------------------------------------------------------------
