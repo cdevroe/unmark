@@ -75,15 +75,17 @@ class CI_DB_mysqli_driver extends CI_DB {
 		{
 			$result =  @mysqli_connect($this->hostname, $this->username, $this->password, $this->database);
 		}
-
-		// If no timezone passed - use local one 
-        if(empty($this->timezone)){
-            $this->timezone = date('P');		
-        }
-        // Set timezone
-        mysqli_query($result, "SET time_zone = '".$this->timezone."'");
-        
-        $res = mysqli_query($result, 'SELECT @@global.time_zone, @@session.time_zone;');
+        // Connected successfully
+		if($result !== false){
+    		// If no timezone passed - use local one 
+            if(empty($this->timezone)){
+                $this->timezone = date('P');		
+            }
+            // Set timezone
+            mysqli_query($result, "SET time_zone = '".$this->timezone."'");
+            
+            $res = mysqli_query($result, 'SELECT @@global.time_zone, @@session.time_zone;');
+		}
         return $result;
 	}
 
