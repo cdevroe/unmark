@@ -29,16 +29,17 @@ if (nilai === undefined) { var nilai = {}; }
             'async': async,
             'success': function (res) {
                 if ($.isFunction(callback)) {
+                    res["success"] = true;
                     callback(res);
                 }
             },
             'error': function(xhr, status, error) {
                 var json = {
+                    'success': false,
                     'error': error,
                     'status': status,
                     'request': xhr
                 };
-
                 if ($.isFunction(callback)) {
                     callback(json);
                 }
@@ -87,14 +88,16 @@ if (nilai === undefined) { var nilai = {}; }
 
     // Archive & Restore Mark
     nilai.mark_archive = function (archive_link) {
-        var url = archive_link.attr("href");
-        $.ajax({
-            url: url,
+        var id = archive_link.data("id");
 
-            success: function() {
-                archive_link.parent().parent().fadeOut();
+        nilai.ajax('/mark/archive/'+id, 'post', '', function(res) {
+            if(res.success) {
+                $('#mark-'+id).fadeOut();
+            } else {
+                alert('Sorry, We could not archive this mark at this time.');
             }
         });
+
     };
 
     // Logout Method
