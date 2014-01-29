@@ -66,6 +66,7 @@ class Plain_Controller extends CI_Controller
             $user_mark = $mark;
         }
         else {
+            $this->load->model('users_to_marks_model', 'user_marks');
             $user_mark = $this->user_marks->read("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'");
 
             // Add
