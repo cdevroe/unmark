@@ -20,17 +20,29 @@ class Register extends Plain_Controller
 
 		// If good
 		// Add user data to session
+		// Set user id
+		// Add defualt marks
 		// Set redirect to /marks
 		// Set default marks (can't really do this)
 		if (isset($user->user_id)) {
 			$this->sessionAddUser($user);
+
+			// Set user id
+			$this->user_id = $user->user_id;
+
+			// Now add default marks to user account
+			$default_marks = $this->config->item('new_account_links');
+			if (! empty($default_marks)) {
+				foreach ($default_marks as $title => $arr) {
+					$title    = $this->db->escape_str($title);
+					$url      = $this->db->escape_str($arr['url']);
+					$label_id = $this->db->escape_str($arr['label_id']);
+					$res      = parent::addMark(array('url' => $url, 'title' => $title, 'label_id' => $label_id));
+				}
+			}
+
+			// set redirect path
 			$redirect = '/marks';
-
-			// Start links
-			// Can't add these, will break the open source release
-			// We won't know the links to add
-			// We will have to -> either define in config or redirect success to like a getting started page
-
 		}
 		// If failure, get messages
 		// Set to flash message
