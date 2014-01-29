@@ -475,7 +475,27 @@ class Marks extends Plain_Controller
         }
 
         // Figure view
-        $this->figureView('marks/info');
+        $this->figureView();
+    }
+
+    public function random()
+    {
+        // Only allow ajax and API
+        parent::redirectIfWebView();
+
+        $this->user_marks->sort = 'RAND()';
+        $mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND archived_on IS NULL", 1);
+
+        // Check for mark
+        if ($mark === false) {
+            $this->data['errors'] = formatErrors('No marks found.', 12);
+        }
+        else {
+            $this->data['mark'] = $mark;
+        }
+
+        // Figure view
+        $this->figureView();
     }
 
     // Restore a bookmark from archived
