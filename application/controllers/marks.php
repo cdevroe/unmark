@@ -318,51 +318,46 @@ class Marks extends Plain_Controller
             // If notes are present set them
             if (isset($this->db_clean->notes)) {
                 $options['notes'] = $this->db_clean->notes;
+
+                // Check for hashmarks to tags
+                $tags = getTagsFromHash($options['notes']);
             }
 
             // If tags are present, handle differentlu
             // Need to add to tags table first
             // Then create association
             // If notes are present set them
-            if (isset($this->db_clean->tags) || isset($this->clean->delete_tags)) {
+            if (isset($tags)) {
                 // Update users_to_marks record
                 $this->load->model('tags_model', 'tag');
                 $this->load->model('user_marks_to_tags_model', 'mark_to_tag');
 
-                // Add/Update tags
-                if (isset($this->db_clean->tags)) {
-                    $tags = explode(',', $this->db_clean->tags);
-                    foreach ($tags as $k => $tag) {
-                        $tag  = trim($tag);
-                        $slug = generateSlug($tag);
-                        if (! empty($slug)) {
-                            $tag = $this->tag->read("slug == '" . $slug . "'", 1, 1, 'tag_id');
-                            if (! isset($tag->tag_id)) {
-                                $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
-                            }
+                $tag_ids = array();
+                foreach ($tags as $k => $tag) {
+                    $tag     = trim($tag);
+                    $slug    = generateSlug($tag);
 
-                            // Add tag to mark
-                            if (isset($tag->tag_id)) {
-                                $res = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
-                            }
-                        }
-                    }
-                }
-
-                // Delete tags
-                if (isset($this->clean->delete_tags)) {
-                    $tag_ids = explode(',', $this->clean->delete_tags);
-                    foreach ($tag_ids as $tag_id) {
-                        if (is_numeric($tag_id)) {
+                    if (! empty($slug)) {
+                        $tag = $this->tag->read("slug == '" . $slug . "'", 1, 1, 'tag_id');
+                        if (! isset($tag->tag_id)) {
                             $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
+                        }
 
-                            // Add tag to mark
-                            if (isset($tag->tag_id)) {
-                                $res = $this->mark_to_tags->delete(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
-                            }
+                        // Add tag to mark
+                        if (isset($tag->tag_id)) {
+                            $tag = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
+                        }
+
+                        // Save all tag ids
+                        if (isset($tag->tag_id)) {
+                            array_push($tag_ids, $tag->tag_id);
                         }
                     }
                 }
+
+                // Delete old tags
+                $delete_where = (! empty($tag_ids)) ? " AND tag_id <> '" . implode("' AND tag_id <> '", $tag_ids) . "'" : '';
+                $delete       = $this->$this->mark_to_tags->delete("users_to_mark_id = '" . $mark_id . "' AND user_id = '" . $this->user_id . "'" . $delete_where);
             }
 
 
