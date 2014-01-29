@@ -37,6 +37,8 @@
 |	['autoinit'] Whether or not to automatically initialize the database.
 |	['stricton'] TRUE/FALSE - forces 'Strict Mode' connections
 |							- good for ensuring strict SQL while developing
+|   ['timezone'] Timezone (time offset from GMT in +XX:YY format) to set on mysql connection. 
+|                If null or not set defaults to application server timezone `date('P')`
 |
 | The $active_group variable lets you choose which connection group to
 | make active.  By default there is only one group (the 'default' group).
@@ -73,7 +75,7 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
-
+$db['default']['timezone'] = '+00:00'; // GMT
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */
