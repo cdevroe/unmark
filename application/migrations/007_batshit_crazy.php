@@ -86,7 +86,7 @@ class Migration_Batshit_Crazy extends CI_Migration {
       // Loop thru smart labels and add them up
       foreach ($smart_labels as $label_id => $arr) {
         foreach ($arr as $domain) {
-            $smart_info = getSmartLabelInfo($'http://' . $domain);
+            $smart_info = getSmartLabelInfo('http://' . $domain);
             $this->db->query("
               INSERT INTO `labels`
               (`smart_label_id`, `domain`, `smart_key`, `created_on`)
