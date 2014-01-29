@@ -251,6 +251,17 @@ class Marks extends Plain_Controller
         // Check for a JOIN to send to the getTotals call
         // Get the totals
         else {
+
+            // Autolink marks
+            foreach ($marks as $k => $mark) {
+                if (isset($mark->tags) && ! empty($mark->tags)) {
+                    foreach ($mark->tags as $kk => $tag) {
+                        $marks[$k]->notes = str_replace('#' . $tag['slug'], '<a href="/marks/tag/' . $tag['slug'] . '">#' . $tag['slug'] . '</a>', $marks[$k]->notes);
+                    }
+                }
+            }
+
+            // Set marks
             $this->data['marks'] = $marks;
 
             // If a search, get totals here
