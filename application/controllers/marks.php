@@ -36,7 +36,7 @@ class Marks extends Plain_Controller
         }
         else {
             $this->data['mark'] = $user_mark;
-            $redirect           = '/marks/info/' . $user_mark->mark_id . '?bookmarklet=true';
+            $redirect           = '/mark/info/' . $user_mark->mark_id . '?bookmarklet=true';
         }
 
         // Figure what to do here (api, redirect or generate view)
@@ -455,7 +455,7 @@ class Marks extends Plain_Controller
     public function info($mark_id=0)
     {
         // Only allow ajax and API
-        parent::redirectIfWebView();
+        //parent::redirectIfWebView();
 
         // Figure correct way to handle if no mark id
         if (empty($mark_id) || ! is_numeric($mark_id)) {
@@ -475,7 +475,7 @@ class Marks extends Plain_Controller
         }
 
         // Figure view
-        $this->figureView();
+        $this->figureView('marks/info');
     }
 
     public function random()
