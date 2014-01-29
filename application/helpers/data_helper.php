@@ -162,6 +162,12 @@ function getSmartLabelInfo($url)
 
 }
 
+function getTagsFromHash($str)
+{
+    preg_match_all('/#([0-9a-z_-]*)/is', $str, $tags);
+    return (isset($tags[1]) && ! empty($tags[1])) ? $tags[1] : array();
+}
+
 function purifyHTML($str, $exceptions=array())
 {
     if (is_string($str)) {
