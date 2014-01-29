@@ -189,9 +189,6 @@ class Marks extends Plain_Controller
         // Set where
         $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.archived_on " . $archive . $where_time . $search;
 
-        // Give Tim Tim his Active Label Array already!
-        if (isset($label_id)) $this->data['active_label'] = array('label_id'=>$label_id, 'label_name'=>$label_name);
-
         // Get all the marks
         $marks = $this->user_marks->readComplete($where, $this->limit, $page, null, $options);
 
@@ -243,6 +240,9 @@ class Marks extends Plain_Controller
                 foreach ($this->data['labels'] as $k => $label) {
                     $this->data['labels'][$k]->current = ($label->label_id == $label_id) ? '1' : '0';
                 }
+
+                // Give Tim Tim his Active Label Array already!
+                $this->data['active_label'] = (isset($label_id)) ? array('label_id' => $label_id, 'label_name' =>$label_name) : array();
             }
 
             // If looking up by tag, set the current tag if applicable
