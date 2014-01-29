@@ -474,6 +474,9 @@ class Marks extends Plain_Controller
             $this->data['mark'] = $mark;
         }
 
+        $this->data['no_header'] = true;
+        $this->data['no_footer'] = true;
+
         // Figure view
         $this->figureView('marks/info');
     }
@@ -494,12 +497,8 @@ class Marks extends Plain_Controller
             $this->data['mark'] = $mark;
         }
 
-        $data['no_header'] = true;
-        $data['no_footer'] = true;
-
         // Figure view
         $this->figureView();
-
     }
 
     // Restore a bookmark from archived
