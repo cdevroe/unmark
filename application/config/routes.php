@@ -54,7 +54,7 @@ $route['label/info(.*?)']        = 'labels/info$1';
 $route['labels?(.*?)']           = 'labels/index$1';
 
 // Single Mark Actions
-$route['mark/add(.*?)']          = 'marks/add$1';
+$route['marks?/add(.*?)']          = 'marks/add$1';
 $route['mark/archive(.*?)']      = 'marks/archive$1';
 $route['mark/edit(.*?)']         = 'marks/edit$1';
 $route['mark/info(.*?)']         = 'marks/info$1';
@@ -67,6 +67,7 @@ $route['marks/get(.*?)']         = 'marks/get$1';
 $route['marks/search(.*?)']      = 'marks/index/search$1';
 $route['marks/tag(.*?)']         = 'marks/index/tag$1';
 $route['marks/total(.*?)']       = 'marks/total$1';
+$route['marks?/random(.*?)']     = 'marks/random$1';
 
 // Marks catch all
 $route['marks?(.*?)']            = 'marks/index$1';

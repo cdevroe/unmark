@@ -89,7 +89,7 @@ class Plain_Controller extends CI_Controller
                     // Try to extract label
                     $this->load->model('labels_model', 'labels');
                     $this->labels->sort = 'user_id DESC';
-                    $label = $this->labels->readComplete("(labels.user_id IS NULL OR labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "') AND labels.active = '1'", 1);
+                    $label = $this->labels->readComplete("(labels.user_id IS NULL OR labels.user_id = '" . $this->user_id . "') AND labels.smart_key = '" . $smart_info['key'] . "' AND labels.active = '1'", 1);
 
                     // If a label id is found
                     // Set it to options to save

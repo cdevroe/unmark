@@ -63,11 +63,11 @@ class Install extends CI_Controller
     exit('Upgraded. Please <a href="/">return home</a>.');
 
   }
-  
+
   private function check_admin(){
       $this->load->library('session');
       $user = $this->session->userdata('user');
-      
+
       if (! isset($user['admin']) || empty($user['admin'])) {
           header('Location: /');
           exit;

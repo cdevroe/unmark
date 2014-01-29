@@ -73,6 +73,196 @@ class Marks extends Plain_Controller
         $this->figureView('marks/archive');
     }
 
+    // Edit a mark
+    // Both API and web view
+    public function edit($mark_id=0)
+    {
+        // Figure correct way to handle if no mark id
+        if (empty($mark_id) || ! is_numeric($mark_id)) {
+            header('Location: /');
+            exit;
+        }
+
+        // Check for CSRF
+        if ($this->csrf_valid === true) {
+
+            // Figure what options to send for update
+            $options = array();
+
+            // If label ID is found, attach it
+            if (isset($this->clean->label_id) && is_numeric($this->label_id)) {
+                $options['label_id'] = $this->clean->label_id;
+            }
+
+            // If notes are present set them
+            if (isset($this->db_clean->notes)) {
+                $options['notes'] = $this->db_clean->notes;
+
+                // Check for hashmarks to tags
+                $tags = getTagsFromHash($options['notes']);
+            }
+
+            // If tags are present, handle differentlu
+            // Need to add to tags table first
+            // Then create association
+            // If notes are present set them
+            if (isset($tags)) {
+                // Update users_to_marks record
+                $this->load->model('tags_model', 'tag');
+                $this->load->model('user_marks_to_tags_model', 'mark_to_tag');
+
+                $tag_ids = array();
+                foreach ($tags as $k => $tag) {
+                    $tag     = trim($tag);
+                    $slug    = generateSlug($tag);
+
+                    if (! empty($slug)) {
+                        $tag = $this->tag->read("slug == '" . $slug . "'", 1, 1, 'tag_id');
+                        if (! isset($tag->tag_id)) {
+                            $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
+                        }
+
+                        // Add tag to mark
+                        if (isset($tag->tag_id)) {
+                            $tag = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
+                        }
+
+                        // Save all tag ids
+                        if (isset($tag->tag_id)) {
+                            array_push($tag_ids, $tag->tag_id);
+                        }
+                    }
+                }
+
+                // Delete old tags
+                $delete_where = (! empty($tag_ids)) ? " AND tag_id <> '" . implode("' AND tag_id <> '", $tag_ids) . "'" : '';
+                $delete       = $this->$this->mark_to_tags->delete("users_to_mark_id = '" . $mark_id . "' AND user_id = '" . $this->user_id . "'" . $delete_where);
+            }
+
+
+            // Update users_to_marks record
+            $mark = $this->user_marks->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
+
+            // Check if it was updated
+            if ($mark === false) {
+                $this->data['errors'] = formatErrors('Mark could not be updated.', 14);
+            }
+            else {
+                $this->data['mark'] = $mark;
+
+                // Check if label id was set
+                // if so get the parent mark id
+                // Then add a smart label for this domain
+                if (isset($options['label_id']) && ! empty($options['label_id'])) {
+                    $this->load->model('labels_model', 'labels');
+                    $smart_info = getSmartLabelInfo($mark->url);
+                    $total      = $this->labels->count("labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "'");
+
+                    // If not found, create it with label
+                    // Else update current
+                    if ($total < 1 && $options['label_id'] != '1') {
+                        $label = $this->labels->create(array(
+                            'smart_label_id' => $options['label_id'],
+                            'domain'         => $smart_info['domain'],
+                            'smart_key'      => $smart_info['key'],
+                            'user_id'        => $this->user_id
+                        ));
+                    }
+                    else {
+                        $active = ($options['label_id'] == '1') ? '0' : '1';
+                        $label = $this->labels->update("labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "'", array(
+                            'smart_label_id' => $options['label_id'],
+                            'active'         => $active
+                        ));
+                    }
+                }
+            }
+
+        }
+
+        // Figure what to do here (api, redirect or generate view)
+        $this->figureView('marks/edit');
+
+    }
+
+    public function get($what='stats')
+    {
+        parent::redirectIfWebView();
+        $method = 'get' . ucwords($what);
+        if (method_exists($this, $method)) {
+            $total = $this->$method();
+            parent::renderJSON();
+        }
+        else {
+            header('Location: /');
+            exit;
+        }
+
+    }
+
+    private function getLabels()
+    {
+        $this->load->model('labels_model', 'labels');
+        $this->data['labels'] = $this->labels->getSystemLabels();
+
+        if ($this->data['labels'] !== false) {
+            $this->load->model('labels_model', 'labels');
+            foreach($this->data['labels'] as $k => $label) {
+                $this->data['labels'][$k]->total_marks = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "'");
+            }
+        }
+
+    }
+
+
+    private function getStats()
+    {
+        $this->data['stats'] = array();
+
+        // Get total marks saved over the last 5 days
+        $this->data['stats']['saved'] = array(
+            'today'      => self::totalSaved('today'),
+            'yesterday'  => self::totalSaved('yesterday'),
+            '2 days ago' => self::totalSaved('-2 days'),
+            '3 days ago' => self::totalSaved('-3 days'),
+            '4 days ago' => self::totalSaved('-4 days'),
+            'total'      => self::totalSaved(),
+        );
+
+        // Get the total marks archived over the last 5 days
+        $this->data['stats']['archived'] = array(
+            'today'      => self::totalArchived('today'),
+            'yesterday'  => self::totalArchived('yesterday'),
+            '2 days ago' => self::totalArchived('-2 days'),
+            '3 days ago' => self::totalArchived('-3 days'),
+            '4 days ago' => self::totalArchived('-4 days'),
+            'total'      => self::totalArchived()
+        );
+
+        // Get total marks for a series of ranges
+        $this->data['stats']['marks'] = array(
+            'today'         => self::totalMarks('today'),
+            'yesterday'     => self::totalMarks('yesterday'),
+            'last week'     => self::totalMarks('-7 days', 'today'),
+            'last_month'    => self::totalMarks('-1 month', 'today'),
+            'last 3 months' => self::totalMarks('-3 months', 'today'),
+            'last 6 months' => self::totalMarks('-6 months', 'today'),
+            'last year'     => self::totalMarks('-1 year', 'today'),
+            'ages ago'      => self::totalMarks('-20 years', '-1 year'),
+            'total'         => $this->data['stats']['saved']['total']
+        );
+
+    }
+
+    // Get the 10 most used tags for a user
+    private function getTags()
+    {
+        $this->data['tags'] = array();
+        $this->load->model('user_marks_to_tags_model', 'user_tags');
+        $this->data['tags']['popular'] = $this->user_tags->getPopular($this->user_id);
+        $this->data['tags']['recent']  = $this->user_tags->getMostRecent($this->user_id);
+    }
+
     // The index of the marks page
     public function index()
     {
@@ -260,193 +450,6 @@ class Marks extends Plain_Controller
         $this->figureView('marks/index');
     }
 
-    // Edit a mark
-    // Both API and web view
-    public function edit($mark_id=0)
-    {
-        // Figure correct way to handle if no mark id
-        if (empty($mark_id) || ! is_numeric($mark_id)) {
-            header('Location: /');
-            exit;
-        }
-
-        // Check for CSRF
-        if ($this->csrf_valid === true) {
-
-            // Figure what options to send for update
-            $options = array();
-
-            // If label ID is found, attach it
-            if (isset($this->clean->label_id) && is_numeric($this->label_id)) {
-                $options['label_id'] = $this->clean->label_id;
-            }
-
-            // If notes are present set them
-            if (isset($this->db_clean->notes)) {
-                $options['notes'] = $this->db_clean->notes;
-
-                // Check for hashmarks to tags
-                $tags = getTagsFromHash($options['notes']);
-            }
-
-            // If tags are present, handle differentlu
-            // Need to add to tags table first
-            // Then create association
-            // If notes are present set them
-            if (isset($tags)) {
-                // Update users_to_marks record
-                $this->load->model('tags_model', 'tag');
-                $this->load->model('user_marks_to_tags_model', 'mark_to_tag');
-
-                $tag_ids = array();
-                foreach ($tags as $k => $tag) {
-                    $tag     = trim($tag);
-                    $slug    = generateSlug($tag);
-
-                    if (! empty($slug)) {
-                        $tag = $this->tag->read("slug == '" . $slug . "'", 1, 1, 'tag_id');
-                        if (! isset($tag->tag_id)) {
-                            $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
-                        }
-
-                        // Add tag to mark
-                        if (isset($tag->tag_id)) {
-                            $tag = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
-                        }
-
-                        // Save all tag ids
-                        if (isset($tag->tag_id)) {
-                            array_push($tag_ids, $tag->tag_id);
-                        }
-                    }
-                }
-
-                // Delete old tags
-                $delete_where = (! empty($tag_ids)) ? " AND tag_id <> '" . implode("' AND tag_id <> '", $tag_ids) . "'" : '';
-                $delete       = $this->$this->mark_to_tags->delete("users_to_mark_id = '" . $mark_id . "' AND user_id = '" . $this->user_id . "'" . $delete_where);
-            }
-
-
-            // Update users_to_marks record
-            $mark = $this->user_marks->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
-
-            // Check if it was updated
-            if ($mark === false) {
-                $this->data['errors'] = formatErrors('Mark could not be updated.', 14);
-            }
-            else {
-                $this->data['mark'] = $mark;
-
-                // Check if label id was set
-                // if so get the parent mark id
-                // Then add a smart label for this domain
-                if (isset($options['label_id']) && ! empty($options['label_id'])) {
-                    $this->load->model('labels_model', 'labels');
-                    $smart_info = getSmartLabelInfo($mark->url);
-                    $total      = $this->labels->count("labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "'");
-
-                    // If not found, create it with label
-                    // Else update current
-                    if ($total < 1 && $options['label_id'] != '1') {
-                        $label = $this->labels->create(array(
-                            'smart_label_id' => $options['label_id'],
-                            'domain'         => $smart_info['domain'],
-                            'smart_key'      => $smart_info['key'],
-                            'user_id'        => $this->user_id
-                        ));
-                    }
-                    else {
-                        $active = ($options['label_id'] == '1') ? '0' : '1';
-                        $label = $this->labels->update("labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "'", array(
-                            'smart_label_id' => $options['label_id'],
-                            'active'         => $active
-                        ));
-                    }
-                }
-            }
-
-        }
-
-        // Figure what to do here (api, redirect or generate view)
-        $this->figureView('marks/edit');
-
-    }
-
-    public function get($what='stats')
-    {
-        parent::redirectIfWebView();
-        $method = 'get' . ucwords($what);
-        if (method_exists($this, $method)) {
-            $total = $this->$method();
-            parent::renderJSON();
-        }
-        else {
-            header('Location: /');
-            exit;
-        }
-
-    }
-
-    private function getLabels()
-    {
-        $this->load->model('labels_model', 'labels');
-        $this->data['labels'] = $this->labels->getSystemLabels();
-
-        if ($this->data['labels'] !== false) {
-            $this->load->model('labels_model', 'labels');
-            foreach($this->data['labels'] as $k => $label) {
-                $this->data['labels'][$k]->total_marks = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "'");
-            }
-        }
-
-    }
-
-
-    private function getStats()
-    {
-        $this->data['stats'] = array();
-
-        // Get total marks saved over the last 5 days
-        $this->data['stats']['saved'] = array(
-            'today'      => self::totalSaved('today'),
-            'yesterday'  => self::totalSaved('yesterday'),
-            '2 days ago' => self::totalSaved('-2 days'),
-            '3 days ago' => self::totalSaved('-3 days'),
-            '4 days ago' => self::totalSaved('-4 days')
-        );
-
-        // Get the total marks archived over the last 5 days
-        $this->data['stats']['archived'] = array(
-            'today'      => self::totalArchived('today'),
-            'yesterday'  => self::totalArchived('yesterday'),
-            '2 days ago' => self::totalArchived('-2 days'),
-            '3 days ago' => self::totalArchived('-3 days'),
-            '4 days ago' => self::totalArchived('-4 days')
-        );
-
-        // Get total marks for a series of ranges
-        $this->data['stats']['marks'] = array(
-            'today'         => self::totalMarks('today'),
-            'yesterday'     => self::totalMarks('yesterday'),
-            'last week'     => self::totalMarks('-7 days', 'today'),
-            'last_month'    => self::totalMarks('-1 month', 'today'),
-            'last 3 months' => self::totalMarks('-3 months', 'today'),
-            'last 6 months' => self::totalMarks('-6 months', 'today'),
-            'last year'     => self::totalMarks('-1 year', 'today'),
-            'ages ago'      => self::totalMarks('-20 years', '-1 year')
-        );
-
-    }
-
-    // Get the 10 most used tags for a user
-    private function getTags()
-    {
-        $this->data['tags'] = array();
-        $this->load->model('user_marks_to_tags_model', 'user_tags');
-        $this->data['tags']['popular'] = $this->user_tags->getPopular($this->user_id);
-        $this->data['tags']['recent']  = $this->user_tags->getMostRecent($this->user_id);
-    }
-
     // Mark detail view
     // Both API and web view
     public function info($mark_id=0)
@@ -471,11 +474,32 @@ class Marks extends Plain_Controller
             $this->data['mark'] = $mark;
         }
 
+        // Figure view
+        $this->figureView('marks/info');
+    }
+
+    public function random()
+    {
+        // Only allow ajax and API
+        parent::redirectIfWebView();
+
+        $this->user_marks->sort = 'RAND()';
+        $mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND archived_on IS NULL", 1);
+
+        // Check for mark
+        if ($mark === false) {
+            $this->data['errors'] = formatErrors('No marks found.', 12);
+        }
+        else {
+            $this->data['mark'] = $mark;
+        }
+
         $data['no_header'] = true;
         $data['no_footer'] = true;
 
         // Figure view
-        $this->view('marks/info', $data);
+        $this->figureView();
+
     }
 
     // Restore a bookmark from archived
@@ -510,7 +534,7 @@ class Marks extends Plain_Controller
         $this->figureView('marks/restore');
     }
 
-    public function total($what='marks', $start='today', $finish=null)
+    public function total($what='marks', $start=null, $finish=null)
     {
         parent::redirectIfWebView();
         $method = 'total' . ucwords($what);
@@ -526,17 +550,17 @@ class Marks extends Plain_Controller
         }
     }
 
-    private function totalArchived($start='today', $finish=null)
+    private function totalArchived($start=null, $finish=null)
     {
         return $this->user_marks->getTotal('archived', $this->user_id, $start, $finish);
     }
 
-    private function totalMarks($start='today', $finish=null)
+    private function totalMarks($start=null, $finish=null)
     {
         return $this->user_marks->getTotal('marks', $this->user_id, $start, $finish);
     }
 
-    private function totalSaved($start='today', $finish=null)
+    private function totalSaved($start=null, $finish=null)
     {
         return $this->user_marks->getTotal('saved', $this->user_id, $start, $finish);
     }
