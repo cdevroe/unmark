@@ -79,7 +79,7 @@ class Users_To_Marks_model extends Plain_Model
         return $marks;
     }
 
-    public function getTotal($type, $user_id, $start='today', $finish=null)
+    public function getTotal($type, $user_id, $start=null, $finish=null)
     {
         $type  = trim(strtolower($type));
         $types = array('archived' => 'archived_on', 'saved' => 'created_on', 'marks' => 'created_on');
@@ -93,24 +93,29 @@ class Users_To_Marks_model extends Plain_Model
         $column = $types[$type];
 
         // Figure start & finish
-        $dates = findStartFinish($start, $finish);
+        if (! empty($start)) {
+            $dates = findStartFinish($start, $finish);
+        }
 
         // Figure date range
         $when = null;
 
         // If from is not empty, figure timestamp
-        if (! empty($dates['start'])) {
+        if (isset($dates['start']) && ! empty($dates['start'])) {
             $when .= " AND UNIX_TIMESTAMP(" . $column . ") >= '" . $dates['start'] . "'";
         }
 
         // if to is not empty, figure timestamp
-        if (! empty($dates['finish'])) {
+        if (isset($dates['finish']) && ! empty($dates['finish'])) {
             $when .= " AND UNIX_TIMESTAMP(" . $column . ") <= '" . $dates['finish'] . "'";
         }
 
         // If when is empty, set to IS NOT NULL
         if ($type == 'marks') {
             $when .= " AND archived_on IS NULL";
+        }
+        elseif (! isset($dates)) {
+            $when .= ($type == 'archived') ? " AND archived_on IS NOT NULL" : " AND archived_on IS NULL";
         }
 
         return $this->count("user_id='". $user_id . "'" . $when);
