@@ -12,6 +12,7 @@
 <body>
 
 <?php 
+    global $active_label;
     $active_label = 0;
     if (isset($labels)){
         foreach ($labels as $label) {

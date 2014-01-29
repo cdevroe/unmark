@@ -1,9 +1,10 @@
 <div class="navigation-content">
     <div class="menu-activator menu-item"><a rel="200" href="#panel-menu"><i class="barley-icon-reorder"></i></a></div>
     <div class="menu-marks menu-item"><a href="/"><i class="barley-icon-link"></i></a></div>
-    <div data-menu="panel-label" class="menu-labels menu-item"><a rel="200" href="#panel-label"><i class="barley-icon-bookmark"></i></a></div>
+    <div data-menu="panel-label" class="menu-labels menu-item"><a rel="200" href="#panel-label"><i class="barley-icon-circle"></i></a></div>
     <div data-menu="panel-timeline" class="menu-timeline menu-item"><a rel="250" href="#panel-timeline"><i class="barley-icon-time"></i></a></div>
     <div data-menu="panel-search" class="menu-search menu-item"><a rel="350" href="#panel-search"><i class="barley-icon-search"></i></a></div>
+    <div data-menu="panel-archives" class="menu-search menu-item"><a href="/marks/archive"><i class="barley-icon-briefcase"></i></a></div>
     <div data-menu="panel-settings" class="menu-settings menu-item"><a rel="350" href="#panel-settings"><i class="barley-icon-cog"></i></a></div>
 </div>
 
@@ -13,6 +14,7 @@
         <li class="panel-label"><a rel="200" href="#panel-label">Labels</a></li>
         <li class="panel-timeline"><a rel="250" href="#panel-timeline">Timeline</a></li>
         <li class="panel-search"><a rel="350" href="#panel-search">Search</a></li>
+        <li class="panel-search"><a href="/marks/archive">Archives</a></li>
         <li class="panel-settings"><a rel="350" href="#panel-settings">Settings</a></li>
     </ul>
     <div class="navigation-panel-wrapper">

@@ -296,6 +296,19 @@ ul.nav-list {
     padding-right:0;
     overflow: scroll;
     position: absolute;
+    h2.marks-heading {
+        font-weight: 400;
+        margin: 0;
+        border-bottom: 1px solid #000;
+        padding: 14px 25px;
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        @include drop-shadow-border();
+        i {
+            padding-right: 10px;
+        }
+    }
 }
 
 

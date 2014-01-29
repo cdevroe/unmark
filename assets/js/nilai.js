@@ -4,10 +4,6 @@
     Copyright 2014 - Plain - http://plainmade.com
 */
 
-
-// hoverIntent r7 // 2013.03.11 // jQuery 1.9.1+ // http://cherne.net/brian/resources/jquery.hoverIntent.html
-(function(e){e.fn.hoverIntent=function(t,n,r){var i={interval:100,sensitivity:7,timeout:0};if(typeof t==="object"){i=e.extend(i,t)}else if(e.isFunction(n)){i=e.extend(i,{over:t,out:n,selector:r})}else{i=e.extend(i,{over:t,out:t,selector:n})}var s,o,u,a;var f=function(e){s=e.pageX;o=e.pageY};var l=function(t,n){n.hoverIntent_t=clearTimeout(n.hoverIntent_t);if(Math.abs(u-s)+Math.abs(a-o)<i.sensitivity){e(n).off("mousemove.hoverIntent",f);n.hoverIntent_s=1;return i.over.apply(n,[t])}else{u=s;a=o;n.hoverIntent_t=setTimeout(function(){l(t,n)},i.interval)}};var c=function(e,t){t.hoverIntent_t=clearTimeout(t.hoverIntent_t);t.hoverIntent_s=0;return i.out.apply(t,[e])};var h=function(t){var n=jQuery.extend({},t);var r=this;if(r.hoverIntent_t){r.hoverIntent_t=clearTimeout(r.hoverIntent_t)}if(t.type=="mouseenter"){u=n.pageX;a=n.pageY;e(r).on("mousemove.hoverIntent",f);if(r.hoverIntent_s!=1){r.hoverIntent_t=setTimeout(function(){l(n,r)},i.interval)}}else{e(r).off("mousemove.hoverIntent",f);if(r.hoverIntent_s==1){r.hoverIntent_t=setTimeout(function(){c(n,r)},i.timeout)}}};return this.on({"mouseenter.hoverIntent":h,"mouseleave.hoverIntent":h},i.selector)}})(jQuery)
-
 if (nilai === undefined) { var nilai = {}; }
 
 (function ($) {
@@ -100,9 +96,69 @@ if (nilai === undefined) { var nilai = {}; }
 
     };
 
+    // Archive & Restore Mark
+    nilai.mark_restore = function (archive_link) {
+        var id = archive_link.data("id");
+
+        nilai.ajax('/mark/restore/'+id, 'post', '', function(res) {
+            if(res.success) {
+                $('#mark-'+id).fadeOut();
+            } else {
+                alert('Sorry, We could not restore this mark at this time.');
+            }
+        });
+
+    };
+
     // Logout Method
     nilai.logout = function () {
         window.location = "/logout";
+    };
+
+    nilai.interact_nav = function (e, elem_ckd) {
+        // Set variables
+        var panel_to_show = elem_ckd.attr('href'),
+            panel_name = panel_to_show.replace(/^#/, ''),
+            panel_width = parseInt(elem_ckd.attr('rel')),
+            panel_animate = panel_width + 65,
+            panel_position = parseInt(nilai.nav_panel.css('left'));
+
+        // If all links pannel - allow click default
+        if (panel_to_show.match(/\//)) { return true; }
+
+        // Otherwise prevent click default
+        e.preventDefault();
+
+        // Add / Remove Class for current navigation
+        $('.menu-item').removeClass('active-menu');
+        $('.navigation-content').find("[data-menu='" + panel_name + "']").addClass('active-menu');
+
+        // Check for close action on and open panel
+        if (panel_to_show === "#panel-menu") {
+            if (panel_position > 0) {
+                nilai.nav_panel.animate({ left: -258 }, { duration: 200, queue: false });
+                nilai.main_panel.animate({ left: 65 }, { duration: 200, queue: false });
+                $('.nav-panel').hide();
+                $('.navigation-pane-links').show();
+                return;
+            }
+        }
+
+        // Check which panel to show
+        nilai.nav_panel.animate({ left: 65 }, { duration: 200, queue: false });
+        nilai.main_panel.animate({ left: panel_animate }, { duration: 200, queue: false });
+
+        nilai.nav_panel.animate({ width: panel_width, }, 200);
+        nilai.nav_panel.find('.nav-panel').animate({ width: panel_width, }, 200);
+
+        if (panel_to_show === "#panel-menu"){
+            $('.navigation-pane-links').show();
+            $('.nav-panel').hide();                
+        } else {
+            $('.navigation-pane-links').hide();
+            $('.nav-panel').not(panel_to_show).hide();
+            $(panel_to_show).show();
+        }
     };
 
     // Main Init Script
@@ -127,74 +183,17 @@ if (nilai === undefined) { var nilai = {}; }
         // Vertical Tabs
         // Shows and Tabs the Vertical navigition inside the Navigation Panel
         $('.navigation-content a, .navigation-pane-links a').on('click', function (e) {
-            
-            // Set variables
-            var panel_to_show = $(this).attr('href'),
-                panel_name = panel_to_show.replace(/^#/, ''),
-                panel_width = parseInt($(this).attr('rel')),
-                panel_animate = panel_width + 65,
-                panel_position = parseInt(nilai.nav_panel.css('left'));
-
-            // If all links pannel - allow click default
-            if (panel_to_show === "/") { return true; }
-
-            // Otherwise prevent click default
-            e.preventDefault();
-
-            // Add / Remove Class for current navigation
-            $('.menu-item').removeClass('active-menu');
-            $('.navigation-content').find("[data-menu='" + panel_name + "']").addClass('active-menu');
-
-            // Check for close action on and open panel
-            if (panel_to_show === "#panel-menu") {
-                if (panel_position > 0) {
-                    nilai.nav_panel.animate({ left: -258 }, { duration: 200, queue: false });
-                    nilai.main_panel.animate({ left: 65 }, { duration: 200, queue: false });
-                    $('.nav-panel').hide();
-                    $('.navigation-pane-links').show();
-                    return;
-                }
-            }
-
-            // Check which panel to show
-            nilai.nav_panel.animate({ left: 65 }, { duration: 200, queue: false });
-            nilai.main_panel.animate({ left: panel_animate }, { duration: 200, queue: false });
-
-            nilai.nav_panel.animate({ width: panel_width, }, 200);
-            nilai.nav_panel.find('.nav-panel').animate({ width: panel_width, }, 200);
-
-            if (panel_to_show === "#panel-menu"){
-                $('.navigation-pane-links').show();
-                $('.nav-panel').hide();                
-            } else {
-                $('.navigation-pane-links').hide();
-                $('.nav-panel').not(panel_to_show).hide();
-                $(panel_to_show).show();
-            }
+            nilai.interact_nav(e, $(this));
         });
 
         // Hover Action on Marks List
         // Shows the Archive and More Buttons
-        $(".mark").hoverIntent(function () {
+        $(".mark").hover(function () {
             $(this).addClass('hide-dot');
             $(this).find('.mark-actions').show();
         }, function () {
             $(this).removeClass('hide-dot');
             $(this).find('.mark-actions').hide();
-        });
-
-        // Archive a Mark
-        // Sends ajax request to archive a mark.
-        $('a.mark-archive').on('click', function (e) {
-            e.preventDefault();
-            nilai.mark_archive($(this));
-        });
-
-        // View Mark Details
-        // Shows info about mark and actions
-        $('a.mark-more').on('click', function (e) {
-            e.preventDefault();
-            nilai.mark_more($(this));
         });
 
         // Global Buton / Action Link Run
