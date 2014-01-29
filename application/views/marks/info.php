@@ -1,5 +1,7 @@
 <?php if ($lookup_type != "all") :
 
+    print 'helo tim';
+
     $heading = array();
 
     switch ($lookup_type) {

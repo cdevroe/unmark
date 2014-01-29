@@ -1,13 +1,11 @@
-<?php $this->load->view('header'); ?>
-
-<div class="main-content">
+<div class="info-content">
     <h2>How to use Nilai</h2>
 		<p>The learning curve for using Nilai can be a bit steep for some. I hope this simple article makes it just a little bit easier for newcomers. </p>
 
 		<h3>Adding links to Nilai</h3>
 		<p>There are a few ways to add links to Nilai. The most direct way is using Nilai's bookmarklet. A bookmarklet is a small application that resides in your browser's bookmarks bar. Installing a bookmarklet is easy. Simply drag the button you see below into your browser's bookmarks bar.</p>
 
-		<p><a class="btn" href="javascript:(function(){f='<?php echo site_url();?>marks/add?url='+encodeURIComponent(window.location.href)+'&title='+encodeURIComponent(document.title)+'&v=6&';a=function(){if(!window.open(f+'noui=1&jump=doclose','nilaiv1','location=1,links=0,scrollbars=0,toolbar=0,width=710,height=660'))location.href=f+'jump=yes'};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})()" title="Install bookmarklet">Add to Nilai</a></p>
+		<p><a class="btn" href="javascript:(function(){f='http://nilai.co/marks/add?url='+encodeURIComponent(window.location.href)+'&title='+encodeURIComponent(document.title)+'&v=6&';a=function(){if(!window.open(f+'noui=1&jump=doclose','nilaiv1','location=1,links=0,scrollbars=0,toolbar=0,width=710,height=660'))location.href=f+'jump=yes'};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})()" title="Install bookmarklet">Add to Nilai</a></p>
 
 		<!-- <p><strong>How-to videos:</strong></p>
 		<ul>
@@ -45,5 +43,3 @@
 		<p>I hope you enjoy using Nilai,<br />The Plain Team</p>
 
 </div>
-
-<?php $this->load->view('footer'); ?>

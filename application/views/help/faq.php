@@ -1,6 +1,4 @@
-<?php $this->load->view('header'); ?>
-
-<div class="main-content">
+<div class="info-content">
     <h2>Frequently Asked Questions</h2>
 	<p>First I'd like to thank everyone that has sent in suggestions and questions. I have a lot of ideas for Nilai but all of yours are welcomed too. I look forward to working together to make Nilai better at helping us with our links. Here are a few of the questions I've gotten more than once.</p>
 	
@@ -31,5 +29,3 @@
 	<h3>Is there a discussion list?</h3>
 	<p>Duane Johnson <a href="https://twitter.com/canadaduane/status/182105266429505537">asked this on Twitter</a> and I'm sure others will think of it so I'll add this to the FAQ too. Is there going to be a place where ideas and features are being considered? Not yet. If any of you have any suggestions or ideas for Nilai please send them to me via Twitter. If you have any suggestions on how we can have a place to discuss these things I'm all ears. I just don't want to waste time managing a forum.</p>
 </div>
-
-<?php $this->load->view('footer'); ?>
