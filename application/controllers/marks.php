@@ -320,14 +320,14 @@ class Marks extends Plain_Controller
                 $options['notes'] = $this->db_clean->notes;
 
                 // Check for hashmarks to tags
-                $tags = getTagsFromHash($options['notes']);
+                //$tags = getTagsFromHash($options['notes']);
             }
 
             // If tags are present, handle differentlu
             // Need to add to tags table first
             // Then create association
             // If notes are present set them
-            if (isset($tags)) {
+           /* if (isset($tags)) {
                 // Update users_to_marks record
                 $this->load->model('tags_model', 'tag');
                 $this->load->model('user_marks_to_tags_model', 'mark_to_tag');
@@ -358,7 +358,7 @@ class Marks extends Plain_Controller
                 // Delete old tags
                 $delete_where = (! empty($tag_ids)) ? " AND tag_id <> '" . implode("' AND tag_id <> '", $tag_ids) . "'" : '';
                 $delete       = $this->$this->mark_to_tags->delete("users_to_mark_id = '" . $mark_id . "' AND user_id = '" . $this->user_id . "'" . $delete_where);
-            }
+            }*/
 
 
             // Update users_to_marks record
