@@ -6,6 +6,7 @@ class Groups_model extends CI_Model {
     {
         // Call the Model constructor
         parent::__construct();
+        $this->db->query("SET `time_zone` = '".date('P')."'");
     }
 
     /* ## CRUD */
