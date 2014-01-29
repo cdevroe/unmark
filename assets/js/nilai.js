@@ -12,6 +12,47 @@ if (nilai === undefined) { var nilai = {}; }
 
 (function ($) {
 
+    // Basic Ajax Function used throughout the app
+    nilai.ajax = function (path, method, query, callback, data_type, async) {
+        var csrf_token   = nilai.vars.csrf_token,
+            data_type    = (data_type !== undefined) ? data_type : 'json',
+            async        = (async !== undefined) ? async : true,
+            added_vars   = 'csrf_token=' + csrf_token + '&content_type=' + data_type;
+            query        = (nilai.empty(query)) ? added_vars : query + '&' + added_vars;
+
+        $.ajax({
+            'dataType': data_type,
+            'cache': false,
+            'url': path,
+            'type': method.toUpperCase(),
+            'data': query,
+            'async': async,
+            'success': function (res) {
+                if ($.isFunction(callback)) {
+                    callback(res);
+                }
+            },
+            'error': function(xhr, status, error) {
+                var json = {
+                    'error': error,
+                    'status': status,
+                    'request': xhr
+                };
+
+                if ($.isFunction(callback)) {
+                    callback(json);
+                }
+            }
+        });
+
+    };
+
+    // Nice Check Empty Function
+    nilai.empty = function(v) {
+        var l = (v !== undefined && v !== null) ? v.length : 0;
+        return (v === false || v === '' || v === null || v === 0 || v === undefined || l < 1);
+    }; 
+
     // Show Mark Info in Sidebar
     // Grabs relavaent info and shows the sidebar actions with info
     nilai.show_mark_info = function (mark_clicked) {
