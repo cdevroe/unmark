@@ -20,19 +20,44 @@ class Cron extends Plain_Controller
 
         set_time_limit(0);
 
-        // Get any new marks in the last ten minutes that are embeds of NULL
-        $this->load->model('users_to_marks_model', 'user_mark');
-        $marks   = $this->user_mark->read("embed_processed = '0'", 'all', 1, 'users_to_mark_id, url');
+        // Get any marks that haven't been run for embeds
+        $this->load->model('marks_model', 'mark');
+        $marks = $this->user_mark->read("embed_processed = '0'", 'all', 1, 'mark_id, url');
 
         if ($marks->num_rows() > 0) {
             $this->load->helper('oembed');
             $this->load->helper('hrecipe');
 
+            // Get all system smart label domains for food & drink
+            $this->load->model('labels_model', 'label');
+            $label = $this->label->read("labels.slug = 'eat-drink'", 1, 1, 'label_id');
+
+            // Set all eat/drink domains to array
+            $recipe_domains = array();
+            if (isset($label->label_id) && is_numeric($label->label_id)) {
+                $smart_labels = $this->label->read("labels.smart_label_id = '" . $label->label_id . "' AND labels.user_id IS NULL", 'all', 1, 'domain');
+                if (isset($smart_labels[0]->domain)) {
+                    foreach ($smart_labels as $k => $obj) {
+                        array_push($recipe_domains, str_replace('www.', '', strtolower($obj->domain)));
+                    }
+                }
+            }
+
             foreach($marks->result() as $mark) {
 
                 // OEmbed check
+                // If no embed, check recipes
                 $embed = oembed($mark->url);
-                $embed = (empty($embed)) ? parse_hrecipe($mark->url) : $embed;
+
+                // parse_url for host
+                // Check if in recipe domain list
+                // If so, try to find a recipe
+                if (empty($embed)) {
+                    $domain = str_replace('www.', '', strtolower(parse_url($mark->url,  PHP_URL_HOST)));
+                    if (! empty($domain) && in_array($domain, $recipe_domains)) {
+                        $embed = parse_hrecipe($mark->url);
+                    }
+                }
 
                 // Set options
                 // Set embed processed = 1
@@ -45,7 +70,7 @@ class Cron extends Plain_Controller
                     $options['embed'] = $embed;
                 }
 
-                $res = $this->user_mark->update($mark->users_to_mark_id, $options);
+                $res = $this->mark->update($mark->mark_id, $options);
 
             }
         }
