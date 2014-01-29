@@ -6,5 +6,5 @@ application/views/test.php
 .buildpath
 .project
 application/config/*/**
-!application/config/all
+!application/config/all/*
 .sass-cache/
