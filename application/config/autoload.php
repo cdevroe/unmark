@@ -80,7 +80,7 @@ $autoload['helper'] = array('data_helper', 'hash_helper', 'validation_helper');
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('all/app');
 
 
 /*

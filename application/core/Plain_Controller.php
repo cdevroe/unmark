@@ -41,6 +41,82 @@ class Plain_Controller extends CI_Controller
 
     }
 
+    protected function addMark($data=array())
+    {
+        // Set empty $result
+        $result = array();
+
+        // Set default view & redirect
+        $view     = null;
+        $redirect = null;
+
+        // Figure the url and title
+        $url   = (isset($data['url'])) ? $data['url'] : null;
+        $title = (isset($data['title'])) ? $data['title'] : null;
+
+        // Add mark to marks table
+        $this->load->model('marks_model', 'mark');
+        $mark = $this->mark->create(array('title' => $title, 'url' => $url));
+
+        // Check ish
+        if ($mark === false) {
+            $user_mark = formatErrors('Could not add mark.', 10);
+        }
+        elseif (! isset($mark->mark_id)) {
+            $user_mark = $mark;
+        }
+        else {
+            $this->load->model('users_to_marks_model', 'user_marks');
+            $user_mark = $this->user_marks->read("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'");
+
+            // Add
+            if (! isset($user_mark->users_to_mark_id)) {
+
+                // Set default options
+                $options = array('user_id' => $this->user_id, 'mark_id' => $mark->mark_id);
+
+                // Label ID (not required)
+                if (isset($data['label_id']) && is_numeric($data['label_id'])) {
+                    $options['label_id'] = $data['label_id'];
+                }
+
+                // Figure if any automatic labels should be applied
+                $smart_info = getSmartLabelInfo($this->clean->url);
+                if (isset($smart_info['key']) && ! empty($smart_info['key']) && ! isset($options['label_id'])) {
+
+                    // Load labels model
+                    // Sort by user_id DESC (if user has same rule as system, use the user's rule)
+                    // Try to extract label
+                    $this->load->model('labels_model', 'labels');
+                    $this->labels->sort = 'user_id DESC';
+                    $label = $this->labels->readComplete("(labels.user_id IS NULL OR labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "') AND labels.active = '1'", 1);
+
+                    // If a label id is found
+                    // Set it to options to save
+                    if (isset($label->settings->label->id)) {
+                        $options['label_id'] = $label->settings->label->id;
+                    }
+                }
+
+                // Create the mark
+                $user_mark = $this->user_marks->create($options);
+            }
+
+            if ($user_mark === false) {
+                $user_mark = formatErrors('Could not add mark.', 10);
+            }
+            if (! isset($user_mark->users_to_mark_id)) {
+                $user_mark = $user_mark;
+            }
+            else {
+                $user_mark = $user_mark;
+            }
+        }
+
+        return $user_mark;
+
+    }
+
     // Clean any variables coming in from POST or GET 3 ways
     // We have the originals, clean and db_clean versions accessible
     protected function clean()

@@ -43,7 +43,7 @@ if(file_exists($appDir)){
 }
 // Looking for global environment configuration under /etc/nilai/environment.php
 const NILAI_ENV_CONFIG_GLOBAL = '/etc/nilai/environment.php';
-if(!defined('ENVIRONMENT')){    
+if(!defined('ENVIRONMENT')){
     if(file_exists(NILAI_ENV_CONFIG_GLOBAL)){
         include_once(NILAI_ENV_CONFIG_GLOBAL);
     }
@@ -72,7 +72,7 @@ if (defined('ENVIRONMENT'))
 		default:
 			error_reporting(E_ALL);
 		break;
-		
+
 	}
 }
 

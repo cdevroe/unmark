@@ -23,73 +23,24 @@ class Marks extends Plain_Controller
     */
     public function add()
     {
-        // Set default view & redirect
-        $view     = null;
-        $redirect = null;
+        $redirect  = null;
+        $view      = null;
+        $url       = (isset($this->db_clean->url)) ? $this->db_clean->url : null;
+        $title     = (isset($this->db_clean->title)) ? $this->db_clean->title : null;
+        $user_mark = parent::addMark(array('url' => $url, 'title' => $title));
 
-        // Add mark to marks table
-        $this->load->model('marks_model', 'mark');
-        $mark = $this->mark->create(array(
-            'title' => $this->db_clean->title,
-            'url'   => $this->db_clean->url
-        ));
-
-        if ($mark === false) {
-            $this->data['errors'] = formatErrors('Could not add mark.', 10);
-            $view                 = 'marks/add';
-        }
-        elseif (! isset($mark->mark_id)) {
-            $this->data['errors'] = $mark;
-            $view                 = 'marks/add';
+        // Set some info
+        if (! isset($user_mark->mark_id)) {
+            $this->data['error'] = $user_mark;
+            $view = 'marks/add';
         }
         else {
-            $user_mark = $this->user_marks->read("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'");
-
-            // Add
-            if (! isset($user_mark->users_to_mark_id)) {
-
-                // Set default options
-                $options = array('user_id' => $this->user_id, 'mark_id' => $mark->mark_id);
-
-                // Figure if any automatic labels should be applied
-                $smart_info = getSmartLabelInfo($this->clean->url);
-                if (isset($smart_info['key']) && ! empty($smart_info['key'])) {
-
-                    // Load labels model
-                    // Sort by user_id DESC (if user has same rule as system, use the user's rule)
-                    // Try to extract label
-                    $this->load->model('labels_model', 'labels');
-                    $this->labels->sort = 'user_id DESC';
-                    $label = $this->labels->readComplete("(labels.user_id IS NULL OR labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "') AND labels.active = '1'", 1);
-
-                    // If a label id is found
-                    // Set it to options to save
-                    if (isset($label->settings->label->id)) {
-                        $options['label_id'] = $label->settings->label->id;
-                    }
-                }
-
-                // Create the mark
-                $user_mark = $this->user_marks->create($options);
-            }
-
-            if ($user_mark === false) {
-                $this->data['errors'] = formatErrors('Could not add mark.', 10);
-                $view                 = 'marks/add';
-            }
-            if (! isset($user_mark->users_to_mark_id)) {
-                $this->data['errors'] = $user_mark;
-                $view                 = 'marks/add';
-            }
-            else {
-                $this->data['mark'] = $user_mark;
-                $redirect           = '/marks/info/' . $user_mark->users_to_mark_id . '?bookmarklet=true';
-            }
+            $this->data['mark'] = $user_mark;
+            $redirect           = '/marks/info/' . $user_mark->mark_id . '?bookmarklet=true';
         }
 
         // Figure what to do here (api, redirect or generate view)
         $this->figureView($view, $redirect);
-
     }
 
     // Archive a mark
