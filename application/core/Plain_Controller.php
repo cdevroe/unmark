@@ -412,7 +412,7 @@ class Plain_Controller extends CI_Controller
     // This is used so that we can easily add partials to all views
     protected function view($view, $data=array())
     {
-        $data                  = (empty($data)) ? $this->data : $data;
+        $data                  = array_merge($data, $this->data);
         $data['csrf_token']    = $this->session->userdata('csrf_token');
         $data['flash_message'] = $this->flash_message;
         $data['user']          = $this->session->userdata('user');
