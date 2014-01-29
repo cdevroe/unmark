@@ -81,6 +81,40 @@ function generateSlug($str)
     return (empty($slug)) ? false : $slug;
 }
 
+function generateTimeSpan($date)
+{
+    $timestamp  = strtotime($date);
+    $difference = time() - $timestamp;
+    $dividers   = array(
+        'year'   => 31536000,
+        'month'  => 2628000,
+        'week'   => 604800,
+        'day'    => 86400,
+        'hour'   => 3600,
+        'minute' => 60
+    );
+
+    $results = array();
+    if (empty($timestamp) || $difference < 0) {
+        $results['second'] = 1;
+    }
+    elseif ($difference % 60 < 0) {
+        $results['second'] = $difference;
+    }
+    else {
+        foreach ($dividers as $type => $seconds) {
+            $results[$type] = round($difference / $seconds, 0);
+        }
+    }
+
+    foreach ($results as $type => $number) {
+        if (! empty($number)) {
+            $s = ($number == '1') ? '' : 's';
+            return $number . ' ' . $type . $s . ' ago';
+        }
+    }
+}
+
 function getLastJsonError()
 {
     switch (json_last_error()) {
