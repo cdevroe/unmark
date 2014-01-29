@@ -23,73 +23,24 @@ class Marks extends Plain_Controller
     */
     public function add()
     {
-        // Set default view & redirect
-        $view     = null;
-        $redirect = null;
+        $redirect  = null;
+        $view      = null;
+        $url       = (isset($this->db_clean->url)) ? $this->db_clean->url : null;
+        $title     = (isset($this->db_clean->title)) ? $this->db_clean->title : null;
+        $user_mark = parent::addMark(array('url' => $url, 'title' => $title));
 
-        // Add mark to marks table
-        $this->load->model('marks_model', 'mark');
-        $mark = $this->mark->create(array(
-            'title' => $this->db_clean->title,
-            'url'   => $this->db_clean->url
-        ));
-
-        if ($mark === false) {
-            $this->data['errors'] = formatErrors('Could not add mark.', 10);
-            $view                 = 'marks/add';
-        }
-        elseif (! isset($mark->mark_id)) {
-            $this->data['errors'] = $mark;
-            $view                 = 'marks/add';
+        // Set some info
+        if (! isset($user_mark->mark_id)) {
+            $this->data['error'] = $user_mark;
+            $view = 'marks/add';
         }
         else {
-            $user_mark = $this->user_marks->read("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'");
-
-            // Add
-            if (! isset($user_mark->users_to_mark_id)) {
-
-                // Set default options
-                $options = array('user_id' => $this->user_id, 'mark_id' => $mark->mark_id);
-
-                // Figure if any automatic labels should be applied
-                $smart_info = getSmartLabelInfo($this->clean->url);
-                if (isset($smart_info['key']) && ! empty($smart_info['key'])) {
-
-                    // Load labels model
-                    // Sort by user_id DESC (if user has same rule as system, use the user's rule)
-                    // Try to extract label
-                    $this->load->model('labels_model', 'labels');
-                    $this->labels->sort = 'user_id DESC';
-                    $label = $this->labels->readComplete("labels.user_id IS NULL OR labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "'", 1);
-
-                    // If a label id is found
-                    // Set it to options to save
-                    if (isset($label->settings->label->id)) {
-                        $options['label_id'] = $label->settings->label->id;
-                    }
-                }
-
-                // Create the mark
-                $user_mark = $this->user_marks->create($options);
-            }
-
-            if ($user_mark === false) {
-                $this->data['errors'] = formatErrors('Could not add mark.', 10);
-                $view                 = 'marks/add';
-            }
-            if (! isset($user_mark->users_to_mark_id)) {
-                $this->data['errors'] = $user_mark;
-                $view                 = 'marks/add';
-            }
-            else {
-                $this->data['mark'] = $user_mark;
-                $redirect           = '/marks/info/' . $user_mark->users_to_mark_id . '?bookmarklet=true';
-            }
+            $this->data['mark'] = $user_mark;
+            $redirect           = '/marks/info/' . $user_mark->mark_id . '?bookmarklet=true';
         }
 
         // Figure what to do here (api, redirect or generate view)
         $this->figureView($view, $redirect);
-
     }
 
     // Archive a mark
@@ -180,8 +131,9 @@ class Marks extends Plain_Controller
             $label_id = $finish;
             if (! is_numeric($label_id)) {
                 $this->load->model('labels_model', 'label');
-                $label    = $this->label->read("slug = '" . $this->db->escape_str($label_id) . "'", 1, 1, 'label_id');
+                $label    = $this->label->read("slug = '" . $this->db->escape_str($label_id) . "'", 1, 1, 'label_id, name');
                 $label_id = (isset($label->label_id)) ? $label->label_id : 0;
+                $label_name = (isset($label->name)) ? $label->name : 0;
             }
 
             // Set the new where clause
@@ -251,6 +203,17 @@ class Marks extends Plain_Controller
         // Check for a JOIN to send to the getTotals call
         // Get the totals
         else {
+
+            // Autolink marks
+            foreach ($marks as $k => $mark) {
+                if (isset($mark->tags) && ! empty($mark->tags)) {
+                    foreach ($mark->tags as $kk => $tag) {
+                        $marks[$k]->notes = str_replace('#' . $tag['slug'], '<a href="/marks/tag/' . $tag['slug'] . '">#' . $tag['slug'] . '</a>', $marks[$k]->notes);
+                    }
+                }
+            }
+
+            // Set marks
             $this->data['marks'] = $marks;
 
             // If a search, get totals here
@@ -277,6 +240,9 @@ class Marks extends Plain_Controller
                 foreach ($this->data['labels'] as $k => $label) {
                     $this->data['labels'][$k]->current = ($label->label_id == $label_id) ? '1' : '0';
                 }
+
+                // Give Tim Tim his Active Label Array already!
+                $this->data['active_label'] = (isset($label_id)) ? array('label_id' => $label_id, 'label_name' =>$label_name) : array();
             }
 
             // If looking up by tag, set the current tag if applicable
@@ -318,51 +284,46 @@ class Marks extends Plain_Controller
             // If notes are present set them
             if (isset($this->db_clean->notes)) {
                 $options['notes'] = $this->db_clean->notes;
+
+                // Check for hashmarks to tags
+                $tags = getTagsFromHash($options['notes']);
             }
 
             // If tags are present, handle differentlu
             // Need to add to tags table first
             // Then create association
             // If notes are present set them
-            if (isset($this->db_clean->tags) || isset($this->clean->delete_tags)) {
+            if (isset($tags)) {
                 // Update users_to_marks record
                 $this->load->model('tags_model', 'tag');
                 $this->load->model('user_marks_to_tags_model', 'mark_to_tag');
 
-                // Add/Update tags
-                if (isset($this->db_clean->tags)) {
-                    $tags = explode(',', $this->db_clean->tags);
-                    foreach ($tags as $k => $tag) {
-                        $tag  = trim($tag);
-                        $slug = generateSlug($tag);
-                        if (! empty($slug)) {
-                            $tag = $this->tag->read("slug == '" . $slug . "'", 1, 1, 'tag_id');
-                            if (! isset($tag->tag_id)) {
-                                $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
-                            }
+                $tag_ids = array();
+                foreach ($tags as $k => $tag) {
+                    $tag     = trim($tag);
+                    $slug    = generateSlug($tag);
 
-                            // Add tag to mark
-                            if (isset($tag->tag_id)) {
-                                $res = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
-                            }
-                        }
-                    }
-                }
-
-                // Delete tags
-                if (isset($this->clean->delete_tags)) {
-                    $tag_ids = explode(',', $this->clean->delete_tags);
-                    foreach ($tag_ids as $tag_id) {
-                        if (is_numeric($tag_id)) {
+                    if (! empty($slug)) {
+                        $tag = $this->tag->read("slug == '" . $slug . "'", 1, 1, 'tag_id');
+                        if (! isset($tag->tag_id)) {
                             $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
+                        }
 
-                            // Add tag to mark
-                            if (isset($tag->tag_id)) {
-                                $res = $this->mark_to_tags->delete(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
-                            }
+                        // Add tag to mark
+                        if (isset($tag->tag_id)) {
+                            $tag = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
+                        }
+
+                        // Save all tag ids
+                        if (isset($tag->tag_id)) {
+                            array_push($tag_ids, $tag->tag_id);
                         }
                     }
                 }
+
+                // Delete old tags
+                $delete_where = (! empty($tag_ids)) ? " AND tag_id <> '" . implode("' AND tag_id <> '", $tag_ids) . "'" : '';
+                $delete       = $this->$this->mark_to_tags->delete("users_to_mark_id = '" . $mark_id . "' AND user_id = '" . $this->user_id . "'" . $delete_where);
             }
 
 
@@ -386,7 +347,7 @@ class Marks extends Plain_Controller
 
                     // If not found, create it with label
                     // Else update current
-                    if ($total < 1) {
+                    if ($total < 1 && $options['label_id'] != '1') {
                         $label = $this->labels->create(array(
                             'smart_label_id' => $options['label_id'],
                             'domain'         => $smart_info['domain'],
@@ -395,8 +356,10 @@ class Marks extends Plain_Controller
                         ));
                     }
                     else {
+                        $active = ($options['label_id'] == '1') ? '0' : '1';
                         $label = $this->labels->update("labels.user_id = '" . $this->user_id . "' AND labels.smart_key = '" . $smart_info['key'] . "'", array(
-                            'smart_label_id' => $options['label_id']
+                            'smart_label_id' => $options['label_id'],
+                            'active'         => $active
                         ));
                     }
                 }
