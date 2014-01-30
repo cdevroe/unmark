@@ -14,7 +14,7 @@ function findPage()
     return (! is_numeric($uri) || empty($uri) || isValid($uri, 'date') === true || isValid($uri, 'year')) ? 1 : $uri;
 }
 
-function findStartFinish($start, $finish)
+function findStartFinish($start, $finish=null)
 {
     $start   = trim(urldecode($start));
     $start   = (isValid($start, 'date') === false && isValid($start, 'year') === false) ? preg_replace('/\b\-\b/', ' ', $start) : $start;
