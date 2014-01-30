@@ -121,7 +121,7 @@ class User_Marks_To_Tags_model extends Plain_Model
         $this->sendException();
 
         // Return that ish
-        return ($q->num_rows() > 0) ? $q->result() : false;
+        return ($q->num_rows() > 0) ? parent::stripSlashes($q->result()) : false;
     }
 
 }

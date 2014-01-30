@@ -130,7 +130,7 @@ class Plain_Model extends CI_Model
             else {
                 $this->dont_cache = false;
             }
-            return $result;
+            return stripSlashes($result);
         }
     }
 
@@ -174,6 +174,22 @@ class Plain_Model extends CI_Model
         // Not used yet
     }
 
+    protected function stripSlashes($result)
+    {
+        foreach ($result as $k => $row) {
+            if (is_array($result)) {
+                foreach ($row as $key => $value) {
+                    $result[$k]->{$key} = stripslashes($value);
+                }
+            }
+            else {
+                $result->{$k} = stripslashes($row);
+            }
+        }
+
+        return $result;
+    }
+
 
     public function update($where, $options=array())
     {
@@ -193,7 +209,7 @@ class Plain_Model extends CI_Model
                 $this->removeCacheKey($cache_key);
                 $this->dont_cache = true;
                 $method = $this->read_method;
-                return $this->{$method}($where);
+                return self::stripSlashes($this->{$method}($where));
             }
             else {
                 return $this->formatErrors('Eek this is akward, sorry. Something went wrong. Please try again.');

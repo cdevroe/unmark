@@ -54,7 +54,7 @@ class Labels_model extends Plain_Model
             // If good, return full label
             if ($res === true) {
                 $label_id = $this->db->insert_id();
-                return $this->readComplete($label_id);
+                return self::readComplete($label_id);
             }
 
             // Else return error
@@ -128,7 +128,7 @@ class Labels_model extends Plain_Model
 
         // Now format the group names and ids
         if ($labels->num_rows() > 0) {
-            $labels = $this->formatResults($labels->result());
+            $labels = parent::stripSlashes($this->formatResults($labels->result()));
             return ($limit == 1) ? $labels[0] : $labels;
         }
 

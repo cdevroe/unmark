@@ -228,7 +228,7 @@ class Users_To_Marks_model extends Plain_Model
 
         // Now format the group names and ids
         if ($marks->num_rows() > 0) {
-            $marks = $this->format($marks->result());
+            $marks = parent::stripSlashes($this->format($marks->result()));
             return ($limit == 1) ? $marks[0] : $marks;
         }
 
