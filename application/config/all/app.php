@@ -35,6 +35,7 @@ $config['error_codes'][32] = 'Tag could not be added.';
 // System Level Errors - Level 100
 $config['error_codes'][100] = 'Security token is invalid.';
 $config['error_codes'][101] = 'Internal Error';
+$config['error_codes'][102] = 'Validation Errors';
 
 /*
  - Array of titles & urls to add to all newly registered accounts
