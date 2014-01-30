@@ -87,6 +87,9 @@ $route['help(.*?)']              = 'help$1';
 $route['changelog']              = 'singletons/changelog';
 $route['terms']                  = 'singletons/terms';
 
+// internal ajax tools
+$route['/tools/forgotPassword']  = 'tools/forgotPassword';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
