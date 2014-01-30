@@ -178,7 +178,6 @@ class Plain_Model extends CI_Model
 
     protected function stripSlashes($result)
     {
-
         foreach ($result as $k => $row) {
             if (is_array($result)) {
                 foreach ($row as $key => $value) {
@@ -186,7 +185,7 @@ class Plain_Model extends CI_Model
                 }
             }
             else {
-                $result->{$k} = (is_string($value)) ? stripslashes($value) : $value;
+                $result->{$k} = (is_string($row)) ? stripslashes($row) : $row;
             }
         }
 
