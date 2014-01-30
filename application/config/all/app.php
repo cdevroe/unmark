@@ -1,23 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /*
- - Array of titles & urls to add to all newly registered accounts
-
- These will be added to every new account so when they register they
- have some links to *do* something with. The label of 'Do' will be added automatically.
-*/
-$config['new_account_links'] = array(
-    'Read Nilai\'s FAQ' => array(
-        'url'      => 'http://nilai.co/help/faq',
-        'label_id' => '7'
-    ),
-    'How To Use Nilai'  => array(
-        'url'      => 'http://nilai.co/help/how',
-        'label_id' => '7'
-    )
-);
-
-/*
 - Define application errors and error codes
 - This will keep the application lean and the formatErrors method can do easy lookups
 - Feel free to add on
@@ -52,3 +35,20 @@ $config['error_codes'][32] = 'Tag could not be added.';
 // System Level Errors - Level 100
 $config['error_codes'][100] = 'Security token is invalid.';
 $config['error_codes'][101] = 'Internal Error';
+
+/*
+ - Array of titles & urls to add to all newly registered accounts
+
+ These will be added to every new account so when they register they
+ have some links to *do* something with. The label of 'Do' will be added automatically.
+*/
+$config['new_account_links'] = array(
+    'Read Nilai\'s FAQ' => array(
+        'url'      => 'http://nilai.co/help/faq',
+        'label_id' => '7'
+    ),
+    'How To Use Nilai'  => array(
+        'url'      => 'http://nilai.co/help/how',
+        'label_id' => '7'
+    )
+);
