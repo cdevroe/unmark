@@ -115,6 +115,8 @@ if (nilai === undefined) { var nilai = {}; }
         window.location = "/logout";
     };
 
+    // Function for interacting and animating the left navigation
+    // This handels both the top level and secondarly level
     nilai.interact_nav = function (e, elem_ckd) {
         // Set variables
         var panel_to_show = elem_ckd.attr('href'),
@@ -161,6 +163,32 @@ if (nilai === undefined) { var nilai = {}; }
         }
     };
 
+    // Handles editing of notes
+    nilai.marks_editNotes = function (editField) {
+
+        var editable = editField.next();
+
+        editField.html('EDIT NOTES');
+        editable.attr('contenteditable', true);
+        editable.find('span').remove();
+        if(editable.is(':empty')) {
+            editable.html('Click here to edit');
+        }
+
+        editable.on('blur', function () {
+
+            var text = $(this).text(), id = $(this).data('id');
+
+            nilai.ajax('/mark/edit/'+id, 'post', 'notes='+text, function(res) {
+                console.log(res);
+                editField.html('Notes <i class="barley-icon-pencil"></i>');
+                editable.attr('contenteditable', false);
+            });
+        });
+
+    };
+    nilai.marks_clickEdit = function (btn) { btn.parent().prev().trigger('click'); };
+
     // Main Init Script
     nilai.init = function () {
 
@@ -198,7 +226,7 @@ if (nilai === undefined) { var nilai = {}; }
 
         // Global Buton / Action Link Run
         // Create a Function from a string
-        $(document).on('click', 'button, a.action', function (e) {
+        $(document).on('click', 'button, .action', function (e) {
             e.preventDefault();
             var action = $(this).data('action'), funct; // Get Data Action Attribute
             funct = eval('nilai.' + action); // Convert it to an executable function
@@ -206,7 +234,7 @@ if (nilai === undefined) { var nilai = {}; }
         });
 
         // Slide Toggle the Sidebar Info Blocks
-        $(document).on('click', '.sidebar-info-panel h4', function (e) {
+        $(document).on('click', '.sidebar-info-panel h4.prev-coll', function (e) {
             e.preventDefault();
             var section = $(this).next('section'), arrow = $(this).find('i');
             if (section.is(':visible')) {

@@ -19,7 +19,7 @@
     <div class="marks_list">
         <?php foreach ($marks as $mark) :
 
-                $notes = ($mark->notes == "" ? 0 : $mark->notes);
+                $notes = ($mark->notes == "" ? "<span class='action' data-action='marks_clickEdit'>Add a note...</span>" : $mark->notes);
                 $preview = ($mark->embed == "" ? 0 : $mark->embed);
 
                 $marks_data = array(
