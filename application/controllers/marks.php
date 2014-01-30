@@ -321,8 +321,8 @@ class Marks extends Plain_Controller
             $label_id = $finish;
             if (! is_numeric($label_id)) {
                 $this->load->model('labels_model', 'label');
-                $label    = $this->label->read("slug = '" . $this->db->escape_str($label_id) . "'", 1, 1, 'label_id, name');
-                $label_id = (isset($label->label_id)) ? $label->label_id : 0;
+                $label      = $this->label->read("slug = '" . $this->db->escape_str($label_id) . "'", 1, 1, 'label_id, name');
+                $label_id   = (isset($label->label_id)) ? $label->label_id : 0;
                 $label_name = (isset($label->name)) ? $label->name : 0;
             }
 
@@ -428,11 +428,14 @@ class Marks extends Plain_Controller
             // If looking up by label, set the current label
             if ($lookup == 'label') {
                 foreach ($this->data['labels'] as $k => $label) {
-                    $this->data['labels'][$k]->current = ($label->label_id == $label_id) ? '1' : '0';
+                    $this->data['labels'][$k]->current = ($label->label_id == $label_id) ? true : false;
+
+                    // Give Tim Tim his Active Label Array already!
+                    if ($this->data['labels'][$k]->current === true) {
+                        $this->data['active_label'] = array('label_id' => $label->label_id, 'label_name' => $label->name);
+                    }
                 }
 
-                // Give Tim Tim his Active Label Array already!
-                $this->data['active_label'] = (isset($label_id)) ? array('label_id' => $label_id, 'label_name' =>$label_name) : array();
             }
 
             // If looking up by tag, set the current tag if applicable

@@ -123,14 +123,16 @@ class Plain_Model extends CI_Model
                 return false;
             }
 
-            $result = ($limit == 1) ? $q->row() : (array) $q->result();
+            $result = self::stripSlashes($q->result());
+
             if ($this->dont_cache === false) {
                 $this->cache->add($cache_key, serialize($result), true);
             }
             else {
                 $this->dont_cache = false;
             }
-            return stripSlashes($result);
+
+            return ($limit == 1) ? $result[0] : $result;
         }
     }
 
@@ -176,14 +178,15 @@ class Plain_Model extends CI_Model
 
     protected function stripSlashes($result)
     {
+
         foreach ($result as $k => $row) {
             if (is_array($result)) {
                 foreach ($row as $key => $value) {
-                    $result[$k]->{$key} = stripslashes($value);
+                    $result[$k]->{$key} = (is_string($value)) ? stripslashes($value) : $value;
                 }
             }
             else {
-                $result->{$k} = stripslashes($row);
+                $result->{$k} = (is_string($value)) ? stripslashes($value) : $value;
             }
         }
 
