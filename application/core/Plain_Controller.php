@@ -60,7 +60,7 @@ class Plain_Controller extends CI_Controller
 
         // Check ish
         if ($mark === false) {
-            $user_mark = formatErrors('Could not add mark.', 10);
+            $user_mark = formatErrors(15);
         }
         elseif (! isset($mark->mark_id)) {
             $user_mark = $mark;
@@ -103,7 +103,7 @@ class Plain_Controller extends CI_Controller
             }
 
             if ($user_mark === false) {
-                $user_mark = formatErrors('Could not add mark.', 10);
+                $user_mark = formatErrors(15);
             }
             if (! isset($user_mark->users_to_mark_id)) {
                 $user_mark = $user_mark;
@@ -193,7 +193,7 @@ class Plain_Controller extends CI_Controller
                 // If false, set a flash message and data error
                 if ($this->csrf_valid === false) {
                     $this->setFlashMessage('We could not locate the correct security token. Please try again.');
-                    $this->data['errors'] = formatErrors('Security token is invalid.', 100);
+                    $this->data['errors'] = formatErrors(100);
                 }
             }
 

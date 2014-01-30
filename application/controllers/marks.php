@@ -62,7 +62,7 @@ class Marks extends Plain_Controller
             $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
 
             if ($mark === false) {
-                $this->data['errors'] = formatErrors('Mark could not be archived.', 11);
+                $this->data['errors'] = formatErrors(10);
             }
             else {
                 $this->data['mark'] = $mark;
@@ -145,7 +145,7 @@ class Marks extends Plain_Controller
 
             // Check if it was updated
             if ($mark === false) {
-                $this->data['errors'] = formatErrors('Mark could not be updated.', 14);
+                $this->data['errors'] = formatErrors(12);
             }
             else {
                 $this->data['mark'] = $mark;
@@ -385,7 +385,7 @@ class Marks extends Plain_Controller
         // Check for marks
         // If false, return error; set total to 0
         if ($marks === false) {
-            $this->data['errors'] = formatErrors('No marks found.', 12);
+            $this->data['errors'] = formatErrors(11);
             $this->data['total']  = 0;
         }
         // If not false
@@ -468,7 +468,7 @@ class Marks extends Plain_Controller
 
         // Check for mark
         if ($mark === false) {
-            $this->data['errors'] = formatErrors('Mark with id of `' . $mark_id . '` could not be found for this account.', 15);
+            $this->data['errors'] = formatErrors(13);
         }
         else {
             $this->data['mark'] = $mark;
@@ -488,7 +488,7 @@ class Marks extends Plain_Controller
 
         // Check for mark
         if ($mark === false) {
-            $this->data['errors'] = formatErrors('No marks found.', 12);
+            $this->data['errors'] = formatErrors(11);
         }
         else {
             $this->data['mark'] = $mark;
@@ -519,7 +519,7 @@ class Marks extends Plain_Controller
 
             // Check if it was updated
             if ($mark === false) {
-                $this->data['errors'] = formatErrors('Mark could not be restored.', 17);
+                $this->data['errors'] = formatErrors(14);
             }
             else {
                 $this->data['mark'] = $mark;
