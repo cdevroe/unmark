@@ -514,32 +514,32 @@ ul.nav-list {
             }
         }
         &.label-2 {
-            background: lighten($color_orange, 35%);
+            background: rgba($color_orange, .2);
             &:before { background: $color_orange; }
             h3 { color: $color_orange; }
         }
         &.label-3 {
-            background: lighten($color_blue, 35%);
+            background: rgba($color_blue, .2);
             &:before { background: $color_blue; }
             h3 { color: $color_blue; }
         }
         &.label-4 {
-            background: lighten($color_yellow, 35%);
+            background: rgba($color_yellow, .2);
             &:before { background: $color_yellow; }
             h3 { color: $color_yellow; }
         }
         &.label-5 {
-            background: lighten($color_purple, 35%);
+            background: rgba($color_purple, .2);
             &:before { background: $color_purple; }
             h3 { color: $color_purple; }
         }
         &.label-6 {
-            background: lighten($color_green, 35%);
+            background: rgba($color_green, .2);
             &:before { background: $color_green; }
             h3 { color: $color_green; }
         }
         &.label-7 {
-            background: lighten($color_pink, 35%);
+            background: rgba($color_pink, .2);
             &:before { background: $color_pink; }
             h3 { color: $color_pink; }
         }
