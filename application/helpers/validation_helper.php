@@ -75,7 +75,6 @@ function validate($options=array(), $data_types=array(), $required=array())
         foreach ($required as $column) {
             if (! isset($options[$column]) || $options[$column] == '') {
                 $errors[$column] = ucwords(strtolower(str_replace('_', ' ', $column))) . ' is required.';
-                $meets_reqs = false;
             }
         }
     }
@@ -85,10 +84,9 @@ function validate($options=array(), $data_types=array(), $required=array())
         foreach ($data_types as $column => $type) {
             if (isset($options[$column]) && ! isValid($options[$column], $type)) {
                 $errors[$column] = ucwords(strtolower(str_replace('_', ' ', $column))) . ' is not valid.';
-                $meets_reqs = false;
             }
         }
     }
 
-    return ($meets_reqs === false) ? $errors : true;
+    return (! empty($errors)) ? array(112 => $errors) : true;
 }

@@ -5,6 +5,7 @@ application/views/test.php
 .DS_Store
 .buildpath
 .project
+application/config/environment.php
 application/config/*/**
 !application/config/all/*
 .sass-cache/

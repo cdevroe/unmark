@@ -60,7 +60,7 @@ class Plain_Controller extends CI_Controller
 
         // Check ish
         if ($mark === false) {
-            $user_mark = formatErrors('Could not add mark.', 10);
+            $user_mark = formatErrors(15);
         }
         elseif (! isset($mark->mark_id)) {
             $user_mark = $mark;
@@ -103,7 +103,7 @@ class Plain_Controller extends CI_Controller
             }
 
             if ($user_mark === false) {
-                $user_mark = formatErrors('Could not add mark.', 10);
+                $user_mark = formatErrors(15);
             }
             if (! isset($user_mark->users_to_mark_id)) {
                 $user_mark = $user_mark;
@@ -187,7 +187,7 @@ class Plain_Controller extends CI_Controller
                 // If false, set a flash message and data error
                 if ($this->csrf_valid === false) {
                     $this->setFlashMessage('We could not locate the correct security token. Please try again.');
-                    $this->data['errors'] = formatErrors('Security token is invalid.', 100);
+                    $this->data['errors'] = formatErrors(100);
                 }
             }
 
@@ -342,6 +342,7 @@ class Plain_Controller extends CI_Controller
         $callback     = (isset($this->clean->callback)) ? $this->clean->callback : null;
         $json         = (isset($this->clean->content_type) && strtolower($this->clean->content_type) == 'jsonp') ? $callback . '(' . $json . ');' : $json;
         $content_type = (isset($this->clean->content_type) && strtolower($this->clean->content_type) == 'jsonp') ? 'application/javascript' : 'application/json';
+        $this->data   = array();
 
         $this->view('json/index', array(
             'json'         => $json,
@@ -406,7 +407,7 @@ class Plain_Controller extends CI_Controller
     // This is used so that we can easily add partials to all views
     protected function view($view, $data=array())
     {
-        $data                  = (empty($data)) ? $this->data : $data;
+        $data                  = array_merge($data, $this->data);
         $data['csrf_token']    = $this->session->userdata('csrf_token');
         $data['flash_message'] = $this->flash_message;
         $data['user']          = $this->session->userdata('user');

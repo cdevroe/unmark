@@ -62,7 +62,7 @@ class Marks extends Plain_Controller
             $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
 
             if ($mark === false) {
-                $this->data['errors'] = formatErrors('Mark could not be archived.', 11);
+                $this->data['errors'] = formatErrors(10);
             }
             else {
                 $this->data['mark'] = $mark;
@@ -145,7 +145,7 @@ class Marks extends Plain_Controller
 
             // Check if it was updated
             if ($mark === false) {
-                $this->data['errors'] = formatErrors('Mark could not be updated.', 14);
+                $this->data['errors'] = formatErrors(12);
             }
             else {
                 $this->data['mark'] = $mark;
@@ -226,7 +226,7 @@ class Marks extends Plain_Controller
             '2 days ago' => self::totalSaved('-2 days'),
             '3 days ago' => self::totalSaved('-3 days'),
             '4 days ago' => self::totalSaved('-4 days'),
-            'total'      => self::totalSaved(),
+            'total'      => self::totalSaved()
         );
 
         // Get the total marks archived over the last 5 days
@@ -244,12 +244,12 @@ class Marks extends Plain_Controller
             'today'         => self::totalMarks('today'),
             'yesterday'     => self::totalMarks('yesterday'),
             'last week'     => self::totalMarks('-7 days', 'today'),
-            'last_month'    => self::totalMarks('-1 month', 'today'),
+            'last month'    => self::totalMarks('-1 month', 'today'),
             'last 3 months' => self::totalMarks('-3 months', 'today'),
             'last 6 months' => self::totalMarks('-6 months', 'today'),
             'last year'     => self::totalMarks('-1 year', 'today'),
             'ages ago'      => self::totalMarks('-20 years', '-1 year'),
-            'total'         => $this->data['stats']['saved']['total']
+            'total'         => self::totalMarks()
         );
 
     }
@@ -321,8 +321,8 @@ class Marks extends Plain_Controller
             $label_id = $finish;
             if (! is_numeric($label_id)) {
                 $this->load->model('labels_model', 'label');
-                $label    = $this->label->read("slug = '" . $this->db->escape_str($label_id) . "'", 1, 1, 'label_id, name');
-                $label_id = (isset($label->label_id)) ? $label->label_id : 0;
+                $label      = $this->label->read("slug = '" . $this->db->escape_str($label_id) . "'", 1, 1, 'label_id, name');
+                $label_id   = (isset($label->label_id)) ? $label->label_id : 0;
                 $label_name = (isset($label->name)) ? $label->name : 0;
             }
 
@@ -385,7 +385,7 @@ class Marks extends Plain_Controller
         // Check for marks
         // If false, return error; set total to 0
         if ($marks === false) {
-            $this->data['errors'] = formatErrors('No marks found.', 12);
+            $this->data['errors'] = formatErrors(11);
             $this->data['total']  = 0;
         }
         // If not false
@@ -428,11 +428,14 @@ class Marks extends Plain_Controller
             // If looking up by label, set the current label
             if ($lookup == 'label') {
                 foreach ($this->data['labels'] as $k => $label) {
-                    $this->data['labels'][$k]->current = ($label->label_id == $label_id) ? '1' : '0';
+                    $this->data['labels'][$k]->current = ($label->label_id == $label_id) ? true : false;
+
+                    // Give Tim Tim his Active Label Array already!
+                    if ($this->data['labels'][$k]->current === true) {
+                        $this->data['active_label'] = array('label_id' => $label->label_id, 'label_name' => $label->name);
+                    }
                 }
 
-                // Give Tim Tim his Active Label Array already!
-                $this->data['active_label'] = (isset($label_id)) ? array('label_id' => $label_id, 'label_name' =>$label_name) : array();
             }
 
             // If looking up by tag, set the current tag if applicable
@@ -468,7 +471,7 @@ class Marks extends Plain_Controller
 
         // Check for mark
         if ($mark === false) {
-            $this->data['errors'] = formatErrors('Mark with id of `' . $mark_id . '` could not be found for this account.', 15);
+            $this->data['errors'] = formatErrors(13);
         }
         else {
             $this->data['mark'] = $mark;
@@ -491,7 +494,7 @@ class Marks extends Plain_Controller
 
         // Check for mark
         if ($mark === false) {
-            $this->data['errors'] = formatErrors('No marks found.', 12);
+            $this->data['errors'] = formatErrors(11);
         }
         else {
             $this->data['mark'] = $mark;
@@ -522,7 +525,7 @@ class Marks extends Plain_Controller
 
             // Check if it was updated
             if ($mark === false) {
-                $this->data['errors'] = formatErrors('Mark could not be restored.', 17);
+                $this->data['errors'] = formatErrors(14);
             }
             else {
                 $this->data['mark'] = $mark;
