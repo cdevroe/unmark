@@ -114,8 +114,8 @@ class Users_To_Marks_model extends Plain_Model
         if ($type == 'marks') {
             $when .= " AND archived_on IS NULL";
         }
-        elseif (! isset($dates)) {
-            $when .= ($type == 'archived') ? " AND archived_on IS NOT NULL" : "";
+        elseif ($type == 'archived') {
+            $when .= " AND archived_on IS NOT NULL";
         }
 
         return $this->count("user_id='". $user_id . "'" . $when);
