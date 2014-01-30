@@ -226,7 +226,7 @@ class Marks extends Plain_Controller
             '2 days ago' => self::totalSaved('-2 days'),
             '3 days ago' => self::totalSaved('-3 days'),
             '4 days ago' => self::totalSaved('-4 days'),
-            'total'      => self::totalSaved(),
+            'total'      => self::totalSaved()
         );
 
         // Get the total marks archived over the last 5 days
@@ -244,12 +244,12 @@ class Marks extends Plain_Controller
             'today'         => self::totalMarks('today'),
             'yesterday'     => self::totalMarks('yesterday'),
             'last week'     => self::totalMarks('-7 days', 'today'),
-            'last_month'    => self::totalMarks('-1 month', 'today'),
+            'last month'    => self::totalMarks('-1 month', 'today'),
             'last 3 months' => self::totalMarks('-3 months', 'today'),
             'last 6 months' => self::totalMarks('-6 months', 'today'),
             'last year'     => self::totalMarks('-1 year', 'today'),
             'ages ago'      => self::totalMarks('-20 years', '-1 year'),
-            'total'         => $this->data['stats']['saved']['total']
+            'total'         => self::totalMarks()
         );
 
     }
