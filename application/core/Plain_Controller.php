@@ -348,6 +348,7 @@ class Plain_Controller extends CI_Controller
         $callback     = (isset($this->clean->callback)) ? $this->clean->callback : null;
         $json         = (isset($this->clean->content_type) && strtolower($this->clean->content_type) == 'jsonp') ? $callback . '(' . $json . ');' : $json;
         $content_type = (isset($this->clean->content_type) && strtolower($this->clean->content_type) == 'jsonp') ? 'application/javascript' : 'application/json';
+        $this->data   = array();
 
         $this->view('json/index', array(
             'json'         => $json,
