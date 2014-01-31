@@ -40,8 +40,15 @@ class Users_model extends Plain_Model
 
             // Create user token
             do {
-                $options['user_token'] = generateToken(30);
+                $options['user_token'] = generateToken(30) . md5($options['email');
                 $total = $this->count("user_token = '" . $options['user_token'] . "'");
+
+                // If by some freak chance there is a collision
+                // Report it
+                if ($total > 0) {
+                    log_message('debug', 'User token collision detected on key of `' . $options['user_token'] . '`');
+                }
+
             } while ($total > 0);
 
             // Add record
