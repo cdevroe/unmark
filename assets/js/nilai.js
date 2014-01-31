@@ -302,6 +302,27 @@ if (nilai === undefined) { var nilai = {}; }
             }
         });
 
+        // Temp Label Form
+        $('#temp_label').on('submit', function (e) {
+            e.preventDefault();
+
+            $('#tempresponse').remove();
+
+            var label, mark;
+
+            label = $('#templabel').val();
+            mark = $('#tempmarkid').val(); 
+
+            query = 'label_id=' + nilai.urlEncode(label);
+            nilai.ajax('/mark/edit/'+mark, 'post', query, function(res) {
+                console.log(res);
+                $('form').after('<p id="tempresponse">Mark has been updated.</p>');
+            });
+
+
+        });
+
+
     };
 
     // Get this baby in action
