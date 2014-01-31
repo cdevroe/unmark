@@ -32,6 +32,10 @@ $config['error_codes'][60] = 'No tags found.';
 $config['error_codes'][61] = 'No tag provided.';
 $config['error_codes'][62] = 'Tag could not be added.';
 
+// Password recovery - 90-99
+$config['error_codes']['90'] = 'Account with given email does not exist.';
+$config['error_codes']['91'] = 'Invalid password recovery token.';
+
 // System Level Errors - Level 600 - 699
 $config['error_codes'][600] = 'Security token is invalid.';
 $config['error_codes'][601] = 'Internal Error';
