@@ -37,9 +37,9 @@
             
             <h4 class="nav-heading">Most-Used Tags</h4>
             <ul class="tag-list">
-                <?php if ($tags['popular'] != "") : ?>
-                    <?php foreach ($tags as $tag) : ?>
-                        <li><a href="#">#Tags</a></li>
+                <?php if (isset($tags) && count($tags['popular'] > 0)) : ?>
+                    <?php foreach ($tags[popular] as $pop_tag) : ?>
+                        <li><a href="/marks/tag/<?php print $pop_tag->slug; ?>">#<?php print $pop_tag->name; ?></a></li>
                     <?php endforeach; ?>
                 <?php else : ?>
                 <li>No Tags Found</li>

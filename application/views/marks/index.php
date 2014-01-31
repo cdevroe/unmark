@@ -1,3 +1,6 @@
+<?php if (isset($errors['2'])) : ?>
+<h2 class="marks-heading"><i class="barley-icon-exclamation-sign"></i> Sorry, No links found</h2>
+<?php else : ?>
 <?php if ($lookup_type != "all") :
 
     $heading = array();
@@ -65,3 +68,4 @@
         <?php endforeach; ?>
     </div>
 </div>
+<?php endif; ?>
