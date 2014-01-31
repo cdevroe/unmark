@@ -11,9 +11,9 @@ class Plain_Controller extends CI_Controller
     public $footer         = 'layouts/footer';
     public $header         = 'layouts/header';
     public $html_clean     = null;
+    public $is_api         = false;
     public $limit          = 30;
     public $logged_in      = false;
-    public $is_api         = false;
     public $original       = null;
     public $user_admin     = false;
     public $user_id        = 0;
