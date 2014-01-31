@@ -67,12 +67,24 @@ class Tokens_model extends Plain_Model
     
     /**
      * Checks if given tokenValue exists and is still valid for use
-     * @param string $tokenValue
+     * @param string|object $tokenValue Token value (string) or retrieved token object 
      * @return boolean
      */
     public function isValid($tokenValue){
-        $now = date('Y-m-d H:i:s');
-        return $this->count("token_value = '$tokenValue' and active='1' and valid_until >= '$now'") > 0;
+        if(!empty($tokenValue)){
+            $nowTs = time();
+            $now = date('Y-m-d H:i:s', $nowTs);
+            // Token object passed - check fields
+            if(is_object($tokenValue)){
+                $validUntilTs = strtotime($tokenValue->valid_until);
+                return $tokenValue->active == 1 && $validUntilTs >= $nowTs;
+            // Token string passed - check in DB
+            } else{
+                return $this->count("token_value = '$tokenValue' and active='1' and valid_until >= '$now'") > 0;
+            }
+        } else{
+            return false;
+        }
     }
     
     /**
