@@ -21,7 +21,7 @@ if (nilai === undefined) { var nilai = {}; }
             'cache': false,
             'url': path,
             'type': method.toUpperCase(),
-            'data': query,
+            'data': encodeURIComponent(query),
             'async': async,
             'success': function (res) {
                 if ($.isFunction(callback)) {
