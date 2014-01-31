@@ -70,21 +70,26 @@ if (nilai === undefined) { var nilai = {}; }
     nilai.show_mark_info = function (mark_clicked) {
         
         var template, output,
-            mark_obj_ref = mark_clicked.data('mark'),
-            mark_string = $('#' + mark_obj_ref).html();
-            mark_obj = jQuery.parseJSON(mark_string);
+            mark_obj_ref    = mark_clicked.data('mark'),
+            mark_string     = $('#' + mark_obj_ref).html();
+            mark_obj        = jQuery.parseJSON(mark_string),
+            mark_id         = mark_obj_ref.replace("mark-data-","");
 
         // Compile and Render the template
-        template = Hogan.compile(sidebar_template);
+        template = Hogan.compile(nilai.sidebar_template);
         output = template.render(mark_obj);
 
         nilai.sidebar_mark_info.fadeOut(400, function () {
             if (nilai.sidebar_default.is(':visible')) {
                 nilai.sidebar_default.fadeOut(400, function () {
-                    nilai.sidebar_mark_info.html(output).fadeIn(400);
+                    nilai.sidebar_mark_info.html(output).fadeIn(400, function () {
+                        nilai.tagify_notes($('#notes-' + mark_id));
+                    });
                 });
             } else {
-                nilai.sidebar_mark_info.html(output).fadeIn(400);         
+                nilai.sidebar_mark_info.html(output).fadeIn(400, function () {
+                    nilai.tagify_notes($('#notes-' + mark_id));
+                });         
             }
         });
     };

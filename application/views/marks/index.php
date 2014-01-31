@@ -2,15 +2,21 @@
 
     $heading = array();
 
+    $link_plural = ($total > 1) ? " links " : " link ";
+
     switch ($lookup_type) {
         case 'label':
             $heading['icon']    =   'barley-icon-circle';
-            $heading['title']    =   $total . " links labeled " . $active_label['label_name'];
+            $heading['title']    =   $total . $link_plural . "labeled " . $active_label['label_name'];
             break;
         case 'archive':
             $heading['icon']    =   'barley-icon-briefcase';
-            $heading['title']    =   $total . " links archived";
+            $heading['title']    =   $total . $link_plural . "archived";
             break;
+        case 'tag':
+            $heading['icon']    =   'barley-icon-tag';
+            $heading['title']    =   $total . $link_plural . "tagged " . $active_tag['tag_name'];;
+            break;       
     }
 ?>
 <h2 class="marks-heading"><i class="<?php print $heading['icon']; ?>"></i> <?php print $heading['title']; ?></h2>
