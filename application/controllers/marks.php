@@ -136,7 +136,7 @@ class Marks extends Plain_Controller
 
                 // Delete old tags
                 $delete_where = (! empty($tag_ids)) ? " AND tag_id <> '" . implode("' AND tag_id <> '", $tag_ids) . "'" : '';
-                $delete       = $this->$this->mark_to_tags->delete("users_to_mark_id = '" . $mark_id . "' AND user_id = '" . $this->user_id . "'" . $delete_where);
+                $delete       = $this->mark_to_tag->delete("users_to_mark_id = '" . $mark_id . "' AND user_id = '" . $this->user_id . "'" . $delete_where);
             }
 
 
@@ -177,11 +177,13 @@ class Marks extends Plain_Controller
                     }
                 }
             }
-
+        }
+        else {
+            $this->data['errors'] = formatErrors(600);
         }
 
         // Figure what to do here (api, redirect or generate view)
-        $this->figureView('marks/edit');
+        $this->renderJSON();
 
     }
 
