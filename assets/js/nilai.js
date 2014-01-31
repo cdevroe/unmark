@@ -168,6 +168,8 @@ if (nilai === undefined) { var nilai = {}; }
 
         var editable = editField.next();
 
+        editable.unbind();
+
         editField.html('EDIT NOTES');
         editable.attr('contenteditable', true);
         editable.find('span.action').remove();
