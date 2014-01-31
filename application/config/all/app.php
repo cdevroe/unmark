@@ -16,3 +16,9 @@ $config['new_account_links'] = array(
         'label_id' => '7'
     )
 );
+
+/*
+ * Validity of password recovery token
+ */
+    
+$config['forgot_password_token_valid_seconds'] = 60 * 60 * 24; // 24 hours
