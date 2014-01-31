@@ -201,9 +201,6 @@ class Plain_Controller extends CI_Controller
             if (empty($csrf_token)) {
                 $this->session->set_userdata('csrf_token', generateCSRF());
             }
-
-            print 'CSRF TOKEN: ' . $csrf_token . "<BR>";
-            print 'VALID: ' . $this->csrf_valid . "<BR>";
         }
     }
 

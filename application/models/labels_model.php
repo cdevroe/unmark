@@ -24,6 +24,8 @@ class Labels_model extends Plain_Model
             'created_on'      => 'datetime'
         );
 
+        // Set a different read method
+        $this->read_method = 'readComplete';
     }
 
     public function create($options=array())

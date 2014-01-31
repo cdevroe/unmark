@@ -23,6 +23,9 @@ class Users_To_Marks_model extends Plain_Model
             'url'         =>  'url'
         );
 
+         // Set a different read method
+        $this->read_method = 'readComplete';
+
     }
 
     public function create($options=array())

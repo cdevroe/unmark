@@ -113,23 +113,23 @@ class Marks extends Plain_Controller
 
                 $tag_ids = array();
                 foreach ($tags as $k => $tag) {
-                    $tag     = trim($tag);
-                    $slug    = generateSlug($tag);
+                    $tag_name  = trim($tag);
+                    $slug      = generateSlug($tag);
 
                     if (! empty($slug)) {
-                        $tag = $this->tag->read("slug == '" . $slug . "'", 1, 1, 'tag_id');
+                        $tag = $this->tag->read("slug = '" . $slug . "'", 1, 1, 'tag_id');
                         if (! isset($tag->tag_id)) {
-                            $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
+                            $tag = $this->tag->create(array('name' => $tag_name, 'slug' => $slug));
                         }
 
                         // Add tag to mark
                         if (isset($tag->tag_id)) {
-                            $tag = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
+                            $res = $this->mark_to_tag->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->tag_id, 'user_id' => $this->user_id));
                         }
 
                         // Save all tag ids
-                        if (isset($tag->tag_id)) {
-                            array_push($tag_ids, $tag->tag_id);
+                        if (isset($res->tag_id)) {
+                            array_push($tag_ids, $res->tag_id);
                         }
                     }
                 }
@@ -141,7 +141,7 @@ class Marks extends Plain_Controller
 
 
             // Update users_to_marks record
-            $mark = $this->user_marks->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
+            $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", $options);
 
             // Check if it was updated
             if ($mark === false) {
