@@ -7,7 +7,7 @@ class Labels extends Plain_Controller
     {
         parent::__construct();
         $this->redirectIfLoggedOut();
-        $this->redirectIfNotAPI();
+        $this->redirectIfWebView();
 
         // Load user marks model
         $this->load->model('labels_model', 'labels');

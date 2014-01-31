@@ -9,12 +9,6 @@ class Help extends Plain_Controller
         parent::redirectIfLoggedOut();
     }
 
-    public function index()
-    {
-        header('Location: /help/how');
-        exit;
-    }
-
     public function bookmarklet()
     {
         $this->view('help/bookmarklet');
@@ -28,6 +22,12 @@ class Help extends Plain_Controller
     public function how()
     {
         $this->view('help/how');
+    }
+
+    public function index()
+    {
+        header('Location: /help/how');
+        exit;
     }
 
 }
