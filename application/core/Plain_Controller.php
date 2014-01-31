@@ -193,7 +193,7 @@ class Plain_Controller extends CI_Controller
                 // If false, set a flash message and data error
                 if ($this->csrf_valid === false) {
                     $this->setFlashMessage('We could not locate the correct security token. Please try again.');
-                    $this->data['errors'] = formatErrors(100);
+                    $this->data['errors'] = formatErrors(600);
                 }
             }
 
