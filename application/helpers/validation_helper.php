@@ -88,5 +88,5 @@ function validate($options=array(), $data_types=array(), $required=array())
         }
     }
 
-    return (! empty($errors)) ? array(112 => $errors) : true;
+    return (! empty($errors)) ? array(602 => $errors) : true;
 }
