@@ -73,6 +73,41 @@ class Marks extends Plain_Controller
         $this->figureView('marks/archive');
     }
 
+    public function delete($mark_id=0)
+    {
+         parent::redirectIfWebView();
+
+        // Figure correct way to handle if no mark id
+        if (empty($mark_id) || ! is_numeric($mark_id)) {
+            header('Location: /');
+            exit;
+        }
+
+        // Set where
+        $where = "users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'";
+
+        // Check if mark exists for this user
+        $total = $this->user_marks->count($where);
+
+        if ($total < 1) {
+            $this->data['errors'] = formatErrors(4);
+        }
+        else {
+            $mark = $this->user_marks->delete($where);
+            if (! isset($mark->active)) {
+                $this->data['errors'] = formatErrors(601);
+            }
+            elseif ($mark->active != '0') {
+                $this->data['errors'] = formatErrors(7);
+            }
+            else {
+                $this->data['mark'] = $mark;
+            }
+        }
+
+        $this->figureView();
+    }
+
     // Edit a mark
     // Both API and web view
     public function edit($mark_id=0)

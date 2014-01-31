@@ -49,7 +49,6 @@ $route['upgrade']                = 'install/upgrade';
 $route['label/activate(.*?)']    = 'labels/activate$1';
 $route['label/add(.*?)']         = 'labels/add';
 $route['label/deactivate(.*?)']  = 'labels/deactivate$1';
-$route['label/delete(.*?)']      = 'labels/delete$1';
 $route['label/edit(.*?)']        = 'labels/edit$1';
 $route['label/info(.*?)']        = 'labels/info$1';
 $route['labels?(.*?)']           = 'labels/index$1';
@@ -57,6 +56,7 @@ $route['labels?(.*?)']           = 'labels/index$1';
 // Single Mark Actions
 $route['marks?/add(.*?)']        = 'marks/add$1';
 $route['mark/archive(.*?)']      = 'marks/archive$1';
+$route['mark/delete(.*?)']       = 'marks/delete$1';
 $route['mark/edit(.*?)']         = 'marks/edit$1';
 $route['mark/info(.*?)']         = 'marks/info$1';
 $route['mark/restore(.*?)']      = 'marks/restore$1';
