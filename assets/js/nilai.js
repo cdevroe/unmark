@@ -75,6 +75,11 @@ if (nilai === undefined) { var nilai = {}; }
             mark_obj        = jQuery.parseJSON(mark_string),
             mark_id         = mark_obj_ref.replace("mark-data-","");
 
+        // Clean up view
+        $('.mark').removeClass('view-inactive').removeClass('view-active');
+        $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
+        $('#mark-' + mark_id).addClass('view-active');
+
         // Compile and Render the template
         template = Hogan.compile(nilai.sidebar_template);
         output = template.render(mark_obj);
@@ -97,6 +102,7 @@ if (nilai === undefined) { var nilai = {}; }
     // Collapse Marks Info Sidebar
     // Hides the marks info and re-displays the default sidebar
     nilai.sidebar_collapse = function () {
+        $('.mark').removeClass('view-inactive').removeClass('view-active');
         nilai.sidebar_mark_info.fadeOut(400, function () {
             nilai.sidebar_default.fadeIn(400);
         });
@@ -107,7 +113,7 @@ if (nilai === undefined) { var nilai = {}; }
         var id = archive_link.data("id");
 
         nilai.ajax('/mark/archive/'+id, 'post', '', function(res) {
-            if(res.success) {
+            if(res.mark.archived_on !== "") {
                 $('#mark-'+id).fadeOut();
             } else {
                 alert('Sorry, We could not archive this mark at this time.');
@@ -284,6 +290,15 @@ if (nilai === undefined) { var nilai = {}; }
                 arrow.removeClass('barley-icon-chevron-down');
                 arrow.addClass('barley-icon-chevron-up');
                 section.slideDown();                
+            }
+        });
+
+        // Click / Tap on a Mark opens the more info and shows the buttons
+        $(document).on('click', '.mark', function (e){
+            var node = e.target.nodeName, more_link = $(this).find('a.mark-info');
+            if (node !== "A" && node !== "I") {
+                e.preventDefault();
+                more_link.trigger('click');
             }
         });
 

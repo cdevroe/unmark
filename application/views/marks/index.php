@@ -43,14 +43,14 @@
 
             ?>
             <div id="mark-<?php print $mark->mark_id; ?>" class="mark label-<?php print $mark->label_id; ?>">
-                <h2><?php print $mark->title; ?></h2>
+                <h2><a target="_blank" href="<?php print $mark->url; ?>"><?php print $mark->title; ?></a></h2>
                 <div class="mark-meta">
                     <span class="mark-date"><?php print $mark->nice_time; ?></span>
                     <span class="mark-sep">&bull;</span>
                     <span class="mark-link"><a target="_blank" href="<?php print $mark->url; ?>"><?php print $nice_url; ?></a></span>
                 </div>
                 <div class="mark-actions">
-                    <a class="action" href="#" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>" class="mark-more">
+                    <a class="action mark-info" href="#" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>" class="mark-more">
                         <i class="barley-icon-elipsis"></i>
                     </a>
                     <?php if ($lookup_type == "archive") : ?>

@@ -327,6 +327,9 @@ ul.nav-list {
         h2 {
             margin:0 0 9px 0;
             font-weight: 300;
+            a {
+                color:$color_dark;
+            }
         }
         .mark-meta {
             font-style: italic;
@@ -355,6 +358,7 @@ ul.nav-list {
             position: absolute;
             top: 0;
             right: 0;
+            z-index: 800;
             a {
                 background: $color_grey;
                 display: block;
@@ -437,6 +441,12 @@ ul.nav-list {
         }
         &.hide-dot:after {
             display:none;
+        }
+        &.view-inactive {
+            opacity: .4;
+        }
+        &.view-active {
+            .mark-actions { display: block !important; }
         }
     }
 }
