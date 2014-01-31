@@ -583,6 +583,10 @@ ul.nav-list {
                 }
             }
             span.action { cursor: pointer; }
+            &.sidebar-info-notes a {
+                color: $color_black;
+                font-weight: 600;
+            }
         }
     }
     button {

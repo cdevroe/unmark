@@ -9,7 +9,7 @@ if (nilai === undefined) { var nilai = {}; }
 
     // Basic Ajax Function used throughout the app
     nilai.ajax = function (path, method, query, callback, data_type, async) {
-        var csrf_token   = nilai.vars.csrf_token,
+        var csrf_token   = nilai.urlEncode(nilai.vars.csrf_token),
             data_type    = (data_type !== undefined) ? data_type : 'json',
             async        = (async !== undefined) ? async : true,
             added_vars   = 'csrf_token=' + csrf_token + '&content_type=' + data_type;
@@ -20,17 +20,15 @@ if (nilai === undefined) { var nilai = {}; }
             'cache': false,
             'url': path,
             'type': method.toUpperCase(),
-            'data': encodeURIComponent(query),
+            'data': query,
             'async': async,
             'success': function (res) {
                 if ($.isFunction(callback)) {
-                    res["success"] = true;
                     callback(res);
                 }
             },
             'error': function(xhr, status, error) {
                 var json = {
-                    'success': false,
                     'error': error,
                     'status': status,
                     'request': xhr
@@ -41,6 +39,24 @@ if (nilai === undefined) { var nilai = {}; }
             }
         });
 
+    };
+
+    // Replace special chars
+    nilai.replaceSpecial = function(str) {
+        if (str !== undefined && str !== null) {
+            var regex = null;
+            for (var i in nilai.special_chars) {
+                regex = new RegExp(i, 'gi');
+                str   = str.replace(regex, nilai.special_chars[i]);
+            }
+        }
+        return str;
+    };
+
+    // Encode for URL
+    nilai.urlEncode = function(str) {
+        str = nilai.replaceSpecial(str);
+        return encodeURIComponent(str);
     };
 
     // Nice Check Empty Function
@@ -165,10 +181,10 @@ if (nilai === undefined) { var nilai = {}; }
     // Handles editing of notes
     nilai.marks_editNotes = function (editField) {
 
-        var editable = editField.next();
+        var editable = editField.next(), text, query;
 
+        // Clean up the field, check for empty etc
         editable.unbind();
-
         editField.html('EDIT NOTES');
         editable.attr('contenteditable', true);
         editable.find('span.action').remove();
@@ -176,19 +192,35 @@ if (nilai === undefined) { var nilai = {}; }
             editable.html('Click here to edit');
         }
 
-        editable.on('blur', function () {
-
-            var text = $(this).text(), id = $(this).data('id');
-
-            nilai.ajax('/mark/edit/'+id, 'post', 'notes='+text, function(res) {
-                console.log(res);
-                editField.html('Notes <i class="barley-icon-pencil"></i>');
-                editable.attr('contenteditable', false);
-            });
+        // Define the actions that will save the note.
+        // Includes Function to save the note
+        editable.on('blur keydown', function (e) { 
+            if (e.which === 13 || e.type === 'blur') {
+                e.preventDefault();
+                text = $(this).text(), id = $(this).data('id');
+                query = 'notes=' + nilai.urlEncode(text);
+                nilai.ajax('/mark/edit/'+id, 'post', query, function(res) {
+                    console.log(res);
+                    editField.html('Notes <i class="barley-icon-pencil"></i>');
+                    editable.attr('contenteditable', false);
+                });
+                editable.unbind();
+                nilai.tagify_notes(editable);
+            }
         });
-
     };
     nilai.marks_clickEdit = function (btn) { btn.parent().prev().trigger('click'); };
+
+    // Reads the passed note field and tagifies it on the fly.
+    nilai.tagify_notes = function (note) {
+
+        // Get the note text, replace all tags with a linked tag
+        var notetext = note.text();
+        notetext = notetext.replace(/#(\S*)/g,'<a href="/marks/tag/$1">#$1</a>');
+
+        // Send the HTML to the notes field.
+        note.html(notetext);
+    };
 
     // Main Init Script
     nilai.init = function () {
@@ -201,7 +233,8 @@ if (nilai === undefined) { var nilai = {}; }
         this.main_panel_width = nilai.main_panel.width(),
         this.sidebar_default = $('.sidebar-default'),
         this.sidebar_mark_info = $('.sidebar-mark-info'),
-        this.body_height = $('body').height();
+        this.body_height = $('body').height(),
+        this.special_chars     = { '\\+': '&#43;' };
 
         // Basic Page Setup
         nilai.main_panel.width(nilai.main_panel_width);
