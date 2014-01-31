@@ -170,7 +170,7 @@ if (nilai === undefined) { var nilai = {}; }
 
         editField.html('EDIT NOTES');
         editable.attr('contenteditable', true);
-        editable.find('span').remove();
+        editable.find('span.action').remove();
         if(editable.is(':empty')) {
             editable.html('Click here to edit');
         }

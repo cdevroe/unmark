@@ -466,7 +466,7 @@ ul.nav-list {
     .sidebar-action {
         @include drop-shadow-border();
         position: relative;
-        height: 50px;
+        height: 48px;
         a {
             position: absolute;
             left: 15px;
@@ -673,6 +673,14 @@ ul.nav-list {
     width: 6px;
     height: 6px;
     margin-left: -7px;
+}
+
+
+
+// Line Graph
+.line-graph {
+    width: 500px;
+    height: 200px;
 }
 
 
