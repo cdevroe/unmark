@@ -55,7 +55,7 @@ class Tags_model extends Plain_Model
 
         }
 
-        return $this->formatErrors($valid);
+        return formatErrors($valid);
     }
 
 }

@@ -13,7 +13,7 @@ class Plain_Model extends CI_Model
     protected $delimiter    = '~*~';
     protected $dont_cache   = false;
     protected $id_column    = null;
-    protected $read_method  = false;
+    protected $read_method  = 'read';
 
     public function __construct()
     {
@@ -23,7 +23,6 @@ class Plain_Model extends CI_Model
         // Get constants
         $model             = new ReflectionClass($this);
         $constants         = $model->getConstants();
-        $this->read_method = ($model->hasMethod('readComplete')) ? 'readComplete' : 'read';
 
         // Figure the correct table to use
         // If table constant is found, set it
