@@ -1,5 +1,4 @@
 <?php
-
 if (! defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -83,7 +82,7 @@ class Tools extends Plain_Controller
             $this->load->model('tokens_model', 'token');
             $tokenData = $this->token->read("token_value = '$token'");
             if (! $this->token->isValid($tokenData)) {
-            	$this->data['errors'] = formatErrors('Invalid token passed', 4);
+                $this->data['errors'] = formatErrors('Invalid token passed', 4);
             } else {
                 // Checking password
                 if (! isset($this->clean->password) || ! isValid($this->clean->password, 'password')) {
@@ -96,7 +95,9 @@ class Tools extends Plain_Controller
                     ));
                     if (isset($user->password) && $user->password == $password) {
                         // Mark token as used
-                        $this->token->useToken($token);
+                        if (! $this->token->useToken($token)) {
+                            log_message('DEBUG', 'Failed to mark token ' . $token . ' as used in DB');
+                        }
                         $this->data['success'] = true;
                     } else {
                         $this->data['errors'] = formatErrors('Your password could not be updated at this time. Please try again.');

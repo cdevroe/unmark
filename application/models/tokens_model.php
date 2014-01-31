@@ -94,7 +94,7 @@ class Tokens_model extends Plain_Model
      */
     public function useToken($tokenValue){
        $now = date('Y-m-d H:i:s');
-       $updatedToken = $this->update("token_value = '$tokenValue' and active='1' and valid_until >= '$now'", array('active' => '0', 'used_on' => $now));
+       $updatedToken = $this->update("token_value = '$tokenValue' and active='1'", array('active' => '0', 'used_on' => $now));
        return ((!empty($updatedToken) && $updatedToken->active == 1) ? true : false); 
     }
     
