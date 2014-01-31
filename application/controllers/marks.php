@@ -77,6 +77,9 @@ class Marks extends Plain_Controller
     // Both API and web view
     public function edit($mark_id=0)
     {
+
+        parent::redirectIfWebView();
+
         // Figure correct way to handle if no mark id
         if (empty($mark_id) || ! is_numeric($mark_id)) {
             header('Location: /');
