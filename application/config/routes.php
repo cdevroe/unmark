@@ -80,6 +80,11 @@ $route['tags?(.*?)']             = 'tags/index$1';
 $route['register']               = 'register/index';
 $route['register/user']          = 'register/user';
 
+// User methods
+$route['user/update/email']      = 'user/updateEmail';
+$route['user/update/password']   = 'user/updatePassword';
+$route['user(.*?)']              = 'user/index';
+
 // help
 $route['help(.*?)']              = 'help$1';
 

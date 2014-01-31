@@ -114,8 +114,8 @@ class Users_To_Marks_model extends Plain_Model
         if ($type == 'marks') {
             $when .= " AND archived_on IS NULL";
         }
-        elseif (! isset($dates)) {
-            $when .= ($type == 'archived') ? " AND archived_on IS NOT NULL" : " AND archived_on IS NULL";
+        elseif ($type == 'archived') {
+            $when .= " AND archived_on IS NOT NULL";
         }
 
         return $this->count("user_id='". $user_id . "'" . $when);
@@ -228,7 +228,7 @@ class Users_To_Marks_model extends Plain_Model
 
         // Now format the group names and ids
         if ($marks->num_rows() > 0) {
-            $marks = $this->format($marks->result());
+            $marks = $this->format(parent::stripSlashes($marks->result()));
             return ($limit == 1) ? $marks[0] : $marks;
         }
 

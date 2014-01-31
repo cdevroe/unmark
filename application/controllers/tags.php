@@ -33,7 +33,7 @@ class Tags extends Plain_Controller
         // If no labels, return error
         // Else return labels
         if ($tags === false) {
-            $this->data['errors'] = formatErrors('No tags found.', 30);
+            $this->data['errors'] = formatErrors(60);
         }
         else {
             $this->data['tags'] = $tags;
@@ -56,7 +56,7 @@ class Tags extends Plain_Controller
     {
 
         if (! isset($this->db_clean->name) || empty($this->db_clean->name)) {
-            $this->data['errors'] = formatErrors('No tag provided.', 31);
+            $this->data['errors'] = formatErrors(61);
         }
         else {
             $tag = $this->tags->create(array('name' => $this->db_clean->name));
@@ -65,7 +65,7 @@ class Tags extends Plain_Controller
                 $this->data['tag'] = $tag;
             }
             elseif ($tag === false) {
-                $this->data['errors'] = formatErrors('Could not add tag.', 32);
+                $this->data['errors'] = formatErrors(62);
             }
             else {
                 $this->data['errors'] = $tag;

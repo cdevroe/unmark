@@ -14,7 +14,7 @@ function findPage()
     return (! is_numeric($uri) || empty($uri) || isValid($uri, 'date') === true || isValid($uri, 'year')) ? 1 : $uri;
 }
 
-function findStartFinish($start, $finish)
+function findStartFinish($start, $finish=null)
 {
     $start   = trim(urldecode($start));
     $start   = (isValid($start, 'date') === false && isValid($start, 'year') === false) ? preg_replace('/\b\-\b/', ' ', $start) : $start;
@@ -64,12 +64,14 @@ function findStartFinish($start, $finish)
 }
 
 // Format any errors coming back to standardize them
-function formatErrors($errors, $errno=0)
+function formatErrors($errors)
 {
-    if (is_string($errors)) {
-        $message        = $errors;
-        $errors         = array();
-        $errors[$errno] = $message;
+    if (is_numeric($errors)) {
+        $CI             =& get_instance();
+        $error_codes    = $CI->config->item('error_codes');
+        $errno          = (array_key_exists($errors, $error_codes)) ? $errors : 0;
+        $message        = (! empty($errno)) ? $error_codes[$errno] : 'Unknown Error';
+        $errors         = array($errno => $message);
     }
     return $errors;
 }

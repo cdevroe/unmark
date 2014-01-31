@@ -22,9 +22,9 @@ class Cron extends Plain_Controller
 
         // Get any marks that haven't been run for embeds
         $this->load->model('marks_model', 'mark');
-        $marks = $this->user_mark->read("embed_processed = '0'", 'all', 1, 'mark_id, url');
+        $marks = $this->mark->read("embed_processed = '0'", 'all', 1, 'mark_id, url');
 
-        if ($marks->num_rows() > 0) {
+        if (isset($marks[0]->mark_id)) {
             $this->load->helper('oembed');
             $this->load->helper('hrecipe');
 
@@ -43,7 +43,7 @@ class Cron extends Plain_Controller
                 }
             }
 
-            foreach($marks->result() as $mark) {
+            foreach($marks as $k => $mark) {
 
                 // OEmbed check
                 // If no embed, check recipes

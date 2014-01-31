@@ -58,7 +58,7 @@ class Labels extends Plain_Controller
         // If no labels, return error
         // Else return labels
         if ($labels === false) {
-            $this->data['errors'] = formatErrors('No labels found for your account.', 21);
+            $this->data['errors'] = formatErrors(32);
         }
         else {
             $this->data['labels'] = $labels;
@@ -132,10 +132,10 @@ class Labels extends Plain_Controller
         // If a record is found
         // Stop
         if ($total > 0) {
-            $this->data['errors'] = formatErrors('Label already exists for this account.', 24);
+            $this->data['errors'] = formatErrors(34);
         }
         elseif ($type == 'label' && parent::isAdmin() === false) {
-            $this->data['errors'] = formatErrors('You do not have access to create a system level label.', 27);
+            $this->data['errors'] = formatErrors(37);
         }
         // Else, try and add it
         else {
@@ -145,7 +145,7 @@ class Labels extends Plain_Controller
 
             // If update failed, tell the user
             if ($label === false) {
-                $this->data['errors'] = formatErrors('Label could not be created.', 26);
+                $this->data['errors'] = formatErrors(36);
             }
             // Return updated label
             else {
@@ -203,7 +203,7 @@ class Labels extends Plain_Controller
 
         // Figure correct way to handle if no mark id
         if (empty($label_id) || ! is_numeric($label_id)) {
-            $this->data['errors'] = formatErrors('No `label_id` was found.', 20);
+            $this->data['errors'] = formatErrors(30);
         }
         else {
 
@@ -217,15 +217,15 @@ class Labels extends Plain_Controller
 
             // If no type found, there was no label for this id/user combo
             if (! isset($label->type)) {
-                $this->data['errors'] = formatErrors('No label found using label id of `' . $label_id . '` for your account.', 21);
+                $this->data['errors'] = formatErrors(31);
             }
             // If type == label and not admin, leave
             elseif ($label->type == 'label' && parent::isAdmin() === false) {
-                $this->data['errors'] = formatErrors('You do not have access to create a system level label.', 27);
+                $this->data['errors'] = formatErrors(37);
             }
             // If no type was found in above array, something was drastically wrong
             elseif (! array_key_exists($label->type, $types)) {
-                $this->data['errors'] = formatErrors('This type of label `' . $label->type . '` could not be found.', 22);
+                $this->data['errors'] = formatErrors(33);
             }
             // Update label (if it doesn't exist)
             else {
@@ -264,12 +264,12 @@ class Labels extends Plain_Controller
 
                 // If no options, return error
                 if (empty($options)) {
-                    $this->data['errors'] = formatErrors('No options found to update for this label.', 23);
+                    $this->data['errors'] = formatErrors(35);
                 }
                 // If label slug or smart key exists already
                 // Error out
                 elseif ($total > 0) {
-                    $this->data['errors'] = formatErrors('Label already exists for this account.', 24);
+                    $this->data['errors'] = formatErrors(34);
                 }
                 // Send update
                 else {
@@ -277,7 +277,7 @@ class Labels extends Plain_Controller
 
                     // If update failed, tell the user
                     if ($label === false) {
-                        $this->data['errors'] = formatErrors('Label could not be updated.', 25);
+                        $this->data['errors'] = formatErrors(39);
                     }
                     // Return updated label
                     else {
@@ -301,13 +301,13 @@ class Labels extends Plain_Controller
     {
         // Figure correct way to handle if no mark id
         if (empty($label_id) || ! is_numeric($label_id)) {
-            $this->data['errors'] = formatErrors('No `label_id` was found.', 20);
+            $this->data['errors'] = formatErrors(30);
         }
         else {
             $where = (parent::isAdmin() === true) ? "(labels.user_id IS NULL OR labels.user_id = '" . $this->user_id . "')" : "labels.user_id = '" . $this->user_id . "'";
             $label = $this->labels->readComplete($where . " AND labels.label_id= '" . $label_id . "'");
             if ($label === false) {
-                $this->data['errors'] = formatErrors('No label found using `' . $label_id . '` for your account.', 21);
+                $this->data['errors'] = formatErrors(31);
             }
             else {
                 $this->data['label'] = $label;
@@ -322,14 +322,14 @@ class Labels extends Plain_Controller
     {
         // Figure correct way to handle if no mark id
         if (empty($label_id) || ! is_numeric($label_id)) {
-            $this->data['errors'] = formatErrors('No `label_id` was found.', 20);
+            $this->data['errors'] = formatErrors(30);
         }
         else {
             $where = (parent::isAdmin() === true) ? "(labels.user_id IS NULL OR labels.user_id = '" . $this->user_id . "')" : "labels.user_id = '" . $this->user_id . "'";
             $label = $this->labels->update($where . " AND labels.label_id= '" . $label_id . "'", array('active' => $active));
 
             if ($label === false) {
-                $this->data['errors'] = formatErrors('Issue updating label.', 28);
+                $this->data['errors'] = formatErrors(39);
             }
             else {
                 $this->data['label'] = $label;

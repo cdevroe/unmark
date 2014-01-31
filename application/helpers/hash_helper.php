@@ -72,13 +72,13 @@ function generateToken($len=20)
     return $token;
 }
 
-function isStrong($password)
+function isStrong($str)
 {
     $numeric  = false;
     $lower    = false;
     $upper    = false;
-    for ($i = 0; $i < strlen($password); $i++) {
-        $ord      = ord(substr($password, $i, 1));
+    for ($i = 0; $i < strlen($str); $i++) {
+        $ord      = ord(substr($str, $i, 1));
         $numeric  = ($ord >= 48 && $ord <= 57) ? true : $numeric;
         $lower    = ($ord >= 65 && $ord <= 90) ? true : $lower;
         $upper    = ($ord >= 97 && $ord <= 122) ? true : $upper;
