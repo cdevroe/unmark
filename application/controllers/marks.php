@@ -62,7 +62,7 @@ class Marks extends Plain_Controller
             $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
 
             if ($mark === false) {
-                $this->data['errors'] = formatErrors(10);
+                $this->data['errors'] = formatErrors(1);
             }
             else {
                 $this->data['mark'] = $mark;
@@ -77,6 +77,9 @@ class Marks extends Plain_Controller
     // Both API and web view
     public function edit($mark_id=0)
     {
+
+        parent::redirectIfWebView();
+
         // Figure correct way to handle if no mark id
         if (empty($mark_id) || ! is_numeric($mark_id)) {
             header('Location: /');
@@ -113,39 +116,39 @@ class Marks extends Plain_Controller
 
                 $tag_ids = array();
                 foreach ($tags as $k => $tag) {
-                    $tag     = trim($tag);
-                    $slug    = generateSlug($tag);
+                    $tag_name  = trim($tag);
+                    $slug      = generateSlug($tag);
 
                     if (! empty($slug)) {
-                        $tag = $this->tag->read("slug == '" . $slug . "'", 1, 1, 'tag_id');
+                        $tag = $this->tag->read("slug = '" . $slug . "'", 1, 1, 'tag_id');
                         if (! isset($tag->tag_id)) {
-                            $tag = $this->tag->create(array('tag' => trim($this->db_clean->tags->{$k}), 'slug' => $slug));
+                            $tag = $this->tag->create(array('name' => $tag_name, 'slug' => $slug));
                         }
 
                         // Add tag to mark
                         if (isset($tag->tag_id)) {
-                            $tag = $this->mark_to_tags->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->id, 'user_id' => $this->user_id));
+                            $res = $this->mark_to_tag->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->tag_id, 'user_id' => $this->user_id));
                         }
 
                         // Save all tag ids
-                        if (isset($tag->tag_id)) {
-                            array_push($tag_ids, $tag->tag_id);
+                        if (isset($res->tag_id)) {
+                            array_push($tag_ids, $res->tag_id);
                         }
                     }
                 }
 
                 // Delete old tags
                 $delete_where = (! empty($tag_ids)) ? " AND tag_id <> '" . implode("' AND tag_id <> '", $tag_ids) . "'" : '';
-                $delete       = $this->$this->mark_to_tags->delete("users_to_mark_id = '" . $mark_id . "' AND user_id = '" . $this->user_id . "'" . $delete_where);
+                $delete       = $this->mark_to_tag->delete("users_to_mark_id = '" . $mark_id . "' AND user_id = '" . $this->user_id . "'" . $delete_where);
             }
 
 
             // Update users_to_marks record
-            $mark = $this->user_marks->update("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'", $options);
+            $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", $options);
 
             // Check if it was updated
             if ($mark === false) {
-                $this->data['errors'] = formatErrors(12);
+                $this->data['errors'] = formatErrors(3);
             }
             else {
                 $this->data['mark'] = $mark;
@@ -177,11 +180,13 @@ class Marks extends Plain_Controller
                     }
                 }
             }
-
+        }
+        else {
+            $this->data['errors'] = formatErrors(600);
         }
 
         // Figure what to do here (api, redirect or generate view)
-        $this->figureView('marks/edit');
+        $this->renderJSON();
 
     }
 
@@ -385,7 +390,7 @@ class Marks extends Plain_Controller
         // Check for marks
         // If false, return error; set total to 0
         if ($marks === false) {
-            $this->data['errors'] = formatErrors(11);
+            $this->data['errors'] = formatErrors(2);
             $this->data['total']  = 0;
         }
         // If not false
@@ -471,7 +476,7 @@ class Marks extends Plain_Controller
 
         // Check for mark
         if ($mark === false) {
-            $this->data['errors'] = formatErrors(13);
+            $this->data['errors'] = formatErrors(4);
         }
         else {
             $this->data['mark'] = $mark;
@@ -494,7 +499,7 @@ class Marks extends Plain_Controller
 
         // Check for mark
         if ($mark === false) {
-            $this->data['errors'] = formatErrors(11);
+            $this->data['errors'] = formatErrors(2);
         }
         else {
             $this->data['mark'] = $mark;
@@ -525,7 +530,7 @@ class Marks extends Plain_Controller
 
             // Check if it was updated
             if ($mark === false) {
-                $this->data['errors'] = formatErrors(14);
+                $this->data['errors'] = formatErrors(5);
             }
             else {
                 $this->data['mark'] = $mark;

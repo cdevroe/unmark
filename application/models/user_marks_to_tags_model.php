@@ -30,63 +30,46 @@ class User_Marks_To_Tags_model extends Plain_Model
 
 
             // See if this record already exists
-            $total = $this->count("tag_id = '" . $options['tag_id'] . "' AND user_id = '" . $options['user_id'] . "' AND users_to_mark_id = '" . $options['users_to_mark_id'] . "'");
+            $tag = $this->read("tag_id = '" . $options['tag_id'] . "' AND user_id = '" . $options['user_id'] . "' AND users_to_mark_id = '" . $options['users_to_mark_id'] . "'", 1, 1, 'tag_id');
 
             // If not, add it
-            if ($total < 1) {
+            if (! isset($tag->tag_id)) {
                 $q    = $this->db->insert_string($this->table, $options);
                 $res  = $this->db->query($q);
 
                 // Check for errors
                 $this->sendException();
 
+                if ($res === true) {
+                    $mark_to_tag_id = $this->db->insert_id();
+                    return $this->read($mark_to_tag_id);
+                }
+
                 // Return true or false
-                return $res;
+                return false;
 
             }
 
             // If already exists, just return it
-            return true;
+            return $tag;
 
         }
 
-        return false;
+        return formatErrors($valid);
     }
 
     // We don't really delete much from database
     // The tags to marks need to be removed though
-    public function delete($options=array())
+    public function delete($where)
     {
+        // Send request
+        $res  = $this->db->query("DELETE FROM `user_marks_to_tags` WHERE " . $where);
 
-        $valid  = validate($options, $this->data_types, array('tag_id', 'user_id', 'users_to_mark_id'));
+        // Check for errors
+        $this->sendException();
 
-        // Make sure all the options are valid
-        if ($valid === true) {
-
-            // Set where
-            $where = "tag_id = '" . $options['tag_id'] . "' AND user_id = '" . $options['user_id'] . "'' AND users_to_mark_id = '" . $options['users_to_mark_id'] . "'";
-
-            // See if this record already exists
-            $total = $this->count($where);
-
-            // If not, add it
-            if ($total > 0) {
-                $res  = $this->db->query("DELETE FROM `user_marks_to_tags` WHERE " . $where);
-
-                // Check for errors
-                $this->sendException();
-
-                // Return true or false
-                return $res;
-
-            }
-
-            // If record doesn't exists, just return true
-            return true;
-
-        }
-
-        return false;
+        // Return true or false
+        return $res;
     }
 
     public function getMostRecent($user_id, $limit=10)

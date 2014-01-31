@@ -13,7 +13,7 @@ class Plain_Model extends CI_Model
     protected $delimiter    = '~*~';
     protected $dont_cache   = false;
     protected $id_column    = null;
-    protected $read_method  = false;
+    protected $read_method  = 'read';
 
     public function __construct()
     {
@@ -23,7 +23,6 @@ class Plain_Model extends CI_Model
         // Get constants
         $model             = new ReflectionClass($this);
         $constants         = $model->getConstants();
-        $this->read_method = ($model->hasMethod('readComplete')) ? 'readComplete' : 'read';
 
         // Figure the correct table to use
         // If table constant is found, set it
@@ -178,14 +177,19 @@ class Plain_Model extends CI_Model
 
     protected function stripSlashes($result)
     {
-        foreach ($result as $k => $row) {
-            if (is_array($result)) {
-                foreach ($row as $key => $value) {
-                    $result[$k]->{$key} = (is_string($value)) ? stripslashes($value) : $value;
+        if (! is_array($result) && ! is_object($result)) {
+            $result = (is_string($result)) ? stripslashes($result) : $result;
+        }
+        else {
+            foreach ($result as $k => $row) {
+                if (is_array($result)) {
+                    foreach ($row as $key => $value) {
+                        $result[$k]->{$key} = (is_string($value)) ? stripslashes($value) : $value;
+                    }
                 }
-            }
-            else {
-                $result->{$k} = (is_string($row)) ? stripslashes($row) : $row;
+                else {
+                    $result->{$k} = (is_string($row)) ? stripslashes($row) : $row;
+                }
             }
         }
 
@@ -214,7 +218,7 @@ class Plain_Model extends CI_Model
                 return self::stripSlashes($this->{$method}($where));
             }
             else {
-                return formatErrors(101);
+                return formatErrors(601);
             }
         }
 
