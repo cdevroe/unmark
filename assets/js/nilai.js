@@ -303,10 +303,10 @@ if (nilai === undefined) { var nilai = {}; }
         });
 
         // Temp Label Form
-        $('#temp_label').on('submit', function (e) {
+        $(document).on('change', '#temp_label', function (e) {
             e.preventDefault();
 
-            $('#tempresponse').remove();
+            $('.tempresponse').remove();
 
             var label, mark;
 
@@ -316,7 +316,7 @@ if (nilai === undefined) { var nilai = {}; }
             query = 'label_id=' + nilai.urlEncode(label);
             nilai.ajax('/mark/edit/'+mark, 'post', query, function(res) {
                 console.log(res);
-                $('form').after('<p id="tempresponse">Mark has been updated.</p>');
+                $('form').after('<p class="tempresponse">Mark update attempted.</p>');
             });
 
 
