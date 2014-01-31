@@ -14,73 +14,26 @@ class Labels extends Plain_Controller
     }
 
     /*
-        - Start to return all labels that belong to user
-        - Admins will see other labels that say user_id = null
-        - applicable domains:
-            /api/labels/smart(/PAGE)?  = only smart labels
-            /api/labels/normal(/PAGE)? = only normal system level labels (admins only, non-admins get nothing)
-            /api/labels(/PAGE)?        = all labels (non-admins won't see system level labels)
-
-        - The user will only get their labels
-        - Admins will get their labels and system level labels
+        - Activate a single lable
+        - URLS
+            /label/activate/LABEL_ID
     */
-    public function index($v1=0, $v2=null)
+    public function activate($label_id=0)
     {
-
-        // Figure the type
-        $type = (! is_numeric($v1)) ? $v1 : 'all';
-
-        // Figure the correct starting page
-        $page = (! is_numeric($v1) || $v1 < 0) ? 1 : $v1;
-        $page = (is_numeric($v2) || $v2 > 0) ? $v2 : $page;
-
-        // Set the where
-        $where = null;
-
-        // If $type != all, set a where
-        if ($type != 'all') {
-            $where = ($type == 'normal') ? "labels.smart_label_id IS NULL " : "labels.smart_label_id IS NOT NULL ";
-        }
-
-        // Set user where
-        // If admin account, get normal labels
-        $user_where = "labels.user_id='". $this->user_id . "'";
-        if (parent::isAdmin() === true) {
-            $user_where .= " OR labels.user_id IS NULL";
-        }
-
-        // Set final where
-        $where = (empty($where)) ? $user_where : $where . ' AND (' . $user_where . ')';
-
-        // Read the complete user marks records
-        $labels = $this->labels->readComplete($where, $this->limit, $page);
-
-        // If no labels, return error
-        // Else return labels
-        if ($labels === false) {
-            $this->data['errors'] = formatErrors(32);
-        }
-        else {
-            $this->data['labels'] = $labels;
-            $this->data           = $this->labels->getTotals($where, $page, $this->limit, $this->data);
-        }
-
-        // Figure if web or API view
-        $this->figureView();
+        self::toggle($label_id, 1);
     }
 
     /*
         - Activate a single lable
         - URLS
-            /api/label/add
+            label/add
 
         // For normal labels (admins only)
          - name   : Optional
          - active : Optional : defaults to 1
 
         // For smart labels
-         - domain   : Required
-         - path     : Optional : defaults to null
+         - url
          - active   : Optional : defaults to 1
          - label_id : Required : the static label_id to apply if rule is matched
 
@@ -155,16 +108,6 @@ class Labels extends Plain_Controller
 
         // Figure view
         $this->figureView();
-    }
-
-     /*
-        - Activate a single lable
-        - URLS
-            /api/label/activate/LABEL_ID
-    */
-    public function activate($label_id=0)
-    {
-        self::toggle($label_id, 1);
     }
 
     /*
@@ -250,7 +193,7 @@ class Labels extends Plain_Controller
                 }
                 else {
                     if (isset($this->db_clean->name) && ! empty($this->db_clean->name)) {
-                        $options['name'] = $this->db_clean->name
+                        $options['name'] = $this->db_clean->name;
                         $options['slug'] = generateSlug($options['name']);
                         $total           = $this->labels->count("labels.user_id IS NULL AND labels.slug = '" . $options['slug'] . "'");
                     }
@@ -293,9 +236,65 @@ class Labels extends Plain_Controller
     }
 
     /*
+        - Start to return all labels that belong to user
+        - Admins will see other labels that say user_id = null
+        - applicable domains:
+            /labels/smart(/PAGE)?  = only smart labels
+            /labels/normal(/PAGE)? = only normal system level labels (admins only, non-admins get nothing)
+            /labels(/PAGE)?        = all labels (non-admins won't see system level labels)
+
+        - The user will only get their labels
+        - Admins will get their labels and system level labels
+    */
+    public function index($v1=0, $v2=null)
+    {
+
+        // Figure the type
+        $type = (! is_numeric($v1)) ? $v1 : 'all';
+
+        // Figure the correct starting page
+        $page = (! is_numeric($v1) || $v1 < 0) ? 1 : $v1;
+        $page = (is_numeric($v2) || $v2 > 0) ? $v2 : $page;
+
+        // Set the where
+        $where = null;
+
+        // If $type != all, set a where
+        if ($type != 'all') {
+            $where = ($type == 'normal') ? "labels.smart_label_id IS NULL " : "labels.smart_label_id IS NOT NULL ";
+        }
+
+        // Set user where
+        // If admin account, get normal labels
+        $user_where = "labels.user_id='". $this->user_id . "'";
+        if (parent::isAdmin() === true) {
+            $user_where .= " OR labels.user_id IS NULL";
+        }
+
+        // Set final where
+        $where = (empty($where)) ? $user_where : $where . ' AND (' . $user_where . ')';
+
+        // Read the complete user marks records
+        $labels = $this->labels->readComplete($where, $this->limit, $page);
+
+        // If no labels, return error
+        // Else return labels
+        if ($labels === false) {
+            $this->data['errors'] = formatErrors(32);
+        }
+        else {
+            $this->data['labels'] = $labels;
+            $this->data           = $this->labels->getTotals($where, $page, $this->limit, $this->data);
+        }
+
+        // Figure if web or API view
+        $this->figureView();
+    }
+
+    /*
         - Get info for a single label
         - URLS
-            /api/label/info/LABEL_ID
+            /label/info/LABEL_ID
     */
     public function info($label_id=0)
     {
