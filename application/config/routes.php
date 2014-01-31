@@ -49,6 +49,7 @@ $route['upgrade']                = 'install/upgrade';
 $route['label/activate(.*?)']    = 'labels/activate$1';
 $route['label/add(.*?)']         = 'labels/add';
 $route['label/deactivate(.*?)']  = 'labels/deactivate$1';
+$route['label/delete(.*?)']      = 'labels/delete$1';
 $route['label/edit(.*?)']        = 'labels/edit$1';
 $route['label/info(.*?)']        = 'labels/info$1';
 $route['labels?(.*?)']           = 'labels/index$1';

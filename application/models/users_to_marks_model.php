@@ -101,7 +101,7 @@ class Users_To_Marks_model extends Plain_Model
         }
 
         // Figure date range
-        $when = null;
+        $when = " AND active = '1'";
 
         // If from is not empty, figure timestamp
         if (isset($dates['start']) && ! empty($dates['start'])) {
@@ -136,12 +136,13 @@ class Users_To_Marks_model extends Plain_Model
                     users_to_marks.user_id='" . $user_id . "'
                     AND users_to_marks.archived_on IS NULL
                     AND users_to_marks.notes LIKE '%" . $keyword . "%'
+                    AND users_to_marks.active = '1'
                 )
                 UNION DISTINCT
                 (
                     SELECT users_to_marks.users_to_mark_id
                     FROM marks
-                    INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $user_id . "' AND users_to_marks.archived_on IS NULL
+                    INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $user_id . "' AND users_to_marks.archived_on IS NULL AND users_to_marks.active = '1'
                     WHERE
                     marks.title LIKE '%" . $keyword . "%'
                     OR marks.url LIKE '%" . $keyword . "%'
@@ -213,7 +214,7 @@ class Users_To_Marks_model extends Plain_Model
             $search_query = "
                 SELECT " . $fields . "
                 FROM marks
-                INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $options['user_id'] . "' AND users_to_marks.archived_on IS NULL " . $joins . "
+                INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $options['user_id'] . "' AND users_to_marks.active = '1' AND users_to_marks.archived_on IS NULL " . $joins . "
                 WHERE marks.title LIKE '%" . $options['search'] . "%' OR marks.url LIKE '%" . $options['search'] . "%'" . $group_by;
 
             $query = '(' . $query . ') UNION DISTINCT (' . $search_query . ')';
