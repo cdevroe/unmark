@@ -178,14 +178,19 @@ class Plain_Model extends CI_Model
 
     protected function stripSlashes($result)
     {
-        foreach ($result as $k => $row) {
-            if (is_array($result)) {
-                foreach ($row as $key => $value) {
-                    $result[$k]->{$key} = (is_string($value)) ? stripslashes($value) : $value;
+        if (! is_array($result) && ! is_object($result)) {
+            $result = (is_string($result)) ? stripslashes($result) : $result;
+        }
+        else {
+            foreach ($result as $k => $row) {
+                if (is_array($result)) {
+                    foreach ($row as $key => $value) {
+                        $result[$k]->{$key} = (is_string($value)) ? stripslashes($value) : $value;
+                    }
                 }
-            }
-            else {
-                $result->{$k} = (is_string($row)) ? stripslashes($row) : $row;
+                else {
+                    $result->{$k} = (is_string($row)) ? stripslashes($row) : $row;
+                }
             }
         }
 
