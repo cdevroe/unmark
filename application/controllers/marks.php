@@ -400,13 +400,13 @@ class Marks extends Plain_Controller
         else {
 
             // Autolink marks
-            foreach ($marks as $k => $mark) {
+            /*foreach ($marks as $k => $mark) {
                 if (isset($mark->tags) && ! empty($mark->tags)) {
                     foreach ($mark->tags as $kk => $tag) {
                         $marks[$k]->notes = str_replace('#' . $tag['slug'], '<a href="/marks/tag/' . $tag['slug'] . '">#' . $tag['slug'] . '</a>', $marks[$k]->notes);
                     }
                 }
-            }
+            }*/
 
             // Set marks
             $this->data['marks'] = $marks;
