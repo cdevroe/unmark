@@ -18,7 +18,7 @@ if (nilai.graph === undefined) { nilai.graph = {}; }
         }
 
         // animate to new data positions
-        animatePoints(this.graphData, this.graphData.charts[this.graphData.current]);
+        this.animatePoints(this.graphData, this.graphData.charts[this.graphData.current]);
     };
 
     // draw initial points
@@ -35,7 +35,7 @@ if (nilai.graph === undefined) { nilai.graph = {}; }
             yPos = data.yOffset;
       
             circle = data.paper.circle(xPos, yPos, radius);
-            circle.attr(pointOptions);
+            circle.attr(this.pointOptions);
             points[i].point = circle; // store raphael.js point object in global data set
         }   
     };
@@ -109,37 +109,20 @@ if (nilai.graph === undefined) { nilai.graph = {}; }
     // Init Script
     nilai.graph.initGraph = function () {
 
-        /* point attributes object to pass to raphael.js*/
-        this.pointOptions = {
-          'fill' : '#333333',
-          'stroke' : '#7a7a7a',
-          radius : 6
-        }
+        // point attributes object to pass to raphael.js
+        this.pointOptions = {'fill' : '#333333', 'stroke' : '#7a7a7a', radius : 6 }
 
-        /* line attributes object to pass to raphael.js*/    
-        this.lineOptions = {
-          'stroke': 'rgba(102, 102, 102, .08)',
-          'stroke-width': 2,
-          'fill': '#000',
-          /* nice inner shadow for line, requires line be convex and closed off */
-          'fill-opacity': 0.03 /* <-- doesn't work in old IEs */
-        }
+        // line attributes object to pass to raphael.js  
+        this.lineOptions = {'stroke': 'rgba(102, 102, 102, .08)', 'stroke-width': 2, 'fill': '#000', 'fill-opacity': 0.03 }
 
         this.graphData = {
-          current     : 0,
-          /* constant distance between points on the x axis */
-          xDelta      : 69,
-          /* location of y axis in horizontal space */
-          xOffset     : 100,
-          /* location of x axis in vertical space */
+          current     : 0, // constant distance between points on the x axis
+          xDelta      : 69, // location of y axis in horizontal space
+          xOffset     : 100, // location of x axis in vertical space
           yOffset     : 150,
           charts      :[
-              /* initial data set */
               {
-                  /* lower limit of the data set (can be used to flatten or exaggerate the graph) */
                   lower  : 0,
-                  /* upper limit is the upper limit of the data set (set it a bit above your highest data point)*/
-                  /* used to convert data values into pixel positions */
                   upper  : 200,
                   points : [
                       { value : 0},
@@ -175,33 +158,34 @@ if (nilai.graph === undefined) { nilai.graph = {}; }
         };
 
 
-        /* set up raphael.js canvas with the elements of the graph element */
+        // set up raphael.js canvas with the elements of the graph element
         var paper = new Raphael(document.getElementById('line-graph'), $('#line-graph').width(), $('#line-graph').height());  
         this.graphData.paper = paper;
         
-        /* create initial line*/
-        var path = createPathString(this.graphData);
-        /* draw intial line with raphael.js */
+        // create initial line
+        var path = this.createPathString(this.graphData);
+
+        // draw intial line with raphael.js
         var line = paper.path(path); 
         
-        /* set line drawing attributes */
-        line.attr(lineOptions);
+        // set line drawing attributes
+        line.attr(this.lineOptions);
         
-        /* save line to our global(I know, I know) data object */
+        // save line to our global(I know, I know) data object
         this.graphData.line = line;
 
-        /* draw initial points */
-        drawPoints(this.graphData, pointOptions);
+        // draw initial points
+        this.drawPoints(this.graphData, this.pointOptions);
         
         /* set graph auto changing (for demo purposes) */
-        /*setInterval(function(){
-          advanceGraph();
-        }, 3000);*/
-        advanceGraph();
+        setInterval(function(){
+          nilai.graph.advanceGraph();
+        }, 2000);
+        this.advanceGraph();
     }
 
 
 
-    //$(document).ready(function(){ initLineGraph(); });
+    $(document).ready(function(){ nilai.graph.initGraph(); });
 
 }(window.jQuery));

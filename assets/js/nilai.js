@@ -316,7 +316,7 @@ if (nilai === undefined) { var nilai = {}; }
             query = 'label_id=' + nilai.urlEncode(label);
             nilai.ajax('/mark/edit/'+mark, 'post', query, function(res) {
                 console.log(res);
-                $('form').after('<p class="tempresponse">Mark update attempted.</p>');
+                $('form').after('<p class="tempresponse">Label Updated</p>');
             });
 
 
