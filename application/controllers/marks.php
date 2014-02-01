@@ -128,7 +128,7 @@ class Marks extends Plain_Controller
             $options = array();
 
             // If label ID is found, attach it
-            if (isset($this->clean->label_id) && is_numeric($this->label_id)) {
+            if (isset($this->clean->label_id) && is_numeric($this->clean->label_id)) {
                 $options['label_id'] = $this->clean->label_id;
             }
 
