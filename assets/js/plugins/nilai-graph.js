@@ -186,6 +186,6 @@ if (nilai.graph === undefined) { nilai.graph = {}; }
 
 
 
-    $(document).ready(function(){ nilai.graph.initGraph(); });
+    //$(document).ready(function(){ nilai.graph.initGraph(); });
 
 }(window.jQuery));
