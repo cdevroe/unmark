@@ -20,7 +20,6 @@
             <option value="7">Do</option>
         </select>
         <input id="tempmarkid" type="hidden" name="mark_id" value="<?php print $mark->mark_id; ?>" />
-        <input type="submit" value="Submit Label" />
     </form>
 
 
