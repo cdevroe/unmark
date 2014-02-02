@@ -303,6 +303,16 @@ if (nilai === undefined) { var nilai = {}; }
             }
         });
 
+        // Watch Height on each mark action button
+        $('.mark').each(function () {
+            var height  = $(this).outerHeight(true),
+                half    = height / 2;
+            $(this).find('.mark-actions a').each(function () {
+                $(this).height(half);
+            });
+        });
+
+
         // Temp Label Form
         $(document).on('change', '#temp_label', function (e) {
             e.preventDefault();
@@ -319,7 +329,6 @@ if (nilai === undefined) { var nilai = {}; }
                 console.log(res);
                 $('form').after('<p class="tempresponse">Label Updated</p>');
             });
-
 
         });
 

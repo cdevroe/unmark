@@ -364,12 +364,19 @@ ul.nav-list {
                 display: block;
                 text-align: center;
                 width: 52px;
-                padding: 15px 0;
+                padding: 0;
+                position:relative;
                 i {
                     font-size: 19px;
+                    position: absolute;
+                    top: 33%;
+                    left: 31%;
                 }
                 &.mark-archive {
-                    background: lighten( $color_grey, 10% )
+                    background: lighten( $color_grey, 10% );
+                    i {
+                        left: 33%;
+                    }
                 }
             }
         }
