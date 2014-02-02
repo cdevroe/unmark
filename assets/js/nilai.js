@@ -228,6 +228,7 @@ if (nilai === undefined) { var nilai = {}; }
         // Get the note text, replace all tags with a linked tag
         var notetext = note.text();
         notetext = notetext.replace(/#(\S*)/g,'<a href="/marks/tag/$1">#$1</a>');
+        notetext = notetext.replace('Add a note...', '<span class="action" data-action="marks_clickEdit">Add a note...</span>');
 
         // Send the HTML to the notes field.
         note.html(notetext);
