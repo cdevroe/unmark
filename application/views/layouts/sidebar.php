@@ -1,8 +1,8 @@
 <div class="sidebar-default">
     <div class="sidebar-block">
         <div class="sidebar-inner">
-            <div id="line-graph" class="line-graph"></div>
-            <p>You saved <?php print $stats['saved']['yesterday']; ?> links yesterday and archived only <?php print $stats['archived']['yesterday']; ?>.</p>
+            <canvas class="graph" width="500" height="100"></canvas>
+            <p>You saved <?php print $stats['saved']['today']; ?> links today and archived only <?php print $stats['archived']['today']; ?>.</p>
         </div>
     </div>
     <div class="sidebar-block">

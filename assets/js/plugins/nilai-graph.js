@@ -9,183 +9,56 @@ if (nilai.graph === undefined) { nilai.graph = {}; }
 
 (function ($) {
 
-    // changes between data sets in global graph object
-    nilai.graph.advanceGraph = function () {
-        if(this.graphData.current < this.graphData.charts.length -1) {
-            this.graphData.current++;
-        } else {
-            this.graphData.current = 1;
-        }
-
-        // animate to new data positions
-        this.animatePoints(this.graphData, this.graphData.charts[this.graphData.current]);
-    };
-
-    // draw initial points
-    nilai.graph.drawPoints = function (data, options) {
-
-        var i, xPos, yPos, circle, length,
-            radius = options.radius, // point radius
-            points = data.charts[0].points; // set points to initial data set
-
-        for (i = 0, length = points.length; i < length; i++) {
-            // calculate x and y positions: x delta is a constant, y value is intially set to start at 0 on y axis
-            // xOffset and yOffets values are the locations within the canvas where the x and y axes are located
-            xPos = data.xOffset + (i * data.xDelta);
-            yPos = data.yOffset;
-      
-            circle = data.paper.circle(xPos, yPos, radius);
-            circle.attr(this.pointOptions);
-            points[i].point = circle; // store raphael.js point object in global data set
-        }   
-    };
-
-    // animate points into new positions 
-    // data is the global data object, newData is the new dataset to animate to
-    nilai.graph.animatePoints = function (data, newData) {
+    nilai.graph.getMaxY = function () {
+        var max = 0;
         
-        var scaleFactor, points, i, length,
-            newPath = '', // varibale to hold new raphael path string
-            upperLimit = parseInt(newData.upper), // upper and lower limits are the limits of the data set and are used to scale the data values into pixel positions
-            lowerLimit = parseInt(newData.lower);
-    
-        if(isNaN(upperLimit)) {
-            upperLimit = 1; // don't set to 0 to avoid divide by 0 error
-        }
-
-        if(isNaN(lowerLimit)) {
-            lowerLimit = 0;
-        }
-
-        scaleFactor = data.yOffset / (upperLimit - lowerLimit) ; // used to calculate pixel positions based on limits
-        points = data.charts[0].points; // get initial points from global data
-
-        for (i = 0, length = points.length; i < length; i++) {
-            if(i == 0) {
-                newPath += 'M 25 291 L '; // I have hard coded the start of the line, sorry
-                newX = data.xOffset + ' '; // since the x axis is constant, pass along the original x coordinate
-                newPath += newX;
-                newY = data.yOffset - ((newData.points[i].value - lowerLimit) * scaleFactor) + ' '; // calculate the new y value using scale factor and limits
-                newPath += newY; // add new y to path string
-            } else {
-                newPath += ' L ';
-                newX = data.xOffset + (i * data.xDelta) + ' ';
-                newPath += newX;
-                newY = data.yOffset - ((newData.points[i].value - lowerLimit) * scaleFactor);
-                newPath += newY;
+        for(var i = 0; i < this.data.length; i ++) {
+            if(this.data[i] > max) {
+                max = this.data[i];
             }
-      
-            // animate raphael.js points to new positions
-            points[i].point.animate({
-                cy : data.yOffset - ((newData.points[i].value - lowerLimit) * scaleFactor)
-            }, 800, 'ease-in-out' );
         }
-
-        newPath += ' L 500 291 Z'; // add end of path string, sorry hardcoded again
-        data.line.animate({path : newPath}, 800, 'ease-in-out'); // animate raphael.js line into new position
-
+        
+        max += 10 - max % 10;
+        return max;
     };
 
-    /* create a raphael.js path string based on a data set */
-    nilai.graph.createPathString = function (data) {
-
-        var points = data.charts[data.current].points;
-
-        
-        var path = 'M 25 291 L ' + data.xOffset + ' ' + (data.yOffset - points[0].value);
-        var prevY = data.yOffset - points[0].value;
-
-        for (var i = 1, length = points.length; i < length; i++) {
-          path += ' L ';
-          path += data.xOffset + (i * data.xDelta) + ' ';
-          path += (data.yOffset - points[i].value);
-
-          prevY = data.yOffset - points[i].value;
-        }
-        path += ' L 989 291 Z';
-        return path;
+    nilai.graph.getXPixel = function (val) {
+        return ((this.graph.width() - this.xPadding) / this.data.length) * val + (this.xPadding * 1.5);
     };
 
-    // Init Script
-    nilai.graph.initGraph = function () {
+    nilai.graph.getYPixel = function (val) {
+        return this.graph.height() - (((this.graph.height() - this.yPadding) / this.getMaxY()) * val) - this.yPadding;
+    };
 
-        // point attributes object to pass to raphael.js
-        this.pointOptions = {'fill' : '#333333', 'stroke' : '#7a7a7a', radius : 6 }
+    nilai.graph.initGraph = function (obj, x, y, data, color, fill) {
 
-        // line attributes object to pass to raphael.js  
-        this.lineOptions = {'stroke': 'rgba(102, 102, 102, .08)', 'stroke-width': 2, 'fill': '#000', 'fill-opacity': 0.03 }
-
-        this.graphData = {
-          current     : 0, // constant distance between points on the x axis
-          xDelta      : 69, // location of y axis in horizontal space
-          xOffset     : 100, // location of x axis in vertical space
-          yOffset     : 150,
-          charts      :[
-              {
-                  lower  : 0,
-                  upper  : 200,
-                  points : [
-                      { value : 0},
-                      { value : 0},
-                      { value : 0},
-                      { value : 0},
-                      { value : 0}
-                  ]
-              },
-              {
-                  lower  : 0,
-                  upper  : 200,
-                  points : [
-                      { value : 58},
-                      { value : 64},
-                      { value : 12},
-                      { value : 90},
-                      { value : 101}
-                  ]
-              },
-              {
-                  lower  : 0,
-                  upper  : 200,
-                  points : [
-                      { value : 132},
-                      { value : 112},
-                      { value : 124},
-                      { value : 73},
-                      { value : 92}
-                  ]
-              }
-          ]
-        };
-
-
-        // set up raphael.js canvas with the elements of the graph element
-        var paper = new Raphael(document.getElementById('line-graph'), $('#line-graph').width(), $('#line-graph').height());  
-        this.graphData.paper = paper;
+        this.graph       = obj,
+        this.xPadding    = x,
+        this.yPadding    = y,
+        this.data        = data;
         
-        // create initial line
-        var path = this.createPathString(this.graphData);
 
-        // draw intial line with raphael.js
-        var line = paper.path(path); 
+        var c = this.graph[0].getContext('2d');            
         
-        // set line drawing attributes
-        line.attr(this.lineOptions);
+        c.lineWidth = 2;
+        c.strokeStyle = color;
         
-        // save line to our global(I know, I know) data object
-        this.graphData.line = line;
-
-        // draw initial points
-        this.drawPoints(this.graphData, this.pointOptions);
+        // Draw the line graph
+        c.beginPath();
+        c.moveTo(this.getXPixel(0), this.getYPixel(this.data[0]));
+        for(var i = 1; i < this.data.length; i ++) {
+            c.lineTo(this.getXPixel(i), this.getYPixel(this.data[i]));
+        }
+        c.stroke();
         
-        /* set graph auto changing (for demo purposes) */
-        setInterval(function(){
-          nilai.graph.advanceGraph();
-        }, 2000);
-        this.advanceGraph();
-    }
-
-
-
-    //$(document).ready(function(){ nilai.graph.initGraph(); });
+        // Draw the dots
+        c.fillStyle = fill;
+        
+        for(var i = 0; i < this.data.length; i ++) {  
+            c.beginPath();
+            c.arc(this.getXPixel(i), this.getYPixel(this.data[i]), 4, 0, Math.PI * 2, true);
+            c.fill();
+        }
+    };
 
 }(window.jQuery));

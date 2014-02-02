@@ -693,9 +693,8 @@ ul.nav-list {
 
 
 // Line Graph
-.line-graph {
-    width: 500px;
-    height: 200px;
+canvas.graph {
+    border-bottom:1px solid $color_light;
 }
 
 
