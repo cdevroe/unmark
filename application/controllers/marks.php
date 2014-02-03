@@ -332,10 +332,10 @@ class Marks extends Plain_Controller
             'today'             => array('start' => strtotime('today'), 'finish' => strtotime('tomorrow')),
             'yesterday'         => array('start' => strtotime('yesterday'), 'finish' => strtotime('today')),
             'last-week'         => array('start' => strtotime('1 week ago'), 'finish' => strtotime('today')),
-            'last-month'        => array('start' => strtotime('1 month ago'), 'finish' => strtotime('today')),
-            'last-three-months' => array('start' => strtotime('3 months ago'), 'finish' => strtotime('today')),
-            'last-six-months'   => array('start' => strtotime('6 months ago'), 'finish' => strtotime('today')),
-            'last-year'         => array('start' => strtotime('1 year ago'), 'finish' => strtotime('today')),
+            'last-month'        => array('start' => strtotime('1 month ago'), 'finish' => strtotime('tomorrow')),
+            'last-three-months' => array('start' => strtotime('3 months ago'), 'finish' => strtotime('tomorrow')),
+            'last-six-months'   => array('start' => strtotime('6 months ago'), 'finish' => strtotime('tomorrow')),
+            'last-year'         => array('start' => strtotime('1 year ago'), 'finish' => strtotime('tomorrow')),
             'ages-ago'          => array('start' => strtotime('20 years ago'), 'finish' => strtotime('1 year ago'))
         );
 
