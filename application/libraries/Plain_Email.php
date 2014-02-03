@@ -63,20 +63,42 @@ class Plain_Email extends CI_Email {
         $message  = file_get_contents(APPPATH . 'views/email/update-password.php');
         $text     = $this->getTextVersion($message);
 
-        $this->from('support@getbarley.com', 'Barley Support');
-        $this->reply_to('support@getbarley.com', 'Barley Support');
+        $email_from = $this->CI->config->item('email_from');
+        if(empty($email_from) || empty($email_from['address'])){
+            log_message('ERROR', 'No sender address for outgoing email set in config - cannot send.');
+            return false;
+        }
+        $this->from($email_from['address'], $email_from['description']);
+        $reply_to = $this->CI->config->item('email_reply_to');
+        if(empty($reply_to) || empty($reply_to['address'])){
+            $reply_to = $email_from;
+        }
+        $this->reply_to($reply_to['address'], $reply_to['description']);
         $this->to($email);
-        $this->subject('Barley Password Updated');
+        $subject = $this->CI->config->item('password_updated_email_subject');
+        if(empty($subject)){
+            $subject = 'Nilai - Password updated';
+        }
+        $this->subject($subject);
         $this->message($message);
         $this->set_alt_message($text);
         return $this->send();
     }
     
     public function initialize($config = array()){
+        // Use passed config first
         if(!empty($config)){
             return parent::initialize($config);
         } else{
-            return parent::initialize();
+            // If nothing passed - try loading settings from config
+            $emailConfig = $this->CI->config->item('plain_email_settings');
+            if(!empty($emailConfig)){
+                return parent::initialize($emailConfig);
+            // No settings in config - use defaults
+            } else{
+                return parent::initialize();
+
+            }
         }
     }
 

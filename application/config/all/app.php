@@ -83,7 +83,6 @@ $config['email_from'] = array('address'=>'nilai@nilai.co', 'description' => 'Nil
 // Reset email reply to field address and description
 $config['email_reply_to'] = array('address'=>'nilai@nilai.co', 'description' => 'Nilai');
 // Reset email server settings
-
 /*
  * Array with settings accepted by CI email component
  * Example settings for gmail:
@@ -99,3 +98,5 @@ $config['plain_email_settings'] = array(
                     'mailtype'  => 'html',
                 );
 */
+// Updated password email subject
+$config['password_updated_email_subject'] = 'Nilai - Password updated';

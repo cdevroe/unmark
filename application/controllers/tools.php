@@ -53,9 +53,7 @@ class Tools extends Plain_Controller
                 $finalUrl  = str_replace($find, $replace, $urlTemplate);
                 // Send email
                 $this->load->library('plain_email', null, 'email');
-                $emailConfig = $this->config->item('plain_email_settings');
-                $this->email->initialize($emailConfig);
-                
+                $this->email->initialize();
                 $this->data['success'] = $this->email->resetPassword($user->email, $finalUrl);
             }
         } else {
@@ -110,7 +108,10 @@ class Tools extends Plain_Controller
                       if (! $this->token->useToken($token)) {
                           log_message('DEBUG', 'Failed to mark token ' . $token . ' as used in DB');
                       }
-                      $this->data['success'] = true;
+                      // Send email
+                      $this->load->library('plain_email', null, 'email');
+                      $this->email->initialize();
+                      $this->data['success'] = $this->email->updatePassword($user->email);
                   } else {
                       $this->data['errors'] = formatErrors(601);
                   }
