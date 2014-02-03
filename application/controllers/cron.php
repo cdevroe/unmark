@@ -12,7 +12,7 @@ class Cron extends Plain_Controller
 
     public function index()
     {
-        print 'hello command line user >_<';
+        print 'hello command line user >_<' . PHP_EOL;
     }
 
     public function processEmbeds()

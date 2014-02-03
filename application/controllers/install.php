@@ -8,16 +8,17 @@ class Install extends CI_Controller
     parent::__construct();
   }
 
-  public function index()
-  {
+  private function check_admin(){
+      $this->load->library('session');
+      $user = $this->session->userdata('user');
 
-    // Step one: See if there is a database
-  	$data['install_complete'] = $this->database_install();
-  	$this->load->view( 'install', $data );
-
+      if (! isset($user['admin']) || empty($user['admin'])) {
+          header('Location: /');
+          exit;
+      }
   }
 
-  public function database_install()
+  private function database_install()
   {
 
     // See if there is a users table
@@ -49,6 +50,15 @@ class Install extends CI_Controller
     return false;
   }
 
+  public function index()
+  {
+
+    // Step one: See if there is a database
+  	$data['install_complete'] = $this->database_install();
+  	$this->load->view( 'install', $data );
+
+  }
+
   // Used to update from one version to another.
   public function upgrade()
   {
@@ -62,16 +72,6 @@ class Install extends CI_Controller
     }
     exit('Upgraded. Please <a href="/">return home</a>.');
 
-  }
-
-  private function check_admin(){
-      $this->load->library('session');
-      $user = $this->session->userdata('user');
-
-      if (! isset($user['admin']) || empty($user['admin'])) {
-          header('Location: /');
-          exit;
-      }
   }
 
  }
