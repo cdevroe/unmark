@@ -42,6 +42,21 @@ class Tools extends Plain_Controller
                 $this->token->update("token_value != '{$createdToken->token_value}' and token_type = '{$createdToken->token_type}' and active='1' and user_id='{$createdToken->user_id}'", array(
                     'active' => 0
                 ));
+                // Prepare recovery link - {URL_BASE}/password_reset/{TOKEN}
+                $urlTemplate = $this->config->item('forgot_password_recovery_url');
+                $urlBase = $this->config->item('base_url');
+                if(empty($urlBase)){
+                    $urlBase = $_SERVER['HOST'];
+                }
+                $find = array('{URL_BASE}', '{TOKEN}');
+                $replace = array($urlBase, $createdToken->token_value);
+                $finalUrl  = str_replace($find, $replace, $urlTemplate);
+                // Send email
+                $this->load->library('plain_email', null, 'email');
+                $emailConfig = $this->config->item('plain_email_settings');
+                $this->email->initialize($emailConfig);
+                
+                $this->data['success'] = $this->email->resetPassword($user->email, $finalUrl);
             }
         } else {
             $this->data['errors'] = $validationResult;
