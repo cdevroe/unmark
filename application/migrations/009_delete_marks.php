@@ -1,6 +1,13 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Delete_Marks extends CI_Migration {
+class Migration_Delete_Marks extends Plain_Migration
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+        parent::checkForTables('users_to_marks');
+    }
 
     public function up()
     {
@@ -11,7 +18,7 @@ class Migration_Delete_Marks extends CI_Migration {
 
     public function down()
     {
-        // Back to original
+        parent::checkForColumns('active', 'users_to_marks');
         $this->db->query("ALTER TABLE `users_to_marks` DROP COLUMN `active`");
     }
 }
