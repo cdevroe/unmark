@@ -1,11 +1,21 @@
 <?php defined('BASEPATH') OR exit("No direct script access allowed");
 
-class Migration_Batshit_Crazy extends CI_Migration {
+class Migration_Batshit_Crazy extends Plain_Migration {
 
     public function up()
     {
 
       set_time_limit(0);
+
+      // Check for all tables required for this migration
+      parent::checkForTables(array('marks', 'migrations', 'users', 'users_marks', 'users_smartlabels'));
+
+      // Check all columns need per table are found
+      // marks, users and users_marks
+      parent::checkForColumns(array('recipe', 'id', 'title', 'url', 'oembed', 'dateadded'), 'marks');
+      parent::checkForColumns(array('salt', 'status', 'date_joined', 'admin'), 'users');
+      parent::checkForColumns(array('addedby', 'groups', 'status', 'id', 'urlid', 'userid', 'tags', 'note', 'dateadded', 'datearchived'), 'users_marks');
+
       // Make sure all tables are INNODB, UTF-8
       // Original migration they were not
       // If anyone download that version and ran successfully, some keys may not be created correctly
@@ -390,6 +400,24 @@ class Migration_Batshit_Crazy extends CI_Migration {
     public function down()
     {
       set_time_limit(0);
+
+      // Check for all tables required for this migration
+      parent::checkForTables(array('labels', 'marks', 'migrations', 'tags' , 'users', 'user_mark_to_tags', 'users_to_marks'));
+
+      // Check all columns need per table are found
+      // marks, users and users_marks
+      parent::checkForColumns(array('recipe', 'id', 'title', 'url', 'oembed', 'dateadded'), 'marks');
+      parent::checkForColumns(array('salt', 'status', 'date_joined', 'admin'), 'users');
+      parent::checkForColumns(array('addedby', 'groups', 'status', 'id', 'urlid', 'userid', 'tags', 'note', 'dateadded', 'datearchived'), 'users_marks');
+
+
+      $tables_needed = array('labels', 'marks', 'migrations', 'tags' , 'users', 'user_mark_to_tags', 'users_to_marks');
+      foreach ($tables_needed as $table) {
+        if (! $this->db->table_exists($table)) {
+          log('error', 'Table: ' . $table . ' not found. Current migration cannot run without it.');
+          show_error('Sorry, not all tables needed for this migration where found. The current state of your database seems invalid.', 500);
+        }
+      }
 
       // Set default label/tags
       $default_labels = array('unlabeled', 'read', 'watch', 'listen', 'buy', 'eatdrink', 'do');

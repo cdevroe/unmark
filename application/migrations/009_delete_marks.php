@@ -1,17 +1,26 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Delete_Marks extends CI_Migration {
+class Migration_Delete_Marks extends CI_Migration
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+        parent::checkForTables('users_to_marks');
+    }
 
     public function up()
     {
         // Add active column
-        $this->db->query("ALTER TABLE `users_to_marks` ADD COLUMN `active` tinyint(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Set to 1 for active, 0 for inactive.' AFTER `notes`");
+        if ($this->db->table_exists('users_to_marks')) {
+            $this->db->query("ALTER TABLE `users_to_marks` ADD COLUMN `active` tinyint(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Set to 1 for active, 0 for inactive.' AFTER `notes`");
+        }
 
     }
 
     public function down()
     {
-        // Back to original
+        parent::checkForColumns('active', 'users_to_marks');
         $this->db->query("ALTER TABLE `users_to_marks` DROP COLUMN `active`");
     }
 }
