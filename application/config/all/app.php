@@ -33,6 +33,10 @@ $config['error_codes'][60] = 'No tags found.';
 $config['error_codes'][61] = 'No tag provided.';
 $config['error_codes'][62] = 'Tag could not be added.';
 
+// Password recovery - 90-99
+$config['error_codes']['90'] = 'Account with given email does not exist.';
+$config['error_codes']['91'] = 'Invalid password recovery token.';
+
 // System Level Errors - Level 600 - 699
 $config['error_codes'][600] = 'Security token is invalid.';
 $config['error_codes'][601] = 'Internal Error';
@@ -54,3 +58,45 @@ $config['new_account_links'] = array(
         'label_id' => '7'
     )
 );
+
+/*
+ * Validity of password recovery token
+ */
+    
+$config['forgot_password_token_valid_seconds'] = 60 * 60 * 24; // 24 hours
+
+/*
+ * Password reset URL
+ */
+
+$config['forgot_password_recovery_url'] = '{URL_BASE}/password_reset/{TOKEN}';
+
+
+/*
+ * Email settings 
+ */
+
+// Reset email subject
+$config['password_reset_email_subject'] = 'Nilai - Password reset';
+// Reset email from field address and description
+$config['email_from'] = array('address'=>'nilai@nilai.co', 'description' => 'Nilai');
+// Reset email reply to field address and description
+$config['email_reply_to'] = array('address'=>'nilai@nilai.co', 'description' => 'Nilai');
+// Reset email server settings
+/*
+ * Array with settings accepted by CI email component
+ * Example settings for gmail:
+$config['plain_email_settings'] = array(
+                	'protocol' => 'smtp',
+                    'smtp_host' => 'ssl://smtp.googlemail.com',
+                    'smtp_user' => 'login',
+                    'smtp_pass' => 'password',
+                    'smtp_port' => 465,
+                    'smtp_timeout' => 5,
+                    'newline' => "\r\n",
+                    'charset'   => 'UTF-8',
+                    'mailtype'  => 'html',
+                );
+*/
+// Updated password email subject
+$config['password_updated_email_subject'] = 'Nilai - Password updated';

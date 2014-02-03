@@ -93,6 +93,11 @@ $route['help(.*?)']              = 'help$1';
 $route['changelog']              = 'singletons/changelog';
 $route['terms']                  = 'singletons/terms';
 
+// internal ajax tools
+$route['/tools/forgotPassword']  = 'tools/forgotPassword'; // Generate forgot password token
+$route['/tools/verifyToken']     = 'tools/verifyToken'; // Verify password reset token
+$route['/tools/resetPassword']   = 'tools/resetPassword'; // Reset password for given token
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
