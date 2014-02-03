@@ -106,12 +106,14 @@ class Users_To_Marks_model extends Plain_Model
 
         // If from is not empty, figure timestamp
         if (isset($dates['start']) && ! empty($dates['start'])) {
-            $when .= " AND UNIX_TIMESTAMP(" . $column . ") >= '" . $dates['start'] . "'";
+            //$when .= " AND UNIX_TIMESTAMP(" . $column . ") >= '" . $dates['start'] . "'";
+            $when .= " AND " . $column . " >= '" . $dates['start'] . "'";
         }
 
         // if to is not empty, figure timestamp
         if (isset($dates['finish']) && ! empty($dates['finish'])) {
-            $when .= " AND UNIX_TIMESTAMP(" . $column . ") <= '" . $dates['finish'] . "'";
+            //$when .= " AND UNIX_TIMESTAMP(" . $column . ") <= '" . $dates['finish'] . "'";
+            $when .= " AND " . $column . " < '" . $dates['finish'] . "'";
         }
 
         // If when is empty, set to IS NOT NULL

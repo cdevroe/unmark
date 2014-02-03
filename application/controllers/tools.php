@@ -12,7 +12,7 @@ class Tools extends Plain_Controller
     }
 
     /**
-     * Generate password recovery token
+     * Generate password recovery token and send it via email
      * AJAX action
      */
     public function forgotPassword()

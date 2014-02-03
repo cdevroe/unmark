@@ -261,34 +261,34 @@ class Marks extends Plain_Controller
 
         // Get total marks saved over the last 5 days
         $this->data['stats']['saved'] = array(
-            'today'      => self::totalSaved('today'),
-            'yesterday'  => self::totalSaved('yesterday'),
-            '2 days ago' => self::totalSaved('-2 days'),
-            '3 days ago' => self::totalSaved('-3 days'),
-            '4 days ago' => self::totalSaved('-4 days'),
+            'today'      => self::totalSaved('today', 'tomorrow'),
+            'yesterday'  => self::totalSaved('yesterday', 'today'),
+            '2 days ago' => self::totalSaved('2 days ago', 'yesterday'),
+            '3 days ago' => self::totalSaved('3 days ago', '2 days ago'),
+            '4 days ago' => self::totalSaved('4 days ago', '3 days ago'),
             'total'      => self::totalSaved()
         );
 
         // Get the total marks archived over the last 5 days
         $this->data['stats']['archived'] = array(
-            'today'      => self::totalArchived('today'),
-            'yesterday'  => self::totalArchived('yesterday'),
-            '2 days ago' => self::totalArchived('-2 days'),
-            '3 days ago' => self::totalArchived('-3 days'),
-            '4 days ago' => self::totalArchived('-4 days'),
+            'today'      => self::totalArchived('today', 'tomorrow'),
+            'yesterday'  => self::totalArchived('yesterday', 'today'),
+            '2 days ago' => self::totalArchived('2 days ago', 'yesterday'),
+            '3 days ago' => self::totalArchived('3 days ago', '2 days ago'),
+            '4 days ago' => self::totalArchived('4 days ago', '3 days ago'),
             'total'      => self::totalArchived()
         );
 
         // Get total marks for a series of ranges
         $this->data['stats']['marks'] = array(
-            'today'         => self::totalMarks('today'),
-            'yesterday'     => self::totalMarks('yesterday'),
+            'today'         => self::totalMarks('today', 'tomorrow'),
+            'yesterday'     => self::totalMarks('yesterday', 'today'),
             'last week'     => self::totalMarks('-7 days', 'today'),
             'last month'    => self::totalMarks('-1 month', 'today'),
             'last 3 months' => self::totalMarks('-3 months', 'today'),
             'last 6 months' => self::totalMarks('-6 months', 'today'),
             'last year'     => self::totalMarks('-1 year', 'today'),
-            'ages ago'      => self::totalMarks('-20 years', '-1 year'),
+            'ages ago'      => self::totalMarks('-20 years', '1 year ago'),
             'total'         => self::totalMarks()
         );
 
@@ -329,14 +329,14 @@ class Marks extends Plain_Controller
             'all'               => array('start' => null, 'finish' => null),
             'archive'           => array('start' => null, 'finish' => null),
             'search'            => array('start' => null, 'finish' => null),
-            'today'             => array('start' => strtotime('today'), 'finish' => strtotime('today')),
-            'yesterday'         => array('start' => strtotime('yesterday'), 'finish' => strtotime('yesterday')),
-            'last-week'         => array('start' => strtotime('-1 week'), 'finish' => strtotime('today')),
-            'last-month'        => array('start' => strtotime('-1 month'), 'finish' => strtotime('today')),
-            'last-three-months' => array('start' => strtotime('-3 months'), 'finish' => strtotime('today')),
-            'last-six-months'   => array('start' => strtotime('-6 months'), 'finish' => strtotime('today')),
-            'last-year'         => array('start' => strtotime('-1 year'), 'finish' => strtotime('today')),
-            'ages-ago'          => array('start' => strtotime('-20 years'), 'finish' => strtotime('-1 year'))
+            'today'             => array('start' => strtotime('today'), 'finish' => strtotime('tomorrow')),
+            'yesterday'         => array('start' => strtotime('yesterday'), 'finish' => strtotime('today')),
+            'last-week'         => array('start' => strtotime('1 week ago'), 'finish' => strtotime('today')),
+            'last-month'        => array('start' => strtotime('1 month ago'), 'finish' => strtotime('tomorrow')),
+            'last-three-months' => array('start' => strtotime('3 months ago'), 'finish' => strtotime('tomorrow')),
+            'last-six-months'   => array('start' => strtotime('6 months ago'), 'finish' => strtotime('tomorrow')),
+            'last-year'         => array('start' => strtotime('1 year ago'), 'finish' => strtotime('tomorrow')),
+            'ages-ago'          => array('start' => strtotime('20 years ago'), 'finish' => strtotime('1 year ago'))
         );
 
         // If $lookup is one of the following, search by time is disabled
@@ -347,8 +347,8 @@ class Marks extends Plain_Controller
         // Figure when
         $where_time = null;
         if (array_key_exists($lookup, $valid_lookups)) {
-            $where_time .= (! in_array($lookup, $no_time)) ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $valid_lookups[$lookup]['start'] . "'" : '';
-            $where_time .= (! in_array($lookup, $no_time)) ? " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $valid_lookups[$lookup]['finish'] . "'" : '';
+            $where_time .= (! in_array($lookup, $no_time)) ? " AND users_to_marks.created_on >= '" . date('Y-m-d', $valid_lookups[$lookup]['start']) . "'" : '';
+            $where_time .= (! in_array($lookup, $no_time)) ? " AND users_to_marks.created_on < '" . date('Y-m-d', $valid_lookups[$lookup]['finish']) . "'" : '';
             $this->data['lookup_type'] = $lookup;
         }
 
@@ -397,8 +397,8 @@ class Marks extends Plain_Controller
         else {
             // Check for valid dates
             $dates       = findStartFinish($lookup, $finish);
-            $where_time .= " AND UNIX_TIMESTAMP(users_to_marks.created_on) >= '" . $dates['start'] . "'";
-            $where_time .= " AND UNIX_TIMESTAMP(users_to_marks.created_on) <= '" . $dates['finish'] . "'";
+            $where_time .= " AND users_to_marks.created_on >= '" . $dates['start'] . "'";
+            $where_time .= " AND users_to_marks.created_on < '" . $dates['finish'] . "'";
             $this->data['lookup_type'] = 'custom_date';
         }
 

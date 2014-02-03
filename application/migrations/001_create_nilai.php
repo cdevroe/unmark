@@ -1,6 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Create_nilai extends CI_Migration {
+class Migration_Create_nilai extends Plain_Migration
+{
 
 	public function up()
 	{	// Create tables
@@ -95,7 +96,7 @@ class Migration_Create_nilai extends CI_Migration {
 	    $this->dbforge->drop_table('users');
 	    $this->dbforge->drop_table('users_groups');
 	    $this->dbforge->drop_table('users_marks');
-	    $this->dbforge->drop_table('users_smartlabels');        
+	    $this->dbforge->drop_table('users_smartlabels');
 	}
 }
 

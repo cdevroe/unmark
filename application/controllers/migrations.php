@@ -33,7 +33,7 @@ class Migrations extends Plain_Controller
           exit(0);
         }
     }
-    
+
     /**
      * Update DB to specified version
      */
@@ -43,7 +43,7 @@ class Migrations extends Plain_Controller
             // Run migrations to make
             // sure that database is up-to-date.
             $this->load->library('migration');
-        
+
             if ( ! $this->migration->version($version) )
             {
                 show_error($this->migration->error_string());

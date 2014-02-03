@@ -1,6 +1,14 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_User_Token extends CI_Migration {
+class Migration_User_Token extends Plain_Migration
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+        parent::checkForTables('users');
+        parent::checkForColumns('user_token', 'users');
+    }
 
     public function up()
     {
