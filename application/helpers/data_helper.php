@@ -52,6 +52,9 @@ function findStartFinish($start, $finish=null)
     $finish = strtotime($finish);
     $finish = (empty($finish)) ? $start : $finish;
 
+    //print date('Y-m-d', $start) . "<BR>";
+    //print date('Y-m-d', $finish) . '<BR><br>';
+
     // Fix ordering if need be
     if ($start > $finish) {
         $s      = $start;
@@ -60,7 +63,7 @@ function findStartFinish($start, $finish=null)
     }
 
     // Return
-    return array('start' => $start, 'finish' => $finish);
+    return array('start' => date('Y-m-d', $start), 'finish' => date('Y-m-d', $finish));
 }
 
 // Format any errors coming back to standardize them
