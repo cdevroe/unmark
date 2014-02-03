@@ -16,7 +16,7 @@ class Migration_Archive_stats extends Plain_Migration
 
 	public function down()
 	{
-		parent::checkForColumns('datearchived', 'user_marks');
+		parent::checkForColumns('datearchived', 'users_marks');
 		$this->dbforge->drop_column('users_marks','datearchived');
 	}
 }

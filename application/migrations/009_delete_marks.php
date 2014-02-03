@@ -12,9 +12,7 @@ class Migration_Delete_Marks extends Plain_Migration
     public function up()
     {
         // Add active column
-        if ($this->db->table_exists('users_to_marks')) {
-            $this->db->query("ALTER TABLE `users_to_marks` ADD COLUMN `active` tinyint(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Set to 1 for active, 0 for inactive.' AFTER `notes`");
-        }
+        $this->db->query("ALTER TABLE `users_to_marks` ADD COLUMN `active` tinyint(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Set to 1 for active, 0 for inactive.' AFTER `notes`");
 
     }
 

@@ -12,8 +12,9 @@ class Plain_Migration extends CI_Migration
         $columns = (! is_array($columns)) ? array($columns) : $columns;
 
         if (! empty($columns) && ! empty($table)) {
+            $current_columns = self::getColumns($table);
             foreach ($columns as $column) {
-                if (! $this->db->field_exists($column, $table)) {
+                if (! in_array($column, $current_columns)) {
                     $message = 'Column `' . $column . '`  does not exist in `' . $table . '`. Migrations cannot run.';
                     log_message('error', $message);
                     show_error($message, 500);
@@ -29,7 +30,7 @@ class Plain_Migration extends CI_Migration
         $tables = (! is_array($tables)) ? array($tables) : $tables;
         if (! empty($tables)) {
             foreach ($tables as $table) {
-                if (! $this->db->table_exists($table)) {
+                if (self::tableExists($table) === false) {
                     $message = 'Table `' . $table . '` does not exist. Cannot run migration.';
                     log_message('error', $message);
                     show_error($message, 500);
@@ -37,5 +38,23 @@ class Plain_Migration extends CI_Migration
                 }
             }
         }
+    }
+
+    private function getColumns($table)
+    {
+        $columns = array();
+        $q = $this->db->query("SHOW COLUMNS FROM `" . $table . "`");
+        if ($q->num_rows() > 0) {
+            foreach ($q->result() as $obj) {
+                array_push($columns, $obj->Field);
+            }
+        }
+        return $columns;
+    }
+
+    private function tableExists($table)
+    {
+        $q = $this->db->query("SHOW TABLES LIKE '" . $table . "'");
+        return ($q->num_rows() > 0) ? true : false;
     }
 }

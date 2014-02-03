@@ -408,7 +408,7 @@ class Migration_Batshit_Crazy extends Plain_Migration {
       // marks, users and users_marks
       parent::checkForColumns(array('last_updated', 'url_key', 'mark_id', 'title', 'url', 'embed', 'created_on', 'embed_processed'), 'marks');
       parent::checkForColumns(array('active', 'created_on'), 'users');
-      parent::checkForColumns(array('last_updated', 'users_to_mark_id', 'mark_id', 'user_id', 'label_id', 'notes', 'created_on', 'archived_on'), 'users_marks');
+      parent::checkForColumns(array('last_updated', 'users_to_mark_id', 'mark_id', 'user_id', 'label_id', 'notes', 'created_on', 'archived_on'), 'users_to_marks');
 
       // Set default label/tags
       $default_labels = array('unlabeled', 'read', 'watch', 'listen', 'buy', 'eatdrink', 'do');
