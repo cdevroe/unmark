@@ -13,7 +13,7 @@ class Migration_Tokens extends CI_Migration
                               `user_id` BIGINT(20) UNSIGNED NULL DEFAULT NULL COMMENT 'User ID that token belongs to',
                               `token_type` ENUM('FORGOT_PASSWORD') NOT NULL  COMMENT 'Token type enum',
                               `token_value` VARCHAR(64) NOT NULL COMMENT 'Generated token',
-                              `created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Creation date',
+                              `created_on` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Creation date',
                               `valid_until` DATETIME NOT NULL COMMENT 'Expiration date',
                               `active` TINYINT(1) NOT NULL DEFAULT 1 COMMENT 'Active flag',
                               `used_on` DATETIME NULL DEFAULT NULL COMMENT 'Date when token was successfully used',
