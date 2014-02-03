@@ -10,7 +10,6 @@
     <link rel="icon" type="image/ico" href="/favicon.ico" />
 </head>
 
-<body>
 <?php if (isset($active_label)) : ?>
 <body class="label-<?php print $active_label['label_id']; ?>">
 <?php else : ?>
