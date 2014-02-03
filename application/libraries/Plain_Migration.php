@@ -2,12 +2,12 @@
 
 class Plain_Migration extends CI_Migration
 {
-    public function __construct()
+    public function __construct($config = array())
     {
-        parent::__construct();
+        parent::__construct($config);
     }
 
-    protected function checkForColumns($columns, table)
+    protected function checkForColumns($columns, $table)
     {
         $columns = (! is_array($columns)) ? array($columns) : $columns;
 
@@ -15,7 +15,7 @@ class Plain_Migration extends CI_Migration
             foreach ($columns as $column) {
                 if (! $this->db->field_exists($column, $table)) {
                     $message = 'Column `' . $column . '`  does not exist in `' . $table . '`. Migrations cannot run.';
-                    log('error', $message);
+                    log_message('error', $message);
                     show_error($message, 500);
                     exit;
                 }
@@ -29,9 +29,9 @@ class Plain_Migration extends CI_Migration
         $tables = (! is_array($tables)) ? array($tables) : $tables;
         if (! empty($tables)) {
             foreach ($tables as $table) {
-                if (! $this->db->tble_exists($table)) {
+                if (! $this->db->table_exists($table)) {
                     $message = 'Table `' . $table . '` does not exist. Cannot run migration.';
-                    log('error', $message);
+                    log_message('error', $message);
                     show_error($message, 500);
                     exit;
                 }

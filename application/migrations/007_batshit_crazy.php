@@ -402,22 +402,13 @@ class Migration_Batshit_Crazy extends Plain_Migration {
       set_time_limit(0);
 
       // Check for all tables required for this migration
-      parent::checkForTables(array('labels', 'marks', 'migrations', 'tags' , 'users', 'user_mark_to_tags', 'users_to_marks'));
+      parent::checkForTables(array('labels', 'marks', 'migrations', 'tags' , 'users', 'user_marks_to_tags', 'users_to_marks'));
 
       // Check all columns need per table are found
       // marks, users and users_marks
-      parent::checkForColumns(array('recipe', 'id', 'title', 'url', 'oembed', 'dateadded'), 'marks');
-      parent::checkForColumns(array('salt', 'status', 'date_joined', 'admin'), 'users');
-      parent::checkForColumns(array('addedby', 'groups', 'status', 'id', 'urlid', 'userid', 'tags', 'note', 'dateadded', 'datearchived'), 'users_marks');
-
-
-      $tables_needed = array('labels', 'marks', 'migrations', 'tags' , 'users', 'user_mark_to_tags', 'users_to_marks');
-      foreach ($tables_needed as $table) {
-        if (! $this->db->table_exists($table)) {
-          log('error', 'Table: ' . $table . ' not found. Current migration cannot run without it.');
-          show_error('Sorry, not all tables needed for this migration where found. The current state of your database seems invalid.', 500);
-        }
-      }
+      parent::checkForColumns(array('last_updated', 'url_key', 'mark_id', 'title', 'url', 'embed', 'created_on', 'embed_processed'), 'marks');
+      parent::checkForColumns(array('active', 'created_on'), 'users');
+      parent::checkForColumns(array('last_updated', 'users_to_mark_id', 'mark_id', 'user_id', 'label_id', 'notes', 'created_on', 'archived_on'), 'users_marks');
 
       // Set default label/tags
       $default_labels = array('unlabeled', 'read', 'watch', 'listen', 'buy', 'eatdrink', 'do');

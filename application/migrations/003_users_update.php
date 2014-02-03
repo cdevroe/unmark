@@ -10,7 +10,7 @@ class Migration_Users_update extends Plain_Migration {
 
     public function up()
     {
-      parent::checkForColumns(array('id', 'emailaddress', 'password', 'datejoined', 'status'), 'users'));
+      parent::checkForColumns(array('id', 'emailaddress', 'password', 'datejoined', 'status'), 'users');
       $this->db->query('ALTER TABLE `users` CHANGE COLUMN `id` `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT');
       $this->db->query('ALTER TABLE `users` DROP PRIMARY KEY, ADD PRIMARY KEY (`user_id`)');
       $this->db->query('ALTER TABLE `users` CHANGE COLUMN `emailaddress` `email` varchar(255) NOT NULL');
@@ -25,7 +25,7 @@ class Migration_Users_update extends Plain_Migration {
     public function down()
     {
 
-      parent::checkForColumns(array('user_id', 'email', 'password', 'date_joined', 'status', 'last_updated'), 'users'));
+      parent::checkForColumns(array('user_id', 'email', 'password', 'date_joined', 'status', 'last_updated'), 'users');
       $this->db->query('ALTER TABLE `users` CHANGE COLUMN `user_id` `id` bigint(11) NOT NULL AUTO_INCREMENT');
       $this->db->query('ALTER TABLE `users` DROP PRIMARY KEY, ADD PRIMARY KEY (`id`)');
       $this->db->query('ALTER TABLE `users` DROP COLUMN `last_updated`');

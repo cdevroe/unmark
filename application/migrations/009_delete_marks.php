@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Delete_Marks extends CI_Migration
+class Migration_Delete_Marks extends Plain_Migration
 {
 
     public function __construct()
