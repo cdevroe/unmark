@@ -749,17 +749,25 @@ canvas.graph {
         a {
             color:$color_grey;
             text-transform: uppercase;
+            display: block;
+        }
+        i {
+            position:absolute;
+            font-size: 18px;
+            top: 19px;
+            right: 25px;
         }
         section {
+            display:none;
             height: 50px;
             position: absolute;
-            background: lightblue;
+            background: $color_white;
             width: 100%;
             left: 0px;
-            top: 55px;
+            top: 45px;
             opacity: .9;
             padding: 10px 25px;
-            color: #000;
+            color: $color_darker;
         }
     }
     .mark-added-label {

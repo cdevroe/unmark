@@ -21,12 +21,26 @@
     </div>
     
     <div class="mark-added-label mark-added-settings">
+        <i class="barley-icon-question-sign"></i>
         <a class="action" data-action="add_label" href="">Add A Label</a>
+        <section data-id="<?php print $mark->mark_id; ?>">
+            <ul class="label-choices">
+                <li class="label-id-2"><a href="#" rel="2">Read</a></li>
+                <li class="label-id-3"><a href="#" rel="3">Watch</a></li>
+                <li class="label-id-4"><a href="#" rel="4">Listen</a></li>
+                <li class="label-id-5"><a href="#" rel="5">Buy</a></li>
+                <li class="label-id-6"><a href="#" rel="6">Eat &amp; Drink</a></li>
+                <li class="label-id-7"><a href="#" rel="7">Do</a></li>
+                <li class="label-id-1"><a href="#" rel="1">Unlabeled</a></li>
+                <li class="label-id-smart"><a href="#">Add A Smart Label</a></li>
+            </ul>
+        </section>
     </div>
 
     <div class="mark-added-note mark-added-settings">
-        <a class="action" data-action="add_label" href="">Add A Note</a>
-        <section class="mark-add-notes" contenteditable="true"></section>
+        <i class="barley-icon-question-sign"></i>
+        <a class="action" data-action="marks_addNotes" href="">Add A Note</a>
+        <section data-id="<?php print $mark->mark_id; ?>" contenteditable="true"></section>
     </div>
 
     <div class="mark-added-actions">

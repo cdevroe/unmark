@@ -211,7 +211,6 @@ if (nilai === undefined) { var nilai = {}; }
                 text = $(this).text(), id = $(this).data('id');
                 query = 'notes=' + nilai.urlEncode(text);
                 nilai.ajax('/mark/edit/'+id, 'post', query, function(res) {
-                    console.log(res);
                     editField.html('Notes <i class="barley-icon-pencil"></i>');
                     editable.attr('contenteditable', false);
                 });
@@ -221,6 +220,39 @@ if (nilai === undefined) { var nilai = {}; }
         });
     };
     nilai.marks_clickEdit = function (btn) { btn.parent().prev().trigger('click'); };
+
+    // Method for Adding Notes
+    nilai.marks_addNotes = function (btn) {
+
+        var editable = btn.next();
+
+        if(editable.is(':visible')) { return editable.slideUp(); }
+
+        editable.slideDown();
+        editable.attr('contenteditable', true);
+        if(editable.is(':empty')) {
+            editable.html('Type note text here...');
+        }
+
+        // Define the actions that will save the note.
+        // Includes Function to save the note
+        editable.on('blur keydown', function (e) { 
+            if (e.which === 13 || e.type === 'blur') {
+                e.preventDefault();
+                text = $(this).text(), id = $(this).data('id');
+                query = 'notes=' + nilai.urlEncode(text);
+                nilai.ajax('/mark/edit/'+id, 'post', query, function(res) {
+                    editable.attr('contenteditable', false);
+                    editable.slideUp();
+                    editable.prev().text('Edit Note');
+                    editable.parent().find('i').removeClass('barley-icon-question-sign').addClass('barley-icon-ok');
+                });
+                nilai.tagify_notes(editable);
+            }
+        });
+
+
+    };
 
     // Reads the passed note field and tagifies it on the fly.
     nilai.tagify_notes = function (note) {
