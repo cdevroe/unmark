@@ -71,5 +71,13 @@ class Plain_Email extends CI_Email {
         $this->set_alt_message($text);
         return $this->send();
     }
+    
+    public function initialize($config = array()){
+        if(!empty($config)){
+            return parent::initialize($config);
+        } else{
+            return parent::initialize();
+        }
+    }
 
 }
