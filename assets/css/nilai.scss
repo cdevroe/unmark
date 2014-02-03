@@ -739,13 +739,28 @@ canvas.graph {
         }
     }
     .mark-added-settings {
-        text-transform: uppercase;
         font-size: 12px;
         letter-spacing: .1em;
         font-weight: 400;
         border-top: 1px solid $color_grey;
         padding: 25px;
         color:$color_grey;
+        position: relative;
+        a {
+            color:$color_grey;
+            text-transform: uppercase;
+        }
+        section {
+            height: 50px;
+            position: absolute;
+            background: lightblue;
+            width: 100%;
+            left: 0px;
+            top: 55px;
+            opacity: .9;
+            padding: 10px 25px;
+            color: #000;
+        }
     }
     .mark-added-label {
     }

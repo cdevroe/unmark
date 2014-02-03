@@ -21,11 +21,12 @@
     </div>
     
     <div class="mark-added-label mark-added-settings">
-        Add A Label
+        <a class="action" data-action="add_label" href="">Add A Label</a>
     </div>
 
     <div class="mark-added-note mark-added-settings">
-        Add A Note
+        <a class="action" data-action="add_label" href="">Add A Note</a>
+        <section class="mark-add-notes" contenteditable="true"></section>
     </div>
 
     <div class="mark-added-actions">
