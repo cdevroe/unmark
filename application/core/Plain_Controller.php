@@ -341,6 +341,14 @@ class Plain_Controller extends CI_Controller
             exit;
         }
     }
+    
+    // If not AJAX call
+    protected function redirectIfNotAJAX($url='/'){
+        if(!self::isAJAX()){
+            header('Location: ' . $url);
+            exit;
+        }
+    }
 
     protected function renderJSON()
     {
