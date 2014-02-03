@@ -1,26 +1,40 @@
 <html>
 <head>
     <title>Nilai : Mark Added</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/nilai.css" />
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
 </head>
 <body>
-    <h1>Mark Added</h1>
 
-    You add a link to the page - <a href="<?php print $mark->url; ?>"><?php print $mark->title; ?></a> <br /><br />
+<?php $nice_url = rtrim(preg_replace('/https?:\/\/(www.)?/', '', $mark->url), '/'); ?>
 
-    Currently labeled as : <pre style="display:inline;"><?php print $mark->label_name; ?></pre><br /><br />
+<div class="mark-added">
+    <div class="mark-added-block">
+        This link has been added to your stream.
+        <i class="barley-icon-ok"></i>
+    </div>
 
-    <form action="#" type="post" id="temp_label">
-        <select name="label_id" id="templabel">
-            <option value="1">Unlabeled</option>
-            <option value="2">Read</option>
-            <option value="3">Watch</option>
-            <option value="4">Listen</option>
-            <option value="5">Buy</option>
-            <option value="6">Eat & Drink</option>
-            <option value="7">Do</option>
-        </select>
-        <input id="tempmarkid" type="hidden" name="mark_id" value="<?php print $mark->mark_id; ?>" />
-    </form>
+    <div class="mark-added-info">
+        <h1><?php print $mark->title; ?></h1>
+        <span><?php print $nice_url; ?></span>
+    </div>
+    
+    <div class="mark-added-label mark-added-settings">
+        Add A Label
+    </div>
+
+    <div class="mark-added-note mark-added-settings">
+        Add A Note
+    </div>
+
+    <div class="mark-added-actions">
+        <button class="delete" data-action="delete_mark" data-id="<?php print $mark->mark_id; ?>">Delete Link</button>
+        <button>Update & Close</button>
+    </div>
+
+
+</div>
 
 
 <script type="text/javascript">

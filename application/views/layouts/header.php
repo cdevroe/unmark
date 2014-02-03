@@ -11,9 +11,9 @@
 </head>
 
 <?php if (isset($active_label)) : ?>
-<body class="label-<?php print $active_label['label_id']; ?>">
+<body id="nilai" class="label-<?php print $active_label['label_id']; ?>">
 <?php else : ?>
-<body>
+<body id="nilai">
 <?php endif; ?>
 
     <?php include('navigation.php'); ?>
