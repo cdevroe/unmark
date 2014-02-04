@@ -47,7 +47,9 @@ class Register extends Plain_Controller
 			}
 
 			// set redirect path
-			$redirect = '/marks';
+			$redirect           = '/marks';
+			$this->data['user'] = $user;
+
 		}
 		// If failure, get messages
 		// Set to flash message
