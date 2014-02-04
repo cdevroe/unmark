@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/assets/css/nilai.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
 </head>
-<body id="nilai-slim">
+<body class="nilai-solo">
 
 <?php $nice_url = rtrim(preg_replace('/https?:\/\/(www.)?/', '', $mark->url), '/'); ?>
 

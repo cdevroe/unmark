@@ -1,30 +1,30 @@
 <html>
 <head>
-    <title>Welcome to Nilai</title>
-    <style type="text/css">
-        .wrapper {
-            width:500px;
-            margin:0 auto;
-            text-align: center;
-        }
-    </style>
+    <title>Nilai : Mark Added</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/nilai.css" />
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
 </head>
-<body>
+<body class="nilai-solo" id="nilai-login">
 
-    <div class="wrapper">
-        <h1>Welcome to Nilai</h1>
+<div class="loginWrapper">
 
-        <h3>Please Sign In</h3>
+    <div class="login-ball"></div>
 
-        <form method="post" action="/login" class="form-inline">
-            <input type="hidden" name="csrf_token" id="csrf_token" value="<?php print $csrf_token; ?>">
-            <input type="text" class="input-small" name="email" id="email" placeholder="Email Address"> <br />
-            <input type="password" class="input-small" name="password" id="password" placeholder="Password"> <br /><br />
-            <input type="submit" value="Log in" name="login" id="login" class="btn">
-        </form>
+    <h1>Sign In</h1>
 
-        <small>No Account? Too Bad... Signup Is Coming Soon</small>
-    </div>
+    <form method="post" action="/login">
+        <input type="hidden" name="csrf_token" id="csrf_token" value="<?php print $csrf_token; ?>">
+        <input type="email" class="field-input" name="email" id="email" placeholder="Email Address">
+        <input type="password" class="field-input" name="password" id="password" placeholder="Password">
+        <button type="submit"><i class="barley-icon-chevron-right"></i></button>
+    </form>
+
+    <a href="#" class="forgot-pass action" data-action="forgot_pass">Forgot Password?</a>
+</div>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+<script src="/assets/js/nilai-login.js"></script>
 
 </body>
 </html>

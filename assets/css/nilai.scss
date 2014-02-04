@@ -15,6 +15,7 @@
 // Color Variables for Layouts (greyscale)
 $color_dark     : #3D3D3D;
 $color_darker   : #222222;
+$color_darkest  : #303030;
 $color_light    : #BEBCBD;
 $color_lighter  : #F2F0F1;
 $color_lightest : #474747;
@@ -58,9 +59,12 @@ body {
     * {
         @include box-sizing(border-box);
     }
-    &#nilai-slim {
+    &.nilai-solo {
         border-left:none;
         border-top:none;
+    }
+    &#nilai-login {
+        background: $color_darkest;
     }
 }
 
@@ -899,3 +903,56 @@ body.label-4 .navigation-pane { border-top: 56px solid $color_yellow; }
 body.label-5 .navigation-pane { border-top: 56px solid $color_purple; }
 body.label-6 .navigation-pane { border-top: 56px solid $color_green; }
 body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
+
+
+
+// ==============  Login Page Styles ========
+.loginWrapper {
+    width: 275px;
+    margin: 50px auto 0;
+    text-align: center;
+    color:$color_light;
+    h1 {
+        text-transform: uppercase;
+        font-size: 12px;
+        margin: 25px 0;
+        letter-spacing: .19em;
+        font-weight: 400;
+    }
+    .login-ball {
+        background-color: $color_dark;
+        width: 75px;
+        height: 75px;
+        margin: 0 auto;
+        border-radius: 5em;
+    }
+    form {
+        margin-bottom: 0;
+        position: relative;
+        .field-input {
+            width: 275px;
+            background: $color_white;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 2px;
+            border: none;
+            font-size: 12px;
+            color: $color_black;
+        }
+        button {
+            background: none;
+            position: absolute;
+            top: 51px;
+            color: $color_dark;
+            font-size: 17px;
+            right: -5px;
+        }
+    }
+    a.forgot-pass {
+        font-size: 12px;
+        margin: 0 0 25px 0;
+        letter-spacing: .05em;
+        font-weight: 300;
+        color:$color_light;
+    }
+}
