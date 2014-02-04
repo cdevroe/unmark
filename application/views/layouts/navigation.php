@@ -20,7 +20,15 @@
     <div class="navigation-panel-wrapper">
         <div id="panel-label" class="nav-panel">
             <ul class="label-list">
-                <?php foreach ($labels as $label) : ?>
+                <?php 
+                
+                // If the first label is "Unlabeled", move to end of array
+                if ( $labels[0]->name == 'Unlabeled' ) {
+                    $labels[] = $labels[0];
+                    array_shift($labels);
+                }
+
+                foreach ($labels as $label) : ?>
                     <li class="label-<?php print $label->label_id ?>">
                         <a href="/marks/label/<?php print $label->slug; ?>"><?php print $label->name; ?></a>
                         <span><?php print $label->total_marks; ?> links</span>
