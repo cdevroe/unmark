@@ -229,14 +229,15 @@ class Marks extends Plain_Controller
     {
         parent::redirectIfWebView();
         $method = 'get' . ucwords($what);
+
         if (method_exists($this, $method)) {
-            $total = $this->$method();
-            parent::renderJSON();
+            self::$method();
         }
         else {
-            header('Location: /');
-            exit;
+            $this->data['errors'] = formatErrors(603);
         }
+
+        parent::renderJSON();
 
     }
 
@@ -331,12 +332,12 @@ class Marks extends Plain_Controller
             'search'            => array('start' => null, 'finish' => null),
             'today'             => array('start' => strtotime('today'), 'finish' => strtotime('tomorrow')),
             'yesterday'         => array('start' => strtotime('yesterday'), 'finish' => strtotime('today')),
-            'last-week'         => array('start' => strtotime('1 week ago'), 'finish' => strtotime('today')),
-            'last-month'        => array('start' => strtotime('1 month ago'), 'finish' => strtotime('tomorrow')),
-            'last-three-months' => array('start' => strtotime('3 months ago'), 'finish' => strtotime('tomorrow')),
-            'last-six-months'   => array('start' => strtotime('6 months ago'), 'finish' => strtotime('tomorrow')),
-            'last-year'         => array('start' => strtotime('1 year ago'), 'finish' => strtotime('tomorrow')),
-            'ages-ago'          => array('start' => strtotime('20 years ago'), 'finish' => strtotime('1 year ago'))
+            'last-week'         => array('start' => strtotime('6 days ago'), 'finish' => strtotime('tomorrow')),
+            'last-month'        => array('start' => strtotime('29 days ago'), 'finish' => strtotime('tomorrow')),
+            'last-three-months' => array('start' => strtotime('89 days ago'), 'finish' => strtotime('tomorrow')),
+            'last-six-months'   => array('start' => strtotime('179 days ago'), 'finish' => strtotime('tomorrow')),
+            'last-year'         => array('start' => strtotime('364 days ago'), 'finish' => strtotime('tomorrow')),
+            'ages-ago'          => array('start' => strtotime('20 years ago'), 'finish' => strtotime('364 days ago'))
         );
 
         // If $lookup is one of the following, search by time is disabled
@@ -568,16 +569,18 @@ class Marks extends Plain_Controller
     {
         parent::redirectIfWebView();
         $method = 'total' . ucwords($what);
+
         if (method_exists($this, $method)) {
-            $start  = (empty($start)) ? 'today' : strtolower($start);
-            $finish = (empty($finish)) ? 'today' : strtolower($finish);
+            $start               = (empty($start)) ? 'today' : strtolower($start);
+            $finish              = (empty($finish)) ? 'tomorrrow' : strtolower($finish);
             $this->data['total'] = $this->$method($start, $finish);
             parent::renderJSON();
         }
         else {
-            header('Location: /');
-            exit;
+            $this->data['errors'] = formatErrors(603);
         }
+
+        parent::renderJSON();
     }
 
     private function totalArchived($start=null, $finish=null)
