@@ -145,7 +145,7 @@ class Plain_Controller extends CI_Controller
         ksort($this->data);
 
         // If api, return JSON
-        if (self::isAPI() === true || self::isInternalAJAX() === true) {
+        if (self::isAPI() === true || self::isAJAX() === true) {
             $this->renderJSON();
         }
 
@@ -276,7 +276,7 @@ class Plain_Controller extends CI_Controller
 
     protected function isWebView()
     {
-        return (self::isInternalAJAX() === false && self::isAPI() === false) ? true : false;
+        return (self::isAJAX() === false && self::isAPI() === false) ? true : false;
     }
 
     // If logged if invalid CSRF token is not valid

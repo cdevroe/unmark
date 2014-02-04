@@ -3,7 +3,6 @@
 class Plain_Model extends CI_Model
 {
     // Public properties
-    public $CI              = null;
     public $data_types      = array();
     public $sort            = null;
     public $sort_options    = array();
