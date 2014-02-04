@@ -8,7 +8,7 @@ class Tools extends Plain_Controller
     public function __construct()
     {
         parent::__construct();
-        parent::redirectIfNotAJAX();
+        parent::redirectIfNotInternalAJAX();
     }
 
     /**
@@ -20,7 +20,7 @@ class Tools extends Plain_Controller
         $email = isset($this->db_clean->email) ? $this->db_clean->email : null;
         $validationResult = validate(array('email'=>$email), array('email'=>'email'), array('email'));
         if ($validationResult === true) {
-            
+
             // Check if email exists in our DB
             $this->load->model('users_model', 'user');
             $user = $this->user->read('email = \'' . $email . '\' AND active = \'1\'');
