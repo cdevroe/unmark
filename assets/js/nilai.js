@@ -224,10 +224,11 @@ if (nilai === undefined) { var nilai = {}; }
     // Method for Adding Notes
     nilai.marks_addNotes = function (btn) {
 
-        var editable = btn.next();
+        var editable = btn.next(), text, query;
 
         if(editable.is(':visible')) { return editable.slideUp(); }
 
+        editable.unbind();
         editable.slideDown();
         editable.attr('contenteditable', true);
         if(editable.is(':empty')) {
@@ -247,10 +248,37 @@ if (nilai === undefined) { var nilai = {}; }
                     editable.prev().text('Edit Note');
                     editable.parent().find('i').removeClass('barley-icon-question-sign').addClass('barley-icon-ok');
                 });
-                nilai.tagify_notes(editable);
+                editable.unbind();
             }
         });
+    };
 
+    // Method for adding a label
+    nilai.marks_addLabel = function (btn) {
+        
+        var mark, label_id, query, label_name,
+            labels_list = btn.next();
+
+        if(labels_list.is(':visible')) { return labels_list.slideUp(); }
+
+        labels_list.find('a').unbind();
+        labels_list.slideDown();
+
+        console.log(label_name);
+
+        labels_list.find('a').on('click', function () {
+            mark = labels_list.data('id');
+            label_id = $(this).attr('rel');
+            label_name = $(this).text();
+            query = 'label_id=' + nilai.urlEncode(label_id);
+            nilai.ajax('/mark/edit/'+mark, 'post', query, function(res) {
+                console.log(res);
+                labels_list.slideUp();
+                btn.text(label_name);
+                labels_list.find('a').unbind();
+                labels_list.parent().find('i').removeClass('barley-icon-question-sign').addClass('barley-icon-ok');
+            });
+        });
 
     };
 
@@ -264,6 +292,11 @@ if (nilai === undefined) { var nilai = {}; }
 
         // Send the HTML to the notes field.
         note.html(notetext);
+    };
+
+    // Simple Close Window
+    nilai.close_window = function () {
+        window.close();
     };
 
     // Main Init Script

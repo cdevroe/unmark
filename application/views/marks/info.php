@@ -22,17 +22,17 @@
     
     <div class="mark-added-label mark-added-settings">
         <i class="barley-icon-question-sign"></i>
-        <a class="action" data-action="add_label" href="">Add A Label</a>
+        <a class="action" data-action="marks_addLabel" href="#">Add A Label</a>
         <section data-id="<?php print $mark->mark_id; ?>">
             <ul class="label-choices">
-                <li class="label-id-2"><a href="#" rel="2">Read</a></li>
-                <li class="label-id-3"><a href="#" rel="3">Watch</a></li>
-                <li class="label-id-4"><a href="#" rel="4">Listen</a></li>
-                <li class="label-id-5"><a href="#" rel="5">Buy</a></li>
-                <li class="label-id-6"><a href="#" rel="6">Eat &amp; Drink</a></li>
-                <li class="label-id-7"><a href="#" rel="7">Do</a></li>
-                <li class="label-id-1"><a href="#" rel="1">Unlabeled</a></li>
-                <li class="label-id-smart"><a href="#">Add A Smart Label</a></li>
+                <li class="label-2"><a href="#" rel="2">Read</a></li>
+                <li class="label-3"><a href="#" rel="3">Watch</a></li>
+                <li class="label-4"><a href="#" rel="4">Listen</a></li>
+                <li class="label-5"><a href="#" rel="5">Buy</a></li>
+                <li class="label-6"><a href="#" rel="6">Eat &amp; Drink</a></li>
+                <li class="label-7"><a href="#" rel="7">Do</a></li>
+                <li class="label-1"><a href="#" rel="1">Unlabeled</a></li>
+                <li class="label-smart"><a href="#">Add A Smart Label</a></li>
             </ul>
         </section>
     </div>
@@ -45,7 +45,7 @@
 
     <div class="mark-added-actions">
         <button class="delete" data-action="delete_mark" data-id="<?php print $mark->mark_id; ?>">Delete Link</button>
-        <button>Update & Close</button>
+        <button data-action="close_window">Update & Close</button>
     </div>
 
 
