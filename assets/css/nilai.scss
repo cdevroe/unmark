@@ -828,44 +828,42 @@ canvas.graph {
             }
         }
         &.label-2 a {
-            border:none;
             color: $color_orange;
             &:before { background: $color_orange; }
         }
         &.label-3 a {
-            border-right:none; border-bottom:none; border-top:none;
             color: $color_blue;
             &:before { background: $color_blue; }
         }
         &.label-4 a {
-            border-right:none; border-bottom:none; border-top:none;
             color: $color_yellow;
             &:before { background: $color_yellow; }
         }
         &.label-5 a {
-            border-right:none; border-bottom:none; border-left:none;
             color: $color_purple;
             &:before { background: $color_purple; }
         }
         &.label-6 a {
-            border-right:none; border-bottom:none;
             color: $color_green;
             &:before { background: $color_green; }
         }
         &.label-7 a {
-            border-bottom:none; border-right:none;
             color: $color_red;
             &:before { background: $color_red; }
         }
-        &.label-1 a {
-            border-right:none; border-left:none;
-        }
         &.label-smart a {
-            border-right:none;
             width:396px;
             color: $color_black;
             &:before { background: $color_black; }
         }
+        &:nth-child(1) a { border:none; }
+        &:nth-child(2) a { border-right:none; border-bottom:none; border-top:none; }
+        &:nth-child(3) a { border-right:none; border-bottom:none; border-top:none; }
+        &:nth-child(4) a { border-right:none; border-bottom:none; border-left:none; }
+        &:nth-child(5) a { border-right:none; border-bottom:none; }
+        &:nth-child(6) a { border-bottom:none; border-right:none; }
+        &:nth-child(7) a { border-right:none; border-left:none; }
+        &:nth-child(8) a { border-right:none; }
     }
 }
 
