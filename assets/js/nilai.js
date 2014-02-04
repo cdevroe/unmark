@@ -75,6 +75,12 @@ if (nilai === undefined) { var nilai = {}; }
             mark_obj        = jQuery.parseJSON(mark_string),
             mark_id         = mark_obj_ref.replace("mark-data-","");
 
+        // Quick function to populate the tags
+        function showTags(res) {
+            var list = nilai.label_list(res);
+            $('ul.sidebar-label-list').prepend(list);
+        };
+
         // Clean up view
         $('.mark').removeClass('view-inactive').removeClass('view-active');
         $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
@@ -89,14 +95,17 @@ if (nilai === undefined) { var nilai = {}; }
                 nilai.sidebar_default.fadeOut(400, function () {
                     nilai.sidebar_mark_info.html(output).fadeIn(400, function () {
                         nilai.tagify_notes($('#notes-' + mark_id));
+                        nilai.getData('labels', showTags);
                     });
                 });
             } else {
                 nilai.sidebar_mark_info.html(output).fadeIn(400, function () {
                     nilai.tagify_notes($('#notes-' + mark_id));
+                    nilai.getData('labels', showTags);
                 });         
             }
         });
+
     };
 
     // Collapse Marks Info Sidebar
@@ -257,7 +266,8 @@ if (nilai === undefined) { var nilai = {}; }
     nilai.marks_addLabel = function (btn) {
         
         var mark, label_id, query, label_name,
-            labels_list = btn.next();
+            labels_list = btn.next(),
+            label_parent = btn.parent();
 
         if(labels_list.is(':visible')) { return labels_list.slideUp(); }
 
@@ -274,9 +284,23 @@ if (nilai === undefined) { var nilai = {}; }
                 btn.text(label_name);
                 labels_list.find('a').unbind();
                 labels_list.parent().find('i').removeClass('barley-icon-question-sign').addClass('barley-icon-ok');
+                if (label_parent.hasClass('sidebar-label')) {
+                    label_parent.removeClass();
+                    label_parent.addClass('sidebar-label').addClass('label-' + label_id);
+                }
             });
         });
 
+    };
+
+    // Build a Label List
+    nilai.label_list = function (res) {
+        var key, labels = res.labels, obj, list = '';
+        for (key in labels) {
+           obj = labels[key];
+           list += '<li class="label-'+ obj['label_id'] +'"><a href="#" rel="'+ obj['label_id'] +'">'+ obj['name'] +'</a></li>';
+        }
+        return list;
     };
 
     // Simple Ajax method to get a list of results from API

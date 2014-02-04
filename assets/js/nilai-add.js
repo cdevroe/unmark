@@ -8,23 +8,16 @@
     // Wait for Page to load
     $(document).ready(function () {
 
+        // Gets an HTML list of data and prepends the list
+        // Run as a callback for the getData function below
         function built_label_list(res) {
-            console.log(res);
-            var key, labels = res.labels, obj, list = '';
-            for (key in labels) {
-               obj = labels[key];
-               list += '<li class="label-'+ obj['label_id'] +'"><a href="#" rel="'+ obj['label_id'] +'">'+ obj['name'] +'</a></li>';
-            }
+            var list = nilai.label_list(res);
             $('ul.label-choices').prepend(list);
         };
 
         // Grab the labels list
         nilai.getData('labels', built_label_list);
-
-
-
+    
     });
-
-
 
 }(window.jQuery));

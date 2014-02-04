@@ -520,52 +520,44 @@ ul.nav-list {
             border-radius: 50%;
             background: $color_grey;            
         }
-        h3 {
+        a {
             margin: 0;
             padding: 21px 0 21px 50px;
             font-weight: 300;
             text-transform: uppercase;
             font-size: 12px;
             color: $color_grey;
-        }
-        a {
-            position: absolute;
-            top: 19px;
-            right: 45px;
-            i {
-                color: $color_light;
-                font-size: 15px;
-            }
+            display: block;
         }
         &.label-2 {
             background: rgba($color_orange, .2);
             &:before { background: $color_orange; }
-            h3 { color: $color_orange; }
+            a { color: $color_orange; }
         }
         &.label-3 {
             background: rgba($color_blue, .2);
             &:before { background: $color_blue; }
-            h3 { color: $color_blue; }
+            a { color: $color_blue; }
         }
         &.label-4 {
             background: rgba($color_yellow, .2);
             &:before { background: $color_yellow; }
-            h3 { color: $color_yellow; }
+            a { color: $color_yellow; }
         }
         &.label-5 {
             background: rgba($color_purple, .2);
             &:before { background: $color_purple; }
-            h3 { color: $color_purple; }
+            a { color: $color_purple; }
         }
         &.label-6 {
             background: rgba($color_green, .2);
             &:before { background: $color_green; }
-            h3 { color: $color_green; }
+            a { color: $color_green; }
         }
         &.label-7 {
             background: rgba($color_pink, .2);
             &:before { background: $color_pink; }
-            h3 { color: $color_pink; }
+            a { color: $color_pink; }
         }
     } 
     .sidebar-info-panel {
@@ -798,7 +790,7 @@ canvas.graph {
 }
 
 // Label List
-.mark-added-settings ul.label-choices {
+.mark-added-settings ul.label-choices, ul.sidebar-label-list {
     margin: 0;
     padding:0;
     float: left;
@@ -813,7 +805,7 @@ canvas.graph {
             width: 198px;
             text-align: left;
             padding: 15px 0 15px 39px;
-            border: 1px solid $color_grey;
+            box-shadow: 1px 1px 0px $color_grey;
             position: relative;
             font-size: 11px;
             &:before {
@@ -824,46 +816,57 @@ canvas.graph {
                 width: 20px;
                 height: 20px;
                 border-radius: 50%;
-                background: $color_grey;
+                background: $color_grey !important;
             }
         }
         &.label-2 a {
             color: $color_orange;
-            &:before { background: $color_orange; }
+            &:before { background: $color_orange !important; }
         }
         &.label-3 a {
             color: $color_blue;
-            &:before { background: $color_blue; }
+            &:before { background: $color_blue !important; }
         }
         &.label-4 a {
             color: $color_yellow;
-            &:before { background: $color_yellow; }
+            &:before { background: $color_yellow !important; }
         }
         &.label-5 a {
             color: $color_purple;
-            &:before { background: $color_purple; }
+            &:before { background: $color_purple !important; }
         }
         &.label-6 a {
             color: $color_green;
-            &:before { background: $color_green; }
+            &:before { background: $color_green !important; }
         }
         &.label-7 a {
             color: $color_red;
-            &:before { background: $color_red; }
+            &:before { background: $color_red !important; }
         }
         &.label-smart a {
             width:396px;
             color: $color_black;
-            &:before { background: $color_black; }
+            &:before { background: $color_black !important; }
         }
-        &:nth-child(1) a { border:none; }
-        &:nth-child(2) a { border-right:none; border-bottom:none; border-top:none; }
-        &:nth-child(3) a { border-right:none; border-bottom:none; border-top:none; }
-        &:nth-child(4) a { border-right:none; border-bottom:none; border-left:none; }
-        &:nth-child(5) a { border-right:none; border-bottom:none; }
-        &:nth-child(6) a { border-bottom:none; border-right:none; }
-        &:nth-child(7) a { border-right:none; border-left:none; }
-        &:nth-child(8) a { border-right:none; }
+    }
+}
+
+#mark-info-dump ul.sidebar-label-list {
+    width: 100%;
+    display:none;
+    background: $color_lighter;
+    position: absolute;
+    z-index: 999;
+    li {
+        width: 50%;
+        a {
+            right: 0;
+            top: 0px;
+            width: 100%;
+            position: relative;
+            padding: 15px 0 15px 39px;
+            font-size: 11px;
+        }
     }
 }
 
