@@ -26,8 +26,8 @@ class User extends Plain_Controller
     // Redirect any invalid traffic to homepage
     public function index()
     {
-        header('Location: /');
-        exit;
+        $this->data['errors'] = formatErrors(603);
+        $this->renderJSON();
     }
 
     // Update a user's email address
