@@ -5,7 +5,8 @@ class Login extends Plain_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->redirectIfLoggedIn();
+        parent::redirectIfLoggedIn();
+        parent::redirectIfNotInternal();
     }
 
     public function index()
