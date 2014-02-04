@@ -261,6 +261,11 @@ class Plain_Controller extends CI_Controller
         return $this->input->is_cli_request();
     }
 
+    protected function isChromeExtension()
+    {
+        return (isset($_SERVER['X-Chrome-Extension']) && strtolower($_SERVER['X-Chrome-Extension']) == 'nilai') ? true : false;
+    }
+
     protected function isInternalAJAX()
     {
         return (self::isAJAX() === true && self::isSameHost() === true) ? true : false;
