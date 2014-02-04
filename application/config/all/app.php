@@ -41,6 +41,7 @@ $config['error_codes']['91'] = 'Invalid password recovery token.';
 $config['error_codes'][600] = 'Security token is invalid.';
 $config['error_codes'][601] = 'Internal Error';
 $config['error_codes'][602] = 'Validation Errors';
+$config['error_codes'][603] = 'Invalid Request';
 
 /*
  - Array of titles & urls to add to all newly registered accounts
@@ -62,7 +63,7 @@ $config['new_account_links'] = array(
 /*
  * Validity of password recovery token
  */
-    
+
 $config['forgot_password_token_valid_seconds'] = 60 * 60 * 24; // 24 hours
 
 /*
@@ -73,7 +74,7 @@ $config['forgot_password_recovery_url'] = '{URL_BASE}/password_reset/{TOKEN}';
 
 
 /*
- * Email settings 
+ * Email settings
  */
 
 // Reset email subject

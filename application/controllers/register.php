@@ -2,7 +2,12 @@
 
 class Register extends Plain_Controller
 {
-	// NO API ROUTE
+	public function __construct()
+    {
+        parent::__construct();
+        parent::redirectIfNotInternal();
+        parent::redirectIfLoggedIn();
+    }
 
 	public function index()
 	{
@@ -42,19 +47,21 @@ class Register extends Plain_Controller
 			}
 
 			// set redirect path
-			$redirect = '/marks';
+			$redirect           = '/marks';
+			$this->data['user'] = $user;
+
 		}
 		// If failure, get messages
 		// Set to flash message
 		// set redirect to root
 		else {
 			$redirect = '/register';
-			$this->setFlashMessage('<p>' . implode('</p><p>', $user) , '</p>');
+			$this->setFlashMessage($user);
+			$this->data['errors'] = $user;
 		}
 
-		// Redirect
-		header('Location: ' . $redirect);
-		exit;
+		// Redirect for web view or print for ajax call
+		$this->figureView(null, $redirect);
 	}
 
 }
