@@ -16,7 +16,7 @@
 <body id="nilai">
 <?php endif; ?>
 
-    <?php include('navigation.php'); ?>
+    <?php $this->load->view('layouts/navigation'); ?>
 
     <div class="main-wrapper">
         <div class="inner-wrapper">

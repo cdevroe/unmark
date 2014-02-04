@@ -44,7 +44,7 @@
 
 </div>
 
-<?php include '../layouts/jsvars.php'; ?>
+<?php $this->load->view('layouts/jsvars'); ?>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 <script src="/assets/js/nilai.js"></script>

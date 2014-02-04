@@ -323,6 +323,13 @@ if (nilai === undefined) { var nilai = {}; }
     // Simple Close Window
     nilai.close_window = function () { window.close(); };
 
+    // Delete a Mark
+    nilai.delete_mark = function () {
+        nilai.ajax('/marks/get/'+what, 'post', '', function (res) {
+
+        });
+    };
+
     // Main Init Script
     nilai.init = function () {
 
