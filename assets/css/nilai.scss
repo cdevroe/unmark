@@ -49,6 +49,8 @@ body {
     font-weight: 300;
     min-height: 100%;
     color:$color_dark;
+    border-left:65px solid $color_dark;
+    border-top: 8px solid $color_darker;
     a {
         color: $color_white;
         text-decoration:none;
@@ -56,9 +58,9 @@ body {
     * {
         @include box-sizing(border-box);
     }
-    &#nilai {
-        border-left:65px solid $color_dark;
-        border-top: 8px solid $color_darker;
+    &#nilai-slim {
+        border-left:none;
+        border-top:none;
     }
 }
 
@@ -184,15 +186,14 @@ ul.label-list {
     text-align: right;
     li {
         list-style: none;
-        margin-bottom: 25px;
         position: relative;
-        padding-right: 50px;
         a {
             color: $color_white;
             display: block;
             border-bottom: none;
             padding: 0;
             font-size: 12px;
+            padding: 0 50px 45px 0;
         }
         span {
             display: block;
@@ -201,6 +202,9 @@ ul.label-list {
             font-size: 12px;
             color: $color_light;
             margin-top: 5px;
+            position: absolute;
+            right: 50px;
+            top: 15px;
         }
         &:after {
             content: "";
