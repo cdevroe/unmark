@@ -476,6 +476,11 @@ class Marks extends Plain_Controller
                 foreach ($tag_keys as $key) {
                     foreach ($this->data['tags'][$key] as $k => $tag) {
                         $this->data['tags'][$key][$k]->current = ($tag->tag_id == $tag_id) ? '1' : '0';
+
+                        // Create a Active Tag Array
+                        if ($this->data['tags'][$key][$k]->current == '1') {
+                            $this->data['active_tag'] = array('tag_id' => $tag->tag_id, 'tag_name' => $tag->name);
+                        }
                     }
                 }
             }
@@ -508,6 +513,9 @@ class Marks extends Plain_Controller
         else {
             $this->data['mark'] = $mark;
         }
+
+        $this->data['no_header'] = true;
+        $this->data['no_footer'] = true;
 
         // Figure view
         $this->figureView('marks/info');

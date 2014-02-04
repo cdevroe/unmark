@@ -1,0 +1,45 @@
+// Button Styles (class caried over from BootStrap)
+button {
+    display: inline-block;
+    zoom: 1;
+    line-height: normal;
+    white-space: nowrap;
+    vertical-align: baseline;
+    text-align: center;
+    cursor: pointer;
+    @include user-select(none);
+    font-size: 100%;
+    padding: 5px 15px 7px;
+    color: #FFF;
+    border: 1px solid #999; // PICK COLOR
+    border: 0 rgba(0,0,0,0);
+    background-color: $color_darker;  // PICK COLOR
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 300;
+}
+
+button.danger {
+    background-color: $color_red;
+    color:#FFF;
+}
+button.disabled {
+    color: $color_dark;
+}
+
+// Alert Styles
+.alert {
+    background-color: $color_darker;
+    border-radius: 4px;
+    margin: 0 0 15px 0;
+    padding: 10px;
+    color: #FFF;
+}
+
+
+// Some Fancy Mixins
+@mixin drop-shadow-border() {
+    border-bottom:1px solid $color_light;
+    box-shadow: 1px 3px 2px 0 rgba(0,0,0,0.08);
+}
