@@ -264,15 +264,12 @@ if (nilai === undefined) { var nilai = {}; }
         labels_list.find('a').unbind();
         labels_list.slideDown();
 
-        console.log(label_name);
-
         labels_list.find('a').on('click', function () {
             mark = labels_list.data('id');
             label_id = $(this).attr('rel');
             label_name = $(this).text();
             query = 'label_id=' + nilai.urlEncode(label_id);
             nilai.ajax('/mark/edit/'+mark, 'post', query, function(res) {
-                console.log(res);
                 labels_list.slideUp();
                 btn.text(label_name);
                 labels_list.find('a').unbind();
@@ -280,6 +277,11 @@ if (nilai === undefined) { var nilai = {}; }
             });
         });
 
+    };
+
+    // Simple Ajax method to get a list of results from API
+    nilai.getData = function (what, caller) {
+        nilai.ajax('/marks/get/'+what, 'post', '', caller);
     };
 
     // Reads the passed note field and tagifies it on the fly.
@@ -295,9 +297,7 @@ if (nilai === undefined) { var nilai = {}; }
     };
 
     // Simple Close Window
-    nilai.close_window = function () {
-        window.close();
-    };
+    nilai.close_window = function () { window.close(); };
 
     // Main Init Script
     nilai.init = function () {
@@ -376,7 +376,6 @@ if (nilai === undefined) { var nilai = {}; }
                 $(this).height(half);
             });
         });
-
 
         // Temp Label Form
         $(document).on('change', '#temp_label', function (e) {

@@ -5,11 +5,9 @@
 
 
 
-<script type="text/javascript">
-var nilai  = nilai || {};
-nilai.vars = {};
-nilai.vars.csrf_token   = '<?php print $csrf_token; ?>';
-</script>
+
+<?php include 'jsvars.php'; ?>
+
 <script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
 <script src="/assets/js/plugins/hogan.js"></script>
 <script src="/assets/js/plugins/nilai-graph.js"></script>
