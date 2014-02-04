@@ -315,6 +315,15 @@ class Plain_Controller extends CI_Controller
         }
     }
 
+    // If not AJAX call
+    protected function redirectIfNotAJAX($url='/')
+    {
+        if (self::isAJAX() === false) {
+            header('Location: ' . $url);
+            exit;
+        }
+    }
+
     // If not an API url
     protected function redirectIfNotAPI($url='/')
     {
@@ -342,19 +351,20 @@ class Plain_Controller extends CI_Controller
         }
     }
 
+    // If not a web view or an internal call
+    protected function redirectIfNotInternalAJAX($url='/')
+    {
+        if (self::isAPI() === true || self::isWebView() === true || (self::isAJAX() === true && self::isInternalAJAX() === false)) {
+            header('Location: ' . $url);
+            exit;
+        }
+    }
+
     // If webview, redirect away
     protected function redirectIfWebView()
     {
         if (self::isWebView() === true) {
             header('Location: /');
-            exit;
-        }
-    }
-
-    // If not AJAX call
-    protected function redirectIfNotAJAX($url='/'){
-        if(!self::isAJAX()){
-            header('Location: ' . $url);
             exit;
         }
     }

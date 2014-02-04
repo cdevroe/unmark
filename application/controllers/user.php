@@ -7,7 +7,7 @@ class User extends Plain_Controller
     {
         parent::__construct();
         parent::redirectIfLoggedOut();
-        parent::redirectIfWebView();
+        parent::redirectIfNotInternalAJAX();
         parent::redirectIfInvalidCSRF();
 
         // If we can't find a user id, get them out of here
