@@ -5,6 +5,7 @@ class Welcome extends Plain_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		parent::redirectIfNotInternal();
 	}
 
 	public function index()
