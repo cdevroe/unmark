@@ -369,6 +369,9 @@ if (nilai === undefined) { var nilai = {}; }
         $('.nav-panel').height(nilai.body_height);
         $('body').height(nilai.body_height);
 
+        // Hide then quickly fade in Body
+        $('body').animate({opacity: 1}, 1000);
+
         // Vertical Tabs
         // Shows and Tabs the Vertical navigition inside the Navigation Panel
         $('.navigation-content a, .navigation-pane-links a').on('click', function (e) {

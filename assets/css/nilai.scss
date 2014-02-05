@@ -40,11 +40,13 @@ $sans-serif : 'Lato', sans-serif;
 
 
 // ================ Body
+html { background: $color_darkest; }
 body, html{
     min-height: 100%; 
     height:100%; 
 }
 body {
+    opacity:0;
     overflow:hidden;
     font-family: $sans-serif;
     font-weight: 300;
@@ -309,6 +311,7 @@ ul.nav-list {
     padding-right:0;
     overflow: scroll;
     position: absolute;
+    background: $color_white;
     h2.marks-heading {
         font-weight: 400;
         margin: 0;
