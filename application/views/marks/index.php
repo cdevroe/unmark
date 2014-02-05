@@ -18,8 +18,11 @@
             break;
         case 'tag':
             $heading['icon']    =   'barley-icon-tag';
-            $heading['title']    =   $total . $link_plural . "tagged " . $active_tag['tag_name'];;
-            break;       
+            $heading['title']    =   $total . $link_plural . "tagged " . $active_tag['tag_name'];
+            break;
+        default:
+            $heading['icon']    =   'barley-icon-time';
+            $heading['title']    =   $total . $link_plural;     
     }
 ?>
 <h2 class="marks-heading"><i class="<?php print $heading['icon']; ?>"></i> <?php print $heading['title']; ?></h2>

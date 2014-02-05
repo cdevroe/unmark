@@ -36,7 +36,9 @@
                 <?php endforeach; ?>
             </ul>
         </div>
-        <div id="panel-timeline" class="nav-panel">Timeline</div>
+        <div id="panel-timeline" class="nav-panel">
+            <?php $this->load->view('layouts/timeline'); ?>
+        </div>
         <div id="panel-search" class="nav-panel">
             <form method="post" action="#" id="search-form">
                 <input type="text" name="search" id="search-input" placeholder="SEARCH...">

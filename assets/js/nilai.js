@@ -348,6 +348,7 @@ if (nilai === undefined) { var nilai = {}; }
         nilai.main_panel.width(nilai.main_panel_width);
         nilai.main_content.height(nilai.body_height);
         nilai.sidebar_content.height(nilai.body_height);
+        $('.nav-panel').height(nilai.body_height);
         $('body').height(nilai.body_height);
 
         // Vertical Tabs

@@ -181,6 +181,7 @@ body {
             min-height: 100%;
             width: 200px;
             padding: 10px 20px;
+            overflow: scroll;
         }
     }
 }
@@ -641,64 +642,65 @@ ul.nav-list {
 
 // ================ Timeline Rail
 
-.timeline_wrapper {
-    position: absolute;
-    left: 0px;
-    top: 0;
-    width: 55px;
-}
+.timeline_wrapper { width: 100%; }
 
-.timeline {
+ul.timeline {
     position: relative;
-    width: 660px;
-    margin: 0 auto;
-    margin-top: 20px;
-    padding: 1em 0;
     list-style-type: none;
     width: 100%;
-    padding: 4em 0 1em 0;
+    margin:25px 0 0 0;
+    padding:0;
     &:before {
         position: absolute;
-        left: 50%;
-        top: 0;
+        right: 33px;
+        top: 2px;
         content: ' ';
         display: block;
-        width: 4px;
+        width: 2px;
         height: 100%;
         margin-left: -2px;
-        background-color: $color_darker;
+        background-color: $color_light;
         z-index: 5;
     }
-}
-.timeline-dot, .timeline-dot-small {
-    position: relative;
-    display: inline-block;
-    text-align: center;
-    width: 100%;
-    padding: 2em 0;
-    &:before {
-         background: rgb(255,255,255);
-        z-index: 15;
-        position: absolute;
-        top: -30px;
-        left: 50%;
-        content: ' ';
-        display: block;
-        width: 12px;
-        height: 12px;
-        margin-left: -10px;
-        background: $color_white;
-        border-radius: 10px;
-        border: 4px solid $color_darker;
-        z-index: 10;       
+    .timeline-dot {
+        position: relative;
+        display: inline-block;
+        text-align: right;
+        width: 100%;
+        padding: 0;
+        margin:0;
+        text-transform: uppercase;
+        font-size: 13px;
+        &:before {
+            position: absolute;
+            top: -2px;
+            right: 23px;
+            content: ' ';
+            display: block;
+            width: 14px;
+            height: 14px;
+            margin-left: -10px;
+            background: $color_light;
+            border-radius: 5em;
+            border: 5px solid $color_lightest;
+            z-index: 10;   
+        }
+        a {
+            display: block;
+            padding: 0 58px 40px 0;
+            margin-bottom: 20px;
+            span {
+                font-style: italic;
+                display: block;
+                font-size: 12px;
+                padding: 8px 0 0 0;
+                text-transform: lowercase;
+                color: $color_light;
+            }
+        }
     }
 }
-.timeline-dot-small:before {
-    background: $color_darker;
-    width: 6px;
-    height: 6px;
-    margin-left: -7px;
-}
+
 
 
 
