@@ -58,11 +58,11 @@ class Tokens_model extends Plain_Model
                 return $this->read($token_id);
             }
             else {
-                return $this->formatErrors('Eek this is akward, sorry. Something went wrong. Please try again.');
+                return formatErrors('Eek this is akward, sorry. Something went wrong. Please try again.');
             }
         }
 
-        return $this->formatErrors($valid);
+        return formatErrors($valid);
     }
     
     /**
@@ -93,9 +93,13 @@ class Tokens_model extends Plain_Model
      * @return boolean If token was updated
      */
     public function useToken($tokenValue){
-       $now = date('Y-m-d H:i:s');
-       $updatedToken = $this->update("token_value = '$tokenValue' and active='1'", array('active' => '0', 'used_on' => $now));
-       return ((!empty($updatedToken) && $updatedToken->active == 1) ? true : false); 
+       if(!empty($tokenValue)){
+           $now = date('Y-m-d H:i:s');
+           $updatedToken = $this->update("token_value = '$tokenValue' and active='1'", array('active' => '0', 'used_on' => $now));
+           return ((!empty($updatedToken) && $updatedToken->active == 1) ? true : false);
+       } else{
+           return false;
+       } 
     }
     
 

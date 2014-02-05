@@ -6,18 +6,13 @@ class Tags extends Plain_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->redirectIfLoggedOut();
-        $this->redirectIfNotAPI();
+        parent::redirectIfLoggedOut();
+        parent::redirectIfWebView();
 
         // Load user marks model
         $this->load->model('tags_model', 'tags');
     }
 
-    /*
-        - Get a list of all tags, 100 at a time
-        - URLS:
-            /api/tags(/PAGE)?        = all labels (non-admins won't see system level labels)
-    */
     public function index($page=1)
     {
 
@@ -44,14 +39,6 @@ class Tags extends Plain_Controller
         $this->figureView();
     }
 
-    /*
-        - Add a tag
-        - URLS
-            /api/tag/add
-
-        // Query variables
-         - name   : Required : The name of the tag
-    */
     public function add()
     {
 

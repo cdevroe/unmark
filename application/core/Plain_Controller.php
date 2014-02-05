@@ -145,7 +145,7 @@ class Plain_Controller extends CI_Controller
         ksort($this->data);
 
         // If api, return JSON
-        if (self::isAPI() === true || self::isInternalAJAX() === true) {
+        if (self::isAPI() === true || self::isAJAX() === true) {
             $this->renderJSON();
         }
 
@@ -255,6 +255,11 @@ class Plain_Controller extends CI_Controller
         return $this->input->is_cli_request();
     }
 
+    protected function isChromeExtension()
+    {
+        return (isset($_SERVER['X-Chrome-Extension']) && strtolower($_SERVER['X-Chrome-Extension']) == 'nilai') ? true : false;
+    }
+
     protected function isInternalAJAX()
     {
         return (self::isAJAX() === true && self::isSameHost() === true) ? true : false;
@@ -270,7 +275,7 @@ class Plain_Controller extends CI_Controller
 
     protected function isWebView()
     {
-        return (self::isInternalAJAX() === false && self::isAPI() === false) ? true : false;
+        return (self::isAJAX() === false && self::isAPI() === false) ? true : false;
     }
 
     // If logged if invalid CSRF token is not valid
@@ -309,6 +314,15 @@ class Plain_Controller extends CI_Controller
         }
     }
 
+    // If not AJAX call
+    protected function redirectIfNotAJAX($url='/')
+    {
+        if (self::isAJAX() === false) {
+            header('Location: ' . $url);
+            exit;
+        }
+    }
+
     // If not an API url
     protected function redirectIfNotAPI($url='/')
     {
@@ -336,19 +350,20 @@ class Plain_Controller extends CI_Controller
         }
     }
 
+    // If not a web view or an internal call
+    protected function redirectIfNotInternalAJAX($url='/')
+    {
+        if (self::isAPI() === true || self::isWebView() === true || (self::isAJAX() === true && self::isInternalAJAX() === false)) {
+            header('Location: ' . $url);
+            exit;
+        }
+    }
+
     // If webview, redirect away
     protected function redirectIfWebView()
     {
         if (self::isWebView() === true) {
             header('Location: /');
-            exit;
-        }
-    }
-
-    // If not AJAX call
-    protected function redirectIfNotAJAX($url='/'){
-        if(!self::isAJAX()){
-            header('Location: ' . $url);
             exit;
         }
     }

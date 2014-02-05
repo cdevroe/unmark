@@ -7,7 +7,7 @@ class User extends Plain_Controller
     {
         parent::__construct();
         parent::redirectIfLoggedOut();
-        parent::redirectIfWebView();
+        parent::redirectIfNotInternalAJAX();
         parent::redirectIfInvalidCSRF();
 
         // If we can't find a user id, get them out of here
@@ -26,8 +26,8 @@ class User extends Plain_Controller
     // Redirect any invalid traffic to homepage
     public function index()
     {
-        header('Location: /');
-        exit;
+        $this->data['errors'] = formatErrors(603);
+        $this->renderJSON();
     }
 
     // Update a user's email address

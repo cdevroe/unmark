@@ -6,6 +6,7 @@ class Singletons extends Plain_Controller
     public function __construct()
     {
         parent::__construct();
+        parent::redirectIfNotInternal();
     }
 
     // Changelog

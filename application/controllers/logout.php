@@ -5,7 +5,8 @@ class Logout extends Plain_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->redirectIfLoggedOut();
+        parent::redirectIfLoggedOut();
+        parent::redirectIfNotInternal();
     }
 
     public function index()
