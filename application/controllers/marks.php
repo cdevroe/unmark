@@ -325,6 +325,9 @@ class Marks extends Plain_Controller
         $lookup   = (isset($segments[2]) && ! empty($segments[2])) ? strtolower(trim(urldecode($segments[2]))) : 'all';
         $finish   = (isset($segments[3]) && ! empty($segments[3])) ? strtolower(trim(urldecode($segments[3]))) : null;
 
+        // Get limit
+        $this->limit = (isset($this->clean->limit) && is_numeric($this->clean->limit) && $this->clean->limit < $this->limit) ? $this->clean->limit : $this->limit;
+
         // Set allowable textual starts
         $valid_lookups = array(
             'all'               => array('start' => null, 'finish' => null),
