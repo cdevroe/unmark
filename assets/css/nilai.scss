@@ -65,6 +65,7 @@ body {
     }
     &#nilai-login {
         background: $color_darkest;
+        position:relative;
     }
 }
 
@@ -911,6 +912,7 @@ body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
     width: 275px;
     margin: 50px auto 0;
     text-align: center;
+    position: relative;
     color:$color_light;
     h1 {
         text-transform: uppercase;
@@ -955,4 +957,43 @@ body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
         font-weight: 300;
         color:$color_light;
     }
+}
+
+// Animation Keyframes
+//********************************************************//
+@mixin rotate-forever {
+    0%    { @include transform(rotate(0deg)); }
+    100%  { @include transform(rotate(360deg)); }
+}
+@-webkit-keyframes rotate-forever { @include rotate-forever; }
+   @-moz-keyframes rotate-forever { @include rotate-forever; }
+        @keyframes rotate-forever { @include rotate-forever; }
+
+// Animation of Spinner
+.nilai-spinner {
+    @include animation-duration(0.75s);
+    @include animation-iteration-count(infinite);
+    @include animation-name(rotate-forever);
+    @include animation-timing-function(linear);
+    @include size(75px);
+    border: 3px solid $color_dark;
+    border-right-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+// Position of Spinner
+.nilai-spinner {
+    display: none;
+    position: absolute;
+    left: 47.3%;
+    top: 130px;
+}
+
+.nilai-success {
+    display: none;
+    position: absolute;
+    left: 47.1%;
+    top: 117px;
+    font-size: 79px;
 }

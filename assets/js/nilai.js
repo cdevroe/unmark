@@ -368,7 +368,7 @@ if (nilai === undefined) { var nilai = {}; }
 
         // Global Buton / Action Link Run
         // Create a Function from a string
-        $(document).on('click', 'button, .action', function (e) {
+        $(document).on('click', 'button[data-action], .action', function (e) {
             e.preventDefault();
             var action = $(this).data('action'), funct; // Get Data Action Attribute
             funct = eval('nilai.' + action); // Convert it to an executable function
@@ -407,26 +407,6 @@ if (nilai === undefined) { var nilai = {}; }
                 $(this).height(half);
             });
         });
-
-        // Temp Label Form
-        $(document).on('change', '#temp_label', function (e) {
-            e.preventDefault();
-
-            $('.tempresponse').remove();
-
-            var label, mark;
-
-            label = $('#templabel').val();
-            mark = $('#tempmarkid').val(); 
-
-            query = 'label_id=' + nilai.urlEncode(label);
-            nilai.ajax('/mark/edit/'+mark, 'post', query, function(res) {
-                console.log(res);
-                $('form').after('<p class="tempresponse">Label Updated</p>');
-            });
-
-        });
-
 
     };
 
