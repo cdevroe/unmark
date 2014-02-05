@@ -173,7 +173,7 @@ if (nilai === undefined) { var nilai = {}; }
         // Check for close action on and open panel
         if (panel_to_show === "#panel-menu") {
             if (panel_position > 0) {
-                nilai.nav_panel.animate({ left: -258 }, { duration: 200, queue: false });
+                nilai.nav_panel.animate({ left: -285 }, { duration: 200, queue: false });
                 nilai.main_panel.animate({ left: 65 }, { duration: 200, queue: false });
                 $('.nav-panel').hide();
                 $('.navigation-pane-links').show();
