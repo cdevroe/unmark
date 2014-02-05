@@ -67,10 +67,10 @@ class Plain_Controller extends CI_Controller
         }
         else {
             $this->load->model('users_to_marks_model', 'user_marks');
-            $user_mark = $this->user_marks->read("user_id = '" . $this->user_id . "' AND mark_id = '" . $mark->mark_id . "'");
+            $user_mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.mark_id = '" . $mark->mark_id . "'");
 
             // Add
-            if (! isset($user_mark->users_to_mark_id)) {
+            if (! isset($user_mark->mark_id)) {
 
                 // Set default options
                 $options = array('user_id' => $this->user_id, 'mark_id' => $mark->mark_id);
@@ -78,6 +78,12 @@ class Plain_Controller extends CI_Controller
                 // Label ID (not required)
                 if (isset($data['label_id']) && is_numeric($data['label_id'])) {
                     $options['label_id'] = $data['label_id'];
+                }
+
+                // Notes (not required)
+                if (isset($data['notes']) && ! empty($data['notes'])) {
+                    $options['notes'] = $data['notes'];
+                    $tags             = getTagsFromHash($options['notes']);
                 }
 
                 // Figure if any automatic labels should be applied
@@ -105,16 +111,56 @@ class Plain_Controller extends CI_Controller
             if ($user_mark === false) {
                 $user_mark = formatErrors(15);
             }
-            if (! isset($user_mark->users_to_mark_id)) {
-                $user_mark = $user_mark;
-            }
-            else {
-                $user_mark = $user_mark;
+            elseif (isset($user_mark->mark_id)) {
+
+                // If tags are present, add them
+                // Get updated result
+                if (isset($tags)) {
+                    $mark_id   = $user_mark->mark_id;
+                    self::addTags($tags, $mark_id);
+                    $user_mark = $this->user_marks->readComplete($mark_id);
+                }
             }
         }
 
         return $user_mark;
 
+    }
+
+    protected function addTags($tags, $mark_id)
+    {
+        if (! empty($tags) && is_array($tags)) {
+            // Update users_to_marks record
+            $this->load->model('tags_model', 'tag');
+            $this->load->model('user_marks_to_tags_model', 'mark_to_tag');
+
+            $tag_ids = array();
+            foreach ($tags as $k => $tag) {
+                $tag_name  = trim($tag);
+                $slug      = generateSlug($tag);
+
+                if (! empty($slug)) {
+                    $tag = $this->tag->read("slug = '" . $slug . "'", 1, 1, 'tag_id');
+                    if (! isset($tag->tag_id)) {
+                        $tag = $this->tag->create(array('name' => $tag_name, 'slug' => $slug));
+                    }
+
+                    // Add tag to mark
+                    if (isset($tag->tag_id)) {
+                        $res = $this->mark_to_tag->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->tag_id, 'user_id' => $this->user_id));
+                    }
+
+                    // Save all tag ids
+                    if (isset($res->tag_id)) {
+                        array_push($tag_ids, $res->tag_id);
+                    }
+                }
+            }
+
+            // Delete old tags
+            $delete_where = (! empty($tag_ids)) ? " AND tag_id <> '" . implode("' AND tag_id <> '", $tag_ids) . "'" : '';
+            $delete       = $this->mark_to_tag->delete("users_to_mark_id = '" . $mark_id . "' AND user_id = '" . $this->user_id . "'" . $delete_where);
+        }
     }
 
     // Clean any variables coming in from POST or GET 3 ways
@@ -288,6 +334,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfInvalidCSRF($url='/')
     {
         if (empty($this->csrf_valid) && self::isAPI() === false) {
+            $url = (self::isWebView() === false) ? 'json/auth/error' : $url;
             header('Location: ' . $url);
             exit;
         }
@@ -306,6 +353,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfLoggedOut($url='/')
     {
         if (empty($this->logged_in) && empty($this->user_id)) {
+            $url = (self::isWebView() === false) ? '/json/auth/error' : $url;
             header('Location: ' . $url);
             exit;
         }
@@ -315,6 +363,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotAdmin($url='/')
     {
         if (empty($this->user_admin)) {
+            $url = (self::isWebView() === false) ? '/json/auth/error' : $url;
             header('Location: ' . $url);
             exit;
         }
@@ -324,6 +373,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotAJAX($url='/')
     {
         if (self::isAJAX() === false) {
+            $url = (self::isWebView() === false) ? '/json' : $url;
             header('Location: ' . $url);
             exit;
         }
@@ -333,6 +383,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotAPI($url='/')
     {
         if (self::isAPI() === false) {
+            $url = (self::isWebView() === false) ? '/json' : $url;
             header('Location: ' . $url);
             exit;
         }
@@ -342,6 +393,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotCommandLine()
     {
         if (self::isCommandLine() === false) {
+            $url = (self::isWebView() === false) ? '/json' : $url;
             header('Location: /');
             exit;
         }
@@ -351,6 +403,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotInternal($url='/')
     {
         if (self::isAPI() === true || (self::isAJAX() === true && self::isInternalAJAX() === false)) {
+            $url = (self::isWebView() === false) ? '/json' : $url;
             header('Location: ' . $url);
             exit;
         }
@@ -360,16 +413,17 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotInternalAJAX($url='/')
     {
         if (self::isAPI() === true || self::isWebView() === true || (self::isAJAX() === true && self::isInternalAJAX() === false)) {
+            $url = (self::isWebView() === false) ? '/json' : $url;
             header('Location: ' . $url);
             exit;
         }
     }
 
     // If webview, redirect away
-    protected function redirectIfWebView()
+    protected function redirectIfWebView($url='/')
     {
         if (self::isWebView() === true) {
-            header('Location: /');
+            header('Location: ' . $url);
             exit;
         }
     }

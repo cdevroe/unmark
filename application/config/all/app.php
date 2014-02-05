@@ -37,11 +37,16 @@ $config['error_codes'][62] = 'Tag could not be added.';
 $config['error_codes']['90'] = 'Account with given email does not exist.';
 $config['error_codes']['91'] = 'Invalid password recovery token.';
 
+
+// HTTP mimic status codes
+// Only to be used if they make sense
+$config['error_codes'][403] = 'Forbidden';
+$config['error_codes'][404] = 'Not Found';
+$config['error_codes'][500] = 'Internal Error';
+
 // System Level Errors - Level 600 - 699
 $config['error_codes'][600] = 'Security token is invalid.';
-$config['error_codes'][601] = 'Internal Error';
-$config['error_codes'][602] = 'Validation Errors';
-$config['error_codes'][603] = 'Invalid Request';
+$config['error_codes'][601] = 'Validation Errors';
 
 /*
  - Array of titles & urls to add to all newly registered accounts
