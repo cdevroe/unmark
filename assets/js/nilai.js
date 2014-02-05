@@ -324,9 +324,25 @@ if (nilai === undefined) { var nilai = {}; }
     nilai.close_window = function () { window.close(); };
 
     // Delete a Mark
-    nilai.delete_mark = function () {
-        nilai.ajax('/marks/get/'+what, 'post', '', function (res) {
+    nilai.delete_mark = function (btn) {
 
+        // Get Mark Id
+        // Check View
+        var mark_id = btn.data('id'),
+            view = btn.data('view');
+
+        // Request to delete the mark
+        nilai.ajax('/mark/delete/'+mark_id, 'post', '', function (res) {
+            if (res.mark.active === "0") {
+                if (view === "bookmarklet"){
+                    nilai.close_window();
+                } else {
+                    nilai.sidebar_collapse();
+                    $('#mark-'+mark_id).fadeOut();
+                }
+            } else {
+                alert('This mark could not be deleted, please try again laster.');
+            }
         });
     };
 

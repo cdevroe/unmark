@@ -37,7 +37,7 @@
     </div>
 
     <div class="mark-added-actions">
-        <button class="delete" data-action="delete_mark" data-id="<?php print $mark->mark_id; ?>">Delete Link</button>
+        <button class="delete" data-action="delete_mark" data-view="bookmarklet" data-id="<?php print $mark->mark_id; ?>">Delete Link</button>
         <button data-action="close_window">Update & Close</button>
     </div>
 
