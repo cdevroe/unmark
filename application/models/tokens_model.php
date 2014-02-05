@@ -58,11 +58,11 @@ class Tokens_model extends Plain_Model
                 return $this->read($token_id);
             }
             else {
-                return $this->formatErrors('Eek this is akward, sorry. Something went wrong. Please try again.');
+                return formatErrors('Eek this is akward, sorry. Something went wrong. Please try again.');
             }
         }
 
-        return $this->formatErrors($valid);
+        return formatErrors($valid);
     }
     
     /**

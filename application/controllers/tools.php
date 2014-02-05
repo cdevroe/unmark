@@ -34,27 +34,37 @@ class Tools extends Plain_Controller
                     'token_type' => Tokens_model::TYPE_FORGOT_PASSWORD,
                     'user_id' => $user->user_id
                 ));
-                $this->data['token'] = array(
-                    'token_value' => $createdToken->token_value,
-                    'valid_until' => $createdToken->valid_until
-                );
-                // Invalidate all other tokens for this type and user
-                $this->token->update("token_value != '{$createdToken->token_value}' and token_type = '{$createdToken->token_type}' and active='1' and user_id='{$createdToken->user_id}'", array(
-                    'active' => 0
-                ));
-                // Prepare recovery link - {URL_BASE}/password_reset/{TOKEN}
-                $urlTemplate = $this->config->item('forgot_password_recovery_url');
-                $urlBase = $this->config->item('base_url');
-                if(empty($urlBase)){
-                    $urlBase = $_SERVER['HOST'];
+                if (isset($createdToken->token_id)) {
+                    $this->data['token'] = array(
+                        'token_value' => $createdToken->token_value,
+                        'valid_until' => $createdToken->valid_until
+                    );
+                    // Invalidate all other tokens for this type and user
+                    $this->token->update("token_value != '{$createdToken->token_value}' and token_type = '{$createdToken->token_type}' and active='1' and user_id='{$createdToken->user_id}'", array(
+                        'active' => 0
+                    ));
+                    // Prepare recovery link - {URL_BASE}/password_reset/{TOKEN}
+                    $urlTemplate = $this->config->item('forgot_password_recovery_url');
+                    $urlBase = $this->config->item('base_url');
+                    if (empty($urlBase)) {
+                        $urlBase = $_SERVER['HOST'];
+                    }
+                    $find = array(
+                        '{URL_BASE}',
+                        '{TOKEN}'
+                    );
+                    $replace = array(
+                        $urlBase,
+                        $createdToken->token_value
+                    );
+                    $finalUrl = str_replace($find, $replace, $urlTemplate);
+                    // Send email
+                    $this->load->library('plain_email', null, 'email');
+                    $this->email->initialize();
+                    $this->data['success'] = $this->email->resetPassword($user->email, $finalUrl);
+                } else {
+                    $this->data['errors'] = $createdToken;
                 }
-                $find = array('{URL_BASE}', '{TOKEN}');
-                $replace = array($urlBase, $createdToken->token_value);
-                $finalUrl  = str_replace($find, $replace, $urlTemplate);
-                // Send email
-                $this->load->library('plain_email', null, 'email');
-                $this->email->initialize();
-                $this->data['success'] = $this->email->resetPassword($user->email, $finalUrl);
             }
         } else {
             $this->data['errors'] = $validationResult;
@@ -90,33 +100,42 @@ class Tools extends Plain_Controller
         $this->data['success'] = false;
         $token = isset($this->db_clean->token) ? $this->db_clean->token : null;
         $password = isset($this->clean->password) ? $this->clean->password : null;
-        $validationResult = validate(array('token' => $token, 'password' => $password), array('token'=>'string', 'password' => 'password'), array('token', 'password'));
-        if($validationResult === true){
+        $validationResult = validate(array(
+            'token' => $token,
+            'password' => $password
+        ), array(
+            'token' => 'string',
+            'password' => 'password'
+        ), array(
+            'token',
+            'password'
+        ));
+        if ($validationResult === true) {
             // Checking token
             $this->load->model('tokens_model', 'token');
             $tokenData = $this->token->read("token_value = '$token'");
             if (! $this->token->isValid($tokenData)) {
                 $this->data['errors'] = formatErrors(91);
             } else {
-                  $hashedPassword = generateHash($this->clean->password);
-                  $this->load->model('users_model', 'user');
-                  $user = $this->user->update($tokenData->user_id, array(
-                      'password' => $hashedPassword
-                  ));
-                  if (isset($user->password) && $user->password == $hashedPassword) {
-                      // Mark token as used
-                      if (! $this->token->useToken($token)) {
-                          log_message('DEBUG', 'Failed to mark token ' . $token . ' as used in DB');
-                      }
-                      // Send email
-                      $this->load->library('plain_email', null, 'email');
-                      $this->email->initialize();
-                      $this->data['success'] = $this->email->updatePassword($user->email);
-                  } else {
-                      $this->data['errors'] = formatErrors(601);
-                  }
+                $hashedPassword = generateHash($this->clean->password);
+                $this->load->model('users_model', 'user');
+                $user = $this->user->update($tokenData->user_id, array(
+                    'password' => $hashedPassword
+                ));
+                if (isset($user->password) && $user->password == $hashedPassword) {
+                    // Mark token as used
+                    if (! $this->token->useToken($token)) {
+                        log_message('DEBUG', 'Failed to mark token ' . $token . ' as used in DB');
+                    }
+                    // Send email
+                    $this->load->library('plain_email', null, 'email');
+                    $this->email->initialize();
+                    $this->data['success'] = $this->email->updatePassword($user->email);
+                } else {
+                    $this->data['errors'] = formatErrors(601);
+                }
             }
-        } else{
+        } else {
             $this->data['errors'] = $validationResult;
         }
         $this->figureView();
