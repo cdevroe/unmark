@@ -7,6 +7,8 @@
 
     $link_plural = ($total > 1) ? " links " : " link ";
 
+    if (isset($_POST['q'])) { $search_term = $_POST['q']; }
+
     switch ($lookup_type) {
         case 'label':
             $heading['icon']    =   'barley-icon-circle';
@@ -19,6 +21,10 @@
         case 'tag':
             $heading['icon']    =   'barley-icon-tag';
             $heading['title']    =   $total . $link_plural . "tagged " . $active_tag['tag_name'];
+            break;
+        case 'search':
+            $heading['icon']    =   'barley-icon-search';
+            $heading['title']    =   $total . $link_plural . "found in \"" . $search_term . "\"";
             break;
         default:
             $heading['icon']    =   'barley-icon-time';

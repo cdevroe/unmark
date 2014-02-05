@@ -40,8 +40,8 @@
             <?php $this->load->view('layouts/timeline'); ?>
         </div>
         <div id="panel-search" class="nav-panel">
-            <form method="post" action="#" id="search-form">
-                <input type="text" name="search" id="search-input" placeholder="SEARCH...">
+            <form method="post" action="/marks/search" id="search-form">
+                <input type="text" name="q" id="search-input" placeholder="SEARCH...">
                 <i class="barley-icon-chevron-right"></i>
             </form>
             
