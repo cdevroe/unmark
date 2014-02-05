@@ -334,6 +334,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfInvalidCSRF($url='/')
     {
         if (empty($this->csrf_valid) && self::isAPI() === false) {
+            $url = (self::isWebView() === false) ? 'json/auth/error' : $url;
             header('Location: ' . $url);
             exit;
         }
@@ -352,7 +353,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfLoggedOut($url='/')
     {
         if (empty($this->logged_in) && empty($this->user_id)) {
-            $url = (self::isWebView() === false) ? 'json/auth/error' : $url;
+            $url = (self::isWebView() === false) ? '/json/auth/error' : $url;
             header('Location: ' . $url);
             exit;
         }
@@ -362,6 +363,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotAdmin($url='/')
     {
         if (empty($this->user_admin)) {
+            $url = (self::isWebView() === false) ? '/json/auth/error' : $url;
             header('Location: ' . $url);
             exit;
         }
@@ -371,6 +373,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotAJAX($url='/')
     {
         if (self::isAJAX() === false) {
+            $url = (self::isWebView() === false) ? '/json' : $url;
             header('Location: ' . $url);
             exit;
         }
@@ -380,6 +383,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotAPI($url='/')
     {
         if (self::isAPI() === false) {
+            $url = (self::isWebView() === false) ? '/json' : $url;
             header('Location: ' . $url);
             exit;
         }
@@ -389,6 +393,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotCommandLine()
     {
         if (self::isCommandLine() === false) {
+            $url = (self::isWebView() === false) ? '/json' : $url;
             header('Location: /');
             exit;
         }
@@ -398,6 +403,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotInternal($url='/')
     {
         if (self::isAPI() === true || (self::isAJAX() === true && self::isInternalAJAX() === false)) {
+            $url = (self::isWebView() === false) ? '/json' : $url;
             header('Location: ' . $url);
             exit;
         }
@@ -407,16 +413,17 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotInternalAJAX($url='/')
     {
         if (self::isAPI() === true || self::isWebView() === true || (self::isAJAX() === true && self::isInternalAJAX() === false)) {
+            $url = (self::isWebView() === false) ? '/json' : $url;
             header('Location: ' . $url);
             exit;
         }
     }
 
     // If webview, redirect away
-    protected function redirectIfWebView()
+    protected function redirectIfWebView($url='/')
     {
         if (self::isWebView() === true) {
-            header('Location: /');
+            header('Location: ' . $url);
             exit;
         }
     }
