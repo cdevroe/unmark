@@ -217,7 +217,7 @@ class Plain_Model extends CI_Model
                 return self::stripSlashes($this->{$method}($where));
             }
             else {
-                return formatErrors(601);
+                return formatErrors(500);
             }
         }
 

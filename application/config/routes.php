@@ -94,9 +94,13 @@ $route['changelog']              = 'singletons/changelog';
 $route['terms']                  = 'singletons/terms';
 
 // internal ajax tools
-$route['/tools/forgotPassword']  = 'tools/forgotPassword'; // Generate forgot password token
-$route['/tools/verifyToken']     = 'tools/verifyToken'; // Verify password reset token
-$route['/tools/resetPassword']   = 'tools/resetPassword'; // Reset password for given token
+$route['tools/forgotPassword']  = 'tools/forgotPassword'; // Generate forgot password token
+$route['tools/verifyToken']     = 'tools/verifyToken'; // Verify password reset token
+$route['tools/resetPassword']   = 'tools/resetPassword'; // Reset password for given token
+
+// json only routes
+$route['json/auth/error']       = 'json/authError';
+$route['json/.*?']              = 'json/index';
 
 
 /* End of file routes.php */

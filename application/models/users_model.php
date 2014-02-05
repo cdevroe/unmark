@@ -63,7 +63,7 @@ class Users_model extends Plain_Model
                 return $this->read($user_id);
             }
             else {
-                return $this->formatErrors(601);
+                return $this->formatErrors(500);
             }
         }
 

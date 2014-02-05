@@ -74,6 +74,9 @@ function formatErrors($errors)
         $error_codes    = $CI->config->item('error_codes');
         $errno          = (array_key_exists($errors, $error_codes)) ? $errors : 0;
         $message        = (! empty($errno)) ? $error_codes[$errno] : 'Unknown Error';
+        if ($errors >= 400 & $errors < 600) {
+            http_response_code($errors);
+        }
         $errors         = array($errno => $message);
     }
     return $errors;

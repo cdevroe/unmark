@@ -56,7 +56,7 @@ class Marks_model extends Plain_Model
             return $mark;
         }
 
-        return $this->formatErrors($valid);
+        return formatErrors($valid);
     }
 
 }
