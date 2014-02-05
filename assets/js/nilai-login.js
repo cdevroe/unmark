@@ -24,7 +24,7 @@
         function login_success() {
             $('.nilai-spinner').fadeOut(400, function () {
                 $('.nilai-success').fadeIn(400, function () {
-                    window.location.href = "/marks";
+                    setTimeout(function(){ window.location.href = "/marks" }, 800);
                 });
             });   
         }
