@@ -124,6 +124,7 @@ if (nilai === undefined) { var nilai = {}; }
         nilai.ajax('/mark/archive/'+id, 'post', '', function(res) {
             if(res.mark.archived_on !== null) {
                 $('#mark-'+id).fadeOut();
+                nilai.sidebar_collapse();
             } else {
                 alert('Sorry, We could not archive this mark at this time.');
             }
@@ -138,6 +139,7 @@ if (nilai === undefined) { var nilai = {}; }
         nilai.ajax('/mark/restore/'+id, 'post', '', function(res) {
             if(res.mark.archived_on === null) {
                 $('#mark-'+id).fadeOut();
+                nilai.sidebar_collapse();
             } else {
                 alert('Sorry, We could not restore this mark at this time.');
             }
