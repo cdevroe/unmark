@@ -113,7 +113,7 @@ class Tools extends Plain_Controller
                       $this->email->initialize();
                       $this->data['success'] = $this->email->updatePassword($user->email);
                   } else {
-                      $this->data['errors'] = formatErrors(601);
+                      $this->data['errors'] = formatErrors(500);
                   }
             }
         } else{

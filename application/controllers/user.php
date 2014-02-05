@@ -26,7 +26,7 @@ class User extends Plain_Controller
     // Redirect any invalid traffic to homepage
     public function index()
     {
-        $this->data['errors'] = formatErrors(603);
+        $this->data['errors'] = formatErrors(404);
         $this->renderJSON();
     }
 

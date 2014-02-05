@@ -27,11 +27,24 @@ class Marks extends Plain_Controller
         $view      = null;
         $url       = (isset($this->db_clean->url)) ? $this->db_clean->url : null;
         $title     = (isset($this->db_clean->title)) ? $this->db_clean->title : null;
-        $user_mark = parent::addMark(array('url' => $url, 'title' => $title));
+        $options   = array('url' => $url, 'title' => $title);
+
+        // If label id was passed, use it.
+        if (isset($this->clean->label_id) && is_numeric($this->clean->label_id)) {
+            $options['label_id'] = $this->clean->label_id;
+        }
+
+        // If notes are present, use them
+        if (isset($this->db_clean->notes) && ! empty($this->db_clean->notes)) {
+            $options['notes'] = $this->db_clean->notes;
+        }
+
+        // Add mark
+        $user_mark = parent::addMark($options);
 
         // Set some info
         if (! isset($user_mark->mark_id)) {
-            $this->data['error'] = $user_mark;
+            $this->data['errors'] = $user_mark;
             $view = 'marks/add';
         }
         else {
@@ -95,7 +108,7 @@ class Marks extends Plain_Controller
         else {
             $mark = $this->user_marks->delete($where);
             if (! isset($mark->active)) {
-                $this->data['errors'] = formatErrors(601);
+                $this->data['errors'] = formatErrors(500);
             }
             elseif ($mark->active != '0') {
                 $this->data['errors'] = formatErrors(7);
@@ -145,36 +158,7 @@ class Marks extends Plain_Controller
             // Then create association
             // If notes are present set them
             if (isset($tags)) {
-                // Update users_to_marks record
-                $this->load->model('tags_model', 'tag');
-                $this->load->model('user_marks_to_tags_model', 'mark_to_tag');
-
-                $tag_ids = array();
-                foreach ($tags as $k => $tag) {
-                    $tag_name  = trim($tag);
-                    $slug      = generateSlug($tag);
-
-                    if (! empty($slug)) {
-                        $tag = $this->tag->read("slug = '" . $slug . "'", 1, 1, 'tag_id');
-                        if (! isset($tag->tag_id)) {
-                            $tag = $this->tag->create(array('name' => $tag_name, 'slug' => $slug));
-                        }
-
-                        // Add tag to mark
-                        if (isset($tag->tag_id)) {
-                            $res = $this->mark_to_tag->create(array('users_to_mark_id' => $mark_id, 'tag_id' => $tag->tag_id, 'user_id' => $this->user_id));
-                        }
-
-                        // Save all tag ids
-                        if (isset($res->tag_id)) {
-                            array_push($tag_ids, $res->tag_id);
-                        }
-                    }
-                }
-
-                // Delete old tags
-                $delete_where = (! empty($tag_ids)) ? " AND tag_id <> '" . implode("' AND tag_id <> '", $tag_ids) . "'" : '';
-                $delete       = $this->mark_to_tag->delete("users_to_mark_id = '" . $mark_id . "' AND user_id = '" . $this->user_id . "'" . $delete_where);
+                parent::addTags($tags, $mark_id);
             }
 
 
@@ -234,7 +218,7 @@ class Marks extends Plain_Controller
             self::$method();
         }
         else {
-            $this->data['errors'] = formatErrors(603);
+            $this->data['errors'] = formatErrors(404);
         }
 
         parent::renderJSON();
@@ -580,7 +564,7 @@ class Marks extends Plain_Controller
             parent::renderJSON();
         }
         else {
-            $this->data['errors'] = formatErrors(603);
+            $this->data['errors'] = formatErrors(404);
         }
 
         parent::renderJSON();
