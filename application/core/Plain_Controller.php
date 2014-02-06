@@ -163,6 +163,21 @@ class Plain_Controller extends CI_Controller
         }
     }
 
+    // Check if a mark exists for a user
+    // If not return false, if so return mark
+    protected function checkMark($url)
+    {
+        $url_key = md5($url);
+        $this->load->model('users_to_marks_model', 'user_marks');
+        $mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.mark_id = '" . $mark->mark_id . "'", 1, 1, null, array('url_key' => $url_key));
+
+        if (! isset($mark->mark_id)) {
+            return false;
+        }
+
+        return $mark;
+    }
+
     // Clean any variables coming in from POST or GET 3 ways
     // We have the originals, clean and db_clean versions accessible
     protected function clean()
