@@ -18,7 +18,7 @@ class Json extends Plain_Controller
     // Check if user is logged in and using chrome extension
     public function chromePing()
     {
-        if ($this->logged_in !== true || ! isset($_SERVER['HTTP_X_CHROME_EXTENSION'])) {
+        if ($this->logged_in !== true || parent::isChromeExtension() === false) {
             $this->data['errors'] = formatErrors(403);
         }
         else {
