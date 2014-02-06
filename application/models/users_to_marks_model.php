@@ -185,6 +185,7 @@ class Users_To_Marks_model extends Plain_Model
         $sort       = (! empty($sort) && $is_search === true) ? ' ORDER BY ' . $this->sort : $sort;
         $sort       = (stristr($sort, 'RAND()')) ? ' ORDER BY ' . $this->sort : $sort;
         $tag_id     = (isset($options['tag_id']) && ! empty($options['tag_id'])) ? " INNER JOIN user_marks_to_tags UMTT ON users_to_marks.users_to_mark_id = UMTT.users_to_mark_id AND UMTT.tag_id = '" . $options['tag_id'] . "'" : null;
+        $url_key    = (isset($options['url_key']) && ! empty($options['url_key'])) ? " INNER JOIN marks M1 ON users_to_marks.mark_id = M1.mark_id AND M1.url_key = '" . $options['url_key'] . "'" : null;
 
         // Default fields
         $fields = "
@@ -207,7 +208,7 @@ class Users_To_Marks_model extends Plain_Model
         $group_by = " GROUP BY users_to_marks.users_to_mark_id";
 
         // Default Query
-        $query = "SELECT " . $fields . " FROM users_to_marks" . $tag_id . " INNER JOIN marks ON users_to_marks.mark_id = marks.mark_id " . $joins . " WHERE " . $where . $group_by;
+        $query = "SELECT " . $fields . " FROM users_to_marks" . $tag_id . $url_key . " INNER JOIN marks ON users_to_marks.mark_id = marks.mark_id " . $joins . " WHERE " . $where . $group_by;
 
         // Order By
         $order_by = " GROUP BY users_to_marks.users_to_mark_id";

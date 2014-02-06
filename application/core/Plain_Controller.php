@@ -67,7 +67,7 @@ class Plain_Controller extends CI_Controller
         }
         else {
             $this->load->model('users_to_marks_model', 'user_marks');
-            $user_mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.mark_id = '" . $mark->mark_id . "'");
+            $user_mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.mark_id = '" . $mark->mark_id . "' AND users_to_marks.active = '1'");
 
             // Add
             if (! isset($user_mark->mark_id)) {
@@ -163,6 +163,21 @@ class Plain_Controller extends CI_Controller
         }
     }
 
+    // Check if a mark exists for a user
+    // If not return false, if so return mark
+    protected function checkMark($url)
+    {
+        $url_key = md5($url);
+        $this->load->model('users_to_marks_model', 'user_marks');
+        $mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.active = '1'", 1, 1, null, array('url_key' => $url_key));
+
+        if (! isset($mark->mark_id)) {
+            return false;
+        }
+
+        return $mark;
+    }
+
     // Clean any variables coming in from POST or GET 3 ways
     // We have the originals, clean and db_clean versions accessible
     protected function clean()
@@ -191,8 +206,15 @@ class Plain_Controller extends CI_Controller
         ksort($this->data);
 
         // If api, return JSON
-        if (self::isAPI() === true || self::isAJAX() === true) {
+        if ((self::isAPI() === true || self::isAJAX() === true) && self::isPJAX() === false) {
             $this->renderJSON();
+        }
+
+        // If PJAX call, render view
+        elseif (self::isPJAX() === true) {
+            $this->data['no_header'] = true;
+            $this->data['no_footer'] = true;
+            $this->view($view);
         }
 
         // If user to be redirected
@@ -218,7 +240,7 @@ class Plain_Controller extends CI_Controller
         // IF API call, CSRF is not used
         // Set to true
         // All calls will require a user_token to validate instead
-        if (self::isAPI() === true || self::isCommandLine() === true) {
+        if (self::isAPI() === true || self::isCommandLine() === true || self::isChromeExtension() === true) {
             $this->csrf_valid = true;
         }
         else {
@@ -303,12 +325,17 @@ class Plain_Controller extends CI_Controller
 
     protected function isChromeExtension()
     {
-        return (isset($_SERVER['X-Chrome-Extension']) && strtolower($_SERVER['X-Chrome-Extension']) == 'nilai') ? true : false;
+        return (isset($_SERVER['HTTP_X_CHROME_EXTENSION'])) ? true : false;
     }
 
     protected function isInternalAJAX()
     {
         return (self::isAJAX() === true && self::isSameHost() === true) ? true : false;
+    }
+
+    protected function isPJAX()
+    {
+        return (isset($_SERVER['HTTP_X_PJAX'])) ? true : false;
     }
 
     protected function isSameHost()
@@ -321,7 +348,7 @@ class Plain_Controller extends CI_Controller
 
     protected function isWebView()
     {
-        return (self::isAJAX() === false && self::isAPI() === false) ? true : false;
+        return (self::isAJAX() === false && self::isAPI() === false && self::isPJAX() === false) ? true : false;
     }
 
     // If logged if invalid CSRF token is not valid
