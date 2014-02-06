@@ -169,7 +169,7 @@ class Plain_Controller extends CI_Controller
     {
         $url_key = md5($url);
         $this->load->model('users_to_marks_model', 'user_marks');
-        $mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "'", 1, 1, null, array('url_key' => $url_key));
+        $mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.active = '1'", 1, 1, null, array('url_key' => $url_key));
 
         if (! isset($mark->mark_id)) {
             return false;
