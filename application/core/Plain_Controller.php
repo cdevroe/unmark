@@ -67,7 +67,7 @@ class Plain_Controller extends CI_Controller
         }
         else {
             $this->load->model('users_to_marks_model', 'user_marks');
-            $user_mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.mark_id = '" . $mark->mark_id . "'");
+            $user_mark = $this->user_marks->readComplete("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.mark_id = '" . $mark->mark_id . "' AND users_to_marks.active = '1'");
 
             // Add
             if (! isset($user_mark->mark_id)) {
