@@ -86,6 +86,29 @@ class Marks extends Plain_Controller
         $this->figureView('marks/archive');
     }
 
+    public function check()
+    {
+        // Only allow ajax and API
+        parent::redirectIfWebView();
+
+        // Set default success
+        $this->data['success'] = false;
+
+        // If url is found, check it
+        // else skip
+        if (isset($this->clean->url) && ! empty($this->clean->url)) {
+            $mark = parent::checkMark($this->clean->url);
+
+            if ($mark !== false) {
+                $this->data['success'] = true;
+                $this->data['mark']    = $mark;
+            }
+        }
+
+        // Render JSON
+        $this->renderJSON();
+    }
+
     public function delete($mark_id=0)
     {
          parent::redirectIfWebView();
