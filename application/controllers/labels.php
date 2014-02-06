@@ -257,11 +257,11 @@ class Labels extends Plain_Controller
         $page = (is_numeric($v2) || $v2 > 0) ? $v2 : $page;
 
         // Set the where
-        $where = null;
+        $where = (! isset($this->db_clean->active) || $this->db_clean->active != 0) ? "labels.active = '1'" : "labels.active = '0'";
 
         // If $type != all, set a where
         if ($type != 'all') {
-            $where = ($type == 'normal') ? "labels.smart_label_id IS NULL " : "labels.smart_label_id IS NOT NULL ";
+            $where .= ($type == 'normal') ? " AND labels.smart_label_id IS NULL " : " AND labels.smart_label_id IS NOT NULL ";
         }
 
         // Set user where
@@ -269,6 +269,11 @@ class Labels extends Plain_Controller
         $user_where = "labels.user_id='". $this->user_id . "'";
         if (parent::isAdmin() === true) {
             $user_where .= " OR labels.user_id IS NULL";
+        }
+
+        // If requesting normal, give them
+        if ($type == 'normal') {
+            $user_where = "labels.user_id IS NULL";
         }
 
         // Set final where
