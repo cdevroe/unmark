@@ -206,8 +206,15 @@ class Plain_Controller extends CI_Controller
         ksort($this->data);
 
         // If api, return JSON
-        if (self::isAPI() === true || self::isAJAX() === true) {
+        if ((self::isAPI() === true || self::isAJAX() === true) && self::isPJAX() === false) {
             $this->renderJSON();
+        }
+
+        // If PJAX call, render view
+        elseif (self::isPJAX() === true) {
+            $this->data['no_header'] = true;
+            $this->data['no_footer'] = true;
+            $this->view($view);
         }
 
         // If user to be redirected
@@ -332,6 +339,11 @@ class Plain_Controller extends CI_Controller
         return (self::isAJAX() === true && self::isSameHost() === true) ? true : false;
     }
 
+    protected function isPJAX()
+    {
+        return (isset($_SERVER['HTTP_X_PJAX'])) ? true : false;
+    }
+
     protected function isSameHost()
     {
         // Going to execute this better, need to think about it
@@ -342,7 +354,7 @@ class Plain_Controller extends CI_Controller
 
     protected function isWebView()
     {
-        return (self::isAJAX() === false && self::isAPI() === false) ? true : false;
+        return (self::isAJAX() === false && self::isAPI() === false && self::isPJAX() === false) ? true : false;
     }
 
     // If logged if invalid CSRF token is not valid
