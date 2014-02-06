@@ -54,8 +54,8 @@ if (nilai === undefined) { var nilai = {}; }
     };
 
     // Rebuild the dom after pjax call
-    nilai.updateDom = function (marks) {
-        console.log('updating the dom');
+    nilai.updateDom = function () {
+        this.update_mark_action_btns();
     };
 
     // Build Mark JSON
@@ -317,6 +317,18 @@ if (nilai === undefined) { var nilai = {}; }
         });
     };
 
+    // Watch Height on each mark action button
+    nilai.update_mark_action_btns = function () {
+        $('.mark').each(function () {
+            var height  = $(this).outerHeight(true),
+                half    = height / 2;
+            $(this).find('.mark-actions a').each(function () {
+                $(this).height(half);
+            });
+        });
+    };
+
+
     // Main Init Script
     nilai.init = function () {
 
@@ -332,13 +344,13 @@ if (nilai === undefined) { var nilai = {}; }
         this.special_chars     = { '\\+': '&#43;' };
 
         // Basic Page Setup
-        nilai.main_panel.width(nilai.main_panel_width);
-        nilai.main_content.height(nilai.body_height);
-        nilai.sidebar_content.height(nilai.body_height);
+        this.main_panel.width(nilai.main_panel_width);
+        this.main_content.height(nilai.body_height);
+        this.sidebar_content.height(nilai.body_height);
         $('.nav-panel').height(nilai.body_height);
         $('body').height(nilai.body_height);
 
-        // Hide then quickly fade in Body
+        // Animate the body fading in
         $('body').animate({opacity: 1}, 1000);
 
         // Vertical Tabs
@@ -347,12 +359,16 @@ if (nilai === undefined) { var nilai = {}; }
             nilai.interact_nav(e, $(this));
         });
 
+        // Update Mark Btns
+        nilai.update_mark_action_btns();
+
         // Hover Action on Marks List
         // Shows the Archive and More Buttons
-        $(".mark").hover(function () {
+        $(document).on('mouseenter', '.mark', function () {
             $(this).addClass('hide-dot');
             $(this).find('.mark-actions').show();
-        }, function () {
+        });
+        $(document).on('mouseleave', '.mark', function () {
             $(this).removeClass('hide-dot');
             $(this).find('.mark-actions').hide();
         });
@@ -390,13 +406,12 @@ if (nilai === undefined) { var nilai = {}; }
             }
         });
 
-        // Watch Height on each mark action button
-        $('.mark').each(function () {
-            var height  = $(this).outerHeight(true),
-                half    = height / 2;
-            $(this).find('.mark-actions a').each(function () {
-                $(this).height(half);
-            });
+        // Watch for internal link click and run PJAX
+        // To Do, remove outside links from elem array
+        $(document).pjax("a[href*='/']", nilai.main_content);
+        $(document).on('pjax:complete', function() {
+            nilai.main_content.find('.marks').hide().fadeIn();
+            nilai.updateDom();
         });
 
     };
