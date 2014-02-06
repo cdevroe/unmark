@@ -13,6 +13,7 @@
 <script src="/assets/js/plugins/nilai-graph.js"></script>
 <script src="/assets/js/templates/nilai-sidebar.js"></script>
 <script src="/assets/js/nilai.js"></script>
+<script src="/assets/js/nilai-actions.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() { 

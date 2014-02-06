@@ -48,6 +48,7 @@
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 <script src="/assets/js/nilai.js"></script>
+<script src="/assets/js/nilai-actions.js"></script>
 <script src="/assets/js/nilai-add.js"></script>
 
 </body>
