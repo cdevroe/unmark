@@ -239,7 +239,7 @@ class Plain_Controller extends CI_Controller
         // IF API call, CSRF is not used
         // Set to true
         // All calls will require a user_token to validate instead
-        if (self::isAPI() === true || self::isCommandLine() === true) {
+        if (self::isAPI() === true || self::isCommandLine() === true || self::isChromeExtension() === true) {
             $this->csrf_valid = true;
         }
         else {
@@ -324,7 +324,7 @@ class Plain_Controller extends CI_Controller
 
     protected function isChromeExtension()
     {
-        return (isset($_SERVER['X-Chrome-Extension']) && strtolower($_SERVER['X-Chrome-Extension']) == 'nilai') ? true : false;
+        return (isset($_SERVER['HTTP_X_CHROME_EXTENSION']) && strtolower($_SERVER['HTTP_X_CHROME_EXTENSION']) == 'nilai') ? true : false;
     }
 
     protected function isInternalAJAX()
