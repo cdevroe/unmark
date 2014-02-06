@@ -324,7 +324,7 @@ class Plain_Controller extends CI_Controller
 
     protected function isChromeExtension()
     {
-        return (isset($_SERVER['HTTP_X_CHROME_EXTENSION']) && strtolower($_SERVER['HTTP_X_CHROME_EXTENSION']) == 'nilai') ? true : false;
+        return (isset($_SERVER['HTTP_X_CHROME_EXTENSION'])) ? true : false;
     }
 
     protected function isInternalAJAX()
