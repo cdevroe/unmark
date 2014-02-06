@@ -32,7 +32,7 @@ if (nilai === undefined) { var nilai = {}; }
         $('#mark-' + mark_id).addClass('view-active');
 
         // Compile and Render the template
-        template = Hogan.compile(nilai.sidebar_template);
+        template = Hogan.compile(nilai.template.sidebar);
         output = template.render(mark_obj);
 
         nilai.sidebar_mark_info.fadeOut(400, function () {
@@ -51,6 +51,11 @@ if (nilai === undefined) { var nilai = {}; }
             }
         });
 
+    };
+
+    // Rebuild the dom after pjax call
+    nilai.updateDom = function (marks) {
+        console.log('updating the dom');
     };
 
     // Build Mark JSON

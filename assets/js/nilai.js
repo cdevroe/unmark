@@ -99,4 +99,16 @@ if (nilai === undefined) { var nilai = {}; }
         return (v === false || v === '' || v === null || v === 0 || v === undefined || l < 1);
     };
 
+    // Default Pushstate using PJAX
+    $(document).ready(function () {
+        
+        var container = $('.main-content');
+
+        $(document).pjax("a[href*='/']", container);
+        $(document).on('pjax:complete', function() {
+            nilai.updateDom(container.text());
+        });
+
+    });
+
 }(window.jQuery));

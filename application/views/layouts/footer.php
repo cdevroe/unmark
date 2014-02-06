@@ -10,8 +10,9 @@
 
 <script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
 <script src="/assets/js/plugins/hogan.js"></script>
+<script src="/assets/js/plugins/pjax.js"></script>
 <script src="/assets/js/plugins/nilai-graph.js"></script>
-<script src="/assets/js/templates/nilai-sidebar.js"></script>
+<script src="/assets/js/templates/nilai-templates.js"></script>
 <script src="/assets/js/nilai.js"></script>
 <script src="/assets/js/nilai-actions.js"></script>
 
