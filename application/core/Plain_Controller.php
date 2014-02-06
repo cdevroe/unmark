@@ -205,9 +205,9 @@ class Plain_Controller extends CI_Controller
         // Sort main data keys from A-Z
         ksort($this->data);
 
-        // If api, return JSON
-        if ((self::isAPI() === true || self::isAJAX() === true) && self::isPJAX() === false) {
-            $this->renderJSON();
+        if (! empty($redirect)) {
+            header('Location: ' . $redirect);
+            exit;
         }
 
         // If PJAX call, render view
@@ -217,11 +217,9 @@ class Plain_Controller extends CI_Controller
             $this->view($view);
         }
 
-        // If user to be redirected
-        // do it
-        elseif (! empty($redirect)) {
-            header('Location: ' . $redirect);
-            exit;
+        // If api, return JSON
+        elseif (self::isAPI() === true || self::isAJAX() === true) {
+            $this->renderJSON();
         }
 
         // Else return array for view
