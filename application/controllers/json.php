@@ -8,17 +8,26 @@ class Json extends Plain_Controller
         parent::__construct();
     }
 
-    // Catch all
-    public function index()
-    {
-        $this->data['errors'] = formatErrors(404);
-        $this->renderJSON();
-    }
-
     // Not logged in for api or ajax
     public function authError()
     {
         $this->data['errors'] = formatErrors(403);
+        $this->renderJSON();
+    }
+
+    // Check if user is logged in and using chrome extension
+    public function chromePing()
+    {
+        if ($this->logged_in !== true || ! isset($_SERVER['HTTP_X_CHROME_EXTENSION'])) {
+            $this->data['errors'] = formatErrors(403);
+            $this->renderJSON();
+        }
+    }
+
+    // Catch all
+    public function index()
+    {
+        $this->data['errors'] = formatErrors(404);
         $this->renderJSON();
     }
 

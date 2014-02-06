@@ -100,7 +100,11 @@ $route['tools/resetPassword']   = 'tools/resetPassword'; // Reset password for g
 
 // json only routes
 $route['json/auth/error']       = 'json/authError';
-$route['json/.*?']              = 'json/index';
+$route['json.*?']               = 'json/index';
+
+// Chrome extension routes
+$route['chrome/ping']           = 'json/chromePing';
+$route['chrome.*?']             = 'json/index';
 
 
 /* End of file routes.php */
