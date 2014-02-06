@@ -20,8 +20,11 @@ class Json extends Plain_Controller
     {
         if ($this->logged_in !== true || ! isset($_SERVER['HTTP_X_CHROME_EXTENSION'])) {
             $this->data['errors'] = formatErrors(403);
-            $this->renderJSON();
         }
+        else {
+            $this->data['success'] = true;
+        }
+        $this->renderJSON();
     }
 
     // Catch all
