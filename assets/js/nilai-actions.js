@@ -171,14 +171,14 @@ if (nilai === undefined) { var nilai = {}; }
         // If all links pannel - allow click default
         if (panel_to_show.match(/\//)) { return true; }
 
+        // Otherwise prevent click default
+        e.preventDefault();
+
         // If tap/click on open menu, hide menu
         if (elem_parent.hasClass('active-menu')) {
             $('.menu-item').removeClass('active-menu');
             return returnMenu();
         }
-
-        // Otherwise prevent click default
-        e.preventDefault();
 
         // Add / Remove Class for current navigation
         $('.menu-item').removeClass('active-menu');
