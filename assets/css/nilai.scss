@@ -696,6 +696,8 @@ ul.timeline {
             display: block;
             padding: 0 58px 40px 0;
             margin-bottom: 20px;
+            position: relative;
+            z-index: 900;
             span {
                 font-style: italic;
                 display: block;
