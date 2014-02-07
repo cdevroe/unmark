@@ -238,7 +238,8 @@ if (nilai === undefined) { var nilai = {}; }
         labels_list.find('a').unbind();
         labels_list.slideDown();
 
-        labels_list.find('a').on('click', function () {
+        labels_list.find('a').on('click', function (e) {
+            e.preventDefault();
             mark = labels_list.data('id');
             label_id = $(this).attr('rel');
             label_name = $(this).text();

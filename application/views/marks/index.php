@@ -28,12 +28,12 @@
             break;
         default:
             $heading['icon']    =   'barley-icon-time';
-            $heading['title']    =   $total . $link_plural;     
+            $heading['title']    =   $total . $link_plural;
     }
 ?>
 <h2 class="marks-heading"><i class="<?php print $heading['icon']; ?>"></i> <?php print $heading['title']; ?></h2>
 <?php endif; ?>
-<div class="marks">
+<div class="marks" data-lookup="<?php print $active_label['label_name']; ?>">
     <div class="marks_list">
         <?php foreach ($marks as $mark) :
 
