@@ -75,8 +75,6 @@ class Marks extends Plain_Controller
             $and  = (is_numeric($mark_id)) ? "users_to_marks.users_to_mark_id = '" . $mark_id . "'" : "users_to_marks.created_on < '" . date('Y-m-d', strtotime('364 days ago')) . "'";
             $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND " . $and, array('archived_on' => date('Y-m-d H:i:s')));
 
-            print "users_to_marks.user_id = '" . $this->user_id . "' AND " . $and . "<BR>";
-
             if ($mark === false) {
                 $this->data['errors'] = formatErrors(1);
                 if ($mark_id == 'old') {
