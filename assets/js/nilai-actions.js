@@ -118,6 +118,7 @@ if (nilai === undefined) { var nilai = {}; }
             if(res.mark.archived_on !== null) {
                 $('#mark-'+id).fadeOut();
                 nilai.sidebar_collapse();
+                nilai.update_label_count();
             } else {
                 alert('Sorry, We could not archive this mark at this time.');
             }
