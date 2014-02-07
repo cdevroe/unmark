@@ -260,7 +260,7 @@ if (nilai === undefined) { var nilai = {}; }
     // Method for adding a label
     nilai.marks_addLabel = function (btn) {
         
-        var mark, label_id, query, label_name,
+        var mark, label_id, query, label_name, body_class, pattern,
             labels_list = btn.next(),
             label_parent = btn.parent();
 
@@ -274,6 +274,8 @@ if (nilai === undefined) { var nilai = {}; }
             mark = labels_list.data('id');
             label_id = $(this).attr('rel');
             label_name = $(this).text();
+            body_class = $('body').attr('class');
+            pattern = new RegExp('label');
             query = 'label_id=' + nilai.urlEncode(label_id);
             nilai.ajax('/mark/edit/'+mark, 'post', query, function(res) {
                 labels_list.slideUp();
@@ -285,7 +287,7 @@ if (nilai === undefined) { var nilai = {}; }
                     nilai.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
                     nilai.get_mark_info(mark);
                     nilai.update_label_count(); // Update the count under labels menu
-                    if ($('body').attr('class') !== 'label-'+label_id) {
+                    if ((pattern.test(body_class))  && (body_class !== 'label-'+label_id)) { // If on current label and label change, remove mark from label
                         $('#mark-'+mark).fadeOut();
                         nilai.sidebar_collapse();
                     }
