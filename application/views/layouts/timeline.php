@@ -1,7 +1,7 @@
 <div class="timeline_wrapper">
     <ul class="timeline">
         <li class="timeline-dot">
-            <a href="/">Now / All</a>
+            <a href="/marks">Now / All</a>
         </li>
         <li class="timeline-dot">
             <a href="/marks/yesterday">Yesterday<span><?php print $stats['marks']['yesterday']; ?> links</span></a>

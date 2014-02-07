@@ -104,15 +104,16 @@ body {
     background-color: $color_dark;
     min-height: 100%;
     .menu-item {
-        width: 65px;
         height: inherit;
         text-align: center;
-        padding: 8px 0 15px 0;
         border-bottom:1px solid $color_lightest;
         cursor: pointer;
         a {
             color: $color_white;
             text-decoration:none;
+            padding: 8px 0 15px 0;
+            width:65px;
+            display: block;
             i {
                 font-size: 27px;
             }
@@ -203,6 +204,8 @@ ul.label-list {
             padding: 0;
             font-size: 12px;
             padding: 0 50px 45px 0;
+            position: relative;
+            z-index: 900;
         }
         span {
             display: block;
