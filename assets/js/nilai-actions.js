@@ -65,6 +65,9 @@ if (nilai === undefined) { var nilai = {}; }
         // Bind the new mark action buttons
         this.update_mark_action_btns();
 
+        // Update Body Height ... just in case
+        nilai.page_setup($('body').height());
+
     };
 
     // Updates the label count
@@ -154,10 +157,25 @@ if (nilai === undefined) { var nilai = {}; }
             panel_name = panel_to_show.replace(/^#/, ''),
             panel_width = parseInt(elem_ckd.attr('rel')),
             panel_animate = panel_width + 65,
+            elem_parent = elem_ckd.parent(),
             panel_position = parseInt(nilai.nav_panel.css('left'));
+
+        function returnMenu() {
+            nilai.nav_panel.animate({ left: -285 }, { duration: 200, queue: false });
+            nilai.main_panel.animate({ left: 65 }, { duration: 200, queue: false });
+            $('.nav-panel').hide();
+            $('.navigation-pane-links').show();          
+        }
+
 
         // If all links pannel - allow click default
         if (panel_to_show.match(/\//)) { return true; }
+
+        // If tap/click on open menu, hide menu
+        if (elem_parent.hasClass('active-menu')) {
+            $('.menu-item').removeClass('active-menu');
+            return returnMenu();
+        }
 
         // Otherwise prevent click default
         e.preventDefault();
@@ -169,11 +187,7 @@ if (nilai === undefined) { var nilai = {}; }
         // Check for close action on and open panel
         if (panel_to_show === "#panel-menu") {
             if (panel_position > 0) {
-                nilai.nav_panel.animate({ left: -285 }, { duration: 200, queue: false });
-                nilai.main_panel.animate({ left: 65 }, { duration: 200, queue: false });
-                $('.nav-panel').hide();
-                $('.navigation-pane-links').show();
-                return;
+                return returnMenu();
             }
         }
 
@@ -368,6 +382,14 @@ if (nilai === undefined) { var nilai = {}; }
         });
     };
 
+    // Page Set Up
+    nilai.page_setup = function (height) {
+        nilai.main_content.height(height);
+        nilai.sidebar_content.height(height);
+        $('.nav-panel').height(height);
+        $('body').height(height);
+    };
+
 
     // Main Init Script
     nilai.init = function () {
@@ -385,10 +407,7 @@ if (nilai === undefined) { var nilai = {}; }
 
         // Basic Page Setup
         this.main_panel.width(nilai.main_panel_width);
-        this.main_content.height(nilai.body_height);
-        this.sidebar_content.height(nilai.body_height);
-        $('.nav-panel').height(nilai.body_height);
-        $('body').height(nilai.body_height);
+        nilai.page_setup(nilai.body_height);
 
         // Animate the body fading in
         $('body').animate({opacity: 1}, 1000);
@@ -449,6 +468,9 @@ if (nilai === undefined) { var nilai = {}; }
         // Watch for internal link click and run PJAX
         // To Do, remove outside links from elem array
         $(document).pjax("a[href*='/']", nilai.main_content);
+        $(document).on('submit', '#search-form', function(e) {
+            $.pjax.submit(e, nilai.main_content);
+        });
         $(document).on('pjax:complete', function() {
             nilai.main_content.find('.marks').hide().fadeIn();
             nilai.updateDom();

@@ -7,7 +7,7 @@
 
     $link_plural = ($total > 1) ? " links " : " link ";
 
-    if (isset($_POST['q'])) { $search_term = $_POST['q']; }
+    if (isset($_GET['q'])) { $search_term = $_GET['q']; }
 
     switch ($lookup_type) {
         case 'label':
