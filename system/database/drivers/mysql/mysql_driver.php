@@ -79,9 +79,9 @@ class CI_DB_mysql_driver extends CI_DB {
                 $this->timezone = date('P');		
             }
             // Set timezone
-            mysqli_query($result, "SET time_zone = '".$this->timezone."'");
+            mysql_query("SET time_zone = '".$this->timezone."'", $result);
             
-            $res = mysqli_query($result, 'SELECT @@global.time_zone, @@session.time_zone;');
+            $res = mysql_query('SELECT @@global.time_zone, @@session.time_zone;', $result);
 		}
 		
 		return $result;
@@ -111,9 +111,9 @@ class CI_DB_mysql_driver extends CI_DB {
                 $this->timezone = date('P');		
             }
             // Set timezone
-            mysqli_query($result, "SET time_zone = '".$this->timezone."'");
+            mysql_query("SET time_zone = '".$this->timezone."'", $result);
             
-            $res = mysqli_query($result, 'SELECT @@global.time_zone, @@session.time_zone;');
+            $res = mysql_query('SELECT @@global.time_zone, @@session.time_zone;', $result);
 		}
 		
 	    return $result;
