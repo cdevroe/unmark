@@ -64,7 +64,7 @@ class Marks extends Plain_Controller
         parent::redirectIfWebView();
 
         // Figure correct way to handle if no mark id
-        if (empty($mark_id) || ! is_numeric($mark_id)) {
+        if (empty($mark_id) || (! is_numeric($mark_id) && $mark_id != 'old')) {
             header('Location: /');
             exit;
         }
@@ -72,13 +72,24 @@ class Marks extends Plain_Controller
         // Check for CSRF
         if ($this->csrf_valid === true) {
             // Update
-            $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", array('archived_on' => date('Y-m-d H:i:s')));
+            $and  = (is_numeric($mark_id)) ? "users_to_marks.users_to_mark_id = '" . $mark_id . "'" : "users_to_marks.created_on < '" . date('Y-m-d', strtotime('364 days ago')) . "'";
+            $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND " . $and, array('archived_on' => date('Y-m-d H:i:s')));
+
+            print "users_to_marks.user_id = '" . $this->user_id . "' AND " . $and . "<BR>";
 
             if ($mark === false) {
                 $this->data['errors'] = formatErrors(1);
+                if ($mark_id == 'old') {
+                    $this->data['archived'] = false;
+                }
             }
             else {
-                $this->data['mark'] = $mark;
+                if ($mark_id == 'old') {
+                    $this->data['archived'] = true;
+                }
+                else {
+                    $this->data['mark'] = $mark;
+                }
             }
         }
 
