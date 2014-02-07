@@ -1,5 +1,5 @@
 <?php
-class CIDatabaseSessionHandler implements SessionHandlerInterface {
+class CIDatabaseSessionHandler {
     
     private $CI;
     private $db;
