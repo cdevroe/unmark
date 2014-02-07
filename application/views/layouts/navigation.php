@@ -31,7 +31,7 @@
                 foreach ($labels as $label) : ?>
                     <li class="label-<?php print $label->label_id ?>">
                         <a href="/marks/label/<?php print $label->slug; ?>"><?php print $label->name; ?></a>
-                        <span><?php print $label->total_marks; ?> links</span>
+                        <span><?php print $label->total_active_marks; ?> links</span>
                     </li>
                 <?php endforeach; ?>
             </ul>

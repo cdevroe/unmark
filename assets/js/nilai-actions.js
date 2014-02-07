@@ -75,7 +75,7 @@ if (nilai === undefined) { var nilai = {}; }
         function updateLabelCount(res) {
             var i, labels = res.labels, count;
             for (i in labels) {
-                count = labels[i].total_marks;
+                count = labels[i].total_active_marks;
                 if (count === "1") {
                     count = count + " link";
                 } else {
@@ -284,8 +284,11 @@ if (nilai === undefined) { var nilai = {}; }
                     nilai.swapClass(label_parent, 'label-*', 'label-'+label_id);
                     nilai.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
                     nilai.get_mark_info(mark);
-                    // Update the count under labels menu
-                    nilai.update_label_count();
+                    nilai.update_label_count(); // Update the count under labels menu
+                    if ($('body').attr('class') !== 'label-'+label_id) {
+                        $('#mark-'+mark).fadeOut();
+                        nilai.sidebar_collapse();
+                    }
                 }
             });
         });
