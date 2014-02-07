@@ -59,8 +59,33 @@ if (nilai === undefined) { var nilai = {}; }
         var label_class = $('div.marks').data('label-class'),
             body = $('body');
 
+        // Change Body Class for Label Colors
         body.removeClass().addClass(label_class);
+
+        // Bind the new mark action buttons
         this.update_mark_action_btns();
+
+    };
+
+    // Updates the label count
+    nilai.update_label_count = function () {
+
+        var label_list = $('ul.label-list');
+
+        function updateLabelCount(res) {
+            var i, labels = res.labels, count;
+            for (i in labels) {
+                count = labels[i].total_marks;
+                if (count === "1") {
+                    count = count + " link";
+                } else {
+                    count = count + " links";
+                }
+                label_list.find('.label-'+labels[i].label_id + ' span').text(count);
+            }
+        }
+
+        nilai.getData('labels', updateLabelCount);
 
     };
 
@@ -259,6 +284,8 @@ if (nilai === undefined) { var nilai = {}; }
                     nilai.swapClass(label_parent, 'label-*', 'label-'+label_id);
                     nilai.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
                     nilai.get_mark_info(mark);
+                    // Update the count under labels menu
+                    nilai.update_label_count();
                 }
             });
         });
