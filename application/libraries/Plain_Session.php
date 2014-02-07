@@ -323,7 +323,16 @@ class Plain_Session extends CI_Session {
 	    {
 	        require_once(APPPATH.'/libraries/CIDatabaseSessionHandler.php');
 	        $dbSessionHandler = new CIDatabaseSessionHandler();
-	        session_set_save_handler($dbSessionHandler, true);
+	        
+	        session_set_save_handler(
+                array($dbSessionHandler, 'open'),
+                array($dbSessionHandler, 'close'),
+                array($dbSessionHandler, 'read'),
+                array($dbSessionHandler, 'write'),
+                array($dbSessionHandler, 'destroy'),
+                array($dbSessionHandler, 'gc')
+            );
+            register_shutdown_function('session_write_close');
 	    } else if($this->plain_sess_storage == 'memcached'){
 	        // Memcache session storage
 	        ini_set('session.save_handler', 'memcached');
