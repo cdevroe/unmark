@@ -16,7 +16,6 @@
 // ------------------------------------------------------------------------
 
 require_once(BASEPATH.'/libraries/Session.php');
-require_once(APPPATH.'/libraries/CIDatabaseSessionHandler.php');
 
 /**
  * Session Class
@@ -322,6 +321,7 @@ class Plain_Session extends CI_Session {
 	    // Are we using a database?  If so, load it
 	    if ($this->plain_sess_storage == 'database')
 	    {
+	        require_once(APPPATH.'/libraries/CIDatabaseSessionHandler.php');
 	        $dbSessionHandler = new CIDatabaseSessionHandler();
 	        session_set_save_handler($dbSessionHandler, true);
 	    } else if($this->plain_sess_storage == 'memcached'){
