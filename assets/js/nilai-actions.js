@@ -467,14 +467,16 @@ if (nilai === undefined) { var nilai = {}; }
 
         // Watch for internal link click and run PJAX
         // To Do, remove outside links from elem array
-        $(document).pjax("a[href*='/']", nilai.main_content);
-        $(document).on('submit', '#search-form', function(e) {
-            $.pjax.submit(e, nilai.main_content);
-        });
-        $(document).on('pjax:complete', function() {
-            nilai.main_content.find('.marks').hide().fadeIn();
-            nilai.updateDom();
-        });
+        if ( $('#nilai').length > 0 ) {
+            $(document).pjax("a[href*='/']", nilai.main_content);
+            $(document).on('submit', '#search-form', function(e) {
+                $.pjax.submit(e, nilai.main_content);
+            });
+            $(document).on('pjax:complete', function() {
+                nilai.main_content.find('.marks').hide().fadeIn();
+                nilai.updateDom();
+            });
+        }
 
     };
 
