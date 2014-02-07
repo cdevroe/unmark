@@ -3,6 +3,11 @@
 class Migration_Plain_sessions extends Plain_Migration
 {
 
+    public function __construct()
+    {
+      parent::__construct();
+    }
+
     public function up()
     {	// Create tables
         $this->db->query("CREATE TABLE IF NOT EXISTS  `plain_sessions` (
