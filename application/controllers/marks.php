@@ -256,7 +256,9 @@ class Marks extends Plain_Controller
         if ($this->data['labels'] !== false) {
             $this->load->model('labels_model', 'labels');
             foreach($this->data['labels'] as $k => $label) {
-                $this->data['labels'][$k]->total_marks = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "'");
+                $this->data['labels'][$k]->total_active_marks   = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "' AND archived_on IS NULL");
+                $this->data['labels'][$k]->total_inactive_marks = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "' AND archived_on IS NOT NULL");
+                $this->data['labels'][$k]->total_marks          = $this->data['labels'][$k]->total_active_marks + $this->data['labels'][$k]->total_inactive_marks;
             }
         }
 
@@ -420,7 +422,7 @@ class Marks extends Plain_Controller
 
             // Set active tag
             if (parent::isWebView() === true || parent::isPJAX() === true) {
-                $this->data['active_tag'] = array('tag_id' => $tag_id, 'name' => $tag_name, 'slug' => $tag_slug);
+                $this->data['active_tag'] = array('tag_id' => $tag_id, 'tag_name' => $tag_name, 'tag_slug' => $tag_slug);
             }
         }
 
