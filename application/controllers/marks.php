@@ -370,11 +370,15 @@ class Marks extends Plain_Controller
 
             // Get label ID
             $label_id = $finish;
+            $this->load->model('labels_model', 'label');
             if (! is_numeric($label_id)) {
-                $this->load->model('labels_model', 'label');
                 $label      = $this->label->read("slug = '" . $this->db->escape_str($label_id) . "'", 1, 1, 'label_id, name');
                 $label_id   = (isset($label->label_id)) ? $label->label_id : 0;
-                $label_name = (isset($label->name)) ? $label->name : 0;
+                $label_name = (isset($label->name)) ? $label->name : null;
+            }
+            else {
+                $label      = $this->label->read("label_id = '" . $this->db->escape_str($label_id) . "'", 1, 1, 'name');
+                $label_name = (isset($label->name)) ? $label->name : null;
             }
 
             // Set the new where clause
@@ -384,13 +388,6 @@ class Marks extends Plain_Controller
 
             // Give Tim Tim his Active Label Array already!
             if (parent::isWebView() === true || parent::isPJAX() === true) {
-                if (! isset($label_name) || empty($label_name)) {
-                    $this->load->model('labels_model', 'label');
-                    $l  = $this->label->read("label_id = '" . $label_id . "'", 1, 1, 'name');
-                    $label_name = (isset($l->label_name)) ? $l->label_name : '';
-                }
-
-                // Set it
                 $this->data['active_label'] = array('label_id' => $label_id, 'label_name' => $label_name);
             }
         }
@@ -403,17 +400,28 @@ class Marks extends Plain_Controller
         elseif ($lookup == 'tag') {
             // Get label ID
             $tag_id = $finish;
+            $this->load->model('tags_model', 'tag');
             if (! is_numeric($tag_id)) {
-                $this->load->model('tags_model', 'tag');
                 $tag      = $this->tag->read("slug = '" . $this->db->escape_str($tag_id) . "'", 1, 1, '*');
                 $tag_id   = (isset($tag->tag_id)) ? $tag->tag_id : 0;
                 $tag_slug = (isset($tag->slug)) ? $tag->slug : null;
+                $tag_name = (isset($tag->name)) ? $tag->name : null;
+            }
+            else {
+                $tag      = $this->tag->read("tag_id = '" . $this->db->escape_str($tag_id) . "'", 1, 1, '*');
+                $tag_slug = (isset($tag->slug)) ? $tag->slug : null;
+                $tag_name = (isset($tag->name)) ? $tag->name : null;
             }
 
             // Set the new where clause
             // Set lookup type
             $this->data['lookup_type'] = 'tag';
             $options['tag_id'] = $tag_id;
+
+            // Set active tag
+            if (parent::isWebView() === true || parent::isPJAX() === true) {
+                $this->data['active_tag'] = array('tag_id' => $tag_id, 'name' => $tag_name, 'slug' => $tag_slug);
+            }
         }
 
         // Date Range Search
@@ -478,29 +486,6 @@ class Marks extends Plain_Controller
             self::getStats();
             self::getLabels();
             self::getTags();
-
-            // If looking up by label, set the current label
-            if ($lookup == 'label') {
-                foreach ($this->data['labels'] as $k => $label) {
-                    $this->data['labels'][$k]->current = ($label->label_id == $label_id) ? true : false;
-                }
-
-            }
-
-            // If looking up by tag, set the current tag if applicable
-            if ($lookup == 'tag') {
-                $tag_keys = array('popular', 'recent');
-                foreach ($tag_keys as $key) {
-                    foreach ($this->data['tags'][$key] as $k => $tag) {
-                        $this->data['tags'][$key][$k]->current = ($tag->tag_id == $tag_id) ? '1' : '0';
-
-                        // Create a Active Tag Array
-                        if ($this->data['tags'][$key][$k]->current == '1') {
-                            $this->data['active_tag'] = array('tag_id' => $tag->tag_id, 'tag_name' => $tag->name);
-                        }
-                    }
-                }
-            }
         }
 
         // Figure if web, redirect, internal ajax call or API
