@@ -381,6 +381,18 @@ class Marks extends Plain_Controller
             // Set lookup type
             $where_time                = " AND users_to_marks.label_id = '" . $label_id . "'";
             $this->data['lookup_type'] = 'label';
+
+            // Give Tim Tim his Active Label Array already!
+            if (parent::isWebView() === true || parent::isPJAX() === true) {
+                if (! isset($label_name) || empty($label_name)) {
+                    $this->load->model('labels_model', 'label');
+                    $l  = $this->label->read("label_id = '" . $label_id . "'", 1, 1, 'name');
+                    $label_name = (isset($l->label_name)) ? $l->label_name : '';
+                }
+
+                // Set it
+                $this->data['active_label'] = array('label_id' => $label_id, 'label_name' => $label_name);
+            }
         }
 
         // Tag lookups
@@ -471,11 +483,6 @@ class Marks extends Plain_Controller
             if ($lookup == 'label') {
                 foreach ($this->data['labels'] as $k => $label) {
                     $this->data['labels'][$k]->current = ($label->label_id == $label_id) ? true : false;
-
-                    // Give Tim Tim his Active Label Array already!
-                    if ($this->data['labels'][$k]->current === true) {
-                        $this->data['active_label'] = array('label_id' => $label->label_id, 'label_name' => $label->name);
-                    }
                 }
 
             }
