@@ -420,7 +420,7 @@ class Marks extends Plain_Controller
 
             // Set active tag
             if (parent::isWebView() === true || parent::isPJAX() === true) {
-                $this->data['active_tag'] = array('tag_id' => $tag_id, 'name' => $tag_name, 'slug' => $tag_slug);
+                $this->data['active_tag'] = array('tag_id' => $tag_id, 'tag_name' => $tag_name, 'tag_slug' => $tag_slug);
             }
         }
 
