@@ -12,24 +12,31 @@
     switch ($lookup_type) {
         case 'label':
             $heading['icon']    =   'barley-icon-circle';
-            $heading['title']    =   $total . $link_plural . "labeled " . $active_label['label_name'];
+            $heading['title']   =   $total . $link_plural . "labeled " . $active_label['label_name'];
             break;
         case 'archive':
             $heading['icon']    =   'barley-icon-briefcase';
-            $heading['title']    =   $total . $link_plural . "archived";
+            $heading['title']   =   $total . $link_plural . "archived";
             break;
         case 'tag':
             $heading['icon']    =   'barley-icon-tag';
-            $heading['title']    =   $total . $link_plural . "tagged " . $active_tag['tag_name'];
+            $heading['title']   =   $total . $link_plural . "tagged " . $active_tag['tag_name'];
             break;
         case 'search':
             $heading['icon']    =   'barley-icon-search';
-            $heading['title']    =   $total . $link_plural . "found in \"" . $search_term . "\"";
+            $heading['title']   =   $total . $link_plural . "found in \"" . $search_term . "\"";
             break;
         default:
             $heading['icon']    =   'barley-icon-time';
-            $heading['title']    =   $total . $link_plural;     
+            $heading['title']   =   $total . $link_plural;
+            $default_title      = true;
     }
+
+    // If a lookup time frame
+    // Work some magic
+    $in_the           = (stristr($lookup_type, 'last-')) ? 'in the ' : '';
+    $heading['title'] = (isset($default_title)) ? $total . $link_plural . 'created ' . $in_the . str_replace('-', ' ', $lookup_type) : $heading['title'];
+
 ?>
 <h2 class="marks-heading"><i class="<?php print $heading['icon']; ?>"></i> <?php print $heading['title']; ?></h2>
 <?php endif; ?>
