@@ -59,8 +59,33 @@ if (nilai === undefined) { var nilai = {}; }
         var label_class = $('div.marks').data('label-class'),
             body = $('body');
 
+        // Change Body Class for Label Colors
         body.removeClass().addClass(label_class);
+
+        // Bind the new mark action buttons
         this.update_mark_action_btns();
+
+    };
+
+    // Updates the label count
+    nilai.update_label_count = function () {
+
+        var label_list = $('ul.label-list');
+
+        function updateLabelCount(res) {
+            var i, labels = res.labels, count;
+            for (i in labels) {
+                count = labels[i].total_active_marks;
+                if (count === "1") {
+                    count = count + " link";
+                } else {
+                    count = count + " links";
+                }
+                label_list.find('.label-'+labels[i].label_id + ' span').text(count);
+            }
+        }
+
+        nilai.getData('labels', updateLabelCount);
 
     };
 
@@ -93,6 +118,7 @@ if (nilai === undefined) { var nilai = {}; }
             if(res.mark.archived_on !== null) {
                 $('#mark-'+id).fadeOut();
                 nilai.sidebar_collapse();
+                nilai.update_label_count();
             } else {
                 alert('Sorry, We could not archive this mark at this time.');
             }
@@ -235,7 +261,7 @@ if (nilai === undefined) { var nilai = {}; }
     // Method for adding a label
     nilai.marks_addLabel = function (btn) {
         
-        var mark, label_id, query, label_name,
+        var mark, label_id, query, label_name, body_class, pattern,
             labels_list = btn.next(),
             label_parent = btn.parent();
 
@@ -249,6 +275,8 @@ if (nilai === undefined) { var nilai = {}; }
             mark = labels_list.data('id');
             label_id = $(this).attr('rel');
             label_name = $(this).text();
+            body_class = $('body').attr('class');
+            pattern = new RegExp('label');
             query = 'label_id=' + nilai.urlEncode(label_id);
             nilai.ajax('/mark/edit/'+mark, 'post', query, function(res) {
                 labels_list.slideUp();
@@ -259,6 +287,11 @@ if (nilai === undefined) { var nilai = {}; }
                     nilai.swapClass(label_parent, 'label-*', 'label-'+label_id);
                     nilai.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
                     nilai.get_mark_info(mark);
+                    nilai.update_label_count(); // Update the count under labels menu
+                    if ((pattern.test(body_class))  && (body_class !== 'label-'+label_id)) { // If on current label and label change, remove mark from label
+                        $('#mark-'+mark).fadeOut();
+                        nilai.sidebar_collapse();
+                    }
                 }
             });
         });
