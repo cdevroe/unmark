@@ -1,6 +1,12 @@
 <?php defined('BASEPATH') OR exit("No direct script access allowed");
 
-class Migration_Batshit_Crazy extends Plain_Migration {
+class Migration_Batshit_Crazy extends Plain_Migration
+{
+
+    public function __construct()
+    {
+      parent::__construct();
+    }
 
     public function up()
     {

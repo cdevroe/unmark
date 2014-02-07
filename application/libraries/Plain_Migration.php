@@ -5,6 +5,7 @@ class Plain_Migration extends CI_Migration
     public function __construct($config = array())
     {
         parent::__construct($config);
+        self::checkForInnoDB();
     }
 
     protected function checkForColumns($columns, $table)
@@ -16,6 +17,21 @@ class Plain_Migration extends CI_Migration
             foreach ($columns as $column) {
                 if (! in_array($column, $current_columns)) {
                     $message = 'Column `' . $column . '`  does not exist in `' . $table . '`. Migrations cannot run.';
+                    log_message('error', $message);
+                    show_error($message, 500);
+                    exit;
+                }
+            }
+        }
+    }
+
+    protected function checkForInnoDB()
+    {
+        $res = $this->db->query('SHOW TABLE STATUS');
+        if ($res->num_rows() > 0) {
+            foreach ($res->result() as $k => $obj) {
+                if (! isset($obj->Engine) || strtolower($obj->Engine) != 'innodb') {
+                    $message = 'Table `' . $obj->Name . '` is not in InnoDB format. Migrations cannot run.';
                     log_message('error', $message);
                     show_error($message, 500);
                     exit;
