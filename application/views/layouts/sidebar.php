@@ -7,8 +7,8 @@
     </div>
     <div class="sidebar-block">
         <div class="sidebar-inner">
-            <p>You have <?php print $stats['marks']['last year']; ?> links that are over 1 year old. Want to tidy up a bit?</p>
-            <a href="/marks/last-year" class="btn">View Links</a>
+            <p>You have <?php print $stats['marks']['ages ago']; ?> links that are over 1 year old. Want to tidy up a bit?</p>
+            <a href="/marks/ages-ago" class="btn">View Links</a>
             <button data-action="dismiss_this">Do Nothing</button>
         </div>
     </div>
