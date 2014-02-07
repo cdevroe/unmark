@@ -11,9 +11,9 @@
 </head>
 
 <?php if (isset($active_label)) : ?>
-<body id="nilai" class="label-<?php print $active_label['label_id']; ?>">
+<body id="nilai" class="label-<?php print $active_label['label_id']; ?>" data-lookup="<?php print $lookup_type; ?>">
 <?php else : ?>
-<body id="nilai">
+<body id="nilai" data-lookup="<?php print $lookup_type; ?>">
 <?php endif; ?>
 
     <?php $this->load->view('layouts/navigation'); ?>

@@ -45,9 +45,7 @@ body, html{
     min-height: 100%; 
     height:100%; 
 }
-body#nilai {
-    opacity: 0;
-}
+body[data-lookup="all"] { opacity: 0; }
 body {
     overflow:hidden;
     font-family: $sans-serif;

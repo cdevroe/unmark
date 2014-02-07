@@ -55,7 +55,13 @@ if (nilai === undefined) { var nilai = {}; }
 
     // Rebuild the dom after pjax call
     nilai.updateDom = function () {
+
+        var label_class = $('div.marks').data('label-class'),
+            body = $('body');
+
+        body.removeClass().addClass(label_class);
         this.update_mark_action_btns();
+
     };
 
     // Build Mark JSON

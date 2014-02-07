@@ -33,7 +33,12 @@
 ?>
 <h2 class="marks-heading"><i class="<?php print $heading['icon']; ?>"></i> <?php print $heading['title']; ?></h2>
 <?php endif; ?>
+
+<?php if (isset($active_label)) : ?>
+<div class="marks" data-label-class="label-<?php print $active_label['label_id']; ?>">
+<?php else : ?>
 <div class="marks">
+<?php endif; ?>
     <div class="marks_list">
         <?php foreach ($marks as $mark) :
 
