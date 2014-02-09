@@ -81,6 +81,8 @@ if (nilai === undefined) { var nilai = {}; }
                 count = labels[i].total_active_marks;
                 if (count === "1") {
                     count = count + " link";
+                } else if (count === "0") {
+                    count = "no links";
                 } else {
                     count = count + " links";
                 }
@@ -149,6 +151,15 @@ if (nilai === undefined) { var nilai = {}; }
         window.location = "/logout";
     };
 
+    // Hides the left navigation
+    nilai.hideNavigation = function () {
+        nilai.nav_panel.animate({ left: -285 }, { duration: 200, queue: false });
+        nilai.main_panel.animate({ left: 65 }, { duration: 200, queue: false });
+        $('.nav-panel').hide();
+        $('.menu-item').removeClass('active-menu');
+        $('.navigation-pane-links').show();
+    };
+
     // Function for interacting and animating the left navigation
     // This handels both the top level and secondarly level
     nilai.interact_nav = function (e, elem_ckd) {
@@ -160,14 +171,6 @@ if (nilai === undefined) { var nilai = {}; }
             elem_parent = elem_ckd.parent(),
             panel_position = parseInt(nilai.nav_panel.css('left'));
 
-        function returnMenu() {
-            nilai.nav_panel.animate({ left: -285 }, { duration: 200, queue: false });
-            nilai.main_panel.animate({ left: 65 }, { duration: 200, queue: false });
-            $('.nav-panel').hide();
-            $('.navigation-pane-links').show();          
-        }
-
-
         // If all links pannel - allow click default
         if (panel_to_show.match(/\//)) { return true; }
 
@@ -177,7 +180,7 @@ if (nilai === undefined) { var nilai = {}; }
         // If tap/click on open menu, hide menu
         if (elem_parent.hasClass('active-menu')) {
             $('.menu-item').removeClass('active-menu');
-            return returnMenu();
+            return nilai.hideNavigation();
         }
 
         // Add / Remove Class for current navigation
@@ -187,7 +190,7 @@ if (nilai === undefined) { var nilai = {}; }
         // Check for close action on and open panel
         if (panel_to_show === "#panel-menu") {
             if (panel_position > 0) {
-                return returnMenu();
+                return nilai.hideNavigation();
             }
         }
 
@@ -439,6 +442,7 @@ if (nilai === undefined) { var nilai = {}; }
             var action = $(this).data('action'), funct; // Get Data Action Attribute
             funct = eval('nilai.' + action); // Convert it to an executable function
             funct($(this)); // Run it with passed in object
+            nilai.hideNavigation(); // Hide Main Navigation
         });
 
         // Slide Toggle the Sidebar Info Blocks
@@ -463,6 +467,7 @@ if (nilai === undefined) { var nilai = {}; }
                 e.preventDefault();
                 more_link.trigger('click');
             }
+            nilai.hideNavigation(); // Hide Main Navigation
         });
 
         // Watch for internal link click and run PJAX
