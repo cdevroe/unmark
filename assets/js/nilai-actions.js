@@ -151,6 +151,17 @@ if (nilai === undefined) { var nilai = {}; }
         window.location = "/logout";
     };
 
+    // Archive all marks over a year old
+    nilai.archive_all = function () {
+        nilai.ajax('/marks/archive/old', 'post', '', function (res) {
+            if (res.archived === true) {
+                window.location = "/marks";
+            } else {
+                alert('Sorry, We could not archive the links at this time. Please try again.')
+            }
+        });
+    };
+
     // Hides the left navigation
     nilai.hideNavigation = function () {
         nilai.nav_panel.animate({ left: -285 }, { duration: 200, queue: false });
