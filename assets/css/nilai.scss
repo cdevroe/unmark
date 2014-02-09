@@ -325,8 +325,18 @@ ul.nav-list {
         text-transform: uppercase;
         letter-spacing: .1em;
         @include drop-shadow-border();
+        position:fixed;
+        width:100%;
+        background: $color_white;
+        z-index: 500;
         i {
             padding-right: 10px;
+        }
+    }
+    .marks {
+        margin-top: 48px;
+        &#lookup-all {
+            margin-top:0;
         }
     }
 }
@@ -377,7 +387,7 @@ ul.nav-list {
             position: absolute;
             top: 0;
             right: 0;
-            z-index: 800;
+            z-index: 400;
             a {
                 background: $color_grey;
                 display: block;
@@ -488,6 +498,7 @@ ul.nav-list {
     position: absolute;
     right: -1.5%;
     overflow:scroll;
+    z-index: 600;
     .sidebar-block {
         @include drop-shadow-border();
         padding: 15px 0;

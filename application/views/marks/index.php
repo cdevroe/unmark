@@ -42,9 +42,9 @@
 <?php endif; ?>
 
 <?php if (isset($active_label)) : ?>
-<div class="marks" data-label-class="label-<?php print $active_label['label_id']; ?>">
+<div id="lookup-<?php print $lookup_type; ?>" class="marks" data-label-class="label-<?php print $active_label['label_id']; ?>">
 <?php else : ?>
-<div class="marks">
+<div id="lookup-<?php print $lookup_type; ?>" class="marks">
 <?php endif; ?>
     <div class="marks_list">
         <?php foreach ($marks as $mark) :
