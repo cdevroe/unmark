@@ -2,7 +2,7 @@
     <div class="sidebar-block">
         <div class="sidebar-inner">
             <canvas class="graph" width="500" height="100"></canvas>
-            <p>You saved <?php print $stats['saved']['today']; ?> links today and archived only <?php print $stats['archived']['today']; ?>.</p>
+            <p>You saved <?php print $stats['saved']['today']; ?> links today and archived <?php print $stats['archived']['today']; ?>.</p>
         </div>
     </div>
     <?php if ($stats['marks']['ages ago'] > 0) : ?>
