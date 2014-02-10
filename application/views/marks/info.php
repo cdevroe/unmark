@@ -33,12 +33,12 @@
     <div class="mark-added-note mark-added-settings">
         <i class="barley-icon-question-sign"></i>
         <a class="action" data-action="marks_addNotes" href="">Add A Note</a>
-        <section data-id="<?php print $mark->mark_id; ?>" contenteditable="true"></section>
+        <section class="hideoutline" data-id="<?php print $mark->mark_id; ?>" contenteditable="true"></section>
     </div>
 
     <div class="mark-added-actions">
         <button class="delete" data-action="delete_mark" data-view="bookmarklet" data-id="<?php print $mark->mark_id; ?>">Delete Link</button>
-        <button data-action="close_window">Update & Close</button>
+        <button data-action="close_window">Update &amp; Close</button>
     </div>
 
 

@@ -72,6 +72,9 @@ body {
     }
 }
 
+// Hide Stupid Outlines
+textarea:focus, input:focus, .hideoutline, button { outline: 0; }
+
 // ================ Element Styles
 @import "partials/element-settings";
 
@@ -930,12 +933,18 @@ body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
 
 
 // ==============  Login Page Styles ========
-.loginWrapper {
+.loginWrapper, .forgotPassWrapper {
     width: 275px;
     margin: 50px auto 0;
     text-align: center;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 50%;
     color:$color_light;
+    .loginInner {
+        position: relative;
+        left:-50%;
+    }
     h1 {
         text-transform: uppercase;
         font-size: 12px;
@@ -963,13 +972,17 @@ body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
             font-size: 12px;
             color: $color_black;
         }
-        button {
+        .login-submit, .forgot-submit {
             background: none;
             position: absolute;
             top: 51px;
             color: $color_dark;
             font-size: 17px;
             right: -5px;
+            display:none;
+        }
+        .forgot-submit {
+            top: 2px;
         }
     }
     a.forgot-pass {
@@ -979,6 +992,26 @@ body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
         font-weight: 300;
         color:$color_light;
     }
+    .response-message {
+        padding: 12px 10px;
+        border-radius: 1px;
+        margin: 0 0 25px 0;
+        color: $color_light;
+        border: 1px solid $color_light;
+        font-size: 12px;
+        letter-spacing: .1em;
+        display: none;
+        &.error {
+            color: $color_white;
+            background: $color_red;
+            border:none;
+        }
+    }
+}
+
+.forgotPassWrapper {
+    top: -400px;
+    display: none;
 }
 
 // Animation Keyframes
@@ -1018,4 +1051,18 @@ body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
     left: 47.1%;
     top: 117px;
     font-size: 79px;
+}
+
+// Default Spinner
+.barley-icon-spinner {
+    @include animation-duration(0.75s);
+    @include animation-iteration-count(infinite);
+    @include animation-name(rotate-forever);
+    @include animation-timing-function(linear);
+    display: inline-block;
+    width: 25px;
+    height: 24px;
+    overflow: hidden;
+    padding: 0;
+    margin-right: -5px;
 }
