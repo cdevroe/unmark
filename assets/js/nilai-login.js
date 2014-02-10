@@ -1,5 +1,5 @@
 /*!
-    Main scripts for Nilai.co
+    Login Scripts for Nilai.co
     Copyright 2014 - Plain - http://plainmade.com
 */
 

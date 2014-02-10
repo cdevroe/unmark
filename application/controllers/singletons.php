@@ -28,4 +28,13 @@ class Singletons extends Plain_Controller
         $this->view('singletons/terms');
     }
 
+    // Reset password View
+    public function reset($token=null)
+    {
+        $this->data['token'] = $token;
+        $this->data['no_header'] = true;
+        $this->data['no_footer'] = true;
+        $this->view('singletons/reset');
+    }
+
 }

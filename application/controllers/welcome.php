@@ -23,7 +23,7 @@ class Welcome extends Plain_Controller
 		$data['no_header'] = true;
 		$data['no_footer'] = true;
 
-		$this->view('home', $data);
+		$this->view('welcome', $data);
 
 	}
 

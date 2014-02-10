@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Nilai : Mark Added</title>
+    <title>Welcome to Nilai</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/nilai.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
