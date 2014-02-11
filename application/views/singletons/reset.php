@@ -13,11 +13,16 @@
         <h1>Reset Password</h1>
         <form id="nilaiLogin" method="post" action="/login">
             <input type="password" class="field-input" name="password" id="password" placeholder="New Password..." autocomplete="off" />
-            <input type="password2" class="field-input" name="password2" id="password2" placeholder="Once More..." autocomplete="off" />
+            <input type="password" class="field-input" name="password2" id="password2" placeholder="Once More..." autocomplete="off" />
             <button class="login-submit" type="submit"><i class="barley-icon-chevron-right"></i></button>
         </form>
         <div class="response-message"></div>
         <a href="#" class="forgot-pass">How did I get here?</a>
+        <div class="gethere">
+            <p>You clicked on a link in an email from us.</p>
+            <p class="last">You can choose a new password here and be on your way.</p>
+            <a class="help" href="/help">HELP</a><a class="home" href="/">NILAI.CO</a>
+        </div>
     </div>
 </div>
 

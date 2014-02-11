@@ -1014,6 +1014,56 @@ body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
     display: none;
 }
 
+.resetWrapper {
+    a.forgot-pass {
+        margin-top: 50px;
+        display: block;
+    }
+    #password2 { display: none; }
+    .gethere {
+        display: none;
+        border: 1px solid $color_light;
+        padding: 10px 10px 0 10px;
+        margin-top: 25px;
+        font-size: 14px;
+        position: relative;
+        p {
+            margin: 0;
+            padding: 5px 5px 0px 5px;
+            &.last {
+                margin-bottom:25px;
+            }
+        }
+        a {
+            display: block;
+            float: left;
+            padding: 10px 47px;
+            margin: 0 0 -15px -11px;
+            border: 1px solid $color_light;
+        }
+        a.help {
+            margin-left: -11px;
+        }
+        a.home {
+            margin-right: -11px;
+            padding-right: 49px;
+            border-left: none;
+        }
+        &:before {
+            position:absolute;
+            top: -11px;
+            content: "";
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid $color_light;
+            left: 45%;
+        }
+    }
+}
+
+
 // Animation Keyframes
 //********************************************************//
 @mixin rotate-forever {
