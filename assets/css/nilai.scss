@@ -1095,6 +1095,15 @@ body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
     background-color: $color_dark;
     opacity: 0.95;
     z-index: 10000;
+    #nilaiModalClose {
+        position: absolute;
+        top: 10px;
+        right: 25px;
+        i {
+            font-size: 50px;
+            color: $color_light;
+        }
+    }
 }
 
 

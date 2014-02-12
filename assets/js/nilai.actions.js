@@ -120,9 +120,10 @@
     nilai.overlay = function (show) {
         if (show) {
             nilai.mainpanels.addClass('blurme');
-            var overlay = $('<div id="nilai-overlay"> </div>');
+            var overlay = $('<div id="nilai-overlay"><a href="#" id="nilaiModalClose"><i class="barley-icon-remove"></i></a></div>');
             overlay.appendTo(document.body);
         } else {
+            $('#resetPasswordForm').hide().css('top', '-300px');
             nilai.mainpanels.removeClass('blurme');
             $('#nilai-overlay').remove();
         }

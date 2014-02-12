@@ -107,8 +107,14 @@
         });
         $('#helperforms input.field-input').on('keydown change', function () {
             $(this).parent().parent().find('.response-message').hide();
-        })
+        });
 
+        // Close Overlay
+        $(document).on('click', '#nilaiModalClose', function (e) { 
+            e.preventDefault(); 
+            return nilai.overlay(false); 
+        });
+        
     };
 
     // Get this baby in action
