@@ -15,12 +15,5 @@ class Plain_Loader extends CI_Loader
             CUSTOMPATH . 'views/' => true,
             APPPATH . 'views/'     => true
         );
-
-        print '<pre>';
-        print_r($this->_ci_library_paths);
-        print_r($this->_ci_helper_paths);
-        print_r($this->_ci_model_paths);
-        print_r($this->_ci_view_paths);
-        print '</pre>';
     }
 }
