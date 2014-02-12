@@ -24,7 +24,7 @@ class Plain_Migration extends CI_Migration
         $migrationsResult = parent::version($target_version);
         // If everything went well - remove backup
         if($migrationsResult !== FALSE && $migrationsResult == $target_version){
-            if(!$this->_delete_backup($backupFile)){
+            if($backupFile !== FALSE && !$this->_delete_backup($backupFile)){
                 log_message('debug', 'There was an error when removing backup file.');
             }
         } else{
