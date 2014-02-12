@@ -52,6 +52,14 @@ if(!defined('ENVIRONMENT')){
     define('ENVIRONMENT', 'production');
 }
 
+// Define DOCROOT
+$dr = (isset($_SERVER['PWD']) && ! empty($_SERVER['PWD'])) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
+$dr = str_replace('//', '/', $dr . '/');
+define('DOCROOT', $dr);
+
+// Define CUSTOMPATH
+define('CUSTOMPATH', DOCROOT . 'custom/');
+
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -229,7 +237,7 @@ if (defined('ENVIRONMENT'))
  * And away we go...
  *
  */
-require_once BASEPATH.'core/CodeIgniter.php';
+require_once APPPATH . 'core/Plain_CodeIgniter.php';
 
 /* End of file index.php */
 /* Location: ./index.php */
