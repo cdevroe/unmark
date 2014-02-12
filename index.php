@@ -52,6 +52,14 @@ if(!defined('ENVIRONMENT')){
     define('ENVIRONMENT', 'production');
 }
 
+// Define DOCROOT
+$dr = (isset($_SERVER['PWD']) && ! empty($_SERVER['PWD'])) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
+$dr = str_replace('//', '/', $dr . '/');
+define('DOCROOT', $dr);
+
+// Define CUSTOMPATH
+define('CUSTOMPATH', DOCROOT . 'custom/');
+
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
