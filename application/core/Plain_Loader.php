@@ -17,6 +17,7 @@ class Plain_Loader extends CI_Loader
         );
     }
 
+    // Autoload shiz
     private function autoload()
     {
         // Set default autoload array
