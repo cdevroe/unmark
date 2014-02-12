@@ -381,7 +381,7 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 /*
- * Folder storing database backups 
+ * Folder storing database backups
  */
 $config['plain_db_backup_folder'] = 'application/cache/db_backups/';
 /*
