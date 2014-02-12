@@ -63,16 +63,16 @@ if (nilai === undefined) { var nilai = {}; }
                 '\\s', 'g' );
      
         // Run the replace with regex pattern
-        self.each( function ( i, it ) {
+        self.each( function (i, it) {
             var cn = ' ' + it.className + ' ';
-            while ( patt.test( cn ) ) {
-                cn = cn.replace( patt, ' ' );
+            while ( patt.test(cn) ) {
+                cn = cn.replace(patt, ' ');
             }
-            it.className = $.trim( cn );
+            it.className = $.trim(cn);
         });
      
         // Return new swap
-        return !additions ? self : self.addClass( additions );
+        return !additions ? self : self.addClass(additions);
     };
 
     // Replace special chars

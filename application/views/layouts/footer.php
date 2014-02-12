@@ -2,9 +2,9 @@
             <div class="sidebar-content"><?php $this->load->view('layouts/sidebar'); ?></div>
         </div>
     </div> <!-- end main-wrapper -->
+</div> <!-- end nilai-wrapper -->
 
-
-
+<?php $this->load->view('layouts/userforms'); ?>
 
 <?php $this->load->view('layouts/jsvars'); ?>
 
@@ -14,10 +14,10 @@
 <script src="/assets/js/plugins/nilai-graph.js"></script>
 <script src="/assets/js/templates/nilai-templates.js"></script>
 <script src="/assets/js/nilai.js"></script>
-<script src="/assets/js/nilai-actions.js"></script>
-<script src="/assets/js/nilai-marks.js"></script>
-<script src="/assets/js/nilai-client.js"></script>
-
+<script src="/assets/js/nilai.actions.js"></script>
+<script src="/assets/js/nilai.marks.js"></script>
+<script src="/assets/js/nilai.client.js"></script>
+<script src="/assets/js/nilai.init.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() { 

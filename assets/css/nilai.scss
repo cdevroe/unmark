@@ -72,6 +72,10 @@ body {
     }
 }
 
+// Blur for WebKit
+//#nilai-wrapper { -webkit-transition:-webkit-filter 0.4s ease-in-out; }
+//.blurme { -webkit-filter: blur(5px); }
+
 // Hide Stupid Outlines
 textarea:focus, input:focus, .hideoutline, button { outline: 0; }
 
@@ -905,7 +909,6 @@ canvas.graph {
     }
 }
 
-
 // ==============  Site Label Color Scheme ========
 
 // Body Top Border
@@ -1068,6 +1071,32 @@ body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
     }
 }
 
+#helperforms {
+    position:relative;
+    z-index: 20000;
+    left: -65px;
+    .hiddenform { display: none; }
+    #resetPasswordForm {
+        top: -300px;
+        .login-submit {
+            top: 102px;
+            display: block;
+        }
+    }
+}
+
+// Overlay
+#nilai-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $color_dark;
+    opacity: 0.95;
+    z-index: 10000;
+}
+
 
 // Animation Keyframes
 //********************************************************//
@@ -1110,7 +1139,7 @@ body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
 
 // Default Spinner
 .barley-icon-spinner {
-    @include animation-duration(0.75s);
+    @include animation-duration(1.25s);
     @include animation-iteration-count(infinite);
     @include animation-name(rotate-forever);
     @include animation-timing-function(linear);

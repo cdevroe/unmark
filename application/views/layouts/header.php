@@ -15,6 +15,8 @@
 <?php else : ?>
 <body id="nilai" data-lookup="<?php print $lookup_type; ?>">
 <?php endif; ?>
+    
+    <div id="nilai-wrapper">
 
     <?php $this->load->view('layouts/navigation'); ?>
 

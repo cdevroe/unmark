@@ -35,7 +35,7 @@ nilai.vars.csrf_token   = '<?php print $csrf_token; ?>';
 </script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 <script src="/assets/js/nilai.js"></script>
-<script src="/assets/js/nilai-reset.js"></script>
+<script src="/assets/js/nilai.reset.js"></script>
 
 </body>
 </html>
