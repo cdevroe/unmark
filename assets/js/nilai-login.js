@@ -114,10 +114,8 @@
         });
 
         // Show Submit Button on Key Press
-        nilailogin.input_fields.on('keypress change', function () { 
-            if ($(this).attr('name') === 'password') {
-                nilailogin.login_submit.fadeIn();
-            }
+        nilailogin.input_fields.on('change', function () { 
+            nilailogin.login_submit.fadeIn();
             nilailogin.message.slideUp();
         });
 
