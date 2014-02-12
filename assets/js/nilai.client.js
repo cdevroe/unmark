@@ -39,17 +39,28 @@
     // Submit Password Change
     nilai.send_password_change = function (form) {
         var query,
-            newpass = $('#pass1, #pass2'),
-            oldpass = $('#oldpass'),
-            pass1   = $('#pass1'),
-            pass2   = $('#pass2');
+            new_pass_field = $('#pass1, #pass2'),
+            old_pass_field = $('#oldpass'),
+            oldpass = $('#oldpass').val(),
+            pass1   = $('#pass1').val(),
+            pass2   = $('#pass2').val();
 
         showSpinner(form, true);
 
         if (pass1 === pass2) {
-            query = 'password='+pass1;
+            query = 'password='+pass1+'&current_password='+oldpass;
+            nilai.ajax('/user/update/password', 'post', query, function (res) {
+                if (res.success) {
+                    showMessage(form, false, 'Your password has been changed.');
+                } else {
+                    showMessage(form, true, res.message);
+                }
+                showSpinner(form, false);
+                new_pass_field.val('');
+                old_pass_field.val('');
+            });
         } else { 
-            newpass.val('');
+            new_pass_field.val('');
             showSpinner(form, false);
             return showMessage(form, true, 'New Passwords do not match'); 
         }
