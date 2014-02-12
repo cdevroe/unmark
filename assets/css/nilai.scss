@@ -247,7 +247,12 @@ h4.nav-heading {
     border-bottom: 1px solid $color_light;
     padding: 0 0 10px 0;
     margin-top: 50px;
-    color: $color_light;    
+    color: $color_light;
+    span {
+        text-transform: lowercase;
+        font-size: 12px;
+        padding-left: 10px;
+    }
 }
 
 ul.nav-list {

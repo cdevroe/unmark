@@ -60,8 +60,16 @@
             <button id="logout-btn" class="danger" data-action="logout">Sign Out</button>
             <h4 class="nav-heading">Settings</h4>
             <ul class="nav-list">
-                <li>Email: <?php print $user['email']; ?></li>
+                <li><a href="#" class="action" data-action="awesome">Turn On Awesome</a></li>
             </ul>
+
+            <h4 class="nav-heading">Account <span>[ <?php print $user['email']; ?> ]</span></h4>
+            <ul class="nav-list">
+                <li><a href="#" class="action" data-action="change_password">Change Password</a></li>
+                <li><a href="#" class="action" data-action="change_email">Change Email Address</a></li>
+                <li><a href="mailto:?subject=Checkout Nilai&amp;body=You should really check out Nilai. http://nilai.co">Invite Others</a></li>
+            </ul>
+
             <h4 class="nav-heading">Help</h4>
             <ul class="nav-list">
                 <li><a href="/help/how.php">How to Use Nilai</a></li>

@@ -15,6 +15,9 @@
 <script src="/assets/js/templates/nilai-templates.js"></script>
 <script src="/assets/js/nilai.js"></script>
 <script src="/assets/js/nilai-actions.js"></script>
+<script src="/assets/js/nilai-marks.js"></script>
+<script src="/assets/js/nilai-client.js"></script>
+
 
 <script type="text/javascript">
 $(document).ready(function() { 
