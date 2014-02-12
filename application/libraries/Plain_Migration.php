@@ -7,6 +7,96 @@ class Plain_Migration extends CI_Migration
         parent::__construct($config);
         self::checkForInnoDB();
     }
+    
+    /**
+     * Extends migration mechanism to create backup before running migrations and remove it on success, but keep on failure
+     * (non-PHPdoc)
+     * @see CI_Migration::version()
+     */
+    public function version($target_version)
+    {
+        // Make DB backup
+        $backupFile = $this->_make_backup();
+        if($backupFile === FALSE){
+            log_message('DEBUG', 'Making backup before migrating failed.');
+        }
+        // Run migrationgs
+        $migrationsResult = parent::version($target_version);
+        // If everything went well - remove backup
+        if($migrationsResult !== FALSE && $migrationsResult == $target_version){
+            if($backupFile !== FALSE && !$this->_delete_backup($backupFile)){
+                log_message('debug', 'There was an error when removing backup file.');
+            }
+        } else{
+            if($backupFile !== FALSE){
+                log_message('error', 'Migrating to version '.$target_version.' failed. Backup from before migration stored in '.$backupFile);
+            } else{
+                log_message('error', 'Migrating to version '.$target_version.' failed, but no valid backup saved.');
+            }
+        }
+        return $migrationsResult;    
+    }
+    
+    /**
+     * Creates database backup and returns a path to a file with this backup
+     * @return string Backup file path
+     */
+    protected function _make_backup(){
+        $fullBackupFileName = $this->_createBackupFile();
+        if($fullBackupFileName !== false){
+            // Do backup
+            $this->load->dbutil();
+            // Backup your entire database and assign it to a variable
+            $backup =& $this->dbutil->backup();
+            
+            // Load the file helper and write the file to your server
+            $this->load->helper('file');
+            write_file($fullBackupFileName, $backup);
+            log_message('info', 'Created backup file '.$fullBackupFileName);
+        }
+        return $fullBackupFileName;
+    }
+    
+    /**
+     * Creates new database backup file in folder specified by config
+     * @return boolean|string File path or false on failure
+     */
+    private function _createBackupFile(){
+        $backupFolder = $this->config->item('plain_db_backup_folder');
+        if(!file_exists($backupFolder)){
+            if(!mkdir($backupFolder, 0700, true)){
+                log_message('DEBUG', 'Cannot create folder for DB backups '.$backupFolder);
+                return false;
+            }
+        }
+        if(!is_readable($backupFolder)){
+            log_message('DEBUG', 'Cannot create DB backup - backups folder '.$backupFolder.' is not readable');
+            return false;
+        }
+        $absolutePath = realpath($backupFolder);
+        $count=0;
+        // Skip existing backups
+        do{
+            $backupFileName = 'db_'.$count.'_'.time().'.bak.gz';
+            $fullBackupFileName = $absolutePath . DIRECTORY_SEPARATOR . $backupFileName;
+        } while(file_exists($fullBackupFileName));
+        return $fullBackupFileName;
+    }
+    
+    /**
+     * Removes database backup file
+     * @param string $backupFile Path to stored backup file
+     * @return boolean
+     */
+    protected function _delete_backup($backupFile){
+        $configFlag = $this->config->item('plain_db_backup_remove_on_success');
+        // If config flag is set to false - do not remove
+        if(isset($configFlag) && $configFlag === false){
+            return true;
+        }
+        // Remove backup and return result of deletion
+        return unlink($backupFile);
+    }
 
     protected function checkForColumns($columns, $table)
     {

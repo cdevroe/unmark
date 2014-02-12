@@ -9,3 +9,4 @@ application/config/environment.php
 application/config/*/**
 !application/config/all/*
 .sass-cache/
+application/cache/db_backups
