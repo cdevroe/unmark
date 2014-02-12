@@ -3,8 +3,6 @@
 class Plain_Config extends CI_Config
 {
 
-    //var $_config_paths = array(CUSTOMPATH, APPPATH);
-
     public function __construct()
     {
         parent::__construct();
@@ -24,6 +22,7 @@ class Plain_Config extends CI_Config
      */
     function load($file = '', $use_sections = FALSE, $fail_gracefully = FALSE)
     {
+        // Call default config loader
         $load = parent::load($file, $use_sections, $fail_gracefully);
 
         // Now check for any custom configs
