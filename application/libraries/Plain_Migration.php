@@ -52,6 +52,7 @@ class Plain_Migration extends CI_Migration
             // Load the file helper and write the file to your server
             $this->load->helper('file');
             write_file($fullBackupFileName, $backup);
+            @chmod($fullBackupFileName, 0600);
             log_message('info', 'Created backup file '.$fullBackupFileName);
         }
         return $fullBackupFileName;
