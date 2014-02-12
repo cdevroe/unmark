@@ -527,6 +527,9 @@ class Marks extends Plain_Controller
             $this->data['mark'] = $mark;
         }
 
+        $this->data['no_header'] = true;
+        $this->data['no_footer'] = true;
+
         // Figure view
         $this->figureView('marks/info');
     }

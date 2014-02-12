@@ -92,11 +92,12 @@ $config['email_reply_to'] = array('address'=>'nilai@nilai.co', 'description' => 
 /*
  * Array with settings accepted by CI email component
  * Example settings for gmail:
+
 $config['plain_email_settings'] = array(
                 	'protocol' => 'smtp',
                     'smtp_host' => 'ssl://smtp.googlemail.com',
-                    'smtp_user' => 'login',
-                    'smtp_pass' => 'password',
+                    'smtp_user' => 'user',
+                    'smtp_pass' => 'pass',
                     'smtp_port' => 465,
                     'smtp_timeout' => 5,
                     'newline' => "\r\n",

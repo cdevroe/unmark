@@ -8,8 +8,8 @@ class Plain_Controller extends CI_Controller
     public $data           = array();
     public $db_clean       = null;
     public $flash_message  = array();
-    public $footer         = 'footer';
-    public $header         = 'header';
+    public $footer         = 'layouts/footer';
+    public $header         = 'layouts/header';
     public $html_clean     = null;
     public $is_api         = false;
     public $limit          = 30;
@@ -229,14 +229,8 @@ class Plain_Controller extends CI_Controller
         // This will change to show view when ready
         else {
 
-            $this->data['csrf_token']    = $this->session->userdata('csrf_token');
-            $this->data['flash_message'] = $this->flash_message;
-            $this->data['user']          = $this->session->userdata('user');
-            $this->data['logged_in']     = $this->session->userdata('logged_in');
-            $this->data['view'] = $view;
-            print '<pre>';
-            print_r($this->data);
-            print '</pre>';
+            $this->view($view);
+
         }
     }
 

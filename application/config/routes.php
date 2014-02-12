@@ -92,6 +92,7 @@ $route['user(.*?)']              = 'user/index';
 $route['help(.*?)']              = 'help$1';
 
 // one offs
+$route['password_reset(.*?)']    = 'singletons/reset$1';
 $route['changelog']              = 'singletons/changelog';
 $route['terms']                  = 'singletons/terms';
 
