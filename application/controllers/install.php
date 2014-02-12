@@ -18,7 +18,7 @@ class Install extends CI_Controller
       }
   }
 
-  private function database_install()
+  public function index()
   {
 
     // See if there is a users table
@@ -41,22 +41,10 @@ class Install extends CI_Controller
     $this->db->from('users');
     $number_of_users = $this->db->count_all_results();
 
-    if ( $number_of_users > 0 ) { // There is at least one user
-        return true;
-    } else {
-        return false;
-    }
-
-    return false;
-  }
-
-  public function index()
-  {
-
-    // Step one: See if there is a database
-  	$data['install_complete'] = $this->database_install();
-  	$this->load->view( 'install', $data );
-
+    // if users exist, redirect to homepage, else register
+    $redirect = ($number_of_users > 0) ? '/' : '/register';
+    header('Location: ' . $redirect);
+    exit;
   }
 
   // Used to update from one version to another.
