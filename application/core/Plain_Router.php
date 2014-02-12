@@ -68,11 +68,6 @@ class Plain_Router extends CI_Router
             }
         }
 
-        print '<pre>';
-        print_r($custom_routes);
-        print_r($route);
-        print '</pre>';
-
         $this->routes = ( ! isset($route) OR ! is_array($route)) ? array() : $route;
         unset($route);
 
