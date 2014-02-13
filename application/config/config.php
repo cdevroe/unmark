@@ -183,7 +183,7 @@ $config['directory_trigger']	= 'd'; // experimental not currently in use
 if (ENVIRONMENT == 'production') {
 	$config['log_threshold'] = 1;
 } else {
-	$config['log_threshold'] = 1;
+	$config['log_threshold'] = 4;
 }
 
 /*
@@ -381,7 +381,7 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 /*
- * Folder storing database backups 
+ * Folder storing database backups
  */
 $config['plain_db_backup_folder'] = 'application/cache/db_backups/';
 /*

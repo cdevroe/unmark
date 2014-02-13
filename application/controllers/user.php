@@ -65,13 +65,26 @@ class User extends Plain_Controller
             $this->data['message'] = 'Please submit a valid password.';
         }
         else {
-            $password = generateHash($this->clean->password);
-            $user = $this->user->update($this->user_id, array('password' => $password));
-            if (isset($user->password) && $user->password == $password) {
-                $this->data['success'] = true;
+
+            // Check current password
+            $current_password = (isset($this->clean->current_password)) ? $this->clean->current_password : null;
+            $res              = $this->user->read($this->user_id, 1, 1, 'password');
+
+            if (! isset($res->password)) {
+                $this->data['message'] = 'We could not verify your current password.';
+            }
+            elseif (verifyHash($current_password, $res->password) != $res->password) {
+                $this->data['message'] = 'Your current password does not match what we have on record.';
             }
             else {
-                $this->data['message'] = 'Your password could not be updated at this time. Please try again.';
+                $password = generateHash($this->clean->password);
+                $user = $this->user->update($this->user_id, array('password' => $password));
+                if (isset($user->password) && $user->password == $password) {
+                    $this->data['success'] = true;
+                }
+                else {
+                    $this->data['message'] = 'Your password could not be updated at this time. Please try again.';
+                }
             }
         }
 

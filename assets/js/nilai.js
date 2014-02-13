@@ -1,229 +1,102 @@
-!function ($) {
+/*!
+    Main scripts for Nilai.co
+    Copyright 2014 - Plain - http://plainmade.com
 
-  // when the document is ready
-  $(function(){
-      
-      // !Popover
-      $("a[rel=popover]")
-            .popover()
-            .click(function(e) {
-              e.preventDefault()
-            })
-      // !Dropdown
-      $('.dropdown-toggle').dropdown()
+    A set of helper functions that can be called and used throughout the app
 
-      if ( $('[name="terms"]') ) {
-        $('[name="terms"]').click(function(){ 
-          $('[name="join"]').removeAttr('disabled');
+*/
+
+if (nilai === undefined) { var nilai = {}; }
+
+(function ($) {
+
+    // Basic Ajax Function used throughout the app
+    nilai.ajax = function (path, method, query, callback, data_type, async) {
+        var csrf_token   = nilai.urlEncode(nilai.vars.csrf_token),
+            data_type    = (data_type !== undefined) ? data_type : 'json',
+            async        = (async !== undefined) ? async : true,
+            added_vars   = 'csrf_token=' + csrf_token + '&content_type=' + data_type;
+            query        = (nilai.empty(query)) ? added_vars : query + '&' + added_vars;
+
+        $.ajax({
+            'dataType': data_type,
+            'cache': false,
+            'url': path,
+            'type': method.toUpperCase(),
+            'data': query,
+            'async': async,
+            'success': function (res) {
+                if ($.isFunction(callback)) {
+                    callback(res);
+                }
+            },
+            'error': function(xhr, status, error) {
+                var json = {
+                    'error': error,
+                    'status': status,
+                    'request': xhr
+                };
+                if ($.isFunction(callback)) {
+                    callback(json);
+                }
+            }
         });
 
-      }
-      
-      // !Add label
-      // Add label to mark
-      $('.addlabel').click(function(e){
-        e.preventDefault();
-        if ($(this).hasClass('btn-success')) { return; } // Do nothing if clicking on a label that is already chosen
-        
-        label = $(this).attr("title");
-        urlid = $("#urlid").val();
-        
-        $.ajax({
-          url: "/marks/addlabel?urlid="+urlid+"&label="+label,
-          success: function(){}
+    };
+
+    // Simple Swap Class Method that uses regex
+    nilai.swapClass = function (elem, removals, additions) {
+        var self = elem;
+
+        // Check for simple replacement        
+        if ( removals.indexOf( '*' ) === -1 ) {
+            self.removeClass( removals );
+            return !additions ? self : self.addClass( additions );
+        }
+     
+        // If regex is passed in create pattern and search/replace
+        var patt = new RegExp( '\\s' + 
+                removals.
+                    replace( /\*/g, '[A-Za-z0-9-_]+' ).
+                    split( ' ' ).
+                    join( '\\s|\\s' ) + 
+                '\\s', 'g' );
+     
+        // Run the replace with regex pattern
+        self.each( function (i, it) {
+            var cn = ' ' + it.className + ' ';
+            while ( patt.test(cn) ) {
+                cn = cn.replace(patt, ' ');
+            }
+            it.className = $.trim(cn);
         });
-        
-        $('.addlabel').removeClass('btn-success');
-        $(this).addClass("btn-success");
-        
-        $('#label').val(label);
-        
-        if ($('#clearlabelbutton').hasClass('disabled')) { // Make clear label and add smart label button active
-          
-          $('#clearlabelbutton').removeClass('disabled');
-          $('#smartlabelbutton').removeClass('disabled');
-          
-        } else { // De-activate?
-        
-          if ($('#smartlabelbutton').hasClass('btn-danger')) { // Just deactivate clearlabel, not smart label
-            $('#clearlabelbutton').removeClass('btn-success');
-            $('#clearlabelbutton').addClass('disabled');
-            return; 
-          }
-          
-          if (label == '') { // if label is nothing, disable both buttons
-            $('#clearlabelbutton').removeClass('btn-success');
-            $('#smartlabelbutton').removeClass('btn-danger');
-            $('#clearlabelbutton').addClass('disabled');
-            $('#smartlabelbutton').addClass('disabled');
-          }
-        }
-        
-      });
-      
-      // !Add to Group
-      $('.addgroup').click(function(e){
-        e.preventDefault();
-        
-        urlid = $("#urlid").val();
-        
-        currentgroup = $('#group').val();
-        newgroup = $(this).attr("data-group");
-        
-        if ($(this).hasClass('btn-success')) {
-          // Remove from group
-          $.ajax({
-            url: "/marks/addgroup?urlid="+urlid+"&group=",
-            success: function(){}
-          });
-          $(this).removeClass('btn-success');
-        } else {
-          // Add to group
-          $('.addgroup').removeClass('btn-success');
-          $.ajax({
-            url: "/marks/addgroup?urlid="+urlid+"&group="+newgroup,
-            success: function(){}
-          });
-          $('#group').val(newgroup);
-          $(this).addClass("btn-success");
-        }
-        
-        note = $('#note').val();
-        $.ajax({
-            url: "/marks/savenote?urlid="+urlid+"&note="+encodeURIComponent(note),
-            success: function(){}
-          });
-        
-      });
-      
-      
-      
-      // !Smart label
-      $('#smartlabelbutton').click(function(e){
-        e.preventDefault();
-        
-        if ($(this).hasClass('disabled')) { return; } // If button is disabled do nothing.
-        
-        if ($(this).hasClass('btn-danger')) {
-          // Remove the smart label
-          // Add the smart label
-          label = $('#label').val();
-          domain = $('#domain').val();
-          
-          $.ajax({
-            url: "/marks/removesmartlabel?domain="+domain+"&label="+label,
-            success: function(){}
-          });
-          
-          $(this).removeClass('btn-danger');
-          $(this).html('Add Smart Label?');
-          
-          if (label == '') $(this).addClass('disabled');
-          
-          $('#smartlabelmessage').html('');
-        } else {
-          // Add the smart label
-          label = $('#label').val();
-          domain = $('#domain').val();
-          
-          $.ajax({
-            url: "/marks/addsmartlabel?domain="+domain+"&label="+label,
-            success: function(){}
-          });
-        
-          $(this).addClass('btn-danger');
-          $(this).html('Stop using Smart Label?');
-          $('#smartlabelmessage').html('<small>All future marks from <strong>'+domain+'</strong> will be labeled <strong>'+label+'</strong> automatically.</small>');
-        }
-      
-      });
-      
-      // ! Save a note
-      $('#note').blur(function(){
+     
+        // Return new swap
+        return !additions ? self : self.addClass(additions);
+    };
 
-        if ($(this).val() != '') {
+    // Replace special chars
+    nilai.replaceSpecial = function(str) {
+        if (str !== undefined && str !== null) {
+            var regex = null;
+            for (var i in nilai.special_chars) {
+                regex = new RegExp(i, 'gi');
+                str   = str.replace(regex, nilai.special_chars[i]);
+            }
+        }
+        return str;
+    };
 
-          urlid = $("#urlid").val();
-          note = $(this).val();
-          
-          $.ajax({
-            url: "/marks/savenote?urlid="+urlid+"&note="+encodeURIComponent(note),
-            success: function(){}
-          });
-        }
-      });
-      
-      // !Archive mark
-      // Asynchronously archive or restore.
-      $('.archivemark').click(function(e){
-        e.preventDefault();
-        
-        url = $(this).attr("href");
-        
-        markid = $(this).attr("data-mark");
-        preview = $('#preview-'+markid);
-        note = $('#note-'+markid);
-        
-        if (preview && !$(preview).is(':hidden')) {
-          preview.toggle();
-        }
-        
-        if (note && !$(note).is(':hidden')) {
-          note.toggle();
-        }
-        
-        $.ajax({
-          url: url,
-          success: function(){}
-        });
-        
-        $(this).parent().parent().parent().hide(800);
-      });
-      
-      // If "edit marks" is clicked, show edit buttons and activate button
-      /*$('.editmarks').click(function(){
-        if ($(this).hasClass('active')) {
-          $(this).removeClass('active');
-          $(this).html('Edit marks');
-        } else {
-          $(this).addClass('active');
-          $(this).html('Stop editing');
-        }
-        
-        $('.archivemark').toggle();
-        $('.editmark').toggle();
-      }); *
-      
-      //Edit icon per mark
-      /*$('.mark h3').hover(function(){
-        $(this).children('.editmark').toggle();
-      });*/
-      
-      // !Preview button
-      $('.preview-button').click(function(e){
-        e.preventDefault();
+    // Encode for URL
+    nilai.urlEncode = function(str) {
+        str = nilai.replaceSpecial(str);
+        return encodeURIComponent(str);
+    };
 
-        preview = $(this).attr("href");
-        markid = $(this).attr("data-mark");
-        mark = $('#mark-'+markid);
-        
-        // Show/hide
-        $(preview).toggle();
-        
-        if (!$(preview).is(':hidden')) {
-          //$.scrollTo(mark,900);
-          $(mark+' > .preview-button i').removeClass('icon-zoom-in');
-          $(mark+' > .preview-button i').addClass('icon-zoom-out');
-        } else {
-          $(mark+' > .preview-button i').removeClass('icon-zoom-out');
-          $(mark+' > .preview-button i').addClass('icon-zoom-in');
-        }
-      });
-      
-      // !Restored mark
-      // Show a mark has been restored
-      $('.restored').hide();
-      $('.restored').fadeIn(1000);
-      
-})
-}(window.jQuery)
+    // Nice Check Empty Function
+    nilai.empty = function(v) {
+        var l = (v !== undefined && v !== null) ? v.length : 0;
+        return (v === false || v === '' || v === null || v === 0 || v === undefined || l < 1);
+    };
+
+}(window.jQuery));

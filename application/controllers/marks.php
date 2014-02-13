@@ -265,8 +265,8 @@ class Marks extends Plain_Controller
         if ($this->data['labels'] !== false) {
             $this->load->model('labels_model', 'labels');
             foreach($this->data['labels'] as $k => $label) {
-                $this->data['labels'][$k]->total_active_marks   = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "' AND archived_on IS NULL");
-                $this->data['labels'][$k]->total_inactive_marks = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "' AND archived_on IS NOT NULL");
+                $this->data['labels'][$k]->total_active_marks   = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "' AND archived_on IS NULL AND active = '1'");
+                $this->data['labels'][$k]->total_inactive_marks = $this->user_marks->count("label_id = '" . $label->label_id . "' AND user_id = '" . $this->user_id . "' AND archived_on IS NOT NULL AND active = '1'");
                 $this->data['labels'][$k]->total_marks          = $this->data['labels'][$k]->total_active_marks + $this->data['labels'][$k]->total_inactive_marks;
             }
         }
@@ -345,6 +345,12 @@ class Marks extends Plain_Controller
 
         // Get limit
         $this->limit = (isset($this->clean->limit) && is_numeric($this->clean->limit) && $this->clean->limit < $this->limit) ? $this->clean->limit : $this->limit;
+
+        // Set sort
+        $sort = (isset($this->clean->sort) && ! empty($this->clean->sort)) ? strtolower($this->clean->sort) : 'newest';
+        $sort = ($sort != 'newest' && $sort != 'oldest') ? 'newest' : $sort;
+        $sort = ($sort == 'oldest') ? 'ASC' : 'DESC';
+        $this->user_marks->sort = ($lookup == 'archive') ? 'archived_on ' . $sort : 'created_on ' . $sort;
 
         // Set allowable textual starts
         $valid_lookups = array(
@@ -448,7 +454,8 @@ class Marks extends Plain_Controller
         $page = findPage();
 
         // Archives
-        $archive = ($lookup == 'archive') ? 'IS NOT NULL' : 'IS NULL';
+        $search_archives = (isset($this->clean->archive) && ! empty($this->clean->archive) && $lookup == 'search') ? true : false;
+        $archive         = ($lookup == 'archive' || $search_archives == true) ? 'IS NOT NULL' : 'IS NULL';
 
         // Search it up
         $search = null;
@@ -456,11 +463,13 @@ class Marks extends Plain_Controller
             $search = " AND users_to_marks.notes LIKE '%" . $this->db_clean->q . "%'";
             $options['search']  = $this->db_clean->q;
             $options['user_id'] = $this->user_id;
+            $options['archive'] = $archive;
         }
 
         // Set where
         $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.active = '1' AND users_to_marks.archived_on " . $archive . $where_time . $search;
 
+        // Set actual sort
         // Get all the marks
         $marks = $this->user_marks->readComplete($where, $this->limit, $page, null, $options);
 
@@ -481,7 +490,7 @@ class Marks extends Plain_Controller
 
             // If a search, get totals here
             if (isset($options['search'])) {
-                $this->data = $this->user_marks->getTotalsSearch($page, $this->limit, $this->data, $options['search'], $options['user_id']);
+                $this->data = $this->user_marks->getTotalsSearch($page, $this->limit, $this->data, $options['search'], $options['user_id'], $options['archive']);
             }
             // Everthing else here
             else {
@@ -526,6 +535,9 @@ class Marks extends Plain_Controller
         else {
             $this->data['mark'] = $mark;
         }
+
+        $this->data['no_header'] = true;
+        $this->data['no_footer'] = true;
 
         // Figure view
         $this->figureView('marks/info');

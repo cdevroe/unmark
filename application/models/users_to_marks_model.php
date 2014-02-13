@@ -127,7 +127,7 @@ class Users_To_Marks_model extends Plain_Model
         return $this->count("user_id='". $user_id . "'" . $when);
     }
 
-    public function getTotalsSearch($page, $limit, $data=array(), $keyword, $user_id)
+    public function getTotalsSearch($page, $limit, $data=array(), $keyword, $user_id, $archive)
     {
 
         $q = $this->db->query("
@@ -145,7 +145,7 @@ class Users_To_Marks_model extends Plain_Model
                 (
                     SELECT users_to_marks.users_to_mark_id
                     FROM marks
-                    INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $user_id . "' AND users_to_marks.archived_on IS NULL AND users_to_marks.active = '1'
+                    INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $user_id . "' AND users_to_marks.archived_on " . $archive . " AND users_to_marks.active = '1'
                     WHERE
                     marks.title LIKE '%" . $keyword . "%'
                     OR marks.url LIKE '%" . $keyword . "%'
@@ -218,7 +218,7 @@ class Users_To_Marks_model extends Plain_Model
             $search_query = "
                 SELECT " . $fields . "
                 FROM marks
-                INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $options['user_id'] . "' AND users_to_marks.active = '1' AND users_to_marks.archived_on IS NULL " . $joins . "
+                INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $options['user_id'] . "' AND users_to_marks.active = '1' AND users_to_marks.archived_on " . $options['archive'] . ' ' . $joins . "
                 WHERE marks.title LIKE '%" . $options['search'] . "%' OR marks.url LIKE '%" . $options['search'] . "%'" . $group_by;
 
             $query = '(' . $query . ') UNION DISTINCT (' . $search_query . ')';
