@@ -94,6 +94,13 @@
         }
     };
 
+    // Pagination on Scroll
+    nilai.scrollPaginate = function (cont) {
+        if(cont.scrollTop() + cont.innerHeight() >= cont[0].scrollHeight) {
+            console.log('end reached');
+        }
+    };
+
     // Simple Ajax method to get a list of results from API
     nilai.getData = function (what, caller) {
         nilai.ajax('/marks/get/'+what, 'post', '', caller);

@@ -113,11 +113,15 @@
             $(this).parent().parent().find('.response-message').hide();
         });
 
-
         // Close Overlay
         $(document).on('click', '#nilaiModalClose', function (e) { 
             e.preventDefault(); 
             return nilai.overlay(false); 
+        });
+
+        // Set up Scrolling
+        nilai.main_content.on('scroll', function (e){
+            nilai.scrollPaginate($(this));
         });
         
     };
