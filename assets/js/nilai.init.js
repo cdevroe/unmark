@@ -100,14 +100,19 @@
             });
         }
 
-        // Change Password Submit
+        // Change Password & Email Submit
         $('#passwordUpdate').on('submit', function (e) {
             e.preventDefault();
             nilai.send_password_change($(this));
         });
+        $('#emailUpdate').on('submit', function (e) {
+            e.preventDefault();
+            nilai.send_email_change($(this));
+        });
         $('#helperforms input.field-input').on('keydown change', function () {
             $(this).parent().parent().find('.response-message').hide();
         });
+
 
         // Close Overlay
         $(document).on('click', '#nilaiModalClose', function (e) { 

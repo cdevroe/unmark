@@ -63,7 +63,7 @@
                 <li><a href="#" class="action" data-action="awesome">Turn On Awesome</a></li>
             </ul>
 
-            <h4 class="nav-heading">Account <span>[ <?php print $user['email']; ?> ]</span></h4>
+            <h4 class="nav-heading">Account <span id="user-email">[ <?php print $user['email']; ?> ]</span></h4>
             <ul class="nav-list">
                 <li><a href="#" class="action" data-action="change_password">Change Password</a></li>
                 <li><a href="#" class="action" data-action="change_email">Change Email Address</a></li>
