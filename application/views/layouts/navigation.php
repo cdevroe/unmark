@@ -1,11 +1,11 @@
 <div class="navigation-content">
-    <div class="menu-activator menu-item"><a rel="200" href="#panel-menu"><i class="barley-icon-reorder"></i></a></div>
-    <div class="menu-marks menu-item"><a href="/marks"><i class="barley-icon-link"></i></a></div>
-    <div data-menu="panel-label" class="menu-labels menu-item"><a rel="200" href="#panel-label"><i class="barley-icon-circle"></i></a></div>
-    <div data-menu="panel-timeline" class="menu-timeline menu-item"><a rel="250" href="#panel-timeline"><i class="barley-icon-time"></i></a></div>
-    <div data-menu="panel-search" class="menu-search menu-item"><a rel="350" href="#panel-search"><i class="barley-icon-search"></i></a></div>
-    <div data-menu="panel-archives" class="menu-search menu-item"><a href="/marks/archive"><i class="barley-icon-briefcase"></i></a></div>
-    <div data-menu="panel-settings" class="menu-settings menu-item"><a rel="350" href="#panel-settings"><i class="barley-icon-cog"></i></a></div>
+    <div class="menu-activator menu-item"><a rel="200" href="#panel-menu"><i class="icon-menu_open"></i></a></div>
+    <div class="menu-marks menu-item"><a href="/marks"><i class="icon-links"></i></a></div>
+    <div data-menu="panel-label" class="menu-labels menu-item"><a rel="200" href="#panel-label"><i class="icon-label"></i></a></div>
+    <div data-menu="panel-timeline" class="menu-timeline menu-item"><a rel="250" href="#panel-timeline"><i class="icon-time"></i></a></div>
+    <div data-menu="panel-search" class="menu-search menu-item"><a rel="350" href="#panel-search"><i class="icon-search"></i></a></div>
+    <div data-menu="panel-archives" class="menu-search menu-item"><a href="/marks/archive"><i class="icon-archive"></i></a></div>
+    <div data-menu="panel-settings" class="menu-settings menu-item"><a rel="350" href="#panel-settings"><i class="icon-settings"></i></a></div>
 </div>
 
 <div class="navigation-pane">
@@ -42,7 +42,7 @@
         <div id="panel-search" class="nav-panel">
             <form method="get" action="/marks/search" id="search-form">
                 <input type="text" name="q" id="search-input" placeholder="SEARCH...">
-                <i class="barley-icon-chevron-right"></i>
+                <i class="icon-go"></i>
             </form>
             
             <h4 class="nav-heading">Most-Used Tags</h4>
