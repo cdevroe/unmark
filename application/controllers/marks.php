@@ -454,7 +454,8 @@ class Marks extends Plain_Controller
         $page = findPage();
 
         // Archives
-        $archive = ($lookup == 'archive') ? 'IS NOT NULL' : 'IS NULL';
+        $search_archives = (isset($this->clean->archive) && ! empty($this->clean->archive) && $lookup == 'search') ? true : false;
+        $archive         = ($lookup == 'archive' || $search_archives == true) ? 'IS NOT NULL' : 'IS NULL';
 
         // Search it up
         $search = null;
@@ -462,6 +463,7 @@ class Marks extends Plain_Controller
             $search = " AND users_to_marks.notes LIKE '%" . $this->db_clean->q . "%'";
             $options['search']  = $this->db_clean->q;
             $options['user_id'] = $this->user_id;
+            $options['archive'] = $archive;
         }
 
         // Set where
@@ -488,7 +490,7 @@ class Marks extends Plain_Controller
 
             // If a search, get totals here
             if (isset($options['search'])) {
-                $this->data = $this->user_marks->getTotalsSearch($page, $this->limit, $this->data, $options['search'], $options['user_id']);
+                $this->data = $this->user_marks->getTotalsSearch($page, $this->limit, $this->data, $options['search'], $options['user_id'], $options['archive']);
             }
             // Everthing else here
             else {
