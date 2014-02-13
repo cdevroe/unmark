@@ -346,6 +346,12 @@ class Marks extends Plain_Controller
         // Get limit
         $this->limit = (isset($this->clean->limit) && is_numeric($this->clean->limit) && $this->clean->limit < $this->limit) ? $this->clean->limit : $this->limit;
 
+        // Set sort
+        $sort = (isset($this->clean->sort) && ! empty($this->clean->sort)) ? strtolower($this->clean->sort) : 'newest';
+        $sort = ($sort != 'newest' && $sort != 'oldest') ? 'newest' : $sort;
+        $sort = ($sort == 'oldest') ? 'ASC' : 'DESC';
+        $this->user_marks->sort = ($lookup == 'archive') ? 'archived_on ' . $sort : 'created_on ' . $sort;
+
         // Set allowable textual starts
         $valid_lookups = array(
             'all'               => array('start' => null, 'finish' => null),
@@ -461,6 +467,7 @@ class Marks extends Plain_Controller
         // Set where
         $where = "users_to_marks.user_id='". $this->user_id . "' AND users_to_marks.active = '1' AND users_to_marks.archived_on " . $archive . $where_time . $search;
 
+        // Set actual sort
         // Get all the marks
         $marks = $this->user_marks->readComplete($where, $this->limit, $page, null, $options);
 
