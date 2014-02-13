@@ -342,6 +342,7 @@ class Marks extends Plain_Controller
         $segments = $this->uri->segment_array();
         $lookup   = (isset($segments[2]) && ! empty($segments[2])) ? strtolower(trim(urldecode($segments[2]))) : 'all';
         $finish   = (isset($segments[3]) && ! empty($segments[3])) ? strtolower(trim(urldecode($segments[3]))) : null;
+        $lookup   = (is_numeric($lookup) && empty($finish)) ? 'all' : $lookup;
 
         // Get limit
         $this->limit = (isset($this->clean->limit) && is_numeric($this->clean->limit) && $this->clean->limit < $this->limit) ? $this->clean->limit : $this->limit;
