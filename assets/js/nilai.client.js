@@ -35,6 +35,10 @@
         nilai.overlay(true);
         $('#resetPasswordForm').show().animate({ top: 0 }, 1000);
     };
+    nilai.change_email = function () {
+        nilai.overlay(true);
+        $('#changePasswordForm').show().animate({ top: 0 }, 1000);
+    };
 
     // Submit Password Change
     nilai.send_password_change = function (form) {
@@ -63,6 +67,33 @@
             new_pass_field.val('');
             showSpinner(form, false);
             return showMessage(form, true, 'New Passwords do not match'); 
+        }
+    };
+
+    // Submit Email Change
+    nilai.send_email_change = function (form) {
+        var query, 
+            email_field = $('#emailupdate'),
+            email_value = email_field.val();
+
+        showSpinner(form, true);
+
+        if (email_value !== '') {
+            query = 'email='+email_value;
+            nilai.ajax('/user/update/email', 'post', query, function (res) {
+                if (res.success) {
+                    showMessage(form, false, 'Your email has been changed.');
+                    $('#user-email').empty().text('[ '+email_value+' ]');
+                } else {
+                    showMessage(form, true, res.message);
+                }
+                showSpinner(form, false);
+                email_field.val('');
+            });
+        } else { 
+            email_field.val('');
+            showSpinner(form, false);
+            return showMessage(form, true, 'Please enter something!'); 
         }
     };
 

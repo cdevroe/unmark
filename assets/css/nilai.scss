@@ -1083,6 +1083,12 @@ body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
             display: block;
         }
     }
+    #changePasswordForm {
+        .login-submit {
+            top: 1px;
+            display: block;
+        }
+    }
 }
 
 // Overlay

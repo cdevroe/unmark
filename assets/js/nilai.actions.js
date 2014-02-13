@@ -124,6 +124,7 @@
             overlay.appendTo(document.body);
         } else {
             $('#resetPasswordForm').hide().css('top', '-300px');
+            $('#changePasswordForm').hide().css('top', '-300px');
             nilai.mainpanels.removeClass('blurme');
             $('#nilai-overlay').remove();
         }
