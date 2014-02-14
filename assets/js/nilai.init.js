@@ -35,8 +35,8 @@
             nilai.page_setup($(window).outerHeight(true));
         });
 
-        // Set Cookies
-        nilai.createCookie('nilai_page', 1, 7);
+        // Set any window variables
+        window.nilai_current_page = 1;
 
         // Animate the body fading in
         $('body').animate({opacity: 1}, 1000);
@@ -104,6 +104,8 @@
                 $.pjax.submit(e, nilai.main_content);
             });
             $(document).on('pjax:complete', function() {
+                window.nilai_current_page = 1;
+                nilai.main_content.scrollTop(0);
                 nilai.main_content.find('.marks').hide().fadeIn();
                 nilai.updateDom();
             });

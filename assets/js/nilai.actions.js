@@ -96,20 +96,31 @@
 
     // Pagination on Scroll
     nilai.scrollPaginate = function (cont) {
-        var url, page, i, template, output = '', next_page,
-            mark_count = nilai.vars.per_page;
+        var url, page, i, template, output = '', next_page, mark_count,
+            next_page = window.nilai_current_page + 1,
+            total_pages = window.nilai_total_pages;
+
         if (cont.scrollTop() + cont.innerHeight() >= cont[0].scrollHeight) {
-            template = Hogan.compile(nilai.template.marks);
-            url = window.location.pathname;
-            next_page = parseInt(nilai.readCookie('nilai_page')) + 1;
-            console.log(next_page);
-            nilai.ajax(url+next_page, 'post', '', function (res) {
-                for (i = 1; i < mark_count; i++) {
-                    output += template.render(res.marks[i]);
-                }
-                nilai.main_content.find('.marks_list').append(output);
-                nilai.createCookie('nilai_page', next_page, 7);
-            });
+
+            console.log('Next Page: ' + next_page);
+            console.log('Total Pages: ' + total_pages);
+
+            if (next_page <= total_pages) {
+
+                template = Hogan.compile(nilai.template.marks);
+                url = window.location.pathname;
+                nilai.ajax(url+'/'+next_page, 'post', '', function (res) {
+
+                    if (res.marks) {
+                        mark_count = Object.keys(res.marks).length;
+                        for (i = 1; i < mark_count; i++) {
+                            output += template.render(res.marks[i]);
+                        }
+                        nilai.main_content.find('.marks_list').append(output);
+                        window.nilai_current_page = next_page;
+                    }
+                });
+            }
         }
     };
 
