@@ -4,6 +4,12 @@
  * JSONExport Class
  *
  * Library that handles nilai data export into JSON file
+ * Export should be able to handle data regardless of number
+ * of marks to export. So data are processed in packs, saved
+ * to temporary file and served as attachment in the end.
+ * JSON file format has to be well defined in order to import
+ * it later line-by-line, without need to load it as a whole
+ * into memory.
  *
  * @category Libraries
  */

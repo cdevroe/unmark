@@ -43,6 +43,8 @@ class Export extends Plain_Controller
         $this->load->model('users_to_marks_model', 'user_marks');
         $where = 'users_to_marks.user_id='. $this->user_id;
         $marksCount = $this->user_marks->count($where);
+        // Number of marks
+        $this->jsonexport->addMeta('marks_count', $marksCount);
         $pages = ceil((double) $marksCount / (double) self::PAGE_SIZE);
         // Get page of data
         for($curPage=1;$curPage<=$pages;$curPage++){
@@ -57,8 +59,6 @@ class Export extends Plain_Controller
                 $this->jsonexport->addMark($pageResults);
             }
         }
-        // Number of marks
-        $this->jsonexport->addMeta('marks_count', $marksCount);
         // Write the file as attachment
         $file = $this->jsonexport->getFileForOutput();
         $this->output->set_content_type('application/json');
