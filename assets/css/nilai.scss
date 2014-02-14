@@ -87,6 +87,7 @@ body {
         border-left:none;
         border-top:none;
         background: $color_white;
+        box-shadow:none;
     }
     &#nilai-login {
         background: $color_darkest;
@@ -874,12 +875,6 @@ canvas.graph {
             text-transform: uppercase;
             display: block;
         }
-        i {
-            position:absolute;
-            font-size: 18px;
-            top: 19px;
-            right: 25px;
-        }
         section {
             display:none;
             position: absolute;
@@ -893,8 +888,25 @@ canvas.graph {
         }
         &.mark-added-label section {
             padding: 0;
-            top: 66px;
+            top: 18px;
+            left: 15px;
             z-index: 999;
+        }
+        #label-chosen {
+            position: absolute;
+            right: 25px;
+            top: 23px;
+            z-index: 9999;
+            display: none;
+            font-size: 17px;
+            font-weight: 600;
+            color: $color_grey;
+            &.label-2 { color: $color_orange; }
+            &.label-3 { color: $color_blue; }
+            &.label-4 { color: $color_yellow; }
+            &.label-5 { color: $color_purple; }
+            &.label-6 { color: $color_green; }
+            &.label-7 { color: $color_red; }
         }
     }
     .mark-added-note {
@@ -927,23 +939,29 @@ canvas.graph {
         float: left;
         a {
             display: block;
-            float: left;
             color: $color_grey;
-            width: 198px;
             text-align: left;
             padding: 15px 0 15px 39px;
-            box-shadow: 1px 1px 0px $color_grey;
             position: relative;
             font-size: 11px;
             &:before {
                 content: "";
                 position: absolute;
-                top: 12px;
+                top: 6px;
                 left: 10px;
                 width: 20px;
                 height: 20px;
                 border-radius: 50%;
                 background: $color_grey !important;
+                opacity: 0.3;
+            }
+            &:hover {
+                &:before {
+                    opacity: 1;
+                }
+            }
+            span {
+                display:none;
             }
         }
         &.label-2 a {
@@ -969,11 +987,6 @@ canvas.graph {
         &.label-7 a {
             color: $color_red;
             &:before { background: $color_red !important; }
-        }
-        &.label-smart a {
-            width:396px;
-            color: $color_black;
-            &:before { background: $color_black !important; }
         }
     }
 }

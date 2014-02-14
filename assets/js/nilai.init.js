@@ -130,6 +130,18 @@
             return nilai.overlay(false); 
         });
 
+        // Label Hovers
+        $(document).on('mouseenter', '.label-choices li', function (e) {
+            var label = $(this),
+                label_name = label.find('span').text(),
+                label_class = label.attr('class');
+            $('#label-chosen').show().text(label_name).removeClass().addClass(label_class);
+        });
+        $(document).on('mouseleave', '.label-choices li', function (e) {
+            $('#label-chosen').show().hide();
+        });
+
+
         // Set up Scrolling
         nilai.main_content.on('scroll', function (e){
             nilai.scrollPaginate($(this));
