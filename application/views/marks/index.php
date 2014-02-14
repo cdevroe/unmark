@@ -15,19 +15,19 @@
             $heading['title']   =   $total . $link_plural . "labeled " . $active_label['label_name'];
             break;
         case 'archive':
-            $heading['icon']    =   'barley-icon-briefcase';
+            $heading['icon']    =   'icon-heading_archive';
             $heading['title']   =   $total . $link_plural . "archived";
             break;
         case 'tag':
-            $heading['icon']    =   'barley-icon-tag';
+            $heading['icon']    =   'icon-heading_tag';
             $heading['title']   =   $total . $link_plural . "tagged " . $active_tag['tag_name'];
             break;
         case 'search':
-            $heading['icon']    =   'barley-icon-search';
-            $heading['title']   =   $total . $link_plural . "found in \"" . $search_term . "\"";
+            $heading['icon']    =   'icon-heading_search';
+            $heading['title']   =   $total . $link_plural . "found containing \"" . $search_term . "\"";
             break;
         default:
-            $heading['icon']    =   'barley-icon-time';
+            $heading['icon']    =   'icon-heading_time';
             $heading['title']   =   $total . $link_plural;
             $default_title      = true;
     }
@@ -74,7 +74,7 @@
                 </div>
                 <div class="mark-actions">
                     <a class="action mark-info" href="#" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>" class="mark-more">
-                        <i class="barley-icon-elipsis"></i>
+                        <i class="icon-goto_link"></i>
                     </a>
                     <?php if ($lookup_type == "archive") : ?>
                         <a class="action mark-archive" data-action="mark_restore" href="#" data-id="<?php print $mark->mark_id; ?>">
@@ -82,7 +82,7 @@
                         </a>
                     <?php else : ?>
                         <a class="action mark-archive" data-action="mark_archive" href="#" data-id="<?php print $mark->mark_id; ?>">
-                            <i class="barley-icon-ok"></i>
+                            <i class="icon-check"></i>
                         </a>
                     <?php endif; ?>
                 </div>

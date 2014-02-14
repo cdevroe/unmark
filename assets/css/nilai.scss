@@ -35,15 +35,34 @@ $color_grey   : #A5A6AA;
 // Font Variables
 $serif      : 'Merriweather', serif;
 $sans-serif : 'Lato', sans-serif;
+$title      : 'Montserrat', sans-serif;
 
 /* normalize.css v2.1.3 | MIT License | git.io/normalize */article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background:0 0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
 
 
+@mixin title-text {
+    font-family: $title;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+@mixin font-smoothing {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
 // ================ Body
+*, *:before, *:after {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
 html { background: $color_darkest; }
 body, html{
     min-height: 100%; 
     height:100%; 
+
 }
 body[data-lookup="all"] { opacity: 0; }
 body {
@@ -52,8 +71,11 @@ body {
     font-weight: 300;
     min-height: 100%;
     color:$color_dark;
-    border-left:65px solid $color_dark;
-    border-top: 8px solid $color_darker;
+    //border-left:65px solid $color_dark;
+    //border-top: 8px solid $color_darker;
+    background: darken($color_darkest, 4); 
+    box-shadow: 0 120px 130px -70px $color_darkest inset;
+    @include font-smoothing;
     a {
         color: $color_white;
         text-decoration:none;
@@ -92,6 +114,8 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
     position: absolute;
     top: 8px;
     left: 65px;
+    z-index: 201;
+    box-shadow: 0 2px 14px 0 rgba(0,0,0,0.3), 0 1px 3px 0 rgba(0,0,0,0.18);
     .inner-wrapper {
         @include span-columns(12);
         @include row(table);
@@ -110,30 +134,41 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
     z-index: 200;
     background-color: $color_dark;
     min-height: 100%;
+    margin-top: 64px;
     .menu-item {
         height: inherit;
         text-align: center;
         border-bottom:1px solid $color_lightest;
         cursor: pointer;
+        height: 64px;
         a {
             color: $color_white;
             text-decoration:none;
-            padding: 8px 0 15px 0;
-            width:65px;
+            padding: 20px 0;
+            width: 64px;
+            height: 64px;
             display: block;
             i {
                 font-size: 27px;
+                width: 24px;
+                height: 24px;
+                display: block;
+                background-size: 100%;
+                margin: 0 auto;
             }
         }
         &.active-menu {
             background: #303030;
+            box-shadow: 1px 0 0 0 #303030;
+            width: 66px;
         }    
     }
     .menu-item:first-child {
         border-bottom:none;
     }
     .menu-activator {
-        background-color: $color_darker;
+        background-color: transparent;
+        margin-top: -64px;
     }
     .menu-settings {
         position: absolute;
@@ -145,15 +180,16 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
 }
 
 .navigation-pane {
-    width:200px;
+    width: 200px;
     background-color: $color_dark;
     min-height: 100%;
     height: 100%;
-    position:absolute;
-    top:0;
+    position: absolute;
+    top: 0;
     left:-193px;
     z-index: 100;
-    border-top: 56px solid $color_darker;
+    //border-top: 64px solid $color_darker;
+    margin-top: 64px;
     ul.navigation-pane-links {
         margin:0;
         padding:0;
@@ -161,12 +197,13 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
             list-style: none;
             a {
                 display: block;
+                @include title-text;
                 color: $color_white;
-                border-bottom:1px solid $color_lightest;
-                font-weight: 300;
-                text-transform: uppercase;
-                font-size: 13px;
+                border-bottom: 1px solid $color_lightest;
+                font-size: 12px;
                 padding: 20px 0 20px 10px;
+                height: 64px;
+                line-height: 21px;
             }
         }
         li.panel-settings {
@@ -193,6 +230,8 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
             width: 200px;
             padding: 10px 20px;
             overflow: scroll;
+            border-left: 1px solid;
+            border-color: lighten($color_dark, 8%);
         }
     }
 }
@@ -205,11 +244,12 @@ ul.label-list {
         list-style: none;
         position: relative;
         a {
+            @include title-text;
             color: $color_white;
             display: block;
             border-bottom: none;
             padding: 0;
-            font-size: 12px;
+            font-size: 11px;
             padding: 0 50px 45px 0;
             position: relative;
             z-index: 900;
@@ -217,10 +257,10 @@ ul.label-list {
         span {
             display: block;
             font-style: italic;
-            font-weight: 300;
-            font-size: 12px;
-            color: $color_light;
-            margin-top: 5px;
+            font-weight: 400;
+            font-size: 11px;
+            color: darken($color_light, 15%);
+            margin-top: 2px;
             position: absolute;
             right: 50px;
             top: 15px;
@@ -245,13 +285,12 @@ ul.label-list {
 }
 
 h4.nav-heading {
-    font-weight: 300;
-    text-transform: uppercase;
-    font-size: 12px;
-    border-bottom: 1px solid $color_light;
-    padding: 0 0 10px 0;
+    @include title-text;
+    font-size: 11px;
+    border-bottom: 1px solid $color_dark;
+    padding: 0 0 14px 2px;
     margin-top: 50px;
-    color: $color_light;
+    color: $color_lighter;
     span {
         text-transform: lowercase;
         font-size: 12px;
@@ -282,16 +321,37 @@ ul.nav-list {
         input {
             background: $color_white;
             width: 310px;
-            padding: 8px 15px;
-            font-size: 12px;
-            letter-spacing: .1em;
+            padding: 10px 13px;
+            font-size: 13px;
+            font-weight: 300;
+            box-shadow: none;
+            border: none;
+        }
+        ::-webkit-input-placeholder {
+            @include title-text;
+            font-size: 11px;
+            color: $color_light;
+            line-height: 17px;
+        }
+        ::-moz-placeholder {  /* Firefox 19+ */
+            @include title-text;
+            font-size: 11px;
+            color: $color_light;
+            line-height: 17px;
+        }
+        :-ms-input-placeholder {  
+            @include title-text;
+            font-size: 11px;
+            color: $color_light;
+            line-height: 17px;
         }
         i {
             position: absolute;
-            top: 8px;
+            top: 12px;
             right: 8px;
-            color: $color_darker;
-            font-size: 13px;
+            width: 11px;
+            height: 11px;
+            background-size: 100%;
         }
     }
     ul.tag-list {
@@ -301,11 +361,12 @@ ul.nav-list {
             list-style: none;
             color: $color_light;
             a {
-                color: $color_light;
+                color: $color_lighter;
                 border-bottom: none;
-                padding: 10px;
+                padding: 8px 10px;
                 text-transform: inherit;
-                display:block;
+                display: block;
+                font-size: 14px;
             }
         }
     }
@@ -329,24 +390,28 @@ ul.nav-list {
     position: absolute;
     background: $color_white;
     h2.marks-heading {
-        font-weight: 400;
+        @include title-text;
         margin: 0;
-        border-bottom: 1px solid #000;
-        padding: 14px 25px;
-        font-size: 15px;
-        text-transform: uppercase;
-        letter-spacing: .1em;
+        padding: 14px 18px;
+        font-size: 13px;
+        line-height: 26px;
         @include drop-shadow-border();
         position:fixed;
         width:100%;
         background: $color_white;
         z-index: 500;
+        height: 56px;
         i {
-            padding-right: 10px;
+            vertical-align: -4px;
+            margin-right: 6px;
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            background-size: 100%;
         }
     }
     .marks {
-        margin-top: 48px;
+        margin-top: 56px;
         &#lookup-all {
             margin-top:0;
         }
@@ -363,10 +428,10 @@ ul.nav-list {
     .mark {
         cursor: pointer;
         border-bottom:1px solid $color_lighter;
-        padding: 25px 60px 25px 25px;
+        padding: 24px 70px 32px 25px;
         position:relative;
         h2 {
-            margin:0 0 9px 0;
+            margin:0 0 12px 0;
             font-weight: 300;
             a {
                 color:$color_dark;
@@ -375,20 +440,22 @@ ul.nav-list {
         .mark-meta {
             font-style: italic;
             font-size: 12px;
-            color:$color_light;
+            color: darken($color_light, 15%);
             .mark-sep {
-                padding: 0 5px; 
+                padding: 0 6px 0 5px; 
+                color: lighten($color_light, 15%);
             }
             .mark-link a {
                 text-decoration: none;
-                color: $color_light;
+                color: darken($color_light, 15%);
             }
         }
         &:after {
             content: "";
             position: absolute;
-            top: 39%;
-            right: 2%;
+            top: 50%;
+            margin-top: -11px;
+            right: 18px;
             width: 22px;
             height: 22px;
             border-radius: 50%;
@@ -401,23 +468,25 @@ ul.nav-list {
             right: 0;
             z-index: 400;
             a {
-                background: $color_grey;
+                background: lighten($color_grey, 7%);
                 display: block;
                 text-align: center;
-                width: 52px;
+                width: 58px;
                 padding: 0;
                 position:relative;
                 i {
                     font-size: 19px;
                     position: absolute;
-                    top: 33%;
-                    left: 31%;
+                    top: 50%;
+                    left: 50%;
+                    display: block;
+                    width: 22px;
+                    height: 22px;
+                    margin: -11px 0 0 -11px;
+                    background-size: 100%;
                 }
                 &.mark-archive {
-                    background: lighten( $color_grey, 10% );
-                    i {
-                        left: 33%;
-                    }
+                    background: lighten( $color_grey, 18%);
                 }
             }
         }
@@ -426,9 +495,9 @@ ul.nav-list {
                 background: $color_orange;           
             }
             .mark-actions a {
-                background: $color_orange;
+                background: lighten($color_orange, 7%);
                 &.mark-archive {
-                    background: lighten( $color_orange, 10% )
+                    background: lighten( $color_orange, 18%);
                 }
             }
         }
@@ -437,9 +506,9 @@ ul.nav-list {
                 background: $color_blue;         
             }
             .mark-actions a {
-                background: $color_blue;
+                background: lighten($color_blue, 7%);
                 &.mark-archive {
-                    background: lighten( $color_blue, 10% )
+                    background: lighten( $color_blue, 18%);
                 }
             }
         }
@@ -450,7 +519,7 @@ ul.nav-list {
             .mark-actions a {
                 background: $color_yellow;
                 &.mark-archive {
-                    background: lighten( $color_yellow, 10% )
+                    background: lighten( $color_yellow, 9%);
                 }
             }
         }
@@ -459,9 +528,9 @@ ul.nav-list {
                 background: $color_purple;           
             }
             .mark-actions a {
-                background: $color_purple;
+                background: lighten($color_purple, 7%);
                 &.mark-archive {
-                    background: lighten( $color_purple, 10% )
+                    background: lighten( $color_purple, 18%);
                 }
             }
         }
@@ -470,9 +539,9 @@ ul.nav-list {
                 background: $color_green;          
             }
             .mark-actions a {
-                background: $color_green;
+                background: lighten($color_green, 7%);
                 &.mark-archive {
-                    background: lighten( $color_green, 10% )
+                    background: lighten( $color_green, 18%);
                 }
             }
         }
@@ -481,9 +550,9 @@ ul.nav-list {
                 background: $color_pink;        
             }
             .mark-actions a {
-                background: $color_pink;
+                background: lighten($color_pink, 7%);
                 &.mark-archive {
-                    background: lighten( $color_pink, 10% )
+                    background: lighten( $color_pink, 18%);
                 }
             }
         }
@@ -514,12 +583,23 @@ ul.nav-list {
     .sidebar-block {
         @include drop-shadow-border();
         padding: 15px 0;
+        background: #f9f9f9;
         .sidebar-inner {
             padding:0 25px;
         }
     }
     //.sidebar-default { display: none; }
     .sidebar-mark-info { display: none; }
+    &:after {
+        display: block;
+        content: " ";
+        position: absolute;
+        width: 20px;
+        height: 100%;
+        box-shadow: 12px 0 34px -15px rgba(0,0,0,0.11) inset, 2px 0 5px -3px rgba(0,0,0,0.16) inset;
+        top: 0;
+        left: 0;
+    }
 }
 
 .sidebar-mark-info {
@@ -682,15 +762,17 @@ ul.timeline {
     padding:0;
     &:before {
         position: absolute;
-        right: 33px;
-        top: 2px;
+        right: 26px;
+        top: 7px;
         content: ' ';
         display: block;
         width: 2px;
         height: 100%;
         margin-left: -2px;
-        background-color: $color_light;
+        @include linear-gradient(to bottom, $color_light 0%, $color_light 60%, rgba(0,0,0,0) 100%);
+        background-color: transparent;
         z-index: 5;
+        opacity: 0.2; 
     }
     .timeline-dot {
         position: relative;
@@ -703,31 +785,37 @@ ul.timeline {
         font-size: 13px;
         &:before {
             position: absolute;
-            top: -2px;
-            right: 23px;
+            top: 2px;
+            right: 22px;
             content: ' ';
             display: block;
-            width: 14px;
-            height: 14px;
-            margin-left: -10px;
-            background: $color_light;
-            border-radius: 5em;
-            border: 5px solid $color_lightest;
-            z-index: 10;   
+            width: 10px;
+            height: 10px;
+            margin-left: -9px;
+            background: lighten($color_light, 15%);
+            border-radius: 50%;
+            box-shadow: 0 0 0 5px transparentize(white, 0.9), 0 -6px 10px -5px rgba(0,0,0,0.3) inset;
+            z-index: 10;  
         }
         a {
+            @include title-text;
             display: block;
             padding: 0 58px 40px 0;
             margin-bottom: 20px;
             position: relative;
-            z-index: 900;
+            font-size: 11px;
             span {
                 font-style: italic;
+                font-family: $sans-serif;
+                text-transform: none;
+                letter-spacing: normal;
+                word-spacing: normal;
                 display: block;
-                font-size: 12px;
-                padding: 8px 0 0 0;
-                text-transform: lowercase;
-                color: $color_light;
+                font-weight: 400;
+                font-size: 11px;
+                margin-top: 2px;
+                padding: 4px 0 0 0;
+                color: darken($color_light, 15%);
             }
         }
     }
@@ -911,16 +999,26 @@ canvas.graph {
 
 // ==============  Site Label Color Scheme ========
 
-// Body Top Border
+// Body Top Border 
+/*
 body.label-1 { border-top: 8px solid $color_grey; }
 body.label-2 { border-top: 8px solid $color_orange; }
 body.label-3 { border-top: 8px solid $color_blue; }
 body.label-4 { border-top: 8px solid $color_yellow; }
 body.label-5 { border-top: 8px solid $color_purple; }
 body.label-6 { border-top: 8px solid $color_green; }
-body.label-7 { border-top: 8px solid $color_pink; }
+body.label-7 { border-top: 8px solid $color_pink; } 
+*/
+body.label-1 { border-top: none; background: darken($color_grey, 2); box-shadow: 0 120px 130px -70px $color_grey inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
+body.label-2 { border-top: none; background: saturate(darken($color_orange, 2), 2); box-shadow: 0 120px 130px -70px $color_orange inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
+body.label-3 { border-top: none; background: saturate(darken($color_blue, 2), 2); box-shadow: 0 120px 130px -70px $color_blue inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
+body.label-4 { border-top: none; background: saturate(darken($color_yellow, 2), 2); box-shadow: 0 120px 130px -70px $color_yellow inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
+body.label-5 { border-top: none; background: saturate(darken($color_purple, 2), 2); box-shadow: 0 120px 130px -70px $color_purple inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
+body.label-6 { border-top: none; background: saturate(darken($color_green, 2), 2); box-shadow: 0 120px 130px -70px $color_green inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
+body.label-7 { border-top: none; background: saturate(darken($color_pink, 2), 2); box-shadow: 0 120px 130px -70px $color_pink inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
 
 // Menu Activator Settigns
+/*
 body.label-1 .menu-activator { background-color: $color_grey; }
 body.label-2 .menu-activator { background-color: $color_orange; }
 body.label-3 .menu-activator { background-color: $color_blue; }
@@ -928,16 +1026,25 @@ body.label-4 .menu-activator { background-color: $color_yellow; }
 body.label-5 .menu-activator { background-color: $color_purple; }
 body.label-6 .menu-activator { background-color: $color_green; }
 body.label-7 .menu-activator { background-color: $color_pink; }
+*/
 
 // Navigation Pane
-body.label-1 .navigation-pane { border-top: 56px solid $color_grey; }
-body.label-2 .navigation-pane { border-top: 56px solid $color_orange; }
-body.label-3 .navigation-pane { border-top: 56px solid $color_blue; }
-body.label-4 .navigation-pane { border-top: 56px solid $color_yellow; }
-body.label-5 .navigation-pane { border-top: 56px solid $color_purple; }
-body.label-6 .navigation-pane { border-top: 56px solid $color_green; }
-body.label-7 .navigation-pane { border-top: 56px solid $color_pink; }
-
+/*
+body.label-1 .navigation-pane { border-top: 64px solid $color_grey; }
+body.label-2 .navigation-pane { border-top: 64px solid $color_orange; }
+body.label-3 .navigation-pane { border-top: 64px solid $color_blue; }
+body.label-4 .navigation-pane { border-top: 64px solid $color_yellow; }
+body.label-5 .navigation-pane { border-top: 64px solid $color_purple; }
+body.label-6 .navigation-pane { border-top: 64px solid $color_green; }
+body.label-7 .navigation-pane { border-top: 64px solid $color_pink; }
+*/
+body.label-1 .navigation-pane { border-top: none; }
+body.label-2 .navigation-pane { border-top: none; }
+body.label-3 .navigation-pane { border-top: none; }
+body.label-4 .navigation-pane { border-top: none; }
+body.label-5 .navigation-pane { border-top: none; }
+body.label-6 .navigation-pane { border-top: none; }
+body.label-7 .navigation-pane { border-top: none; }
 
 
 // ==============  Login Page Styles ========
