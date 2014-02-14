@@ -97,7 +97,7 @@
     // Pagination on Scroll
     nilai.scrollPaginate = function (cont) {
         if(cont.scrollTop() + cont.innerHeight() >= cont[0].scrollHeight) {
-            console.log('end reached');
+            console.log(window.location.pathname);
         }
     };
 
