@@ -2,8 +2,11 @@
 var nilai  = nilai || {};
 nilai.vars = {};
 nilai.vars.csrf_token = '<?php print $csrf_token; ?>';
-nilai.vars.per_page = <?php print $per_page; ?>;
 <?php 
+// Check for Page Stats
+if(isset($per_page)) {
+    print "nilai.vars.per_page = $per_page;\n";
+}
 // Check for Stats
 if(isset($stats)) {
     print "nilai.vars.stats_set   = true;\n";
