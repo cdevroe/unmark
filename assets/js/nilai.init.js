@@ -29,6 +29,9 @@
         this.main_panel.width(nilai.main_panel_width);
         nilai.page_setup(nilai.body_height);
 
+        // Set Cookies
+        nilai.createCookie('nilai_page', 1, 7);
+
         // Animate the body fading in
         $('body').animate({opacity: 1}, 1000);
 

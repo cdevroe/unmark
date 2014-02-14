@@ -1,7 +1,8 @@
 <script type="text/javascript">
 var nilai  = nilai || {};
 nilai.vars = {};
-nilai.vars.csrf_token   = '<?php print $csrf_token; ?>';
+nilai.vars.csrf_token = '<?php print $csrf_token; ?>';
+nilai.vars.per_page = <?php print $per_page; ?>;
 <?php 
 // Check for Stats
 if(isset($stats)) {
