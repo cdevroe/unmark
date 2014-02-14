@@ -302,12 +302,12 @@ class Marks extends Plain_Controller
         $this->data['stats']['marks'] = array(
             'today'         => self::totalMarks('today', 'tomorrow'),
             'yesterday'     => self::totalMarks('yesterday', 'today'),
-            'last week'     => self::totalMarks('-7 days', 'today'),
-            'last month'    => self::totalMarks('-1 month', 'today'),
-            'last 3 months' => self::totalMarks('-3 months', 'today'),
-            'last 6 months' => self::totalMarks('-6 months', 'today'),
-            'last year'     => self::totalMarks('-1 year', 'today'),
-            'ages ago'      => self::totalMarks('-20 years', '1 year ago'),
+            'last week'     => self::totalMarks('6 days ago', 'tomorrow'),
+            'last month'    => self::totalMarks('29 days ago', 'tomorrow'),
+            'last 3 months' => self::totalMarks('89 days ago', 'tomorrow'),
+            'last 6 months' => self::totalMarks('179 days ago', 'tomorrow'),
+            'last year'     => self::totalMarks('364 days ago', 'tomorrow'),
+            'ages ago'      => self::totalMarks('20 years ago', '364 days ago'),
             'total'         => self::totalMarks()
         );
 
@@ -342,6 +342,7 @@ class Marks extends Plain_Controller
         $segments = $this->uri->segment_array();
         $lookup   = (isset($segments[2]) && ! empty($segments[2])) ? strtolower(trim(urldecode($segments[2]))) : 'all';
         $finish   = (isset($segments[3]) && ! empty($segments[3])) ? strtolower(trim(urldecode($segments[3]))) : null;
+        $lookup   = (is_numeric($lookup) && empty($finish)) ? 'all' : $lookup;
 
         // Get limit
         $this->limit = (isset($this->clean->limit) && is_numeric($this->clean->limit) && $this->clean->limit < $this->limit) ? $this->clean->limit : $this->limit;

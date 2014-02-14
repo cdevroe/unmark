@@ -94,6 +94,25 @@
         }
     };
 
+    // Pagination on Scroll
+    nilai.scrollPaginate = function (cont) {
+        var url, page, i, template, output = '', next_page,
+            mark_count = nilai.vars.per_page;
+        if (cont.scrollTop() + cont.innerHeight() >= cont[0].scrollHeight) {
+            template = Hogan.compile(nilai.template.marks);
+            url = window.location.pathname;
+            next_page = parseInt(nilai.readCookie('nilai_page')) + 1;
+            console.log(next_page);
+            nilai.ajax(url+next_page, 'post', '', function (res) {
+                for (i = 1; i < mark_count; i++) {
+                    output += template.render(res.marks[i]);
+                }
+                nilai.main_content.find('.marks_list').append(output);
+                nilai.createCookie('nilai_page', next_page, 7);
+            });
+        }
+    };
+
     // Simple Ajax method to get a list of results from API
     nilai.getData = function (what, caller) {
         nilai.ajax('/marks/get/'+what, 'post', '', caller);

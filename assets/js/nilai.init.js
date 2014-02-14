@@ -29,6 +29,9 @@
         this.main_panel.width(nilai.main_panel_width);
         nilai.page_setup(nilai.body_height);
 
+        // Set Cookies
+        nilai.createCookie('nilai_page', 1, 7);
+
         // Animate the body fading in
         $('body').animate({opacity: 1}, 1000);
 
@@ -113,11 +116,15 @@
             $(this).parent().parent().find('.response-message').hide();
         });
 
-
         // Close Overlay
         $(document).on('click', '#nilaiModalClose', function (e) { 
             e.preventDefault(); 
             return nilai.overlay(false); 
+        });
+
+        // Set up Scrolling
+        nilai.main_content.on('scroll', function (e){
+            nilai.scrollPaginate($(this));
         });
         
     };
