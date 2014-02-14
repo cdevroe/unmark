@@ -21,13 +21,19 @@
         this.main_panel_width = nilai.main_panel.width(),
         this.sidebar_default = $('.sidebar-default'),
         this.sidebar_mark_info = $('.sidebar-mark-info'),
-        this.body_height = $('body').height(),
+        this.body_height = $(window).outerHeight(true),
         this.special_chars     = { '\\+': '&#43;' };
         this.mainpanels = $('#nilai-wrapper');
 
         // Basic Page Setup
-        this.main_panel.width(nilai.main_panel_width);
+        nilai.main_panel.width(nilai.main_panel_width);
         nilai.page_setup(nilai.body_height);
+
+        // Resize Helper for Dev Tools 
+        // Also for weirdo's who want to resize their browser
+        $(window).on('resize',function () {
+            nilai.page_setup($(window).outerHeight(true));
+        });
 
         // Set Cookies
         nilai.createCookie('nilai_page', 1, 7);
