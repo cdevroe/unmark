@@ -173,7 +173,7 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
     }
     .menu-settings {
         position: absolute;
-        bottom: 0;
+        bottom: 64px;
         left: 0;
         border-top:1px solid $color_lightest;
         border-bottom:none;
