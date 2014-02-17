@@ -42,6 +42,10 @@ class Plain_Migration extends CI_Migration
      * @return string Backup file path
      */
     protected function _make_backup(){
+        if ($this->db->dbdriver != 'mysql') {
+            // FIXME kip9 Look for a way to work with other drivers
+            return false;
+        }
         $fullBackupFileName = $this->_createBackupFile();
         if($fullBackupFileName !== false){
             // Do backup
