@@ -31,28 +31,39 @@ class Users_To_Marks_model extends Plain_Model
 
     public function create($options=array())
     {
+        return $this->validateAndSave($options, true);
+    }
+    
+    public function import($options=array())
+    {
+        return $this->validateAndSave($options, false);
+    }
+    
+    private function validateAndSave($options, $overwriteCreatedOn){
         $valid  = validate($options, $this->data_types, array('user_id', 'mark_id'));
-
+        
         // Make sure all the options are valid
         if ($valid === true) {
-
-            $options['created_on'] = date('Y-m-d H:i:s');
+        
+            if($overwriteCreatedOn || empty($options['created_on'])){
+                $options['created_on'] = date('Y-m-d H:i:s');
+            }
             $q   = $this->db->insert_string('users_to_marks', $options);
             $res = $this->db->query($q);
-
+        
             // Check for errors
             $this->sendException();
-
+        
             // If good, return full record
             if ($res === true) {
                 $user_mark_id = $this->db->insert_id();
                 return $this->readComplete($user_mark_id);
             }
-
+        
             // Else return error
             return false;
         }
-
+        
         return $this->formatErrors($valid);
     }
 

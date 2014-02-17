@@ -98,7 +98,11 @@ class JSONImportStateMarks implements JSONImportStateInterface
                     // Set default options
                     $options = array(
                         'user_id' => $this->importData['user_id'],
-                        'mark_id' => $mark->mark_id
+                        'mark_id' => $mark->mark_id,
+                        'active' => $markObject->active,
+                        'archived_on' => $markObject->archived_on,
+                        'created_on' => $markObject->created_on,
+                        
                     );
                     
                     // Label ID (not required)
@@ -156,7 +160,7 @@ class JSONImportStateMarks implements JSONImportStateInterface
                     }
                     
                     // Create the mark
-                    $user_mark = $this->CI->user_marks->create($options);
+                    $user_mark = $this->CI->user_marks->import($options);
                     $result['result'] = 'added';
                 } else{
                     $result['result'] = 'skipped';

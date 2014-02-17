@@ -39,7 +39,7 @@ class Marks_model extends Plain_Model
         
             // If not found, add it
             if (! isset($mark->mark_id)) {
-                if($overwriteCreatedOn){
+                if($overwriteCreatedOn || empty($options['created_on'])){
                     $options['created_on'] = date('Y-m-d H:i:s');
                 }
                 $options['url_key']    = $md5;
