@@ -60,7 +60,7 @@ p {
 			<ol>
 				<li>Rename <i>application/config/database-sample.php</i> to <i>application/config/database.php</i></li>
 				<li>Edit the hostname, username, password, and database name in database.php</li>
-				<li><a href="<?php echo site_url(); ?>install">Try again</a></li>
+				<li><a href="/install">Try again</a></li>
 			</ol>
 	</div>
 </body>
