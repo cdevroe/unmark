@@ -21,7 +21,7 @@
     </div>
     
     <div class="mark-added-label mark-added-settings">
-        <span id="label-chosen">SUP</span>
+        <span id="label-chosen"></span>
         <a class="action" data-action="marks_addLabel" href="#">Unlabeled</a>
         <section data-id="<?php print $mark->mark_id; ?>">
             <ul class="label-choices"></ul>

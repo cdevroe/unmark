@@ -137,13 +137,13 @@
 
 
         // Label Hovers
-        $(document).on('mouseenter', '.label-choices li', function (e) {
+        $(document).on('mouseenter', '.label-choices li, .sidebar-label-list li', function (e) {
             var label = $(this),
                 label_name = label.find('span').text(),
                 label_class = label.attr('class');
             $('#label-chosen').show().text(label_name).removeClass().addClass(label_class);
         });
-        $(document).on('mouseleave', '.label-choices li', function (e) {
+        $(document).on('mouseleave', '.label-choices li, .sidebar-label-list li', function (e) {
             $('#label-chosen').show().hide();
         });
 

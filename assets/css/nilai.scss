@@ -660,6 +660,22 @@ ul.nav-list {
             &:before { background: $color_pink; }
             a { color: $color_pink; }
         }
+        #label-chosen {
+            position: absolute;
+            left: 300px;
+            top: 76px;
+            z-index: 9999;
+            display: none;
+            font-size: 17px;
+            font-weight: 600;
+            color: $color_grey;
+            &.label-2 { color: $color_orange; }
+            &.label-3 { color: $color_blue; }
+            &.label-4 { color: $color_yellow; }
+            &.label-5 { color: $color_purple; }
+            &.label-6 { color: $color_green; }
+            &.label-7 { color: $color_red; }
+        }
     } 
     .sidebar-info-panel {
         padding: 10px 0 10px 25px;
@@ -1018,12 +1034,15 @@ canvas.graph {
 
 #mark-info-dump ul.sidebar-label-list {
     width: 100%;
-    display:none;
+    display: none;
     background: $color_lighter;
     position: absolute;
     z-index: 999;
+    top: 57px;
+    left: 2px;
+    padding: 15px 0;
+    border-bottom: 1px solid $color_light;
     li {
-        width: 50%;
         a {
             right: 0;
             top: 0px;
