@@ -30,8 +30,10 @@ class Export extends Plain_Controller
         $this->data['success'] = false;
 
     }
-    
-    // Redirect any invalid traffic to homepage
+
+    /**
+     * Generate JSON export file for current user
+     */
     public function index()
     {
         // Enable export library
