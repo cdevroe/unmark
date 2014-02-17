@@ -4,15 +4,50 @@ if (! defined('BASEPATH'))
 
 require_once (APPPATH . 'libraries/JSONImportStateMachine/JSONImportStateInterface.php');
 
+/**
+ * JSON Import state inside marks array.
+ * Every line from now on should contain saved mark object
+ * JSON representation with dependencies.
+ * @author kip9
+ *
+ */
 class JSONImportStateMarks implements JSONImportStateInterface
 {
 
+    /**
+     * Flag deciding if we want to return import details
+     * @var boolean
+     */
     const RETURN_DETAILS = true;
 
+    /**
+     * Flag deciding if we want to return warning and error
+     * entries for details.
+     * If RETURN_DETAILS is set to false, this flag is not
+     * taken into account
+     * @var boolean
+     */
     const RETURN_DETAILS_ERRORS_ONLY = true;
     
+    /*
+     * Result keys
+     */
+    /**
+     * Number of marks imported
+     * @var string
+     */
     const RESULT_ADDED = 'added';
+    
+    /**
+     * Number of marks already existing in the system
+     * @var string
+     */
     const RESULT_SKIPPED = 'skipped';
+    
+    /**
+     * Number of marks not imported due to errors
+     * @var string
+     */
     const RESULT_FAILED = 'failed';
 
     /**

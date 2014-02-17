@@ -3,6 +3,12 @@
 require_once(APPPATH.'libraries/JSONImportStateMachine/JSONImportStateInterface.php');
 require_once(APPPATH.'libraries/JSONImportStateMachine/JSONImportStateMarks.php');
 
+/**
+ * JSON Import state for meta data key => value entries describing
+ * exported file.
+ * @author kip9
+ *
+ */
 class JSONImportStateMetaData implements JSONImportStateInterface{
     
     private $importData;
@@ -11,6 +17,10 @@ class JSONImportStateMetaData implements JSONImportStateInterface{
         $this->importData = $importData;
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see JSONImportStateInterface::processLine()
+     */
     public function processLine($line){
         // Change state
         if(mb_ereg_match("\"marks\"\:[ ]*\[.*", $line)){

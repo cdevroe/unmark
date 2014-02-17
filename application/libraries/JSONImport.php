@@ -20,14 +20,31 @@ require_once (APPPATH . 'libraries/JSONImportStateMachine/JSONImportStateStart.p
 class JSONImport
 {
 
+    /**
+     * File type
+     * @var string
+     */
     const TYPE_JSON = 'application/json';
 
+    /**
+     * Imported file handle
+     * @var SplFileObject
+     */
     private $tmpFile;
 
-    private $jsonParser;
-
+    /**
+     * Parameters passed to json library
+     * Has to contain user_id
+     * @var array
+     */
     private $params;
 
+    /**
+     * Creates JSON Importer library
+     * Initializes CodeIgniter and saves passed params for later
+     * @param array $params
+     * @throws RuntimeException When no user_id is passed in params
+     */
     public function __construct($params)
     {
         if (empty($params['user_id'])) {
@@ -37,6 +54,11 @@ class JSONImport
         $CI = & get_instance();
     }
 
+    /**
+     * Imports given JSON file
+     * @param string $filePath Path to a JSON file with data to import
+     * @return array Array with import output - metadata, status, warnings and errors
+     */
     public function importFile($filePath)
     {
         $this->tmpFile = new SplFileObject($filePath, "r");
@@ -49,9 +71,10 @@ class JSONImport
         while (! $this->tmpFile->eof()) {
             $curLine = trim($this->tmpFile->fgets());
             $result = $curState->processLine($curLine);
-            // Exit condition
+            // Returns next state for processing
             if (! is_array($result)) {
                 $curState = $result;
+            // Returned array with results
             } else {
                 $result['success'] = true;
                 break;
@@ -60,6 +83,11 @@ class JSONImport
         return $result;
     }
 
+    /**
+     * Checks if passed file is valid 
+     * @param array $uploadedFile Uploaded file POST information
+     * @return multitype:array|boolean True on success, array with error information otherwise
+     */
     public function validateUpload($uploadedFile)
     {
         if (empty($uploadedFile) || $uploadedFile['size'] <= 0 || $uploadedFile['error'] != 0) {
