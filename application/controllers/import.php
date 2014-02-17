@@ -35,6 +35,7 @@ class Import extends Plain_Controller
                 $this->data['errors'] = $validationResult;   
             } else{
                 $importResult = $this->jsonimport->importFile($uploadedFile['tmp_name']);
+                $this->data = $importResult;
             }
         } else{
             $this->data['success'] = false;

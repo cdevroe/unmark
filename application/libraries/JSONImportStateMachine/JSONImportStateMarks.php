@@ -10,16 +10,21 @@ class JSONImportStateMarks implements JSONImportStateInterface
     const RETURN_DETAILS = true;
 
     const RETURN_DETAILS_ERRORS_ONLY = true;
+    
+    const RESULT_ADDED = 'added';
+    const RESULT_SKIPPED = 'skipped';
+    const RESULT_FAILED = 'failed';
 
     /**
      * Import status and data
-     * 
+     *
      * @var array
      */
     private $importData;
-    
+
     /**
      * Cache for 'unlabeled' label id used to mark entries with unknown label
+     * 
      * @var int
      */
     private $unlabeled_label_id = null;
@@ -28,8 +33,9 @@ class JSONImportStateMarks implements JSONImportStateInterface
     {
         $this->importData = $importData;
         $this->importData['result'] = array(
-            'success' => 0,
-            'failed' => 0,
+            self::RESULT_ADDED => 0,
+            self::RESULT_SKIPPED => 0,
+            self::RESULT_FAILED => 0,
             'total' => 0
         );
         $this->CI = & get_instance();
@@ -44,9 +50,6 @@ class JSONImportStateMarks implements JSONImportStateInterface
     {
         // Finished
         if (mb_ereg_match("^[ ]*\][ ]*$", $line)) {
-            print('<pre>');
-            print_r($this->importData);
-            print('</pre>');
             return $this->importData;
         } else {
             // Strip trailing comma and simulate JSON
@@ -54,12 +57,8 @@ class JSONImportStateMarks implements JSONImportStateInterface
             $decodedMark = json_decode($jsonLine);
             $importResult = $this->importMark($decodedMark);
             $this->importData['result']['total'] ++;
-            if ($importResult['success'] === true) {
-                $this->importData['result']['success'] ++;
-            } else {
-                $this->importData['result']['failed'] ++;
-            }
-            if (self::RETURN_DETAILS && (! self::RETURN_DETAILS_ERRORS_ONLY || $importResult['success'] === false || !empty($importResult['warnings']))) {
+            $this->importData['result'][$importResult['result']] ++;
+            if (self::RETURN_DETAILS && (! self::RETURN_DETAILS_ERRORS_ONLY || $importResult['result'] === self::RESULT_FAILED || ! empty($importResult['warnings']))) {
                 $this->importData['details'][$decodedMark->mark_id] = $importResult;
             }
             return $this;
@@ -77,7 +76,6 @@ class JSONImportStateMarks implements JSONImportStateInterface
     {
         $result = array();
         $this->CI->load->helper('data_helper');
-        $success = false;
         // Run in transaction
         $this->CI->db->trans_start();
         if ($this->importData['meta']['export_version'] == 1) {
@@ -95,10 +93,8 @@ class JSONImportStateMarks implements JSONImportStateInterface
                 // Try to create user_mark and other related records
                 $this->CI->load->model('users_to_marks_model', 'user_marks');
                 $user_mark = $this->CI->user_marks->readComplete("users_to_marks.user_id = '" . $this->importData['user_id'] . "' AND users_to_marks.mark_id = '" . $mark->mark_id . "' AND users_to_marks.active = '1'");
-                $result['mode'] = 'update';
                 // User mark does not exist - add one
                 if (! isset($user_mark->mark_id)) {
-                    $result['mode'] = 'insert';
                     // Set default options
                     $options = array(
                         'user_id' => $this->importData['user_id'],
@@ -112,25 +108,26 @@ class JSONImportStateMarks implements JSONImportStateInterface
                         if (! empty($label) && isset($label->label_id)) {
                             $options['label_id'] = $label->label_id;
                         } else {
-                            if (! empty($this->unlabeled_label_id) ) {
+                            if (! empty($this->unlabeled_label_id)) {
                                 $options['label_id'] = $this->unlabeled_label_id;
-                                $result['warnings'][] = 'Label '.$markObject->label_name.' not found. Marked as Unlabeled.';
-                            } else if($this->unlabeled_label_id === false) {
-                               $result['warnings'][] = 'Label '.$markObject->label_name.' not found. Stripped label info.';
-                            } else {
-                                // Label not found and no unlabeled cache - looking for unlabeled label id
-                                $label = $this->CI->labels->readComplete("(labels.user_id IS NULL OR labels.user_id='" . $this->importData['user_id'] . "') AND labels.active='1' AND labels.name = " . $this->CI->db->escape('Unlabeled'), 1);
-                                if (! empty($label) && isset($label->label_id)) {
-                                    $options['label_id'] = $label->label_id;
-                                    // Cache the id of unlabeled label id
-                                    $this->unlabeled_label_id = $label->label_id;
-                                    $result['warnings'][] = 'Label '.$markObject->label_name.' not found. Marked as Unlabeled.';
-                                } else{
-                                    // There is no unlabeled label - cache invalid value to mark
-                                    $this->unlabeled_label_id = false;       
-                                    $result['warnings'][] = 'Label '.$markObject->label_name.' not found. Stripped label info.';
+                                $result['warnings'][] = 'Label ' . $markObject->label_name . ' not found. Marked as Unlabeled.';
+                            } else 
+                                if ($this->unlabeled_label_id === false) {
+                                    $result['warnings'][] = 'Label ' . $markObject->label_name . ' not found. Stripped label info.';
+                                } else {
+                                    // Label not found and no unlabeled cache - looking for unlabeled label id
+                                    $label = $this->CI->labels->readComplete("(labels.user_id IS NULL OR labels.user_id='" . $this->importData['user_id'] . "') AND labels.active='1' AND labels.name = " . $this->CI->db->escape('Unlabeled'), 1);
+                                    if (! empty($label) && isset($label->label_id)) {
+                                        $options['label_id'] = $label->label_id;
+                                        // Cache the id of unlabeled label id
+                                        $this->unlabeled_label_id = $label->label_id;
+                                        $result['warnings'][] = 'Label ' . $markObject->label_name . ' not found. Marked as Unlabeled.';
+                                    } else {
+                                        // There is no unlabeled label - cache invalid value to mark
+                                        $this->unlabeled_label_id = false;
+                                        $result['warnings'][] = 'Label ' . $markObject->label_name . ' not found. Stripped label info.';
+                                    }
                                 }
-                            }
                         }
                     }
                     
@@ -160,11 +157,12 @@ class JSONImportStateMarks implements JSONImportStateInterface
                     
                     // Create the mark
                     $user_mark = $this->CI->user_marks->create($options);
+                    $result['result'] = 'added';
+                } else{
+                    $result['result'] = 'skipped';
                 }
                 // Added user mark
                 if (isset($user_mark->mark_id)) {
-                    // Mark success
-                    $success = true;
                     // If tags are present, add them
                     // Get updated result
                     if (isset($tags)) {
@@ -179,7 +177,13 @@ class JSONImportStateMarks implements JSONImportStateInterface
                             'error_message' => $errorMessage
                         );
                     }
+                } else{
+                    $result['errors'][] = formatErrors(500);
                 }
+        } else {
+            $result['errors'][] = array(
+                'error_message' => 'Invalid data format ' . $this->importData['meta']['export_version']
+            );
         }
         $this->CI->db->trans_complete();
         // Check if DB operations succeeded
@@ -187,13 +191,15 @@ class JSONImportStateMarks implements JSONImportStateInterface
             // Internal error
             $result['errors'][] = formatErrors(500);
         }
-        $result['success'] = empty($result['errors']) ? $success : false;
+        if (! empty($result['errors'])) {
+            $result['result'] = 'failed';
+        }
         return $result;
     }
 
     /**
      * Add tags for specified mark
-     * 
+     *
      * @param array $tags            
      * @param int $mark_id            
      */
