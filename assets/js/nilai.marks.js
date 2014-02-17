@@ -199,10 +199,10 @@
             labels_list = btn.next(),
             label_parent = btn.parent();
 
-        if(labels_list.is(':visible')) { return labels_list.slideUp(); }
+        if(labels_list.is(':visible')) { return labels_list.fadeOut(); }
 
         labels_list.find('a').unbind();
-        labels_list.slideDown();
+        labels_list.fadeIn();
 
         labels_list.find('a').on('click', function (e) {
             e.preventDefault();
@@ -213,7 +213,7 @@
             pattern = new RegExp('label');
             query = 'label_id=' + nilai.urlEncode(label_id);
             nilai.ajax('/mark/edit/'+mark, 'post', query, function(res) {
-                labels_list.slideUp();
+                labels_list.fadeOut();
                 btn.text(label_name);
                 labels_list.find('a').unbind();
                 labels_list.parent().find('i').removeClass('barley-icon-question-sign').addClass('barley-icon-ok');
@@ -237,7 +237,7 @@
         var key, labels = res.labels, obj, list = '';
         for (key in labels) {
            obj = labels[key];
-           list += '<li class="label-'+ obj['label_id'] +'"><a href="#" rel="'+ obj['label_id'] +'">'+ obj['name'] +'</a></li>';
+           list += '<li class="label-'+ obj['label_id'] +'"><a href="#" rel="'+ obj['label_id'] +'"><span>'+ obj['name'] +'</span></a></li>';
         }
         return list;
     };

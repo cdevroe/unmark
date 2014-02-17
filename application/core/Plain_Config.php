@@ -23,7 +23,7 @@ class Plain_Config extends CI_Config
     function load($file = '', $use_sections = FALSE, $fail_gracefully = FALSE)
     {
         // Call default config loader
-        $load = parent::load($file, $use_sections, $fail_gracefully);
+        $load = parent::load($file, $use_sections, true);
 
         // Now check for any custom configs
         $file = (empty($file)) ? 'config' : $file;
@@ -33,10 +33,11 @@ class Plain_Config extends CI_Config
 
         // Set the custom locations
         $locations = array();
-        if (defined(ENVIRONMENT)) {
+        if (defined('ENVIRONMENT')) {
             array_push($locations, CUSTOMPATH . 'config/' . ENVIRONMENT . '/' . $file);
         }
         array_push($locations, CUSTOMPATH . 'config/' . $file);
+
 
         // Loop thru the locations
         // If found, load the file

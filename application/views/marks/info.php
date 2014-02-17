@@ -21,17 +21,14 @@
     </div>
     
     <div class="mark-added-label mark-added-settings">
-        <i class="barley-icon-question-sign"></i>
+        <span id="label-chosen">SUP</span>
         <a class="action" data-action="marks_addLabel" href="#">Add A Label</a>
         <section data-id="<?php print $mark->mark_id; ?>">
-            <ul class="label-choices">
-                <li class="label-smart"><a href="#">Add A Smart Label</a></li>
-            </ul>
+            <ul class="label-choices"></ul>
         </section>
     </div>
 
     <div class="mark-added-note mark-added-settings">
-        <i class="barley-icon-question-sign"></i>
         <a class="action" data-action="marks_addNotes" href="">Add A Note</a>
         <section class="hideoutline" data-id="<?php print $mark->mark_id; ?>" contenteditable="true"></section>
     </div>

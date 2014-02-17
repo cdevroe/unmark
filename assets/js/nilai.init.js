@@ -21,16 +21,22 @@
         this.main_panel_width = nilai.main_panel.width(),
         this.sidebar_default = $('.sidebar-default'),
         this.sidebar_mark_info = $('.sidebar-mark-info'),
-        this.body_height = $('body').height(),
+        this.body_height = $(window).outerHeight(true),
         this.special_chars     = { '\\+': '&#43;' };
         this.mainpanels = $('#nilai-wrapper');
 
         // Basic Page Setup
-        this.main_panel.width(nilai.main_panel_width);
+        nilai.main_panel.width(nilai.main_panel_width);
         nilai.page_setup(nilai.body_height);
 
-        // Set Cookies
-        nilai.createCookie('nilai_page', 1, 7);
+        // Resize Helper for Dev Tools 
+        // Also for weirdo's who want to resize their browser
+        $(window).on('resize',function () {
+            nilai.page_setup($(window).outerHeight(true));
+        });
+
+        // Set any window variables
+        window.nilai_current_page = 1;
 
         // Animate the body fading in
         $('body').animate({opacity: 1}, 1000);
@@ -98,6 +104,8 @@
                 $.pjax.submit(e, nilai.main_content);
             });
             $(document).on('pjax:complete', function() {
+                window.nilai_current_page = 1;
+                nilai.main_content.scrollTop(0);
                 nilai.main_content.find('.marks').hide().fadeIn();
                 nilai.updateDom();
             });
@@ -121,6 +129,18 @@
             e.preventDefault(); 
             return nilai.overlay(false); 
         });
+
+        // Label Hovers
+        $(document).on('mouseenter', '.label-choices li', function (e) {
+            var label = $(this),
+                label_name = label.find('span').text(),
+                label_class = label.attr('class');
+            $('#label-chosen').show().text(label_name).removeClass().addClass(label_class);
+        });
+        $(document).on('mouseleave', '.label-choices li', function (e) {
+            $('#label-chosen').show().hide();
+        });
+
 
         // Set up Scrolling
         nilai.main_content.on('scroll', function (e){
