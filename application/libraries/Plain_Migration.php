@@ -7,7 +7,46 @@ class Plain_Migration extends CI_Migration
         parent::__construct($config);
         self::checkForInnoDB();
     }
-    
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Retrieves list of available migration scripts
+     *
+     * @return  array   list of migration file paths sorted by version
+     */
+    public function find_migrations()
+    {
+        $migrations = array();
+
+        $files = glob($this->_migration_path.'*_*.php');
+        if (is_dir(CUSTOMPATH . 'migrations/')) {
+            $files = array_merge($files, glob(CUSTOMPATH . 'migrations/' . '*_*.php'));
+        }
+
+        // Load all *_*.php files in the migrations path
+        foreach ($files as $file) {
+            $name   = basename($file, '.php');
+            $number = $this->_get_migration_number($name);
+
+            // There cannot be duplicate migration numbers
+            if (isset($migrations[$number]))
+            {
+                $this->_error_string = sprintf($this->lang->line('migration_multiple_version'), $number);
+                show_error($this->_error_string);
+            }
+            elseif (! is_numeric($number) || empty($number)) {
+                log_message('error', 'Migration file not used because it did not start with a numeric (' . $file . ')');
+            }
+            else {
+                $migrations[$number] = $file;
+            }
+        }
+
+        ksort($migrations);
+        return $migrations;
+    }
+
     /**
      * Extends migration mechanism to create backup before running migrations and remove it on success, but keep on failure
      * (non-PHPdoc)
@@ -34,21 +73,26 @@ class Plain_Migration extends CI_Migration
                 log_message('error', 'Migrating to version '.$target_version.' failed, but no valid backup saved.');
             }
         }
-        return $migrationsResult;    
+        return $migrationsResult;
     }
-    
+
     /**
      * Creates database backup and returns a path to a file with this backup
      * @return string Backup file path
      */
     protected function _make_backup(){
+
+        if ($this->db->dbdriver != 'mysql') {
+            return false;
+        }
+
         $fullBackupFileName = $this->_createBackupFile();
         if($fullBackupFileName !== false){
             // Do backup
             $this->load->dbutil();
             // Backup your entire database and assign it to a variable
             $backup =& $this->dbutil->backup();
-            
+
             // Load the file helper and write the file to your server
             $this->load->helper('file');
             write_file($fullBackupFileName, $backup);
@@ -57,7 +101,7 @@ class Plain_Migration extends CI_Migration
         }
         return $fullBackupFileName;
     }
-    
+
     /**
      * Creates new database backup file in folder specified by config
      * @return boolean|string File path or false on failure
@@ -83,7 +127,7 @@ class Plain_Migration extends CI_Migration
         } while(file_exists($fullBackupFileName));
         return $fullBackupFileName;
     }
-    
+
     /**
      * Removes database backup file
      * @param string $backupFile Path to stored backup file

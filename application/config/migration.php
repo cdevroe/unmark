@@ -23,6 +23,9 @@ $config['migration_enabled'] = true;
 */
 $config['migration_version'] = 10;
 
+// Set migration type to timestamp to avoid conflicts
+$config['migration_type']    = 'timestamp';
+
 
 /*
 |--------------------------------------------------------------------------
