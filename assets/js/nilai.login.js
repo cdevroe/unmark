@@ -42,7 +42,7 @@
         function login_success() {
             nilailogin.login_spinner.fadeOut(400, function () {
                 nilailogin.login_success.fadeIn(400, function () {
-                    //setTimeout(function(){ window.location.href = "/marks" }, 800);
+                    setTimeout(function(){ window.location.href = "/marks" }, 800);
                 });
             });   
         }
