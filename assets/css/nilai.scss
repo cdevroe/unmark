@@ -624,11 +624,11 @@ ul.nav-list {
         a {
             margin: 0;
             padding: 21px 0 21px 50px;
-            font-weight: 300;
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: 13px;
             color: $color_grey;
             display: block;
+            font-weight: 600;
         }
         &.label-2 {
             background: rgba($color_orange, .2);

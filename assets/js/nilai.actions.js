@@ -102,9 +102,6 @@
 
         if (cont.scrollTop() + cont.innerHeight() >= cont[0].scrollHeight) {
 
-            console.log('Next Page: ' + next_page);
-            console.log('Total Pages: ' + total_pages);
-
             if (next_page <= total_pages) {
 
                 template = Hogan.compile(nilai.template.marks);
