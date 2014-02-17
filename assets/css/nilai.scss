@@ -848,10 +848,11 @@ canvas.graph {
         letter-spacing: .1em;
         font-weight: 400;
         i {
-            color:$color_lighter;
             float: right;
-            font-size: 20px;
-            margin-top: -8px;
+            margin-top: -9px;
+            width: 30px;
+            height: 30px;
+            background-size: 100%;
         }
     }
     .mark-added-info {
@@ -1157,6 +1158,13 @@ body.label-7 .navigation-pane { border-top: none; }
             font-size: 17px;
             right: -5px;
             display:none;
+            i {
+                width: 15px;
+                height: 15px;
+                display: block;
+                background-size: 100%;
+                margin-top: 4px;
+            }
         }
         .forgot-submit {
             top: 2px;
@@ -1248,14 +1256,27 @@ body.label-7 .navigation-pane { border-top: none; }
     #resetPasswordForm {
         top: -300px;
         .login-submit {
-            top: 102px;
+            top: 106px;
+            right: -5px;
             display: block;
+            i {
+                background-size: 100%;
+                width: 13px;
+                height: 13px;
+                display: block;
+            }
         }
     }
     #changePasswordForm {
         .login-submit {
-            top: 1px;
+            top: 6px;
             display: block;
+            i {
+                background-size: 100%;
+                width: 13px;
+                height: 13px;
+                display: block;
+            }
         }
     }
 }
@@ -1272,11 +1293,14 @@ body.label-7 .navigation-pane { border-top: none; }
     z-index: 10000;
     #nilaiModalClose {
         position: absolute;
-        top: 10px;
+        top: 27px;
         right: 25px;
         i {
-            font-size: 50px;
             color: $color_light;
+            width: 50px;
+            height: 50px;
+            display: block;
+            background-size: 100%;
         }
     }
 }
@@ -1319,11 +1343,17 @@ body.label-7 .navigation-pane { border-top: none; }
     left: 47.1%;
     top: 117px;
     font-size: 79px;
+    i {
+        width: 75px;
+        height: 75px;
+        display: block;
+        background-size: 100%;
+    }
 }
 
 // Default Spinner
-.barley-icon-spinner {
-    @include animation-duration(1.25s);
+.icon-spinner {
+    @include animation-duration(0.75s);
     @include animation-iteration-count(infinite);
     @include animation-name(rotate-forever);
     @include animation-timing-function(linear);
@@ -1332,7 +1362,6 @@ body.label-7 .navigation-pane { border-top: none; }
     height: 24px;
     overflow: hidden;
     padding: 0;
-    margin-right: -5px;
 }
 
 // Helper Icon

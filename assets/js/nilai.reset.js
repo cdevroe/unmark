@@ -25,9 +25,9 @@
         // Show or Hide the spinner
         function showSpinner(show) {
             if (show) {
-                nilaireset.submitbtn.find('i').removeClass('barley-icon-chevron-right').addClass('barley-icon-spinner');
+                nilaireset.submitbtn.find('i').removeClass('icon-go').addClass('icon-spinner');
             } else {
-                nilaireset.submitbtn.find('i').removeClass('barley-icon-spinner').addClass('barley-icon-chevron-right');
+                nilaireset.submitbtn.find('i').removeClass('icon-spinner').addClass('icon-go');
             }
         }
 

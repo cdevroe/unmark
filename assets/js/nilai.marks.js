@@ -185,7 +185,6 @@
                     editable.attr('contenteditable', false);
                     editable.slideUp();
                     editable.prev().text('Edit Note');
-                    editable.parent().find('i').removeClass('barley-icon-question-sign').addClass('barley-icon-ok');
                 });
                 editable.unbind();
             }
@@ -217,7 +216,6 @@
                 btn.text(label_name);
                 nilai.swapClass(btn, 'label-*', 'label-'+label_id);
                 labels_list.find('a').unbind();
-                labels_list.parent().find('i').removeClass('barley-icon-question-sign').addClass('barley-icon-ok');
                 if (label_parent.hasClass('sidebar-label')) {
                     nilai.swapClass(label_parent, 'label-*', 'label-'+label_id);
                     nilai.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
