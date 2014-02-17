@@ -76,10 +76,8 @@ class CIDatabaseSessionHandler {
     public function read ( $session_id ){
          $this->_log('Read called');
          $session = $this->db->get_where($this->dbTable, array($this->idColumn => $session_id));
-         $this->_log('Session read: '.print_r($session, true));
          if (isset($session) && $session->num_rows() > 0){
              $row = $session->row();
-             $this->_log('Session query result: ' . print_r($row, true));
              return $row->{$this->dataColumn};
          }
         return null;
