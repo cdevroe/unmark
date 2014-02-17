@@ -10,10 +10,14 @@ class Plain_Migration extends CI_Migration
             include CUSTOMPATH . 'config/migration.php';
             $custom_config = $config;
             unset($config);
-            $config = $main_config;
         }
 
-        $config['migration_version'] = (isset($custom_config['migration_version']) && $custom_config['migration_version'] > $config['migration_version']) ? $custom_config['migration_version'] : $config['migration_version'];
+        $config = $main_config;
+
+        if (! empty($config)) {
+            $config['migration_version'] = (isset($custom_config['migration_version']) && $custom_config['migration_version'] > $config['migration_version']) ? $custom_config['migration_version'] : $config['migration_version'];
+        }
+
         parent::__construct($config);
         self::checkForInnoDB();
     }
