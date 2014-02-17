@@ -63,7 +63,8 @@ class Plain_Migration extends CI_Migration
      * @return boolean|string File path or false on failure
      */
     private function _createBackupFile(){
-        $backupFolder = $this->config->item('plain_db_backup_folder');
+        
+        $backupFolder = APPPATH . $this->config->item('plain_db_backup_folder');
         if(!file_exists($backupFolder)){
             if(!mkdir($backupFolder, 0700, true)){
                 log_message('DEBUG', 'Cannot create folder for DB backups '.$backupFolder);
@@ -80,7 +81,7 @@ class Plain_Migration extends CI_Migration
         do{
             $backupFileName = 'db_'.$count.'_'.time().'.bak.gz';
             $fullBackupFileName = $absolutePath . DIRECTORY_SEPARATOR . $backupFileName;
-        } while(file_exists($fullBackupFileName));
+        } while(file_exists($fullBackupFileName));  
         return $fullBackupFileName;
     }
     

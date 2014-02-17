@@ -381,13 +381,13 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 /*
- * Folder storing database backups
+ * Folder storing database backups, relative to APPPATH
  */
-$config['plain_db_backup_folder'] = 'application/cache/db_backups/';
+$config['plain_db_backup_folder'] = 'cache/db_backups/';
 /*
  * Flag saying to remove DB backup on successful migration
  */
-$config['plain_db_backup_remove_on_success'] = true;
+$config['plain_db_backup_remove_on_success'] = false;
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
