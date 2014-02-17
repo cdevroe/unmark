@@ -215,6 +215,7 @@
             nilai.ajax('/mark/edit/'+mark, 'post', query, function(res) {
                 labels_list.fadeOut();
                 btn.text(label_name);
+                nilai.swapClass(btn, 'label-*', 'label-'+label_id);
                 labels_list.find('a').unbind();
                 labels_list.parent().find('i').removeClass('barley-icon-question-sign').addClass('barley-icon-ok');
                 if (label_parent.hasClass('sidebar-label')) {

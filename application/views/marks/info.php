@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/assets/css/nilai.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
 </head>
-<body class="nilai-solo">
+<body class="nilai-solo greybg">
 
 <?php $nice_url = rtrim(preg_replace('/https?:\/\/(www.)?/', '', $mark->url), '/'); ?>
 
@@ -22,7 +22,7 @@
     
     <div class="mark-added-label mark-added-settings">
         <span id="label-chosen">SUP</span>
-        <a class="action" data-action="marks_addLabel" href="#">Add A Label</a>
+        <a class="action" data-action="marks_addLabel" href="#">Unlabeled</a>
         <section data-id="<?php print $mark->mark_id; ?>">
             <ul class="label-choices"></ul>
         </section>

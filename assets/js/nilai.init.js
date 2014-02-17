@@ -130,6 +130,12 @@
             return nilai.overlay(false); 
         });
 
+        // Show Labels in Bookmarklet
+        /*$(document).on('mouseenter', '#bml-show-labels', function (e) {
+            nilai.marks_addLabel($(this));
+        });*/
+
+
         // Label Hovers
         $(document).on('mouseenter', '.label-choices li', function (e) {
             var label = $(this),
