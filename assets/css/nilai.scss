@@ -8,10 +8,6 @@
 @import "partials/grid-settings";
 @import "../libraries/neat/neat";
 
-// Import fonts and font icons created by Plain
-@import "partials/barlicons";
-
-
 // Color Variables for Layouts (greyscale)
 $color_dark     : #3D3D3D;
 $color_darker   : #222222;
@@ -611,6 +607,11 @@ ul.nav-list {
             i {
                 color: $color_light;
                 font-size: 20px;
+                width: 15px;
+                height: 15px;
+                display: block;
+                background-size: 100%;
+                margin: 7px 7px 0 0;
             }
         }
     }
@@ -694,6 +695,9 @@ ul.nav-list {
                 right: 5px;
                 top: 0px;
                 color: $color_dark;
+                background-size: 100%;
+                width: 12px;
+                height: 12px;
             }
         }
         section {
@@ -828,6 +832,7 @@ ul.timeline {
 // Line Graph
 canvas.graph {
     border-bottom:1px solid $color_light;
+    margin-top:25px;
 }
 
 
@@ -1328,4 +1333,11 @@ body.label-7 .navigation-pane { border-top: none; }
     overflow: hidden;
     padding: 0;
     margin-right: -5px;
+}
+
+// Helper Icon
+i.icon-circle {
+    @include unmark-label-ball(0, 0, 20px);
+    position: relative;
+    background: #A7A9AC;
 }

@@ -41,6 +41,7 @@
         $('.nav-panel').hide();
         $('.menu-item').removeClass('active-menu');
         $('.navigation-pane-links').show();
+        $('.menu-activator i').removeClass('icon-menu_close').addClass('icon-menu_open');
     };
 
     // Function for interacting and animating the left navigation
@@ -76,6 +77,8 @@
                 return nilai.hideNavigation();
             }
         }
+
+        $('.menu-activator i').removeClass('icon-menu_open').addClass('icon-menu_close');
 
         // Check which panel to show
         nilai.nav_panel.animate({ left: 65 }, { duration: 200, queue: false });

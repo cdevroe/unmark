@@ -150,7 +150,7 @@
                 text = $(this).text(), id = $(this).data('id');
                 query = 'notes=' + nilai.urlEncode(text);
                 nilai.ajax('/mark/edit/'+id, 'post', query, function(res) {
-                    editField.html('Notes <i class="barley-icon-pencil"></i>');
+                    editField.html('Notes <i class="icon-edit"></i>');
                     editable.attr('contenteditable', false);
                 });
                 editable.unbind();

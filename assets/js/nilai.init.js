@@ -76,12 +76,12 @@
             e.preventDefault();
             var section = $(this).next('section'), arrow = $(this).find('i');
             if (section.is(':visible')) {
-                arrow.removeClass('barley-icon-chevron-up');
-                arrow.addClass('barley-icon-chevron-down');
+                arrow.removeClass('icon-up');
+                arrow.addClass('icon-down');
                 section.slideUp();
             } else {
-                arrow.removeClass('barley-icon-chevron-down');
-                arrow.addClass('barley-icon-chevron-up');
+                arrow.removeClass('icon-down');
+                arrow.addClass('icon-up');
                 section.slideDown();                
             }
         });
