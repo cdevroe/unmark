@@ -100,7 +100,7 @@
         // Forgot Password Submit
         nilailogin.pass_form.on('submit', function (e) {
             e.preventDefault();
-            nilailogin.forget_submit.find('i').removeClass('barley-icon-chevron-right').addClass('barley-icon-spinner');
+            nilailogin.forget_submit.find('i').removeClass('icon-go').addClass('icon-spinner');
             var email = $('#forgot_email').val(),
                 query = 'email='+email;
             nilai.ajax('/tools/forgotPassword', 'post', query, function (res) {
@@ -109,7 +109,7 @@
                 } else {
                     showMessage(true, 'Email not recogonized');
                 }
-                nilailogin.forget_submit.find('i').removeClass('barley-icon-spinner').addClass('barley-icon-chevron-right');
+                nilailogin.forget_submit.find('i').removeClass('icon-spinner').addClass('icon-go');
             });
         });
 
