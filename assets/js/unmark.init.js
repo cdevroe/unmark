@@ -1,8 +1,8 @@
 /*!
-    Action Scripts for Nilai.co
+    Action Scripts for Unmark.it
     Copyright 2014 - Plain - http://plainmade.com
 
-    A set of functions used to show interactions throughout Nilai.
+    A set of functions used to show interactions throughout Unmark.
 
     Also includes the INIT file.
 
@@ -11,32 +11,32 @@
 (function ($) { 
 
     // Main Init Script
-    nilai.init = function () {
+    unmark.init = function () {
 
         // Define some re-usable elements 
         this.nav_panel = $('.navigation-pane'), 
         this.main_panel = $('.main-wrapper'),
         this.main_content = $('.main-content'),
         this.sidebar_content = $('.sidebar-content'),
-        this.main_panel_width = nilai.main_panel.width(),
+        this.main_panel_width = unmark.main_panel.width(),
         this.sidebar_default = $('.sidebar-default'),
         this.sidebar_mark_info = $('.sidebar-mark-info'),
         this.body_height = $(window).outerHeight(true),
         this.special_chars     = { '\\+': '&#43;' };
-        this.mainpanels = $('#nilai-wrapper');
+        this.mainpanels = $('#unmark-wrapper');
 
         // Basic Page Setup
-        nilai.main_panel.width(nilai.main_panel_width);
-        nilai.page_setup(nilai.body_height);
+        unmark.main_panel.width(unmark.main_panel_width);
+        unmark.page_setup(unmark.body_height);
 
         // Resize Helper for Dev Tools 
         // Also for weirdo's who want to resize their browser
         $(window).on('resize',function () {
-            nilai.page_setup($(window).outerHeight(true));
+            unmark.page_setup($(window).outerHeight(true));
         });
 
         // Set any window variables
-        window.nilai_current_page = 1;
+        window.unmark_current_page = 1;
 
         // Animate the body fading in
         $('body').animate({opacity: 1}, 1000);
@@ -44,11 +44,11 @@
         // Vertical Tabs
         // Shows and Tabs the Vertical navigition inside the Navigation Panel
         $('.navigation-content a, .navigation-pane-links a').on('click', function (e) {
-            nilai.interact_nav(e, $(this));
+            unmark.interact_nav(e, $(this));
         });
 
         // Update Mark Btns
-        nilai.update_mark_action_btns();
+        unmark.update_mark_action_btns();
 
         // Hover Action on Marks List
         // Shows the Archive and More Buttons
@@ -66,9 +66,9 @@
         $(document).on('click', 'button[data-action], .action', function (e) {
             e.preventDefault();
             var action = $(this).data('action'), funct; // Get Data Action Attribute
-            funct = eval('nilai.' + action); // Convert it to an executable function
+            funct = eval('unmark.' + action); // Convert it to an executable function
             funct($(this)); // Run it with passed in object
-            nilai.hideNavigation(); // Hide Main Navigation
+            unmark.hideNavigation(); // Hide Main Navigation
         });
 
         // Slide Toggle the Sidebar Info Blocks
@@ -93,46 +93,46 @@
                 e.preventDefault();
                 more_link.trigger('click');
             }
-            nilai.hideNavigation(); // Hide Main Navigation
+            unmark.hideNavigation(); // Hide Main Navigation
         });
 
         // Watch for internal link click and run PJAX
         // To Do, remove outside links from elem array
-        if ( $('#nilai').length > 0 ) {
-            $(document).pjax("a[href*='/']", nilai.main_content);
+        if ( $('#unmark').length > 0 ) {
+            $(document).pjax("a[href*='/']", unmark.main_content);
             $(document).on('submit', '#search-form', function(e) {
-                $.pjax.submit(e, nilai.main_content);
+                $.pjax.submit(e, unmark.main_content);
             });
             $(document).on('pjax:complete', function() {
-                window.nilai_current_page = 1;
-                nilai.main_content.scrollTop(0);
-                nilai.main_content.find('.marks').hide().fadeIn();
-                nilai.updateDom();
+                window.unmark_current_page = 1;
+                unmark.main_content.scrollTop(0);
+                unmark.main_content.find('.marks').hide().fadeIn();
+                unmark.updateDom();
             });
         }
 
         // Change Password & Email Submit
         $('#passwordUpdate').on('submit', function (e) {
             e.preventDefault();
-            nilai.send_password_change($(this));
+            unmark.send_password_change($(this));
         });
         $('#emailUpdate').on('submit', function (e) {
             e.preventDefault();
-            nilai.send_email_change($(this));
+            unmark.send_email_change($(this));
         });
         $('#helperforms input.field-input').on('keydown change', function () {
             $(this).parent().parent().find('.response-message').hide();
         });
 
         // Close Overlay
-        $(document).on('click', '#nilaiModalClose', function (e) { 
+        $(document).on('click', '#unmarkModalClose', function (e) { 
             e.preventDefault(); 
-            return nilai.overlay(false); 
+            return unmark.overlay(false); 
         });
 
         // Show Labels in Bookmarklet
         /*$(document).on('mouseenter', '#bml-show-labels', function (e) {
-            nilai.marks_addLabel($(this));
+            unmark.marks_addLabel($(this));
         });*/
 
 
@@ -149,13 +149,13 @@
 
 
         // Set up Scrolling
-        nilai.main_content.on('scroll', function (e){
-            nilai.scrollPaginate($(this));
+        unmark.main_content.on('scroll', function (e){
+            unmark.scrollPaginate($(this));
         });
         
     };
 
     // Get this baby in action
-    $(document).ready(function(){ nilai.init(); });
+    $(document).ready(function(){ unmark.init(); });
 
 }(window.jQuery));

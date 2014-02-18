@@ -1,5 +1,5 @@
 /*!
-    Marks Scripts for Nilai.co
+    Marks Scripts for Unmark.it
     Copyright 2014 - Plain - http://plainmade.com
 
     A set of functions used to pull and push data for Marks
@@ -10,7 +10,7 @@
 
     // Show Mark Info in Sidebar
     // Grabs relavaent info and shows the sidebar actions with info
-    nilai.show_mark_info = function (mark_clicked) {
+    unmark.show_mark_info = function (mark_clicked) {
         
         var template, output,
             mark_obj_ref    = mark_clicked.data('mark'),
@@ -20,7 +20,7 @@
 
         // Quick function to populate the tags
         function showTags(res) {
-            var list = nilai.label_list(res);
+            var list = unmark.label_list(res);
             $('ul.sidebar-label-list').prepend(list);
         };
 
@@ -30,21 +30,21 @@
         $('#mark-' + mark_id).addClass('view-active');
 
         // Compile and Render the template
-        template = Hogan.compile(nilai.template.sidebar);
+        template = Hogan.compile(unmark.template.sidebar);
         output = template.render(mark_obj);
 
-        nilai.sidebar_mark_info.fadeOut(400, function () {
-            if (nilai.sidebar_default.is(':visible')) {
-                nilai.sidebar_default.fadeOut(400, function () {
-                    nilai.sidebar_mark_info.html(output).fadeIn(400, function () {
-                        nilai.tagify_notes($('#notes-' + mark_id));
-                        nilai.getData('labels', showTags);
+        unmark.sidebar_mark_info.fadeOut(400, function () {
+            if (unmark.sidebar_default.is(':visible')) {
+                unmark.sidebar_default.fadeOut(400, function () {
+                    unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
+                        unmark.tagify_notes($('#notes-' + mark_id));
+                        unmark.getData('labels', showTags);
                     });
                 });
             } else {
-                nilai.sidebar_mark_info.html(output).fadeIn(400, function () {
-                    nilai.tagify_notes($('#notes-' + mark_id));
-                    nilai.getData('labels', showTags);
+                unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
+                    unmark.tagify_notes($('#notes-' + mark_id));
+                    unmark.getData('labels', showTags);
                 });         
             }
         });
@@ -52,7 +52,7 @@
     };
 
     // Updates the label count
-    nilai.update_label_count = function () {
+    unmark.update_label_count = function () {
 
         var label_list = $('ul.label-list');
 
@@ -71,14 +71,14 @@
             }
         }
 
-        nilai.getData('labels', updateLabelCount);
+        unmark.getData('labels', updateLabelCount);
 
     };
 
     // Build Mark JSON
-    nilai.get_mark_info = function (mark_id) {
+    unmark.get_mark_info = function (mark_id) {
         var mark_data;
-        nilai.ajax('/mark/info/'+mark_id, 'post', '', function(res) {
+        unmark.ajax('/mark/info/'+mark_id, 'post', '', function(res) {
             mark_data = res.mark;
             mark_data = JSON.stringify(mark_data);
 
@@ -88,14 +88,14 @@
     };
 
     // Archive & Restore Mark
-    nilai.mark_archive = function (archive_link) {
+    unmark.mark_archive = function (archive_link) {
         var id = archive_link.data("id");
 
-        nilai.ajax('/mark/archive/'+id, 'post', '', function(res) {
+        unmark.ajax('/mark/archive/'+id, 'post', '', function(res) {
             if(res.mark.archived_on !== null) {
                 $('#mark-'+id).fadeOut();
-                nilai.sidebar_collapse();
-                nilai.update_label_count();
+                unmark.sidebar_collapse();
+                unmark.update_label_count();
             } else {
                 alert('Sorry, We could not archive this mark at this time.');
             }
@@ -104,13 +104,13 @@
 
 
     // Archive & Restore Mark
-    nilai.mark_restore = function (archive_link) {
+    unmark.mark_restore = function (archive_link) {
         var id = archive_link.data("id");
 
-        nilai.ajax('/mark/restore/'+id, 'post', '', function(res) {
+        unmark.ajax('/mark/restore/'+id, 'post', '', function(res) {
             if(res.mark.archived_on === null) {
                 $('#mark-'+id).fadeOut();
-                nilai.sidebar_collapse();
+                unmark.sidebar_collapse();
             } else {
                 alert('Sorry, We could not restore this mark at this time.');
             }
@@ -118,8 +118,8 @@
     };
 
     // Archive all marks over a year old
-    nilai.archive_all = function () {
-        nilai.ajax('/marks/archive/old', 'post', '', function (res) {
+    unmark.archive_all = function () {
+        unmark.ajax('/marks/archive/old', 'post', '', function (res) {
             if (res.archived === true) {
                 window.location = "/marks";
             } else {
@@ -129,7 +129,7 @@
     };
 
     // Handles editing of notes
-    nilai.marks_editNotes = function (editField) {
+    unmark.marks_editNotes = function (editField) {
 
         var editable = editField.next(), text, query;
 
@@ -148,20 +148,20 @@
             if (e.which === 13 || e.type === 'blur') {
                 e.preventDefault();
                 text = $(this).text(), id = $(this).data('id');
-                query = 'notes=' + nilai.urlEncode(text);
-                nilai.ajax('/mark/edit/'+id, 'post', query, function(res) {
+                query = 'notes=' + unmark.urlEncode(text);
+                unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
                     editField.html('Notes <i class="icon-edit"></i>');
                     editable.attr('contenteditable', false);
                 });
                 editable.unbind();
-                nilai.tagify_notes(editable);
+                unmark.tagify_notes(editable);
             }
         });
     };
-    nilai.marks_clickEdit = function (btn) { btn.parent().prev().trigger('click'); };
+    unmark.marks_clickEdit = function (btn) { btn.parent().prev().trigger('click'); };
 
     // Method for Adding Notes
-    nilai.marks_addNotes = function (btn) {
+    unmark.marks_addNotes = function (btn) {
 
         var editable = btn.next(), text, query;
 
@@ -180,8 +180,8 @@
             if (e.which === 13 || e.type === 'blur') {
                 e.preventDefault();
                 text = $(this).text(), id = $(this).data('id');
-                query = 'notes=' + nilai.urlEncode(text);
-                nilai.ajax('/mark/edit/'+id, 'post', query, function(res) {
+                query = 'notes=' + unmark.urlEncode(text);
+                unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
                     editable.attr('contenteditable', false);
                     editable.slideUp();
                     editable.prev().text('Edit Note');
@@ -192,7 +192,7 @@
     };
 
     // Method for adding a label
-    nilai.marks_addLabel = function (btn) {
+    unmark.marks_addLabel = function (btn) {
         
         var mark, label_id, query, label_name, body_class, pattern,
             labels_list = btn.next(),
@@ -210,20 +210,20 @@
             label_name = $(this).text();
             body_class = $('body').attr('class');
             pattern = new RegExp('label');
-            query = 'label_id=' + nilai.urlEncode(label_id);
-            nilai.ajax('/mark/edit/'+mark, 'post', query, function(res) {
+            query = 'label_id=' + unmark.urlEncode(label_id);
+            unmark.ajax('/mark/edit/'+mark, 'post', query, function(res) {
                 labels_list.fadeOut();
                 btn.text(label_name);
-                nilai.swapClass(btn, 'label-*', 'label-'+label_id);
+                unmark.swapClass(btn, 'label-*', 'label-'+label_id);
                 labels_list.find('a').unbind();
                 if (label_parent.hasClass('sidebar-label')) {
-                    nilai.swapClass(label_parent, 'label-*', 'label-'+label_id);
-                    nilai.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
-                    nilai.get_mark_info(mark);
-                    nilai.update_label_count(); // Update the count under labels menu
+                    unmark.swapClass(label_parent, 'label-*', 'label-'+label_id);
+                    unmark.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
+                    unmark.get_mark_info(mark);
+                    unmark.update_label_count(); // Update the count under labels menu
                     if ((pattern.test(body_class))  && (body_class !== 'label-'+label_id)) { // If on current label and label change, remove mark from label
                         $('#mark-'+mark).fadeOut();
-                        nilai.sidebar_collapse();
+                        unmark.sidebar_collapse();
                     }
                 }
             });
@@ -232,7 +232,7 @@
     };
 
     // Build a Label List
-    nilai.label_list = function (res) {
+    unmark.label_list = function (res) {
         var key, labels = res.labels, obj, list = '';
         for (key in labels) {
            obj = labels[key];
@@ -242,7 +242,7 @@
     };
 
     // Reads the passed note field and tagifies it on the fly.
-    nilai.tagify_notes = function (note) {
+    unmark.tagify_notes = function (note) {
 
         // Get the note text, replace all tags with a linked tag
         var notetext = note.text();
@@ -254,7 +254,7 @@
     };
 
     // Delete a Mark
-    nilai.delete_mark = function (btn) {
+    unmark.delete_mark = function (btn) {
 
         // Get Mark Id
         // Check View
@@ -262,12 +262,12 @@
             view = btn.data('view');
 
         // Request to delete the mark
-        nilai.ajax('/mark/delete/'+mark_id, 'post', '', function (res) {
+        unmark.ajax('/mark/delete/'+mark_id, 'post', '', function (res) {
             if (res.mark.active === "0") {
                 if (view === "bookmarklet"){
-                    nilai.close_window();
+                    unmark.close_window();
                 } else {
-                    nilai.sidebar_collapse();
+                    unmark.sidebar_collapse();
                     $('#mark-'+mark_id).fadeOut();
                 }
             } else {
@@ -277,7 +277,7 @@
     };
 
     // Watch Height on each mark action button
-    nilai.update_mark_action_btns = function () {
+    unmark.update_mark_action_btns = function () {
         $('.mark').each(function () {
             var height  = $(this).outerHeight(true),
                 half    = height / 2;

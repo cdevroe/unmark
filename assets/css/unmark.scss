@@ -1,5 +1,5 @@
 /*!
-    Main stylesheet for Nilai.co
+    Main stylesheet for Unmark.it
     Copyright 2014 - Plain - http://plainmade.com
 */
 
@@ -80,13 +80,13 @@ body {
     * {
         @include box-sizing(border-box);
     }
-    &.nilai-solo {
+    &.unmark-solo {
         border-left:none;
         border-top:none;
         background: $color_white;
         box-shadow:none;
     }
-    &#nilai-login {
+    &#unmark-login {
         background: $color_darkest;
         position:relative;
     }
@@ -96,7 +96,7 @@ body {
 }
 
 // Blur for WebKit
-//#nilai-wrapper { -webkit-transition:-webkit-filter 0.4s ease-in-out; }
+//#unmark-wrapper { -webkit-transition:-webkit-filter 0.4s ease-in-out; }
 //.blurme { -webkit-filter: blur(5px); }
 
 // Hide Stupid Outlines
@@ -1256,7 +1256,7 @@ body.label-7 .navigation-pane { border-top: none; }
     #resetPasswordForm {
         top: -300px;
         .login-submit {
-            top: 106px;
+            top: 102px;
             right: -5px;
             display: block;
             i {
@@ -1269,7 +1269,7 @@ body.label-7 .navigation-pane { border-top: none; }
     }
     #changePasswordForm {
         .login-submit {
-            top: 6px;
+            top: 2px;
             display: block;
             i {
                 background-size: 100%;
@@ -1282,7 +1282,7 @@ body.label-7 .navigation-pane { border-top: none; }
 }
 
 // Overlay
-#nilai-overlay {
+#unmark-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -1291,7 +1291,7 @@ body.label-7 .navigation-pane { border-top: none; }
     background-color: $color_dark;
     opacity: 0.95;
     z-index: 10000;
-    #nilaiModalClose {
+    #unmarkModalClose {
         position: absolute;
         top: 27px;
         right: 25px;
@@ -1317,7 +1317,7 @@ body.label-7 .navigation-pane { border-top: none; }
         @keyframes rotate-forever { @include rotate-forever; }
 
 // Animation of Spinner
-.nilai-spinner {
+.unmark-spinner {
     @include animation-duration(0.75s);
     @include animation-iteration-count(infinite);
     @include animation-name(rotate-forever);
@@ -1330,14 +1330,14 @@ body.label-7 .navigation-pane { border-top: none; }
 }
 
 // Position of Spinner
-.nilai-spinner {
+.unmark-spinner {
     display: none;
     position: absolute;
     left: 47.3%;
     top: 130px;
 }
 
-.nilai-success {
+.unmark-success {
     display: none;
     position: absolute;
     left: 47.1%;

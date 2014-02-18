@@ -1,8 +1,8 @@
 <html>
 <head>
-    <title>Welcome to Nilai</title>
+    <title>Welcome to Unmark</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/assets/css/nilai.css" />
+    <link rel="stylesheet" href="/assets/css/unmark.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
     <script>
         /* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
@@ -11,13 +11,13 @@
     </script>
     <noscript><link href="/assets/css/icons.fallback.css" rel="stylesheet"></noscript>
 </head>
-<body class="nilai-solo" id="nilai-login">
+<body class="unmark-solo" id="unmark-login">
 
 <div class="loginWrapper">
     <div class="loginInner">
         <div class="login-ball"></div>
         <h1>Sign In</h1>
-        <form id="nilaiLogin" method="post" action="/login">
+        <form id="unmarkLogin" method="post" action="/login">
             <input type="email" class="field-input" name="email" id="email" placeholder="Email Address" autocomplete="off" autocapitalize="off" autocorrect="off" />
             <input type="password" class="field-input" name="password" id="password" placeholder="Password" autocomplete="off" />
             <button class="login-submit" type="submit"><i class="icon-go"></i></button>
@@ -31,7 +31,7 @@
     <div class="loginInner">
         <div class="login-ball"></div>
         <h1>Reset Password</h1>
-        <form id="nilaiForgotPass" method="post" action="/tools/forgotPassword">
+        <form id="unmarkForgotPass" method="post" action="/tools/forgotPassword">
             <input type="email" class="field-input" name="email" id="forgot_email" placeholder="Email Address" autocomplete="off" autocapitalize="off" autocorrect="off" />
             <button class="forgot-submit" type="submit"><i class="icon-go"></i></button>
         </form>
@@ -40,18 +40,18 @@
     </div>
 </div>
 
-<div class="nilai-spinner"></div>
-<div class="nilai-success"><i class="icon-check"></i></div>
+<div class="unmark-spinner"></div>
+<div class="unmark-success"><i class="icon-check"></i></div>
 
 
 <script type="text/javascript">
-var nilai  = nilai || {};
-nilai.vars = {};
-nilai.vars.csrf_token   = '<?php print $csrf_token; ?>';       
+var unmark  = unmark || {};
+unmark.vars = {};
+unmark.vars.csrf_token   = '<?php print $csrf_token; ?>';       
 </script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-<script src="/assets/js/nilai.js"></script>
-<script src="/assets/js/nilai.login.js"></script>
+<script src="/assets/js/unmark.js"></script>
+<script src="/assets/js/unmark.login.js"></script>
 
 </body>
 </html>

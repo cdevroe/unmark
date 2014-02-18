@@ -94,6 +94,6 @@
 
 
 <script type="text/javascript">
-window.nilai_total_pages = <?php print $pages . ";\n"; ?>
+window.unmark_total_pages = <?php print $pages . ";\n"; ?>
 </script>
 <?php endif; ?>

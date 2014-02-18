@@ -42,7 +42,7 @@ class Plain_Email extends CI_Email {
         $this->to($email);
         $subject = $this->CI->config->item('password_reset_email_subject');
         if(empty($subject)){
-            $subject = 'Nilai - Password reset';
+            $subject = 'Unmark - Password reset';
         }
         $this->subject($subject);
         $this->message($message);
@@ -77,7 +77,7 @@ class Plain_Email extends CI_Email {
         $this->to($email);
         $subject = $this->CI->config->item('password_updated_email_subject');
         if(empty($subject)){
-            $subject = 'Nilai - Password updated';
+            $subject = 'Unmark - Password updated';
         }
         $this->subject($subject);
         $this->message($message);

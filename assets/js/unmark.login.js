@@ -1,5 +1,5 @@
 /*!
-    Login Scripts for Nilai.co
+    Login Scripts for Unmark.it
     Copyright 2014 - Plain - http://plainmade.com
 */
 
@@ -8,29 +8,29 @@
     $(document).ready(function () {
 
         // Set up Variables
-        var nilailogin = {};
+        var unmarklogin = {};
 
-        nilailogin.message = $('.response-message');
-        nilailogin.login_wrapper = $('.loginWrapper');
-        nilailogin.login_spinner = $('.nilai-spinner');
-        nilailogin.login_success = $('.nilai-success');
-        nilailogin.login_form    = $('#nilaiLogin');
-        nilailogin.pass_form     = $('#nilaiForgotPass');
-        nilailogin.login_submit  = $('.login-submit');
-        nilailogin.forget_submit = $('.forgot-submit');
-        nilailogin.input_fields  = $('input.field-input');
-        nilailogin.helper_buttom = $('.forgot-pass');
-        nilailogin.pass_wrapper  = $('.forgotPassWrapper');
+        unmarklogin.message = $('.response-message');
+        unmarklogin.login_wrapper = $('.loginWrapper');
+        unmarklogin.login_spinner = $('.unmark-spinner');
+        unmarklogin.login_success = $('.unmark-success');
+        unmarklogin.login_form    = $('#unmarkLogin');
+        unmarklogin.pass_form     = $('#unmarkForgotPass');
+        unmarklogin.login_submit  = $('.login-submit');
+        unmarklogin.forget_submit = $('.forgot-submit');
+        unmarklogin.input_fields  = $('input.field-input');
+        unmarklogin.helper_buttom = $('.forgot-pass');
+        unmarklogin.pass_wrapper  = $('.forgotPassWrapper');
 
         // Toggle the Login Form
         function toggle_login_form(hide, message) {
             if (hide === true) {
-                nilailogin.login_wrapper.animate({ top: '-400px' }, 500, function () {
-                    nilailogin.login_spinner.fadeIn();
+                unmarklogin.login_wrapper.animate({ top: '-400px' }, 500, function () {
+                    unmarklogin.login_spinner.fadeIn();
                 });
             } else {
-                nilailogin.login_spinner.fadeOut(400, function () {
-                    nilailogin.login_wrapper.animate({ top: '0' }, 500);
+                unmarklogin.login_spinner.fadeOut(400, function () {
+                    unmarklogin.login_wrapper.animate({ top: '0' }, 500);
                     if (message){
                         showMessage(true, message);
                     }
@@ -40,8 +40,8 @@
 
         // Successfull Login - Show Checkmark and redirect to login
         function login_success() {
-            nilailogin.login_spinner.fadeOut(400, function () {
-                nilailogin.login_success.fadeIn(400, function () {
+            unmarklogin.login_spinner.fadeOut(400, function () {
+                unmarklogin.login_success.fadeIn(400, function () {
                     setTimeout(function(){ window.location.href = "/marks" }, 800);
                 });
             });   
@@ -50,7 +50,7 @@
         // Process the login
         // Decide what do do on sucess or failure
         function process_login(query) {
-            nilai.ajax('/login', 'post', query, function (res) {
+            unmark.ajax('/login', 'post', query, function (res) {
                 if (typeof res.lookup_type != 'undefined') {
                     login_success(); // Run the redirection
                 } else {
@@ -62,7 +62,7 @@
         // Change the icon for submit to a spinner
         function showMessage(error, message) {
 
-            var form     = (nilailogin.pass_wrapper.is(':visible')) ? nilailogin.pass_wrapper : nilailogin.login_wrapper,
+            var form     = (unmarklogin.pass_wrapper.is(':visible')) ? unmarklogin.pass_wrapper : unmarklogin.login_wrapper,
                 eclass   = (error) ? 'error' : '';
                 response = form.find('.response-message');
 
@@ -73,20 +73,20 @@
         
         // Toggle the forgot password screen
         function toggleForgotPass() {
-            if (nilailogin.pass_wrapper.is(':visible')) {
-                nilailogin.pass_wrapper.animate({ top: '-400px' }, 500, function () {
+            if (unmarklogin.pass_wrapper.is(':visible')) {
+                unmarklogin.pass_wrapper.animate({ top: '-400px' }, 500, function () {
                     $(this).hide();
                     toggle_login_form();
                 });
             } else {
-                nilailogin.login_wrapper.animate({ top: '-400px' }, 500, function () {
-                    nilailogin.pass_wrapper.show().animate({ top: '0' }, 500);
+                unmarklogin.login_wrapper.animate({ top: '-400px' }, 500, function () {
+                    unmarklogin.pass_wrapper.show().animate({ top: '0' }, 500);
                 });
             }
         }
 
         // Login Submit Action
-        nilailogin.login_form.on('submit', function (e) {
+        unmarklogin.login_form.on('submit', function (e) {
             e.preventDefault(); // prevent page submit
             toggle_login_form(true); // Hide the Login Form
 
@@ -98,35 +98,35 @@
         });
 
         // Forgot Password Submit
-        nilailogin.pass_form.on('submit', function (e) {
+        unmarklogin.pass_form.on('submit', function (e) {
             e.preventDefault();
-            nilailogin.forget_submit.find('i').removeClass('icon-go').addClass('icon-spinner');
+            unmarklogin.forget_submit.find('i').removeClass('icon-go').addClass('icon-spinner');
             var email = $('#forgot_email').val(),
                 query = 'email='+email;
-            nilai.ajax('/tools/forgotPassword', 'post', query, function (res) {
+            unmark.ajax('/tools/forgotPassword', 'post', query, function (res) {
                 if (res.success) {
                     showMessage(false, 'A confirmation link will be sent via email.');
                 } else {
                     showMessage(true, 'Email not recogonized');
                 }
-                nilailogin.forget_submit.find('i').removeClass('icon-spinner').addClass('icon-go');
+                unmarklogin.forget_submit.find('i').removeClass('icon-spinner').addClass('icon-go');
             });
         });
 
         // Show Submit Button on Key Press
-        nilailogin.input_fields.on('change', function () { 
-            nilailogin.login_submit.fadeIn();
-            nilailogin.message.slideUp();
+        unmarklogin.input_fields.on('change', function () { 
+            unmarklogin.login_submit.fadeIn();
+            unmarklogin.message.slideUp();
         });
 
         // Show Submit Button on key press on the forgot form
-        nilailogin.pass_form.find('input.field-input').on('keypress change', function (e) {
-            nilailogin.forget_submit.fadeIn();
-            nilailogin.message.slideUp();
+        unmarklogin.pass_form.find('input.field-input').on('keypress change', function (e) {
+            unmarklogin.forget_submit.fadeIn();
+            unmarklogin.message.slideUp();
         });
 
         // Toggle Forgot Password
-        nilailogin.helper_buttom.on('click', function (e) {
+        unmarklogin.helper_buttom.on('click', function (e) {
             e.preventDefault();
             toggleForgotPass();
         });

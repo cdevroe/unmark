@@ -1,7 +1,7 @@
-Nilai
+Unmark
 =======
 
-**Note: Nilai is a "work in progress" by team Plain. Please expect many updates, every day, and for things to appear and disappear without warning. Thar be dragons! Follow along via [@plainmade](http://twitter.com/plainmade)**
+**Note: Unmark is a "work in progress" by team Plain. Please expect many updates, every day, and for things to appear and disappear without warning. Thar be dragons! Follow along via [@plainmade](http://twitter.com/plainmade)**
 
 A work-in-progress, open source, bookmarking service created by [Colin Devroe](http://colin.getbarley.com/) and [being rebuilt by Plain](http://plainmade.com/blog/7020/).
 

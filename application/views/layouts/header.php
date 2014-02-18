@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>Unmark<?php if (! isset($_SESSION['logged_in'])) { echo ': Save your links for later.'; } ?></title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic|Merriweather:400,300,300italic,400italic,700,700italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/assets/css/nilai.css" />
+    <link rel="stylesheet" href="/assets/css/unmark.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
     <script src="/assets/js/plugins/modernizr-2.7.1.min.js"></script>
     <script>
@@ -18,12 +18,12 @@
 </head>
 
 <?php if (isset($active_label)) : ?>
-<body id="nilai" class="label-<?php print $active_label['label_id']; ?>" data-lookup="<?php print $lookup_type; ?>">
+<body id="unmark" class="label-<?php print $active_label['label_id']; ?>" data-lookup="<?php print $lookup_type; ?>">
 <?php else : ?>
-<body id="nilai" data-lookup="<?php print $lookup_type; ?>">
+<body id="unmark" data-lookup="<?php print $lookup_type; ?>">
 <?php endif; ?>
     
-    <div id="nilai-wrapper">
+    <div id="unmark-wrapper">
 
     <?php $this->load->view('layouts/navigation'); ?>
 

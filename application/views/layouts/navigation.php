@@ -67,13 +67,13 @@
             <ul class="nav-list">
                 <li><a href="#" class="action" data-action="change_password">Change Password</a></li>
                 <li><a href="#" class="action" data-action="change_email">Change Email Address</a></li>
-                <li><a href="mailto:?subject=Checkout Nilai&amp;body=You should really check out Nilai. http://nilai.co">Invite Others</a></li>
+                <li><a href="mailto:?subject=Checkout Unmark&amp;body=You should really check out Unmark. http://unmark.it">Invite Others</a></li>
             </ul>
 
             <h4 class="nav-heading">Help</h4>
             <ul class="nav-list">
-                <li><a href="/help/how.php">How to Use Nilai</a></li>
-                <li><a href="/help/faq">FAQ</a></li>
+                <li><a href="#">How to Use Unmark</a></li>
+                <li><a href="#">FAQ</a></li>
                 <li><a href="/help/bookmarklet">Get the Bookmarklet</a></li>
                 <li><a href="#">Get the Chrome Extension</a></li>
             </ul>
