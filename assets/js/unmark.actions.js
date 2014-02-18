@@ -124,6 +124,24 @@
         }
     };
 
+    // Update the count in the sidebar and graph upon mark archive/unarchive
+    unmark.updateCounts = function () {
+        unmark.getData('stats', function (res) {
+
+            var archived = res.stats.archived,
+                saved = res.stats.saved,
+                marks = res.stats.marks;
+
+            // First update sidebar count
+            $('.na-today').text(archived.today);
+            $('.ns-year').text(marks['ages ago']);
+
+            // Now the graph
+            unmark.createGraph(archived['4 days ago'], archived['3 days ago'], archived['2 days ago'], archived['yesterday'], archived['today'], saved['4 days ago'], saved['3 days ago'], saved['2 days ago'], saved['yesterday'], saved['today']);
+
+        });
+    };
+
     // Simple Ajax method to get a list of results from API
     unmark.getData = function (what, caller) {
         unmark.ajax('/marks/get/'+what, 'post', '', caller);

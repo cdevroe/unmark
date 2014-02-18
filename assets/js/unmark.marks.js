@@ -80,6 +80,8 @@
 
         unmark.getData('labels', updateLabelCount);
 
+        unmark.updateCounts();
+
     };
 
     // Build Mark JSON

@@ -2,13 +2,16 @@
     <div class="sidebar-block">
         <div class="sidebar-inner">
             <canvas id="unmark-graph" class="graph" width="400" height="100"></canvas>
-            <p>You saved <?php print $stats['saved']['today']; ?> links today and archived <?php print $stats['archived']['today']; ?>.</p>
+            <p>
+                You saved <span class="ns-today"><?php print $stats['saved']['today']; ?></span> 
+                links today and archived <span class="na-today"><?php print $stats['archived']['today']; ?></span>.
+            </p>
         </div>
     </div>
     <?php if ($stats['marks']['ages ago'] > 0) : ?>
         <div class="sidebar-block">
             <div class="sidebar-inner">
-                <p>You have <?php print $stats['marks']['ages ago']; ?> links that are over 1 year old. Want to tidy up a bit?</p>
+                <p>You have <span class="ns-year"><?php print $stats['marks']['ages ago']; ?></span> links that are over 1 year old. Want to tidy up a bit?</p>
                 <a href="/marks/ages-ago" class="btn">View Links</a>
                 <button data-action="dismiss_this">Do Nothing</button>
                 <button data-action="archive_all">Archive All</button>
