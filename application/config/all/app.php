@@ -55,12 +55,12 @@ $config['error_codes'][601] = 'Validation Errors';
  have some links to *do* something with. The label of 'Do' will be added automatically.
 */
 $config['new_account_links'] = array(
-    'Read Nilai\'s FAQ' => array(
-        'url'      => 'http://nilai.co/help/faq',
+    'Read Unmark\'s FAQ' => array(
+        'url'      => 'http://unmark.it/help/faq',
         'label_id' => '7'
     ),
-    'How To Use Nilai'  => array(
-        'url'      => 'http://nilai.co/help/how',
+    'How To Use Unmark'  => array(
+        'url'      => 'http://unmark.it/help/how',
         'label_id' => '7'
     )
 );
@@ -83,11 +83,11 @@ $config['forgot_password_recovery_url'] = '{URL_BASE}/password_reset/{TOKEN}';
  */
 
 // Reset email subject
-$config['password_reset_email_subject'] = 'Nilai - Password reset';
+$config['password_reset_email_subject'] = 'Unmark - Password reset';
 // Reset email from field address and description
-$config['email_from'] = array('address'=>'nilai@nilai.co', 'description' => 'Nilai');
+$config['email_from'] = array('address'=>'noreply@unmark.it', 'description' => 'Unmark');
 // Reset email reply to field address and description
-$config['email_reply_to'] = array('address'=>'nilai@nilai.co', 'description' => 'Nilai');
+$config['email_reply_to'] = array('address'=>'noreply@unmark.it', 'description' => 'Unmark');
 // Reset email server settings
 /*
  * Array with settings accepted by CI email component
@@ -106,4 +106,4 @@ $config['plain_email_settings'] = array(
                 );
 */
 // Updated password email subject
-$config['password_updated_email_subject'] = 'Nilai - Password updated';
+$config['password_updated_email_subject'] = 'Unmark - Password updated';

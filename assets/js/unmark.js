@@ -1,22 +1,22 @@
 /*!
-    Main scripts for Nilai.co
+    Main scripts for Unmark.it
     Copyright 2014 - Plain - http://plainmade.com
 
     A set of helper functions that can be called and used throughout the app
 
 */
 
-if (nilai === undefined) { var nilai = {}; }
+if (unmark === undefined) { var unmark = {}; }
 
 (function ($) {
 
     // Basic Ajax Function used throughout the app
-    nilai.ajax = function (path, method, query, callback, data_type, async) {
-        var csrf_token   = nilai.urlEncode(nilai.vars.csrf_token),
+    unmark.ajax = function (path, method, query, callback, data_type, async) {
+        var csrf_token   = unmark.urlEncode(unmark.vars.csrf_token),
             data_type    = (data_type !== undefined) ? data_type : 'json',
             async        = (async !== undefined) ? async : true,
             added_vars   = 'csrf_token=' + csrf_token + '&content_type=' + data_type;
-            query        = (nilai.empty(query)) ? added_vars : query + '&' + added_vars;
+            query        = (unmark.empty(query)) ? added_vars : query + '&' + added_vars;
 
         $.ajax({
             'dataType': data_type,
@@ -45,7 +45,7 @@ if (nilai === undefined) { var nilai = {}; }
     };
 
     // Simple Swap Class Method that uses regex
-    nilai.swapClass = function (elem, removals, additions) {
+    unmark.swapClass = function (elem, removals, additions) {
         var self = elem;
 
         // Check for simple replacement        
@@ -76,31 +76,31 @@ if (nilai === undefined) { var nilai = {}; }
     };
 
     // Replace special chars
-    nilai.replaceSpecial = function(str) {
+    unmark.replaceSpecial = function(str) {
         if (str !== undefined && str !== null) {
             var regex = null;
-            for (var i in nilai.special_chars) {
+            for (var i in unmark.special_chars) {
                 regex = new RegExp(i, 'gi');
-                str   = str.replace(regex, nilai.special_chars[i]);
+                str   = str.replace(regex, unmark.special_chars[i]);
             }
         }
         return str;
     };
 
     // Encode for URL
-    nilai.urlEncode = function(str) {
-        str = nilai.replaceSpecial(str);
+    unmark.urlEncode = function(str) {
+        str = unmark.replaceSpecial(str);
         return encodeURIComponent(str);
     };
 
     // Nice Check Empty Function
-    nilai.empty = function(v) {
+    unmark.empty = function(v) {
         var l = (v !== undefined && v !== null) ? v.length : 0;
         return (v === false || v === '' || v === null || v === 0 || v === undefined || l < 1);
     };
 
     // Function to Create/Update Cookies
-    nilai.createCookie = function (name,value,days) {
+    unmark.createCookie = function (name,value,days) {
         if (days) {
             var date = new Date();
             date.setTime(date.getTime()+(days*24*60*60*1000));
@@ -111,7 +111,7 @@ if (nilai === undefined) { var nilai = {}; }
     };
 
     // Function to Read Cookie
-    nilai.readCookie = function (name) {
+    unmark.readCookie = function (name) {
         var nameEQ = name + "=";
         var ca = document.cookie.split(';');
         for(var i=0;i < ca.length;i++) {

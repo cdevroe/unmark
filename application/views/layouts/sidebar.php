@@ -1,7 +1,7 @@
 <div class="sidebar-default">
     <div class="sidebar-block">
         <div class="sidebar-inner">
-            <canvas id="nilai-graph" class="graph" width="400" height="100"></canvas>
+            <canvas id="unmark-graph" class="graph" width="400" height="100"></canvas>
             <p>You saved <?php print $stats['saved']['today']; ?> links today and archived <?php print $stats['archived']['today']; ?>.</p>
         </div>
     </div>

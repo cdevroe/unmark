@@ -261,7 +261,7 @@ $config['sess_time_to_update']	= 300;
 $config['sess_table_name']		= 'plain_sessions';
 
 
-// WARNING: Session settings below refer to CodeIgniter session library which is not being used in Nilai
+// WARNING: Session settings below refer to CodeIgniter session library which is not being used in Unmark
 $config['sess_use_database']	= FALSE;
 
 

@@ -1,5 +1,5 @@
 /*!
-    User Scripts for Nilai.co
+    User Scripts for Unmark.it
     Copyright 2014 - Plain - http://plainmade.com
 
     A set of functions used push and pull user info.
@@ -25,23 +25,23 @@
     }
 
     // Logout Method
-    nilai.logout = function () {
+    unmark.logout = function () {
         window.location = "/logout";
     };
 
 
     // Change Password Function
-    nilai.change_password = function () {
-        nilai.overlay(true);
+    unmark.change_password = function () {
+        unmark.overlay(true);
         $('#resetPasswordForm').show().animate({ top: 0 }, 1000);
     };
-    nilai.change_email = function () {
-        nilai.overlay(true);
+    unmark.change_email = function () {
+        unmark.overlay(true);
         $('#changePasswordForm').show().animate({ top: 0 }, 1000);
     };
 
     // Submit Password Change
-    nilai.send_password_change = function (form) {
+    unmark.send_password_change = function (form) {
         var query,
             new_pass_field = $('#pass1, #pass2'),
             old_pass_field = $('#oldpass'),
@@ -53,7 +53,7 @@
 
         if (pass1 === pass2) {
             query = 'password='+pass1+'&current_password='+oldpass;
-            nilai.ajax('/user/update/password', 'post', query, function (res) {
+            unmark.ajax('/user/update/password', 'post', query, function (res) {
                 if (res.success) {
                     showMessage(form, false, 'Your password has been changed.');
                 } else {
@@ -71,7 +71,7 @@
     };
 
     // Submit Email Change
-    nilai.send_email_change = function (form) {
+    unmark.send_email_change = function (form) {
         var query, 
             email_field = $('#emailupdate'),
             email_value = email_field.val();
@@ -80,7 +80,7 @@
 
         if (email_value !== '') {
             query = 'email='+email_value;
-            nilai.ajax('/user/update/email', 'post', query, function (res) {
+            unmark.ajax('/user/update/email', 'post', query, function (res) {
                 if (res.success) {
                     showMessage(form, false, 'Your email has been changed.');
                     $('#user-email').empty().text('[ '+email_value+' ]');

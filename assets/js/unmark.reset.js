@@ -1,5 +1,5 @@
 /*!
-    Password Reset Scripts for Nilai.co
+    Password Reset Scripts for Unmark.it
     Copyright 2014 - Plain - http://plainmade.com
 */
 
@@ -7,41 +7,41 @@
 
     $(document).ready(function () {
 
-        var nilaireset = {};
-            nilaireset.helper      = $('.gethere');
-            nilaireset.helptrigger = $('.forgot-pass');
-            nilaireset.firstpass   = $('#password');
-            nilaireset.secondpass  = $('#password2');
-            nilaireset.submitbtn   = $('.login-submit');
-            nilaireset.resetform   = $('#nilaiReset');
-            nilaireset.message     = $('.response-message');
+        var unmarkreset = {};
+            unmarkreset.helper      = $('.gethere');
+            unmarkreset.helptrigger = $('.forgot-pass');
+            unmarkreset.firstpass   = $('#password');
+            unmarkreset.secondpass  = $('#password2');
+            unmarkreset.submitbtn   = $('.login-submit');
+            unmarkreset.resetform   = $('#unmarkReset');
+            unmarkreset.message     = $('.response-message');
 
         // Show Error Message & Spinner
         function showMessage(error, message) {
             var eclass   = (error) ? 'error' : '';
-            nilaireset.message.removeClass('error').addClass(eclass).text(message).fadeIn();
+            unmarkreset.message.removeClass('error').addClass(eclass).text(message).fadeIn();
         }
 
         // Show or Hide the spinner
         function showSpinner(show) {
             if (show) {
-                nilaireset.submitbtn.find('i').removeClass('icon-go').addClass('icon-spinner');
+                unmarkreset.submitbtn.find('i').removeClass('icon-go').addClass('icon-spinner');
             } else {
-                nilaireset.submitbtn.find('i').removeClass('icon-spinner').addClass('icon-go');
+                unmarkreset.submitbtn.find('i').removeClass('icon-spinner').addClass('icon-go');
             }
         }
 
         // Clean up the form after an error
         function cleanupForm() {
             showSpinner(false);
-            nilaireset.submitbtn.fadeOut();
-            nilaireset.firstpass.val('');
-            nilaireset.secondpass.val('').slideUp();
+            unmarkreset.submitbtn.fadeOut();
+            unmarkreset.firstpass.val('');
+            unmarkreset.secondpass.val('').slideUp();
         }
 
         // Resets the password
         function resetPassword(query) {
-            nilai.ajax('/tools/resetPassword', 'post', query, function (res) {
+            unmark.ajax('/tools/resetPassword', 'post', query, function (res) {
                 cleanupForm();
                 if (res.success) {
                     showMessage(false, 'Your password has been changed. Redirecting now...')
@@ -56,30 +56,30 @@
         }
 
         // Show/Hide Help
-        nilaireset.helptrigger.on('click', function (e) {
+        unmarkreset.helptrigger.on('click', function (e) {
             e.preventDefault();
-            nilaireset.helper.fadeToggle();
+            unmarkreset.helper.fadeToggle();
         });
 
         // Show second password field
-        nilaireset.firstpass.on('keypress change', function () {
-            nilaireset.message.fadeOut();
-            nilaireset.secondpass.fadeIn();
+        unmarkreset.firstpass.on('keypress change', function () {
+            unmarkreset.message.fadeOut();
+            unmarkreset.secondpass.fadeIn();
         });
 
         // Show Submit Button
-        nilaireset.secondpass.on('keypress change', function () {
-            nilaireset.submitbtn.fadeIn();
+        unmarkreset.secondpass.on('keypress change', function () {
+            unmarkreset.submitbtn.fadeIn();
         });
 
         // Handle Password Form Update
-        nilaireset.resetform.on('submit', function (e) {
+        unmarkreset.resetform.on('submit', function (e) {
             e.preventDefault();
 
             var query,
-                pass = nilaireset.firstpass.val(),
-                pass2 = nilaireset.secondpass.val(), 
-                token = nilai.vars.token;
+                pass = unmarkreset.firstpass.val(),
+                pass2 = unmarkreset.secondpass.val(), 
+                token = unmark.vars.token;
 
             showSpinner(true); // Show spinner
 

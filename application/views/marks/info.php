@@ -1,8 +1,8 @@
 <html>
 <head>
-    <title>Nilai : Mark Added</title>
+    <title>Unmark : Mark Added</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/assets/css/nilai.css" />
+    <link rel="stylesheet" href="/assets/css/unmark.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
     <script>
         /* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
@@ -11,7 +11,7 @@
     </script>
     <noscript><link href="/assets/css/icons.fallback.css" rel="stylesheet"></noscript>
 </head>
-<body class="nilai-solo greybg">
+<body class="unmark-solo greybg">
 
 <?php $nice_url = rtrim(preg_replace('/https?:\/\/(www.)?/', '', $mark->url), '/'); ?>
 
@@ -50,11 +50,11 @@
 <?php $this->load->view('layouts/jsvars'); ?>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-<script src="/assets/js/nilai.js"></script>
-<script src="/assets/js/nilai.actions.js"></script>
-<script src="/assets/js/nilai.marks.js"></script>
-<script src="/assets/js/nilai.add.js"></script>
-<script src="/assets/js/nilai.init.js"></script>
+<script src="/assets/js/unmark.js"></script>
+<script src="/assets/js/unmark.actions.js"></script>
+<script src="/assets/js/unmark.marks.js"></script>
+<script src="/assets/js/unmark.add.js"></script>
+<script src="/assets/js/unmark.init.js"></script>
 
 </body>
 </html>
