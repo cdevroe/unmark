@@ -16,7 +16,8 @@
             mark_obj_ref    = mark_clicked.data('mark'),
             mark_string     = $('#' + mark_obj_ref).html();
             mark_obj        = jQuery.parseJSON(mark_string),
-            mark_id         = mark_obj_ref.replace("mark-data-","");
+            mark_id         = mark_obj_ref.replace("mark-data-",""),
+            mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
 
         // Quick function to populate the tags
         function showTags(res) {
@@ -30,9 +31,15 @@
         $('#mark-' + mark_id).addClass('view-active');
 
         // Compile and Render the template
+
+        // Check for note placeholder and update if there.
+        if (mark_notehold !== ''){ mark_obj['notes'] = mark_notehold; }
+
+        // Render the Template
         template = Hogan.compile(unmark.template.sidebar);
         output = template.render(mark_obj);
 
+        // Run the view interaction
         unmark.sidebar_mark_info.fadeOut(400, function () {
             if (unmark.sidebar_default.is(':visible')) {
                 unmark.sidebar_default.fadeOut(400, function () {
@@ -152,6 +159,7 @@
                 unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
                     editField.html('Notes <i class="icon-edit"></i>');
                     editable.attr('contenteditable', false);
+                    $('#mark-'+id).find('.note-placeholder').text(editable.text());
                 });
                 editable.unbind();
                 unmark.tagify_notes(editable);

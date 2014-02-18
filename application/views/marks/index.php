@@ -86,6 +86,7 @@
                         </a>
                     <?php endif; ?>
                 </div>
+                <div class="note-placeholder"></div>
                 <script id="mark-data-<?php print $mark->mark_id; ?>" type="application/json"><?php echo json_encode($marks_data); ?></script>
             </div>
         <?php endforeach; ?>
