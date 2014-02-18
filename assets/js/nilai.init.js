@@ -76,12 +76,12 @@
             e.preventDefault();
             var section = $(this).next('section'), arrow = $(this).find('i');
             if (section.is(':visible')) {
-                arrow.removeClass('barley-icon-chevron-up');
-                arrow.addClass('barley-icon-chevron-down');
+                arrow.removeClass('icon-up');
+                arrow.addClass('icon-down');
                 section.slideUp();
             } else {
-                arrow.removeClass('barley-icon-chevron-down');
-                arrow.addClass('barley-icon-chevron-up');
+                arrow.removeClass('icon-down');
+                arrow.addClass('icon-up');
                 section.slideDown();                
             }
         });
@@ -130,14 +130,20 @@
             return nilai.overlay(false); 
         });
 
+        // Show Labels in Bookmarklet
+        /*$(document).on('mouseenter', '#bml-show-labels', function (e) {
+            nilai.marks_addLabel($(this));
+        });*/
+
+
         // Label Hovers
-        $(document).on('mouseenter', '.label-choices li', function (e) {
+        $(document).on('mouseenter', '.label-choices li, .sidebar-label-list li', function (e) {
             var label = $(this),
                 label_name = label.find('span').text(),
                 label_class = label.attr('class');
             $('#label-chosen').show().text(label_name).removeClass().addClass(label_class);
         });
-        $(document).on('mouseleave', '.label-choices li', function (e) {
+        $(document).on('mouseleave', '.label-choices li, .sidebar-label-list li', function (e) {
             $('#label-chosen').show().hide();
         });
 

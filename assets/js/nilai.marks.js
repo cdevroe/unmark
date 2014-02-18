@@ -150,7 +150,7 @@
                 text = $(this).text(), id = $(this).data('id');
                 query = 'notes=' + nilai.urlEncode(text);
                 nilai.ajax('/mark/edit/'+id, 'post', query, function(res) {
-                    editField.html('Notes <i class="barley-icon-pencil"></i>');
+                    editField.html('Notes <i class="icon-edit"></i>');
                     editable.attr('contenteditable', false);
                 });
                 editable.unbind();
@@ -185,7 +185,6 @@
                     editable.attr('contenteditable', false);
                     editable.slideUp();
                     editable.prev().text('Edit Note');
-                    editable.parent().find('i').removeClass('barley-icon-question-sign').addClass('barley-icon-ok');
                 });
                 editable.unbind();
             }
@@ -215,8 +214,8 @@
             nilai.ajax('/mark/edit/'+mark, 'post', query, function(res) {
                 labels_list.fadeOut();
                 btn.text(label_name);
+                nilai.swapClass(btn, 'label-*', 'label-'+label_id);
                 labels_list.find('a').unbind();
-                labels_list.parent().find('i').removeClass('barley-icon-question-sign').addClass('barley-icon-ok');
                 if (label_parent.hasClass('sidebar-label')) {
                     nilai.swapClass(label_parent, 'label-*', 'label-'+label_id);
                     nilai.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);

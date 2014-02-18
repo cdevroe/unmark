@@ -1,6 +1,7 @@
 /*!
     Graph Main scripts for Nilai.co
     Copyright 2014 - Plain - http://plainmade.com
+    REQUIRES - Chart.min.js file
 */
 
 
@@ -9,56 +10,44 @@ if (nilai.graph === undefined) { nilai.graph = {}; }
 
 (function ($) {
 
-    nilai.graph.getMaxY = function () {
-        var max = 0;
-        
-        for(var i = 0; i < this.data.length; i ++) {
-            if(this.data[i] > max) {
-                max = this.data[i];
-            }
+    nilai.createGraph = function (a4, a3, a2, a1, a, s4, s3, s2, s1, s) {
+
+        var lineChartData, lineChartOptions, chartElement;
+
+        lineChartElement = document.getElementById("nilai-graph").getContext("2d");
+
+        lineChartData = {
+            labels : ["4 Days Ago","3 Days Ago","2 Days Ago", "Yesterday", "Today"],
+            datasets : [
+                {
+                    // Archived Settings
+                    strokeColor : "#DCDCDC",
+                    pointColor : "#C1C1C1",
+                    pointStrokeColor : "#fff",
+                    data : [a4, a3, a2, a1, a]
+                },
+                {
+                    // Saved Settings
+                    strokeColor : "#B8B7B7",
+                    pointColor : "#777777",
+                    pointStrokeColor : "#fff",
+                    data : [s4, s3, s2, s1, s]
+                }
+            ]
+            
         }
-        
-        max += 10 - max % 10;
-        return max;
-    };
 
-    nilai.graph.getXPixel = function (val) {
-        return ((this.graph.width() - this.xPadding) / this.data.length) * val + (this.xPadding * 1.5);
-    };
-
-    nilai.graph.getYPixel = function (val) {
-        return this.graph.height() - (((this.graph.height() - this.yPadding) / this.getMaxY()) * val) - this.yPadding;
-    };
-
-    nilai.graph.initGraph = function (obj, x, y, data, color, fill) {
-
-        this.graph       = obj,
-        this.xPadding    = x,
-        this.yPadding    = y,
-        this.data        = data;
-        
-
-        var c = this.graph[0].getContext('2d');            
-        
-        c.lineWidth = 2;
-        c.strokeStyle = color;
-        
-        // Draw the line graph
-        c.beginPath();
-        c.moveTo(this.getXPixel(0), this.getYPixel(this.data[0]));
-        for(var i = 1; i < this.data.length; i ++) {
-            c.lineTo(this.getXPixel(i), this.getYPixel(this.data[i]));
+        lineChartOptions = {
+            scaleShowLabels : false,
+            scaleShowGridLines : false,
+            datasetFill : false,
+            bezierCurve : false,
+            scaleLineColor: 'transparent',
+            scaleFontColor: 'transparent'            
         }
-        c.stroke();
-        
-        // Draw the dots
-        c.fillStyle = fill;
-        
-        for(var i = 0; i < this.data.length; i ++) {  
-            c.beginPath();
-            c.arc(this.getXPixel(i), this.getYPixel(this.data[i]), 4, 0, Math.PI * 2, true);
-            c.fill();
-        }
+
+        new Chart(lineChartElement).Line(lineChartData, lineChartOptions);
+
     };
 
 }(window.jQuery));

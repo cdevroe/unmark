@@ -4,15 +4,21 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/nilai.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <script>
+        /* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
+        window.grunticon=function(e){if(e&&3===e.length){var t=window,n=!!t.document.createElementNS&&!!t.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect&&!!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"),A=function(A){var o=t.document.createElement("link"),r=t.document.getElementsByTagName("script")[0];o.rel="stylesheet",o.href=e[A&&n?0:A?1:2],r.parentNode.insertBefore(o,r)},o=new t.Image;o.onerror=function(){A(!1)},o.onload=function(){A(1===o.width&&1===o.height)},o.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="}};
+        grunticon( [ "/assets/css/icons.data.svg.css", "/assets/css/icons.data.png.css", "/assets/css/icons.fallback.css" ] );
+    </script>
+    <noscript><link href="/assets/css/icons.fallback.css" rel="stylesheet"></noscript>
 </head>
-<body class="nilai-solo">
+<body class="nilai-solo greybg">
 
 <?php $nice_url = rtrim(preg_replace('/https?:\/\/(www.)?/', '', $mark->url), '/'); ?>
 
 <div class="mark-added">
     <div class="mark-added-block">
         This link has been added to your stream.
-        <i class="barley-icon-ok"></i>
+        <i class="icon-check"></i>
     </div>
 
     <div class="mark-added-info">
@@ -21,8 +27,8 @@
     </div>
     
     <div class="mark-added-label mark-added-settings">
-        <span id="label-chosen">SUP</span>
-        <a class="action" data-action="marks_addLabel" href="#">Add A Label</a>
+        <span id="label-chosen"></span>
+        <a class="action" data-action="marks_addLabel" href="#">Unlabeled</a>
         <section data-id="<?php print $mark->mark_id; ?>">
             <ul class="label-choices"></ul>
         </section>

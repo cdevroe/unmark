@@ -18,9 +18,9 @@
     function showSpinner(form, show) {
         var button = form.find('.login-submit i');
         if (show) {
-            button.removeClass('barley-icon-chevron-right').addClass('barley-icon-spinner');
+            button.removeClass('icon-go').addClass('icon-spinner');
         } else {
-            button.removeClass('barley-icon-spinner').addClass('barley-icon-chevron-right');
+            button.removeClass('icon-spinner').addClass('icon-go');
         }
     }
 

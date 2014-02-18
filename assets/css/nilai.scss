@@ -8,10 +8,6 @@
 @import "partials/grid-settings";
 @import "../libraries/neat/neat";
 
-// Import fonts and font icons created by Plain
-@import "partials/barlicons";
-
-
 // Color Variables for Layouts (greyscale)
 $color_dark     : #3D3D3D;
 $color_darker   : #222222;
@@ -21,6 +17,7 @@ $color_lighter  : #F2F0F1;
 $color_lightest : #474747;
 $color_white    : #FFFFFF;
 $color_black    : #000000;
+$color_shade    : #F9F9F9;
 
 // Color Variables for labels
 $color_orange : #DA6D46;
@@ -92,6 +89,9 @@ body {
     &#nilai-login {
         background: $color_darkest;
         position:relative;
+    }
+    &.greybg {
+        background:$color_shade;
     }
 }
 
@@ -267,14 +267,7 @@ ul.label-list {
             top: 15px;
         }
         &:after {
-            content: "";
-            position: absolute;
-            top: 2px;
-            right: 10px;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: $color_grey;
+            @include unmark-label-ball(2px, 10px, 22px, true);
         }
         &.label-2:after { background: $color_orange; }
         &.label-3:after { background: $color_blue; }
@@ -452,14 +445,8 @@ ul.nav-list {
             }
         }
         &:after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            margin-top: -11px;
-            right: 18px;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
+            @include unmark-label-ball(50%, 18px, 22px, true);
+            margin-top:-11px;
             background: transparent;
         }
         .mark-actions {
@@ -593,7 +580,7 @@ ul.nav-list {
     .sidebar-mark-info { display: none; }
     &:after {
         display: block;
-        content: " ";
+        content: "";
         position: absolute;
         width: 20px;
         height: 100%;
@@ -620,6 +607,11 @@ ul.nav-list {
             i {
                 color: $color_light;
                 font-size: 20px;
+                width: 15px;
+                height: 15px;
+                display: block;
+                background-size: 100%;
+                margin: 7px 7px 0 0;
             }
         }
     }
@@ -628,23 +620,16 @@ ul.nav-list {
         position: relative;
         @include drop-shadow-border();
         &:before {
-            content: "";
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: $color_grey;            
+            @include unmark-label-ball(20px, 20px, 18px);         
         }
         a {
             margin: 0;
             padding: 21px 0 21px 50px;
-            font-weight: 300;
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: 13px;
             color: $color_grey;
             display: block;
+            font-weight: 600;
         }
         &.label-2 {
             background: rgba($color_orange, .2);
@@ -676,6 +661,22 @@ ul.nav-list {
             &:before { background: $color_pink; }
             a { color: $color_pink; }
         }
+        #label-chosen {
+            position: absolute;
+            left: 300px;
+            top: 76px;
+            z-index: 9999;
+            display: none;
+            font-size: 17px;
+            font-weight: 600;
+            color: $color_grey;
+            &.label-2 { color: $color_orange; }
+            &.label-3 { color: $color_blue; }
+            &.label-4 { color: $color_yellow; }
+            &.label-5 { color: $color_purple; }
+            &.label-6 { color: $color_green; }
+            &.label-7 { color: $color_red; }
+        }
     } 
     .sidebar-info-panel {
         padding: 10px 0 10px 25px;
@@ -694,6 +695,9 @@ ul.nav-list {
                 right: 5px;
                 top: 0px;
                 color: $color_dark;
+                background-size: 100%;
+                width: 12px;
+                height: 12px;
             }
         }
         section {
@@ -765,7 +769,7 @@ ul.timeline {
         position: absolute;
         right: 26px;
         top: 7px;
-        content: ' ';
+        content: "";
         display: block;
         width: 2px;
         height: 100%;
@@ -788,7 +792,7 @@ ul.timeline {
             position: absolute;
             top: 2px;
             right: 22px;
-            content: ' ';
+            content: "";
             display: block;
             width: 10px;
             height: 10px;
@@ -828,6 +832,7 @@ ul.timeline {
 // Line Graph
 canvas.graph {
     border-bottom:1px solid $color_light;
+    margin-top:25px;
 }
 
 
@@ -843,14 +848,16 @@ canvas.graph {
         letter-spacing: .1em;
         font-weight: 400;
         i {
-            color:$color_lighter;
             float: right;
-            font-size: 20px;
-            margin-top: -8px;
+            margin-top: -9px;
+            width: 30px;
+            height: 30px;
+            background-size: 100%;
         }
     }
     .mark-added-info {
         padding: 25px;
+        color: $color_white;
         h1 {
             font-weight: 300;
             color:$color_dark;
@@ -874,11 +881,58 @@ canvas.graph {
             color:$color_grey;
             text-transform: uppercase;
             display: block;
+            position: relative;
+            padding-left: 20px;
+            &:before {
+                @include unmark-label-ball(-2px, -6px, 20px);
+            }
+            &.label-2 {
+                &:before {
+                    background: $color_orange; 
+                } 
+                color: $color_orange; 
+            }
+            &.label-3 {
+                &:before {
+                    background: $color_blue; 
+                } 
+                color: $color_blue; 
+            }
+            &.label-4 {
+                &:before {
+                    background: $color_yellow; 
+                } 
+                color: $color_yellow; 
+            }
+            &.label-5 {
+                &:before {
+                    background: $color_purple; 
+                } 
+                color: $color_purple; 
+            }
+            &.label-6 {
+                &:before {
+                    background: $color_green; 
+                } 
+                color: $color_green; 
+            }
+            &.label-7 {
+                &:before {
+                    background: $color_red; 
+                } 
+                color: $color_red; 
+            }
+        }
+        &.mark-added-note a {
+            padding-left:0;
+            &:before {
+                display:none;
+            }
         }
         section {
             display:none;
             position: absolute;
-            background: $color_white;
+            background: $color_shade;
             width: 100%;
             left: 0px;
             top: 45px;
@@ -945,14 +999,7 @@ canvas.graph {
             position: relative;
             font-size: 11px;
             &:before {
-                content: "";
-                position: absolute;
-                top: 6px;
-                left: 10px;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                background: $color_grey !important;
+                @include unmark-label-ball(6px, 10px, 20px);
                 opacity: 0.3;
             }
             &:hover {
@@ -993,12 +1040,15 @@ canvas.graph {
 
 #mark-info-dump ul.sidebar-label-list {
     width: 100%;
-    display:none;
+    display: none;
     background: $color_lighter;
     position: absolute;
     z-index: 999;
+    top: 57px;
+    left: 2px;
+    padding: 15px 0;
+    border-bottom: 1px solid $color_light;
     li {
-        width: 50%;
         a {
             right: 0;
             top: 0px;
@@ -1108,6 +1158,13 @@ body.label-7 .navigation-pane { border-top: none; }
             font-size: 17px;
             right: -5px;
             display:none;
+            i {
+                width: 15px;
+                height: 15px;
+                display: block;
+                background-size: 100%;
+                margin-top: 4px;
+            }
         }
         .forgot-submit {
             top: 2px;
@@ -1199,14 +1256,27 @@ body.label-7 .navigation-pane { border-top: none; }
     #resetPasswordForm {
         top: -300px;
         .login-submit {
-            top: 102px;
+            top: 106px;
+            right: -5px;
             display: block;
+            i {
+                background-size: 100%;
+                width: 13px;
+                height: 13px;
+                display: block;
+            }
         }
     }
     #changePasswordForm {
         .login-submit {
-            top: 1px;
+            top: 6px;
             display: block;
+            i {
+                background-size: 100%;
+                width: 13px;
+                height: 13px;
+                display: block;
+            }
         }
     }
 }
@@ -1223,11 +1293,14 @@ body.label-7 .navigation-pane { border-top: none; }
     z-index: 10000;
     #nilaiModalClose {
         position: absolute;
-        top: 10px;
+        top: 27px;
         right: 25px;
         i {
-            font-size: 50px;
             color: $color_light;
+            width: 50px;
+            height: 50px;
+            display: block;
+            background-size: 100%;
         }
     }
 }
@@ -1270,11 +1343,17 @@ body.label-7 .navigation-pane { border-top: none; }
     left: 47.1%;
     top: 117px;
     font-size: 79px;
+    i {
+        width: 75px;
+        height: 75px;
+        display: block;
+        background-size: 100%;
+    }
 }
 
 // Default Spinner
-.barley-icon-spinner {
-    @include animation-duration(1.25s);
+.icon-spinner {
+    @include animation-duration(0.75s);
     @include animation-iteration-count(infinite);
     @include animation-name(rotate-forever);
     @include animation-timing-function(linear);
@@ -1283,5 +1362,11 @@ body.label-7 .navigation-pane { border-top: none; }
     height: 24px;
     overflow: hidden;
     padding: 0;
-    margin-right: -5px;
+}
+
+// Helper Icon
+i.icon-circle {
+    @include unmark-label-ball(0, 0, 20px);
+    position: relative;
+    background: #A7A9AC;
 }

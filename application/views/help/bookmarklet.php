@@ -19,7 +19,7 @@
 	<h3>Android devices</h3>
 	<p>I have no idea. If you do, please drop me a line.</p>
 
-    <p><a href="javascript:(function()%7Bf%3D%27http://nilai.co/mark/add%3Furl%3D%27%2BencodeURIComponent(window.location.href)%2B%27%26title%3D%27%2BencodeURIComponent(document.title)%2B%27%26v%3D6%26%27%3Ba%3Dfunction()%7Bif(!window.open(f%2B%27noui%3D1%26jump%3Ddoclose%27,%27nilaiv2%27,%27location%3D1,links%3D0,scrollbars%3D0,toolbar%3D0,width%3D594,height%3D485%27))location.href%3Df%2B%27jump%3Dyes%27%7D%3Bif(/Firefox/.test(navigator.userAgent))%7BsetTimeout(a,0)%7Delse%7Ba()%7D%7D)()" title="Install bookmarklet" style="color:red;"><i class="barley-icon-heart"></i></a> <strong>&lt;-- DRAG TO BOOKMARKS</strong></p>
+    <p><a href="javascript:(function()%7Bf%3D%27http://nilai.co/mark/add%3Furl%3D%27%2BencodeURIComponent(window.location.href)%2B%27%26title%3D%27%2BencodeURIComponent(document.title)%2B%27%26v%3D6%26%27%3Ba%3Dfunction()%7Bif(!window.open(f%2B%27noui%3D1%26jump%3Ddoclose%27,%27nilaiv2%27,%27location%3D1,links%3D0,scrollbars%3D0,toolbar%3D0,width%3D594,height%3D485%27))location.href%3Df%2B%27jump%3Dyes%27%7D%3Bif(/Firefox/.test(navigator.userAgent))%7BsetTimeout(a,0)%7Delse%7Ba()%7D%7D)()" title="Install bookmarklet" style="color:red;">UNMARK</a> <strong>&lt;-- DRAG TO BOOKMARKS</strong></p>
     <p><a href="/home">Back to your marks</a></p>
 
 </div>

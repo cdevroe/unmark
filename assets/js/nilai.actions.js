@@ -41,6 +41,7 @@
         $('.nav-panel').hide();
         $('.menu-item').removeClass('active-menu');
         $('.navigation-pane-links').show();
+        $('.menu-activator i').removeClass('icon-menu_close').addClass('icon-menu_open');
     };
 
     // Function for interacting and animating the left navigation
@@ -77,6 +78,8 @@
             }
         }
 
+        $('.menu-activator i').removeClass('icon-menu_open').addClass('icon-menu_close');
+
         // Check which panel to show
         nilai.nav_panel.animate({ left: 65 }, { duration: 200, queue: false });
         nilai.main_panel.animate({ left: panel_animate }, { duration: 200, queue: false });
@@ -101,9 +104,6 @@
             total_pages = window.nilai_total_pages;
 
         if (cont.scrollTop() + cont.innerHeight() >= cont[0].scrollHeight) {
-
-            console.log('Next Page: ' + next_page);
-            console.log('Total Pages: ' + total_pages);
 
             if (next_page <= total_pages) {
 
@@ -150,7 +150,7 @@
     nilai.overlay = function (show) {
         if (show) {
             nilai.mainpanels.addClass('blurme');
-            var overlay = $('<div id="nilai-overlay"><a href="#" id="nilaiModalClose"><i class="barley-icon-remove"></i></a></div>');
+            var overlay = $('<div id="nilai-overlay"><a href="#" id="nilaiModalClose"><i class="icon-big_close"></i></a></div>');
             overlay.appendTo(document.body);
         } else {
             $('#resetPasswordForm').hide().css('top', '-300px');
