@@ -34,9 +34,12 @@ $config['error_codes'][61] = 'No tag provided.';
 $config['error_codes'][62] = 'Tag could not be added.';
 
 // Password recovery - 90-99
-$config['error_codes']['90'] = 'Account with given email does not exist.';
-$config['error_codes']['91'] = 'Invalid password recovery token.';
+$config['error_codes'][90] = 'Account with given email does not exist.';
+$config['error_codes'][91] = 'Invalid password recovery token.';
 
+// Import - 100 - 105
+$config['error_codes'][100] = 'No file uploaded.';
+$config['error_codes'][101] = 'Invalid file format uploaded. Only JSON files accepted';
 
 // HTTP mimic status codes
 // Only to be used if they make sense
