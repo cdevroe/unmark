@@ -16,7 +16,7 @@ class Welcome extends Plain_Controller
 		// Needs to be installed
 		// This should be updated to be cleaner
 		if (! $this->db->table_exists('users')) {
-			print_r('<p>Nilai has not been installed yet. Please <a href="/install/">install</a> before continuing.</p>');
+			print_r('<p>Unmark has not been installed yet. Please <a href="/install/">install</a> before continuing.</p>');
 			exit;
 		}
 

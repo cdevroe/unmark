@@ -1,4 +1,4 @@
-Password reset request for Nilai was just created for your account. To reset your password please visit following link:
+Password reset request for Unmark was just created for your account. To reset your password please visit following link:
 <br />
 {URL}
 <br />

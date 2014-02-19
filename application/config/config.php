@@ -91,7 +91,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = true;
 
 
 /*
@@ -261,7 +261,7 @@ $config['sess_time_to_update']	= 300;
 $config['sess_table_name']		= 'plain_sessions';
 
 
-// WARNING: Session settings below refer to CodeIgniter session library which is not being used in Nilai
+// WARNING: Session settings below refer to CodeIgniter session library which is not being used in Unmark
 $config['sess_use_database']	= FALSE;
 
 
@@ -381,13 +381,13 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 /*
- * Folder storing database backups
+ * Folder storing database backups, relative to APPPATH
  */
-$config['plain_db_backup_folder'] = 'application/cache/db_backups/';
+$config['plain_db_backup_folder'] = 'cache/db_backups/';
 /*
  * Flag saying to remove DB backup on successful migration
  */
-$config['plain_db_backup_remove_on_success'] = true;
+$config['plain_db_backup_remove_on_success'] = false;
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

@@ -31,28 +31,39 @@ class Users_To_Marks_model extends Plain_Model
 
     public function create($options=array())
     {
+        return $this->validateAndSave($options, true);
+    }
+    
+    public function import($options=array())
+    {
+        return $this->validateAndSave($options, false);
+    }
+    
+    private function validateAndSave($options, $overwriteCreatedOn){
         $valid  = validate($options, $this->data_types, array('user_id', 'mark_id'));
-
+        
         // Make sure all the options are valid
         if ($valid === true) {
-
-            $options['created_on'] = date('Y-m-d H:i:s');
+        
+            if($overwriteCreatedOn || empty($options['created_on'])){
+                $options['created_on'] = date('Y-m-d H:i:s');
+            }
             $q   = $this->db->insert_string('users_to_marks', $options);
             $res = $this->db->query($q);
-
+        
             // Check for errors
             $this->sendException();
-
+        
             // If good, return full record
             if ($res === true) {
                 $user_mark_id = $this->db->insert_id();
                 return $this->readComplete($user_mark_id);
             }
-
+        
             // Else return error
             return false;
         }
-
+        
         return $this->formatErrors($valid);
     }
 
@@ -127,7 +138,7 @@ class Users_To_Marks_model extends Plain_Model
         return $this->count("user_id='". $user_id . "'" . $when);
     }
 
-    public function getTotalsSearch($page, $limit, $data=array(), $keyword, $user_id)
+    public function getTotalsSearch($page, $limit, $data=array(), $keyword, $user_id, $archive)
     {
 
         $q = $this->db->query("
@@ -145,7 +156,7 @@ class Users_To_Marks_model extends Plain_Model
                 (
                     SELECT users_to_marks.users_to_mark_id
                     FROM marks
-                    INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $user_id . "' AND users_to_marks.archived_on IS NULL AND users_to_marks.active = '1'
+                    INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $user_id . "' AND users_to_marks.archived_on " . $archive . " AND users_to_marks.active = '1'
                     WHERE
                     marks.title LIKE '%" . $keyword . "%'
                     OR marks.url LIKE '%" . $keyword . "%'
@@ -218,7 +229,7 @@ class Users_To_Marks_model extends Plain_Model
             $search_query = "
                 SELECT " . $fields . "
                 FROM marks
-                INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $options['user_id'] . "' AND users_to_marks.active = '1' AND users_to_marks.archived_on IS NULL " . $joins . "
+                INNER JOIN users_to_marks ON marks.mark_id = users_to_marks.mark_id AND users_to_marks.user_id = '" . $options['user_id'] . "' AND users_to_marks.active = '1' AND users_to_marks.archived_on " . $options['archive'] . ' ' . $joins . "
                 WHERE marks.title LIKE '%" . $options['search'] . "%' OR marks.url LIKE '%" . $options['search'] . "%'" . $group_by;
 
             $query = '(' . $query . ') UNION DISTINCT (' . $search_query . ')';

@@ -42,3 +42,20 @@ button.disabled {
 @mixin drop-shadow-border() {
     box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02);
 }
+
+
+// The Unmark Ball
+@mixin unmark-label-ball($top: 0, $hor: 0, $size: 20px, $right: false) {
+    content: "";
+    position: absolute;
+    top: $top;
+    @if $right { 
+        right: $hor; 
+    } @else {
+        left: $hor;
+    }
+    height: $size;
+    width: $size;
+    border-radius: 50%;
+    background: $color_grey;
+}

@@ -2,7 +2,7 @@
 include('simple_html_dom.php');
 
 function parse_hrecipe($url) {
-  ini_set('user_agent', 'Nilai/1.0');
+  ini_set('user_agent', 'Unmark/1.0');
   ini_set('memory_limit', '500M');
 
   /* Alchemy API

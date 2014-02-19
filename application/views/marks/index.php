@@ -1,5 +1,5 @@
 <?php if (isset($errors['2'])) : ?>
-<h2 class="marks-heading"><i class="barley-icon-exclamation-sign"></i> Sorry, No links found</h2>
+<h2 class="marks-heading">Sorry, No links found</h2>
 <?php else : ?>
 <?php if ($lookup_type != "all") :
 
@@ -11,7 +11,7 @@
 
     switch ($lookup_type) {
         case 'label':
-            $heading['icon']    =   'barley-icon-circle';
+            $heading['icon']    =   'icon-circle';
             $heading['title']   =   $total . $link_plural . "labeled " . $active_label['label_name'];
             break;
         case 'archive':
@@ -78,7 +78,7 @@
                     </a>
                     <?php if ($lookup_type == "archive") : ?>
                         <a class="action mark-archive" data-action="mark_restore" href="#" data-id="<?php print $mark->mark_id; ?>">
-                            <i class="barley-icon-refresh"></i>
+                            <i class="icon-spinner"></i>
                         </a>
                     <?php else : ?>
                         <a class="action mark-archive" data-action="mark_archive" href="#" data-id="<?php print $mark->mark_id; ?>">
@@ -86,9 +86,15 @@
                         </a>
                     <?php endif; ?>
                 </div>
+                <div class="note-placeholder"></div>
                 <script id="mark-data-<?php print $mark->mark_id; ?>" type="application/json"><?php echo json_encode($marks_data); ?></script>
             </div>
         <?php endforeach; ?>
     </div>
 </div>
+
+
+<script type="text/javascript">
+window.unmark_total_pages = <?php print $pages . ";\n"; ?>
+</script>
 <?php endif; ?>

@@ -2,7 +2,7 @@
 
 /*
  *---------------------------------------------------------------
- * Nilai Version
+ * Unmark Version
  *---------------------------------------------------------------
  *
  * Set the current version here. Be sure to follow basic rules
@@ -12,7 +12,7 @@
  * /application/views/changelog.php
  *
  */
-define('NILAI_VERSION','0.3.5');
+define('UNMARK_VERSION','0.3.5');
 
 /*
  *---------------------------------------------------------------
@@ -41,11 +41,11 @@ if(file_exists($appDir)){
         include_once($localEnvConfigFile);
     }
 }
-// Looking for global environment configuration under /etc/nilai/environment.php
-const NILAI_ENV_CONFIG_GLOBAL = '/etc/nilai/environment.php';
+// Looking for global environment configuration under /etc/unmark/environment.php
+const UNMARK_ENV_CONFIG_GLOBAL = '/etc/unmark/environment.php';
 if(!defined('ENVIRONMENT')){
-    if(file_exists(NILAI_ENV_CONFIG_GLOBAL)){
-        include_once(NILAI_ENV_CONFIG_GLOBAL);
+    if(file_exists(UNMARK_ENV_CONFIG_GLOBAL)){
+        include_once(UNMARK_ENV_CONFIG_GLOBAL);
     }
 }
 if(!defined('ENVIRONMENT')){
