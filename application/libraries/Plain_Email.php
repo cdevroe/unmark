@@ -1,7 +1,5 @@
 <?php defined("BASEPATH") or exit("No direct script access allowed");
 
-require_once(BASEPATH.'Libraries/Email.php');
-
 class Plain_Email extends CI_Email {
 
     public $is_bulk   = false;
@@ -84,7 +82,7 @@ class Plain_Email extends CI_Email {
         $this->set_alt_message($text);
         return $this->send();
     }
-    
+
     public function initialize($config = array()){
         // Use passed config first
         if(!empty($config)){
