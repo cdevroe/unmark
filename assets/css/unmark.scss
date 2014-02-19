@@ -871,6 +871,8 @@ canvas.graph {
         span {
             color:$color_light;
             font-size: 13px;
+            display: inline-block;
+            @include unmark-truncate(400px);
         }
     }
     .mark-added-settings {
