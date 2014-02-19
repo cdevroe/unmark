@@ -442,6 +442,9 @@ ul.nav-list {
             .mark-link a {
                 text-decoration: none;
                 color: darken($color_light, 15%);
+                display:inline-block;
+                vertical-align: bottom;
+                @include unmark-truncate(400px);
             }
         }
         &:after {
@@ -868,6 +871,8 @@ canvas.graph {
         span {
             color:$color_light;
             font-size: 13px;
+            display: inline-block;
+            @include unmark-truncate(400px);
         }
     }
     .mark-added-settings {

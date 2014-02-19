@@ -91,7 +91,9 @@
             var node = e.target.nodeName, more_link = $(this).find('a.mark-info');
             if (node !== "A" && node !== "I") {
                 e.preventDefault();
-                more_link.trigger('click');
+            }
+            if (node !== "I") {
+                unmark.show_mark_info(more_link);
             }
             unmark.hideNavigation(); // Hide Main Navigation
         });

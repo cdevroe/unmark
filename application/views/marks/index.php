@@ -48,22 +48,7 @@
 <?php endif; ?>
     <div class="marks_list">
         <?php foreach ($marks as $mark) :
-
-                $notes = ($mark->notes == "" ? "Add a note or #hashtags ..." : $mark->notes);
-                $preview = ($mark->embed == "" ? 0 : $mark->embed);
-                $archived = ($mark->archived_on == "" ? 0 : 1);
-
-                $marks_data = array(
-                    "mark_id"       => $mark->mark_id,
-                    "label_id"      => $mark->label_id,
-                    "label_name"    => $mark->label_name,
-                    "notes"         => $notes,
-                    "preview"       => $preview,
-                    "archived"      => $archived
-                );
-
                 $nice_url = rtrim(preg_replace('/https?:\/\/(www.)?/', '', $mark->url), '/');
-
             ?>
             <div id="mark-<?php print $mark->mark_id; ?>" class="mark label-<?php print $mark->label_id; ?>">
                 <h2><a target="_blank" href="<?php print $mark->url; ?>"><?php print $mark->title; ?></a></h2>
@@ -73,21 +58,21 @@
                     <span class="mark-link"><a target="_blank" href="<?php print $mark->url; ?>"><?php print $nice_url; ?></a></span>
                 </div>
                 <div class="mark-actions">
-                    <a class="action mark-info" href="#" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>" class="mark-more">
-                        <i class="icon-goto_link"></i>
+                    <a title="View Mark Info" class="action mark-info" href="#" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>" class="mark-more">
+                        <i class="icon-ellipsis"></i>
                     </a>
                     <?php if ($lookup_type == "archive") : ?>
-                        <a class="action mark-archive" data-action="mark_restore" href="#" data-id="<?php print $mark->mark_id; ?>">
-                            <i class="icon-spinner"></i>
+                        <a title="Unarchive Mark" class="action mark-archive" data-action="mark_restore" href="#" data-id="<?php print $mark->mark_id; ?>">
+                            <i class="icon-label"></i>
                         </a>
                     <?php else : ?>
-                        <a class="action mark-archive" data-action="mark_archive" href="#" data-id="<?php print $mark->mark_id; ?>">
+                        <a title="Archive Mark" class="action mark-archive" data-action="mark_archive" href="#" data-id="<?php print $mark->mark_id; ?>">
                             <i class="icon-check"></i>
                         </a>
                     <?php endif; ?>
                 </div>
                 <div class="note-placeholder"></div>
-                <script id="mark-data-<?php print $mark->mark_id; ?>" type="application/json"><?php echo json_encode($marks_data); ?></script>
+                <script id="mark-data-<?php print $mark->mark_id; ?>" type="application/json"><?php echo json_encode($mark); ?></script>
             </div>
         <?php endforeach; ?>
     </div>

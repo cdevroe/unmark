@@ -55,8 +55,14 @@
             elem_parent = elem_ckd.parent(),
             panel_position = parseInt(unmark.nav_panel.css('left'));
 
+        // For Any Nav Click, Return Sidebar
+        unmark.sidebar_collapse();
+
         // If all links pannel - allow click default
-        if (panel_to_show.match(/\//)) { return true; }
+        if (panel_to_show.match(/\//)) { 
+            unmark.hideNavigation();
+            return true; 
+        }
 
         // Otherwise prevent click default
         e.preventDefault();
@@ -110,18 +116,37 @@
                 template = Hogan.compile(unmark.template.marks);
                 url = window.location.pathname;
                 unmark.ajax(url+'/'+next_page, 'post', '', function (res) {
-
                     if (res.marks) {
                         mark_count = Object.keys(res.marks).length;
                         for (i = 1; i < mark_count; i++) {
+                            res.marks[i]['prettyurl'] = unmark.prettyLink(res.marks[i]['url']);
                             output += template.render(res.marks[i]);
                         }
                         unmark.main_content.find('.marks_list').append(output);
                         window.unmark_current_page = next_page;
+                        unmark.update_mark_action_btns();
                     }
                 });
             }
         }
+    };
+
+    // Update the count in the sidebar and graph upon mark archive/unarchive
+    unmark.updateCounts = function () {
+        unmark.getData('stats', function (res) {
+
+            var archived = res.stats.archived,
+                saved = res.stats.saved,
+                marks = res.stats.marks;
+
+            // First update sidebar count
+            $('.na-today').text(archived.today);
+            $('.ns-year').text(marks['ages ago']);
+
+            // Now the graph
+            unmark.createGraph(archived['4 days ago'], archived['3 days ago'], archived['2 days ago'], archived['yesterday'], archived['today'], saved['4 days ago'], saved['3 days ago'], saved['2 days ago'], saved['yesterday'], saved['today']);
+
+        });
     };
 
     // Simple Ajax method to get a list of results from API

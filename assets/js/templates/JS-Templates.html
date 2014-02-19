@@ -9,16 +9,16 @@
     <ul class="sidebar-label-list" data-id="{{mark_id}}"></ul>
 </div>
 <div class="sidebar-info-panel">
-    {{#preview}}
+    {{#embed}}
         <h4 class="prev-coll">Preview <i class="icon-up"></i></h4>
-        <section class="sidebar-info-preview">{{{preview}}}</section>
-    {{/preview}}
+        <section class="sidebar-info-preview">{{{embed}}}</section>
+    {{/embed}}
     <h4 class="action" data-action="marks_editNotes">Notes <i class="icon-edit"></i></h4>
     <section id="notes-{{mark_id}}" data-id="{{mark_id}}" class="sidebar-info-notes hideoutline">{{{notes}}}</section>
 </div>
-{{#archived}}
+{{#archived_on}}
     <button data-id="{{mark_id}}" data-view="sidebar" data-action="delete_mark">Delete Link</button>
-{{/archived}}
+{{/archived_on}}
 
 
 <!-- Main Mark Listing Template -->
@@ -28,12 +28,17 @@
     <div class="mark-meta">
         <span class="mark-date">{{nice_time}}</span>
         <span class="mark-sep">•</span>
-        <span class="mark-link"><a target="_blank" href="{{url}}">{{url}}</a></span>
+        <span class="mark-link"><a target="_blank" href="{{url}}">{{prettyurl}}</a></span>
     </div>
     <div class="mark-actions" style="display: none;">
-        <a class="action mark-info" href="#" data-action="show_mark_info" data-mark="mark-data-{{mark_id}}"><i class="icon-goto_link"></i></a>
-        <a class="action mark-archive" data-action="mark_archive" href="#" data-id="{{mark_id}}"><i class="icon-check"></i></a>
+        <a class="action mark-info" href="#" data-action="show_mark_info" data-mark="mark-data-{{mark_id}}"><i class="icon-ellipsis"></i></a>
+        {{#archived_on}}
+            <a title="Unarchive Mark" class="action mark-archive" data-action="mark_restore" href="#" data-id="{{mark_id}}"><i class="icon-label"></i></a>
+        {{/archived_on}}
+        {{^archived_on}}
+            <a title="Archive Mark" class="action mark-archive" data-action="mark_archive" href="#" data-id="{{mark_id}}"><i class="icon-check"></i></a>
+        {{/archived_on}}
     </div>
     <div class="note-placeholder"></div>
-    <script id="mark-data-{{mark_id}}" type="application/json">{"mark_id":"{{mark_id}}","label_id":"{{label_id}}","label_name":"{{label_name}}","notes":"{{notes}}","preview":{{embed}},"archived":{{active}}}</script>
+    <script id="mark-data-{{mark_id}}" type="application/json">{"mark_id":"{{mark_id}}","label_id":"{{label_id}}","label_name":"{{label_name}}","notes":"{{notes}}",{{#embed}}"preview":{{embed}},{{/embed}}"archived":{{active}}}</script>
 </div>
