@@ -119,6 +119,7 @@
                     if (res.marks) {
                         mark_count = Object.keys(res.marks).length;
                         for (i = 1; i < mark_count; i++) {
+                            res.marks[i]['prettyurl'] = unmark.prettyLink(res.marks[i]['url']);
                             output += template.render(res.marks[i]);
                         }
                         unmark.main_content.find('.marks_list').append(output);

@@ -122,4 +122,14 @@ if (unmark === undefined) { var unmark = {}; }
         return null;
     };
 
+    // Prefity Link
+    unmark.prettyLink = function (link) {
+        link = link.replace(/https?:\/\/(www.)?/, '');
+        if(link.substr(-1) === '/') {
+            link = link.substr(0, link.length - 1);
+        }
+        return link;
+    };
+
+
 }(window.jQuery));

@@ -59,3 +59,11 @@ button.disabled {
     border-radius: 50%;
     background: $color_grey;
 }
+
+// Shorten URL
+@mixin unmark-truncate($width) {
+    width: $width;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -442,6 +442,9 @@ ul.nav-list {
             .mark-link a {
                 text-decoration: none;
                 color: darken($color_light, 15%);
+                display:inline-block;
+                vertical-align: bottom;
+                @include unmark-truncate(400px);
             }
         }
         &:after {
