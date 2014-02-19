@@ -110,7 +110,6 @@
                 template = Hogan.compile(unmark.template.marks);
                 url = window.location.pathname;
                 unmark.ajax(url+'/'+next_page, 'post', '', function (res) {
-
                     if (res.marks) {
                         mark_count = Object.keys(res.marks).length;
                         for (i = 1; i < mark_count; i++) {
@@ -118,6 +117,7 @@
                         }
                         unmark.main_content.find('.marks_list').append(output);
                         window.unmark_current_page = next_page;
+                        unmark.update_mark_action_btns();
                     }
                 });
             }

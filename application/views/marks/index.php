@@ -48,22 +48,7 @@
 <?php endif; ?>
     <div class="marks_list">
         <?php foreach ($marks as $mark) :
-
-                $notes = ($mark->notes == "" ? "Add a note or #hashtags ..." : $mark->notes);
-                $preview = ($mark->embed == "" ? 0 : $mark->embed);
-                $archived = ($mark->archived_on == "" ? 0 : 1);
-
-                $marks_data = array(
-                    "mark_id"       => $mark->mark_id,
-                    "label_id"      => $mark->label_id,
-                    "label_name"    => $mark->label_name,
-                    "notes"         => $notes,
-                    "preview"       => $preview,
-                    "archived"      => $archived
-                );
-
                 $nice_url = rtrim(preg_replace('/https?:\/\/(www.)?/', '', $mark->url), '/');
-
             ?>
             <div id="mark-<?php print $mark->mark_id; ?>" class="mark label-<?php print $mark->label_id; ?>">
                 <h2><a target="_blank" href="<?php print $mark->url; ?>"><?php print $mark->title; ?></a></h2>
@@ -87,7 +72,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="note-placeholder"></div>
-                <script id="mark-data-<?php print $mark->mark_id; ?>" type="application/json"><?php echo json_encode($marks_data); ?></script>
+                <script id="mark-data-<?php print $mark->mark_id; ?>" type="application/json"><?php echo json_encode($mark); ?></script>
             </div>
         <?php endforeach; ?>
     </div>

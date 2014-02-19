@@ -14,7 +14,7 @@
         
         var template, output,
             mark_obj_ref    = mark_clicked.data('mark'),
-            mark_string     = $('#' + mark_obj_ref).html();
+            mark_string     = $('#' + mark_obj_ref).html(),
             mark_obj        = jQuery.parseJSON(mark_string),
             mark_id         = mark_obj_ref.replace("mark-data-",""),
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
@@ -157,14 +157,18 @@
             if (e.which === 13 || e.type === 'blur') {
                 e.preventDefault();
                 text = $(this).text(), id = $(this).data('id');
-                query = 'notes=' + unmark.urlEncode(text);
-                unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
-                    editField.html('Notes <i class="icon-edit"></i>');
-                    editable.attr('contenteditable', false);
-                    $('#mark-'+id).find('.note-placeholder').text(editable.text());
-                });
-                editable.unbind();
-                unmark.tagify_notes(editable);
+                if (text === 'Click here to edit') {
+                    $(this).empty().html('<span class="action" data-action="marks_clickEdit">Add a note or #hashtags ...</span>');
+                } else {
+                    query = 'notes=' + unmark.urlEncode(text);
+                    unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
+                        editField.html('Notes <i class="icon-edit"></i>');
+                        editable.attr('contenteditable', false);
+                        $('#mark-'+id).find('.note-placeholder').text(editable.text());
+                    });
+                    editable.unbind();
+                    unmark.tagify_notes(editable);
+                }
             }
         });
     };
@@ -256,8 +260,12 @@
 
         // Get the note text, replace all tags with a linked tag
         var notetext = note.text();
-        notetext = notetext.replace(/#(\S*)/g,'<a href="/marks/tag/$1">#$1</a>');
-        notetext = notetext.replace('Add a note or #hashtags ...', '<span class="action" data-action="marks_clickEdit">Add a note or #hashtags ...</span>');
+
+        if (notetext === '') {
+            notetext = '<span class="action" data-action="marks_clickEdit">Add a note or #hashtags ...</span>';
+        } else {
+            notetext = notetext.replace(/#(\S*)/g,'<a href="/marks/tag/$1">#$1</a>');
+        }
 
         // Send the HTML to the notes field.
         note.html(notetext);

@@ -9,16 +9,16 @@
     <ul class="sidebar-label-list" data-id="{{mark_id}}"></ul>
 </div>
 <div class="sidebar-info-panel">
-    {{#preview}}
+    {{#embed}}
         <h4 class="prev-coll">Preview <i class="icon-up"></i></h4>
-        <section class="sidebar-info-preview">{{{preview}}}</section>
-    {{/preview}}
+        <section class="sidebar-info-preview">{{{embed}}}</section>
+    {{/embed}}
     <h4 class="action" data-action="marks_editNotes">Notes <i class="icon-edit"></i></h4>
     <section id="notes-{{mark_id}}" data-id="{{mark_id}}" class="sidebar-info-notes hideoutline">{{{notes}}}</section>
 </div>
-{{#archived}}
+{{#archived_on}}
     <button data-id="{{mark_id}}" data-view="sidebar" data-action="delete_mark">Delete Link</button>
-{{/archived}}
+{{/archived_on}}
 
 
 <!-- Main Mark Listing Template -->
@@ -35,5 +35,5 @@
         <a class="action mark-archive" data-action="mark_archive" href="#" data-id="{{mark_id}}"><i class="icon-check"></i></a>
     </div>
     <div class="note-placeholder"></div>
-    <script id="mark-data-{{mark_id}}" type="application/json">{"mark_id":"{{mark_id}}","label_id":"{{label_id}}","label_name":"{{label_name}}","notes":"{{notes}}","preview":{{embed}},"archived":{{active}}}</script>
+    <script id="mark-data-{{mark_id}}" type="application/json">{"mark_id":"{{mark_id}}","label_id":"{{label_id}}","label_name":"{{label_name}}","notes":"{{notes}}",{{#embed}}"preview":{{embed}},{{/embed}}"archived":{{active}}}</script>
 </div>

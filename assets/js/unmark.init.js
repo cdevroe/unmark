@@ -92,7 +92,9 @@
             if (node !== "A" && node !== "I") {
                 e.preventDefault();
             }
-            unmark.show_mark_info(more_link);
+            if (node !== "I") {
+                unmark.show_mark_info(more_link);
+            }
             unmark.hideNavigation(); // Hide Main Navigation
         });
 
