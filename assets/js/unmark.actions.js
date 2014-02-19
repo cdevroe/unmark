@@ -55,8 +55,14 @@
             elem_parent = elem_ckd.parent(),
             panel_position = parseInt(unmark.nav_panel.css('left'));
 
+        // For Any Nav Click, Return Sidebar
+        unmark.sidebar_collapse();
+
         // If all links pannel - allow click default
-        if (panel_to_show.match(/\//)) { return true; }
+        if (panel_to_show.match(/\//)) { 
+            unmark.hideNavigation();
+            return true; 
+        }
 
         // Otherwise prevent click default
         e.preventDefault();
