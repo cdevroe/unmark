@@ -31,8 +31,13 @@
         <span class="mark-link"><a target="_blank" href="{{url}}">{{url}}</a></span>
     </div>
     <div class="mark-actions" style="display: none;">
-        <a class="action mark-info" href="#" data-action="show_mark_info" data-mark="mark-data-{{mark_id}}"><i class="icon-goto_link"></i></a>
-        <a class="action mark-archive" data-action="mark_archive" href="#" data-id="{{mark_id}}"><i class="icon-check"></i></a>
+        <a class="action mark-info" href="#" data-action="show_mark_info" data-mark="mark-data-{{mark_id}}"><i class="icon-ellipsis"></i></a>
+        {{#archived_on}}
+            <a title="Unarchive Mark" class="action mark-archive" data-action="mark_restore" href="#" data-id="{{mark_id}}"><i class="icon-label"></i></a>
+        {{/archived_on}}
+        {{^archived_on}}
+            <a title="Archive Mark" class="action mark-archive" data-action="mark_archive" href="#" data-id="{{mark_id}}"><i class="icon-check"></i></a>
+        {{/archived_on}}
     </div>
     <div class="note-placeholder"></div>
     <script id="mark-data-{{mark_id}}" type="application/json">{"mark_id":"{{mark_id}}","label_id":"{{label_id}}","label_name":"{{label_name}}","notes":"{{notes}}",{{#embed}}"preview":{{embed}},{{/embed}}"archived":{{active}}}</script>

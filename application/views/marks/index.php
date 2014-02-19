@@ -58,15 +58,15 @@
                     <span class="mark-link"><a target="_blank" href="<?php print $mark->url; ?>"><?php print $nice_url; ?></a></span>
                 </div>
                 <div class="mark-actions">
-                    <a class="action mark-info" href="#" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>" class="mark-more">
-                        <i class="icon-goto_link"></i>
+                    <a title="View Mark Info" class="action mark-info" href="#" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>" class="mark-more">
+                        <i class="icon-ellipsis"></i>
                     </a>
                     <?php if ($lookup_type == "archive") : ?>
-                        <a class="action mark-archive" data-action="mark_restore" href="#" data-id="<?php print $mark->mark_id; ?>">
-                            <i class="icon-spinner"></i>
+                        <a title="Unarchive Mark" class="action mark-archive" data-action="mark_restore" href="#" data-id="<?php print $mark->mark_id; ?>">
+                            <i class="icon-label"></i>
                         </a>
                     <?php else : ?>
-                        <a class="action mark-archive" data-action="mark_archive" href="#" data-id="<?php print $mark->mark_id; ?>">
+                        <a title="Archive Mark" class="action mark-archive" data-action="mark_archive" href="#" data-id="<?php print $mark->mark_id; ?>">
                             <i class="icon-check"></i>
                         </a>
                     <?php endif; ?>
