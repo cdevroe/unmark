@@ -67,3 +67,25 @@ button.disabled {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+// Title Elements
+@mixin title-text {
+    font-family: $title;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+// Font Smoothing
+@mixin font-smoothing {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+// Rotate Mixins
+@mixin rotate-forever {
+    0%    { @include transform(rotate(0deg)); }
+    100%  { @include transform(rotate(360deg)); }
+}
