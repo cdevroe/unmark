@@ -10,5 +10,4 @@ application/config/*/**
 !application/config/all/*
 .sass-cache/
 application/cache/db_backups
-custom/*
-!custom/readme.md
+custom
