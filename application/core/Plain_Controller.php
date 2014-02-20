@@ -87,7 +87,7 @@ class Plain_Controller extends CI_Controller
                 }
 
                 // Figure if any automatic labels should be applied
-                $smart_info = getSmartLabelInfo($this->clean->url);
+                $smart_info = getSmartLabelInfo($url);
                 if (isset($smart_info['key']) && ! empty($smart_info['key']) && ! isset($options['label_id'])) {
 
                     // Load labels model
