@@ -16,29 +16,7 @@ module.exports = function(grunt) {
         return object;
     }
 
-    // Base Config
-    var config = {
-        pkg: grunt.file.readJSON('package.json'),
-        sass: {
-            all: {
-                options: {
-                    style: 'compressed',
-                    banner: '/*! <%= pkg.name %> - <%=pkg.url %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> - <%= pkg.author %> */'
-                },
-                files: {
-                    'assets/css/unmark.css': 'assets/css/unmark.scss'
-                }
-            }
-        },
-        uglify: {
-            all: {
-                options : {
-                    beautify : {
-                        ascii_only : true
-                    },
-                    banner: '/*! <%= pkg.name %> - <%=pkg.url %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> - <%= pkg.author %> */'
-                },
-                files: {
+    var js_file_config = {
                     'assets/js/production/unmark.plugins.js': [
                         'assets/js/plugins/hogan.js',
                         'assets/js/plugins/pjax.js',
@@ -66,13 +44,63 @@ module.exports = function(grunt) {
                         'assets/js/unmark.init.js'
                     ]
                 }
+
+    // Base Config
+    var config = {
+        pkg: grunt.file.readJSON('package.json'),
+        sass: {
+            prod: {
+                options: {
+                    style: 'compressed',
+                    banner: '/*! <%= pkg.name %> - <%=pkg.url %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> - <%= pkg.author %> */ \n'
+                },
+                files: {
+                    'assets/css/unmark.css': 'assets/css/unmark.scss'
+                }
+            }
+        },
+        uglify: {
+            prod: {
+                options : {
+                    beautify : {
+                        ascii_only : true
+                    },
+                    banner: '/*! <%= pkg.name %> - <%=pkg.url %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> - <%= pkg.author %> */ \n'
+                },
+                files: js_file_config
+            }
+        },
+        concat: {
+            dev: {
+                options: {
+                    stripBanners: false,
+                    banner: '/*! DEVELOPMENT VERSION */ \n'
+                },
+                files: js_file_config
+            }
+        },
+        "string-replace": {                 
+            prod: {
+                files: {
+                    "index.php" : "index.php"
+                },
+                options: {
+                    replacements: [{
+                        pattern: /define\('UNMARK_VERSION', ('(?:''|[^'])*'|[^',]+)\);/,
+                        replacement: "define('UNMARK_VERSION', '<%= pkg.version %>');"
+                    }]
+                }
             }
         },
         watch: {
             scripts: {
-                files: ['assets/css/*.scss', 'assets/js/*.js'],
-                tasks: ['sass', 'uglify']
+                files: ['assets/js/*.js'],
+                tasks: ['concat:dev', 'concat:custom']
             },
+            css: {
+                files: ['assets/css/*.scss'],
+                tasks: ['sass:prod']
+            }
         }
     };
 
@@ -89,6 +117,8 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     // Register Tasks
-    grunt.registerTask('default', [ 'sass', 'uglify' ]);
+    grunt.registerTask('default', [ 'sass:prod', 'uglify:prod', 'uglify:custom', 'string-replace:prod' ]); // Default Production Build
+
+    grunt.registerTask('dev', [ 'sass:prod', 'concat:dev', 'concat:custom' ]);
 
 };
