@@ -49,12 +49,8 @@
 
 <?php $this->load->view('layouts/jsvars'); ?>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-<script src="/assets/js/unmark.js"></script>
-<script src="/assets/js/unmark.actions.js"></script>
-<script src="/assets/js/unmark.marks.js"></script>
-<script src="/assets/js/unmark.add.js"></script>
-<script src="/assets/js/unmark.init.js"></script>
+<script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
+<script src="/assets/js/production/unmark.bookmarklet.js"></script>
 
 </body>
 </html>
