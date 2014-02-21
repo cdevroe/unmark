@@ -8,7 +8,7 @@
     #'system' can be replaced if you have renamed your system folder.
     RewriteCond %{REQUEST_URI} ^system.*
     RewriteRule ^(.*)$ /index.php?/$1 [L]
-    
+
     #When your application folder isn't in the system folder
     #This snippet prevents user access to the application folder
     #Submitted by: Fabdrol
@@ -30,4 +30,4 @@
     # Submitted by: ElliotHaughin
 
     ErrorDocument 404 /index.php
-</IfModule> 
+</IfModule>
