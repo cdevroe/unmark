@@ -113,15 +113,15 @@
             });
         }
 
-        // Change Password & Email Submit
-        $('#passwordUpdate').on('submit', function (e) {
+        // Hooks up all functions for client/customer hidden forms
+        $('.hiddenform').on('submit', function (e) {
             e.preventDefault();
-            unmark.send_password_change($(this));
+            var form = $(this).find('form'),
+                formid = form.attr('id');
+            funct = eval('unmark.' + formid);
+            funct(form);
         });
-        $('#emailUpdate').on('submit', function (e) {
-            e.preventDefault();
-            unmark.send_email_change($(this));
-        });
+
         $('#helperforms input.field-input').on('keydown change', function () {
             $(this).parent().parent().find('.response-message').hide();
         });

@@ -1145,6 +1145,15 @@ body.label-7 .navigation-pane { border-top: none; }
             border: none;
             font-size: 12px;
             color: $color_black;
+            &.small-left {
+                width: 110px;
+                float: left;
+                margin-right: 10px;
+            }
+            &.small-right {
+                width: 155px;
+                float: left;
+            }
         }
         .login-submit, .forgot-submit {
             background: none;
@@ -1255,12 +1264,6 @@ body.label-7 .navigation-pane { border-top: none; }
             top: 102px;
             right: -5px;
             display: block;
-            i {
-                background-size: 100%;
-                width: 13px;
-                height: 13px;
-                display: block;
-            }
         }
     }
     #changePasswordForm {
@@ -1268,13 +1271,14 @@ body.label-7 .navigation-pane { border-top: none; }
         .login-submit {
             top: 2px;
             display: block;
-            i {
-                background-size: 100%;
-                width: 13px;
-                height: 13px;
-                display: block;
-            }
         }
+    }
+    #upgradeToPro {
+        top: -300px;
+        .login-submit {
+            display: block;
+            top: 101px;
+        }   
     }
 }
 
