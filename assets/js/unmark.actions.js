@@ -180,6 +180,7 @@
         } else {
             $('#resetPasswordForm').hide().css('top', '-300px');
             $('#changePasswordForm').hide().css('top', '-300px');
+            $('#upgradeToPro').hide().css('top', '-300px');
             unmark.mainpanels.removeClass('blurme');
             $('#unmark-overlay').remove();
         }
