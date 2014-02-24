@@ -33,6 +33,14 @@ Upgrading
 - Replace all files (keeping your local configuration intact.)
 - Run /upgrade/
 
+
+We Use Grunt
+==
+
+- We use Grunt to compile our SASS files as well as concat/uglify our JS files for production and some other small tasks.
+- For more info, please [check out our Grunt guide](https://github.com/plainmade/nilai/wiki/Grunt).
+
+
 How To Contribute
 ==
 

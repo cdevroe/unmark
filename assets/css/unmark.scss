@@ -1,6 +1,10 @@
-/*!
+/*
     Main stylesheet for Unmark.it
     Copyright 2014 - Plain - http://plainmade.com
+
+    ** NOTE ** - 
+    This is the SASS File and you must run GRUNT to compile this before pushing to production
+
 */
 
 // First include Bourbon & Neat
@@ -34,11 +38,14 @@ $serif      : 'Merriweather', serif;
 $sans-serif : 'Lato', sans-serif;
 $title      : 'Montserrat', sans-serif;
 
-/* normalize.css v2.1.3 | MIT License | git.io/normalize */article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background:0 0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
+// Import Mixins
+@import "partials/element-settings";
 
 
 // ================ Element Styles
 @import "partials/element-settings";
+/* normalize.css v2.1.3 | MIT License | git.io/normalize */article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background:0 0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
+
 
 
 // ================ Body
@@ -434,6 +441,9 @@ ul.nav-list {
             .mark-link a {
                 text-decoration: none;
                 color: darken($color_light, 15%);
+                display:inline-block;
+                vertical-align: bottom;
+                @include unmark-truncate(400px);
             }
         }
         &:after {
@@ -908,6 +918,8 @@ canvas.graph {
         span {
             color:$color_light;
             font-size: 13px;
+            display: inline-block;
+            @include unmark-truncate(400px);
         }
     }
     .mark-added-settings {
@@ -1190,6 +1202,15 @@ body.label-7 .navigation-pane { border-top: none; }
             border: none;
             font-size: 12px;
             color: $color_black;
+            &.small-left {
+                width: 110px;
+                float: left;
+                margin-right: 10px;
+            }
+            &.small-right {
+                width: 155px;
+                float: left;
+            }
         }
         .login-submit, .forgot-submit {
             background: none;
@@ -1300,25 +1321,21 @@ body.label-7 .navigation-pane { border-top: none; }
             top: 102px;
             right: -5px;
             display: block;
-            i {
-                background-size: 100%;
-                width: 13px;
-                height: 13px;
-                display: block;
-            }
         }
     }
     #changePasswordForm {
+        top: -300px;
         .login-submit {
             top: 2px;
             display: block;
-            i {
-                background-size: 100%;
-                width: 13px;
-                height: 13px;
-                display: block;
-            }
         }
+    }
+    #upgradeToPro {
+        top: -300px;
+        .login-submit {
+            display: block;
+            top: 101px;
+        }   
     }
 }
 
@@ -1349,10 +1366,6 @@ body.label-7 .navigation-pane { border-top: none; }
 
 // Animation Keyframes
 //********************************************************//
-@mixin rotate-forever {
-    0%    { @include transform(rotate(0deg)); }
-    100%  { @include transform(rotate(360deg)); }
-}
 @-webkit-keyframes rotate-forever { @include rotate-forever; }
    @-moz-keyframes rotate-forever { @include rotate-forever; }
         @keyframes rotate-forever { @include rotate-forever; }

@@ -11,7 +11,9 @@ class Register extends Plain_Controller
 
 	public function index()
 	{
-		$this->view('register');
+		$this->data['no_header'] = true;
+        $this->data['no_footer'] = true;
+		$this->view('register/index');
 	}
 
 	public function user()

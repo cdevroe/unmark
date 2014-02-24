@@ -9,16 +9,8 @@
 <?php $this->load->view('layouts/jsvars'); ?>
 
 <script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
-<script src="/assets/js/plugins/hogan.js"></script>
-<script src="/assets/js/plugins/pjax.js"></script>
-<script src="/assets/js/plugins/Chart.min.js"></script>
-<script src="/assets/js/plugins/unmark-graph.js"></script>
-<script src="/assets/js/templates/unmark-templates.js"></script>
-<script src="/assets/js/unmark.js"></script>
-<script src="/assets/js/unmark.actions.js"></script>
-<script src="/assets/js/unmark.marks.js"></script>
-<script src="/assets/js/unmark.client.js"></script>
-<script src="/assets/js/unmark.init.js"></script>
+<script src="/assets/js/production/unmark.plugins.js"></script>
+<script src="/assets/js/production/unmark.loggedin.js"></script>
 
 
 <script type="text/javascript">

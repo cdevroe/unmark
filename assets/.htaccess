@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    ###
+    # Check for assets request under custom folder
+    # If exists use it, if not skip and load as normal
+    ###
+
+    RewriteCond %{DOCUMENT_ROOT}/custom/%{REQUEST_URI}  -f
+    RewriteRule ^(.*) /custom/assets/$1 [L,QSA]
+</IfModule>

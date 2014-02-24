@@ -55,8 +55,14 @@
             elem_parent = elem_ckd.parent(),
             panel_position = parseInt(unmark.nav_panel.css('left'));
 
+        // For Any Nav Click, Return Sidebar
+        unmark.sidebar_collapse();
+
         // If all links pannel - allow click default
-        if (panel_to_show.match(/\//)) { return true; }
+        if (panel_to_show.match(/\//)) { 
+            unmark.hideNavigation();
+            return true; 
+        }
 
         // Otherwise prevent click default
         e.preventDefault();
@@ -110,14 +116,15 @@
                 template = Hogan.compile(unmark.template.marks);
                 url = window.location.pathname;
                 unmark.ajax(url+'/'+next_page, 'post', '', function (res) {
-
                     if (res.marks) {
                         mark_count = Object.keys(res.marks).length;
                         for (i = 1; i < mark_count; i++) {
+                            res.marks[i]['prettyurl'] = unmark.prettyLink(res.marks[i]['url']);
                             output += template.render(res.marks[i]);
                         }
                         unmark.main_content.find('.marks_list').append(output);
                         window.unmark_current_page = next_page;
+                        unmark.update_mark_action_btns();
                     }
                 });
             }

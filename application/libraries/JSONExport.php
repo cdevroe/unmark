@@ -3,7 +3,7 @@
 /**
  * JSONExport Class
  *
- * Library that handles nilai data export into JSON file
+ * Library that handles Unmark data export into JSON file
  * Export should be able to handle data regardless of number
  * of marks to export. So data are processed in packs, saved
  * to temporary file and served as attachment in the end.
@@ -130,6 +130,11 @@ class JSONExport {
         }
     }
     
+    /**
+     * Add metadata key/value entry to export file
+     * @param string $metaName Name of entry
+     * @param string $metaValue Value of entry
+     */
     public function addMeta($metaName, $metaValue){
         if(!$this->started){
             $this->startFile();

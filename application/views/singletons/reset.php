@@ -39,9 +39,9 @@ unmark.vars = {};
 unmark.vars.token   = '<?php print $token; ?>';
 unmark.vars.csrf_token   = '<?php print $csrf_token; ?>';     
 </script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-<script src="/assets/js/unmark.js"></script>
-<script src="/assets/js/unmark.reset.js"></script>
+
+<script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
+<script src="/assets/js/production/unmark.loggedout.js"></script>
 
 </body>
 </html>

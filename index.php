@@ -12,7 +12,7 @@
  * /application/views/changelog.php
  *
  */
-define('UNMARK_VERSION','0.3.5');
+define('UNMARK_VERSION', '0.3.5');
 
 /*
  *---------------------------------------------------------------

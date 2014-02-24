@@ -1,0 +1,18 @@
+{
+  "name": "Unmark",
+  "url": "http://unmark.it",
+  "version": "0.3.5",
+  "description": "An open source bookmarking service.",
+  "author": "http://plainmade.com",
+  "main": "Gruntfile.js",
+  "devDependencies": {
+    "load-grunt-tasks": "~0.3.0",
+    "grunt": "~0.4.2",
+    "grunt-contrib-sass": "~0.7.2",
+    "grunt-contrib-uglify": "~0.1.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "glob": "~3.2.8",
+    "grunt-string-replace": "~0.2.7",
+    "grunt-contrib-concat": "~0.3.0"
+  }
+}
