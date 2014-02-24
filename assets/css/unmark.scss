@@ -1254,6 +1254,11 @@ body.label-7 .navigation-pane { border-top: none; }
             border:none;
         }
     }
+    #current_sub_card span {
+        display: block;
+        margin-bottom: 15px;
+        font-size: 13px;
+    }
 }
 
 .forgotPassWrapper {
