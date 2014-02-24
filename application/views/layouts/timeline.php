@@ -24,6 +24,5 @@
         <li class="timeline-dot">
             <a href="/marks/last-year">Last Year<span><?php print determinePlurality($stats['marks']['last year'], 'link'); ?></span></a>
         </li>
-        <li class="timeline-dot"></li>
     </ul>
 </div>

@@ -24,7 +24,7 @@ $color_orange : #DA6D46;
 $color_blue   : #2D96C5;
 $color_yellow : #EAC863;
 $color_purple : #8E75A6;
-$color_green  : #19A59B;
+$color_green  : #69B363;
 $color_red    : #EB5556;
 $color_pink   : #DB5B73;
 $color_grey   : #A5A6AA;
@@ -37,17 +37,8 @@ $title      : 'Montserrat', sans-serif;
 /* normalize.css v2.1.3 | MIT License | git.io/normalize */article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background:0 0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
 
 
-@mixin title-text {
-    font-family: $title;
-    letter-spacing: 1px;
-    word-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 400;
-}
-@mixin font-smoothing {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+// ================ Element Styles
+@import "partials/element-settings";
 
 
 // ================ Body
@@ -70,7 +61,7 @@ body {
     color:$color_dark;
     //border-left:65px solid $color_dark;
     //border-top: 8px solid $color_darker;
-    background: darken($color_darkest, 4); 
+    background: #000; 
     box-shadow: 0 120px 130px -70px $color_darkest inset;
     @include font-smoothing;
     a {
@@ -101,9 +92,6 @@ body {
 
 // Hide Stupid Outlines
 textarea:focus, input:focus, .hideoutline, button { outline: 0; }
-
-// ================ Element Styles
-@import "partials/element-settings";
 
 
 // ================ Site Wrapper
@@ -136,6 +124,7 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
     background-color: $color_dark;
     min-height: 100%;
     margin-top: 64px;
+    box-shadow: 0 6px 10px -6px rgba(0,0,0,0.3) inset;
     .menu-item {
         height: inherit;
         text-align: center;
@@ -159,8 +148,8 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
             }
         }
         &.active-menu {
-            background: #303030;
-            box-shadow: 1px 0 0 0 #303030;
+            background: #333;
+            box-shadow: 1px 0 0 0 #333;
             width: 66px;
         }    
     }
@@ -194,6 +183,7 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
     ul.navigation-pane-links {
         margin:0;
         padding:0;
+        box-shadow: 0 6px 10px -6px rgba(0,0,0,0.3) inset;
         li {
             list-style: none;
             a {
@@ -226,13 +216,14 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
             position: absolute;
             display:none;
             color: #FFF;
-            background-color: #303030;
+            background-color: #333333;
             min-height: 100%;
             width: 200px;
             padding: 10px 20px;
             overflow: scroll;
             border-left: 1px solid;
-            border-color: lighten($color_dark, 8%);
+            border-color: lighten($color_dark, 4%);
+            box-shadow: 0 6px 10px -6px rgba(0,0,0,0.3) inset;
         }
     }
 }
@@ -385,10 +376,11 @@ ul.nav-list {
     background: $color_white;
     h2.marks-heading {
         @include title-text;
+        color: $color_lightest;
         margin: 0;
         padding: 14px 18px;
-        font-size: 13px;
-        line-height: 26px;
+        font-size: 11px;
+        line-height: 28px;
         @include drop-shadow-border();
         position:fixed;
         width:100%;
@@ -428,7 +420,7 @@ ul.nav-list {
             margin:0 0 12px 0;
             font-weight: 300;
             a {
-                color:$color_dark;
+                color: $color_darker;
             }
         }
         .mark-meta {
@@ -448,6 +440,11 @@ ul.nav-list {
             @include unmark-label-ball(50%, 18px, 22px, true);
             margin-top:-11px;
             background: transparent;
+            font-family: $title;
+            font-size: 12px;
+            color: transparentize(white, 0.5);
+            text-align: center;
+            line-height: 21px;
         }
         .note-placeholder { display: none; }
         .mark-actions {
@@ -481,7 +478,8 @@ ul.nav-list {
         }
         &.label-2 {
             &:after {
-                background: $color_orange;           
+                background: $color_orange;
+                content: "R";           
             }
             .mark-actions a {
                 background: lighten($color_orange, 7%);
@@ -493,6 +491,9 @@ ul.nav-list {
         &.label-3 {
             &:after {
                 background: $color_blue;         
+                content: "W";
+                font-size: 11px;
+                padding-top: 1px;
             }
             .mark-actions a {
                 background: lighten($color_blue, 7%);
@@ -503,7 +504,8 @@ ul.nav-list {
         }
         &.label-4 {
             &:after {
-                background: $color_yellow;           
+                background: $color_yellow;
+                content: "L";           
             }
             .mark-actions a {
                 background: $color_yellow;
@@ -515,6 +517,7 @@ ul.nav-list {
         &.label-5 {
             &:after {
                 background: $color_purple;           
+                content: "B";
             }
             .mark-actions a {
                 background: lighten($color_purple, 7%);
@@ -525,7 +528,8 @@ ul.nav-list {
         }
         &.label-6 {
             &:after {
-                background: $color_green;          
+                background: $color_green;         
+                content: "E"; 
             }
             .mark-actions a {
                 background: lighten($color_green, 7%);
@@ -537,6 +541,7 @@ ul.nav-list {
         &.label-7 {
             &:after {
                 background: $color_pink;        
+                content: "D";
             }
             .mark-actions a {
                 background: lighten($color_pink, 7%);
@@ -549,9 +554,10 @@ ul.nav-list {
             display:none;
         }
         &.view-inactive {
-            opacity: .4;
+            opacity: .3;
         }
         &.view-active {
+            box-shadow: 0 -1px 0 0 $color_lighter;
             .mark-actions { display: block !important; }
         }
     }
@@ -561,20 +567,40 @@ ul.nav-list {
 .sidebar-content {
     @include span-columns(5);
     @include reset-display;  
-    background-color: $color_lighter;
+    background-color: lighten($color_lighter, 3%);
     min-height: 100%;
     height: 100%;
     padding-right:0;
     position: absolute;
     right: -1.5%;
+    padding-right: 1.5%;
     overflow:scroll;
     z-index: 600;
     .sidebar-block {
         @include drop-shadow-border();
         padding: 15px 0;
-        background: #f9f9f9;
+        background: #fdfdfd;
+        box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08),0 1px 0 0 rgba(0,0,0,0.02), 0 2px 3px 0 rgba(0,0,0,0.08) inset,0 1px 0 0 rgba(0,0,0,0.02) inset;
         .sidebar-inner {
-            padding:0 25px;
+            padding: 0 25px 4px;
+            @extend %clearfix;
+            p {
+                font-size: 14px;
+                line-height: 20px;
+                margin: 10px 0 20px;
+            }
+            a.btn, button {
+                @include title-text;
+                @include font-smoothing;
+                font-size: 10px;
+                line-height: 16px;
+                padding-top: 7px;
+                margin: 0;
+                border: 3px solid #fdfdfd;
+                width: 33.333%;
+                box-sizing: border-box;
+                float: left;
+            }
         }
     }
     //.sidebar-default { display: none; }
@@ -582,27 +608,31 @@ ul.nav-list {
     &:after {
         display: block;
         content: "";
-        position: absolute;
+        position: fixed;
         width: 20px;
         height: 100%;
         box-shadow: 12px 0 34px -15px rgba(0,0,0,0.11) inset, 2px 0 5px -3px rgba(0,0,0,0.16) inset;
         top: 0;
-        left: 0;
+        z-index: 1;
     }
 }
 
 .sidebar-mark-info {
     .sidebar-action {
         @include drop-shadow-border();
-        position: relative;
-        height: 48px;
+        position: fixed;
+        width: 100%;
+        top: 8px;
+        height: 56px;
+        z-index: 1;
+        background: transparentize(#fcfafa, 0.1);
         a {
-            position: absolute;
-            left: 15px;
-            top: 10px;
+            position: fixed;
+            left: 12px;
+            top: 21px;
             &:last-child {
-                right: 45px;
-                top: 10px;
+                right: 12px;
+                top: 21px;
                 left: inherit;
             }
             i {
@@ -617,8 +647,10 @@ ul.nav-list {
         }
     }
     .sidebar-label {
-        background: lighten($color_grey, 35%);
+        background: white;
         position: relative;
+        margin-top: 56px;
+        height: 56px;
         @include drop-shadow-border();
         &:before {
             @include unmark-label-ball(20px, 20px, 18px);         
@@ -626,50 +658,55 @@ ul.nav-list {
         a {
             margin: 0;
             padding: 21px 0 21px 50px;
-            text-transform: uppercase;
+            @include title-text;
             font-size: 13px;
             color: $color_grey;
             display: block;
-            font-weight: 600;
         }
         &.label-2 {
-            background: rgba($color_orange, .2);
+            //background: rgba($color_orange, .2);
+            box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02), 0 0 0 100px lighten($color_orange, 36) inset;
             &:before { background: $color_orange; }
             a { color: $color_orange; }
         }
         &.label-3 {
-            background: rgba($color_blue, .2);
+            //background: rgba($color_blue, .2);
+            box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02), 0 0 0 100px lighten($color_blue, 46) inset;
             &:before { background: $color_blue; }
             a { color: $color_blue; }
         }
         &.label-4 {
-            background: rgba($color_yellow, .2);
+            //background: rgba($color_yellow, .2);
+            box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02), 0 0 0 100px lighten($color_yellow, 29) inset;
             &:before { background: $color_yellow; }
             a { color: $color_yellow; }
         }
         &.label-5 {
-            background: rgba($color_purple, .2);
+            //background: rgba($color_purple, .2);
+            box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02), 0 0 0 100px lighten($color_purple, 38) inset;
             &:before { background: $color_purple; }
             a { color: $color_purple; }
         }
         &.label-6 {
-            background: rgba($color_green, .2);
+            //background: rgba($color_green, .2);
+            box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02), 0 0 0 100px lighten($color_green, 39) inset;
             &:before { background: $color_green; }
             a { color: $color_green; }
         }
         &.label-7 {
-            background: rgba($color_pink, .2);
+            //background: rgba($color_pink, .2);
+            box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02), 0 0 0 100px lighten($color_pink, 34) inset;
             &:before { background: $color_pink; }
             a { color: $color_pink; }
         }
         #label-chosen {
             position: absolute;
             left: 300px;
-            top: 76px;
+            top: 80px;
             z-index: 9999;
             display: none;
-            font-size: 17px;
-            font-weight: 600;
+            font-size: 11px;
+            @include title-text;
             color: $color_grey;
             &.label-2 { color: $color_orange; }
             &.label-3 { color: $color_blue; }
@@ -681,16 +718,16 @@ ul.nav-list {
     } 
     .sidebar-info-panel {
         padding: 10px 0 10px 25px;
-        width: 92%;
+        width: 96%;
         h4 {
-            border-bottom: 1px solid $color_light;
-            padding: 0 0 10px 0;
-            text-transform: uppercase;
-            font-size: 12px;
-            font-weight: 400;
+            border-bottom: 1px solid lighten($color_light, 16%);
+            padding: 0 0 14px 0;
+            @include title-text;
+            font-size: 11px;
             position: relative;
-            color: $color_dark;
+            color: $color_lightest;
             cursor: pointer;
+            margin-bottom: 26px;
             i {
                 position: absolute;
                 right: 5px;
@@ -704,7 +741,8 @@ ul.nav-list {
         section {
             margin-bottom: 45px;
             font-size: 14px;
-            line-height: 20px;
+            line-height: 23px;
+            padding: 0 2px;
             a.social-link {
                 float:left;
                 border: 1px solid $color_light;
@@ -732,7 +770,9 @@ ul.nav-list {
         margin: 25px;
         width: 89%;
         padding: 17px 0;
-        font-size: 16px;
+        @include title-text;
+        @include font-smoothing;
+        font-size: 13px;
     }
 }
 
@@ -996,7 +1036,7 @@ canvas.graph {
             display: block;
             color: $color_grey;
             text-align: left;
-            padding: 15px 0 15px 39px;
+            padding: 15px 0 15px 32px;
             position: relative;
             font-size: 11px;
             &:before {
@@ -1042,20 +1082,20 @@ canvas.graph {
 #mark-info-dump ul.sidebar-label-list {
     width: 100%;
     display: none;
-    background: $color_lighter;
+    background: lighten($color_lighter, 5%);
     position: absolute;
-    z-index: 999;
+    z-index: 1;
     top: 57px;
     left: 2px;
-    padding: 15px 0;
-    border-bottom: 1px solid $color_light;
+    padding: 15px 10px;
+    @include drop-shadow-border;
     li {
         a {
             right: 0;
             top: 0px;
             width: 100%;
             position: relative;
-            padding: 15px 0 15px 39px;
+            padding: 15px 0 15px 32px;
             font-size: 11px;
         }
     }

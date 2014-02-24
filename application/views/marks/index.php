@@ -78,7 +78,7 @@
                     </a>
                     <?php if ($lookup_type == "archive") : ?>
                         <a class="action mark-archive" data-action="mark_restore" href="#" data-id="<?php print $mark->mark_id; ?>">
-                            <i class="icon-spinner"></i>
+                            <i class="icon-unarchive"></i>
                         </a>
                     <?php else : ?>
                         <a class="action mark-archive" data-action="mark_archive" href="#" data-id="<?php print $mark->mark_id; ?>">
