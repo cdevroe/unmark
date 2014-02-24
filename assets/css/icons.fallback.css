@@ -87,7 +87,7 @@
 	background-repeat: no-repeat;
 }
 .icon-settings {
-	background-image: url('icons/settings.png');
+	background-image: url('png/settings.png');
 	background-repeat: no-repeat;
 }
 .icon-spinner {
@@ -100,5 +100,13 @@
 }
 .icon-up {
 	background-image: url('icons/up.png');
+	background-repeat: no-repeat;
+}
+.icon-goto_title {
+	background-image: url('icons/goto_title.png');
+	background-repeat: no-repeat;
+}
+.icon-unarchive {
+	background-image: url('png/unarchive.png');
 	background-repeat: no-repeat;
 }

@@ -63,7 +63,7 @@
                     </a>
                     <?php if ($lookup_type == "archive") : ?>
                         <a title="Unarchive Mark" class="action mark-archive" data-action="mark_restore" href="#" data-id="<?php print $mark->mark_id; ?>">
-                            <i class="icon-label"></i>
+                            <i class="icon-unarchive"></i>
                         </a>
                     <?php else : ?>
                         <a title="Archive Mark" class="action mark-archive" data-action="mark_archive" href="#" data-id="<?php print $mark->mark_id; ?>">
