@@ -49,6 +49,11 @@ class Install extends CI_Controller
 
   public function setup()
   {
+    if ($this->db->table_exists('users') === true) {
+      header('Location: /');
+      exit;
+    }
+
     $this->load->view('setup');
   }
 
