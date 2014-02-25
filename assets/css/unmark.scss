@@ -103,6 +103,10 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
     color: $color_white;
     text-align: center;
     a {
+        color: $color_white;
+        border-bottom: 1px dashed $color_light;
+    }
+    a.unmark-setup {
         border-radius: 5px;
         padding: 10px 30px 12px;
         margin-top: 25px;

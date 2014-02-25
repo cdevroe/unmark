@@ -112,6 +112,4 @@
     };
 
 
-
-
 }(window.jQuery));

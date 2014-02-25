@@ -119,7 +119,7 @@
             var form = $(this),
                 formid = form.attr('id');
             funct = eval('unmark.' + formid);
-            funct(form);
+            funct(form, e);
         });
 
         $('#helperforms input.field-input').on('keydown change', function () {
