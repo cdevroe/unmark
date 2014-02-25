@@ -224,7 +224,7 @@
             label_name = $(this).text();
             body_class = $('body').attr('class');
             pattern = new RegExp('label');
-            query = 'label_id=' + unmark.urlEncode(label_id);
+            query = 'label_id=' + label_id;
             unmark.ajax('/mark/edit/'+mark, 'post', query, function(res) {
                 labels_list.fadeOut();
                 btn.text(label_name);

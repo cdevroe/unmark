@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Unmark Setup</title>
+    <title>Unmark: User Registration</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
@@ -13,17 +13,25 @@
 </head>
 <body class="unmark-solo" id="unmark-login">
 
-    <div id="unmark-setup">
-
-        <p>Welcome to Unmark, the to do list for bookmarks.</p>
-
-        <p>In order to use this you need to click the button below to get started.</p>
-
-        <p>This will install all the db tables and redirect you to a signup page.</p>
-
-        <a href="/install">SET THIS SHIT UP!</a>
-
+<div class="loginWrapper">
+    <div class="loginInner internalform">
+        <div class="login-ball"></div>
+        <h1>Signup User</h1>
+        <form id="register_user" method="post" action="#">
+            <input type="email" class="field-input" name="email" id="email" placeholder="Email Address" autocomplete="off" autocapitalize="off" autocorrect="off" />
+            <input type="password" class="field-input" name="password" id="password" placeholder="Password" autocomplete="off" />
+            <input type="password" class="field-input" name="password2" id="password2" placeholder="Password Again" autocomplete="off" />
+            <button class="login-submit" type="submit"><i class="icon-go"></i></button>
+        </form>
+        <div class="response-message"></div>
     </div>
+</div>
+
+<script type="text/javascript">
+var unmark  = unmark || {};
+unmark.vars = {};
+unmark.vars.csrf_token   = '<?php print $csrf_token; ?>';       
+</script>
 
 <script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
 <script src="/assets/js/production/unmark.loggedout.js"></script>

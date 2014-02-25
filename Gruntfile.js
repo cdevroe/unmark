@@ -34,7 +34,8 @@ module.exports = function(grunt) {
                     'assets/js/production/unmark.loggedout.js': [
                         'assets/js/unmark.js',
                         'assets/js/unmark.reset.js',
-                        'assets/js/unmark.login.js'
+                        'assets/js/unmark.login.js',
+                        'assets/js/unmark.register.js'
                     ],
                     'assets/js/production/unmark.bookmarklet.js': [
                         'assets/js/unmark.js',

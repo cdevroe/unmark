@@ -114,9 +114,10 @@
         }
 
         // Hooks up all functions for client/customer hidden forms
-        $('.hiddenform').on('submit', function (e) {
+        $('.hiddenform form, .internalform form').on('submit', function (e) {
             e.preventDefault();
-            var form = $(this).find('form'),
+            alert('submit');
+            var form = $(this),
                 formid = form.attr('id');
             funct = eval('unmark.' + formid);
             funct(form);
@@ -132,12 +133,6 @@
             return unmark.overlay(false); 
         });
 
-        // Show Labels in Bookmarklet
-        /*$(document).on('mouseenter', '#bml-show-labels', function (e) {
-            unmark.marks_addLabel($(this));
-        });*/
-
-
         // Label Hovers
         $(document).on('mouseenter', '.label-choices li, .sidebar-label-list li', function (e) {
             var label = $(this),
@@ -148,7 +143,6 @@
         $(document).on('mouseleave', '.label-choices li, .sidebar-label-list li', function (e) {
             $('#label-chosen').show().hide();
         });
-
 
         // Set up Scrolling
         unmark.main_content.on('scroll', function (e){
