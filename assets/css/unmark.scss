@@ -1330,6 +1330,22 @@ body.label-7 .navigation-pane { border-top: none; }
     }
 }
 
+#importExportForm {
+    top: -300px;
+    a.exportbtn, a.importbtn {
+        background: $color_blue;
+        padding: 6px 25px 8px;
+        border-radius: 5px;
+    }
+    .importer {
+        display:none;
+    }
+    small {
+        display: block;
+        margin-top: 35px;
+    }
+}
+
 #helperforms {
     position:relative;
     z-index: 20000;

@@ -178,9 +178,7 @@
             var overlay = $('<div id="unmark-overlay"><a href="#" id="unmarkModalClose"><i class="icon-big_close"></i></a></div>');
             overlay.appendTo(document.body);
         } else {
-            $('#resetPasswordForm').hide().css('top', '-300px');
-            $('#changePasswordForm').hide().css('top', '-300px');
-            $('#upgradeToPro').hide().css('top', '-300px');
+            $('.hiddenform').hide().css('top', '-300px');
             unmark.mainpanels.removeClass('blurme');
             $('#unmark-overlay').remove();
         }

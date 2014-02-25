@@ -21,7 +21,7 @@
 
         <p>This will install all the db tables and redirect you to a signup page.</p>
 
-        <a href="/install">SET THIS SHIT UP!</a>
+        <a href="/install">INSTALL UNMARK</a>
 
     </div>
 

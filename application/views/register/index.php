@@ -17,7 +17,7 @@
     <div class="loginInner internalform">
         <div class="login-ball"></div>
         <h1>Register for Unmark</h1>
-        <form id="register_user" method="post" action="#">
+        <form id="register_user" method="post" action="#" class="ajaxsbmt">
             <input type="email" class="field-input" name="email" id="email" placeholder="Email Address" autocomplete="off" autocapitalize="off" autocorrect="off" />
             <input type="password" class="field-input" name="password" id="password" placeholder="Password" autocomplete="off" />
             <input type="password" class="field-input" name="password2" id="password2" placeholder="Password Again" autocomplete="off" />

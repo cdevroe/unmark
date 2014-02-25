@@ -114,9 +114,8 @@
         }
 
         // Hooks up all functions for client/customer hidden forms
-        $('.hiddenform form, .internalform form').on('submit', function (e) {
+        $('form.ajaxsbmt').on('submit', function (e) {
             e.preventDefault();
-            alert('submit');
             var form = $(this),
                 formid = form.attr('id');
             funct = eval('unmark.' + formid);
@@ -147,6 +146,11 @@
         // Set up Scrolling
         unmark.main_content.on('scroll', function (e){
             unmark.scrollPaginate($(this));
+        });
+
+        // Import Form Init
+        $('.importer').change(function (e) {
+            return $('#importForm').submit();
         });
         
     };

@@ -39,6 +39,10 @@
         unmark.overlay(true);
         $('#changePasswordForm').show().animate({ top: 0 }, 1000);
     };
+    unmark.import_export = function () {
+        unmark.overlay(true);
+        $('#importExportForm').show().animate({ top: 0 }, 1000);
+    };
 
     // Submit Password Change
     unmark.send_password_change = function (form) {
@@ -95,6 +99,16 @@
             showSpinner(form, false);
             return showMessage(form, true, 'Please enter something!'); 
         }
+    };
+
+    // Export Data
+    unmark.export_data = function () {
+        return window.location.href = "/export";
+    };
+
+    // Import Data
+    unmark.import_data = function () {
+        return $('.importer').trigger('click');
     };
 
 
