@@ -1,67 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<title>Database Error</title>
-<style type="text/css">
-
-::selection{ background-color: #E13300; color: white; }
-::moz-selection{ background-color: #E13300; color: white; }
-::webkit-selection{ background-color: #E13300; color: white; }
-
-body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
-}
-
-a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
-}
-
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 14px 0;
-	padding: 14px 15px 10px 15px;
-}
-
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
-	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
-}
-
-#container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	-webkit-box-shadow: 0 0 8px #D0D0D0;
-}
-
-p {
-	margin: 12px 15px 12px 15px;
-}
-</style>
+    <title>Eek, something is wrong</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/unmark.css">
+    <link rel="icon" type="image/ico" href="/favicon.ico">
+    <script>
+        /* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
+        window.grunticon=function(e){if(e&&3===e.length){var t=window,n=!!t.document.createElementNS&&!!t.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect&&!!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"),A=function(A){var o=t.document.createElement("link"),r=t.document.getElementsByTagName("script")[0];o.rel="stylesheet",o.href=e[A&&n?0:A?1:2],r.parentNode.insertBefore(o,r)},o=new t.Image;o.onerror=function(){A(!1)},o.onload=function(){A(1===o.width&&1===o.height)},o.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="}};
+        grunticon( [ "/assets/css/icons.data.svg.css", "/assets/css/icons.data.png.css", "/assets/css/icons.fallback.css" ] );
+    </script>
+    <noscript><link href="/assets/css/icons.fallback.css" rel="stylesheet"></noscript>
 </head>
-<body>
-	<div id="container">
-		<h1>First, we need a database</h1>
-		<p>The app couldn't find your database. More than likely that is because your configuration file isn't set up yet. Here is how you do this.</p>
-			<ol>
-				<li>Rename <i>application/config/database-sample.php</i> to <i>application/config/database.php</i></li>
-				<li>Edit the hostname, username, password, and database name in database.php</li>
-				<li><a href="/install">Try again</a></li>
-			</ol>
+<body class="unmark-solo" id="unmark-login">
+
+	<div style="width: 50%; margin: 0 auto; text-align: left; background-color: #ccc; padding: 5px; margin-top: 30px;">
+	<?php if (defined('ENVIRONMENT') && ENVIRONMENT === 'production'): ?>
+		<h1>An unexpected error has occured</h1>
+		<p>The issue has been logged and will be taken care of shortly.</p>
+	<?php else: ?>
+		<h1><?php print $heading; ?></h1>
+		<p><?php print $message; ?></p>
+	<?php endif; ?>
 	</div>
+
 </body>
 </html>
