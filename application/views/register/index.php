@@ -16,7 +16,7 @@
 <div class="loginWrapper">
     <div class="loginInner internalform">
         <div class="login-ball"></div>
-        <h1>Signup User</h1>
+        <h1>Register for Unmark</h1>
         <form id="register_user" method="post" action="#">
             <input type="email" class="field-input" name="email" id="email" placeholder="Email Address" autocomplete="off" autocapitalize="off" autocorrect="off" />
             <input type="password" class="field-input" name="password" id="password" placeholder="Password" autocomplete="off" />

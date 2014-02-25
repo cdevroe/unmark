@@ -23,7 +23,7 @@
             <button class="login-submit" type="submit"><i class="icon-go"></i></button>
         </form>
         <div class="response-message"></div>
-        <a href="#" class="forgot-pass">Forgot Password?</a>
+        <a href="/register" class="register">Register for Unmark</a> &nbsp; | &nbsp; <a href="#" class="forgot-pass">Forgot Password?</a>
     </div>
 </div>
 

@@ -1243,7 +1243,7 @@ body.label-7 .navigation-pane { border-top: none; }
             top: 2px;
         }
     }
-    a.forgot-pass {
+    a.forgot-pass, a.register {
         font-size: 12px;
         margin: 0 0 25px 0;
         letter-spacing: .05em;
@@ -1355,7 +1355,13 @@ body.label-7 .navigation-pane { border-top: none; }
         .login-submit {
             display: block;
             top: 101px;
-        }   
+        }
+        button.cnclAcct {
+            border-radius: 5px;
+            padding: 10px 30px 12px;
+            margin-top: 25px;
+            background-color: $color_red;
+        } 
     }
 }
 
