@@ -47,6 +47,11 @@ class Install extends CI_Controller
     exit;
   }
 
+  public function setup()
+  {
+    $this->load->view('setup');
+  }
+
   // Used to update from one version to another.
   public function upgrade()
   {

@@ -11,8 +11,7 @@ class Welcome extends Plain_Controller
 	public function index()
 	{
 		$this->redirectIfLoggedIn('/marks');
-		$view = (! $this->db->table_exists('users')) ? 'setup' : 'welcome';
-		$this->view($view, array('no_header' => true, 'no_footer' => true));
+		$this->view('welcome', array('no_header' => true, 'no_footer' => true));
 	}
 
 }
