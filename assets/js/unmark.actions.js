@@ -34,6 +34,19 @@
         });
     };
 
+    // Expands or Compresses the Info Sidebar
+    unmark.sidebar_expand = function () {
+
+        var expBtn = unmark.sidebar_content.find('a[data-action="sidebar_expand"] i');
+
+        if (expBtn.hasClass('heading_expand')) {
+            unmark.sidebar_content.animate({ width: '55%' }, { duration: 200, queue: false });
+        } else {
+            unmark.sidebar_content.animate({ width: '42.17749%' }, { duration: 200, queue: false });
+        }
+
+    };
+
     // Hides the left navigation
     unmark.hideNavigation = function () {
         unmark.nav_panel.animate({ left: -285 }, { duration: 200, queue: false });
