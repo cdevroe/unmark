@@ -788,6 +788,11 @@ ul.nav-list {
                 color: $color_black;
                 font-weight: 400;
             }
+            img {
+                max-width:100% !important;
+                height:auto;
+                display:block;
+            }
         }
     }
     button {
