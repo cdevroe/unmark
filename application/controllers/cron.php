@@ -2,12 +2,9 @@
 
 class Cron extends Plain_Controller
 {
-    // NO API ROUTE
 
     public function __construct()
     {
-        // Added cause CI is dying w/o this for embeds
-        $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
         parent::__construct();
         parent::redirectIfNotCommandLine();
     }

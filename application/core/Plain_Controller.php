@@ -347,9 +347,9 @@ class Plain_Controller extends CI_Controller
         return (! empty($origin) && ! empty($host) && $host == $origin) ? true : false;
     }
 
-    protected function isWebView()
+    public function isWebView()
     {
-        return (self::isAJAX() === false && self::isAPI() === false && self::isPJAX() === false) ? true : false;
+        return (self::isAJAX() === false && self::isAPI() === false && self::isPJAX() === false && self::isCommandLine() === false) ? true : false;
     }
 
     // If logged if invalid CSRF token is not valid
