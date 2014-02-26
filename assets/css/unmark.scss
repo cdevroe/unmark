@@ -795,6 +795,26 @@ ul.nav-list {
                 height:auto;
                 display:block;
             }
+            .videoInfo {
+                clear: both;
+                padding: 15px 0 5px 0;
+                span.viLeft {
+                    font-style: italic;
+                    float: left;
+                }
+                span.viRight {
+                    font-style: italic;
+                    float: right;
+                }
+                a {
+                    color: $color_dark;
+                    box-shadow: 0px 1px 0px $color_dark;
+                }
+                p {
+                    clear: both;
+                    padding-top: 20px;
+                }
+            }
         }
     }
     button {

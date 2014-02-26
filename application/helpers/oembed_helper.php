@@ -58,7 +58,11 @@ function oembed($url, $key) {
         return '<div class="row-fluid"><div class="span5"><a href="'.$url.'"><img src="'.$response['thumbnail_url'].'" /></a></div><div class="span4"><p>'.$response['description'].'</p></div></div>';
       break;*/
 
-      // YouTube, Vimeo support HTML
+      case 'YouTube' :
+        return $response['html'] . '<div class="videoInfo"><span class="viLeft">by <a target="_blank" href="'.$response['author_url'].'">'.$response['author_name'].'</a></span><p>'.$response['description'].'</p></div>';
+      break;
+
+      // Vimeo, other video sites and generic HTML
       default:
         if (isset($response['html'])) {
           return $response['html'];

@@ -40,7 +40,13 @@
 
         var expBtn = unmark.sidebar_content.find('a[data-action="sidebar_expand"] i');
 
-        if (expBtn.hasClass('icon-heading_collapse')  || compress === true) {
+        if (compress === true) {
+            return unmark.sidebar_content.animate({ width: '42.17749%' }, 800, function () {
+                expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
+            });
+        }
+
+        if (expBtn.hasClass('icon-heading_collapse')) {
             unmark.sidebar_content.animate({ width: '42.17749%' }, 800, function () {
                 expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
             });
