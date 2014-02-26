@@ -653,12 +653,14 @@ ul.nav-list {
         background: transparentize(#fcfafa, 0.1);
         a {
             position: fixed;
-            left: 12px;
             top: 21px;
+            left: inherit;
+            margin-left: 15px;
             &:last-child {
                 right: 12px;
                 top: 21px;
                 left: inherit;
+                margin:0;
             }
             i {
                 color: $color_light;

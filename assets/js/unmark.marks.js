@@ -46,12 +46,14 @@
                     unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                         unmark.tagify_notes($('#notes-' + mark_id));
                         unmark.getData('labels', showTags);
+                        $("section.sidebar-info-preview").fitVids();
                     });
                 });
             } else {
                 unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                     unmark.tagify_notes($('#notes-' + mark_id));
                     unmark.getData('labels', showTags);
+                    $("section.sidebar-info-preview").fitVids();
                 });         
             }
         });
