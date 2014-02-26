@@ -815,6 +815,27 @@ ul.nav-list {
                     padding-top: 20px;
                 }
             }
+            .hrecipe { 
+                background: #FFF8DB;
+                padding: 10px;
+                color: #333;
+            }
+            .hrecipe .fn {
+                font-size: 1.5em;
+                padding-bottom: 10px;
+            }
+            .hrecipe .ingredients {
+                margin-left: 10px;
+                margin-bottom: 10px;
+            }
+            .hrecipe .ingredients .ingredient {
+                display: block;
+                border-bottom: 1px solid #c0c0c0;
+                margin-bottom: 6px;
+            }
+            .hrecipe .yield {
+                font-weight: bold;
+            }
         }
     }
     button {
