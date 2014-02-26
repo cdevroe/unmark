@@ -110,3 +110,7 @@ $config['plain_email_settings'] = array(
 */
 // Updated password email subject
 $config['password_updated_email_subject'] = 'Unmark - Password updated';
+
+
+// Embedly API Token
+$config['embedly_api_key'] = '';

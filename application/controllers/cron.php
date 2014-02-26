@@ -46,7 +46,7 @@ class Cron extends Plain_Controller
 
                 // OEmbed check
                 // If no embed, check recipes
-                $embed = oembed($mark->url);
+                $embed = oembed($mark->url, $this->config->item('embedly_api_key'));
 
                 // parse_url for host
                 // Check if in recipe domain list

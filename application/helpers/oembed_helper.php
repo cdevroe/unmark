@@ -1,11 +1,13 @@
 <?php
 
-function oembed($url) {
+function oembed($url, $key) {
 
+  if ($key == '') { return false; } // Embedly is not activated
   if (!checkOEmbedUrl($url)) { return false; } // This means oEmbed is not supported yet.
+
   ini_set('memory_limit', '500M');
 
-  $endpoint = 'http://api.embed.ly/1/oembed?format=json&key=4d8ccde6777611e1a4884040d3dc5c07&url='.urlencode($url).'&maxwidth=500';
+  $endpoint = 'http://api.embed.ly/1/oembed?format=json&key='.$key.'&url='.urlencode($url).'&maxwidth=1200';
 
   $curl = curl_init();
   curl_setopt($curl, CURLOPT_URL, $endpoint);

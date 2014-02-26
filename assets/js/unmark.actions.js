@@ -41,11 +41,11 @@
         var expBtn = unmark.sidebar_content.find('a[data-action="sidebar_expand"] i');
 
         if (expBtn.hasClass('icon-heading_collapse')  || compress === true) {
-            unmark.sidebar_content.animate({ width: '42.17749%' }, 500, function () {
+            unmark.sidebar_content.animate({ width: '42.17749%' }, 800, function () {
                 expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
             });
         } else {
-            unmark.sidebar_content.animate({ width: '55%' }, 500, function () {
+            unmark.sidebar_content.animate({ width: '75%' }, 800, function () {
                 expBtn.removeClass('icon-heading_expand').addClass('icon-heading_collapse');
             });
         }
