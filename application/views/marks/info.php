@@ -13,8 +13,6 @@
 </head>
 <body class="unmark-solo greybg">
 
-<?php $nice_url = rtrim(preg_replace('/https?:\/\/(www.)?/', '', $mark->url), '/'); ?>
-
 <div class="mark-added">
     <div class="mark-added-block">
         This link has been added to your stream.
@@ -23,9 +21,9 @@
 
     <div class="mark-added-info">
         <h1><?php print $mark->title; ?></h1>
-        <span><?php print $nice_url; ?></span>
+        <span><?php print niceUrl($mark->url); ?></span>
     </div>
-    
+
     <div class="mark-added-label mark-added-settings">
         <span id="label-chosen"></span>
         <a class="action" data-action="marks_addLabel" href="#">Unlabeled</a>
