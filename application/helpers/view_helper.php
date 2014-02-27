@@ -1,12 +1,15 @@
 <?php defined("BASEPATH") or exit("No direct script access allowed");
 
+// Checks the count and makes the string plural (well adds an s) if it's longer than 1 or 0.
 function determinePlurality($num, $str)
 {
     if ($num == 0) { return "No ". $str . "s"; }
     return ($num > 1) ? $num . " " . $str . "s" : $num . " " . $str;
 }
 
-function formatExpires($date) // Checks current date with passed date and responsds with proper verbiage.
+
+// Checks current date with passed date and responsds with proper verbiage.
+function formatExpires($date)
 {
     $timestamp  = strtotime($date);
     if (time() > $timestamp) {
@@ -14,4 +17,10 @@ function formatExpires($date) // Checks current date with passed date and respon
     } else {
         return "on " . date('m/d/Y', $timestamp); // Not Yet Expired
     }
+}
+
+// Takes a URL and returns a pretty looking version for view
+function niceUrl($url)
+{
+    return rtrim(preg_replace('/https?:\/\/(www.)?/', '', $url), '/');
 }
