@@ -21,6 +21,7 @@
         <div id="panel-label" class="nav-panel">
             <ul class="label-list">
                 <?php
+                if (isset($labels)) :
                 // If the first label is "Unlabeled", move to end of array
                 if ( $labels[0]->name == 'Unlabeled' ) {
                     $labels[] = $labels[0];
@@ -31,7 +32,7 @@
                         <a href="/marks/label/<?php print $label->slug; ?>"><?php print $label->name; ?></a>
                         <span><?php print determinePlurality($label->total_active_marks, 'link'); ?></span>
                     </li>
-                <?php endforeach; ?>
+                <?php endforeach; endif; ?>
             </ul>
         </div>
         <div id="panel-timeline" class="nav-panel">
@@ -42,7 +43,7 @@
                 <input type="text" name="q" id="search-input" placeholder="SEARCH...">
                 <i class="icon-go"></i>
             </form>
-            
+
             <h4 class="nav-heading">Most-Used Tags</h4>
             <ul class="tag-list">
                 <?php if (isset($tags) && $tags['popular'] != '') : ?>

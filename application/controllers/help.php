@@ -9,25 +9,4 @@ class Help extends Plain_Controller
         parent::redirectIfLoggedOut();
     }
 
-    public function bookmarklet()
-    {
-        $this->view('help/bookmarklet');
-    }
-
-    public function faq()
-    {
-        $this->view('help/faq');
-    }
-
-    public function how()
-    {
-        $this->view('help/how');
-    }
-
-    public function index()
-    {
-        header('Location: /help/how');
-        exit;
-    }
-
 }
