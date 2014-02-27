@@ -653,12 +653,14 @@ ul.nav-list {
         background: transparentize(#fcfafa, 0.1);
         a {
             position: fixed;
-            left: 12px;
             top: 21px;
+            left: inherit;
+            margin-left: 15px;
             &:last-child {
                 right: 12px;
                 top: 21px;
                 left: inherit;
+                margin:0;
             }
             i {
                 color: $color_light;
@@ -787,6 +789,52 @@ ul.nav-list {
             &.sidebar-info-notes a {
                 color: $color_black;
                 font-weight: 400;
+            }
+            img {
+                max-width:100% !important;
+                height:auto;
+                display:block;
+            }
+            .videoInfo {
+                clear: both;
+                padding: 15px 0 5px 0;
+                span.viLeft {
+                    font-style: italic;
+                    float: left;
+                }
+                span.viRight {
+                    font-style: italic;
+                    float: right;
+                }
+                a {
+                    color: $color_dark;
+                    box-shadow: 0px 1px 0px $color_dark;
+                }
+                p {
+                    clear: both;
+                    padding-top: 20px;
+                }
+            }
+            .hrecipe { 
+                background: #FFF8DB;
+                padding: 10px;
+                color: #333;
+            }
+            .hrecipe .fn {
+                font-size: 1.5em;
+                padding-bottom: 10px;
+            }
+            .hrecipe .ingredients {
+                margin-left: 10px;
+                margin-bottom: 10px;
+            }
+            .hrecipe .ingredients .ingredient {
+                display: block;
+                border-bottom: 1px solid #c0c0c0;
+                margin-bottom: 6px;
+            }
+            .hrecipe .yield {
+                font-weight: bold;
             }
         }
     }

@@ -21,7 +21,8 @@ module.exports = function(grunt) {
                         'assets/js/plugins/hogan.js',
                         'assets/js/plugins/pjax.js',
                         'assets/js/plugins/Chart.min.js',
-                        'assets/js/plugins/unmark-graph.js'
+                        'assets/js/plugins/unmark-graph.js',
+                        'assets/js/plugins/fitvids.js'
                     ], 
                     'assets/js/production/unmark.loggedin.js': [
                         'assets/js/templates/unmark-templates.js',

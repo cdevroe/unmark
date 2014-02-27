@@ -29,9 +29,33 @@
     // Hides the marks info and re-displays the default sidebar
     unmark.sidebar_collapse = function () {
         $('.mark').removeClass('view-inactive').removeClass('view-active');
+        unmark.sidebar_expand(true);
         unmark.sidebar_mark_info.fadeOut(400, function () {
             unmark.sidebar_default.fadeIn(400);
         });
+    };
+
+    // Expands or Compresses the Info Sidebar
+    unmark.sidebar_expand = function (compress) {
+
+        var expBtn = unmark.sidebar_content.find('a[data-action="sidebar_expand"] i');
+
+        if (compress === true) {
+            return unmark.sidebar_content.animate({ width: '42.17749%' }, 800, function () {
+                expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
+            });
+        }
+
+        if (expBtn.hasClass('icon-heading_collapse')) {
+            unmark.sidebar_content.animate({ width: '42.17749%' }, 800, function () {
+                expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
+            });
+        } else {
+            unmark.sidebar_content.animate({ width: '75%' }, 800, function () {
+                expBtn.removeClass('icon-heading_expand').addClass('icon-heading_collapse');
+            });
+        }
+
     };
 
     // Hides the left navigation

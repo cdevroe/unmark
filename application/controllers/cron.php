@@ -2,7 +2,6 @@
 
 class Cron extends Plain_Controller
 {
-    // NO API ROUTE
 
     public function __construct()
     {
@@ -17,6 +16,13 @@ class Cron extends Plain_Controller
 
     public function processEmbeds()
     {
+        $embedly_key = $this->config->item('embedly_api_key');
+
+        if (empty($embedly_key)) {
+            print 'ERROR: Please add an embedly API key in order to process embeds.' . PHP_EOL;
+            log_message('error', 'No embedly API key configured. Cannot run process to find embeds.');
+            exit;
+        }
 
         set_time_limit(0);
 
@@ -47,7 +53,7 @@ class Cron extends Plain_Controller
 
                 // OEmbed check
                 // If no embed, check recipes
-                $embed = oembed($mark->url);
+                $embed = oembed($mark->url, $embedly_key);
 
                 // parse_url for host
                 // Check if in recipe domain list

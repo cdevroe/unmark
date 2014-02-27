@@ -15,8 +15,17 @@
             $('ul.label-choices').prepend(list);
         };
 
+        // Function to check the current label for the mark saved
+        function check_for_label() {
+            
+        };
+
+
         // Grab the labels list
         unmark.getData('labels', built_label_list);
+
+
+
     
     });
 
