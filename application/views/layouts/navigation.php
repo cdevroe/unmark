@@ -64,11 +64,11 @@
 
             <?php $this->load->view('layouts/accountlinks'); ?>
 
-            <h4 class="nav-heading">Help</h4>
+            <h4 class="nav-heading">Help (not linked yet)</h4>
             <ul class="nav-list">
                 <li><a href="#">How to Use Unmark</a></li>
                 <li><a href="#">FAQ</a></li>
-                <li><a href="/help/bookmarklet">Get the Bookmarklet</a></li>
+                <li><a href="#">Get the Bookmarklet</a></li>
                 <li><a href="#">Get the Chrome Extension</a></li>
             </ul>
         </div>
