@@ -32,14 +32,14 @@ class Cron extends Plain_Controller
 
         if (isset($marks[0]->mark_id)) {
             $this->load->helper('oembed');
-            $this->load->helper('hrecipe');
+            //$this->load->helper('hrecipe');
 
             // Get all system smart label domains for food & drink
             $this->load->model('labels_model', 'label');
             $label = $this->label->read("labels.slug = 'eat-drink'", 1, 1, 'label_id');
 
             // Set all eat/drink domains to array
-            $recipe_domains = array();
+            /*$recipe_domains = array();
             if (isset($label->label_id) && is_numeric($label->label_id)) {
                 $smart_labels = $this->label->read("labels.smart_label_id = '" . $label->label_id . "' AND labels.user_id IS NULL", 'all', 1, 'domain');
                 if (isset($smart_labels[0]->domain)) {
@@ -47,7 +47,7 @@ class Cron extends Plain_Controller
                         array_push($recipe_domains, str_replace('www.', '', strtolower($obj->domain)));
                     }
                 }
-            }
+            }*/
 
             foreach($marks as $k => $mark) {
 
@@ -58,12 +58,12 @@ class Cron extends Plain_Controller
                 // parse_url for host
                 // Check if in recipe domain list
                 // If so, try to find a recipe
-                if (empty($embed)) {
+                /*if (empty($embed)) {
                     $domain = str_replace('www.', '', strtolower(parse_url($mark->url,  PHP_URL_HOST)));
                     if (! empty($domain) && in_array($domain, $recipe_domains)) {
                         $embed = parse_hrecipe($mark->url);
                     }
-                }
+                }*/
 
                 // Set options
                 // Set embed processed = 1
