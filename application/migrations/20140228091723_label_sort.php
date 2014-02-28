@@ -18,7 +18,7 @@ class Migration_Label_Sort extends Plain_Migration
         $slugs = array('read', 'watch', 'listen', 'buy', 'eat-drink', 'do', 'unlabeled');
         foreach ($slugs as $k => $slug) {
             $order = $k + 1;
-            $this->db->query("UPDATE `labels` SET order = '" . $order . "' WHERE labels.slug = '" . $slug . "'");
+            $this->db->query("UPDATE `labels` SET labels.order = '" . $order . "' WHERE labels.slug = '" . $slug . "'");
         }
 
     }
