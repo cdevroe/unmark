@@ -2,7 +2,7 @@
     Main stylesheet for Unmark.it
     Copyright 2014 - Plain - http://plainmade.com
 
-    ** NOTE ** - 
+    ** NOTE ** -
     This is the SASS File and you must run GRUNT to compile this before pushing to production
 
 */
@@ -53,8 +53,8 @@ $title      : 'Montserrat', sans-serif;
 }
 html { background: $color_darkest; }
 body, html{
-    min-height: 100%; 
-    height:100%; 
+    min-height: 100%;
+    height:100%;
 
 }
 body[data-lookup="all"] { opacity: 0; }
@@ -64,7 +64,7 @@ body {
     font-weight: 300;
     min-height: 100%;
     color:$color_dark;
-    background: #000; 
+    background: #000;
     box-shadow: 0 120px 130px -70px $color_darkest inset;
     @include font-smoothing;
     a {
@@ -173,7 +173,7 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
             background: #333;
             box-shadow: 1px 0 0 0 #333;
             width: 66px;
-        }    
+        }
     }
     .menu-item:first-child {
         border-bottom:none;
@@ -221,7 +221,7 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
         }
         li.panel-settings {
             position: absolute;
-            bottom:0;
+            bottom:64px;
             width:200px;
             a {
                 border-bottom: 0;
@@ -346,7 +346,7 @@ ul.nav-list {
             color: $color_light;
             line-height: 17px;
         }
-        :-ms-input-placeholder {  
+        :-ms-input-placeholder {
             @include title-text;
             font-size: 11px;
             color: $color_light;
@@ -450,7 +450,7 @@ ul.nav-list {
             font-size: 12px;
             color: darken($color_light, 15%);
             .mark-sep {
-                padding: 0 6px 0 5px; 
+                padding: 0 6px 0 5px;
                 color: lighten($color_light, 15%);
             }
             .mark-link a {
@@ -504,7 +504,7 @@ ul.nav-list {
         &.label-2 {
             &:after {
                 background: $color_orange;
-                content: "R";           
+                content: "R";
             }
             .mark-actions a {
                 background: lighten($color_orange, 7%);
@@ -515,7 +515,7 @@ ul.nav-list {
         }
         &.label-3 {
             &:after {
-                background: $color_blue;         
+                background: $color_blue;
                 content: "W";
                 font-size: 11px;
                 padding-top: 1px;
@@ -530,7 +530,7 @@ ul.nav-list {
         &.label-4 {
             &:after {
                 background: $color_yellow;
-                content: "L";           
+                content: "L";
             }
             .mark-actions a {
                 background: $color_yellow;
@@ -541,7 +541,7 @@ ul.nav-list {
         }
         &.label-5 {
             &:after {
-                background: $color_purple;           
+                background: $color_purple;
                 content: "B";
             }
             .mark-actions a {
@@ -553,8 +553,8 @@ ul.nav-list {
         }
         &.label-6 {
             &:after {
-                background: $color_green;         
-                content: "E"; 
+                background: $color_green;
+                content: "E";
             }
             .mark-actions a {
                 background: lighten($color_green, 7%);
@@ -565,7 +565,7 @@ ul.nav-list {
         }
         &.label-7 {
             &:after {
-                background: $color_pink;        
+                background: $color_pink;
                 content: "D";
             }
             .mark-actions a {
@@ -591,7 +591,7 @@ ul.nav-list {
 // ================ Right Content
 .sidebar-content {
     @include span-columns(5);
-    @include reset-display;  
+    @include reset-display;
     background-color: lighten($color_lighter, 3%);
     min-height: 100%;
     height: 100%;
@@ -680,7 +680,7 @@ ul.nav-list {
         height: 56px;
         @include drop-shadow-border();
         &:before {
-            @include unmark-label-ball(20px, 20px, 18px);         
+            @include unmark-label-ball(20px, 20px, 18px);
         }
         a {
             margin: 0;
@@ -742,7 +742,7 @@ ul.nav-list {
             &.label-6 { color: $color_green; }
             &.label-7 { color: $color_red; }
         }
-    } 
+    }
     .sidebar-info-panel {
         padding: 10px 0 10px 25px;
         width: 96%;
@@ -815,7 +815,7 @@ ul.nav-list {
                     padding-top: 20px;
                 }
             }
-            .hrecipe { 
+            .hrecipe {
                 background: #FFF8DB;
                 padding: 10px;
                 color: #333;
@@ -891,7 +891,7 @@ ul.timeline {
         @include linear-gradient(to bottom, $color_light 0%, $color_light 60%, rgba(0,0,0,0) 100%);
         background-color: transparent;
         z-index: 5;
-        opacity: 0.2; 
+        opacity: 0.2;
     }
     .timeline-dot {
         position: relative;
@@ -914,7 +914,7 @@ ul.timeline {
             background: lighten($color_light, 15%);
             border-radius: 50%;
             box-shadow: 0 0 0 5px transparentize(white, 0.9), 0 -6px 10px -5px rgba(0,0,0,0.3) inset;
-            z-index: 10;  
+            z-index: 10;
         }
         a {
             @include title-text;
@@ -1004,39 +1004,39 @@ canvas.graph {
             }
             &.label-2 {
                 &:before {
-                    background: $color_orange; 
-                } 
-                color: $color_orange; 
+                    background: $color_orange;
+                }
+                color: $color_orange;
             }
             &.label-3 {
                 &:before {
-                    background: $color_blue; 
-                } 
-                color: $color_blue; 
+                    background: $color_blue;
+                }
+                color: $color_blue;
             }
             &.label-4 {
                 &:before {
-                    background: $color_yellow; 
-                } 
-                color: $color_yellow; 
+                    background: $color_yellow;
+                }
+                color: $color_yellow;
             }
             &.label-5 {
                 &:before {
-                    background: $color_purple; 
-                } 
-                color: $color_purple; 
+                    background: $color_purple;
+                }
+                color: $color_purple;
             }
             &.label-6 {
                 &:before {
-                    background: $color_green; 
-                } 
-                color: $color_green; 
+                    background: $color_green;
+                }
+                color: $color_green;
             }
             &.label-7 {
                 &:before {
-                    background: $color_red; 
-                } 
-                color: $color_red; 
+                    background: $color_red;
+                }
+                color: $color_red;
             }
         }
         &.mark-added-note a {
@@ -1178,7 +1178,7 @@ canvas.graph {
 
 // ==============  Site Label Color Scheme ========
 
-// Body Top Border 
+// Body Top Border
 /*
 body.label-1 { border-top: 8px solid $color_grey; }
 body.label-2 { border-top: 8px solid $color_orange; }
@@ -1186,7 +1186,7 @@ body.label-3 { border-top: 8px solid $color_blue; }
 body.label-4 { border-top: 8px solid $color_yellow; }
 body.label-5 { border-top: 8px solid $color_purple; }
 body.label-6 { border-top: 8px solid $color_green; }
-body.label-7 { border-top: 8px solid $color_pink; } 
+body.label-7 { border-top: 8px solid $color_pink; }
 */
 body.label-1 { border-top: none; background: darken($color_grey, 2); box-shadow: 0 120px 130px -70px $color_grey inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
 body.label-2 { border-top: none; background: saturate(darken($color_orange, 2), 2); box-shadow: 0 120px 130px -70px $color_orange inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
@@ -1429,7 +1429,7 @@ body.label-7 .navigation-pane { border-top: none; }
             padding: 10px 30px 12px;
             margin-top: 25px;
             background-color: $color_red;
-        } 
+        }
     }
 }
 
