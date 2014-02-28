@@ -907,7 +907,28 @@ ul.nav-list {
     display: none;
 }
 
-
+// Sidebar Extras
+.sidebar-upgrade-notice {
+    padding: 15px 40px;
+    text-align: center;
+    .unmark-upgrade-icon {
+        height:100px;
+    }
+    h4 {
+        font-size: 17px;
+        line-height: 28px;
+        font-weight: 400;
+        padding: 0 35px;
+    }
+    button.upgradeNowSidebar {
+        background-color: $color_blue;
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: .15em;
+        padding: 18px;
+        width: 200px;
+    }
+}
 
 // ================ Timeline Rail
 

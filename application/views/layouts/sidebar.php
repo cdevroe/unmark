@@ -20,6 +20,7 @@
             </div>
         </div>
     <?php endif; ?>
+    <?php $this->load->view('layouts/sidebar/sidebar_notices'); ?>
 </div>
 
 <div id="mark-info-dump" class="sidebar-mark-info"></div>
