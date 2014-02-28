@@ -274,6 +274,7 @@ class Labels extends Plain_Controller
         // If requesting normal, give them
         if ($type == 'normal') {
             $user_where = "labels.user_id IS NULL";
+            $this->labels->sort = 'labels.order ASC';
         }
 
         // Set final where
