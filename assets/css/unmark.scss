@@ -248,28 +248,43 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
             box-shadow: 0 6px 10px -6px rgba(0,0,0,0.3) inset;
         }
         #panel-upgrade {
-            color: $color_dark;
+            color: $color_light;
+            line-height: 25px;
+            font-size: 15px;
+            text-align: center;
             p {
-                font-size: 15px;
-                text-align: center;
                 font-style: italic;
-                line-height: 25px;
             }
             .upgrade-features {
-                border-top: 1px solid $color_dark;
-                border-bottom: 1px solid $color_dark;
+                border-top: 1px solid $color_light;
+                border-bottom: 1px solid $color_light;
                 margin-bottom: 25px;
-                padding: 10px 0;
-                text-align:center;
+                padding: 30px 0 10px 0;
                 i {
-                    font-size:10px;
+                    font-size: 10px;
+                    background-color: $color_light;
+                    border: 4px solid $color_light;
+                    width: 27px;
+                    height: 27px;
+                    display: inline-block;
+                    color: $color_dark;
+                    background-size: 100%;
+                    border-radius: 50em;
                 }
                 h4 {
-                    font-size: 10px;
+                    font-size: 17px;
+                    font-weight: 300;
+                    padding: 0 45px;
+                    margin-top: 0;
                 }
             }
             button#upgradeNow {
                 background-color: $color_blue;
+                font-size: 12px;
+                font-weight: 400;
+                letter-spacing: .15em;
+                padding: 18px;
+                width: 100%;
             }
         }
     }
