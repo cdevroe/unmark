@@ -130,6 +130,21 @@ if (unmark === undefined) { var unmark = {}; }
         }
         return link;
     };
+    
+    /**
+	 * Extends given function by calling the original function and then executing
+	 * another piece of code after original invocation
+	 * @returns New called function result (if not null) or original function result otherwise
+	 */
+	unmark.extendFunction = function(functionName, newFunction) {
+		this[functionName] = (function(_obj, _super, _new) {
+			return function() {
+				var _origResult = _super.apply(_obj, arguments);
+				var _newResult = _new.apply(_obj, arguments);
+				return _newResult !== null ? _newResult : _origResult;
+			};
+		})(this, this[functionName], newFunction);
+	};
 
 
 }(window.jQuery));
