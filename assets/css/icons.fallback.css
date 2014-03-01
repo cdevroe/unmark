@@ -110,3 +110,35 @@
 	background-image: url('png/unarchive.png');
 	background-repeat: no-repeat;
 }
+.icon-check_dark {
+	background-image: url('png/check_dark.png');
+	background-repeat: no-repeat;
+}
+.icon-circle_check {
+	background-image: url('png/circle_check.png');
+	background-repeat: no-repeat;
+}
+.icon-large_check {
+	background-image: url('png/large_check.png');
+	background-repeat: no-repeat;
+}
+.icon-large_x {
+	background-image: url('png/large_x.png');
+	background-repeat: no-repeat;
+}
+.icon-logo {
+	background-image: url('png/logo.png');
+	background-repeat: no-repeat;
+}
+.icon-small_check {
+	background-image: url('png/small_check.png');
+	background-repeat: no-repeat;
+}
+.icon-small_x {
+	background-image: url('png/small_x.png');
+	background-repeat: no-repeat;
+}
+.icon-upgrade {
+	background-image: url('png/upgrade.png');
+	background-repeat: no-repeat;
+}
