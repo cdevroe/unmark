@@ -2,7 +2,7 @@
     Main stylesheet for Unmark.it
     Copyright 2014 - Plain - http://plainmade.com
 
-    ** NOTE ** - 
+    ** NOTE ** -
     This is the SASS File and you must run GRUNT to compile this before pushing to production
 
 */
@@ -46,8 +46,6 @@ $title      : 'Montserrat', sans-serif;
 @import "partials/element-settings";
 /* normalize.css v2.1.3 | MIT License | git.io/normalize */article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background:0 0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
 
-
-
 // ================ Body
 *, *:before, *:after {
     box-sizing: border-box;
@@ -55,8 +53,8 @@ $title      : 'Montserrat', sans-serif;
 }
 html { background: $color_darkest; }
 body, html{
-    min-height: 100%; 
-    height:100%; 
+    min-height: 100%;
+    height:100%;
 
 }
 body[data-lookup="all"] { opacity: 0; }
@@ -66,9 +64,7 @@ body {
     font-weight: 300;
     min-height: 100%;
     color:$color_dark;
-    //border-left:65px solid $color_dark;
-    //border-top: 8px solid $color_darker;
-    background: #000; 
+    background: #000;
     box-shadow: 0 120px 130px -70px $color_darkest inset;
     @include font-smoothing;
     a {
@@ -99,6 +95,25 @@ body {
 
 // Hide Stupid Outlines
 textarea:focus, input:focus, .hideoutline, button { outline: 0; }
+
+// Setup Page
+#unmark-setup {
+    width: 500px;
+    margin: 50px auto;
+    color: $color_white;
+    text-align: center;
+    a {
+        color: $color_white;
+        border-bottom: 1px dashed $color_light;
+    }
+    a.unmark-setup {
+        border-radius: 5px;
+        padding: 10px 30px 12px;
+        margin-top: 25px;
+        background-color: $color_red;
+        display: inline-block;
+    }
+}
 
 
 // ================ Site Wrapper
@@ -158,7 +173,7 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
             background: #333;
             box-shadow: 1px 0 0 0 #333;
             width: 66px;
-        }    
+        }
     }
     .menu-item:first-child {
         border-bottom:none;
@@ -206,7 +221,7 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
         }
         li.panel-settings {
             position: absolute;
-            bottom:0;
+            bottom:64px;
             width:200px;
             a {
                 border-bottom: 0;
@@ -231,6 +246,46 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
             border-left: 1px solid;
             border-color: lighten($color_dark, 4%);
             box-shadow: 0 6px 10px -6px rgba(0,0,0,0.3) inset;
+        }
+        #panel-upgrade {
+            color: $color_light;
+            line-height: 25px;
+            font-size: 15px;
+            text-align: center;
+            p {
+                font-style: italic;
+            }
+            .upgrade-features {
+                border-top: 1px solid $color_light;
+                border-bottom: 1px solid $color_light;
+                margin-bottom: 25px;
+                padding: 30px 0 10px 0;
+                i {
+                    font-size: 10px;
+                    background-color: $color_light;
+                    border: 4px solid $color_light;
+                    width: 27px;
+                    height: 27px;
+                    display: inline-block;
+                    color: $color_dark;
+                    background-size: 100%;
+                    border-radius: 50em;
+                }
+                h4 {
+                    font-size: 17px;
+                    font-weight: 300;
+                    padding: 0 45px;
+                    margin-top: 0;
+                }
+            }
+            button#upgradeNow {
+                background-color: $color_blue;
+                font-size: 12px;
+                font-weight: 400;
+                letter-spacing: .15em;
+                padding: 18px;
+                width: 100%;
+            }
         }
     }
 }
@@ -331,7 +386,7 @@ ul.nav-list {
             color: $color_light;
             line-height: 17px;
         }
-        :-ms-input-placeholder {  
+        :-ms-input-placeholder {
             @include title-text;
             font-size: 11px;
             color: $color_light;
@@ -435,7 +490,7 @@ ul.nav-list {
             font-size: 12px;
             color: darken($color_light, 15%);
             .mark-sep {
-                padding: 0 6px 0 5px; 
+                padding: 0 6px 0 5px;
                 color: lighten($color_light, 15%);
             }
             .mark-link a {
@@ -489,7 +544,7 @@ ul.nav-list {
         &.label-2 {
             &:after {
                 background: $color_orange;
-                content: "R";           
+                content: "R";
             }
             .mark-actions a {
                 background: lighten($color_orange, 7%);
@@ -500,7 +555,7 @@ ul.nav-list {
         }
         &.label-3 {
             &:after {
-                background: $color_blue;         
+                background: $color_blue;
                 content: "W";
                 font-size: 11px;
                 padding-top: 1px;
@@ -515,7 +570,7 @@ ul.nav-list {
         &.label-4 {
             &:after {
                 background: $color_yellow;
-                content: "L";           
+                content: "L";
             }
             .mark-actions a {
                 background: $color_yellow;
@@ -526,7 +581,7 @@ ul.nav-list {
         }
         &.label-5 {
             &:after {
-                background: $color_purple;           
+                background: $color_purple;
                 content: "B";
             }
             .mark-actions a {
@@ -538,8 +593,8 @@ ul.nav-list {
         }
         &.label-6 {
             &:after {
-                background: $color_green;         
-                content: "E"; 
+                background: $color_green;
+                content: "E";
             }
             .mark-actions a {
                 background: lighten($color_green, 7%);
@@ -550,7 +605,7 @@ ul.nav-list {
         }
         &.label-7 {
             &:after {
-                background: $color_pink;        
+                background: $color_pink;
                 content: "D";
             }
             .mark-actions a {
@@ -576,7 +631,7 @@ ul.nav-list {
 // ================ Right Content
 .sidebar-content {
     @include span-columns(5);
-    @include reset-display;  
+    @include reset-display;
     background-color: lighten($color_lighter, 3%);
     min-height: 100%;
     height: 100%;
@@ -638,12 +693,14 @@ ul.nav-list {
         background: transparentize(#fcfafa, 0.1);
         a {
             position: fixed;
-            left: 12px;
             top: 21px;
+            left: inherit;
+            margin-left: 15px;
             &:last-child {
                 right: 12px;
                 top: 21px;
                 left: inherit;
+                margin:0;
             }
             i {
                 color: $color_light;
@@ -663,7 +720,7 @@ ul.nav-list {
         height: 56px;
         @include drop-shadow-border();
         &:before {
-            @include unmark-label-ball(20px, 20px, 18px);         
+            @include unmark-label-ball(20px, 20px, 18px);
         }
         a {
             margin: 0;
@@ -725,7 +782,7 @@ ul.nav-list {
             &.label-6 { color: $color_green; }
             &.label-7 { color: $color_red; }
         }
-    } 
+    }
     .sidebar-info-panel {
         padding: 10px 0 10px 25px;
         width: 96%;
@@ -773,6 +830,52 @@ ul.nav-list {
                 color: $color_black;
                 font-weight: 400;
             }
+            img {
+                max-width:100% !important;
+                height:auto;
+                display:block;
+            }
+            .videoInfo {
+                clear: both;
+                padding: 15px 0 5px 0;
+                span.viLeft {
+                    font-style: italic;
+                    float: left;
+                }
+                span.viRight {
+                    font-style: italic;
+                    float: right;
+                }
+                a {
+                    color: $color_dark;
+                    box-shadow: 0px 1px 0px $color_dark;
+                }
+                p {
+                    clear: both;
+                    padding-top: 20px;
+                }
+            }
+            .hrecipe {
+                background: #FFF8DB;
+                padding: 10px;
+                color: #333;
+            }
+            .hrecipe .fn {
+                font-size: 1.5em;
+                padding-bottom: 10px;
+            }
+            .hrecipe .ingredients {
+                margin-left: 10px;
+                margin-bottom: 10px;
+            }
+            .hrecipe .ingredients .ingredient {
+                display: block;
+                border-bottom: 1px solid #c0c0c0;
+                margin-bottom: 6px;
+            }
+            .hrecipe .yield {
+                font-weight: bold;
+            }
         }
     }
     button {
@@ -804,7 +907,28 @@ ul.nav-list {
     display: none;
 }
 
-
+// Sidebar Extras
+.sidebar-upgrade-notice {
+    padding: 15px 40px;
+    text-align: center;
+    .unmark-upgrade-icon {
+        height:100px;
+    }
+    h4 {
+        font-size: 17px;
+        line-height: 28px;
+        font-weight: 400;
+        padding: 0 35px;
+    }
+    button.upgradeNowSidebar {
+        background-color: $color_blue;
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: .15em;
+        padding: 18px;
+        width: 200px;
+    }
+}
 
 // ================ Timeline Rail
 
@@ -828,7 +952,7 @@ ul.timeline {
         @include linear-gradient(to bottom, $color_light 0%, $color_light 60%, rgba(0,0,0,0) 100%);
         background-color: transparent;
         z-index: 5;
-        opacity: 0.2; 
+        opacity: 0.2;
     }
     .timeline-dot {
         position: relative;
@@ -851,7 +975,7 @@ ul.timeline {
             background: lighten($color_light, 15%);
             border-radius: 50%;
             box-shadow: 0 0 0 5px transparentize(white, 0.9), 0 -6px 10px -5px rgba(0,0,0,0.3) inset;
-            z-index: 10;  
+            z-index: 10;
         }
         a {
             @include title-text;
@@ -941,39 +1065,39 @@ canvas.graph {
             }
             &.label-2 {
                 &:before {
-                    background: $color_orange; 
-                } 
-                color: $color_orange; 
+                    background: $color_orange;
+                }
+                color: $color_orange;
             }
             &.label-3 {
                 &:before {
-                    background: $color_blue; 
-                } 
-                color: $color_blue; 
+                    background: $color_blue;
+                }
+                color: $color_blue;
             }
             &.label-4 {
                 &:before {
-                    background: $color_yellow; 
-                } 
-                color: $color_yellow; 
+                    background: $color_yellow;
+                }
+                color: $color_yellow;
             }
             &.label-5 {
                 &:before {
-                    background: $color_purple; 
-                } 
-                color: $color_purple; 
+                    background: $color_purple;
+                }
+                color: $color_purple;
             }
             &.label-6 {
                 &:before {
-                    background: $color_green; 
-                } 
-                color: $color_green; 
+                    background: $color_green;
+                }
+                color: $color_green;
             }
             &.label-7 {
                 &:before {
-                    background: $color_red; 
-                } 
-                color: $color_red; 
+                    background: $color_red;
+                }
+                color: $color_red;
             }
         }
         &.mark-added-note a {
@@ -1115,7 +1239,7 @@ canvas.graph {
 
 // ==============  Site Label Color Scheme ========
 
-// Body Top Border 
+// Body Top Border
 /*
 body.label-1 { border-top: 8px solid $color_grey; }
 body.label-2 { border-top: 8px solid $color_orange; }
@@ -1123,7 +1247,7 @@ body.label-3 { border-top: 8px solid $color_blue; }
 body.label-4 { border-top: 8px solid $color_yellow; }
 body.label-5 { border-top: 8px solid $color_purple; }
 body.label-6 { border-top: 8px solid $color_green; }
-body.label-7 { border-top: 8px solid $color_pink; } 
+body.label-7 { border-top: 8px solid $color_pink; }
 */
 body.label-1 { border-top: none; background: darken($color_grey, 2); box-shadow: 0 120px 130px -70px $color_grey inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
 body.label-2 { border-top: none; background: saturate(darken($color_orange, 2), 2); box-shadow: 0 120px 130px -70px $color_orange inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
@@ -1232,7 +1356,7 @@ body.label-7 .navigation-pane { border-top: none; }
             top: 2px;
         }
     }
-    a.forgot-pass {
+    a.forgot-pass, a.register {
         font-size: 12px;
         margin: 0 0 25px 0;
         letter-spacing: .05em;
@@ -1253,6 +1377,15 @@ body.label-7 .navigation-pane { border-top: none; }
             background: $color_red;
             border:none;
         }
+    }
+    #current_sub_card span {
+        display: block;
+        margin-bottom: 15px;
+        font-size: 13px;
+    }
+    form#register_user .login-submit {
+        top: 101px;
+        display:block;
     }
 }
 
@@ -1310,6 +1443,22 @@ body.label-7 .navigation-pane { border-top: none; }
     }
 }
 
+#importExportForm {
+    top: -300px;
+    a.exportbtn, a.importbtn {
+        background: $color_blue;
+        padding: 6px 25px 8px;
+        border-radius: 5px;
+    }
+    .importer {
+        display:none;
+    }
+    small {
+        display: block;
+        margin-top: 35px;
+    }
+}
+
 #helperforms {
     position:relative;
     z-index: 20000;
@@ -1335,7 +1484,13 @@ body.label-7 .navigation-pane { border-top: none; }
         .login-submit {
             display: block;
             top: 101px;
-        }   
+        }
+        button.cnclAcct {
+            border-radius: 5px;
+            padding: 10px 30px 12px;
+            margin-top: 25px;
+            background-color: $color_red;
+        }
     }
 }
 

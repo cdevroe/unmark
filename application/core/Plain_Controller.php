@@ -5,6 +5,7 @@ class Plain_Controller extends CI_Controller
 
     public $clean          = null;
     public $csrf_valid     = false;
+    public $current_user   = array();
     public $data           = array();
     public $db_clean       = null;
     public $flash_message  = array();
@@ -200,12 +201,10 @@ class Plain_Controller extends CI_Controller
 
     }
 
-    protected function figureView($view=null, $redirect=null)
+    public function figureView($view=null, $redirect=null)
     {
         // Sort main data keys from A-Z
         ksort($this->data);
-
-
 
         // If PJAX call, render view
         if (self::isPJAX() === true) {
@@ -293,15 +292,17 @@ class Plain_Controller extends CI_Controller
         // If API call, get the user id
         if (self::isAPI() === true && ! empty($this->user_token) && empty($this->user_id)) {
             $this->load->model('users_model', 'user');
-            $user = $this->user->read("users.user_token = '" . $this->user_token . "'", 1, 1, 'user_id, admin');
-            $this->user_id    = (isset($user->user_id)) ? $user->user_id : $this->user_id;
-            $this->user_admin = (isset($user->admin) && ! empty($user->admin)) ? true : $this->user_admin;
+            $user = $this->user->read("users.user_token = '" . $this->user_token . "'", 1, 1);
+            $this->user_id      = (isset($user->user_id)) ? $user->user_id : $this->user_id;
+            $this->user_admin   = (isset($user->admin) && ! empty($user->admin)) ? true : $this->user_admin;
+            $this->current_user = $user;
         }
 
         // User ID & admin
-        $this->user_id    = (isset($user_session['user_id']) && ! empty($user_session['user_id'])) ? $user_session['user_id'] : $this->user_id;
-        $this->user_admin = (isset($user_session['admin']) && ! empty($user_session['admin'])) ? true : $this->user_admin;
-        $this->logged_in  = (isset($this->session)) ? $this->session->userdata('logged_in') : false;
+        $this->user_id       = (isset($user_session['user_id']) && ! empty($user_session['user_id'])) ? $user_session['user_id'] : $this->user_id;
+        $this->user_admin    = (isset($user_session['admin']) && ! empty($user_session['admin'])) ? true : $this->user_admin;
+        $this->logged_in     = (isset($this->session)) ? $this->session->userdata('logged_in') : false;
+        $this->current_user  = (! empty($user_session)) ? $user_session : $this->current_user;
     }
 
     protected function isAdmin()
@@ -309,32 +310,32 @@ class Plain_Controller extends CI_Controller
         return $this->user_admin;
     }
 
-    protected function isAJAX()
+    public function isAJAX()
     {
         return $this->input->is_ajax_request();
     }
 
-    protected function isAPI()
+    public function isAPI()
     {
         return (isset($this->clean->user_token)) ? true : false;
     }
 
-    protected function isCommandLine()
+    public function isCommandLine()
     {
         return $this->input->is_cli_request();
     }
 
-    protected function isChromeExtension()
+    public function isChromeExtension()
     {
         return (isset($_SERVER['HTTP_X_CHROME_EXTENSION'])) ? true : false;
     }
 
-    protected function isInternalAJAX()
+    public function isInternalAJAX()
     {
         return (self::isAJAX() === true && self::isSameHost() === true) ? true : false;
     }
 
-    protected function isPJAX()
+    public function isPJAX()
     {
         return (isset($_SERVER['HTTP_X_PJAX'])) ? true : false;
     }
@@ -347,9 +348,9 @@ class Plain_Controller extends CI_Controller
         return (! empty($origin) && ! empty($host) && $host == $origin) ? true : false;
     }
 
-    protected function isWebView()
+    public function isWebView()
     {
-        return (self::isAJAX() === false && self::isAPI() === false && self::isPJAX() === false) ? true : false;
+        return (self::isAJAX() === false && self::isAPI() === false && self::isPJAX() === false && self::isCommandLine() === false) ? true : false;
     }
 
     // If logged if invalid CSRF token is not valid
@@ -450,13 +451,13 @@ class Plain_Controller extends CI_Controller
         }
     }
 
-    protected function renderJSON()
+    public function renderJSON()
     {
         $json         = json_encode($this->data, JSON_FORCE_OBJECT);
         $callback     = (isset($this->clean->callback)) ? $this->clean->callback : null;
         $json         = (isset($this->clean->content_type) && strtolower($this->clean->content_type) == 'jsonp') ? $callback . '(' . $json . ');' : $json;
         $content_type = (isset($this->clean->content_type) && strtolower($this->clean->content_type) == 'jsonp') ? 'application/javascript' : 'application/json';
-        $this->data   = array();
+        //$this->data   = array();
 
         $this->view('json/index', array(
             'json'         => $json,

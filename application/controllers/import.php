@@ -41,12 +41,12 @@ class Import extends Plain_Controller
             $this->data['success'] = false;
             $this->data['errors'] = formatErrors(100);
         }
+
         // FIXME kip9 Change view logic
-        $this->renderJSON();        
-    }
-    
-    public function test(){
-        $this->load->view('import/test');
+        //$this->renderJSON(); 
+
+        $this->view('import/index', array('no_header' => true, 'no_footer' => true));
+
     }
 
 }

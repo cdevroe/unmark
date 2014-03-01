@@ -46,12 +46,14 @@
                     unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                         unmark.tagify_notes($('#notes-' + mark_id));
                         unmark.getData('labels', showTags);
+                        $("section.sidebar-info-preview").fitVids();
                     });
                 });
             } else {
                 unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                     unmark.tagify_notes($('#notes-' + mark_id));
                     unmark.getData('labels', showTags);
+                    $("section.sidebar-info-preview").fitVids();
                 });         
             }
         });
@@ -224,7 +226,7 @@
             label_name = $(this).text();
             body_class = $('body').attr('class');
             pattern = new RegExp('label');
-            query = 'label_id=' + unmark.urlEncode(label_id);
+            query = 'label_id=' + label_id;
             unmark.ajax('/mark/edit/'+mark, 'post', query, function(res) {
                 labels_list.fadeOut();
                 btn.text(label_name);

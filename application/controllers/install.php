@@ -47,6 +47,16 @@ class Install extends CI_Controller
     exit;
   }
 
+  public function setup()
+  {
+    if ($this->db->table_exists('users') === true) {
+      header('Location: /');
+      exit;
+    }
+
+    $this->load->view('setup');
+  }
+
   // Used to update from one version to another.
   public function upgrade()
   {

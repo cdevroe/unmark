@@ -43,6 +43,7 @@ $route['404_override']            = '';
 
 // Installation & Upgrades
 $route['install']                = 'install';
+$route['setup']                  = 'install/setup';
 $route['upgrade']                = 'install/upgrade';
 
 // Labels (API ONLY)

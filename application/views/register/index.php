@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Welcome to Unmark</title>
+    <title>Unmark: User Registration</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
@@ -14,35 +14,18 @@
 <body class="unmark-solo" id="unmark-login">
 
 <div class="loginWrapper">
-    <div class="loginInner">
+    <div class="loginInner internalform">
         <div class="login-ball"></div>
-        <h1>Sign In</h1>
-        <form id="unmarkLogin" method="post" action="/login">
+        <h1>Register for Unmark</h1>
+        <form id="register_user" method="post" action="#" class="ajaxsbmt">
             <input type="email" class="field-input" name="email" id="email" placeholder="Email Address" autocomplete="off" autocapitalize="off" autocorrect="off" />
             <input type="password" class="field-input" name="password" id="password" placeholder="Password" autocomplete="off" />
+            <input type="password" class="field-input" name="password2" id="password2" placeholder="Password Again" autocomplete="off" />
             <button class="login-submit" type="submit"><i class="icon-go"></i></button>
         </form>
         <div class="response-message"></div>
-        <a href="/register" class="register">Register for Unmark</a> &nbsp; | &nbsp; <a href="#" class="forgot-pass">Forgot Password?</a>
     </div>
 </div>
-
-<div class="forgotPassWrapper">
-    <div class="loginInner">
-        <div class="login-ball"></div>
-        <h1>Reset Password</h1>
-        <form id="unmarkForgotPass" method="post" action="/tools/forgotPassword">
-            <input type="email" class="field-input" name="email" id="forgot_email" placeholder="Email Address" autocomplete="off" autocapitalize="off" autocorrect="off" />
-            <button class="forgot-submit" type="submit"><i class="icon-go"></i></button>
-        </form>
-        <div class="response-message"></div>
-        <a href="#" class="forgot-pass">Need to Sign In?</a>
-    </div>
-</div>
-
-<div class="unmark-spinner"></div>
-<div class="unmark-success"><i class="icon-check"></i></div>
-
 
 <script type="text/javascript">
 var unmark  = unmark || {};

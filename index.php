@@ -53,12 +53,10 @@ if(!defined('ENVIRONMENT')){
 }
 
 // Define DOCROOT
-$dr = (isset($_SERVER['PWD']) && ! empty($_SERVER['PWD'])) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
-$dr = str_replace('//', '/', $dr . '/');
-define('DOCROOT', $dr);
+define('DOCROOT', dirname(__FILE__));
 
 // Define CUSTOMPATH
-define('CUSTOMPATH', DOCROOT . 'custom/');
+define('CUSTOMPATH', DOCROOT . '/custom/');
 
 /*
  *---------------------------------------------------------------

@@ -62,7 +62,7 @@ class User extends Plain_Controller
     public function updatePassword()
     {
         if (! isset($this->clean->password) || ! isValid($this->clean->password, 'password')) {
-            $this->data['message'] = 'Please submit a valid password.';
+            $this->data['message'] = 'Please submit a valid password. Passwords must contain at least one CAPITAL letter, one number and be a minimum of 6 characters.';
         }
         else {
 

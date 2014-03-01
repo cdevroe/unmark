@@ -260,6 +260,7 @@ class Marks extends Plain_Controller
     private function getLabels()
     {
         $this->load->model('labels_model', 'labels');
+        $this->labels->sort = 'labels.order ASC';
         $this->data['labels'] = $this->labels->getSystemLabels();
 
         if ($this->data['labels'] !== false) {
