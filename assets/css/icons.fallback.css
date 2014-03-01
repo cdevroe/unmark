@@ -142,3 +142,23 @@
 	background-image: url('png/upgrade.png');
 	background-repeat: no-repeat;
 }
+.icon-circle_arrow_down {
+	background-image: url('png/circle_arrow_down.png');
+	background-repeat: no-repeat;
+}
+.icon-circle_arrow_up {
+	background-image: url('png/circle_arrow_up.png');
+	background-repeat: no-repeat;
+}
+.icon-github {
+	background-image: url('png/github.png');
+	background-repeat: no-repeat;
+}
+.icon-logo_text_dark {
+	background-image: url('png/logo_text_dark.png');
+	background-repeat: no-repeat;
+}
+.icon-logo_text_light {
+	background-image: url('png/logo_text_light.png');
+	background-repeat: no-repeat;
+}
