@@ -28,7 +28,7 @@ class Plain_Email extends CI_Email {
 
         $email_from = $this->CI->config->item('email_from');
         if(empty($email_from) || empty($email_from['address'])){
-            log_message('ERROR', 'No sender address for outgoing email set in config - cannot send.');
+            $this->exceptional->createTrace(E_ERROR, 'No sender address for outgoing email set in config - cannot send.', __FILE__, __LINE__);
             return false;
         }
         $this->from($email_from['address'], $email_from['description']);
@@ -68,7 +68,7 @@ class Plain_Email extends CI_Email {
 
         $email_from = $this->CI->config->item('email_from');
         if(empty($email_from) || empty($email_from['address'])){
-            log_message('ERROR', 'No sender address for outgoing email set in config - cannot send.');
+            $this->exceptional->createTrace(E_ERROR, 'No sender address for outgoing email set in config - cannot send.', __FILE__, __LINE__);
             return false;
         }
         $this->from($email_from['address'], $email_from['description']);
