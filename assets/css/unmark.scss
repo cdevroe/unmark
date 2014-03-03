@@ -75,6 +75,7 @@ body {
         @include box-sizing(border-box);
     }
     &.unmark-solo {
+        overflow: auto;
         border-left:none;
         border-top:none;
         background: $color_white;
@@ -1264,10 +1265,10 @@ body.label-7 .navigation-pane { border-top: none; }
     width: 100%;
     height: 100%;
     background: #303030;
-    top: -83px;
-    z-index: 999;
+    top: 0;
+    z-index: 99999;
 }
-
+#unmark_about_page { display: none; }
 .login-page-bottom {
     background: #f0635a;
     width: 100%;

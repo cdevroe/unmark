@@ -21,6 +21,8 @@
         unmarklogin.input_fields  = $('input.field-input');
         unmarklogin.helper_buttom = $('.forgot-pass');
         unmarklogin.pass_wrapper  = $('.forgotPassWrapper');
+        unmarklogin.login_page    = $('#unmark_login_page');
+        unmarklogin.about_page    = $('#unmark_about_page');
 
         // Toggle the Login Form
         function toggle_login_form(hide, message) {
@@ -113,6 +115,21 @@
             });
         });
 
+        // Shows the Welcome Screen
+        function toggle_welcome() {
+            var aboutbtn = $('.login-page-bottom');
+            if (aboutbtn.is(':visible')) {
+                aboutbtn.fadeOut();
+                unmarklogin.about_page.fadeOut().delay().fadeIn(800);
+                unmarklogin.login_page.animate({ top: '-130%' }, 1000);
+            } else {
+                unmarklogin.about_page.fadeOut();
+                unmarklogin.login_page.animate({ top: '0' }, 1000, function () {
+                    aboutbtn.fadeIn(800);
+                });
+            }
+        }
+
         // Show Submit Button on Key Press
         unmarklogin.input_fields.on('change', function () {
             unmarklogin.login_submit.fadeIn();
@@ -130,6 +147,12 @@
             e.preventDefault();
             toggleForgotPass();
         });
+
+        $('.toggle_welcome').on('click', function (e) {
+            e.preventDefault();
+            toggle_welcome();
+        });
+
 
     });
 

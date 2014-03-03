@@ -48,8 +48,7 @@
     <div class="unmark-success"><i class="icon-check"></i></div>
 
     <div class="login-page-bottom">
-        <i class="icon-circle_arrow_up"></i>
-        <span>What is Unmark?</span>
+        <a href="#" class="toggle_welcome"><i class="icon-circle_arrow_up"></i><span>What is Unmark?</span></a>
     </div>
 
 </div>
@@ -62,8 +61,8 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Sign In / Register <span class="icon-circle_arrow_down"></span></a></li>
-                <li><a href="#">Fork <i class="full-only">on GitHub</i> <span class="icon-github"></span></a></li>
+                <li><a href="#" class="toggle_welcome">Sign In / Register <span class="icon-circle_arrow_down"></span></a></li>
+                <li><a href="https://github.com/plainmade/unmark">Fork <i class="full-only">on GitHub</i> <span class="icon-github"></span></a></li>
             </ul>
         </nav>
     </section>
@@ -149,7 +148,7 @@
                     <a href="#">Help</a>
                     <a href="#">@unmarkit</a>
                 </div>
-                <div class="byline">Made by <a href="#">Plain</a></div>
+                <div class="byline">Made by <a href="http://plainmade.com" target="_blank">Plain</a></div>
             </footer>
         </div>
     </section>
