@@ -101,6 +101,7 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
 img { max-width: 100%; }
 .centerme { text-align: center; }
 .tempdata { display: none; }
+.hide { display: none; }
 
 // Setup Page
 #unmark-setup {
@@ -1038,7 +1039,7 @@ canvas.graph {
         h1 {
             font-weight: 300;
             color:$color_dark;
-            font-size: 27px;
+            font-size: 20px;
             margin: 0 0 20px 0;
         }
         span {
@@ -1119,6 +1120,18 @@ canvas.graph {
             padding: 10px 25px;
             color: $color_darker;
         }
+        textarea {
+            background: $color_shade;
+            width: 100%;
+            opacity: .95;
+            padding: 0;
+            color: $color_darker;
+            border: none;
+            overflow: auto;
+            resize: none;
+            height: 65px;
+            font-size: 14px;
+        }
         &.mark-added-label section {
             padding: 0;
             top: 18px;
@@ -1146,7 +1159,8 @@ canvas.graph {
         border-bottom: 1px solid $color_grey;
     }
     .mark-added-actions {
-        padding: 55px 25px 25px 25px;
+        padding: 35px 25px 25px 25px;
+        background: $color_shade;
         button {
             color:$color_light;
             width: 300px;

@@ -180,33 +180,16 @@
 
     // Method for Adding Notes
     unmark.marks_addNotes = function (btn) {
+        var editable = btn.next();
+        btn.hide(); // Hide Button
+        editable.fadeIn(); // Show Editable Area
+        editable.focus(); // Set Focus
+    };
 
-        var editable = btn.next(), text, query;
-
-        if(editable.is(':visible')) { return editable.slideUp(); }
-
-        editable.unbind();
-        editable.slideDown();
-        editable.attr('contenteditable', true);
-        if(editable.is(':empty')) {
-            editable.html('Type note text here...');
-        }
-
-        // Define the actions that will save the note.
-        // Includes Function to save the note
-        editable.on('blur keydown', function (e) {
-            if (e.which === 13 || e.type === 'blur') {
-                e.preventDefault();
-                text = $(this).text(), id = $(this).data('id');
-                query = 'notes=' + unmark.urlEncode(text);
-                unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
-                    editable.attr('contenteditable', false);
-                    editable.slideUp();
-                    editable.prev().text('Edit Note');
-                });
-                editable.unbind();
-            }
-        });
+    // Save me some notes!
+    unmark.saveNotes = function (id, note) {
+        var query = 'notes=' + unmark.urlEncode(note);
+        unmark.ajax('/mark/edit/'+id, 'post', query);
     };
 
     // Method for adding a label
@@ -287,7 +270,7 @@
         unmark.ajax('/mark/delete/'+mark_id, 'post', '', function (res) {
             if (res.mark.active === "0") {
                 if (view === "bookmarklet"){
-                    unmark.close_window();
+                    unmark.close_window(true);
                 } else {
                     unmark.sidebar_collapse();
                     $('#mark-'+mark_id).fadeOut();
