@@ -32,10 +32,6 @@
 </div>
 <div id="panel-settings" class="nav-panel">
 	<button id="logout-btn" class="danger" data-action="logout">Sign Out</button>
-	<h4 class="nav-heading">Settings</h4>
-	<ul class="nav-list">
-		<li><a href="#" class="action" data-action="awesome">Turn On Awesome</a></li>
-	</ul>
 
 	<?php $this->load->view('layouts/accountlinks'); ?>
 
