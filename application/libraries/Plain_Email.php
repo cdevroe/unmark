@@ -28,7 +28,7 @@ class Plain_Email extends CI_Email {
 
         $email_from = $this->CI->config->item('email_from');
         if(empty($email_from) || empty($email_from['address'])){
-            log_message('ERROR', 'No sender address for outgoing email set in config - cannot send.');
+            $this->CI->exceptional->createTrace(E_ERROR, 'No sender address for outgoing email set in config - cannot send.', __FILE__, __LINE__);
             return false;
         }
         $this->from($email_from['address'], $email_from['description']);
@@ -45,7 +45,12 @@ class Plain_Email extends CI_Email {
         $this->subject($subject);
         $this->message($message);
         $this->set_alt_message($text);
-        return $this->send();
+
+        $result = $this->send();
+        if ($result === false) {
+            $this->CI->exceptional->createTrace(E_ERROR, 'Could not send reset password email.', __FILE__, __LINE__, array('header' => $this->_header_str));
+        }
+        return $result;
     }
 
     public function subject( $subject )
@@ -63,7 +68,7 @@ class Plain_Email extends CI_Email {
 
         $email_from = $this->CI->config->item('email_from');
         if(empty($email_from) || empty($email_from['address'])){
-            log_message('ERROR', 'No sender address for outgoing email set in config - cannot send.');
+            $this->CI->exceptional->createTrace(E_ERROR, 'No sender address for outgoing email set in config - cannot send.', __FILE__, __LINE__);
             return false;
         }
         $this->from($email_from['address'], $email_from['description']);
@@ -80,7 +85,12 @@ class Plain_Email extends CI_Email {
         $this->subject($subject);
         $this->message($message);
         $this->set_alt_message($text);
-        return $this->send();
+
+        $result = $this->send();
+        if ($result === false) {
+            $this->CI->exceptional->createTrace(E_ERROR, 'Could not send update password email.', __FILE__, __LINE__, array('header' => $this->_header_str));
+        }
+        return $result;
     }
 
     public function initialize($config = array()){

@@ -151,7 +151,7 @@ class Plain_Model extends CI_Model
 
     protected function sendException()
     {
-        /*$err_msg = $this->db->_error_message();
+        $err_msg = $this->db->_error_message();
 
         // Exceptional!
         if (! empty($err_msg)) {
@@ -159,7 +159,7 @@ class Plain_Model extends CI_Model
             $err_no = $this->db->_error_number();
 
             // Remove column information we don't want logged
-            $columns = array('session_id', '.*?_token', 'password', 'email', 'config', 'transaction_data', 'data');
+            $columns = array('session_id', '.*?_token', 'password', 'email', 'session_data');
             foreach ($columns as $column) {
                 $query = preg_replace('/(' . $column . '\s*?=\s*?("|\'))(.*?)\\2/ism', "$1***$2", $query);
             }
@@ -170,8 +170,7 @@ class Plain_Model extends CI_Model
                 'message'   => $err_msg,
                 'error-num' => $err_no
             ));
-        }*/
-        // Not used yet
+        }
     }
 
     protected function stripSlashes($result)
