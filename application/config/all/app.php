@@ -114,9 +114,3 @@ $config['password_updated_email_subject'] = 'Unmark - Password updated';
 
 // Embedly API Token
 $config['embedly_api_key'] = '';
-
-// Add Error Tracking
-// Options are null or custom
-// If using 'custom', we will attempt to load /custom/libraries/errors.php
-// If not found, it will default back to default
-$config['error_tracking'] = null;
