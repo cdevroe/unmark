@@ -170,19 +170,19 @@
             // Now the graph
             unmark.createGraph(archived['4 days ago'], archived['3 days ago'], archived['2 days ago'], archived['yesterday'], archived['today'], saved['4 days ago'], saved['3 days ago'], saved['2 days ago'], saved['yesterday'], saved['today']);
 
-        });
+        }, true);
     };
 
     // Simple Ajax method to get a list of results from API
-    unmark.getData = function (what, caller) {
+    unmark.getData = function (what, caller, force) {
         var tempdata = $('#temp_data_'+what).text();
-        if (tempdata !== '') {
-            caller($.parseJSON(tempdata));
-        } else {
+        if (tempdata === '' || force === true) {
             unmark.ajax('/marks/get/'+what, 'post', '', function (res) {
                 caller(res);
                 $('body').append('<div id="temp_data_'+what+'">'+JSON.stringify(res)+'</div>');
             });
+        } else {
+            caller($.parseJSON(tempdata));
         }
     };
 
