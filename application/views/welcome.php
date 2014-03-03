@@ -145,8 +145,8 @@
             <p>Use Unmark free for as long as you'd like or upgrade to a paid account at any time. An open source version of is <a href="#">available on GitHub</a>. Fork it and set up your own install.</p>
             <footer>
                 <div class="links">
-                    <a href="#">Help</a>
-                    <a href="#">@unmarkit</a>
+                    <a href="http://help.unmark.it/">Help</a>
+                    <a href="http://twitter.com/unmarkit">@unmarkit</a>
                 </div>
                 <div class="byline">Made by <a href="http://plainmade.com" target="_blank">Plain</a></div>
             </footer>

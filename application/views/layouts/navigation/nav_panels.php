@@ -31,8 +31,8 @@
 
 	<h4 class="nav-heading">Help</h4>
 	<ul class="nav-list">
-		<li><a target="_blank" href="http://unmark-help.getbarley.com/">How to Use Unmark</a></li>
-		<li><a target="_blank" href="http://unmark-help.getbarley.com/faq">FAQ</a></li>
-		<li><a target="_blank" href="http://unmark-help.getbarley.com/bookmarklet">Get the Bookmarklet</a></li>
+		<li><a target="_blank" href="http://help.unmark.it/">How to Use Unmark</a></li>
+		<li><a target="_blank" href="http://help.unmark.it/faq">FAQ</a></li>
+		<li><a target="_blank" href="http://help.unmark.it/bookmarklet">Get the Bookmarklet</a></li>
 	</ul>
 </div>
