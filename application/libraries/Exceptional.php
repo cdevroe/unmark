@@ -92,6 +92,14 @@ class Exceptional {
 
         // If ok, fire it off
         if ($ok === true) {
+
+            // Get current instance
+            $CI =& get_instance();
+
+            // Get current user if applicable
+            $user = $CI->session->userdata('user');
+            $user = (empty($user)) ? array() : $user;
+
             // Hack because on shutdown errors we don't have complete access to all CI vars
             // Only have access to essentials
             // So we include the old way
@@ -101,7 +109,8 @@ class Exceptional {
                 'type'        => $type,
                 'backtrace'   => $backtrace,
                 'custom_data' => $custom_data,
-                'enviornment' => $env
+                'enviornment' => $env,
+                'user'        => $user
             );
 
             // If raw exception object is passed, send it so user can do whatever they want
@@ -110,8 +119,13 @@ class Exceptional {
             }
 
             // Send it off
-            $CI =& get_instance();
-            $CI->load->library('error_tracking', $params);
+            if (CUSTOM_ERROR_TRACKING === true) {
+                $CI->load->library('error_tracking', $params);
+            }
+            else {
+                $params['backtrace'] = (isset($params['backtrace'][0]['file'])) ? $params['backtrace'][0]['file'] : '';
+                log_message('error', print_r($params, true));
+            }
         }
     }
 

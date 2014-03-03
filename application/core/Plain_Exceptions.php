@@ -3,20 +3,16 @@
 class Plain_Exceptions extends CI_Exceptions
 {
 
-    private $use_default = true;
-
     public function __construct()
     {
         parent::__construct();
-        $custom_exists     = file_exists(CUSTOMPATH . 'libraries/Error_Tracking.php');
-        $this->use_default = ($custom_exists !== true || (defined('ENVIRONMENT') && ENVIRONMENT == 'development')) ? true : false;
     }
 
     // Log using CI if using default method
     // Else, call exceptional library
     public function log_exception($severity, $message, $filepath, $line)
     {
-        if ($this->use_default === true) {
+        if (CUSTOM_ERROR_TRACKING === false) {
             parent::log_exception($severity, $message, $filepath, $line);
         }
         else {
