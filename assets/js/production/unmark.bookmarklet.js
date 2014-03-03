@@ -326,10 +326,18 @@ if (unmark === undefined) { var unmark = {}; }
 
     // Simple Ajax method to get a list of results from API
     unmark.getData = function (what, caller) {
-        unmark.ajax('/marks/get/'+what, 'post', '', caller);
+        var tempdata = $('#temp_data_'+what).text();
+        if (tempdata !== '') {
+            caller($.parseJSON(tempdata));
+        } else {
+            unmark.ajax('/marks/get/'+what, 'post', '', function (res) {
+                caller(res);
+                $('body').append('<div id="temp_data_'+what+'">'+JSON.stringify(res)+'</div>');
+            });
+        }
     };
 
-    // Simple Close Window
+    // Simple Close Windows
     unmark.close_window = function () { window.close(); };
 
     // Simple function for hiding Elements the user wants gone
@@ -383,7 +391,8 @@ if (unmark === undefined) { var unmark = {}; }
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
 
         // Quick function to populate the tags
-        function showTags(res) {
+        function populateLabels(res) {
+            console.log(res);
             var list = unmark.label_list(res);
             $('ul.sidebar-label-list').prepend(list);
         };
@@ -408,14 +417,14 @@ if (unmark === undefined) { var unmark = {}; }
                 unmark.sidebar_default.fadeOut(400, function () {
                     unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                         unmark.tagify_notes($('#notes-' + mark_id));
-                        unmark.getData('labels', showTags);
+                        unmark.getData('labels', populateLabels);
                         $("section.sidebar-info-preview").fitVids();
                     });
                 });
             } else {
                 unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                     unmark.tagify_notes($('#notes-' + mark_id));
-                    unmark.getData('labels', showTags);
+                    unmark.getData('labels', populateLabels);
                     $("section.sidebar-info-preview").fitVids();
                 });
             }

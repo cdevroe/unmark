@@ -20,7 +20,8 @@
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
 
         // Quick function to populate the tags
-        function showTags(res) {
+        function populateLabels(res) {
+            console.log(res);
             var list = unmark.label_list(res);
             $('ul.sidebar-label-list').prepend(list);
         };
@@ -45,14 +46,14 @@
                 unmark.sidebar_default.fadeOut(400, function () {
                     unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                         unmark.tagify_notes($('#notes-' + mark_id));
-                        unmark.getData('labels', showTags);
+                        unmark.getData('labels', populateLabels);
                         $("section.sidebar-info-preview").fitVids();
                     });
                 });
             } else {
                 unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                     unmark.tagify_notes($('#notes-' + mark_id));
-                    unmark.getData('labels', showTags);
+                    unmark.getData('labels', populateLabels);
                     $("section.sidebar-info-preview").fitVids();
                 });
             }
