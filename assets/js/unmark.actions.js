@@ -176,14 +176,12 @@
     // Simple Ajax method to get a list of results from API
     unmark.getData = function (what, caller, force) {
         var tempdata = $('#temp_data_'+what).text();
-        if (tempdata === '' || force === true) {
+        if (tempdata === '') {
             unmark.ajax('/marks/get/'+what, 'post', '', function (res) {
                 caller(res);
-                $('body').append('<div id="temp_data_'+what+'">'+JSON.stringify(res)+'</div>');
+                if (force !== true) { $('body').append('<div class="tempdata" id="temp_data_'+what+'">'+JSON.stringify(res)+'</div>'); }
             });
-        } else {
-            caller($.parseJSON(tempdata));
-        }
+        } else { caller($.parseJSON(tempdata)); }
     };
 
     // Simple Close Windows
