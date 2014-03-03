@@ -1,5 +1,6 @@
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Unmark : Mark Added</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css" />
@@ -37,7 +38,7 @@
 var unmark  = unmark || {};
 unmark.vars = {};
 unmark.vars.token   = '<?php print $token; ?>';
-unmark.vars.csrf_token   = '<?php print $csrf_token; ?>';     
+unmark.vars.csrf_token   = '<?php print $csrf_token; ?>';
 </script>
 
 <script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
