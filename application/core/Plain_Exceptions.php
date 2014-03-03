@@ -12,7 +12,8 @@ class Plain_Exceptions extends CI_Exceptions
         $this->use_default = ($custom_exists !== true || (defined('ENVIRONMENT') && ENVIRONMENT == 'development')) ? true : false;
     }
 
-    // Dumb CI logging, only do this on dev
+    // Log using CI if using default method
+    // Else, call exceptional library
     public function log_exception($severity, $message, $filepath, $line)
     {
         if ($this->use_default === true) {
