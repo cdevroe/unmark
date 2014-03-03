@@ -6,12 +6,12 @@
 
 */
 
-(function ($) { 
+(function ($) {
 
     // Show Mark Info in Sidebar
     // Grabs relavaent info and shows the sidebar actions with info
     unmark.show_mark_info = function (mark_clicked) {
-        
+
         var template, output,
             mark_obj_ref    = mark_clicked.data('mark'),
             mark_string     = $('#' + mark_obj_ref).html(),
@@ -54,7 +54,7 @@
                     unmark.tagify_notes($('#notes-' + mark_id));
                     unmark.getData('labels', showTags);
                     $("section.sidebar-info-preview").fitVids();
-                });         
+                });
             }
         });
 
@@ -122,6 +122,7 @@
             if(res.mark.archived_on === null) {
                 $('#mark-'+id).fadeOut();
                 unmark.sidebar_collapse();
+                unmark.update_label_count();
             } else {
                 alert('Sorry, We could not restore this mark at this time.');
             }
@@ -155,7 +156,7 @@
 
         // Define the actions that will save the note.
         // Includes Function to save the note
-        editable.on('blur keydown', function (e) { 
+        editable.on('blur keydown', function (e) {
             if (e.which === 13 || e.type === 'blur') {
                 e.preventDefault();
                 text = $(this).text(), id = $(this).data('id');
@@ -192,7 +193,7 @@
 
         // Define the actions that will save the note.
         // Includes Function to save the note
-        editable.on('blur keydown', function (e) { 
+        editable.on('blur keydown', function (e) {
             if (e.which === 13 || e.type === 'blur') {
                 e.preventDefault();
                 text = $(this).text(), id = $(this).data('id');
@@ -209,7 +210,7 @@
 
     // Method for adding a label
     unmark.marks_addLabel = function (btn) {
-        
+
         var mark, label_id, query, label_name, body_class, pattern,
             labels_list = btn.next(),
             label_parent = btn.parent();
