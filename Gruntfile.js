@@ -23,7 +23,7 @@ module.exports = function(grunt) {
                         'assets/js/plugins/Chart.min.js',
                         'assets/js/plugins/unmark-graph.js',
                         'assets/js/plugins/fitvids.js'
-                    ], 
+                    ],
                     'assets/js/production/unmark.loggedin.js': [
                         'assets/js/templates/unmark-templates.js',
                         'assets/js/unmark.js',
@@ -57,7 +57,8 @@ module.exports = function(grunt) {
                     banner: '/*! <%= pkg.name %> - <%=pkg.url %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> - <%= pkg.author %> */ \n'
                 },
                 files: {
-                    'assets/css/unmark.css': 'assets/css/unmark.scss'
+                    'assets/css/unmark.css': 'assets/css/unmark.scss',
+                    'assets/css/unmark_welcome.css': 'assets/css/unmark_welcome.scss'
                 }
             }
         },
@@ -81,7 +82,7 @@ module.exports = function(grunt) {
                 files: js_file_config
             }
         },
-        "string-replace": {                 
+        "string-replace": {
             prod: {
                 files: {
                     "index.php" : "index.php"
