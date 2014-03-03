@@ -99,6 +99,7 @@ textarea:focus, input:focus, .hideoutline, button { outline: 0; }
 
 // Images
 img { max-width: 100%; }
+.centerme { text-align: center; }
 
 // Setup Page
 #unmark-setup {
@@ -1157,6 +1158,16 @@ canvas.graph {
             }
         }
     }
+    .mark-added-upgrade {
+        text-align: center;
+        color: $color_dark;
+        padding: 35px 15%;
+        line-height: 28px;
+        a { color: $color_dark; text-decoration:underline; }
+        button {
+            margin-top:25px;
+        }
+    }
 }
 
 // Label List
@@ -1396,6 +1407,10 @@ body.label-7 .navigation-pane { border-top: none; }
         top: 101px;
         display:block;
     }
+}
+
+.hiddenform h1 {
+    margin-bottom: 25px;
 }
 
 .forgotPassWrapper {

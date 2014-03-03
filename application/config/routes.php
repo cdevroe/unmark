@@ -61,7 +61,7 @@ $route['marks?/archive/old.*?']  = 'marks/archive/old';
 $route['mark/check(.*?)']        = 'marks/check';
 $route['mark/delete(.*?)']       = 'marks/delete$1';
 $route['mark/edit(.*?)']         = 'marks/edit$1';
-$route['mark/info(.*?)']         = 'marks/info$1';
+$route['mark/info(.*?)']         = 'marks/add$1';
 $route['mark/restore(.*?)']      = 'marks/restore$1';
 
 // Plural Marks

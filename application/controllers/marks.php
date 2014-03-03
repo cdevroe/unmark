@@ -542,7 +542,7 @@ class Marks extends Plain_Controller
         $this->data['no_footer'] = true;
 
         // Figure view
-        $this->figureView('marks/info');
+        $this->figureView('marks/add');
     }
 
     public function random()
