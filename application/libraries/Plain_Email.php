@@ -20,7 +20,8 @@ class Plain_Email extends CI_Email {
 
     public function resetPassword($email, $url)
     {
-        $message  = file_get_contents(APPPATH . 'views/email/forgot-password.php');
+        $file     = (file_exists(CUSTOMPATH . 'views/email/forgot-password.php')) ? CUSTOMPATH . 'views/email/forgot-password.php' : APPPATH . 'views/email/forgot-password.php';
+        $message  = file_get_contents($file);
         $find     = array('{URL}');
         $replace  = array($url);
         $message  = str_replace($find, $replace, $message);
@@ -62,8 +63,8 @@ class Plain_Email extends CI_Email {
 
     public function updatePassword($email)
     {
-
-        $message  = file_get_contents(APPPATH . 'views/email/update-password.php');
+        $file     = (file_exists(CUSTOMPATH . 'views/email/update-password.php')) ? CUSTOMPATH . 'views/email/update-password.php' : APPPATH . 'views/email/update-password.php';
+        $message  = file_get_contents($file);
         $text     = $this->getTextVersion($message);
 
         $email_from = $this->CI->config->item('email_from');
