@@ -95,7 +95,7 @@
             // Set and get variables & proces login
             var email = $('#email').val(),
                 pass  = $('#password').val(),
-                query = 'email='+email+'&password='+pass;
+                query = 'email='+unmark.urlEncode(email)+'&password='+unmark.urlEncode(pass);
             setTimeout(function(){ process_login(query) }, 1500);
         });
 
@@ -104,7 +104,7 @@
             e.preventDefault();
             unmarklogin.forget_submit.find('i').removeClass('icon-go').addClass('icon-spinner');
             var email = $('#forgot_email').val(),
-                query = 'email='+email;
+                query = 'email='+unmark.urlEncode(email);
             unmark.ajax('/tools/forgotPassword', 'post', query, function (res) {
                 if (res.success) {
                     showMessage(false, 'A confirmation link will be sent via email.');
