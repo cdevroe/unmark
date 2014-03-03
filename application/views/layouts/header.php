@@ -4,10 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=50, initial-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>Unmark<?php if (! isset($_SESSION['logged_in'])) { echo ': Save your links for later.'; } ?></title>
+    <title>Unmark<?php if (! isset($_SESSION['logged_in'])) { echo ': Do Something with Your Bookmarks.'; } ?></title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic|Merriweather:400,300,300italic,400italic,700,700italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/assets/touch_icons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/touch_icons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/touch_icons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/touch_icons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/touch_icons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/touch_icons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/touch_icons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/touch_icons/apple-touch-icon-152x152.png">
     <script src="/assets/js/plugins/modernizr-2.7.1.min.js"></script>
     <script>
         /* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
@@ -22,7 +30,7 @@
 <?php else : ?>
 <body id="unmark" data-lookup="<?php print $lookup_type; ?>">
 <?php endif; ?>
-    
+
     <div id="unmark-wrapper">
 
     <?php $this->load->view('layouts/navigation'); ?>

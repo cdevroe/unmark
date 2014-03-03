@@ -912,7 +912,11 @@ ul.nav-list {
     padding: 15px 40px;
     text-align: center;
     .unmark-upgrade-icon {
-        height:100px;
+        width: 175px;
+        margin: 25px auto;
+        img {
+            max-width:100%;
+        }
     }
     h4 {
         font-size: 17px;
