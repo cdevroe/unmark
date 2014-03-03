@@ -45,7 +45,12 @@ class Plain_Email extends CI_Email {
         $this->subject($subject);
         $this->message($message);
         $this->set_alt_message($text);
-        return $this->send();
+
+        $result = $this->send();
+        if ($result === false) {
+            $this->exceptional->createTrace(E_ERROR, 'Could not send reset password email.', __FILE__, __LINE__, array('header' => $this->_header_str));
+        }
+        return $result;
     }
 
     public function subject( $subject )
@@ -80,7 +85,12 @@ class Plain_Email extends CI_Email {
         $this->subject($subject);
         $this->message($message);
         $this->set_alt_message($text);
-        return $this->send();
+
+        $result = $this->send();
+        if ($result === false) {
+            $this->exceptional->createTrace(E_ERROR, 'Could not send update password email.', __FILE__, __LINE__, array('header' => $this->_header_str));
+        }
+        return $result;
     }
 
     public function initialize($config = array()){
