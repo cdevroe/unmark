@@ -25,7 +25,7 @@
         // Toggle the Login Form
         function toggle_login_form(hide, message) {
             if (hide === true) {
-                unmarklogin.login_wrapper.animate({ top: '-400px' }, 500, function () {
+                unmarklogin.login_wrapper.animate({ top: '-500px' }, 500, function () {
                     unmarklogin.login_spinner.fadeIn();
                 });
             } else {
@@ -44,7 +44,7 @@
                 unmarklogin.login_success.fadeIn(400, function () {
                     setTimeout(function(){ window.location.href = "/marks" }, 800);
                 });
-            });   
+            });
         }
 
         // Process the login
@@ -56,7 +56,7 @@
                 } else {
                     toggle_login_form(false, 'Invalid Email or Password');
                 }
-            });           
+            });
         }
 
         // Change the icon for submit to a spinner
@@ -70,16 +70,16 @@
             form.find('.field-input').val(''); // Empty Fields
             response.removeClass('error').addClass(eclass).text(message).fadeIn(); // Update Class & Show Message
         }
-        
+
         // Toggle the forgot password screen
         function toggleForgotPass() {
             if (unmarklogin.pass_wrapper.is(':visible')) {
-                unmarklogin.pass_wrapper.animate({ top: '-400px' }, 500, function () {
+                unmarklogin.pass_wrapper.animate({ top: '-500px' }, 500, function () {
                     $(this).hide();
                     toggle_login_form();
                 });
             } else {
-                unmarklogin.login_wrapper.animate({ top: '-400px' }, 500, function () {
+                unmarklogin.login_wrapper.animate({ top: '-500px' }, 500, function () {
                     unmarklogin.pass_wrapper.show().animate({ top: '0' }, 500);
                 });
             }
@@ -114,7 +114,7 @@
         });
 
         // Show Submit Button on Key Press
-        unmarklogin.input_fields.on('change', function () { 
+        unmarklogin.input_fields.on('change', function () {
             unmarklogin.login_submit.fadeIn();
             unmarklogin.message.slideUp();
         });
