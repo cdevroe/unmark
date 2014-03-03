@@ -217,6 +217,7 @@
             $('.hiddenform').hide().css('top', '-300px');
             unmark.mainpanels.removeClass('blurme');
             $('#unmark-overlay').remove();
+            $('#helperforms input').val('');
         }
     };
 
