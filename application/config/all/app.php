@@ -59,11 +59,11 @@ $config['error_codes'][601] = 'Validation Errors';
 */
 $config['new_account_links'] = array(
     'Read Unmark\'s FAQ' => array(
-        'url'      => 'http://unmark.it/help/faq',
+        'url'      => 'http://help.unmark.it/faq',
         'label_id' => '7'
     ),
     'How To Use Unmark'  => array(
-        'url'      => 'http://unmark.it/help/how',
+        'url'      => 'http://help.unmark.it',
         'label_id' => '7'
     )
 );
