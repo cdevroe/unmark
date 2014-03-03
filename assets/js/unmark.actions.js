@@ -6,7 +6,7 @@
 
 */
 
-(function ($) { 
+(function ($) {
 
     // Rebuild the dom after pjax call
     unmark.updateDom = function () {
@@ -83,9 +83,9 @@
         unmark.sidebar_collapse();
 
         // If all links pannel - allow click default
-        if (panel_to_show.match(/\//)) { 
+        if (panel_to_show.match(/\//)) {
             unmark.hideNavigation();
-            return true; 
+            return true;
         }
 
         // Otherwise prevent click default
@@ -119,7 +119,7 @@
 
         if (panel_to_show === "#panel-menu"){
             $('.navigation-pane-links').show();
-            $('.nav-panel').hide();                
+            $('.nav-panel').hide();
         } else {
             $('.navigation-pane-links').hide();
             $('.nav-panel').not(panel_to_show).hide();
@@ -185,7 +185,7 @@
     // TO DO : Hook this up to a cookie so they are gone for good
     unmark.dismiss_this = function (btn) {
         btn.parent().parent().fadeOut();
-    }; 
+    };
 
     // Page Set Up
     unmark.page_setup = function (height) {
@@ -206,11 +206,6 @@
             unmark.mainpanels.removeClass('blurme');
             $('#unmark-overlay').remove();
         }
-    };
-
-    // For Fun
-    unmark.awesome = function () {
-        return alert('Awesome Enabled! (this does nothing)');
     };
 
 }(window.jQuery));
