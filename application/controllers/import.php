@@ -7,7 +7,7 @@
  */
 class Import extends Plain_Controller
 {
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -23,7 +23,7 @@ class Import extends Plain_Controller
         $this->data['success'] = false;
 
     }
-    
+
     public function index()
     {
         if(!empty($_FILES) && !empty($_FILES['upload'])){
@@ -32,7 +32,8 @@ class Import extends Plain_Controller
             $uploadedFile = $_FILES['upload'];
             $validationResult = $this->jsonimport->validateUpload($uploadedFile);
             if($validationResult !== true){
-                $this->data['errors'] = $validationResult;   
+                $this->data['errors'] = $validationResult;
+                $this->exceptional->createTrace(E_ERROR, 'JSON Import Issue: ' . $validationResult, __FILE__, __LINE__);
             } else{
                 $importResult = $this->jsonimport->importFile($uploadedFile['tmp_name']);
                 $this->data = $importResult;
@@ -40,10 +41,11 @@ class Import extends Plain_Controller
         } else{
             $this->data['success'] = false;
             $this->data['errors'] = formatErrors(100);
+            $this->exceptional->createTrace(E_ERROR, 'No JSON file uploaded for import.', __FILE__, __LINE__);
         }
 
         // FIXME kip9 Change view logic
-        //$this->renderJSON(); 
+        //$this->renderJSON();
 
         $this->view('import/index', array('no_header' => true, 'no_footer' => true));
 

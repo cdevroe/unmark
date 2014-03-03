@@ -2,7 +2,7 @@
 
 class Cron extends Plain_Controller
 {
-    
+
     /**
      * Maximum number of embeds to process at once
      * @var int
@@ -26,7 +26,9 @@ class Cron extends Plain_Controller
 
         if (empty($embedly_key)) {
             print 'ERROR: Please add an embedly API key in order to process embeds.' . PHP_EOL;
-            log_message('error', 'No embedly API key configured. Cannot run process to find embeds.');
+
+            // Send exception
+            $this->exceptional->createTrace(E_ERROR, 'No embedly API key configured. Cannot run process to find embeds.', __FILE__, __LINE__);
             exit;
         }
 
