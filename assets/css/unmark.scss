@@ -1583,3 +1583,21 @@ i.icon-circle {
     position: relative;
     background: #A7A9AC;
 }
+
+
+#error-wrapper {
+    color: $color_light;
+    width: 400px;
+    margin: 100px auto 0 auto;
+    text-align: center;
+    #error-icon {
+        width: 75px;
+        margin: 0 auto 40px auto;
+        img { max-width:100%; }
+    }
+    h1 {
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: .15em;
+    }
+}
