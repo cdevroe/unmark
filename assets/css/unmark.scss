@@ -142,7 +142,6 @@ img { max-width: 100%; }
     }
 }
 
-
 // ================ Site Navigation
 .navigation-content {
     position: absolute;
@@ -1656,6 +1655,23 @@ button.upgradeNowSidebar {
 
 // ==============  Let's get Responsive ========
 
+#mobile-sidebar-show {
+    display: none;
+    width: 65px;
+    height: 65px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    i {
+        width: 25px;
+        height: 25px;
+        background-size: 100%;
+        display: block;
+        margin: 19px 0 0 20px;
+    }
+}
+
+
 // Table Landscape
 @media only screen and (max-width : 1024px) {
     .marks_list .mark h2 { font-size: 18px; }
@@ -1672,15 +1688,18 @@ button.upgradeNowSidebar {
     .navigation-content { left: -64px; }
     .main-wrapper {
         left: 0;
-        top: 55px;
+        top: 65px;
     }
     .main-content { width: 100%; }
-    .sidebar-content { width: 0; }
-
+    .sidebar-content {
+        position: absolute;
+        right: -43%;
+    }
+    #mobile-sidebar-show { display: block; }
     .navigation-content .menu-activator {
         position: absolute;
         left: 62px;
-        top: -4px;
+        top: 0;
     }
 
 }

@@ -33,6 +33,8 @@
 
     <div id="unmark-wrapper">
 
+    <a id="mobile-sidebar-show" alt="View/Hide Details" href="#"><i class="icon-ellipsis"></i></a>
+
     <?php $this->load->view('layouts/navigation'); ?>
 
     <div class="main-wrapper">
