@@ -27,7 +27,7 @@
                 <button class="login-submit" type="submit"><i class="icon-go"></i></button>
             </form>
             <div class="response-message"></div>
-            <a href="#" class="forgot-pass">Forgot Password?</a><span class="sep">&bull;</span><a href="/register" class="register">Register</a>
+            <a href="#" class="forgot-pass" title="Forgot Password?">Forgot Password?</a><span class="sep">&bull;</span><a href="/register" class="register" title="Register for free">Register free</a>
         </div>
     </div>
 
@@ -41,7 +41,7 @@
                 <button class="forgot-submit" type="submit"><i class="icon-go"></i></button>
             </form>
             <div class="response-message"></div>
-            <a href="#" class="forgot-pass">Need to Sign In?</a>
+            <a href="#" class="forgot-pass" title="Sign into your account">Need to Sign In?</a>
         </div>
     </div>
 
@@ -49,7 +49,7 @@
     <div class="unmark-success"><i class="icon-check"></i></div>
 
     <div class="login-page-bottom">
-        <a href="#" class="toggle_welcome"><i class="icon-circle_arrow_up"></i><span>What is Unmark?</span></a>
+        <a href="#" class="toggle_welcome" title="What is Unmark?"><i class="icon-circle_arrow_up"></i><span>What is Unmark?</span></a>
     </div>
 
 </div>
@@ -62,8 +62,8 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#" class="toggle_welcome">Sign In / Register <span class="icon-circle_arrow_down"></span></a></li>
-                <li><a href="https://github.com/plainmade/unmark">Fork <i class="full-only">on GitHub</i> <span class="icon-github"></span></a></li>
+                <li><a href="#" class="toggle_welcome" title="Sign in or Sign Up">Sign In / Register <span class="icon-circle_arrow_down"></span></a></li>
+                <li><a href="https://github.com/plainmade/unmark" title="Unmark on GitHub">Fork <i class="full-only">on GitHub</i> <span class="icon-github"></span></a></li>
             </ul>
         </nav>
     </section>
@@ -76,7 +76,7 @@
                 </div>
                 <img src="../assets/images/demo.gif">
             </div>
-            <p>Unmark was designed to help you actually do something with your bookmarks, rather than just hoard them. A simple layout puts the focus on your task at hand and friendly reminders keep you in line. Filtering options let you find what you're looking for.</p>
+            <p>Unmark is designed to help you actually <em>do something</em> with your bookmarks, rather than just hoard them. A simple layout puts the focus on your task at hand and friendly reminders keep you in line. Filtering options let you find what you're looking for.</p>
             <p><strong>Register for free or grab the open source version from GitHub.</strong></p>
 
             <h2>Few, but key features</h2>
@@ -112,8 +112,8 @@
                 <div class="table-column">
                     <ul>
                         <li>Filter <span class="full-only">saved bookmarks</span></li>
-                        <li>Preview <span class="full-only">certain content</span></li>
-                        <li>Add labels<span class="full-only">, notes & tags</span></li>
+                        <li>Preview <span class="full-only">rich media</span></li>
+                        <li>Add labels<span class="full-only">, notes & hashtags</span></li>
                         <li>Search <span class="full-only">saved bookmarks</span></li>
                         <li>Save <span class="full-only">bookmarks</span></li>
                         <li>Keep <span class="full-only">bookmarks</span></li>
@@ -143,13 +143,13 @@
                     </ul>
                 </div>
             </section>
-            <p>Use Unmark free for as long as you'd like or upgrade to a paid account at any time. An open source version of is <a href="#">available on GitHub</a>. Fork it and set up your own install.</p>
+            <p>Use Unmark free for as long as you'd like or upgrade to a paid account at any time. An open source version is <a href="http://github.com/plainmade/unmark">available on GitHub</a>. Fork it and set up your own install.</p>
             <footer>
                 <div class="links">
-                    <a href="http://help.unmark.it/">Help</a>
-                    <a href="http://twitter.com/unmarkit">@unmarkit</a>
+                    <a href="http://help.unmark.it/" title="Unmark Help Center">Help</a>
+                    <a href="http://twitter.com/unmarkit" title="Follow @unmarkit on Twitter">@unmarkit</a>
                 </div>
-                <div class="byline">Made by <a href="http://plainmade.com" target="_blank">Plain</a></div>
+                <div class="byline">Made by <a href="http://plainmade.com" target="_blank" title="Plain is a small software company in Pennsylvania">Plain</a></div>
             </footer>
         </div>
     </section>
