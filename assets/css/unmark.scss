@@ -1670,7 +1670,17 @@ button.upgradeNowSidebar {
 @media only screen and (max-width : 320px) {
     .marks_list .mark h2 { font-size: 14px; }
     .navigation-content { left: -64px; }
-    .main-wrapper { left: 0; }
+    .main-wrapper {
+        left: 0;
+        top: 55px;
+    }
     .main-content { width: 100%; }
     .sidebar-content { width: 0; }
+
+    .navigation-content .menu-activator {
+        position: absolute;
+        left: 62px;
+        top: -4px;
+    }
+
 }
