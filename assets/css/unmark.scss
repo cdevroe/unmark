@@ -153,7 +153,7 @@ img { max-width: 100%; }
     background-color: $color_dark;
     min-height: 100%;
     margin-top: 64px;
-    box-shadow: 0 6px 10px -6px rgba(0,0,0,0.3) inset;
+    box-shadow: 0 9px 10px -9px rgba(0,0,0,0.3) inset;
     .menu-item {
         height: inherit;
         text-align: center;
@@ -212,7 +212,7 @@ img { max-width: 100%; }
     ul.navigation-pane-links {
         margin:0;
         padding:0;
-        box-shadow: 0 6px 10px -6px rgba(0,0,0,0.3) inset;
+        box-shadow: 0 9px 10px -9px rgba(0,0,0,0.3) inset;
         li {
             list-style: none;
             a {
@@ -220,10 +220,10 @@ img { max-width: 100%; }
                 @include title-text;
                 color: $color_white;
                 border-bottom: 1px solid $color_lightest;
-                font-size: 12px;
+                font-size: 11px;
                 padding: 20px 0 20px 10px;
                 height: 64px;
-                line-height: 21px;
+                line-height: 24px;
             }
         }
         li.panel-settings {
@@ -295,6 +295,19 @@ img { max-width: 100%; }
             }
         }
     }
+    .branding {
+        width: 100%;
+        height: 64px;
+        margin-top: -64px;
+        overflow: hidden;
+        .logo-text {
+            width: 130px;
+            height: 20px;
+            margin: 22px auto 18px;
+            background-size: 65%;
+            background-position: top left;
+        }
+    }
 }
 
 ul.label-list {
@@ -346,9 +359,13 @@ h4.nav-heading {
     margin-top: 50px;
     color: $color_lighter;
     span {
-        text-transform: lowercase;
-        font-size: 12px;
+        text-transform: none;
+        font-size: 13px;
         padding-left: 10px;
+        font-family: "Lato", sans-serif;
+        font-weight: 400;
+        letter-spacing: normal;
+        font-style: italic;
     }
 }
 
@@ -383,18 +400,21 @@ ul.nav-list {
         }
         ::-webkit-input-placeholder {
             @include title-text;
+            @include font-smoothing;
             font-size: 11px;
             color: $color_light;
             line-height: 17px;
         }
-        ::-moz-placeholder {  /* Firefox 19+ */
+        ::-moz-placeholder { 
             @include title-text;
+            @include font-smoothing;
             font-size: 11px;
             color: $color_light;
             line-height: 17px;
         }
         :-ms-input-placeholder {
             @include title-text;
+            @include font-smoothing;
             font-size: 11px;
             color: $color_light;
             line-height: 17px;
@@ -431,7 +451,9 @@ ul.nav-list {
         width: 310px;
         margin-top: 15px;
         padding: 13px 0;
-        font-size: 14px;
+        font-size: 13px;
+        @include title-text;
+        @include font-smoothing;
     }
 }
 
@@ -490,6 +512,20 @@ ul.nav-list {
             font-weight: 300;
             a {
                 color: $color_darker;
+                &:hover {
+                    &:after {
+                        display: inline-block;
+                        content: " ";
+                        background-image: url('data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0D%0A%3C%21--%20Generator%3A%20Adobe%20Illustrator%2015.0.0%2C%20SVG%20Export%20Plug-In%20.%20SVG%20Version%3A%206.00%20Build%200%29%20%20--%3E%0D%0A%3C%21DOCTYPE%20svg%20PUBLIC%20%22-//W3C//DTD%20SVG%201.1//EN%22%20%22http%3A//www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd%22%3E%0D%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%20x%3D%220px%22%20y%3D%220px%22%0D%0A%09%20width%3D%2228px%22%20height%3D%2228px%22%20viewBox%3D%220%200%2028%2028%22%20enable-background%3D%22new%200%200%2028%2028%22%20xml%3Aspace%3D%22preserve%22%3E%0D%0A%3Cpolygon%20fill%3D%22%23C1C1C1%22%20points%3D%229.003%2C2.048%209.003%2C5.048%2020.758%2C5.048%201.998%2C23.807%204.143%2C25.953%2023.003%2C7.091%2023.003%2C19.049%20%0D%0A%0926.003%2C19.049%2026.003%2C2.048%20%22/%3E%0D%0A%3C/svg%3E%0D%0A');
+                        background-repeat: no-repeat;
+                        background-size: 100%;
+                        margin-left: 10px;
+                        width: 14px;
+                        height: 14px;
+                        opacity: 0.6;
+                        vertical-align: -1px;
+                    }
+                }
             }
         }
         .mark-meta {
@@ -683,9 +719,16 @@ ul.nav-list {
         position: fixed;
         width: 20px;
         height: 100%;
-        box-shadow: 12px 0 34px -15px rgba(0,0,0,0.11) inset, 2px 0 5px -3px rgba(0,0,0,0.16) inset;
+        box-shadow: 15px 0 34px -20px rgba(0,0,0,0.11) inset,3px 0 5px -4px rgba(0,0,0,0.16) inset;
         top: 0;
         z-index: 1;
+    }
+    &.wide {
+        &:after {
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+            margin-left: -20px;
+        }
     }
 }
 
@@ -727,13 +770,13 @@ ul.nav-list {
         height: 56px;
         @include drop-shadow-border();
         &:before {
-            @include unmark-label-ball(20px, 20px, 18px);
+            @include unmark-label-ball(19px, 20px, 18px);
         }
         a {
             margin: 0;
             padding: 21px 0 21px 50px;
             @include title-text;
-            font-size: 13px;
+            font-size: 12px;
             color: $color_grey;
             display: block;
         }
@@ -775,7 +818,7 @@ ul.nav-list {
         }
         #label-chosen {
             position: absolute;
-            left: 300px;
+            left: 250px;
             top: 80px;
             z-index: 9999;
             display: none;
@@ -1022,51 +1065,56 @@ canvas.graph {
     .mark-added-block {
         background: $color_dark;
         color: $color_lighter;
-        padding: 25px;
-        text-transform: uppercase;
-        font-size: 12px;
-        letter-spacing: .1em;
-        font-weight: 400;
+        padding: 22px;
+        font-size: 11px;
+        @include title-text;
+        word-spacing: 1px;
+        line-height: 13px;
+        box-shadow: 0 -6px 9px -7px rgba(0,0,0,0.7) inset;
         i {
             float: right;
-            margin-top: -9px;
-            width: 30px;
-            height: 30px;
+            margin-top: -5px;
+            margin-right: -6px;
+            width: 24px;
+            height: 24px;
             background-size: 100%;
         }
     }
     .mark-added-info {
         padding: 25px;
         color: $color_white;
+        background: white;
         h1 {
             font-weight: 300;
             color:$color_dark;
-            font-size: 20px;
-            margin: 0 0 20px 0;
+            font-size: 26px;
+            margin: 0 0 15px 0;
         }
         span {
-            color:$color_light;
+            color: darken($color_light, 30%);
             font-size: 13px;
             display: inline-block;
             @include unmark-truncate(400px);
         }
     }
     .mark-added-settings {
-        font-size: 12px;
-        letter-spacing: .1em;
-        font-weight: 400;
-        border-top: 1px solid $color_grey;
+        font-size: 11px;
+        border-top: 1px solid #e5e5e5;
         padding: 25px;
         color:$color_grey;
         position: relative;
+        @include title-text;
         a {
             color:$color_grey;
             text-transform: uppercase;
             display: block;
             position: relative;
             padding-left: 20px;
+            &#currLabel {
+                margin-left: 4px;
+            }
             &:before {
-                @include unmark-label-ball(-2px, -6px, 20px);
+                @include unmark-label-ball(-3px, -9px, 20px);
             }
             &.label-2 {
                 &:before {
@@ -1127,28 +1175,40 @@ canvas.graph {
             width: 100%;
             opacity: .95;
             padding: 0;
-            color: $color_darker;
+            color: darken($color_darker, 15%);
             border: none;
             overflow: auto;
             resize: none;
-            height: 65px;
+            height: 84px;
             font-size: 14px;
+            font-family: $sans-serif;
+            @include font-smoothing;
+        }
+        :-webkit-input-placeholder {
+            @include font-smoothing;
+        }
+        ::-moz-placeholder { 
+            @include font-smoothing;
+        }
+        :-ms-input-placeholder {
+            @include font-smoothing;
         }
         &.mark-added-label section {
             padding: 0;
-            top: 18px;
+            top: 16px;
             left: 15px;
             z-index: 999;
         }
         #label-chosen {
             position: absolute;
-            right: 25px;
-            top: 23px;
+            left: 254px;
+            top: 24px;
             z-index: 9999;
             display: none;
-            font-size: 17px;
-            font-weight: 600;
+            font-size: 12px;
             color: $color_grey;
+            @include title-text;
+            @include font-smoothing;
             &.label-2 { color: $color_orange; }
             &.label-3 { color: $color_blue; }
             &.label-4 { color: $color_yellow; }
@@ -1158,20 +1218,26 @@ canvas.graph {
         }
     }
     .mark-added-note {
-        border-bottom: 1px solid $color_grey;
+        border-bottom: 1px solid #e5e5e5;
     }
     .mark-added-actions {
-        padding: 35px 25px 25px 25px;
+        padding: 35px 25px;
         background: $color_shade;
+        position: absolute;
+        bottom: 0;
         button {
             color:$color_light;
-            width: 300px;
+            width: 326px;
             color: $color_white;
-            padding: 17px 0;
+            padding: 15px 0 16px;
+            @include title-text;
+            @include font-smoothing;
+            font-size: 13px;
+            line-height: 13px;
             &.delete {
                 width: 200px;
                 background: $color_red;
-                margin-right: 25px;
+                margin-right: 15px;
             }
         }
     }
@@ -1249,9 +1315,10 @@ canvas.graph {
     background: lighten($color_lighter, 5%);
     position: absolute;
     z-index: 1;
-    top: 57px;
-    left: 2px;
+    top: 56px;
+    left: 0px;
     padding: 15px 10px;
+    border-top: 1px solid transparentize(black, 0.95);
     @include drop-shadow-border;
     li {
         a {
