@@ -63,8 +63,9 @@ class Plain_Email extends CI_Email {
         $file     = (file_exists(CUSTOMPATH . 'views/email/update-password.php')) ? CUSTOMPATH . 'views/email/update-password.php' : APPPATH . 'views/email/update-password.php';
         $find     = array('{HOST}');
         $replace  = array($_SERVER['HTTP_HOST']);
-        $message  = file_get_contents($file);
+
         $message  = str_replace($find, $replace, $message);
+        $message  = file_get_contents($file);
         $text     = $this->getTextVersion($message);
 
         $email_from = $this->CI->config->item('email_from');
