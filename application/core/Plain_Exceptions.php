@@ -17,6 +17,7 @@ class Plain_Exceptions extends CI_Exceptions
         }
         else {
             $CI =& get_instance();
+            $CI->load->library('Exceptional');
             $CI->exceptional->createTrace($severity, $message, $filepath, $line);
         }
     }
