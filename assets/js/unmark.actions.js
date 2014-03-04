@@ -214,7 +214,6 @@
             var overlay = $('<div id="unmark-overlay"><a href="#" id="unmarkModalClose"><i class="icon-big_close"></i></a></div>');
             overlay.appendTo(document.body);
         } else {
-            $('.hiddenform').hide().css('top', '-300px');
             unmark.mainpanels.removeClass('blurme');
             $('#unmark-overlay').remove();
             $('#helperforms input').val('');
