@@ -29,6 +29,16 @@
         // Show Current Label
         $(document).ready(function() {
             check_for_label();
+
+            $('.mark-added-notes-area').on('blur keydown', function (e) {
+                if (e.which === 13 || e.type === 'blur') {
+                    e.preventDefault();
+                    var text = $(this).val(),
+                        id = $(this).data('id');
+                    unmark.saveNotes(id, text);
+                }
+            });
+
         });
 
 

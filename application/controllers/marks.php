@@ -45,7 +45,7 @@ class Marks extends Plain_Controller
         // Set some info
         if (! isset($user_mark->mark_id)) {
             $this->data['errors'] = $user_mark;
-            $view = 'marks/add';
+            $view = 'marks/info';
         }
         else {
             $this->data['mark'] = $user_mark;

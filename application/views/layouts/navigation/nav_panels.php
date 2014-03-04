@@ -21,13 +21,7 @@
 
 	<h4 class="nav-heading">Most-Used Tags</h4>
 	<ul class="tag-list">
-		<?php if (isset($tags) && $tags['popular'] != '') : ?>
-			<?php foreach ($tags['popular'] as $pop_tag) : ?>
-				<li><a href="/marks/tag/<?php print $pop_tag->slug; ?>">#<?php print $pop_tag->name; ?></a></li>
-			<?php endforeach; ?>
-		<?php else : ?>
-		<li>No Tags Found</li>
-		<?php endif; ?>
+		<?php $this->load->view('layouts/navigation/tags_list.php'); ?>
 	</ul>
 </div>
 <div id="panel-settings" class="nav-panel">
@@ -35,11 +29,10 @@
 
 	<?php $this->load->view('layouts/accountlinks'); ?>
 
-	<h4 class="nav-heading">Help (not linked yet)</h4>
+	<h4 class="nav-heading">Help</h4>
 	<ul class="nav-list">
-		<li><a href="#">How to Use Unmark</a></li>
-		<li><a href="#">FAQ</a></li>
-		<li><a href="#">Get the Bookmarklet</a></li>
-		<li><a href="#">Get the Chrome Extension</a></li>
+		<li><a target="_blank" href="http://help.unmark.it/">How to Use Unmark</a></li>
+		<li><a target="_blank" href="http://help.unmark.it/faq">FAQ</a></li>
+		<li><a target="_blank" href="http://help.unmark.it/bookmarklet">Get the Bookmarklet</a></li>
 	</ul>
 </div>

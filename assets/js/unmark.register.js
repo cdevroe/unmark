@@ -33,10 +33,10 @@
 
         showSpinner(form, true);
 
-        query = 'email='+email+'&password='+pass;
-    
+        query = 'email='+unmark.urlEncode(email)+'&password='+unmark.urlEncode(pass);
+
         unmark.ajax('/register/user', 'post', query, function (res) {
-            
+
             if (res.user) {
                 showMessage(form, false, 'You are now registered, logging you in...');
                 setTimeout(function(){ window.location.href = "/" }, 2500);
@@ -44,7 +44,7 @@
                 showSpinner(form, false);
                 showMessage(form, true, 'Your email or password is not valid. Password must be at least six chars long, have one capital, one lowecase and one number ');
             }
-            
+
         });
 
     };

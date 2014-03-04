@@ -6,7 +6,7 @@
 
 */
 
-(function ($) { 
+(function ($) {
 
     // Show Error Message & Spinner
     function showMessage(form, error, message) {
@@ -56,7 +56,7 @@
         showSpinner(form, true);
 
         if (pass1 === pass2) {
-            query = 'password='+pass1+'&current_password='+oldpass;
+            query = 'password='+unmark.urlEncode(pass1)+'&current_password='+unmark.urlEncode(oldpass);
             unmark.ajax('/user/update/password', 'post', query, function (res) {
                 if (res.success) {
                     showMessage(form, false, 'Your password has been changed.');
@@ -67,23 +67,23 @@
                 new_pass_field.val('');
                 old_pass_field.val('');
             });
-        } else { 
+        } else {
             new_pass_field.val('');
             showSpinner(form, false);
-            return showMessage(form, true, 'New Passwords do not match'); 
+            return showMessage(form, true, 'New Passwords do not match');
         }
     };
 
     // Submit Email Change
     unmark.send_email_change = function (form) {
-        var query, 
+        var query,
             email_field = $('#emailupdate'),
             email_value = email_field.val();
 
         showSpinner(form, true);
 
         if (email_value !== '') {
-            query = 'email='+email_value;
+            query = 'email='+unmark.urlEncode(email_value);
             unmark.ajax('/user/update/email', 'post', query, function (res) {
                 if (res.success) {
                     showMessage(form, false, 'Your email has been changed.');
@@ -94,10 +94,10 @@
                 showSpinner(form, false);
                 email_field.val('');
             });
-        } else { 
+        } else {
             email_field.val('');
             showSpinner(form, false);
-            return showMessage(form, true, 'Please enter something!'); 
+            return showMessage(form, true, 'Please enter something!');
         }
     };
 

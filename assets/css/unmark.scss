@@ -75,6 +75,7 @@ body {
         @include box-sizing(border-box);
     }
     &.unmark-solo {
+        overflow: auto;
         border-left:none;
         border-top:none;
         background: $color_white;
@@ -95,6 +96,12 @@ body {
 
 // Hide Stupid Outlines
 textarea:focus, input:focus, .hideoutline, button { outline: 0; }
+
+// Images
+img { max-width: 100%; }
+.centerme { text-align: center; }
+.tempdata { display: none; }
+.hide { display: none; }
 
 // Setup Page
 #unmark-setup {
@@ -498,7 +505,7 @@ ul.nav-list {
                 color: darken($color_light, 15%);
                 display:inline-block;
                 vertical-align: bottom;
-                @include unmark-truncate(400px);
+                @include unmark-truncate(65%);
             }
         }
         &:after {
@@ -912,21 +919,17 @@ ul.nav-list {
     padding: 15px 40px;
     text-align: center;
     .unmark-upgrade-icon {
-        height:100px;
+        width: 175px;
+        margin: 25px auto;
+        img {
+            max-width:100%;
+        }
     }
     h4 {
         font-size: 17px;
         line-height: 28px;
         font-weight: 400;
         padding: 0 35px;
-    }
-    button.upgradeNowSidebar {
-        background-color: $color_blue;
-        font-size: 12px;
-        font-weight: 400;
-        letter-spacing: .15em;
-        padding: 18px;
-        width: 200px;
     }
 }
 
@@ -1008,6 +1011,8 @@ ul.timeline {
 canvas.graph {
     border-bottom:1px solid $color_light;
     margin-top:25px;
+    width: 400px;
+    height: 100px;
 }
 
 
@@ -1036,7 +1041,7 @@ canvas.graph {
         h1 {
             font-weight: 300;
             color:$color_dark;
-            font-size: 27px;
+            font-size: 20px;
             margin: 0 0 20px 0;
         }
         span {
@@ -1117,6 +1122,18 @@ canvas.graph {
             padding: 10px 25px;
             color: $color_darker;
         }
+        textarea {
+            background: $color_shade;
+            width: 100%;
+            opacity: .95;
+            padding: 0;
+            color: $color_darker;
+            border: none;
+            overflow: auto;
+            resize: none;
+            height: 65px;
+            font-size: 14px;
+        }
         &.mark-added-label section {
             padding: 0;
             top: 18px;
@@ -1144,7 +1161,8 @@ canvas.graph {
         border-bottom: 1px solid $color_grey;
     }
     .mark-added-actions {
-        padding: 55px 25px 25px 25px;
+        padding: 35px 25px 25px 25px;
+        background: $color_shade;
         button {
             color:$color_light;
             width: 300px;
@@ -1155,6 +1173,16 @@ canvas.graph {
                 background: $color_red;
                 margin-right: 25px;
             }
+        }
+    }
+    .mark-added-upgrade {
+        text-align: center;
+        color: $color_dark;
+        padding: 35px 15%;
+        line-height: 28px;
+        a { color: $color_dark; text-decoration:underline; }
+        button {
+            margin-top:25px;
         }
     }
 }
@@ -1240,15 +1268,6 @@ canvas.graph {
 // ==============  Site Label Color Scheme ========
 
 // Body Top Border
-/*
-body.label-1 { border-top: 8px solid $color_grey; }
-body.label-2 { border-top: 8px solid $color_orange; }
-body.label-3 { border-top: 8px solid $color_blue; }
-body.label-4 { border-top: 8px solid $color_yellow; }
-body.label-5 { border-top: 8px solid $color_purple; }
-body.label-6 { border-top: 8px solid $color_green; }
-body.label-7 { border-top: 8px solid $color_pink; }
-*/
 body.label-1 { border-top: none; background: darken($color_grey, 2); box-shadow: 0 120px 130px -70px $color_grey inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
 body.label-2 { border-top: none; background: saturate(darken($color_orange, 2), 2); box-shadow: 0 120px 130px -70px $color_orange inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
 body.label-3 { border-top: none; background: saturate(darken($color_blue, 2), 2); box-shadow: 0 120px 130px -70px $color_blue inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
@@ -1258,26 +1277,6 @@ body.label-6 { border-top: none; background: saturate(darken($color_green, 2), 2
 body.label-7 { border-top: none; background: saturate(darken($color_pink, 2), 2); box-shadow: 0 120px 130px -70px $color_pink inset, 0 30px 80px -30px rgba(255,255,255,0.8) inset; }
 
 // Menu Activator Settigns
-/*
-body.label-1 .menu-activator { background-color: $color_grey; }
-body.label-2 .menu-activator { background-color: $color_orange; }
-body.label-3 .menu-activator { background-color: $color_blue; }
-body.label-4 .menu-activator { background-color: $color_yellow; }
-body.label-5 .menu-activator { background-color: $color_purple; }
-body.label-6 .menu-activator { background-color: $color_green; }
-body.label-7 .menu-activator { background-color: $color_pink; }
-*/
-
-// Navigation Pane
-/*
-body.label-1 .navigation-pane { border-top: 64px solid $color_grey; }
-body.label-2 .navigation-pane { border-top: 64px solid $color_orange; }
-body.label-3 .navigation-pane { border-top: 64px solid $color_blue; }
-body.label-4 .navigation-pane { border-top: 64px solid $color_yellow; }
-body.label-5 .navigation-pane { border-top: 64px solid $color_purple; }
-body.label-6 .navigation-pane { border-top: 64px solid $color_green; }
-body.label-7 .navigation-pane { border-top: 64px solid $color_pink; }
-*/
 body.label-1 .navigation-pane { border-top: none; }
 body.label-2 .navigation-pane { border-top: none; }
 body.label-3 .navigation-pane { border-top: none; }
@@ -1288,6 +1287,39 @@ body.label-7 .navigation-pane { border-top: none; }
 
 
 // ==============  Login Page Styles ========
+#unmark_login_page {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #303030;
+    top: 0;
+    z-index: 99999;
+}
+#unmark_about_page { display: none; }
+.login-page-bottom {
+    background: #f0635a;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 150px;
+    text-align: center;
+    i {
+        display: inline-block;
+        width: 27px;
+        height: 27px;
+        margin: 25px auto;
+        background-size: 100%;
+    }
+    span {
+        text-transform: uppercase;
+        font-weight: 400;
+        font-size: 13px;
+        letter-spacing: .13em;
+        display:block;
+    }
+}
+
 .loginWrapper, .forgotPassWrapper, .resetWrapper {
     width: 275px;
     margin: 50px auto 0;
@@ -1303,16 +1335,17 @@ body.label-7 .navigation-pane { border-top: none; }
     h1 {
         text-transform: uppercase;
         font-size: 12px;
-        margin: 25px 0;
+        margin: 15px 0 5px 0;
         letter-spacing: .19em;
         font-weight: 400;
     }
     .login-ball {
-        background-color: $color_dark;
-        width: 75px;
-        height: 75px;
+        width: 100px;
         margin: 0 auto;
-        border-radius: 5em;
+    }
+    .login-text {
+        width: 150px;
+        margin: 0 auto 30px auto;
     }
     form {
         margin-bottom: 0;
@@ -1363,6 +1396,10 @@ body.label-7 .navigation-pane { border-top: none; }
         font-weight: 300;
         color:$color_light;
     }
+    span.sep {
+        color:$color_light;
+        padding:0 10px;
+    }
     .response-message {
         padding: 12px 10px;
         border-radius: 1px;
@@ -1389,8 +1426,12 @@ body.label-7 .navigation-pane { border-top: none; }
     }
 }
 
+.hiddenform h1 {
+    margin-bottom: 25px;
+}
+
 .forgotPassWrapper {
-    top: -400px;
+    top: -500px;
     display: none;
 }
 
@@ -1462,7 +1503,7 @@ body.label-7 .navigation-pane { border-top: none; }
 #helperforms {
     position:relative;
     z-index: 20000;
-    left: -65px;
+    //left: -65px;
     .hiddenform { display: none; }
     #resetPasswordForm {
         top: -300px;
@@ -1578,4 +1619,58 @@ i.icon-circle {
     @include unmark-label-ball(0, 0, 20px);
     position: relative;
     background: #A7A9AC;
+}
+
+.upgrade-search-results {
+    clear: both;
+    padding: 100px 0 0 0;
+    text-align: center;
+}
+
+button.upgradeNowSidebar {
+    background-color: $color_blue;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: .15em;
+    padding: 18px;
+    width: 200px;
+}
+
+#error-wrapper {
+    color: $color_light;
+    width: 400px;
+    margin: 100px auto 0 auto;
+    text-align: center;
+    #error-icon {
+        width: 75px;
+        margin: 0 auto 40px auto;
+        img { max-width:100%; }
+    }
+    h1 {
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: .15em;
+    }
+}
+
+
+// ==============  Let's get Responsive ========
+
+// Table Landscape
+@media only screen and (max-width : 1024px) {
+    .marks_list .mark h2 { font-size: 18px; }
+}
+
+// Tablet Portrait
+@media only screen and (max-width : 768px) {
+    .marks_list .mark h2 { font-size: 16px; }
+}
+
+// Phone Portrait
+@media only screen and (max-width : 320px) {
+    .marks_list .mark h2 { font-size: 14px; }
+    .navigation-content { left: -64px; }
+    .main-wrapper { left: 0; }
+    .main-content { width: 100%; }
+    .sidebar-content { width: 0; }
 }

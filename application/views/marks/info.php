@@ -1,5 +1,6 @@
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Unmark : Mark Added</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css" />
@@ -33,8 +34,12 @@
     </div>
 
     <div class="mark-added-note mark-added-settings">
-        <a class="action" data-action="marks_addNotes" href="">Add A Note</a>
-        <section class="hideoutline" data-id="<?php print $mark->mark_id; ?>" contenteditable="true"></section>
+        <?php if (empty($mark->notes)) : ?>
+            <a class="action" data-action="marks_addNotes" href="">Add A Note</a>
+            <textarea class="mark-added-notes-area hide" data-id="<?php print $mark->mark_id; ?>" placeholder="Type note text or #tags here..."></textarea>
+        <?php else : ?>
+            <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="Type note text or #tags here..."><?php print $mark->notes; ?></textarea>
+        <?php endif; ?>
     </div>
 
     <div class="mark-added-actions">

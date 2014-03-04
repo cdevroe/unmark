@@ -178,8 +178,14 @@
         unmark.ajax('/marks/get/'+what, 'post', '', caller);
     };
 
-    // Simple Close Window
-    unmark.close_window = function () { window.close(); };
+    // Simple Close Windows
+    unmark.close_window = function (nosave) {
+        if (nosave) { return window.close(); } // Don't save anything, just close it.
+        var notes = $('.mark-added-note').find('textarea').val(),
+            id = $('.mark-added-note').find('textarea').data('id');
+        unmark.saveNotes(id, notes);
+        window.close();
+    };
 
     // Simple function for hiding Elements the user wants gone
     // TO DO : Hook this up to a cookie so they are gone for good
@@ -205,6 +211,7 @@
             $('.hiddenform').hide().css('top', '-300px');
             unmark.mainpanels.removeClass('blurme');
             $('#unmark-overlay').remove();
+            $('#helperforms input').val('');
         }
     };
 

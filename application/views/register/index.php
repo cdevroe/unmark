@@ -1,5 +1,6 @@
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Unmark: User Registration</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css" />
@@ -15,8 +16,9 @@
 
 <div class="loginWrapper">
     <div class="loginInner internalform">
-        <div class="login-ball"></div>
-        <h1>Register for Unmark</h1>
+        <div class="login-ball"><img src="/assets/images/logo.png" /></div>
+        <h1>Register For</h1>
+        <div class="login-text"><img src="/assets/images/icons/logo_text_light.png" /></div>
         <form id="register_user" method="post" action="#" class="ajaxsbmt">
             <input type="email" class="field-input" name="email" id="email" placeholder="Email Address" autocomplete="off" autocapitalize="off" autocorrect="off" />
             <input type="password" class="field-input" name="password" id="password" placeholder="Password" autocomplete="off" />
@@ -24,17 +26,11 @@
             <button class="login-submit" type="submit"><i class="icon-go"></i></button>
         </form>
         <div class="response-message"></div>
+        <a href="/" class="register">Have An Account? Sign In Here</a>
     </div>
 </div>
 
-<script type="text/javascript">
-var unmark  = unmark || {};
-unmark.vars = {};
-unmark.vars.csrf_token   = '<?php print $csrf_token; ?>';       
-</script>
-
-<script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
-<script src="/assets/js/production/unmark.loggedout.js"></script>
+<?php $this->load->view('layouts/footer_unlogged_scripts')?>
 
 </body>
 </html>
