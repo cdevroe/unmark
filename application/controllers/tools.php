@@ -35,10 +35,6 @@ class Tools extends Plain_Controller
                     'user_id' => $user->user_id
                 ));
                 if (isset($createdToken->token_id)) {
-                    $this->data['token'] = array(
-                        'token_value' => $createdToken->token_value,
-                        'valid_until' => $createdToken->valid_until
-                    );
                     // Invalidate all other tokens for this type and user
                     $this->token->update("token_value != '{$createdToken->token_value}' and token_type = '{$createdToken->token_type}' and active='1' and user_id='{$createdToken->user_id}'", array(
                         'active' => 0
