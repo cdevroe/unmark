@@ -3,6 +3,12 @@
 class Cron extends Plain_Controller
 {
 
+    /**
+     * Maximum number of embeds to process at once
+     * @var int
+     */
+    const MAX_EMBEDS_TO_PROCESS = 100;
+
     public function __construct()
     {
         parent::__construct();
@@ -20,7 +26,9 @@ class Cron extends Plain_Controller
 
         if (empty($embedly_key)) {
             print 'ERROR: Please add an embedly API key in order to process embeds.' . PHP_EOL;
-            log_message('error', 'No embedly API key configured. Cannot run process to find embeds.');
+
+            // Send exception
+            $this->exceptional->createTrace(E_ERROR, 'No embedly API key configured. Cannot run process to find embeds.', __FILE__, __LINE__);
             exit;
         }
 
@@ -28,7 +36,7 @@ class Cron extends Plain_Controller
 
         // Get any marks that haven't been run for embeds
         $this->load->model('marks_model', 'mark');
-        $marks = $this->mark->read("embed_processed = '0'", 'all', 1, 'mark_id, url');
+        $marks = $this->mark->read("embed_processed = '0'", self::MAX_EMBEDS_TO_PROCESS, 1, 'mark_id, url');
 
         if (isset($marks[0]->mark_id)) {
             $this->load->helper('oembed');

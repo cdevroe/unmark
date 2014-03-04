@@ -97,6 +97,7 @@ class User_Marks_To_Tags_model extends Plain_Model
             tags.name, tags.slug
             FROM `user_marks_to_tags`
             LEFT JOIN `tags` ON user_marks_to_tags.tag_id = tags.tag_id
+            WHERE user_marks_to_tags.user_id = '" . $user_id . "'
             GROUP BY user_marks_to_tags.tag_id ORDER BY " . $order . " DESC LIMIT " . $limit
         );
 

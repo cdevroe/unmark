@@ -20,6 +20,12 @@ function oembed($url, $key) {
 
   if (isset($response['provider_name'])) {
 
+    // Make sure keys from response exist, if not add them as blank so they don't fail
+    foreach (array('url', 'width', 'height', 'author_url', 'author_name', 'description') as $key) {
+      $response[$key] = (isset($response[$key])) ? $response[$key] : '';
+    }
+
+
     switch ($response['provider_name']) {
 
       case 'Flickr':

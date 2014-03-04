@@ -6,12 +6,12 @@
 
 */
 
-(function ($) { 
+(function ($) {
 
     // Show Mark Info in Sidebar
     // Grabs relavaent info and shows the sidebar actions with info
     unmark.show_mark_info = function (mark_clicked) {
-        
+
         var template, output,
             mark_obj_ref    = mark_clicked.data('mark'),
             mark_string     = $('#' + mark_obj_ref).html(),
@@ -20,7 +20,8 @@
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
 
         // Quick function to populate the tags
-        function showTags(res) {
+        function populateLabels(res) {
+            console.log(res);
             var list = unmark.label_list(res);
             $('ul.sidebar-label-list').prepend(list);
         };
@@ -45,16 +46,16 @@
                 unmark.sidebar_default.fadeOut(400, function () {
                     unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                         unmark.tagify_notes($('#notes-' + mark_id));
-                        unmark.getData('labels', showTags);
+                        unmark.getData('labels', populateLabels);
                         $("section.sidebar-info-preview").fitVids();
                     });
                 });
             } else {
                 unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                     unmark.tagify_notes($('#notes-' + mark_id));
-                    unmark.getData('labels', showTags);
+                    unmark.getData('labels', populateLabels);
                     $("section.sidebar-info-preview").fitVids();
-                });         
+                });
             }
         });
 
@@ -122,6 +123,7 @@
             if(res.mark.archived_on === null) {
                 $('#mark-'+id).fadeOut();
                 unmark.sidebar_collapse();
+                unmark.update_label_count();
             } else {
                 alert('Sorry, We could not restore this mark at this time.');
             }
@@ -155,7 +157,7 @@
 
         // Define the actions that will save the note.
         // Includes Function to save the note
-        editable.on('blur keydown', function (e) { 
+        editable.on('blur keydown', function (e) {
             if (e.which === 13 || e.type === 'blur') {
                 e.preventDefault();
                 text = $(this).text(), id = $(this).data('id');
@@ -178,38 +180,21 @@
 
     // Method for Adding Notes
     unmark.marks_addNotes = function (btn) {
+        var editable = btn.next();
+        btn.hide(); // Hide Button
+        editable.fadeIn(); // Show Editable Area
+        editable.focus(); // Set Focus
+    };
 
-        var editable = btn.next(), text, query;
-
-        if(editable.is(':visible')) { return editable.slideUp(); }
-
-        editable.unbind();
-        editable.slideDown();
-        editable.attr('contenteditable', true);
-        if(editable.is(':empty')) {
-            editable.html('Type note text here...');
-        }
-
-        // Define the actions that will save the note.
-        // Includes Function to save the note
-        editable.on('blur keydown', function (e) { 
-            if (e.which === 13 || e.type === 'blur') {
-                e.preventDefault();
-                text = $(this).text(), id = $(this).data('id');
-                query = 'notes=' + unmark.urlEncode(text);
-                unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
-                    editable.attr('contenteditable', false);
-                    editable.slideUp();
-                    editable.prev().text('Edit Note');
-                });
-                editable.unbind();
-            }
-        });
+    // Save me some notes!
+    unmark.saveNotes = function (id, note) {
+        var query = 'notes=' + unmark.urlEncode(note);
+        unmark.ajax('/mark/edit/'+id, 'post', query);
     };
 
     // Method for adding a label
     unmark.marks_addLabel = function (btn) {
-        
+
         var mark, label_id, query, label_name, body_class, pattern,
             labels_list = btn.next(),
             label_parent = btn.parent();
@@ -285,7 +270,7 @@
         unmark.ajax('/mark/delete/'+mark_id, 'post', '', function (res) {
             if (res.mark.active === "0") {
                 if (view === "bookmarklet"){
-                    unmark.close_window();
+                    unmark.close_window(true);
                 } else {
                     unmark.sidebar_collapse();
                     $('#mark-'+mark_id).fadeOut();

@@ -1,5 +1,6 @@
 <div class="timeline_wrapper">
     <ul class="timeline">
+    <?php if (isset($stats)) : ?>
         <li class="timeline-dot">
             <a href="/marks">All Links</a>
         </li>
@@ -24,5 +25,6 @@
         <li class="timeline-dot">
             <a href="/marks/last-year">Last Year<span><?php print determinePlurality($stats['marks']['last year'], 'link'); ?></span></a>
         </li>
+    <?php endif; ?>
     </ul>
 </div>

@@ -138,7 +138,7 @@ class Plain_Session extends CI_Session {
 			// Does the md5 hash match?  This is to prevent manipulation of session data in userspace
 			if ($hash !==  md5($session.$this->encryption_key))
 			{
-				log_message('error', 'The session cookie data did not match what was expected. This could be a possible hacking attempt.');
+				$this->CI->exceptional->createTrace(E_ERROR, 'The session cookie data did not match what was expected. This could be a possible hacking attempt.', __FILE__, __LINE__);
 				$this->sess_destroy();
 				return FALSE;
 			}
@@ -323,7 +323,7 @@ class Plain_Session extends CI_Session {
 	    {
 	        require_once(APPPATH.'/libraries/CIDatabaseSessionHandler.php');
 	        $dbSessionHandler = new CIDatabaseSessionHandler();
-	        
+
 	        session_set_save_handler(
                 array($dbSessionHandler, 'open'),
                 array($dbSessionHandler, 'close'),

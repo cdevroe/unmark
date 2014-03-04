@@ -20,15 +20,16 @@ class Plain_Email extends CI_Email {
 
     public function resetPassword($email, $url)
     {
-        $message  = file_get_contents(APPPATH . 'views/email/forgot-password.php');
-        $find     = array('{URL}');
-        $replace  = array($url);
+        $file     = (file_exists(CUSTOMPATH . 'views/email/forgot-password.php')) ? CUSTOMPATH . 'views/email/forgot-password.php' : APPPATH . 'views/email/forgot-password.php';
+        $message  = file_get_contents($file);
+        $find     = array('{URL}', '{HOST}');
+        $replace  = array($url, $_SERVER['HTTP_HOST']);
         $message  = str_replace($find, $replace, $message);
         $text     = $this->getTextVersion($message);
 
         $email_from = $this->CI->config->item('email_from');
         if(empty($email_from) || empty($email_from['address'])){
-            log_message('ERROR', 'No sender address for outgoing email set in config - cannot send.');
+            $this->CI->exceptional->createTrace(E_ERROR, 'No sender address for outgoing email set in config - cannot send.', __FILE__, __LINE__);
             return false;
         }
         $this->from($email_from['address'], $email_from['description']);
@@ -45,7 +46,12 @@ class Plain_Email extends CI_Email {
         $this->subject($subject);
         $this->message($message);
         $this->set_alt_message($text);
-        return $this->send();
+
+        $result = $this->send();
+        if ($result === false) {
+            $this->CI->exceptional->createTrace(E_ERROR, 'Could not send reset password email.', __FILE__, __LINE__, array('header' => $this->_header_str));
+        }
+        return $result;
     }
 
     public function subject( $subject )
@@ -57,13 +63,16 @@ class Plain_Email extends CI_Email {
 
     public function updatePassword($email)
     {
-
-        $message  = file_get_contents(APPPATH . 'views/email/update-password.php');
+        $file     = (file_exists(CUSTOMPATH . 'views/email/update-password.php')) ? CUSTOMPATH . 'views/email/update-password.php' : APPPATH . 'views/email/update-password.php';
+        $find     = array('{HOST}');
+        $replace  = array($_SERVER['HTTP_HOST']);
+        $message  = str_replace($find, $replace, $message);
+        $message  = file_get_contents($file);
         $text     = $this->getTextVersion($message);
 
         $email_from = $this->CI->config->item('email_from');
         if(empty($email_from) || empty($email_from['address'])){
-            log_message('ERROR', 'No sender address for outgoing email set in config - cannot send.');
+            $this->CI->exceptional->createTrace(E_ERROR, 'No sender address for outgoing email set in config - cannot send.', __FILE__, __LINE__);
             return false;
         }
         $this->from($email_from['address'], $email_from['description']);
@@ -80,7 +89,12 @@ class Plain_Email extends CI_Email {
         $this->subject($subject);
         $this->message($message);
         $this->set_alt_message($text);
-        return $this->send();
+
+        $result = $this->send();
+        if ($result === false) {
+            $this->CI->exceptional->createTrace(E_ERROR, 'Could not send update password email.', __FILE__, __LINE__, array('header' => $this->_header_str));
+        }
+        return $result;
     }
 
     public function initialize($config = array()){

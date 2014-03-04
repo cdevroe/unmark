@@ -21,11 +21,13 @@
         unmarklogin.input_fields  = $('input.field-input');
         unmarklogin.helper_buttom = $('.forgot-pass');
         unmarklogin.pass_wrapper  = $('.forgotPassWrapper');
+        unmarklogin.login_page    = $('#unmark_login_page');
+        unmarklogin.about_page    = $('#unmark_about_page');
 
         // Toggle the Login Form
         function toggle_login_form(hide, message) {
             if (hide === true) {
-                unmarklogin.login_wrapper.animate({ top: '-400px' }, 500, function () {
+                unmarklogin.login_wrapper.animate({ top: '-500px' }, 500, function () {
                     unmarklogin.login_spinner.fadeIn();
                 });
             } else {
@@ -44,7 +46,7 @@
                 unmarklogin.login_success.fadeIn(400, function () {
                     setTimeout(function(){ window.location.href = "/marks" }, 800);
                 });
-            });   
+            });
         }
 
         // Process the login
@@ -56,7 +58,7 @@
                 } else {
                     toggle_login_form(false, 'Invalid Email or Password');
                 }
-            });           
+            });
         }
 
         // Change the icon for submit to a spinner
@@ -70,16 +72,16 @@
             form.find('.field-input').val(''); // Empty Fields
             response.removeClass('error').addClass(eclass).text(message).fadeIn(); // Update Class & Show Message
         }
-        
+
         // Toggle the forgot password screen
         function toggleForgotPass() {
             if (unmarklogin.pass_wrapper.is(':visible')) {
-                unmarklogin.pass_wrapper.animate({ top: '-400px' }, 500, function () {
+                unmarklogin.pass_wrapper.animate({ top: '-500px' }, 500, function () {
                     $(this).hide();
                     toggle_login_form();
                 });
             } else {
-                unmarklogin.login_wrapper.animate({ top: '-400px' }, 500, function () {
+                unmarklogin.login_wrapper.animate({ top: '-500px' }, 500, function () {
                     unmarklogin.pass_wrapper.show().animate({ top: '0' }, 500);
                 });
             }
@@ -93,7 +95,7 @@
             // Set and get variables & proces login
             var email = $('#email').val(),
                 pass  = $('#password').val(),
-                query = 'email='+email+'&password='+pass;
+                query = 'email='+unmark.urlEncode(email)+'&password='+unmark.urlEncode(pass);
             setTimeout(function(){ process_login(query) }, 1500);
         });
 
@@ -102,7 +104,7 @@
             e.preventDefault();
             unmarklogin.forget_submit.find('i').removeClass('icon-go').addClass('icon-spinner');
             var email = $('#forgot_email').val(),
-                query = 'email='+email;
+                query = 'email='+unmark.urlEncode(email);
             unmark.ajax('/tools/forgotPassword', 'post', query, function (res) {
                 if (res.success) {
                     showMessage(false, 'A confirmation link will be sent via email.');
@@ -113,8 +115,23 @@
             });
         });
 
+        // Shows the Welcome Screen
+        function toggle_welcome() {
+            var aboutbtn = $('.login-page-bottom');
+            if (aboutbtn.is(':visible')) {
+                aboutbtn.fadeOut();
+                unmarklogin.about_page.fadeOut().delay().fadeIn(800);
+                unmarklogin.login_page.animate({ top: '-130%' }, 1000);
+            } else {
+                unmarklogin.about_page.fadeOut();
+                unmarklogin.login_page.animate({ top: '0' }, 1000, function () {
+                    aboutbtn.fadeIn(800);
+                });
+            }
+        }
+
         // Show Submit Button on Key Press
-        unmarklogin.input_fields.on('change', function () { 
+        unmarklogin.input_fields.on('change', function () {
             unmarklogin.login_submit.fadeIn();
             unmarklogin.message.slideUp();
         });
@@ -130,6 +147,12 @@
             e.preventDefault();
             toggleForgotPass();
         });
+
+        $('.toggle_welcome').on('click', function (e) {
+            e.preventDefault();
+            toggle_welcome();
+        });
+
 
     });
 

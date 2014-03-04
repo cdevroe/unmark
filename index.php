@@ -53,12 +53,21 @@ if(!defined('ENVIRONMENT')){
 }
 
 // Define DOCROOT
-$dr = (isset($_SERVER['PWD']) && ! empty($_SERVER['PWD'])) ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'];
-$dr = str_replace('//', '/', $dr . '/');
-define('DOCROOT', $dr);
+define('DOCROOT', dirname(__FILE__));
 
 // Define CUSTOMPATH
-define('CUSTOMPATH', DOCROOT . 'custom/');
+define('CUSTOMPATH', DOCROOT . '/custom/');
+
+// Define custom tracking library
+define('CUSTOM_ERROR_TRACKING_FILE', CUSTOMPATH . 'libraries/Error_Tracking.php');
+
+// Define whether or not to use custom error tracking
+if (file_exists(CUSTOM_ERROR_TRACKING_FILE) !== true || ENVIRONMENT == 'development') {
+	define('CUSTOM_ERROR_TRACKING', false);
+}
+else {
+	define('CUSTOM_ERROR_TRACKING', true);
+}
 
 /*
  *---------------------------------------------------------------

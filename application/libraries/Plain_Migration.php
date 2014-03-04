@@ -187,7 +187,7 @@ class Plain_Migration extends CI_Migration
         $res = $this->db->query('SHOW TABLE STATUS');
         if ($res->num_rows() > 0) {
             foreach ($res->result() as $k => $obj) {
-                if (! isset($obj->Engine) || strtolower($obj->Engine) != 'innodb') {
+                if ((! isset($obj->Engine) || strtolower($obj->Engine) != 'innodb') && strtolower($obj->Name) != 'migrations') {
                     $message = 'Table `' . $obj->Name . '` is not in InnoDB format. Migrations cannot run.';
                     log_message('error', $message);
                     show_error($message, 500);

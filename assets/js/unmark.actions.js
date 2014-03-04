@@ -6,7 +6,7 @@
 
 */
 
-(function ($) { 
+(function ($) {
 
     // Rebuild the dom after pjax call
     unmark.updateDom = function () {
@@ -83,9 +83,9 @@
         unmark.sidebar_collapse();
 
         // If all links pannel - allow click default
-        if (panel_to_show.match(/\//)) { 
+        if (panel_to_show.match(/\//)) {
             unmark.hideNavigation();
-            return true; 
+            return true;
         }
 
         // Otherwise prevent click default
@@ -119,7 +119,7 @@
 
         if (panel_to_show === "#panel-menu"){
             $('.navigation-pane-links').show();
-            $('.nav-panel').hide();                
+            $('.nav-panel').hide();
         } else {
             $('.navigation-pane-links').hide();
             $('.nav-panel').not(panel_to_show).hide();
@@ -170,22 +170,34 @@
             // Now the graph
             unmark.createGraph(archived['4 days ago'], archived['3 days ago'], archived['2 days ago'], archived['yesterday'], archived['today'], saved['4 days ago'], saved['3 days ago'], saved['2 days ago'], saved['yesterday'], saved['today']);
 
-        });
+        }, true);
     };
 
     // Simple Ajax method to get a list of results from API
-    unmark.getData = function (what, caller) {
-        unmark.ajax('/marks/get/'+what, 'post', '', caller);
+    unmark.getData = function (what, caller, force) {
+        var tempdata = $('#temp_data_'+what).text();
+        if (tempdata === '') {
+            unmark.ajax('/marks/get/'+what, 'post', '', function (res) {
+                caller(res);
+                if (force !== true) { $('body').append('<div class="tempdata" id="temp_data_'+what+'">'+JSON.stringify(res)+'</div>'); }
+            });
+        } else { caller($.parseJSON(tempdata)); }
     };
 
-    // Simple Close Window
-    unmark.close_window = function () { window.close(); };
+    // Simple Close Windows
+    unmark.close_window = function (nosave) {
+        if (nosave) { return window.close(); } // Don't save anything, just close it.
+        var notes = $('.mark-added-note').find('textarea').val(),
+            id = $('.mark-added-note').find('textarea').data('id');
+        unmark.saveNotes(id, notes);
+        window.close();
+    };
 
     // Simple function for hiding Elements the user wants gone
     // TO DO : Hook this up to a cookie so they are gone for good
     unmark.dismiss_this = function (btn) {
         btn.parent().parent().fadeOut();
-    }; 
+    };
 
     // Page Set Up
     unmark.page_setup = function (height) {
@@ -205,12 +217,8 @@
             $('.hiddenform').hide().css('top', '-300px');
             unmark.mainpanels.removeClass('blurme');
             $('#unmark-overlay').remove();
+            $('#helperforms input').val('');
         }
-    };
-
-    // For Fun
-    unmark.awesome = function () {
-        return alert('Awesome Enabled! (this does nothing)');
     };
 
 }(window.jQuery));

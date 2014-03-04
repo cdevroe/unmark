@@ -100,6 +100,7 @@ class Labels_model extends Plain_Model
 
     public function getSystemLabels($type='label')
     {
+        //$this->sort = 'order DESC';
         $and = ($type == 'label') ? ' AND labels.smart_key IS NULL' : ' AND labels.smart_key IS NOT NULL';
         $and = ($type == 'all') ? '' : $and;
         return self::readComplete('labels.user_id IS NULL' . $and, 'all');
@@ -114,11 +115,12 @@ class Labels_model extends Plain_Model
         $start      = (! is_null($start)) ? $start : $limit * ($page - 1);
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
         $sort       = (! empty($this->sort)) ? ' ORDER BY l.' . $this->sort : null;
+        $sort       = (stristr($this->sort, '.')) ? ' ORDER BY ' . $this->sort : null;
 
         // Stop, query time
         $labels = $this->db->query("
             SELECT
-            labels.label_id, labels.smart_label_id, labels.name, labels.slug, labels.domain AS smart_label_domain, labels.path AS smart_label_path, labels.active,
+            labels.label_id, labels.smart_label_id, labels.name, labels.slug, labels.order, labels.domain AS smart_label_domain, labels.path AS smart_label_path, labels.active,
             l.name AS smart_label_name, l.slug AS smart_label_slug
             FROM labels
             LEFT JOIN labels AS l ON labels.smart_label_id = l.label_id

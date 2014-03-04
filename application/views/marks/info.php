@@ -1,5 +1,6 @@
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Unmark : Mark Added</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css" />
@@ -13,9 +14,7 @@
 </head>
 <body class="unmark-solo greybg">
 
-<?php $nice_url = rtrim(preg_replace('/https?:\/\/(www.)?/', '', $mark->url), '/'); ?>
-
-<div class="mark-added">
+<div class="mark-added" data-label="<?php print $mark->label_id; ?>" data-label-name="<?php print $mark->label_name; ?>">
     <div class="mark-added-block">
         This link has been added to your stream.
         <i class="icon-check"></i>
@@ -23,27 +22,30 @@
 
     <div class="mark-added-info">
         <h1><?php print $mark->title; ?></h1>
-        <span><?php print $nice_url; ?></span>
+        <span><?php print niceUrl($mark->url); ?></span>
     </div>
-    
+
     <div class="mark-added-label mark-added-settings">
         <span id="label-chosen"></span>
-        <a class="action" data-action="marks_addLabel" href="#">Unlabeled</a>
+        <a id="currLabel" class="action" data-action="marks_addLabel" href="#">Unlabeled</a>
         <section data-id="<?php print $mark->mark_id; ?>">
             <ul class="label-choices"></ul>
         </section>
     </div>
 
     <div class="mark-added-note mark-added-settings">
-        <a class="action" data-action="marks_addNotes" href="">Add A Note</a>
-        <section class="hideoutline" data-id="<?php print $mark->mark_id; ?>" contenteditable="true"></section>
+        <?php if (empty($mark->notes)) : ?>
+            <a class="action" data-action="marks_addNotes" href="">Add A Note</a>
+            <textarea class="mark-added-notes-area hide" data-id="<?php print $mark->mark_id; ?>" placeholder="Type note text or #tags here..."></textarea>
+        <?php else : ?>
+            <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="Type note text or #tags here..."><?php print $mark->notes; ?></textarea>
+        <?php endif; ?>
     </div>
 
     <div class="mark-added-actions">
         <button class="delete" data-action="delete_mark" data-view="bookmarklet" data-id="<?php print $mark->mark_id; ?>">Delete Link</button>
         <button data-action="close_window">Update &amp; Close</button>
     </div>
-
 
 </div>
 
