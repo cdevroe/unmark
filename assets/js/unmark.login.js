@@ -41,10 +41,10 @@
         }
 
         // Successfull Login - Show Checkmark and redirect to login
-        function login_success() {
+        function login_success(url) {
             unmarklogin.login_spinner.fadeOut(400, function () {
                 unmarklogin.login_success.fadeIn(400, function () {
-                    setTimeout(function(){ window.location.href = "/marks" }, 800);
+                    setTimeout(function(){ window.location.href = url }, 800);
                 });
             });
         }
@@ -53,10 +53,10 @@
         // Decide what do do on sucess or failure
         function process_login(query) {
             unmark.ajax('/login', 'post', query, function (res) {
-                if (typeof res.lookup_type != 'undefined') {
-                    login_success(); // Run the redirection
+                if (res.success === true) {
+                    login_success(res.redirect_url); // Run the redirection
                 } else {
-                    toggle_login_form(false, 'Invalid Email or Password');
+                    toggle_login_form(false, res.message);
                 }
             });
         }

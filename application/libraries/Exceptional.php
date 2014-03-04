@@ -132,7 +132,7 @@ class Exceptional {
     public function setHandlers()
     {
         set_exception_handler(array($this, 'logException'));
-        register_shutdown_function('Exceptional::createTrace');
+        register_shutdown_function(array($this, 'createTrace'));
     }
 
 }

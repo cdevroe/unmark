@@ -6,64 +6,63 @@ class Login extends Plain_Controller {
     {
         parent::__construct();
         parent::redirectIfLoggedIn();
-        parent::redirectIfNotInternal();
+        parent::redirectIfNotInternalAJAX();
     }
 
     public function index()
     {
         $this->redirectIfInvalidCSRF();
 
-        // Get redirect page for error
-        $redirect = (isset($this->clean->redirect) && ! empty($this->clean->redirect)) ? $this->clean->redirect : '/';
+        $this->data['success'] = false;
 
         // Find user
         $this->load->model('users_model', 'user');
         $user = $this->user->read("email = '" . $this->db_clean->email . "'", 1, 1);
 
         if (! isset($user->user_id)) {
-            $this->setFlashMessage('The email address `' . $this->clean->email . '` was not found.');
-            header('Location: ' . $redirect);
-            exit;
+            $this->data['message'] = 'The email address `' . $this->clean->email . '` was not found.';
         }
-
-        // Check if active
-        if (! isset($user->active) || empty($user->active)) {
-            $this->setFlashMessage('Your account is no longer active. Please contact support.');
-            header('Location: ' . $redirect);
-            exit;
-        }
-
-        // Check proper password
-        if (strlen($user->password) == 32) {
-            $match = (md5($this->clean->password) == $user->password) ? true : false;
-
-            // Try to update to new password security since they are on old MD5
-            $hash  = generateHash($this->clean->password);
-
-            // If hash is valid and match is valid
-            // Upgrade users to new encryption routine
-            if ($hash !== false && $match === true) {
-                $res = $this->user->update("user_id = '" . $user->user_id . "'", array('password' => $hash));
-            }
+        elseif (! isset($user->active) || empty($user->active)) {
+            $this->data['message'] = 'Your account is no longer active. Please contact support.';
         }
         else {
-            $match = (verifyHash($this->clean->password, $user->password) == $user->password) ? true : false;
+            // Check proper password
+            if (strlen($user->password) == 32) {
+                $match = (md5($this->clean->password) == $user->password) ? true : false;
+
+                // Try to update to new password security since they are on old MD5
+                $hash  = generateHash($this->clean->password);
+
+                // If hash is valid and match is valid
+                // Upgrade users to new encryption routine
+                if ($hash !== false && $match === true) {
+                    $res = $this->user->update("user_id = '" . $user->user_id . "'", array('password' => $hash));
+                }
+            }
+            else {
+                $match = (verifyHash($this->clean->password, $user->password) == $user->password) ? true : false;
+            }
+
+            // Check if passwords match
+            if ($match === false) {
+                $this->data['message'] = 'Your password is incorrect. Please try again.';
+            }
+            else {
+                // At this point we are clear for takeoff
+                // Regenerate session
+                // Set session variables and send user on their way
+                $add_redirect = $this->session->userdata('add_redirect');
+                $redirect     = (empty($add_redirect)) ? '/marks' : $add_redirect;
+
+                $this->session->unset_userdata('add_redirect');
+                $user->email = $this->clean->email;
+                $this->session->sess_update(true);
+                $this->sessionAddUser($user);
+                $this->data['success'] = true;
+                $this->data['redirect_url'] = $redirect;
+            }
         }
 
-        // Check if passwords match
-        if ($match === false) {
-            $this->setFlashMessage('Your password is incorrect. Please try again.');
-            header('Location: ' . $redirect);
-            exit;
-        }
-
-        // At this point we are clear for takeoff
-        // Regenerate session
-        // Set session variables and send user on their way
-        $user->email = $this->clean->email;
-        $this->session->sess_update(true);
-        $this->sessionAddUser($user);
-        header('Location: /marks');
-        exit;
+        $this->renderJSON();
     }
 }
