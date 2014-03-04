@@ -78,7 +78,7 @@ $config['forgot_password_token_valid_seconds'] = 60 * 60 * 24; // 24 hours
  * Password reset URL
  */
 
-$config['forgot_password_recovery_url'] = '{URL_BASE}/password_reset/{TOKEN}';
+$config['forgot_password_recovery_url'] = '{URL_BASE}password_reset/{TOKEN}';
 
 
 /*

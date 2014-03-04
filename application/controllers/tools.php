@@ -41,19 +41,12 @@ class Tools extends Plain_Controller
                     ));
                     // Prepare recovery link - {URL_BASE}/password_reset/{TOKEN}
                     $urlTemplate = $this->config->item('forgot_password_recovery_url');
-                    $urlBase = $this->config->item('base_url');
-                    if (empty($urlBase)) {
-                        $urlBase = $_SERVER['HOST'];
-                    }
-                    $find = array(
-                        '{URL_BASE}',
-                        '{TOKEN}'
-                    );
-                    $replace = array(
-                        $urlBase,
-                        $createdToken->token_value
-                    );
-                    $finalUrl = str_replace($find, $replace, $urlTemplate);
+                    $urlBase     = $this->config->item('base_url');
+                    $urlBase     = (empty($urlBase)) ? $_SERVER['HTTP_HOST'] : $urlBase;
+                    $find        = array('{URL_BASE}', '{TOKEN}');
+                    $replace     = array($urlBase, $createdToken->token_value);
+                    $finalUrl    = str_replace($find, $replace, $urlTemplate);
+
                     // Send email
                     $this->load->library('email');
                     $this->email->initialize(array('mailtype' => 'html'));
