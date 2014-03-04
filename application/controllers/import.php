@@ -33,7 +33,11 @@ class Import extends Plain_Controller
             $validationResult = $this->jsonimport->validateUpload($uploadedFile);
             if($validationResult !== true){
                 $this->data['errors'] = $validationResult;
-                $this->exceptional->createTrace(E_ERROR, 'JSON Import Issue: ' . $validationResult, __FILE__, __LINE__);
+                $data = array();
+                foreach ($validationResult as $k => $v) {
+                    $data['validation_error_' . $k] = $v;
+                }
+                $this->exceptional->createTrace(E_ERROR, 'JSON Import Issue', __FILE__, __LINE__, $data);
             } else{
                 $importResult = $this->jsonimport->importFile($uploadedFile['tmp_name']);
                 $this->data = $importResult;
