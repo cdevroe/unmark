@@ -719,7 +719,7 @@ ul.nav-list {
         width: 20px;
         height: 100%;
         box-shadow: 15px 0 34px -20px rgba(0,0,0,0.11) inset,3px 0 5px -4px rgba(0,0,0,0.16) inset;
-        top: 0;
+        top: 8px;
         z-index: 1;
     }
     &.wide {
@@ -1376,11 +1376,11 @@ body.label-7 .navigation-pane { border-top: none; }
         height: 27px;
         margin: 25px auto;
         background-size: 100%;
+        opacity: 0.6;
     }
     span {
-        text-transform: uppercase;
-        font-weight: 400;
-        font-size: 13px;
+        @include title-text;
+        font-size: 12px;
         letter-spacing: .13em;
         display:block;
     }
