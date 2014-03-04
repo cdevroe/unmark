@@ -68,7 +68,7 @@ class User extends Plain_Controller
 
             // Check current password
             $current_password = (isset($this->clean->current_password)) ? $this->clean->current_password : null;
-            $res              = $this->user->read($this->user_id, 1, 1, 'password');
+            $res              = $this->user->read($this->user_id, 1, 1, 'email,password');
 
             if (! isset($res->password)) {
                 $this->data['message'] = 'We could not verify your current password.';
@@ -81,6 +81,10 @@ class User extends Plain_Controller
                 $user = $this->user->update($this->user_id, array('password' => $password));
                 if (isset($user->password) && $user->password == $password) {
                     $this->data['success'] = true;
+                    // Send email
+                    $this->load->library('email');
+                    $this->email->initialize(array('mailtype' => 'html'));
+                    $sent = $this->email->updatePassword($user->email);
                 }
                 else {
                     $this->data['message'] = 'Your password could not be updated at this time. Please try again.';
