@@ -12,13 +12,13 @@ class Plain_Exceptions extends CI_Exceptions
     // Else, call exceptional library
     public function log_exception($severity, $message, $filepath, $line)
     {
+        if (!($severity & error_reporting())) return;
         if (CUSTOM_ERROR_TRACKING === false) {
             parent::log_exception($severity, $message, $filepath, $line);
         }
         else {
-            $CI =& get_instance();
-            $CI->load->library('Exceptional');
-            $CI->exceptional->createTrace($severity, $message, $filepath, $line);
+            $this->load->library('exceptional');
+            $this->exceptional->createTrace($severity, $message, $filepath, $line);
         }
     }
 
