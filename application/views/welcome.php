@@ -1,6 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
     <title>Welcome to Unmark</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css" />
@@ -82,29 +83,31 @@
             <h2>Few, but key features</h2>
             <div class="feature-detail">
                 <figure class="feature">
-                    <img src="http://placehold.it/344x300&text=.">
+                    <img src="../../assets/images/feature_preview.jpg">
                     <figcaption>Preview Content Inline</figcaption>
                 </figure>
                 <figure class="feature">
-                    <img src="http://placehold.it/344x300&text=.">
-                    <figcaption>Receive Suggestions</figcaption>
-                </figure>
-                <figure class="feature">
-                    <img src="http://placehold.it/344x300&text=.">
+                    <img src="../../assets/images/feature_notes.jpg">
                     <figcaption>Tag & Keep Notes</figcaption>
                 </figure>
+                <figure class="feature">
+                    <img src="../../assets/images/feature_bookmarklet.jpg">
+                    <figcaption>Save from Menu Bar</figcaption>
+                </figure>
+                <!--
                 <figure class="feature">
                     <img src="http://placehold.it/344x300&text=.">
                     <figcaption>Fork on GitHub</figcaption>
                 </figure>
                 <figure class="feature">
                     <img src="http://placehold.it/344x300&text=.">
-                    <figcaption>Save from Menu Bar</figcaption>
+                    <figcaption>Chrome Extension</figcaption>
                 </figure>
                 <figure class="feature">
                     <img src="http://placehold.it/344x300&text=.">
-                    <figcaption>Chrome Extension</figcaption>
+                    <figcaption>Receive Suggestions</figcaption>
                 </figure>
+                -->
             </div>
 
             <h2>Use free or upgrade</h2>

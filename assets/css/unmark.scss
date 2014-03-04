@@ -356,9 +356,10 @@ ul.label-list {
 h4.nav-heading {
     @include title-text;
     font-size: 11px;
-    border-bottom: 1px solid $color_dark;
+    border-bottom: 1px solid lighten($color_dark, 5%);
     padding: 0 0 14px 2px;
-    margin-top: 50px;
+    margin-top: 45px;
+    margin-bottom: 24px;
     color: $color_lighter;
     span {
         text-transform: none;
@@ -377,12 +378,12 @@ ul.nav-list {
     li {
         list-style: none;
         color: $color_light;
-        margin-bottom: 15px;
+        margin: 18px 4px;
         font-size: 14px;
         a {
             font-size: 13px;
             display: block;
-            color: $color_light;
+            color: white;
         }
     }
 }
@@ -1054,8 +1055,8 @@ ul.timeline {
 
 // Line Graph
 canvas.graph {
-    border-bottom:1px solid $color_light;
-    margin-top:25px;
+    border-bottom:1px solid transparent($color_light, 0.75);
+    margin: 25px 0 18px;
     width: 400px;
     height: 100px;
 }
@@ -1487,7 +1488,7 @@ body.label-7 .navigation-pane { border-top: none; }
         color:$color_light;
     }
     span.sep {
-        color:$color_light;
+        color: transparentize($color_light, 0.5);
         padding:0 10px;
     }
     .response-message {
@@ -1768,8 +1769,46 @@ button.upgradeNowSidebar {
 }
 
 // Tablet Portrait
-@media only screen and (max-width : 768px) {
+@media only screen and (max-width : 767px) {
     .marks_list .mark h2 { font-size: 16px; }
+
+    .body {
+        box-shadow: none;
+    }
+    .main-wrapper {
+        box-shadow: none;
+    }
+    .navigation-content {
+        box-shadow: none;
+    }
+    .navigation-pane {
+        ul.navigation-pane-links {
+            box-shadow: none;
+        }
+    }
+    .navigation-panel-wrapper {
+        .nav-panel {
+            box-shadow: none;
+        }
+    }
+    .sidebar-content {
+        .sidebar-block {
+            box-shadow: none;
+        }
+         &:after { 
+            display: none;
+        }
+    }
+    ul.timeline {
+        .timeline-dot {
+            &:before {
+                box-shadow: none;
+            }
+        }
+    }
+    .login-page-bottom {
+        box-shadow: none;
+    }
 }
 
 // Phone Portrait
