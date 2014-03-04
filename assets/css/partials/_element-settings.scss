@@ -45,7 +45,7 @@ button.disabled {
 @mixin title-text {
     font-family: $title;
     letter-spacing: 1px;
-    word-spacing: 2px;
+    word-spacing: 1px;
     text-transform: uppercase;
     font-weight: 400;
 }
