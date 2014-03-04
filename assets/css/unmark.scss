@@ -505,7 +505,7 @@ ul.nav-list {
                 color: darken($color_light, 15%);
                 display:inline-block;
                 vertical-align: bottom;
-                @include unmark-truncate(400px);
+                @include unmark-truncate(65%);
             }
         }
         &:after {
@@ -1011,6 +1011,8 @@ ul.timeline {
 canvas.graph {
     border-bottom:1px solid $color_light;
     margin-top:25px;
+    width: 400px;
+    height: 100px;
 }
 
 
@@ -1649,4 +1651,26 @@ button.upgradeNowSidebar {
         text-transform: uppercase;
         letter-spacing: .15em;
     }
+}
+
+
+// ==============  Let's get Responsive ========
+
+// Table Landscape
+@media only screen and (max-width : 1024px) {
+    .marks_list .mark h2 { font-size: 18px; }
+}
+
+// Tablet Portrait
+@media only screen and (max-width : 768px) {
+    .marks_list .mark h2 { font-size: 16px; }
+}
+
+// Phone Portrait
+@media only screen and (max-width : 320px) {
+    .marks_list .mark h2 { font-size: 14px; }
+    .navigation-content { left: -64px; }
+    .main-wrapper { left: 0; }
+    .main-content { width: 100%; }
+    .sidebar-content { width: 0; }
 }
