@@ -21,7 +21,6 @@
 
         // Quick function to populate the tags
         function populateLabels(res) {
-            console.log(res);
             var list = unmark.label_list(res);
             $('ul.sidebar-label-list').prepend(list);
         };

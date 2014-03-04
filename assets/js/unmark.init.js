@@ -8,13 +8,13 @@
 
 */
 
-(function ($) { 
+(function ($) {
 
     // Main Init Script
     unmark.init = function () {
 
-        // Define some re-usable elements 
-        this.nav_panel = $('.navigation-pane'), 
+        // Define some re-usable elements
+        this.nav_panel = $('.navigation-pane'),
         this.main_panel = $('.main-wrapper'),
         this.main_content = $('.main-content'),
         this.sidebar_content = $('.sidebar-content'),
@@ -29,7 +29,7 @@
         unmark.main_panel.width(unmark.main_panel_width);
         unmark.page_setup(unmark.body_height);
 
-        // Resize Helper for Dev Tools 
+        // Resize Helper for Dev Tools
         // Also for weirdo's who want to resize their browser
         $(window).on('resize',function () {
             unmark.page_setup($(window).outerHeight(true));
@@ -82,20 +82,19 @@
             } else {
                 arrow.removeClass('icon-down');
                 arrow.addClass('icon-up');
-                section.slideDown();                
+                section.slideDown();
             }
         });
 
         // Click / Tap on a Mark opens the more info and shows the buttons
         $(document).on('click', '.mark', function (e){
-            var node = e.target.nodeName, more_link = $(this).find('a.mark-info');
-            if (node !== "A" && node !== "I") {
-                e.preventDefault();
-            }
-            if (node !== "I") {
+            var node = e.target.className, more_link = $(this).find('a.mark-info');
+            // Check for Archive... don't show info for this, otherwise show the info
+            if (node !== "icon-check" && node !== "action mark-archive") {
                 unmark.show_mark_info(more_link);
             }
-            unmark.hideNavigation(); // Hide Main Navigation
+            // Hide Nav
+            unmark.hideNavigation();
         });
 
         // Watch for internal link click and run PJAX
@@ -127,9 +126,9 @@
         });
 
         // Close Overlay
-        $(document).on('click', '#unmarkModalClose', function (e) { 
-            e.preventDefault(); 
-            return unmark.overlay(false); 
+        $(document).on('click', '#unmarkModalClose', function (e) {
+            e.preventDefault();
+            return unmark.overlay(false);
         });
 
         // Label Hovers
@@ -152,7 +151,7 @@
         $('.importer').change(function (e) {
             return $('#importForm').submit();
         });
-        
+
     };
 
     // Get this baby in action

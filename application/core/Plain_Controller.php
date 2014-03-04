@@ -376,7 +376,14 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfLoggedOut($url='/')
     {
         if (empty($this->logged_in) && empty($this->user_id)) {
-            $url = (self::isWebView() === false) ? '/json/auth/error' : $url;
+            if (self::isWebView() === false) {
+                $url = '/json/auth/error';
+            }
+            else {
+                if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], '/marks/add?') == 0) {
+                    $this->session->set_userdata('add_redirect', $_SERVER['REQUEST_URI']);
+                }
+            }
             header('Location: ' . $url);
             exit;
         }

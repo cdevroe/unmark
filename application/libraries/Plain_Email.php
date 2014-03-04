@@ -2,9 +2,6 @@
 
 class Plain_Email extends CI_Email {
 
-    public $is_bulk   = false;
-    private $postmark = false;
-
     public function __construct()
     {
         parent::__construct();
@@ -66,8 +63,8 @@ class Plain_Email extends CI_Email {
         $file     = (file_exists(CUSTOMPATH . 'views/email/update-password.php')) ? CUSTOMPATH . 'views/email/update-password.php' : APPPATH . 'views/email/update-password.php';
         $find     = array('{HOST}');
         $replace  = array($_SERVER['HTTP_HOST']);
-        $message  = str_replace($find, $replace, $message);
         $message  = file_get_contents($file);
+        $message  = str_replace($find, $replace, $message);
         $text     = $this->getTextVersion($message);
 
         $email_from = $this->CI->config->item('email_from');

@@ -120,7 +120,7 @@ class Exceptional {
 
             // Send it off
             if (CUSTOM_ERROR_TRACKING === true) {
-                $CI->load->library('error_tracking', $params);
+                $CI->load->library('Error_Tracking', $params);
             }
             else {
                 $params['backtrace'] = (isset($params['backtrace'][0]['file'])) ? $params['backtrace'][0]['file'] : '';
@@ -132,7 +132,7 @@ class Exceptional {
     public function setHandlers()
     {
         set_exception_handler(array($this, 'logException'));
-        register_shutdown_function('Exceptional::createTrace');
+        register_shutdown_function(array($this, 'createTrace'));
     }
 
 }

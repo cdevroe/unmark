@@ -35,32 +35,21 @@ class Tools extends Plain_Controller
                     'user_id' => $user->user_id
                 ));
                 if (isset($createdToken->token_id)) {
-                    $this->data['token'] = array(
-                        'token_value' => $createdToken->token_value,
-                        'valid_until' => $createdToken->valid_until
-                    );
                     // Invalidate all other tokens for this type and user
                     $this->token->update("token_value != '{$createdToken->token_value}' and token_type = '{$createdToken->token_type}' and active='1' and user_id='{$createdToken->user_id}'", array(
                         'active' => 0
                     ));
                     // Prepare recovery link - {URL_BASE}/password_reset/{TOKEN}
                     $urlTemplate = $this->config->item('forgot_password_recovery_url');
-                    $urlBase = $this->config->item('base_url');
-                    if (empty($urlBase)) {
-                        $urlBase = $_SERVER['HOST'];
-                    }
-                    $find = array(
-                        '{URL_BASE}',
-                        '{TOKEN}'
-                    );
-                    $replace = array(
-                        $urlBase,
-                        $createdToken->token_value
-                    );
-                    $finalUrl = str_replace($find, $replace, $urlTemplate);
+                    $urlBase     = $this->config->item('base_url');
+                    $urlBase     = (empty($urlBase)) ? $_SERVER['HTTP_HOST'] : $urlBase;
+                    $find        = array('{URL_BASE}', '{TOKEN}');
+                    $replace     = array($urlBase, $createdToken->token_value);
+                    $finalUrl    = str_replace($find, $replace, $urlTemplate);
+
                     // Send email
-                    $this->load->library('plain_email', null, 'email');
-                    $this->email->initialize();
+                    $this->load->library('email');
+                    $this->email->initialize(array('mailtype' => 'html'));
                     $this->data['success'] = $this->email->resetPassword($user->email, $finalUrl);
                 } else {
                     $this->data['errors'] = $createdToken;
@@ -128,8 +117,8 @@ class Tools extends Plain_Controller
                         log_message('DEBUG', 'Failed to mark token ' . $token . ' as used in DB');
                     }
                     // Send email
-                    $this->load->library('plain_email', null, 'email');
-                    $this->email->initialize();
+                    $this->load->library('email');
+                    $this->email->initialize(array('mailtype' => 'html'));
                     $this->data['success'] = $this->email->updatePassword($user->email);
                 } else {
                     $this->data['errors'] = formatErrors(500);
