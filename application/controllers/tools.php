@@ -56,7 +56,7 @@ class Tools extends Plain_Controller
                     $finalUrl = str_replace($find, $replace, $urlTemplate);
                     // Send email
                     $this->load->library('email');
-                    $this->email->initialize();
+                    $this->email->initialize(array('mailtype' => 'html'));
                     $this->data['success'] = $this->email->resetPassword($user->email, $finalUrl);
                 } else {
                     $this->data['errors'] = $createdToken;
@@ -125,7 +125,7 @@ class Tools extends Plain_Controller
                     }
                     // Send email
                     $this->load->library('email');
-                    $this->email->initialize();
+                    $this->email->initialize(array('mailtype' => 'html'));
                     $this->data['success'] = $this->email->updatePassword($user->email);
                 } else {
                     $this->data['errors'] = formatErrors(500);

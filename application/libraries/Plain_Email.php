@@ -2,9 +2,6 @@
 
 class Plain_Email extends CI_Email {
 
-    public $is_bulk   = false;
-    private $postmark = false;
-
     public function __construct()
     {
         parent::__construct();
