@@ -30,6 +30,7 @@ module.exports = function(grunt) {
                         'assets/js/unmark.actions.js',
                         'assets/js/unmark.marks.js',
                         'assets/js/unmark.client.js',
+                        'assets/js/unmark.touch.js',
                         'assets/js/unmark.init.js'
                     ],
                     'assets/js/production/unmark.loggedout.js': [
