@@ -217,11 +217,11 @@
                 btn.text(label_name);
                 unmark.swapClass(btn, 'label-*', 'label-'+label_id);
                 labels_list.find('a').unbind();
+                unmark.update_label_count(); // Update the count under labels menu
                 if (label_parent.hasClass('sidebar-label')) {
                     unmark.swapClass(label_parent, 'label-*', 'label-'+label_id);
                     unmark.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
                     unmark.get_mark_info(mark);
-                    unmark.update_label_count(); // Update the count under labels menu
                     if ((pattern.test(body_class))  && (body_class !== 'label-'+label_id)) { // If on current label and label change, remove mark from label
                         $('#mark-'+mark).fadeOut();
                         unmark.sidebar_collapse();

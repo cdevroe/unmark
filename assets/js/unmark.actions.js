@@ -170,18 +170,12 @@
             // Now the graph
             unmark.createGraph(archived['4 days ago'], archived['3 days ago'], archived['2 days ago'], archived['yesterday'], archived['today'], saved['4 days ago'], saved['3 days ago'], saved['2 days ago'], saved['yesterday'], saved['today']);
 
-        }, true);
+        });
     };
 
     // Simple Ajax method to get a list of results from API
-    unmark.getData = function (what, caller, force) {
-        var tempdata = $('#temp_data_'+what).text();
-        if (tempdata === '') {
-            unmark.ajax('/marks/get/'+what, 'post', '', function (res) {
-                caller(res);
-                if (force !== true) { $('body').append('<div class="tempdata" id="temp_data_'+what+'">'+JSON.stringify(res)+'</div>'); }
-            });
-        } else { caller($.parseJSON(tempdata)); }
+    unmark.getData = function (what, caller) {
+        unmark.ajax('/marks/get/'+what, 'post', '', caller);
     };
 
     // Simple Close Windows
@@ -214,6 +208,7 @@
             var overlay = $('<div id="unmark-overlay"><a href="#" id="unmarkModalClose"><i class="icon-big_close"></i></a></div>');
             overlay.appendTo(document.body);
         } else {
+            $('.hiddenform').hide().css('top', '-300px');
             unmark.mainpanels.removeClass('blurme');
             $('#unmark-overlay').remove();
             $('#helperforms input').val('');
