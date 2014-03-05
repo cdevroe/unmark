@@ -1,13 +1,12 @@
 <?php if (isset($errors['2'])) : ?>
-<h2 class="marks-heading">Sorry, No links found</h2>
+<h2 class="marks-heading">Sorry, No marks found</h2>
 <?php else : ?>
 <?php if (isset($lookup_type) && $lookup_type != "all") :
 
     // Variable Setup
     $heading = array();
-    $link_plural = (isset($total) && $total > 1) ? " links " : " link ";
+    $link_plural = " ".determinePlurality($total, "mark")." ";
     $search_term = (isset($_GET['q'])) ? $_GET['q'] : '';
-    $total_count = (isset($total)) ? $total : '';
     $label_name = (isset($active_label['label_name'])) ? $active_label['label_name'] : '';
     $tag_name = (isset($active_tag['tag_name'])) ? $active_tag['tag_name'] : '';
 
@@ -15,23 +14,23 @@
     switch ($lookup_type) {
         case 'label':
             $heading['icon']    =   'icon-circle';
-            $heading['title']   =   $total_count . $link_plural . "labeled " . $label_name;
+            $heading['title']   =   $link_plural . "labeled " . $label_name;
             break;
         case 'archive':
             $heading['icon']    =   'icon-heading_archive';
-            $heading['title']   =   $total_count . $link_plural . "archived";
+            $heading['title']   =   $link_plural . "archived";
             break;
         case 'tag':
             $heading['icon']    =   'icon-heading_tag';
-            $heading['title']   =   $total_count . $link_plural . "tagged " . $tag_name;
+            $heading['title']   =   $link_plural . "tagged " . $tag_name;
             break;
         case 'search':
             $heading['icon']    =   'icon-heading_search';
-            $heading['title']   =   $total_count . $link_plural . "found containing \"" . $search_term . "\"";
+            $heading['title']   =   $link_plural . "found containing \"" . $search_term . "\"";
             break;
         default:
             $heading['icon']    =   'icon-heading_time';
-            $heading['title']   =   $total_count . $link_plural;
+            $heading['title']   =   $link_plural;
             $default_title      =   true;
     }
 
@@ -63,7 +62,7 @@
                         <a title="View Mark Info" class="action mark-archive tabletonly" href="#" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>">
                             <i class="icon-ellipsis"></i>
                         </a>
-                        <a target="_blank" title="Open Link" class="mark-info" href="<?php print $mark->url; ?>" data-mark="mark-data-<?php print $mark->mark_id; ?>">
+                        <a target="_blank" title="Open Mark" class="mark-info" href="<?php print $mark->url; ?>" data-mark="mark-data-<?php print $mark->mark_id; ?>">
                             <i class="icon-goto_link"></i>
                         </a>
                         <?php if ($lookup_type == "archive") : ?>

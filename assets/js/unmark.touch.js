@@ -67,6 +67,13 @@
 
 		}
 
+		// Tablet Portrait & Below
+		if (Modernizr.mq('only screen and (max-width: 767px)')) {
+			$('.nav-panel a').on('click', function (e) {
+				unmark.hideNavigation();
+			});
+		}
+
 
 	});
 

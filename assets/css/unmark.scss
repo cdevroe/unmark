@@ -94,6 +94,24 @@ body {
 //#unmark-wrapper { -webkit-transition:-webkit-filter 0.4s ease-in-out; }
 //.blurme { -webkit-filter: blur(5px); }
 
+// Logo
+.branding {
+    width: 150px;
+    height: 64px;
+    position: absolute;
+    left: 61px;
+    top: -2px;
+    overflow: hidden;
+    display: none;
+    .logo-text {
+        width: 130px;
+        height: 20px;
+        margin: 22px auto 18px;
+        background-size: 65%;
+        background-position: top left;
+    }
+}
+
 // Hide Stupid Outlines
 textarea:focus, input:focus, .hideoutline, button { outline: 0; }
 
@@ -102,6 +120,7 @@ img { max-width: 100%; }
 .centerme { text-align: center; }
 .tempdata { display: none; }
 .hide { display: none; }
+.clear { clear: both; }
 
 // Setup Page
 #unmark-setup {
@@ -297,19 +316,6 @@ img { max-width: 100%; }
                 padding: 16px;
                 width: 100%;
             }
-        }
-    }
-    .branding {
-        width: 100%;
-        height: 64px;
-        margin-top: -64px;
-        overflow: hidden;
-        .logo-text {
-            width: 130px;
-            height: 20px;
-            margin: 22px auto 18px;
-            background-size: 65%;
-            background-position: top left;
         }
     }
 }
@@ -511,7 +517,7 @@ ul.nav-list {
     .mark {
         cursor: pointer;
         border-bottom:1px solid $color_lighter;
-        padding: 24px 70px 32px 25px;
+        padding: 24px 85px 32px 25px;
         position:relative;
         h2 {
             margin:0 0 12px 0;
@@ -595,7 +601,6 @@ ul.nav-list {
         &.label-2 {
             &:after {
                 background: $color_orange;
-                //content: "R";
             }
             .mark-actions a {
                 background: lighten($color_orange, 7%);
@@ -607,9 +612,8 @@ ul.nav-list {
         &.label-3 {
             &:after {
                 background: $color_blue;
-                //content: "W";
-                //font-size: 11px;
-                //padding-top: 1px;
+                font-size: 11px;
+                padding-top: 1px;
             }
             .mark-actions a {
                 background: lighten($color_blue, 7%);
@@ -621,7 +625,6 @@ ul.nav-list {
         &.label-4 {
             &:after {
                 background: $color_yellow;
-                //content: "L";
             }
             .mark-actions a {
                 background: $color_yellow;
@@ -633,7 +636,6 @@ ul.nav-list {
         &.label-5 {
             &:after {
                 background: $color_purple;
-                //content: "B";
             }
             .mark-actions a {
                 background: lighten($color_purple, 7%);
@@ -645,7 +647,6 @@ ul.nav-list {
         &.label-6 {
             &:after {
                 background: $color_green;
-                //content: "E";
             }
             .mark-actions a {
                 background: lighten($color_green, 7%);
@@ -657,7 +658,6 @@ ul.nav-list {
         &.label-7 {
             &:after {
                 background: $color_pink;
-                //content: "D";
             }
             .mark-actions a {
                 background: lighten($color_pink, 7%);
@@ -714,9 +714,17 @@ ul.nav-list {
                 padding-top: 7px;
                 margin: 0;
                 border: 3px solid #fdfdfd;
-                width: 33.333%;
+                width: auto;
                 box-sizing: border-box;
                 float: left;
+            }
+            .sidenote {
+                padding: 10px 0 0 5px;
+                margin-bottom: 0;
+                a {
+                    color: $color_dark;
+                    text-decoration: underline;
+                }
             }
         }
     }
@@ -1039,6 +1047,7 @@ ul.timeline {
             margin-bottom: 20px;
             position: relative;
             font-size: 11px;
+            z-index: 11;
             span {
                 font-style: italic;
                 font-family: $sans-serif;
@@ -1376,9 +1385,10 @@ body.label-7 .navigation-pane { border-top: none; }
 .login-page-bottom {
     background: #f0635a;
     width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    height: 150px;
+    height: 20%;
+    max-height: 150px;
     text-align: center;
     box-shadow: 0 18px 26px -20px rgba(0,0,0,0.4) inset, 0 5px 8px -6px rgba(0,0,0,0.35) inset;
     i {
@@ -1849,7 +1859,7 @@ button.upgradeNowSidebar {
             display: inline-block;
         }
     }
-    .sidebar-content { 
+    .sidebar-content {
         .sidebar-block {
             .sidebar-inner {
                 a.btn, button {
@@ -1886,8 +1896,8 @@ button.upgradeNowSidebar {
     .marks_list {
         .mark {
             padding: 20px 70px 25px 20px;
-            h2 { 
-                font-size: 16px; 
+            h2 {
+                font-size: 16px;
                 line-height: 22px;
             }
             &:after {
@@ -1915,12 +1925,13 @@ button.upgradeNowSidebar {
         top: 0;
     }
 
-    .navigation-pane .branding {
+    .branding {
         position: fixed;
         top: 21px;
         left: 60px;
         margin: 0;
         width: auto;
+        display: block;
         .logo-text {
             background-size: 100%;
             width: 85px;
@@ -1931,6 +1942,15 @@ button.upgradeNowSidebar {
     .marks_list .mark h2 a:hover:after { display: none; }
 
     .sidebar-mark-info .sidebar-label { margin-top: 0; }
+
+    .login-page-bottom { height: 17%; }
+    .login-page-bottom i {
+        width: 22px;
+        height: 22px;
+        margin: 15px auto;
+    }
+
+    .loginWrapper, .forgotPassWrapper, .resetWrapper { margin-top: 25px; }
 
 
 }
