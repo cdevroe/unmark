@@ -25,20 +25,6 @@
         this.special_chars     = { '\\+': '&#43;' };
         this.mainpanels = $('#unmark-wrapper');
 
-        // Fix for tablets/phones
-        //$(document).on('touchmove', function (e) { e.preventDefault(); });
-        //$('.main-content').on('touchmove', function (e) { e.stopPropagation(); });
-
-        // Basic Page Setup
-        //unmark.main_panel.width(unmark.main_panel_width);
-        //unmark.page_setup(unmark.body_height);
-
-        // Resize Helper for Dev Tools
-        // Also for weirdo's who want to resize their browser
-        /*$(window).on('resize',function () {
-            unmark.page_setup($(window).outerHeight(true));
-        });*/
-
         // Set any window variables
         window.unmark_current_page = 1;
 
@@ -68,6 +54,7 @@
         // Create a Function from a string
         $(document).on('click', 'button[data-action], .action', function (e) {
             e.preventDefault();
+            e.stopPropagation();
             var action = $(this).data('action'), funct; // Get Data Action Attribute
             funct = eval('unmark.' + action); // Convert it to an executable function
             funct($(this)); // Run it with passed in object
