@@ -8,6 +8,8 @@
 
 (function ($) {
 
+    var _labels = 0;
+
     // Show Mark Info in Sidebar
     // Grabs relavaent info and shows the sidebar actions with info
     unmark.show_mark_info = function (mark_clicked) {
@@ -20,9 +22,9 @@
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
 
         // Quick function to populate the tags
-        function populateLabels(res) {
-            var list = unmark.label_list(res);
-            $('ul.sidebar-label-list').prepend(list);
+        function populateLabels() {
+            _labels = arguments[0] || _labels;
+            (! isNaN(_labels)) ? unmark.getData('labels', populateLabels) : $('ul.sidebar-label-list').prepend(unmark.label_list(_labels));
         };
 
         // Clean up view
@@ -46,14 +48,14 @@
                 unmark.sidebar_default.fadeOut(400, function () {
                     unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                         unmark.tagify_notes($('#notes-' + mark_id));
-                        unmark.getData('labels', populateLabels);
+                        populateLabels();
                         $("section.sidebar-info-preview").fitVids();
                     });
                 });
             } else {
                 unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                     unmark.tagify_notes($('#notes-' + mark_id));
-                    unmark.getData('labels', populateLabels);
+                    populateLabels();
                     $("section.sidebar-info-preview").fitVids();
                 });
             }
