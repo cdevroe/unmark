@@ -25,30 +25,33 @@
         this.special_chars     = { '\\+': '&#43;' };
         this.mainpanels = $('#unmark-wrapper');
 
+        // Fix for tablets/phones
+        //$(document).on('touchmove', function (e) { e.preventDefault(); });
+        //$('.main-content').on('touchmove', function (e) { e.stopPropagation(); });
+
         // Basic Page Setup
-        unmark.main_panel.width(unmark.main_panel_width);
-        unmark.page_setup(unmark.body_height);
+        //unmark.main_panel.width(unmark.main_panel_width);
+        //unmark.page_setup(unmark.body_height);
 
         // Resize Helper for Dev Tools
         // Also for weirdo's who want to resize their browser
-        $(window).on('resize',function () {
+        /*$(window).on('resize',function () {
             unmark.page_setup($(window).outerHeight(true));
-        });
+        });*/
 
         // Set any window variables
         window.unmark_current_page = 1;
 
         // Animate the body fading in
-        $('body').animate({opacity: 1}, 1000);
+        if (Modernizr.mq('only screen and (min-width: 480px)')) {
+            $('body').animate({opacity: 1}, 1000);
+        }
 
         // Vertical Tabs
         // Shows and Tabs the Vertical navigition inside the Navigation Panel
         $('.navigation-content a, .navigation-pane-links a').on('click', function (e) {
             unmark.interact_nav(e, $(this));
         });
-
-        // Update Mark Btns
-        unmark.update_mark_action_btns();
 
         // Hover Action on Marks List
         // Shows the Archive and More Buttons
@@ -68,7 +71,7 @@
             var action = $(this).data('action'), funct; // Get Data Action Attribute
             funct = eval('unmark.' + action); // Convert it to an executable function
             funct($(this)); // Run it with passed in object
-            unmark.hideNavigation(); // Hide Main Navigation
+            //unmark.hideNavigation(); // Hide Main Navigation
         });
 
         // Slide Toggle the Sidebar Info Blocks
