@@ -1871,15 +1871,17 @@ button.upgradeNowSidebar {
     }
     .login-page-bottom {
         height: 68px;
-        padding: 20px;
+        padding: 20px 10px;
         i {
-            vertical-align: -8px;
-            margin: 0 10px 0 0;
-            width: 24px;
-            height: 24px;
+            //vertical-align: -8px;
+            //margin: 0 10px 0 0;
+            //width: 20px;
+            //height: 20px;
+            display: none;
         }
         span {
             display: inline-block;
+            font-size: 11px;
         }
     }
 }
@@ -1943,7 +1945,7 @@ button.upgradeNowSidebar {
 
     .sidebar-mark-info .sidebar-label { margin-top: 0; }
 
-    .login-page-bottom { height: 17%; }
+    .login-page-bottom { height: 68px; }
     .login-page-bottom i {
         width: 22px;
         height: 22px;
