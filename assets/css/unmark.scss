@@ -1826,7 +1826,7 @@ button.upgradeNowSidebar {
 
     #sidebar-graph { display: none; }
 
-    .body {
+    body {
         box-shadow: none;
     }
     .main-wrapper {
@@ -1847,10 +1847,12 @@ button.upgradeNowSidebar {
     }
     .sidebar-content {
         .sidebar-block {
-            box-shadow: 0 1px 0 0 #e5e5e5;
+            box-shadow: none;
+            border-bottom: 1px solid #e4e4e4;
         }
          &:after {
-            box-shadow: -1px 0 0 0 #e5e5e5;
+            box-shadow: none;
+            border-left: 1px solid #e4e4e4;
             top: 65px;
         }
     }
@@ -1910,7 +1912,7 @@ button.upgradeNowSidebar {
 
     a[data-action="sidebar_expand"] { display: none; }
 
-    body { overflow-x: hidden; }
+    body { overflow-x: hidden; box-shadow:none; }
 
     .marks_list {
         .mark {
