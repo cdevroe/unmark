@@ -83,7 +83,7 @@ class User extends Plain_Controller
                     $this->data['success'] = true;
                     // Send email
                     $this->load->library('email');
-                    $this->email->initialize(array('mailtype' => 'html'));
+                    $this->email->initialize();
                     $sent = $this->email->updatePassword($user->email);
                 }
                 else {
