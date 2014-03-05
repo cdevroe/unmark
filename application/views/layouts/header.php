@@ -28,7 +28,7 @@
 <?php if (isset($active_label)) : ?>
 <body id="unmark" class="label-<?php print $active_label['label_id']; ?>" data-lookup="<?php print $lookup_type; ?>">
 <?php else : ?>
-<body id="unmark" data-lookup="<?php print $lookup_type; ?>">
+<body id="unmark" data-lookup="<?php if(isset($lookup_type)) { print $lookup_type; } ?>">
 <?php endif; ?>
 
     <div id="unmark-wrapper">

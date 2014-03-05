@@ -1543,7 +1543,7 @@ body.label-7 .navigation-pane { border-top: none; }
 
 .resetWrapper {
     a.forgot-pass {
-        margin-top: 50px;
+        margin-top: 15px;
         display: block;
     }
     #password2 { display: none; }
@@ -1564,8 +1564,8 @@ body.label-7 .navigation-pane { border-top: none; }
         a {
             display: block;
             float: left;
-            padding: 10px 47px;
-            margin: 0 0 -15px -11px;
+            padding: 10px 41px;
+            margin: 0 0 -15px -10px;
             border: 1px solid $color_light;
         }
         a.help {
