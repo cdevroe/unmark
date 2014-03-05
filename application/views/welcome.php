@@ -39,7 +39,7 @@
                 <button class="login-submit" type="submit"><i class="icon-go"></i></button>
             </form>
             <div class="response-message"></div>
-            <a href="#" class="forgot-pass" title="Forgot Password?">Forgot Password?</a><span class="sep">&bull;</span><a href="/register" class="register" title="Register for free">Register free</a>
+            <a href="#" class="forgot-pass" title="Forgot Password?">Forgot Password?</a><span class="sep">&bull;</span><a href="/register" class="register" title="Register for free">Register Free</a>
         </div>
     </div>
 
