@@ -1,3 +1,4 @@
+<h4 class="suggestion-heading">Here are a few interesting links to get you started...</h4>
 <?php
 
 // Add any notification you want to appear in the sidebar here...
