@@ -25,7 +25,11 @@
     // Collapse Marks Info Sidebar
     // Hides the marks info and re-displays the default sidebar
     unmark.sidebar_collapse = function () {
-        if (Modernizr.mq('only screen and (max-width: 480px)')) { $('.sidebar-content').animate({right: '-85%'}, 600); }
+        if (Modernizr.mq('only screen and (max-width: 480px)')) {
+            $('.sidebar-content').animate({right: '-85%'}, 600, function () {
+                $(this).hide();
+            });
+        }
         $('.mark').removeClass('view-inactive').removeClass('view-active');
         unmark.sidebar_expand(true);
         unmark.sidebar_mark_info.fadeOut(400, function () {

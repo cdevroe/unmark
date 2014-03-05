@@ -1402,11 +1402,11 @@ body.label-7 .navigation-pane { border-top: none; }
 .login-page-bottom {
     background: #f0635a;
     width: 100%;
-    position: fixed;
+    position: absolute;
     bottom: 0;
-    height: 20%;
-    max-height: 150px;
+    height: 150px;
     text-align: center;
+    padding: 50px 20px 20px 20px;
     box-shadow: 0 18px 26px -20px rgba(0,0,0,0.4) inset, 0 5px 8px -6px rgba(0,0,0,0.35) inset;
     i {
         display: inline-block;
@@ -1428,13 +1428,13 @@ body.label-7 .navigation-pane { border-top: none; }
     width: 275px;
     margin: 50px auto 0;
     text-align: center;
-    position: absolute;
-    top: 0;
-    left: 50%;
+    position: relative;
+    //top: 0;
+    //left: 50%;
     color:$color_light;
     .loginInner {
         position: relative;
-        left:-50%;
+        //left:-50%;
     }
     h1 {
         @include title-text;
@@ -1712,17 +1712,14 @@ body.label-7 .navigation-pane { border-top: none; }
 // Position of Spinner
 .unmark-spinner {
     display: none;
-    position: absolute;
-    left: 47.3%;
-    top: 130px;
+    margin: 130px auto 0;
+    width: 75px;
 }
 
 .unmark-success {
     display: none;
-    position: absolute;
-    left: 47.1%;
-    top: 117px;
-    font-size: 79px;
+    margin: 117px auto 0;
+    width: 75px;
     i {
         width: 75px;
         height: 75px;
@@ -1934,6 +1931,8 @@ button.upgradeNowSidebar {
         position: absolute;
         right: -85%;
         padding-right:0;
+        display: none;
+        border-left: 1px solid $color_light;
     }
     #mobile-sidebar-show { display: block; }
     .navigation-content .menu-activator {
@@ -1960,14 +1959,15 @@ button.upgradeNowSidebar {
 
     .sidebar-mark-info .sidebar-label { margin-top: 0; }
 
-    .login-page-bottom { height: 17%; }
-    .login-page-bottom i {
-        width: 22px;
-        height: 22px;
-        margin: 15px auto;
-    }
-
     .loginWrapper, .forgotPassWrapper, .resetWrapper { margin-top: 25px; }
 
+    .login-page-bottom {
+        background: none;
+        box-shadow: none;
+        position: relative;
+        margin-top: 30px;
+    }
+
+    #helperforms { top: 35px; }
 
 }

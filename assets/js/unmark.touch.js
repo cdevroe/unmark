@@ -24,9 +24,11 @@
 		// Toggle the Mobile Sidebar
 		unmark.mobile_sidebar = function (hide) {
 			if (hide) {
-				$('.sidebar-content').animate({right: '-85%'}, 600);
+				$('.sidebar-content').show().animate({right: '-85%'}, 600, function () {
+					$(this).hide();
+				});
 			} else {
-				$('.sidebar-content').css('width', '85%').animate({right: 0 }, 600);
+				$('.sidebar-content').show().css('width', '85%').animate({right: 0 }, 600);
 				unmark.mobile_nav(true); // Hide Mobile Nav
 			}
 		}
