@@ -108,6 +108,7 @@ $config['plain_email_settings'] = array(
                     'mailtype'  => 'html',
                 );
 */
+$config['plain_email_settings'] = array('charset' => 'UTF-8', 'mailtype' => 'html', 'newline' => "\r\n");
 // Updated password email subject
 $config['password_updated_email_subject'] = 'Unmark - Password updated';
 

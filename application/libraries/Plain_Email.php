@@ -46,7 +46,7 @@ class Plain_Email extends CI_Email {
 
         $result = $this->send();
         if ($result === false) {
-            $this->CI->exceptional->createTrace(E_ERROR, 'Could not send reset password email.', __FILE__, __LINE__, array('header' => $this->_header_str));
+            $this->CI->exceptional->createTrace(E_ERROR, 'Could not send reset password email.', __FILE__, __LINE__, array('debug' => $this->print_debugger()));
         }
         return $result;
     }
@@ -89,7 +89,7 @@ class Plain_Email extends CI_Email {
 
         $result = $this->send();
         if ($result === false) {
-            $this->CI->exceptional->createTrace(E_ERROR, 'Could not send update password email.', __FILE__, __LINE__, array('header' => $this->_header_str));
+            $this->CI->exceptional->createTrace(E_ERROR, 'Could not send update password email.', __FILE__, __LINE__, array('debug' => $this->print_debugger()));
         }
         return $result;
     }
