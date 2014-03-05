@@ -1,12 +1,15 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>Welcome to Unmark</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css" />
     <link rel="stylesheet" href="/assets/css/unmark_welcome.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <script src="/assets/js/plugins/modernizr-2.7.1.min.js"></script>
     <script>
         /* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
         window.grunticon=function(e){if(e&&3===e.length){var t=window,n=!!t.document.createElementNS&&!!t.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect&&!!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"),A=function(A){var o=t.document.createElement("link"),r=t.document.getElementsByTagName("script")[0];o.rel="stylesheet",o.href=e[A&&n?0:A?1:2],r.parentNode.insertBefore(o,r)},o=new t.Image;o.onerror=function(){A(!1)},o.onload=function(){A(1===o.width&&1===o.height)},o.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="}};
@@ -94,6 +97,10 @@
                     <img src="../../assets/images/feature_bookmarklet.jpg">
                     <figcaption>Save from Menu Bar</figcaption>
                 </figure>
+                <figure class="feature mobile-only">
+                    <img src="../../assets/images/feature_chrome.jpg">
+                    <figcaption>More Coming Soon</figcaption>
+                </figure>
                 <!--
                 <figure class="feature">
                     <img src="http://placehold.it/344x300&text=.">
@@ -116,7 +123,7 @@
                     <ul>
                         <li>Filter <span class="full-only">saved bookmarks</span></li>
                         <li>Preview <span class="full-only">rich media</span></li>
-                        <li>Add labels<span class="full-only">, notes & hashtags</span></li>
+                        <li>Add labels<span class="full-only">, notes & tags</span></li>
                         <li>Search <span class="full-only">saved bookmarks</span></li>
                         <li>Save <span class="full-only">bookmarks</span></li>
                         <li>Keep <span class="full-only">bookmarks</span></li>

@@ -24,7 +24,7 @@ $color_black    : #000000;
 $color_shade    : #F9F9F9;
 
 // Color Variables for labels
-$color_orange : #DA6D46;
+$color_orange : #E28128;
 $color_blue   : #2D96C5;
 $color_yellow : #EAC863;
 $color_purple : #8E75A6;
@@ -94,6 +94,24 @@ body {
 //#unmark-wrapper { -webkit-transition:-webkit-filter 0.4s ease-in-out; }
 //.blurme { -webkit-filter: blur(5px); }
 
+// Logo
+.branding {
+    width: 150px;
+    height: 64px;
+    position: absolute;
+    left: 61px;
+    top: -2px;
+    overflow: hidden;
+    display: none;
+    .logo-text {
+        width: 130px;
+        height: 20px;
+        margin: 22px auto 18px;
+        background-size: 65%;
+        background-position: top left;
+    }
+}
+
 // Hide Stupid Outlines
 textarea:focus, input:focus, .hideoutline, button { outline: 0; }
 
@@ -102,6 +120,7 @@ img { max-width: 100%; }
 .centerme { text-align: center; }
 .tempdata { display: none; }
 .hide { display: none; }
+.clear { clear: both; }
 
 // Setup Page
 #unmark-setup {
@@ -267,7 +286,7 @@ img { max-width: 100%; }
             .upgrade-features {
                 border-top: 1px solid transparentize($color_light, 0.85);
                 border-bottom: 1px solid transparentize($color_light, 0.85);
-                margin-bottom: 20px 0;
+                margin: 24px 0;
                 padding: 30px 0 10px 0;
                 i {
                     font-size: 10px;
@@ -292,23 +311,11 @@ img { max-width: 100%; }
                 background-color: $color_blue;
                 font-size: 12px;
                 @include title-text;
+                @include font-smoothing;
                 color: white;
-                padding: 18px;
+                padding: 16px;
                 width: 100%;
             }
-        }
-    }
-    .branding {
-        width: 100%;
-        height: 64px;
-        margin-top: -64px;
-        overflow: hidden;
-        .logo-text {
-            width: 130px;
-            height: 20px;
-            margin: 22px auto 18px;
-            background-size: 65%;
-            background-position: top left;
         }
     }
 }
@@ -454,7 +461,7 @@ ul.nav-list {
     button#logout-btn {
         width: 100%;
         margin-top: 15px;
-        padding: 13px 0;
+        padding: 13px 0 15px;
         font-size: 13px;
         @include title-text;
         @include font-smoothing;
@@ -510,7 +517,7 @@ ul.nav-list {
     .mark {
         cursor: pointer;
         border-bottom:1px solid $color_lighter;
-        padding: 24px 70px 32px 25px;
+        padding: 24px 85px 32px 25px;
         position:relative;
         h2 {
             margin:0 0 12px 0;
@@ -594,7 +601,6 @@ ul.nav-list {
         &.label-2 {
             &:after {
                 background: $color_orange;
-                content: "R";
             }
             .mark-actions a {
                 background: lighten($color_orange, 7%);
@@ -606,7 +612,6 @@ ul.nav-list {
         &.label-3 {
             &:after {
                 background: $color_blue;
-                content: "W";
                 font-size: 11px;
                 padding-top: 1px;
             }
@@ -620,7 +625,6 @@ ul.nav-list {
         &.label-4 {
             &:after {
                 background: $color_yellow;
-                content: "L";
             }
             .mark-actions a {
                 background: $color_yellow;
@@ -632,7 +636,6 @@ ul.nav-list {
         &.label-5 {
             &:after {
                 background: $color_purple;
-                content: "B";
             }
             .mark-actions a {
                 background: lighten($color_purple, 7%);
@@ -644,7 +647,6 @@ ul.nav-list {
         &.label-6 {
             &:after {
                 background: $color_green;
-                content: "E";
             }
             .mark-actions a {
                 background: lighten($color_green, 7%);
@@ -656,7 +658,6 @@ ul.nav-list {
         &.label-7 {
             &:after {
                 background: $color_pink;
-                content: "D";
             }
             .mark-actions a {
                 background: lighten($color_pink, 7%);
@@ -713,9 +714,17 @@ ul.nav-list {
                 padding-top: 7px;
                 margin: 0;
                 border: 3px solid #fdfdfd;
-                width: 33.333%;
+                width: auto;
                 box-sizing: border-box;
                 float: left;
+            }
+            .sidenote {
+                padding: 10px 0 0 5px;
+                margin-bottom: 0;
+                a {
+                    color: $color_dark;
+                    text-decoration: underline;
+                }
             }
         }
     }
@@ -1038,6 +1047,7 @@ ul.timeline {
             margin-bottom: 20px;
             position: relative;
             font-size: 11px;
+            z-index: 11;
             span {
                 font-style: italic;
                 font-family: $sans-serif;
@@ -1060,7 +1070,7 @@ ul.timeline {
 
 // Line Graph
 canvas.graph {
-    border-bottom:1px solid transparent($color_light, 0.75);
+    border-bottom:1px solid transparentize($color_light, 0.75);
     margin: 25px 0 18px;
     width: 400px;
     height: 100px;
@@ -1375,9 +1385,10 @@ body.label-7 .navigation-pane { border-top: none; }
 .login-page-bottom {
     background: #f0635a;
     width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    height: 150px;
+    height: 20%;
+    max-height: 150px;
     text-align: center;
     box-shadow: 0 18px 26px -20px rgba(0,0,0,0.4) inset, 0 5px 8px -6px rgba(0,0,0,0.35) inset;
     i {
@@ -1583,8 +1594,12 @@ body.label-7 .navigation-pane { border-top: none; }
     top: -300px;
     a.exportbtn, a.importbtn {
         background: $color_blue;
-        padding: 6px 25px 8px;
-        border-radius: 5px;
+        padding: 10px 20px;
+        @include title-text;
+        color: white;
+        font-size: 12px;
+        display: block;
+        margin-bottom: 36px;
     }
     .importer {
         display:none;
@@ -1592,6 +1607,9 @@ body.label-7 .navigation-pane { border-top: none; }
     small {
         display: block;
         margin-top: 35px;
+    }
+    p {
+        font-size: 15px;
     }
 }
 
@@ -1646,8 +1664,8 @@ body.label-7 .navigation-pane { border-top: none; }
         right: 25px;
         i {
             color: $color_light;
-            width: 50px;
-            height: 50px;
+            width: 24px;
+            height: 24px;
             display: block;
             background-size: 100%;
         }
@@ -1812,10 +1830,11 @@ button.upgradeNowSidebar {
     }
     .sidebar-content {
         .sidebar-block {
-            box-shadow: none;
+            box-shadow: 0 1px 0 0 #e5e5e5;
         }
          &:after {
-            display: none;
+            box-shadow: -1px 0 0 0 #e5e5e5;
+            top: 65px;
         }
     }
     ul.timeline {
@@ -1828,6 +1847,41 @@ button.upgradeNowSidebar {
     .login-page-bottom {
         box-shadow: none;
     }
+    .fullonly {
+        display: none;
+    }
+    .mobileonly {
+        display: block;
+        &.inline {
+            display: inline;
+        }
+        &.inline-block {
+            display: inline-block;
+        }
+    }
+    .sidebar-content {
+        .sidebar-block {
+            .sidebar-inner {
+                a.btn, button {
+                    width: 100%;
+                    margin-bottom: 3px;
+                }
+            }
+        }
+    }
+    .login-page-bottom {
+        height: 68px;
+        padding: 20px;
+        i {
+            vertical-align: -8px;
+            margin: 0 10px 0 0;
+            width: 24px;
+            height: 24px;
+        }
+        span {
+            display: inline-block;
+        }
+    }
 }
 
 // Phone Portrait
@@ -1839,7 +1893,20 @@ button.upgradeNowSidebar {
 
     body { overflow-x: hidden; }
 
-    .marks_list .mark h2 { font-size: 14px; }
+    .marks_list {
+        .mark {
+            padding: 20px 70px 25px 20px;
+            h2 {
+                font-size: 16px;
+                line-height: 22px;
+            }
+            &:after {
+                right: 12px;
+                height: 18px;
+                width: 18px;
+            }
+        }
+    }
     .navigation-content { left: -64px; }
     .main-wrapper {
         left: 0;
@@ -1849,6 +1916,7 @@ button.upgradeNowSidebar {
     .sidebar-content {
         position: absolute;
         right: -85%;
+        padding-right:0;
     }
     #mobile-sidebar-show { display: block; }
     .navigation-content .menu-activator {
@@ -1857,12 +1925,13 @@ button.upgradeNowSidebar {
         top: 0;
     }
 
-    .navigation-pane .branding {
+    .branding {
         position: fixed;
         top: 21px;
         left: 60px;
         margin: 0;
         width: auto;
+        display: block;
         .logo-text {
             background-size: 100%;
             width: 85px;
@@ -1873,6 +1942,15 @@ button.upgradeNowSidebar {
     .marks_list .mark h2 a:hover:after { display: none; }
 
     .sidebar-mark-info .sidebar-label { margin-top: 0; }
+
+    .login-page-bottom { height: 17%; }
+    .login-page-bottom i {
+        width: 22px;
+        height: 22px;
+        margin: 15px auto;
+    }
+
+    .loginWrapper, .forgotPassWrapper, .resetWrapper { margin-top: 25px; }
 
 
 }

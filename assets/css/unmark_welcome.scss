@@ -49,6 +49,9 @@ body {
 	padding: 0;
 	color: white;
 	@include font-smooth;
+	&#unmark-login {
+		position: static;
+	}
 }
 a {
 	color: inherit;
@@ -287,11 +290,23 @@ nav {
 		}
 	}
 }
+.mobile-only {
+	display: none;
+}
 
 @media all and (max-width: 767px) {
 
 .full-only {
 	display: none;
+}
+.mobile-only {
+    display: block;
+    &.inline {
+        display: inline;
+    }
+    &.inline-block {
+        display: inline-block;
+    }
 }
 #top {
 	height: 64px;

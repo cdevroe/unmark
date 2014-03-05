@@ -61,12 +61,14 @@
 
     // Hides the left navigation
     unmark.hideNavigation = function () {
-        unmark.nav_panel.animate({ left: -285 }, { duration: 200, queue: false });
-        unmark.main_panel.animate({ left: 65 }, { duration: 200, queue: false });
-        $('.nav-panel').hide();
-        $('.menu-item').removeClass('active-menu');
-        $('.navigation-pane-links').show();
-        $('.menu-activator i').removeClass('icon-menu_close').addClass('icon-menu_open');
+        if (Modernizr.mq('only screen and (min-width: 480px)')) { $('.branding').fadeOut(); }
+        unmark.nav_panel.stop().animate({ left: -285 }, 400);
+        unmark.main_panel.stop().animate({ left: 65 }, 200, function () {
+            $('.nav-panel').hide();
+            $('.menu-item').removeClass('active-menu');
+            $('.navigation-pane-links').show();
+            $('.menu-activator i').removeClass('icon-menu_close').addClass('icon-menu_open');
+        });
     };
 
     // Function for interacting and animating the left navigation
@@ -117,6 +119,9 @@
 
         unmark.nav_panel.animate({ width: panel_width, }, 200);
         unmark.nav_panel.find('.nav-panel').animate({ width: panel_width, }, 200);
+
+        // Fade in Logo
+        $('.branding').fadeIn();
 
         if (panel_to_show === "#panel-menu"){
             $('.navigation-pane-links').show();

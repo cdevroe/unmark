@@ -24,3 +24,10 @@ function niceUrl($url)
 {
     return rtrim(preg_replace('/https?:\/\/(www.)?/', '', $url), '/');
 }
+
+
+// Get URL For Bookmarklet
+function getFullUrl()
+{
+    return @( $_SERVER["HTTPS"] != 'on' ) ? 'http://'.$_SERVER["SERVER_NAME"] :  'https://'.$_SERVER["SERVER_NAME"];
+}
