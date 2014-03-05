@@ -24,18 +24,15 @@
 		// Toggle the Mobile Sidebar
 		unmark.mobile_sidebar = function (hide) {
 			if (hide) {
-				$('.sidebar-content').animate({ width: '0', right: '-43%'}, 400);
+				$('.sidebar-content').animate({right: '-85%'}, 600);
 			} else {
-				$('.sidebar-content').animate({ width: '100%', right: 0 }, 400);
+				$('.sidebar-content').css('width', '85%').animate({right: 0 }, 600);
 				unmark.mobile_nav(true); // Hide Mobile Nav
 			}
 		}
 
 		// For Small Phone Size Devices
-		if (Modernizr.mq('only screen and (max-width: 320px)')) {
-
-			// Unbind the Hover State for Marks in List
-			$(document).off('mouseenter mouseleave', '.mark');
+		if (Modernizr.mq('only screen and (max-width: 480px)')) {
 
 			// Unbind/Bind the Hamburger to show correct sidebar menu
 			$('.menu-activator a').off().on('click', function (e) {
@@ -51,7 +48,25 @@
 				if (open === '0px') { unmark.mobile_sidebar(true); } else { unmark.mobile_sidebar(); }
 			});
 
+			// Set Max width for view of sidebar expand.
+			// Since they are parsed on the fly, we need to update the DOM
+			$('.menu-upgrade a, .menu-settings a, .menu-search a').attr('rel', '250');
+
 		}
+
+		// Tablets & Netbooks...
+		if (Modernizr.mq('only screen and (max-width: 1024px)')) {
+			// Unbind the Hover State for Marks in List as well as click
+			$(document).off('mouseenter mouseleave click', '.mark');
+
+			$('.mark').hammer().on("tap", function(e) {
+				e.gesture.preventDefault();
+				$('.mark-actions').hide();
+				$(this).find('.mark-actions').show();
+    		});
+
+		}
+
 
 	});
 

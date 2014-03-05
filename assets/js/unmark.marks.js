@@ -8,6 +8,8 @@
 
 (function ($) {
 
+    var _labels = 0;
+
     // Show Mark Info in Sidebar
     // Grabs relavaent info and shows the sidebar actions with info
     unmark.show_mark_info = function (mark_clicked) {
@@ -20,17 +22,15 @@
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
 
         // Quick function to populate the tags
-        function populateLabels(res) {
-            var list = unmark.label_list(res);
-            $('ul.sidebar-label-list').prepend(list);
+        function populateLabels() {
+            _labels = arguments[0] || _labels;
+            (! isNaN(_labels)) ? unmark.getData('labels', populateLabels) : $('ul.sidebar-label-list').prepend(unmark.label_list(_labels));
         };
 
         // Clean up view
         $('.mark').removeClass('view-inactive').removeClass('view-active');
         $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
         $('#mark-' + mark_id).addClass('view-active');
-
-        // Compile and Render the template
 
         // Check for note placeholder and update if there.
         if (mark_notehold !== ''){ mark_obj['notes'] = mark_notehold; }
@@ -39,20 +39,23 @@
         template = Hogan.compile(unmark.template.sidebar);
         output = template.render(mark_obj);
 
+        // Show Mobile Sidebar
+        if (Modernizr.mq('only screen and (max-width: 480px)')) { $('#mobile-sidebar-show').trigger('click'); }
+
         // Run the view interaction
         unmark.sidebar_mark_info.fadeOut(400, function () {
             if (unmark.sidebar_default.is(':visible')) {
                 unmark.sidebar_default.fadeOut(400, function () {
                     unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                         unmark.tagify_notes($('#notes-' + mark_id));
-                        unmark.getData('labels', populateLabels);
+                        populateLabels();
                         $("section.sidebar-info-preview").fitVids();
                     });
                 });
             } else {
                 unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                     unmark.tagify_notes($('#notes-' + mark_id));
-                    unmark.getData('labels', populateLabels);
+                    populateLabels();
                     $("section.sidebar-info-preview").fitVids();
                 });
             }
@@ -279,21 +282,5 @@
             }
         });
     };
-
-    // Watch Height on each mark action button
-    unmark.update_mark_action_btns = function () {
-        $('.mark').each(function () {
-            var height  = $(this).outerHeight(true),
-                half    = height / 2;
-            $(this).find('.mark-actions a').each(function () {
-                $(this).height(half);
-            });
-        });
-    };
-
-
-
-
-
 
 }(window.jQuery));

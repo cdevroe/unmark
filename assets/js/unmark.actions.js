@@ -17,9 +17,6 @@
         // Change Body Class for Label Colors
         body.removeClass().addClass(label_class);
 
-        // Bind the new mark action buttons
-        this.update_mark_action_btns();
-
         // Update Body Height ... just in case
         unmark.page_setup($('body').height());
 
@@ -28,6 +25,7 @@
     // Collapse Marks Info Sidebar
     // Hides the marks info and re-displays the default sidebar
     unmark.sidebar_collapse = function () {
+        if (Modernizr.mq('only screen and (max-width: 480px)')) { $('.sidebar-content').animate({right: '-85%'}, 600); }
         $('.mark').removeClass('view-inactive').removeClass('view-active');
         unmark.sidebar_expand(true);
         unmark.sidebar_mark_info.fadeOut(400, function () {
@@ -43,16 +41,19 @@
         if (compress === true) {
             return unmark.sidebar_content.animate({ width: '42.17749%' }, 800, function () {
                 expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
+                unmark.sidebar_content.removeClass('wide');
             });
         }
 
         if (expBtn.hasClass('icon-heading_collapse')) {
             unmark.sidebar_content.animate({ width: '42.17749%' }, 800, function () {
                 expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
+                unmark.sidebar_content.removeClass('wide');
             });
         } else {
             unmark.sidebar_content.animate({ width: '75%' }, 800, function () {
                 expBtn.removeClass('icon-heading_expand').addClass('icon-heading_collapse');
+                unmark.sidebar_content.addClass('wide');
             });
         }
 
@@ -148,7 +149,6 @@
                         }
                         unmark.main_content.find('.marks_list').append(output);
                         window.unmark_current_page = next_page;
-                        unmark.update_mark_action_btns();
                     }
                 });
             }

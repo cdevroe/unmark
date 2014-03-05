@@ -49,10 +49,6 @@ button.disabled {
     text-transform: uppercase;
     font-weight: 400;
 }
-@mixin font-smoothing {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
 
 
 // Clearfix Placeholder
@@ -71,8 +67,8 @@ button.disabled {
     content: "";
     position: absolute;
     top: $top;
-    @if $right { 
-        right: $hor; 
+    @if $right {
+        right: $hor;
     } @else {
         left: $hor;
     }

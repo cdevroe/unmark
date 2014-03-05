@@ -46,7 +46,7 @@ $title      : 'Montserrat', sans-serif;
 @import "partials/element-settings";
 /* normalize.css v2.1.3 | MIT License | git.io/normalize */article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background:0 0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
 
-// ================ Body
+// ================ Body //
 *, *:before, *:after {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -249,6 +249,7 @@ img { max-width: 100%; }
             width: 200px;
             padding: 10px 20px;
             overflow: scroll;
+            -webkit-overflow-scrolling: touch;
             border-left: 1px solid;
             border-color: lighten($color_dark, 4%);
             box-shadow: 0 6px 10px -6px rgba(0,0,0,0.3) inset;
@@ -394,7 +395,7 @@ ul.nav-list {
         position: relative;
         input {
             background: $color_white;
-            width: 310px;
+            width: 100%;
             padding: 10px 13px;
             font-size: 13px;
             font-weight: 300;
@@ -408,7 +409,7 @@ ul.nav-list {
             color: $color_light;
             line-height: 17px;
         }
-        ::-moz-placeholder { 
+        ::-moz-placeholder {
             @include title-text;
             @include font-smoothing;
             font-size: 11px;
@@ -428,7 +429,7 @@ ul.nav-list {
             right: 8px;
             width: 11px;
             height: 11px;
-            background-size: 100%;
+            background-size: 100%; //
         }
     }
     ul.tag-list {
@@ -451,7 +452,7 @@ ul.nav-list {
 
 #panel-settings {
     button#logout-btn {
-        width: 310px;
+        width: 100%;
         margin-top: 15px;
         padding: 13px 0;
         font-size: 13px;
@@ -466,6 +467,7 @@ ul.nav-list {
     @include span-columns(7);
     padding-right:0;
     overflow: scroll;
+    height: 100%;
     position: absolute;
     background: $color_white;
     h2.marks-heading {
@@ -564,11 +566,13 @@ ul.nav-list {
             top: 0;
             right: 0;
             z-index: 400;
+            height: 100%;
             a {
                 background: lighten($color_grey, 7%);
                 display: block;
                 text-align: center;
                 width: 58px;
+                height: 50%;
                 padding: 0;
                 position:relative;
                 i {
@@ -686,6 +690,7 @@ ul.nav-list {
     right: -1.5%;
     padding-right: 1.5%;
     overflow:scroll;
+    -webkit-overflow-scrolling: touch;
     z-index: 600;
     .sidebar-block {
         @include drop-shadow-border();
@@ -743,7 +748,7 @@ ul.nav-list {
         top: 8px;
         height: 56px;
         z-index: 1;
-        background: transparentize(#fcfafa, 0.1);
+        background: $color_shade;
         a {
             position: fixed;
             top: 21px;
@@ -1190,7 +1195,7 @@ canvas.graph {
         :-webkit-input-placeholder {
             @include font-smoothing;
         }
-        ::-moz-placeholder { 
+        ::-moz-placeholder {
             @include font-smoothing;
         }
         :-ms-input-placeholder {
@@ -1466,7 +1471,7 @@ body.label-7 .navigation-pane { border-top: none; }
             color: $color_light;
             line-height: 17px;
         }
-        ::-moz-placeholder { 
+        ::-moz-placeholder {
             @include title-text;
             @include font-smoothing;
             font-size: 11px;
@@ -1746,6 +1751,9 @@ button.upgradeNowSidebar {
 
 // ==============  Let's get Responsive ========
 
+.mobileonly { display: none !important; }
+.tabletonly { display: none !important; }
+
 #mobile-sidebar-show {
     display: none;
     width: 65px;
@@ -1766,11 +1774,22 @@ button.upgradeNowSidebar {
 // Table Landscape
 @media only screen and (max-width : 1024px) {
     .marks_list .mark h2 { font-size: 18px; }
+
+    .marks_list .mark .mark-actions a {
+        width: 75px;
+        float: left;
+        height: 100%;
+    }
+
+    .tabletonly { display: block !important; }
+
 }
 
 // Tablet Portrait
 @media only screen and (max-width : 767px) {
     .marks_list .mark h2 { font-size: 16px; }
+
+    #sidebar-graph { display: none; }
 
     .body {
         box-shadow: none;
@@ -1795,7 +1814,7 @@ button.upgradeNowSidebar {
         .sidebar-block {
             box-shadow: none;
         }
-         &:after { 
+         &:after {
             display: none;
         }
     }
@@ -1812,7 +1831,14 @@ button.upgradeNowSidebar {
 }
 
 // Phone Portrait
-@media only screen and (max-width : 320px) {
+@media only screen and (max-width : 480px) {
+
+    body[data-lookup="all"] { opacity: 1; }
+
+    a[data-action="sidebar_expand"] { display: none; }
+
+    body { overflow-x: hidden; }
+
     .marks_list .mark h2 { font-size: 14px; }
     .navigation-content { left: -64px; }
     .main-wrapper {
@@ -1822,7 +1848,7 @@ button.upgradeNowSidebar {
     .main-content { width: 100%; }
     .sidebar-content {
         position: absolute;
-        right: -43%;
+        right: -85%;
     }
     #mobile-sidebar-show { display: block; }
     .navigation-content .menu-activator {
@@ -1830,6 +1856,23 @@ button.upgradeNowSidebar {
         left: 62px;
         top: 0;
     }
-    #sidebar-graph { display: none; }
+
+    .navigation-pane .branding {
+        position: fixed;
+        top: 21px;
+        left: 60px;
+        margin: 0;
+        width: auto;
+        .logo-text {
+            background-size: 100%;
+            width: 85px;
+            margin: auto;
+        }
+    }
+
+    .marks_list .mark h2 a:hover:after { display: none; }
+
+    .sidebar-mark-info .sidebar-label { margin-top: 0; }
+
 
 }
