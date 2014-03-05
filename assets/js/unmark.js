@@ -48,20 +48,20 @@ if (unmark === undefined) { var unmark = {}; }
     unmark.swapClass = function (elem, removals, additions) {
         var self = elem;
 
-        // Check for simple replacement        
+        // Check for simple replacement
         if ( removals.indexOf( '*' ) === -1 ) {
             self.removeClass( removals );
             return !additions ? self : self.addClass( additions );
         }
-     
+
         // If regex is passed in create pattern and search/replace
-        var patt = new RegExp( '\\s' + 
+        var patt = new RegExp( '\\s' +
                 removals.
                     replace( /\*/g, '[A-Za-z0-9-_]+' ).
                     split( ' ' ).
-                    join( '\\s|\\s' ) + 
+                    join( '\\s|\\s' ) +
                 '\\s', 'g' );
-     
+
         // Run the replace with regex pattern
         self.each( function (i, it) {
             var cn = ' ' + it.className + ' ';
@@ -70,7 +70,7 @@ if (unmark === undefined) { var unmark = {}; }
             }
             it.className = $.trim(cn);
         });
-     
+
         // Return new swap
         return !additions ? self : self.addClass(additions);
     };
@@ -130,13 +130,21 @@ if (unmark === undefined) { var unmark = {}; }
         }
         return link;
     };
-    
+
+    // Function to parse query string
+    unmark.read_query_str = function (name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
     /**
 	 * Extends given function by calling the original function and then executing
 	 * another piece of code after original invocation
 	 * @returns New called function result (if not null) or original function result otherwise
 	 */
-	unmark.extendFunction = function(functionName, newFunction) {
+	unmark.extendFunction = function (functionName, newFunction) {
 		this[functionName] = (function(_obj, _super, _new) {
 			return function() {
 				var _origResult = _super.apply(_obj, arguments);
