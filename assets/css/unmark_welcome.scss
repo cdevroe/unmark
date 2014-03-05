@@ -49,6 +49,9 @@ body {
 	padding: 0;
 	color: white;
 	@include font-smooth;
+	&#unmark-login {
+		position: static;
+	}
 }
 a {
 	color: inherit;
