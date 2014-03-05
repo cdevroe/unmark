@@ -71,7 +71,7 @@
             echo '<ul>';
             foreach($random_featured_links as $link) {
                 if ($link_counter >= $number_of_links_to_show) break;
-                echo '<li><a style="color: black;" href="'.$link['url'].'">'.$link['title'].'</a></li>';
+                echo '<li><a style="color: black;" href="'.$link['url'].'" target="_blank">'.$link['title'].'</a></li>';
                 $link_counter++;
             }
             echo '</ul>';
