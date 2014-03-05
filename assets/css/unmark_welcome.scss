@@ -287,6 +287,9 @@ nav {
 		}
 	}
 }
+.mobile-only {
+	display: none;
+}
 
 @media all and (max-width: 767px) {
 
