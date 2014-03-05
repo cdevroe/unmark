@@ -2,7 +2,7 @@
     <ul class="timeline">
     <?php if (isset($stats)) : ?>
         <li class="timeline-dot">
-            <a href="/marks">All Links</a>
+            <a href="/marks">All Marks</a>
         </li>
         <li class="timeline-dot">
             <a href="/marks/today">Today<span><?php print determinePlurality($stats['marks']['today'], 'mark'); ?></span></a>

@@ -1,4 +1,4 @@
-<h4 class="suggestion-heading">Here are a few interesting links to get you started...</h4>
+<h4 class="suggestion-heading">Here are a few interesting marks to get you started...</h4>
 <?php
 
 // Add any notification you want to appear in the sidebar here...
@@ -42,7 +42,7 @@
 		$random_featured_links[] = array('title'=>'Listen: Discover Funk on Bandcamp','url'=>'http://bandcamp.com/?g=funk&s=top&f=all&w=-1#discover');
 		$random_featured_links[] = array('title'=>'Eat: Braised Chicken in White Wine','url'=>'http://tastefoodblog.com/2012/01/01/braised-chicken-in-white-wine-recipe/');
 		$random_featured_links[] = array('title'=>'Eat: Slow Cooker Cilantro Lime Chicken','url'=>'http://allrecipes.com/recipe/slow-cooker-cilantro-lime-chicken/');
-		
+
 		shuffle($random_featured_links);
 		$number_of_links = count($random_featured_links);
 		$number_of_links_to_show = 8;

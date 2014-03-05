@@ -61,7 +61,7 @@
 			// Unbind the Hover State for Marks in List as well as click
 			$(document).off('mouseenter mouseleave click', '.mark');
 
-			$('.mark').hammer().on("tap", function(e) {
+			$(document).hammer().on('tap', '.mark', function(e) {
 				e.gesture.preventDefault();
 				$('.mark-actions').hide();
 				$(this).find('.mark-actions').show();

@@ -37,7 +37,7 @@
     // If a lookup time frame
     // Work some magic
     $in_the           = (stristr($lookup_type, 'last-')) ? 'in the ' : '';
-    $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? $total . $link_plural . 'created ' . $in_the . str_replace('-', ' ', $lookup_type) : $heading['title'];
+    $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? $link_plural . 'created ' . $in_the . str_replace('-', ' ', $lookup_type) : $heading['title'];
 
 ?>
 <h2 class="marks-heading"><i class="<?php print $heading['icon']; ?>"></i> <?php print $heading['title']; ?></h2>
