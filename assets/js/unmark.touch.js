@@ -26,9 +26,11 @@
 			if (hide) {
 				$('.sidebar-content').show().animate({right: '-85%'}, 600, function () {
 					$(this).hide();
+					$('a#mobile-sidebar-show i').removeClass('icon-heading_close').addClass('icon-ellipsis');
 				});
 			} else {
 				$('.sidebar-content').show().css('width', '85%').animate({right: 0 }, 600);
+				$('a#mobile-sidebar-show i').removeClass('.icon-ellipsis').addClass('icon-heading_close');
 				unmark.mobile_nav(true); // Hide Mobile Nav
 			}
 		}

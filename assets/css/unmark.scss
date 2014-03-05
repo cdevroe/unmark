@@ -781,7 +781,7 @@ ul.nav-list {
         width: 100%;
         top: 8px;
         height: 56px;
-        z-index: 1;
+        z-index: 99999;
         background: $color_shade;
         a {
             position: fixed;
@@ -902,6 +902,7 @@ ul.nav-list {
             font-size: 14px;
             line-height: 23px;
             padding: 0 2px;
+            overflow:hidden;
             a.social-link {
                 float:left;
                 border: 1px solid $color_light;
@@ -1910,6 +1911,8 @@ button.upgradeNowSidebar {
 
 // Phone Portrait
 @media only screen and (max-width : 480px) {
+
+    .sidebar-action { display: none; }
 
     body[data-lookup="all"] { opacity: 1; }
 
