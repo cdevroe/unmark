@@ -2,7 +2,7 @@
     <div class="sidebar-block" id="sidebar-graph">
         <div class="sidebar-inner">
             <?php if (isset($stats)) : ?>
-            <canvas id="unmark-graph" class="graph" width="300" height="150"></canvas>
+            <!--<canvas id="unmark-graph" class="graph" width="300" height="150"></canvas>-->
             <p>
                 You saved <span class="ns-today"><?php print $stats['saved']['today']; ?></span>
                 links today and archived <span class="na-today"><?php print $stats['archived']['today']; ?></span>.
