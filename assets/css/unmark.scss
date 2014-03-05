@@ -267,7 +267,7 @@ img { max-width: 100%; }
             .upgrade-features {
                 border-top: 1px solid transparentize($color_light, 0.85);
                 border-bottom: 1px solid transparentize($color_light, 0.85);
-                margin-bottom: 20px 0;
+                margin: 24px 0;
                 padding: 30px 0 10px 0;
                 i {
                     font-size: 10px;
@@ -292,8 +292,9 @@ img { max-width: 100%; }
                 background-color: $color_blue;
                 font-size: 12px;
                 @include title-text;
+                @include font-smoothing;
                 color: white;
-                padding: 18px;
+                padding: 16px;
                 width: 100%;
             }
         }
@@ -594,7 +595,7 @@ ul.nav-list {
         &.label-2 {
             &:after {
                 background: $color_orange;
-                content: "R";
+                //content: "R";
             }
             .mark-actions a {
                 background: lighten($color_orange, 7%);
@@ -606,9 +607,9 @@ ul.nav-list {
         &.label-3 {
             &:after {
                 background: $color_blue;
-                content: "W";
-                font-size: 11px;
-                padding-top: 1px;
+                //content: "W";
+                //font-size: 11px;
+                //padding-top: 1px;
             }
             .mark-actions a {
                 background: lighten($color_blue, 7%);
@@ -620,7 +621,7 @@ ul.nav-list {
         &.label-4 {
             &:after {
                 background: $color_yellow;
-                content: "L";
+                //content: "L";
             }
             .mark-actions a {
                 background: $color_yellow;
@@ -632,7 +633,7 @@ ul.nav-list {
         &.label-5 {
             &:after {
                 background: $color_purple;
-                content: "B";
+                //content: "B";
             }
             .mark-actions a {
                 background: lighten($color_purple, 7%);
@@ -644,7 +645,7 @@ ul.nav-list {
         &.label-6 {
             &:after {
                 background: $color_green;
-                content: "E";
+                //content: "E";
             }
             .mark-actions a {
                 background: lighten($color_green, 7%);
@@ -656,7 +657,7 @@ ul.nav-list {
         &.label-7 {
             &:after {
                 background: $color_pink;
-                content: "D";
+                //content: "D";
             }
             .mark-actions a {
                 background: lighten($color_pink, 7%);
@@ -1060,7 +1061,7 @@ ul.timeline {
 
 // Line Graph
 canvas.graph {
-    border-bottom:1px solid transparent($color_light, 0.75);
+    border-bottom:1px solid transparentize($color_light, 0.75);
     margin: 25px 0 18px;
     width: 400px;
     height: 100px;
@@ -1583,8 +1584,10 @@ body.label-7 .navigation-pane { border-top: none; }
     top: -300px;
     a.exportbtn, a.importbtn {
         background: $color_blue;
-        padding: 6px 25px 8px;
-        border-radius: 5px;
+        padding: 10px 40px;
+        @include title-text;
+        color: white;
+        font-size: 12px;
     }
     .importer {
         display:none;
@@ -1592,6 +1595,9 @@ body.label-7 .navigation-pane { border-top: none; }
     small {
         display: block;
         margin-top: 35px;
+    }
+    p {
+        font-size: 15px;
     }
 }
 
@@ -1646,8 +1652,8 @@ body.label-7 .navigation-pane { border-top: none; }
         right: 25px;
         i {
             color: $color_light;
-            width: 50px;
-            height: 50px;
+            width: 24px;
+            height: 24px;
             display: block;
             background-size: 100%;
         }
