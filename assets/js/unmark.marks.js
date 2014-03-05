@@ -32,14 +32,15 @@
         $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
         $('#mark-' + mark_id).addClass('view-active');
 
-        // Compile and Render the template
-
         // Check for note placeholder and update if there.
         if (mark_notehold !== ''){ mark_obj['notes'] = mark_notehold; }
 
         // Render the Template
         template = Hogan.compile(unmark.template.sidebar);
         output = template.render(mark_obj);
+
+        // Show Mobile Sidebar
+        if (Modernizr.mq('only screen and (max-width: 480px)')) { $('#mobile-sidebar-show').trigger('click'); }
 
         // Run the view interaction
         unmark.sidebar_mark_info.fadeOut(400, function () {
@@ -281,21 +282,5 @@
             }
         });
     };
-
-    // Watch Height on each mark action button
-    unmark.update_mark_action_btns = function () {
-        $('.mark').each(function () {
-            var height  = $(this).outerHeight(true),
-                half    = height / 2;
-            $(this).find('.mark-actions a').each(function () {
-                $(this).height(half);
-            });
-        });
-    };
-
-
-
-
-
 
 }(window.jQuery));
