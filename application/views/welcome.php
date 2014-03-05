@@ -94,6 +94,10 @@
                     <img src="../../assets/images/feature_bookmarklet.jpg">
                     <figcaption>Save from Menu Bar</figcaption>
                 </figure>
+                <figure class="feature mobile-only">
+                    <img src="../../assets/images/feature_chrome.jpg">
+                    <figcaption>More Coming Soon</figcaption>
+                </figure>
                 <!--
                 <figure class="feature">
                     <img src="http://placehold.it/344x300&text=.">
@@ -116,7 +120,7 @@
                     <ul>
                         <li>Filter <span class="full-only">saved bookmarks</span></li>
                         <li>Preview <span class="full-only">rich media</span></li>
-                        <li>Add labels<span class="full-only">, notes & hashtags</span></li>
+                        <li>Add labels<span class="full-only">, notes & tags</span></li>
                         <li>Search <span class="full-only">saved bookmarks</span></li>
                         <li>Save <span class="full-only">bookmarks</span></li>
                         <li>Keep <span class="full-only">bookmarks</span></li>

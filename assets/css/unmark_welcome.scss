@@ -293,6 +293,15 @@ nav {
 .full-only {
 	display: none;
 }
+.mobile-only {
+    display: block;
+    &.inline {
+        display: inline;
+    }
+    &.inline-block {
+        display: inline-block;
+    }
+}
 #top {
 	height: 64px;
 }

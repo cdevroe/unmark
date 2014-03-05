@@ -24,7 +24,7 @@ $color_black    : #000000;
 $color_shade    : #F9F9F9;
 
 // Color Variables for labels
-$color_orange : #DA6D46;
+$color_orange : #E28128;
 $color_blue   : #2D96C5;
 $color_yellow : #EAC863;
 $color_purple : #8E75A6;
@@ -455,7 +455,7 @@ ul.nav-list {
     button#logout-btn {
         width: 100%;
         margin-top: 15px;
-        padding: 13px 0;
+        padding: 13px 0 15px;
         font-size: 13px;
         @include title-text;
         @include font-smoothing;
@@ -1584,10 +1584,12 @@ body.label-7 .navigation-pane { border-top: none; }
     top: -300px;
     a.exportbtn, a.importbtn {
         background: $color_blue;
-        padding: 10px 40px;
+        padding: 10px 20px;
         @include title-text;
         color: white;
         font-size: 12px;
+        display: block;
+        margin-bottom: 36px;
     }
     .importer {
         display:none;
@@ -1818,10 +1820,11 @@ button.upgradeNowSidebar {
     }
     .sidebar-content {
         .sidebar-block {
-            box-shadow: none;
+            box-shadow: 0 1px 0 0 #e5e5e5;
         }
          &:after {
-            display: none;
+            box-shadow: -1px 0 0 0 #e5e5e5;
+            top: 65px;
         }
     }
     ul.timeline {
@@ -1834,6 +1837,41 @@ button.upgradeNowSidebar {
     .login-page-bottom {
         box-shadow: none;
     }
+    .fullonly {
+        display: none;
+    }
+    .mobileonly {
+        display: block;
+        &.inline {
+            display: inline;
+        }
+        &.inline-block {
+            display: inline-block;
+        }
+    }
+    .sidebar-content { 
+        .sidebar-block {
+            .sidebar-inner {
+                a.btn, button {
+                    width: 100%;
+                    margin-bottom: 3px;
+                }
+            }
+        }
+    }
+    .login-page-bottom {
+        height: 68px;
+        padding: 20px;
+        i {
+            vertical-align: -8px;
+            margin: 0 10px 0 0;
+            width: 24px;
+            height: 24px;
+        }
+        span {
+            display: inline-block;
+        }
+    }
 }
 
 // Phone Portrait
@@ -1845,7 +1883,20 @@ button.upgradeNowSidebar {
 
     body { overflow-x: hidden; }
 
-    .marks_list .mark h2 { font-size: 14px; }
+    .marks_list {
+        .mark {
+            padding: 20px 70px 25px 20px;
+            h2 { 
+                font-size: 16px; 
+                line-height: 22px;
+            }
+            &:after {
+                right: 12px;
+                height: 18px;
+                width: 18px;
+            }
+        }
+    }
     .navigation-content { left: -64px; }
     .main-wrapper {
         left: 0;
@@ -1855,6 +1906,7 @@ button.upgradeNowSidebar {
     .sidebar-content {
         position: absolute;
         right: -85%;
+        padding-right:0;
     }
     #mobile-sidebar-show { display: block; }
     .navigation-content .menu-activator {
