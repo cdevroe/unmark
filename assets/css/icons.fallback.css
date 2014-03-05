@@ -162,3 +162,11 @@
 	background-image: url('png/logo_text_light.png');
 	background-repeat: no-repeat;
 }
+.icon-logo_text_white {
+	background-image: url('png/logo_text_white.png');
+	background-repeat: no-repeat;
+}
+.icon-bell {
+	background-image: url('png/bell.png');
+	background-repeat: no-repeat;
+}
