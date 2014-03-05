@@ -98,6 +98,9 @@
         // Otherwise prevent click default
         e.preventDefault();
 
+        // In Case... hide the mark actions
+        $('.mark-actions').hide();
+
         // If tap/click on open menu, hide menu
         if (elem_parent.hasClass('active-menu')) {
             $('.menu-item').removeClass('active-menu');
@@ -175,9 +178,6 @@
             // First update sidebar count
             $('.na-today').text(archived.today);
             $('.ns-year').text(marks['ages ago']);
-
-            // Now the graph
-            unmark.createGraph(archived['4 days ago'], archived['3 days ago'], archived['2 days ago'], archived['yesterday'], archived['today'], saved['4 days ago'], saved['3 days ago'], saved['2 days ago'], saved['yesterday'], saved['today']);
 
         });
     };
