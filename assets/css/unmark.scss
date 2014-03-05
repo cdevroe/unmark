@@ -764,6 +764,14 @@ ul.nav-list {
             }
         }
     }
+    h4.suggestion-heading {
+        width: 100%;
+        padding: 26px 22px;
+        margin: 0px;
+        font-weight: 400;
+        font-style: italic;
+        border-bottom: 1px solid #e7e7e7;
+    }
 }
 
 .sidebar-mark-info {
@@ -1823,7 +1831,7 @@ button.upgradeNowSidebar {
 
     #sidebar-graph { display: none; }
 
-    .body {
+    body {
         box-shadow: none;
     }
     .main-wrapper {
@@ -1844,10 +1852,12 @@ button.upgradeNowSidebar {
     }
     .sidebar-content {
         .sidebar-block {
-            box-shadow: 0 1px 0 0 #e5e5e5;
+            box-shadow: none;
+            border-bottom: 1px solid #e4e4e4;
         }
          &:after {
-            box-shadow: -1px 0 0 0 #e5e5e5;
+            box-shadow: none;
+            border-left: 1px solid #e4e4e4;
             top: 65px;
         }
     }
@@ -1885,15 +1895,17 @@ button.upgradeNowSidebar {
     }
     .login-page-bottom {
         height: 68px;
-        padding: 20px;
+        padding: 20px 10px;
         i {
-            vertical-align: -8px;
-            margin: 0 10px 0 0;
-            width: 24px;
-            height: 24px;
+            //vertical-align: -8px;
+            //margin: 0 10px 0 0;
+            //width: 20px;
+            //height: 20px;
+            display: none;
         }
         span {
             display: inline-block;
+            font-size: 11px;
         }
     }
 }
@@ -1905,7 +1917,7 @@ button.upgradeNowSidebar {
 
     a[data-action="sidebar_expand"] { display: none; }
 
-    body { overflow-x: hidden; }
+    body { overflow-x: hidden; box-shadow:none; }
 
     .marks_list {
         .mark {
