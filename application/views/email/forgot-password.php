@@ -126,9 +126,9 @@
                                        <div class="imgpop">
                                           <a href="https://unmark.it" style="text-decoration:none;">
                                              <!-- Logo Mark -->
-                                             <img src="http://{HOST}/assets/images/logo.png" alt="logo" border="0" style="display:inline-block; border:none; outline:none; text-decoration:none;" st-image="edit" class="logo" height="40px">
+                                             <img src="https://{HOST}/assets/images/logo.png" alt="logo" border="0" style="display:inline-block; border:none; outline:none; text-decoration:none;" st-image="edit" class="logo" height="40px">
                                              <!-- Logo Text -->
-                                             <img src="http://{HOST}/assets/images/logo_text_light.png" alt="logo" border="0" style="display:inline-block; border:none; outline:none; text-decoration:none;margin-left: 8px;vertical-align:12px;" st-image="edit" height="20px">
+                                             <img src="https://{HOST}/assets/images/logo_text_light.png" alt="logo" border="0" style="display:inline-block; border:none; outline:none; text-decoration:none;margin-left: 8px;vertical-align:12px;" st-image="edit" height="20px">
                                           </a>
                                        </div>
                                     </td>
