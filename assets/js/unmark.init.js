@@ -93,6 +93,9 @@
             $(document).pjax("a[href*='/']", unmark.main_content);
             $(document).on('submit', '#search-form', function(e) {
                 $.pjax.submit(e, unmark.main_content);
+                if (Modernizr.mq('only screen and (max-width: 480px)')) {
+                    unmark.mobile_nav(true);
+                }
             });
             $(document).on('pjax:complete', function() {
                 window.unmark_current_page = 1;

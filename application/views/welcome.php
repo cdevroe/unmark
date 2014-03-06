@@ -34,7 +34,7 @@
             <h1>Sign In To</h1>
             <div class="login-text"><img src="/assets/images/icons/logo_text_light.png" /></div>
             <form id="unmarkLogin" method="post" action="/login">
-                <input type="email" class="field-input" name="email" id="email" placeholder="Email Address" />
+                <input type="email" class="field-input" name="email" id="email" placeholder="Email Address" autocapitalize="off" />
                 <input type="password" class="field-input" name="password" id="password" placeholder="Password" />
                 <button class="login-submit" type="submit"><i class="icon-go"></i></button>
             </form>

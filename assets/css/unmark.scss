@@ -430,13 +430,17 @@ ul.nav-list {
             color: $color_light;
             line-height: 17px;
         }
-        i {
+        button {
+            background: none;
             position: absolute;
-            top: 12px;
-            right: 8px;
-            width: 11px;
-            height: 11px;
-            background-size: 100%; //
+            top: 8px;
+            right: -6px;
+            i {
+                width: 11px;
+                height: 11px;
+                display: block;
+                background-size: 100%;
+            }
         }
     }
     ul.tag-list {
