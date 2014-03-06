@@ -52,6 +52,7 @@ class Register extends Plain_Controller
 			// set redirect path
 			$redirect              = '/marks';
 			$this->data['success'] = true;
+			$this->data['email']   = $email;
 
 		}
 		// If failure, get messages
