@@ -1,9 +1,10 @@
 Unmark
 =======
 
-An open source, bookmarking service created by [Colin Devroe](http://colin.getbarley.com/) and [ rebuilt by Plain](http://plainmade.com/blog/7020/).
+An open source, bookmarking service created by [Colin Devroe](http://colin.getbarley.com/) and [ rebuilt by Plain](http://plainmade.com/blog/7825/say-hello-to-unmark).
 
-While this is open for anyone to use, we also have a [hosted version](https://unmark.it) that you can sign to for free as well.
+- [Unmark.it](https://unmark.it) - A hosted version of Unmark. [Sign up for free](https://unmark.it)
+- [Unmark Wiki](https://github.com/plainmade/unmark/wiki) - Everything you wanted to know about Unmark.
 
 
 Installation
@@ -27,11 +28,17 @@ Upgrading
 - You could also run this from the command line `php index.php migrations latest`
 
 
-We Use Grunt
+Building Locally
 ==
 
-- We use Grunt to compile our SASS files as well as concat/uglify our JS files for production and some other small tasks.
+- We use [Grunt](http://gruntjs.com/) to compile our SASS files as well as concat/uglify our JS files for production and some other small tasks.
 - For more info, please [check out our Grunt guide](https://github.com/plainmade/nilai/wiki/Grunt).
+
+
+Staging
+==
+
+Generally our **staging** branch will always be kept up to date with **master**, unless we are testing a feature. We use this internally to test on our staging server. You can feel free to use this at any time, just note that things might not always work 100%.
 
 
 How To Contribute
