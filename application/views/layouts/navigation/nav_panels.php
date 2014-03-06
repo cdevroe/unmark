@@ -15,8 +15,8 @@
 </div>
 <div id="panel-search" class="nav-panel">
 	<form method="get" action="/marks/search" id="search-form">
-		<input type="text" name="q" id="search-input" placeholder="SEARCH...">
-		<i class="icon-go"></i>
+		<input type="text" name="q" id="search-input" placeholder="SEARCH..." autocapitalize="off">
+		<button type="submit"><i class="icon-go"></i></button>
 	</form>
 
 	<h4 class="nav-heading">Most-Used Tags</h4>

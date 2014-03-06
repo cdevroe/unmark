@@ -34,8 +34,8 @@
             <h1>Sign In To</h1>
             <div class="login-text"><img src="/assets/images/icons/logo_text_light.png" /></div>
             <form id="unmarkLogin" method="post" action="/login">
-                <input type="email" class="field-input" name="email" id="email" placeholder="Email Address" autocomplete="off" autocapitalize="off" autocorrect="off" />
-                <input type="password" class="field-input" name="password" id="password" placeholder="Password" autocomplete="off" />
+                <input type="email" class="field-input" name="email" id="email" placeholder="Email Address" autocapitalize="off" />
+                <input type="password" class="field-input" name="password" id="password" placeholder="Password" />
                 <button class="login-submit" type="submit"><i class="icon-go"></i></button>
             </form>
             <div class="response-message"></div>
@@ -61,7 +61,7 @@
     <div class="unmark-success"><i class="icon-check"></i></div>
 
     <div class="login-page-bottom">
-        <a href="#" class="toggle_welcome" title="What is Unmark?"><span>What is Unmark?</span></a>
+        <a href="#" class="toggle_welcome" title="What is Unmark?"><i class="icon-circle_arrow_up"></i><span>What is Unmark?</span></a>
     </div>
 
 </div>

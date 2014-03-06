@@ -13,6 +13,7 @@
 				$('.main-wrapper').animate({left: 0}, 400);
 				$('.navigation-content').animate({left: '-64'}, 400);
 				$('.navigation-content .menu-activator').animate({left: 62}, 400);
+				$('.menu-item').removeClass('active-menu');
 			} else {
 				$('.main-wrapper').animate({left: 65}, 400);
 				$('.navigation-content').animate({left: 0}, 400);
