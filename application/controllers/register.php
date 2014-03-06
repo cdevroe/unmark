@@ -22,6 +22,7 @@ class Register extends Plain_Controller
 		$email    = (isset($this->db_clean->email)) ? $this->db_clean->email : null;
 		$password = (isset($this->clean->password)) ? $this->clean->password : null;
 
+		$this->data['success'] = false;
 		$this->load->model('users_model', 'user');
 		$user = $this->user->create(array('email' => $email, 'password' => $password, 'active' => '1'));
 
@@ -49,8 +50,8 @@ class Register extends Plain_Controller
 			}
 
 			// set redirect path
-			$redirect           = '/marks';
-			$this->data['user'] = $user;
+			$redirect              = '/marks';
+			$this->data['success'] = true;
 
 		}
 		// If failure, get messages
@@ -59,7 +60,9 @@ class Register extends Plain_Controller
 		else {
 			$redirect = '/register';
 			$this->setFlashMessage($user);
-			$this->data['errors'] = $user;
+			foreach ($user as $error_code => $message) {
+				$this->data['message'] = $message;
+			}
 		}
 
 		// Redirect for web view or print for ajax call

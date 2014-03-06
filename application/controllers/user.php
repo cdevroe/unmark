@@ -34,14 +34,16 @@ class User extends Plain_Controller
     public function updateEmail()
     {
         if (! isset($this->db_clean->email) || ! isValid($this->db_clean->email, 'email')) {
-            $this->data['message'] = 'Please submit a valid email address.';
+            $error_codes = $this->config->item('error_codes');
+            $this->data['message'] = $error_codes[604];
         }
         else {
             // Check if email already exists
             $total = $this->user->count("email = '" . $this->db_clean->email . "'");
 
             if ($total > 0) {
-                $this->data['message'] = 'Email address already exists. Please try again.';
+                $error_codes = $this->config->item('error_codes');
+                $this->data['message'] = $error_codes[603];
             }
             else {
                 $user = $this->user->update($this->user_id, array('email' => $this->db_clean->email));
@@ -62,7 +64,8 @@ class User extends Plain_Controller
     public function updatePassword()
     {
         if (! isset($this->clean->password) || ! isValid($this->clean->password, 'password')) {
-            $this->data['message'] = 'Please submit a valid password. Passwords must contain at least one CAPITAL letter, one number and be a minimum of 6 characters.';
+            $error_codes = $this->config->item('error_codes');
+            $this->data['message'] = $error_codes[602];
         }
         else {
 

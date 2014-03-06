@@ -37,12 +37,12 @@
 
         unmark.ajax('/register/user', 'post', query, function (res) {
 
-            if (res.user) {
+            if (res.success) {
                 showMessage(form, false, 'You are now registered, logging you in...');
                 setTimeout(function(){ window.location.href = "/" }, 2500);
             } else {
                 showSpinner(form, false);
-                showMessage(form, true, 'Your email or password is not valid. Password must be at least six chars long, have one capital, one lowecase and one number ');
+                showMessage(form, true, res.message);
             }
 
         });
