@@ -50,6 +50,9 @@ $config['error_codes'][500] = 'Internal Error';
 // System Level Errors - Level 600 - 699
 $config['error_codes'][600] = 'Security token is invalid.';
 $config['error_codes'][601] = 'Validation Errors';
+$config['error_codes'][602] = 'Your password is invalid. Passwords must contain at least one CAPITAL letter, one number and be a minimum of 6 characters.';
+$config['error_codes'][603] = 'This email address already exists in the system.';
+$config['error_codes'][604] = 'Your email address is invalid.';
 
 /*
  - Array of titles & urls to add to all newly registered accounts
