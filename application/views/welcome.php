@@ -61,7 +61,7 @@
     <div class="unmark-success"><i class="icon-check"></i></div>
 
     <div class="login-page-bottom">
-        <a href="#" class="toggle_welcome" title="What is Unmark?"><span>What is Unmark?</span></a>
+        <a href="#" class="toggle_welcome" title="What is Unmark?"><i class="icon-circle_arrow_up"></i><span>What is Unmark?</span></a>
     </div>
 
 </div>

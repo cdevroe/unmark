@@ -474,6 +474,7 @@ ul.nav-list {
     @include span-columns(7);
     padding-right:0;
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
     height: 100%;
     position: absolute;
     background: $color_white;
@@ -1415,7 +1416,7 @@ body.label-7 .navigation-pane { border-top: none; }
     bottom: 0;
     height: 150px;
     text-align: center;
-    padding: 50px 20px 20px 20px;
+    padding: 10px 20px 20px 20px;
     box-shadow: 0 18px 26px -20px rgba(0,0,0,0.4) inset, 0 5px 8px -6px rgba(0,0,0,0.35) inset;
     i {
         display: inline-block;
@@ -1488,7 +1489,6 @@ body.label-7 .navigation-pane { border-top: none; }
             color: $color_dark;
             font-size: 17px;
             right: -5px;
-            display:none;
             i {
                 width: 12px;
                 height: 12px;
