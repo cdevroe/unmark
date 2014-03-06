@@ -1,37 +1,30 @@
 Unmark
 =======
 
-**Note: Unmark is a "work in progress" by team Plain. Please expect many updates, every day, and for things to appear and disappear without warning. Thar be dragons! Follow along via [@plainmade](http://twitter.com/plainmade)**
+An open source, bookmarking service created by [Colin Devroe](http://colin.getbarley.com/) and [ rebuilt by Plain](http://plainmade.com/blog/7020/).
 
-A work-in-progress, open source, bookmarking service created by [Colin Devroe](http://colin.getbarley.com/) and [being rebuilt by Plain](http://plainmade.com/blog/7020/).
+While this is open for anyone to use, we also have a [hosted version](https://unmark.it) that you can sign to for free as well.
 
-We're completely open to contributions and ideas.
 
 Installation
 ==
 
-- Download [the latest release](https://github.com/plainmade/nilai/releases).
+- Download [the latest release](https://github.com/plainmade/unmark/releases) or clone the repo.
 - Unzip the archive.
-- Copy /application/config/database-sample.php to /application/config/database.php (leave database-sample.php)
-- Fill in proper database details in /application/config/database.php
-- Run /install/
+- Copy `/application/config/database-sample.php` to `/application/config/database.php` (leave `database-sample.php`)
+- Create a database
+- Fill in proper database details in `/application/config/database.php`
+- Navigate to `/setup` (note that index will result in an error until `/setup` has been run)
 - Follow onscreen instructions
 
-Or, Installation via cloning
-==
-
-- I figure, if you know how to clone this repo, you don't need much more help.
-- Copy /application/config/database-sample.php to /application/config/database.php (leave database-sample.php)
-- Fill in proper database details in /application/config/database.php
-- Run /install/
-- Follow onscreen instructions
 
 Upgrading
-== 
+==
 
-- Download [the latest release](https://github.com/plainmade/nilai/releases).
+- Download [the latest release](https://github.com/plainmade/unmark/releases).
 - Replace all files (keeping your local configuration intact.)
-- Run /upgrade/
+- Navigate to `/upgrade`
+- You could also run this from the command line `php index.php migrations latest`
 
 
 We Use Grunt
@@ -54,4 +47,4 @@ To submit code patches:
 - Make updates to your code.
 - Submit a Pull Request.
 
-Enjoy. If you have questions or issues submit them [on GitHub](http://github.com/plainmade/nilai).
+Enjoy. If you have questions or issues submit them [on GitHub](http://github.com/plainmade/unmark).
