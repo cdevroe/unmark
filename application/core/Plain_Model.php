@@ -48,18 +48,21 @@ class Plain_Model extends CI_Model
     public function checkForHit($query)
     {
         $cache_key      = $this->getCacheKey($query);
+        print $cache_key . PHP_EOL;
         $data           = $this->plain_cache->read($cache_key);
         $this->num_rows = 0;
 
         // If data is found, just return it
         if (! empty($data)) {
             $data           = unserialize($data);
-            $this->num_rows = (is_array($data) ? count($data) : 1;
+            $this->num_rows = (is_array($data)) ? count($data) : 1;
+            print 'CACHED' . PHP_EOL;
             return $data;
         }
 
         // Cache miss, hit DB
         $q = $this->db->query($query);
+        print 'NOT CACHED' . PHP_EOL;
 
         // Check for errors
         $this->sendException();
@@ -68,7 +71,10 @@ class Plain_Model extends CI_Model
         if ($this->db_error == false) {
             $this->num_rows = $q->num_rows();
             $result         = $this->stripSlashes($q->result());
-            $this->plain_cache->add($cache_key, serialize($result), true);
+
+            if ($this->dont_cache === false) {
+                $this->plain_cache->add($cache_key, serialize($result), true);
+            }
         }
         else {
             $result = array();
@@ -105,18 +111,36 @@ class Plain_Model extends CI_Model
     {
         // Set the tables not to cache results for
         // If the current table is one of the list, return null
-        $no_cache = array('plain_sessions', 'tokens', 'users', 'labels', 'tags');
+        $no_cache = array('plain_sessions', 'tokens', 'tags');
+        print $this->table . PHP_EOL;
+        //print $query . "<BR>\n";
         if (in_array($this->table, $no_cache)) {
             return null;
         }
 
+        $id = null;
+        if ($this->table == 'labels') {
+            $id = (stristr($query, 'user_id IS NULL') && stristr($query, 'smart_key IS NULL')) ? 'labels-system' : null;
+            $id = (empty($id) && stristr($query, 'user_id IS NULL')) ? 'labels-smart' : $id;
+        }
+
+        $id = (empty($id)) ? $this->getCacheID($query, 'user_id') : $id;
+
         // If user id is found, set cache key
-        if (isset($this->user_id) && ! empty($this->user_id)) {
-            return 'ummark-' . $this->user_id . '-' . md5($query);
+        if (! empty($id)) {
+            return 'ummark-' . $id . '-' . md5($query);
         }
 
         // Return null by default
         return null;
+    }
+
+    private function getCacheID($query, $column)
+    {
+        // Extract the value sent
+        // If not found, return null
+        preg_match('/.*?WHERE.*?' . $column . '\)?.*?=.*?(\'|")(.*?)\\1.*?/im', $query, $m);
+        return (isset($m[2]) && ! empty($m[2])) ? $m[2] : null;
     }
 
     public function getTotals($where, $page, $limit, $data=array(), $join=null)
@@ -140,36 +164,13 @@ class Plain_Model extends CI_Model
         $start      = $limit * ($page - 1);
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
         $sort       = (! empty($this->sort)) ? ' ORDER BY ' . $this->sort : null;
+        $result     = $this->checkForHit("SELECT " . $select . " FROM `" . $this->table . "` WHERE " . $where . $sort . $q_limit);
 
-        $query     = "SELECT " . $select . " FROM `" . $this->table . "` WHERE " . $where . $sort . $q_limit;
-        $cache_key = $this->getCacheKey($query);
-        $data      = $this->plain_cache->read($cache_key);
-
-
-        if (! empty($data)) {
-            return unserialize($data);
+        if ($this->num_rows < 1) {
+            return false;
         }
-        else {
-            $q = $this->db->query($query);
 
-            // Check for errors
-            $this->sendException();
-
-            if ($q->num_rows() <= 0) {
-                return false;
-            }
-
-            $result = self::stripSlashes($q->result());
-
-            if ($this->dont_cache === false) {
-                $this->plain_cache->add($cache_key, serialize($result), true);
-            }
-            else {
-                $this->dont_cache = false;
-            }
-
-            return ($limit == 1) ? $result[0] : $result;
-        }
+        return ($limit == 1) ? $result[0] : $result;
     }
 
     protected function removeCacheKey($key, $single=false)

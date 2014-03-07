@@ -2,26 +2,25 @@
 
 class Plain_Cache {
 
-    private $cache      = '';
-    private $has_custom = false;
-
-    public function __construct()
+    public function __call($method, $args)
     {
-        $this->cache = new stdClass;
         $file = CUSTOMPATH . '/libraries/Cache.php';
         if (file_exists($file)) {
             include_once $file;
-            $this->cache = new Cache;
+            $cache = new Cache;
+            if (method_exists($cache, $method)) {
+                if (! empty($args)) {
+                    call_user_func_array(array($cache, $method), $args);
+                }
+                else {
+                    $cache->$method();
+                }
+            }
+            else {
+                return false;
+            }
         }
-    }
-
-    public function __call($method, $args)
-    {
-        print $method . "<BR>\n";
-        print_r($args) . "<BR>\n";
-        if (method_exists($this->cache, $method)) {
-            $this->cache->$method($args);
-        }
+        return false;
     }
 
 }

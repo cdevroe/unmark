@@ -33,37 +33,37 @@ class Users_To_Marks_model extends Plain_Model
     {
         return $this->validateAndSave($options, true);
     }
-    
+
     public function import($options=array())
     {
         return $this->validateAndSave($options, false);
     }
-    
+
     private function validateAndSave($options, $overwriteCreatedOn){
         $valid  = validate($options, $this->data_types, array('user_id', 'mark_id'));
-        
+
         // Make sure all the options are valid
         if ($valid === true) {
-        
+
             if($overwriteCreatedOn || empty($options['created_on'])){
                 $options['created_on'] = date('Y-m-d H:i:s');
             }
             $q   = $this->db->insert_string('users_to_marks', $options);
             $res = $this->db->query($q);
-        
+
             // Check for errors
             $this->sendException();
-        
+
             // If good, return full record
             if ($res === true) {
                 $user_mark_id = $this->db->insert_id();
                 return $this->readComplete($user_mark_id);
             }
-        
+
             // Else return error
             return false;
         }
-        
+
         return formatErrors($valid);
     }
 
@@ -240,14 +240,11 @@ class Users_To_Marks_model extends Plain_Model
 
         // Stop, query time
         $q     = $this->db->query('SET SESSION group_concat_max_len = 10000');
-		$marks = $this->db->query($query);
-
-        // Check for errors
-        $this->sendException();
+		$marks = $this->checkForHit($query);
 
         // Now format the group names and ids
-        if ($marks->num_rows() > 0) {
-            $marks = $this->format(parent::stripSlashes($marks->result()));
+        if ($this->num_rows > 0) {
+            $marks = $this->format($marks);
             return ($limit == 1) ? $marks[0] : $marks;
         }
 

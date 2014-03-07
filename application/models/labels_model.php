@@ -118,7 +118,7 @@ class Labels_model extends Plain_Model
         $sort       = (stristr($this->sort, '.')) ? ' ORDER BY ' . $this->sort : null;
 
         // Check for cache hit
-        $labels = $this->plain_cache->checkForHit("
+        $labels = $this->checkForHit("
             SELECT
             labels.label_id, labels.smart_label_id, labels.name, labels.slug, labels.order, labels.domain AS smart_label_domain, labels.path AS smart_label_path, labels.active,
             l.name AS smart_label_name, l.slug AS smart_label_slug
@@ -128,7 +128,7 @@ class Labels_model extends Plain_Model
         );
 
         // Now format the group names and ids
-        if ($this->num_rows() > 0) {
+        if ($this->num_rows > 0) {
             $labels = $this->formatResults($labels);
             return ($limit == 1) ? $labels[0] : $labels;
         }
