@@ -9,9 +9,11 @@ class Plain_Model extends CI_Model
     public $table           = null;
 
     // Protected properties
+    protected $db_error     = false;
     protected $delimiter    = '~*~';
     protected $dont_cache   = false;
     protected $id_column    = null;
+    protected $num_rows     = 0;
     protected $read_method  = 'read';
 
     public function __construct()
@@ -43,6 +45,39 @@ class Plain_Model extends CI_Model
         $this->dont_cache = false;
     }
 
+    public function checkForHit($query)
+    {
+        $cache_key      = $this->getCacheKey($query);
+        $data           = $this->plain_cache->read($cache_key);
+        $this->num_rows = 0;
+
+        // If data is found, just return it
+        if (! empty($data)) {
+            $data           = unserialize($data);
+            $this->num_rows = (is_array($data) ? count($data) : 1;
+            return $data;
+        }
+
+        // Cache miss, hit DB
+        $q = $this->db->query($query);
+
+        // Check for errors
+        $this->sendException();
+
+        // If no DB error, ready results and add to cache
+        if ($this->db_error == false) {
+            $this->num_rows = $q->num_rows();
+            $result         = $this->stripSlashes($q->result());
+            $this->plain_cache->add($cache_key, serialize($result), true);
+        }
+        else {
+            $result = array();
+        }
+
+        // Return result
+        return $result;
+    }
+
     public function count($where=null, $join=null)
     {
         $where = (! empty($where)) ? ' WHERE ' . $where : null;
@@ -70,15 +105,17 @@ class Plain_Model extends CI_Model
     {
         // Set the tables not to cache results for
         // If the current table is one of the list, return null
-        $no_cache = array();
+        $no_cache = array('plain_sessions', 'tokens', 'users', 'labels', 'tags');
         if (in_array($this->table, $no_cache)) {
             return null;
         }
 
-        // Get user ID, query
-        // $_SESSION['user_id'] . '-' . md5($query);
+        // If user id is found, set cache key
+        if (isset($this->user_id) && ! empty($this->user_id)) {
+            return 'ummark-' . $this->user_id . '-' . md5($query);
+        }
 
-        // Will add caching later
+        // Return null by default
         return null;
     }
 
@@ -106,7 +143,8 @@ class Plain_Model extends CI_Model
 
         $query     = "SELECT " . $select . " FROM `" . $this->table . "` WHERE " . $where . $sort . $q_limit;
         $cache_key = $this->getCacheKey($query);
-        $data      = $this->cache->read($cache_key);
+        $data      = $this->plain_cache->read($cache_key);
+
 
         if (! empty($data)) {
             return unserialize($data);
@@ -124,7 +162,7 @@ class Plain_Model extends CI_Model
             $result = self::stripSlashes($q->result());
 
             if ($this->dont_cache === false) {
-                $this->cache->add($cache_key, serialize($result), true);
+                $this->plain_cache->add($cache_key, serialize($result), true);
             }
             else {
                 $this->dont_cache = false;
@@ -138,25 +176,27 @@ class Plain_Model extends CI_Model
     {
         // If single, delete only single entry
         if ($single === true) {
-            $this->cache->delete($key);
+            $this->plain_cache->delete($key);
         }
         // else, delete all entries for the domain token
         else {
             $tmp = explode('-', $key);
             if (isset($tmp[0]) && ! empty($tmp[0])) {
-                $this->cache->deleteAll($tmp[0] . '*');
+                $this->plain_cache->deleteAll($tmp[0] . '*');
             }
         }
     }
 
     protected function sendException()
     {
-        $err_msg = $this->db->_error_message();
+        $err_msg        = $this->db->_error_message();
+        $this->db_error = false;
 
         // Exceptional!
         if (! empty($err_msg)) {
-            $query  = $this->db->last_query();
-            $err_no = $this->db->_error_number();
+            $query          = $this->db->last_query();
+            $err_no         = $this->db->_error_number();
+            $this->db_error = true;
 
             // Remove column information we don't want logged
             $columns = array('session_id', '.*?_token', 'password', 'email', 'session_data');
