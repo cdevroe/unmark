@@ -39,7 +39,9 @@
                 <button class="login-submit" type="submit"><i class="icon-go"></i></button>
             </form>
             <div class="response-message"></div>
-            <a href="#" class="forgot-pass" title="Forgot Password?">Forgot Password?</a><span class="sep">&bull;</span><a href="/register" class="register" title="Register for free">Register Free</a>
+            <a href="#" class="forgot-pass" title="Forgot Password?">Forgot Password?</a>
+            <span class="sep">&bull;</span>
+            <a href="http://help.unmark.it" class="register" title="Visit Us">What is Unmark?</a>
         </div>
     </div>
 
@@ -60,117 +62,6 @@
     <div class="unmark-spinner"></div>
     <div class="unmark-success"><i class="icon-check"></i></div>
 
-    <div class="login-page-bottom">
-        <a href="#" class="toggle_welcome" title="What is Unmark?"><i class="icon-circle_arrow_up"></i><span>What is Unmark?</span></a>
-    </div>
-
-</div>
-
-<div id="unmark_about_page">
-    <section id="top">
-        <div class="logo">
-            <img class="logo-mark" src="../assets/images/logo.png">
-            <div class="logo-text icon-logo_text_light"></div>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#" class="toggle_welcome" title="Sign in or Sign Up">Sign In / Register <span class="icon-circle_arrow_down"></span></a></li>
-                <li><a href="https://github.com/plainmade/unmark" title="Unmark on GitHub">Fork <i class="full-only">on GitHub</i> <span class="icon-github"></span></a></li>
-            </ul>
-        </nav>
-    </section>
-    <section id="bottom">
-        <div class="content">
-            <h2>Do something with your bookmarks</h2>
-            <div class="demo">
-                <div class="chrome">
-                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                </div>
-                <img src="../assets/images/demo.gif">
-            </div>
-            <p>Unmark is designed to help you actually <em>do something</em> with your bookmarks, rather than just hoard them. A simple layout puts the focus on your task at hand and friendly reminders keep you in line. Filtering options let you find what you're looking for.</p>
-            <p><strong>Register for free or grab the open source version from GitHub.</strong></p>
-
-            <h2>Few, but key features</h2>
-            <div class="feature-detail">
-                <figure class="feature">
-                    <img src="../../assets/images/feature_preview.jpg">
-                    <figcaption>Preview Content Inline</figcaption>
-                </figure>
-                <figure class="feature">
-                    <img src="../../assets/images/feature_notes.jpg">
-                    <figcaption>Tag & Keep Notes</figcaption>
-                </figure>
-                <figure class="feature">
-                    <img src="../../assets/images/feature_bookmarklet.jpg">
-                    <figcaption>Save from Menu Bar</figcaption>
-                </figure>
-                <figure class="feature mobile-only">
-                    <img src="../../assets/images/feature_chrome.jpg">
-                    <figcaption>More Coming Soon</figcaption>
-                </figure>
-                <!--
-                <figure class="feature">
-                    <img src="http://placehold.it/344x300&text=.">
-                    <figcaption>Fork on GitHub</figcaption>
-                </figure>
-                <figure class="feature">
-                    <img src="http://placehold.it/344x300&text=.">
-                    <figcaption>Chrome Extension</figcaption>
-                </figure>
-                <figure class="feature">
-                    <img src="http://placehold.it/344x300&text=.">
-                    <figcaption>Receive Suggestions</figcaption>
-                </figure>
-                -->
-            </div>
-
-            <h2>Use free or upgrade</h2>
-            <section class="chart">
-                <div class="table-column">
-                    <ul>
-                        <li>Filter <span class="full-only">saved bookmarks</span></li>
-                        <li>Preview <span class="full-only">rich media</span></li>
-                        <li>Add labels<span class="full-only">, notes & tags</span></li>
-                        <li>Search <span class="full-only">saved bookmarks</span></li>
-                        <li>Save <span class="full-only">bookmarks</span></li>
-                        <li>Keep <span class="full-only">bookmarks</span></li>
-                        <li>Price</li>
-                    </ul>
-                </div>
-                <div class="table-column">
-                    <ul>
-                        <li><span class="yay icon-small_check"></span></li>
-                        <li><span class="yay icon-small_check"></span></li>
-                        <li><span class="yay icon-small_check"></span></li>
-                        <li><span class="yay icon-small_x"></span></li>
-                        <li>5 per day</li>
-                        <li>50 total</li>
-                        <li>Free</li>
-                    </ul>
-                </div>
-                <div class="table-column">
-                    <ul>
-                        <li><span class="yay icon-small_check"></span></li>
-                        <li><span class="yay icon-small_check"></span></li>
-                        <li><span class="yay icon-small_check"></span></li>
-                        <li><span class="nay icon-small_check"></span></li>
-                        <li>Unlimited</li>
-                        <li>Unlimited</li>
-                        <li>$12/year</li>
-                    </ul>
-                </div>
-            </section>
-            <p>Use Unmark free for as long as you'd like or upgrade to a paid account at any time. An open source version is <a href="http://github.com/plainmade/unmark">available on GitHub</a>. Fork it and set up your own install.</p>
-            <footer>
-                <div class="links">
-                    <a href="http://help.unmark.it/" title="Unmark Help Center">Help</a>
-                    <a href="http://twitter.com/unmarkit" title="Follow @unmarkit on Twitter">@unmarkit</a>
-                </div>
-                <div class="byline">Made by <a href="http://plainmade.com" target="_blank" title="Plain is a small software company in Pennsylvania">Plain</a></div>
-            </footer>
-        </div>
-    </section>
 </div>
 
 <?php $this->load->view('layouts/footer_unlogged_scripts'); ?>
