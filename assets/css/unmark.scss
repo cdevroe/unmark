@@ -115,6 +115,11 @@ body {
 // Hide Stupid Outlines
 textarea:focus, input:focus, .hideoutline, button { outline: 0; }
 
+.sidebar-spacer {
+    display: inline-block;
+    padding: 0 6px;
+}
+
 // Images
 img { max-width: 100%; }
 .centerme { text-align: center; }
