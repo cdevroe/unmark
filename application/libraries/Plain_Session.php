@@ -338,10 +338,11 @@ class Plain_Session extends CI_Session {
 	        ini_set('session.save_handler', 'memcached');
 	        ini_set('session.save_path', $this->plain_sess_memcache_addr);
 	    }
-
-	    session_name($this->sess_cookie_name);
-	    session_set_cookie_params($this->sess_expiration, $this->cookie_path, $this->cookie_domain, $this->cookie_secure);
-	    session_start();
+	    if( session_id() === '') {
+	       session_name($this->sess_cookie_name);
+	       session_set_cookie_params($this->sess_expiration, $this->cookie_path, $this->cookie_domain, $this->cookie_secure);
+	       session_start();
+	    }
 	}
 
 	// --------------------------------------------------------------------

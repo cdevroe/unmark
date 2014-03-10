@@ -9,12 +9,16 @@
 
     <div id="unmark-setup">
         <?php
-            if (isset($errors)) {
-                foreach($errors as $prop) {
-                    $first = $prop;
-                    break;
-                } 
-                print "<p>Sorry, there was an error. Please <a href='/''>go back</a> and try again</p>" . "<p>ERROR: " . $first . "</p>";
+            if ($success === false) {
+                if (isset($errors) ) {
+                    foreach($errors as $prop) {
+                        $first = $prop;
+                        break;
+                    } 
+                    print "<p>Sorry, there was an error. Please <a href='/''>go back</a> and try again</p>" . "<p>ERROR: " . $first . "</p>";
+                } else{
+                    print "<p>Sorry, there was an error. Please <a href='/''>go back</a> and try again</p>";
+                }
             } else {
                 print "<p>Successfull Upload!</p>";
                 print "<p>" . $result['added'] . " marks added</p>";

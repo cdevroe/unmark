@@ -111,7 +111,7 @@
                 if (res.success) {
                     showMessage(false, 'A confirmation link will be sent via email.');
                 } else {
-                    showMessage(true, 'Email not recogonized');
+                    showMessage(true, 'Email not recognized');
                 }
                 unmarklogin.forget_submit.find('i').removeClass('icon-spinner').addClass('icon-go');
             });
