@@ -44,8 +44,10 @@ class Marks extends Plain_Controller
 
         // Set some info
         if (! isset($user_mark->mark_id)) {
-            $this->data['errors'] = $user_mark;
-            $view                 = 'marks/error';
+            $this->data['no_header'] = true;
+            $this->data['no_footer'] = true;
+            $this->data['errors']    = $user_mark;
+            $view                    = 'marks/error';
         }
         else {
             $this->data['mark'] = $user_mark;
