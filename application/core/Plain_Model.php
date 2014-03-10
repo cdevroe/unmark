@@ -176,7 +176,7 @@ class Plain_Model extends CI_Model
     protected function removeCacheKey($key)
     {
         if (substr_count($key, '-') >= 2) {
-            $tmp = explode('-', $cache_key);
+            $tmp = explode('-', $key);
             $key = $tmp[0] . '-' . $tmp[1] . '-*';
         }
         $this->plain_cache->delete($key);
@@ -246,9 +246,9 @@ class Plain_Model extends CI_Model
             if ($res) {
                 $cache_key = $this->getCacheKey($q);
                 $this->removeCacheKey($cache_key);
-                $this->dont_cache = true;
+                //$this->dont_cache = true;
                 $method = $this->read_method;
-                return self::stripSlashes($this->{$method}($where));
+                return $this->{$method}($where);
             }
             else {
                 return formatErrors(500);
