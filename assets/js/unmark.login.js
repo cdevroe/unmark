@@ -16,7 +16,6 @@
         unmarklogin.login_success = $('.unmark-success');
         unmarklogin.login_form    = $('#unmarkLogin');
         unmarklogin.pass_form     = $('#unmarkForgotPass');
-        unmarklogin.login_submit  = $('.login-submit');
         unmarklogin.forget_submit = $('.forgot-submit');
         unmarklogin.input_fields  = $('input.field-input');
         unmarklogin.helper_buttom = $('.forgot-pass');
@@ -112,7 +111,7 @@
                 if (res.success) {
                     showMessage(false, 'A confirmation link will be sent via email.');
                 } else {
-                    showMessage(true, 'Email not recogonized');
+                    showMessage(true, 'Email not recognized');
                 }
                 unmarklogin.forget_submit.find('i').removeClass('icon-spinner').addClass('icon-go');
             });
@@ -135,7 +134,6 @@
 
         // Show Submit Button on Key Press
         unmarklogin.input_fields.on('change', function () {
-            unmarklogin.login_submit.fadeIn();
             unmarklogin.message.slideUp();
         });
 

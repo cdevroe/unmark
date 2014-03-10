@@ -34,9 +34,8 @@
         // Clean up the form after an error
         function cleanupForm() {
             showSpinner(false);
-            unmarkreset.submitbtn.fadeOut();
             unmarkreset.firstpass.val('');
-            unmarkreset.secondpass.val('').slideUp();
+            unmarkreset.secondpass.val('');
         }
 
         // Resets the password
@@ -64,12 +63,6 @@
         // Show second password field
         unmarkreset.firstpass.on('keypress change', function () {
             unmarkreset.message.fadeOut();
-            unmarkreset.secondpass.fadeIn();
-        });
-
-        // Show Submit Button
-        unmarkreset.secondpass.on('keypress change', function () {
-            unmarkreset.submitbtn.fadeIn();
         });
 
         // Handle Password Form Update
@@ -78,7 +71,7 @@
 
             var query,
                 pass = unmarkreset.firstpass.val(),
-                pass2 = unmarkreset.secondpass.val(), 
+                pass2 = unmarkreset.secondpass.val(),
                 token = unmark.vars.token;
 
             showSpinner(true); // Show spinner

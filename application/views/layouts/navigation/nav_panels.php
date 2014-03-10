@@ -32,7 +32,8 @@
 	<h4 class="nav-heading">Help</h4>
 	<ul class="nav-list">
 		<li><a target="_blank" href="http://help.unmark.it/">How to Use Unmark</a></li>
-		<li><a target="_blank" href="http://help.unmark.it/faq">FAQ</a></li>
+		<li><a target="_blank" href="http://help.unmark.it/faq">View Our FAQ</a></li>
 		<li><a target="_blank" href="http://help.unmark.it/bookmarklet">Get the Bookmarklet</a></li>
+		<li><a target="_blank" href="https://chrome.google.com/webstore/detail/unmark/cdhnljlbeehjgddokagghpfgahhlifch">Get the Chrome Extension</a></li>
 	</ul>
 </div>

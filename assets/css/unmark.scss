@@ -115,6 +115,11 @@ body {
 // Hide Stupid Outlines
 textarea:focus, input:focus, .hideoutline, button { outline: 0; }
 
+.sidebar-spacer {
+    display: inline-block;
+    padding: 0 6px;
+}
+
 // Images
 img { max-width: 100%; }
 .centerme { text-align: center; }
@@ -1576,7 +1581,6 @@ body.label-7 .navigation-pane { border-top: none; }
         margin-top: 15px;
         display: block;
     }
-    #password2 { display: none; }
     .gethere {
         display: none;
         border: 1px solid $color_light;
