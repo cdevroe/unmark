@@ -9,6 +9,7 @@ class Plain_Model extends CI_Model
     public $table           = null;
 
     // Protected properties
+    protected $cache_id     = 'ummark-';
     protected $db_error     = false;
     protected $delimiter    = '~*~';
     protected $dont_cache   = false;
@@ -48,21 +49,24 @@ class Plain_Model extends CI_Model
     public function checkForHit($query)
     {
         $cache_key      = $this->getCacheKey($query);
-        print $cache_key . PHP_EOL;
         $data           = $this->plain_cache->read($cache_key);
         $this->num_rows = 0;
 
+        //$this->plain_cache->delete($cache_key);
+
+
+        //print $cache_key . PHP_EOL;
         // If data is found, just return it
         if (! empty($data)) {
             $data           = unserialize($data);
             $this->num_rows = (is_array($data)) ? count($data) : 1;
-            print 'CACHED' . PHP_EOL;
+            //print 'CACHED' . PHP_EOL . PHP_EOL;
             return $data;
         }
 
         // Cache miss, hit DB
         $q = $this->db->query($query);
-        print 'NOT CACHED' . PHP_EOL;
+        //print 'NOT CACHED' . PHP_EOL . PHP_EOL;
 
         // Check for errors
         $this->sendException();
@@ -86,20 +90,15 @@ class Plain_Model extends CI_Model
 
     public function count($where=null, $join=null)
     {
-        $where = (! empty($where)) ? ' WHERE ' . $where : null;
-        $join  = (! empty($join)) ? ' ' . $join : null;
-
-        $q = $this->db->query("
+        $where  = (! empty($where)) ? ' WHERE ' . $where : null;
+        $join   = (! empty($join)) ? ' ' . $join : null;
+        $result = $this->checkForHit("
             SELECT
             COUNT(" . $this->table . '.' . $this->id_column . ") AS total
             FROM `" . $this->table . "`" . $join . $where
         );
 
-        // Check for errors
-        $this->sendException();
-
-        $row = $q->row();
-        return (integer) $row->{'total'};
+        return (isset($result[0]->total)) ? (integer) $result[0]->total : 0;
     }
 
     public function delete($where)
@@ -111,9 +110,7 @@ class Plain_Model extends CI_Model
     {
         // Set the tables not to cache results for
         // If the current table is one of the list, return null
-        $no_cache = array('plain_sessions', 'tokens', 'tags');
-        print $this->table . PHP_EOL;
-        //print $query . "<BR>\n";
+        $no_cache = array('marks', 'plain_sessions', 'tokens');
         if (in_array($this->table, $no_cache)) {
             return null;
         }
@@ -123,12 +120,15 @@ class Plain_Model extends CI_Model
             $id = (stristr($query, 'user_id IS NULL') && stristr($query, 'smart_key IS NULL')) ? 'labels-system' : null;
             $id = (empty($id) && stristr($query, 'user_id IS NULL')) ? 'labels-smart' : $id;
         }
+        elseif ($this->table == 'tags') {
+            $id = 'tags';
+        }
 
         $id = (empty($id)) ? $this->getCacheID($query, 'user_id') : $id;
 
         // If user id is found, set cache key
         if (! empty($id)) {
-            return 'ummark-' . $id . '-' . md5($query);
+            return $this->cache_id . $id . '-' . md5($query);
         }
 
         // Return null by default
@@ -173,19 +173,13 @@ class Plain_Model extends CI_Model
         return ($limit == 1) ? $result[0] : $result;
     }
 
-    protected function removeCacheKey($key, $single=false)
+    protected function removeCacheKey($key)
     {
-        // If single, delete only single entry
-        if ($single === true) {
-            $this->plain_cache->delete($key);
+        if (substr_count($key, '-') >= 2) {
+            $tmp = explode('-', $cache_key);
+            $key = $tmp[0] . '-' . $tmp[1] . '-*';
         }
-        // else, delete all entries for the domain token
-        else {
-            $tmp = explode('-', $key);
-            if (isset($tmp[0]) && ! empty($tmp[0])) {
-                $this->plain_cache->deleteAll($tmp[0] . '*');
-            }
-        }
+        $this->plain_cache->delete($key);
     }
 
     protected function sendException()

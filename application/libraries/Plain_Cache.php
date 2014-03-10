@@ -10,10 +10,10 @@ class Plain_Cache {
             $cache = new Cache;
             if (method_exists($cache, $method)) {
                 if (! empty($args)) {
-                    call_user_func_array(array($cache, $method), $args);
+                    return call_user_func_array(array($cache, $method), $args);
                 }
                 else {
-                    $cache->$method();
+                    return $cache->$method();
                 }
             }
             else {

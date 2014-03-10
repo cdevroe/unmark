@@ -56,6 +56,10 @@ class Users_To_Marks_model extends Plain_Model
 
             // If good, return full record
             if ($res === true) {
+                // Remove cache for this user
+                $this->removeCacheKey($this->cache_id . $options['user_id'] . '-*');
+
+                // Get info and return it
                 $user_mark_id = $this->db->insert_id();
                 return $this->readComplete($user_mark_id);
             }
@@ -141,7 +145,7 @@ class Users_To_Marks_model extends Plain_Model
     public function getTotalsSearch($page, $limit, $data=array(), $keyword, $user_id, $archive)
     {
 
-        $q = $this->db->query("
+        $result = $this->checkForHit("
             SELECT COUNT(*) AS total FROM (
                 (
                     SELECT users_to_marks.users_to_mark_id
@@ -164,15 +168,7 @@ class Users_To_Marks_model extends Plain_Model
             ) as t1
         ");
 
-
-        // Check for errors
-        $this->sendException();
-
-        // Get total
-        $row = $q->row();
-        $total = (integer) $row->{'total'};
-
-        // Figure shiz
+        $total            = (isset($result[0]->total)) ? (integer) $result[0]->total : 0;
         $total_pages      = ($total > 0) ? ceil($total / $limit) : 0;
         $data['total']    = $total;
         $data['page']     = $page;
