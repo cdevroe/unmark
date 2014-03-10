@@ -53,7 +53,7 @@ module.exports = function(grunt) {
             prod: {
                 options: {
                     style: 'compressed',
-                    banner: '/*! <%= pkg.name %> - <%=pkg.url %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> - <%= pkg.author %> */ \n'
+                    banner: '/*! <%= pkg.name %> - <%=pkg.url %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> - <%= pkg.author %> */ \n'
                 },
                 files: {
                     'assets/css/unmark.css': 'assets/css/unmark.scss',
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
                     beautify : {
                         ascii_only : true
                     },
-                    banner: '/*! <%= pkg.name %> - <%=pkg.url %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> - <%= pkg.author %> */ \n'
+                    banner: '/*! <%= pkg.name %> - <%=pkg.url %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> - <%= pkg.author %> */ \n'
                 },
                 files: js_file_config
             }
@@ -79,19 +79,6 @@ module.exports = function(grunt) {
                     banner: '/*! DEVELOPMENT VERSION */ \n'
                 },
                 files: js_file_config
-            }
-        },
-        "string-replace": {
-            prod: {
-                files: {
-                    "index.php" : "index.php"
-                },
-                options: {
-                    replacements: [{
-                        pattern: /define\('UNMARK_VERSION', ('(?:''|[^'])*'|[^',]+)\);/,
-                        replacement: "define('UNMARK_VERSION', '<%= pkg.version %>');"
-                    }]
-                }
             }
         },
         watch: {

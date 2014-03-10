@@ -15,6 +15,8 @@ $config['error_codes'][4] = 'Mark with this id could not be found for this accou
 $config['error_codes'][5] = 'Mark could not be restored.';
 $config['error_codes'][6] = 'Could not add mark.';
 $config['error_codes'][7] = 'Could not delete mark.';
+$config['error_codes'][8] = 'This mark does\'t have a valid URL.';
+$config['error_codes'][9] = 'This mark does\'t have a valid title.';
 
 // Labels - Level 30 - 59
 $config['error_codes'][30] = 'No `label_id` was found.';

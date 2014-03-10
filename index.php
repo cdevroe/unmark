@@ -4,15 +4,10 @@
  *---------------------------------------------------------------
  * Unmark Version
  *---------------------------------------------------------------
- *
- * Set the current version here. Be sure to follow basic rules
- * for doing point releases, major releases, etc.
- *
- * Don't forget to update the changelog!
- * /application/views/changelog.php
- *
- */
-define('UNMARK_VERSION', '0.3.5');
+*/
+
+//  For up todate version info on Unmark, please see our releases page
+//  https://github.com/plainmade/unmark/releases
 
 /*
  *---------------------------------------------------------------
