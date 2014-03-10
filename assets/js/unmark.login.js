@@ -69,7 +69,6 @@
                 eclass   = (error) ? 'error' : '';
                 response = form.find('.response-message');
 
-            form.find('button').hide(); // Hide Submit Button
             form.find('#password').val(''); // Empty Password Field
             response.removeClass('error').addClass(eclass).text(message).fadeIn(); // Update Class & Show Message
         }
