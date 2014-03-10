@@ -53,9 +53,10 @@
                     });
                 });
             } else {
-                unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
-                    unmark.tagify_notes($('#notes-' + mark_id));
-                    populateLabels();
+                unmark.sidebar_mark_info.html(output);
+                unmark.tagify_notes($('#notes-' + mark_id));
+                populateLabels();
+                unmark.sidebar_mark_info.fadeIn(400, function () {
                     $("section.sidebar-info-preview").fitVids();
                 });
             }
@@ -148,11 +149,23 @@
 
         var editable = editField.next(), text, query;
 
+        // Clear the Slate
+        editable.unbind();
+
+        // Check if in Edit Mode
+        if (editable.hasClass('editable')) {
+            if(editable.is(':empty')) {
+                editField.html('ADD A NOTE <i class="icon-edit"></i>');
+            } else {
+                editField.html('NOTES <i class="icon-edit"></i>');
+            }
+            return editable.attr('contenteditable', false).removeClass('editable');
+        }
+
         // Clean up the field, check for empty etc
         editable.unbind();
-        editField.html('EDIT NOTES');
-        editable.attr('contenteditable', true);
-        editable.find('span.action').remove();
+        editField.html('EDITING NOTES <i class="icon-heading_close"></i>');
+        editable.attr('contenteditable', true).addClass('editable');
         if(editable.is(':empty')) {
             editable.html('Click here to edit');
         }
@@ -164,12 +177,14 @@
                 e.preventDefault();
                 text = $(this).text(), id = $(this).data('id');
                 if (text === 'Click here to edit') {
-                    $(this).empty().html('<span class="action" data-action="marks_clickEdit">Add a note or #hashtags ...</span>');
+                    $(this).empty();
+                    editField.html('ADD A NOTE <i class="icon-edit"></i>');
+                    editable.attr('contenteditable', false).removeClass('editable');
                 } else {
                     query = 'notes=' + unmark.urlEncode(text);
                     unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
                         editField.html('Notes <i class="icon-edit"></i>');
-                        editable.attr('contenteditable', false);
+                        editable.attr('contenteditable', false).removeClass('editable');
                         $('#mark-'+id).find('.note-placeholder').text(editable.text());
                     });
                     editable.unbind();
@@ -247,13 +262,15 @@
     // Reads the passed note field and tagifies it on the fly.
     unmark.tagify_notes = function (note) {
 
+        console.log(note);
+
         // Get the note text, replace all tags with a linked tag
         var notetext = note.text();
 
-        if (notetext === '') {
-            notetext = '<span class="action" data-action="marks_clickEdit">Add a note or #hashtags ...</span>';
-        } else {
+        if (notetext !== '') {
             notetext = notetext.replace(/#(\S*)/g,'<a href="/marks/tag/$1">#$1</a>');
+        } else {
+            note.prev().html('Click To Add A Note <i class="icon-edit"></i>');
         }
 
         // Send the HTML to the notes field.

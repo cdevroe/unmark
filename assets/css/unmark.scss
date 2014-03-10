@@ -114,6 +114,8 @@ body {
 
 // Hide Stupid Outlines
 textarea:focus, input:focus, .hideoutline, button { outline: 0; }
+// However for now, show a slight background to know what you are editing.
+.editable { background-color: #FDFBE4; }
 
 .sidebar-spacer {
     display: inline-block;
@@ -929,6 +931,9 @@ ul.nav-list {
                 }
             }
             span.action { cursor: pointer; }
+            &.sidebar-info-notes {
+                padding: 5px 10px;
+            }
             &.sidebar-info-notes a {
                 color: $color_black;
                 font-weight: 400;
@@ -979,6 +984,12 @@ ul.nav-list {
             .hrecipe .yield {
                 font-weight: bold;
             }
+        }
+        textarea {
+            width: 100%;
+            min-height: 75px;
+            border: none;
+            background-color: $color_shade;
         }
     }
     button {
