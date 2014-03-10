@@ -55,6 +55,8 @@ class Labels_model extends Plain_Model
 
             // If good, return full label
             if ($res === true) {
+                $cache_key = (isset($options['user_id'])) ? $this->cache_id . $options['user_id'] . '-*' : $this->cache_id . 'labels-*';
+                $this->removeCacheKey($cache_key);
                 $label_id = $this->db->insert_id();
                 return self::readComplete($label_id);
             }
