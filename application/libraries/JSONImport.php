@@ -67,15 +67,17 @@ class JSONImport
             'result' => array(),
             'user_id' => $this->params['user_id']
         ));
-        $result = false;
+        $result = array('success' => false);
+        $stepResult = false;
         while (! $this->tmpFile->eof()) {
             $curLine = trim($this->tmpFile->fgets());
-            $result = $curState->processLine($curLine);
+            $stepResult = $curState->processLine($curLine);
             // Returns next state for processing
-            if (! is_array($result)) {
-                $curState = $result;
+            if (! is_array($stepResult) ) {
+                $curState = $stepResult;
             // Returned array with results
             } else {
+                $result = $stepResult;
                 $result['success'] = true;
                 break;
             }
