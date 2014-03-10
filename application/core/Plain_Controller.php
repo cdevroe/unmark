@@ -55,13 +55,23 @@ class Plain_Controller extends CI_Controller
         $url   = (isset($data['url'])) ? $data['url'] : null;
         $title = (isset($data['title'])) ? $data['title'] : null;
 
+        // If url or title are empty
+        // error out
+        if (empty($url)) {
+            return formatErrors(8);
+        }
+
+        if (empty($title)) {
+            return formatErrors(9);
+        }
+
         // Add mark to marks table
         $this->load->model('marks_model', 'mark');
         $mark = $this->mark->create(array('title' => $title, 'url' => $url));
 
         // Check ish
         if ($mark === false) {
-            $user_mark = formatErrors(15);
+            $user_mark = formatErrors(6);
         }
         elseif (! isset($mark->mark_id)) {
             $user_mark = $mark;
@@ -110,7 +120,7 @@ class Plain_Controller extends CI_Controller
             }
 
             if ($user_mark === false) {
-                $user_mark = formatErrors(15);
+                $user_mark = formatErrors(6);
             }
             elseif (isset($user_mark->mark_id)) {
 

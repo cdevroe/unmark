@@ -36,4 +36,6 @@
 		<li><a target="_blank" href="http://help.unmark.it/bookmarklet">Get the Bookmarklet</a></li>
 		<li><a target="_blank" href="https://chrome.google.com/webstore/detail/unmark/cdhnljlbeehjgddokagghpfgahhlifch">Get the Chrome Extension</a></li>
 	</ul>
+
+	<h3 class="version">Unmark Version: <?php echo UNMARK_VERSION; ?></h3>
 </div>
