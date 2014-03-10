@@ -69,7 +69,6 @@
                 eclass   = (error) ? 'error' : '';
                 response = form.find('.response-message');
 
-            form.find('button').hide(); // Hide Submit Button
             form.find('#password').val(''); // Empty Password Field
             response.removeClass('error').addClass(eclass).text(message).fadeIn(); // Update Class & Show Message
         }
@@ -111,7 +110,7 @@
                 if (res.success) {
                     showMessage(false, 'A confirmation link will be sent via email.');
                 } else {
-                    showMessage(true, 'Email not recogonized');
+                    showMessage(true, 'Email not recognized');
                 }
                 unmarklogin.forget_submit.find('i').removeClass('icon-spinner').addClass('icon-go');
             });

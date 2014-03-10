@@ -76,8 +76,8 @@ class Plain_Controller extends CI_Controller
                 // Set default options
                 $options = array('user_id' => $this->user_id, 'mark_id' => $mark->mark_id);
 
-                // Label ID (not required)
-                if (isset($data['label_id']) && is_numeric($data['label_id'])) {
+                // Label ID (not required), if set and numeric and greater than 0, use it
+                if (isset($data['label_id']) && is_numeric($data['label_id']) && $data['label_id'] > 0) {
                     $options['label_id'] = $data['label_id'];
                 }
 
