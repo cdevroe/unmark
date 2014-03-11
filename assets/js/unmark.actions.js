@@ -26,6 +26,7 @@
     // Hides the marks info and re-displays the default sidebar
     unmark.sidebar_collapse = function () {
         if (Modernizr.mq('only screen and (max-width: 480px)')) {
+            $('.mark-actions').hide();
             $('.sidebar-content').animate({right: '-85%'}, 600, function () {
                 $(this).hide();
             });
@@ -65,7 +66,7 @@
 
     // Hides the left navigation
     unmark.hideNavigation = function () {
-        if (Modernizr.mq('only screen and (min-width: 480px)')) { $('.branding').fadeOut(); }
+        if (Modernizr.mq('only screen and (min-width: 480px)')) { $('.mark-actions').hide(); $('.branding').fadeOut(); }
         unmark.nav_panel.stop().animate({ left: -285 }, 400);
         unmark.main_panel.stop().animate({ left: 65 }, 200, function () {
             $('.nav-panel').hide();

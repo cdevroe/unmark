@@ -15,6 +15,7 @@
 				$('.navigation-content .menu-activator').animate({left: 62}, 400);
 				$('.menu-item').removeClass('active-menu');
 			} else {
+				$('.mark-actions').hide();
 				$('.main-wrapper').animate({left: 65}, 400);
 				$('.navigation-content').animate({left: 0}, 400);
 				$('.navigation-content .menu-activator').animate({left: 0}, 400);
@@ -68,6 +69,7 @@
 				e.gesture.preventDefault();
 				$('.mark-actions').hide();
 				$(this).find('.mark-actions').show();
+				unmark.mobile_nav(true);
     		});
 
 		}
