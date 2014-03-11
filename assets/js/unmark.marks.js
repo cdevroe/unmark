@@ -166,8 +166,10 @@
         editable.unbind();
         editField.html('EDITING NOTES <i class="icon-heading_close"></i>');
         editable.attr('contenteditable', true).addClass('editable');
+
+        // If Empty, Set Focus
         if(editable.is(':empty')) {
-            editable.html('Click here to edit');
+            editable.focus();
         }
 
         // Define the actions that will save the note.
@@ -176,7 +178,7 @@
             if (e.which === 13 || e.type === 'blur') {
                 e.preventDefault();
                 text = $(this).text(), id = $(this).data('id');
-                if (text === 'Click here to edit') {
+                if (text === '') {
                     $(this).empty();
                     editField.html('ADD A NOTE <i class="icon-edit"></i>');
                     editable.attr('contenteditable', false).removeClass('editable');
