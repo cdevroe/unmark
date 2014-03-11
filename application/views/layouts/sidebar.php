@@ -22,7 +22,8 @@
     <div class="sidebar-block">
         <div class="sidebar-inner">
             <a href="javascript:(function()%7Bl%3D%22<?php print getFullUrl(); ?>%2Fmark%2Fadd%3Furl%3D%22%2BencodeURIComponent(window.location.href)%2B%22%26title%3D%22%2BencodeURIComponent(document.title)%2B%22%26v%3D1%26nowindow%3Dyes%26%22%3Bvar%20e%3Dwindow.open(l%2B%22noui%3D1%22%2C%22Unmark%22%2C%22location%3D0%2Clinks%3D0%2Cscrollbars%3D0%2Ctoolbar%3D0%2Cwidth%3D594%2Cheight%3D485%22)%3Breturn%20false%7D)()" class="btn">Unmark+</a>
-            <p class="clear sidenote">To add Marks, drag this button into your bookmark toolbar.  <a href="http://help.unmark.it/bookmarklet" target="_blank">Learn how</a>.</p>
+            <p class="clear sidenote">To add Marks, drag this button into your bookmark toolbar.
+                <br /> Checkout our <a href="https://chrome.google.com/webstore/detail/unmark/cdhnljlbeehjgddokagghpfgahhlifch" target="_blank">Chrome Plugin</a> or to see more tools in <a href="http://help.unmark.it/bookmarklet" target="_blank">our help docs.</a></p>
         </div>
     </div>
     <?php $this->load->view('layouts/sidebar/sidebar_notices'); ?>
