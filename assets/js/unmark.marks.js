@@ -159,7 +159,8 @@
             } else {
                 editField.html('NOTES <i class="icon-edit"></i>');
             }
-            return editable.attr('contenteditable', false).removeClass('editable');
+            editable.attr('contenteditable', false).removeClass('editable');
+            return unmark.tagify_notes(editable);
         }
 
         // Clean up the field, check for empty etc
@@ -167,9 +168,11 @@
         editField.html('EDITING NOTES <i class="icon-heading_close"></i>');
         editable.attr('contenteditable', true).addClass('editable');
 
-        // If Empty, Set Focus
+        // If Empty, Set Focus or Remove A Tags
         if(editable.is(':empty')) {
             editable.focus();
+        } else {
+            editable.find('a').contents().unwrap();
         }
 
         // Define the actions that will save the note.
@@ -179,7 +182,6 @@
                 e.preventDefault();
                 text = $(this).text(), id = $(this).data('id');
                 if (text === '') {
-                    $(this).empty();
                     editField.html('ADD A NOTE <i class="icon-edit"></i>');
                     editable.attr('contenteditable', false).removeClass('editable');
                 } else {
@@ -189,9 +191,11 @@
                         editable.attr('contenteditable', false).removeClass('editable');
                         $('#mark-'+id).find('.note-placeholder').text(editable.text());
                     });
-                    editable.unbind();
-                    unmark.tagify_notes(editable);
                 }
+
+                // Set up for next edit
+                editable.unbind();
+                unmark.tagify_notes(editable);
             }
         });
     };
@@ -263,8 +267,6 @@
 
     // Reads the passed note field and tagifies it on the fly.
     unmark.tagify_notes = function (note) {
-
-        console.log(note);
 
         // Get the note text, replace all tags with a linked tag
         var notetext = note.text();

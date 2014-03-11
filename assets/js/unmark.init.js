@@ -145,10 +145,6 @@
             return $('#importForm').submit();
         });
 
-        $(document).on('click', '.sidebar-info-notes a', function (e) {
-            // Finish This
-        });
-
     };
 
     // Get this baby in action
