@@ -68,6 +68,7 @@
 				e.gesture.preventDefault();
 				$('.mark-actions').hide();
 				$(this).find('.mark-actions').show();
+				unmark.mobile_nav(true);
     		});
 
 		}
