@@ -106,7 +106,7 @@ class Plain_Model extends CI_Model
         $start      = $limit * ($page - 1);
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
         $sortSelected = (empty($sort) ? $this->sort : $sort );
-        $sort       = (! empty($sortSelected)) ? ' ORDER BY ' . $this->sort : null;
+        $sort       = (! empty($sortSelected)) ? ' ORDER BY ' . $sortSelected : null;
 
         $query     = "SELECT " . $select . " FROM `" . $this->table . "` WHERE " . $where . $sort . $q_limit;
         $cache_key = $this->getCacheKey($query);
