@@ -12,7 +12,7 @@ class Plain_Model extends CI_Model
     public $table           = null;
 
     // Protected properties
-    protected $cache_id     = 'ummark-';
+    protected $cache_id     = 'unmark-';
     protected $db_error     = false;
     protected $delimiter    = '~*~';
     protected $dont_cache   = false;
