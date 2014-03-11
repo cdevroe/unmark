@@ -9,7 +9,9 @@ class Users_model extends Plain_Model
         'email'          => 'Email',
         'customer_id'    => 'Stripe Customer ID',
         'active'         => 'Active',
-        'created_on'  => 'Registered On',
+        'admin'          => 'Admin',
+        'plan_id'        => 'Stripe plan id',
+        'created_on'     => 'Registered On',
         'last_updated'   => 'Last Updated'
     );
     
