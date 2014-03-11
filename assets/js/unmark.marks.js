@@ -66,28 +66,23 @@
 
     // Updates the label count
     unmark.update_label_count = function () {
-
         var label_list = $('ul.label-list');
-
         function updateLabelCount(res) {
             var i, labels = res.labels, count;
             for (i in labels) {
                 count = labels[i].total_active_marks;
                 if (count === "1") {
-                    count = count + " link";
+                    count = count + " mark";
                 } else if (count === "0") {
-                    count = "no links";
+                    count = "no marks";
                 } else {
-                    count = count + " links";
+                    count = count + " marks";
                 }
                 label_list.find('.label-'+labels[i].label_id + ' span').text(count);
             }
         }
-
         unmark.getData('labels', updateLabelCount);
-
         unmark.updateCounts();
-
     };
 
     // Build Mark JSON
@@ -149,18 +144,40 @@
 
         var editable = editField.next(), text, query;
 
+        // Private function to save notes
+        function saveNotes(text, id) {
+            query = 'notes=' + unmark.urlEncode(text);
+            unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
+                setNoteTitle(1);
+                $('#mark-'+id).find('.note-placeholder').text(text);
+            });
+        }
+
+        // Private function to update note title
+        function setNoteTitle(num) {
+            switch (num) {
+                case 1:
+                    heading = 'Notes <i class="icon-edit"></i>';
+                break;
+                case 2:
+                    heading = 'EDITING NOTES <i class="icon-heading_close"></i>';
+                break;
+                case 3:
+                    heading = 'ADD A NOTE <i class="icon-edit"></i>';
+                break;
+            }
+            editField.html(heading);
+        }
+
         // Clean up the field, check for empty etc
         editable.unbind();
-        editField.html('EDITING NOTES <i class="icon-heading_close"></i>');
+        setNoteTitle(2);
         editField.removeClass('action');
         editable.attr('contenteditable', true).addClass('editable');
 
-        // If Empty, Set Focus or Remove A Tags
-        if(editable.is(':empty')) {
-            editable.focus();
-        } else {
-            editable.find('a').contents().unwrap();
-        }
+        // Set Focus and Clean up Tags
+        editable.find('a').contents().unwrap();
+        editable.focus();
 
         // Define the actions that will save the note.
         // Includes Function to save the note
@@ -170,13 +187,9 @@
                 editable.attr('contenteditable', false).removeClass('editable');
                 text = $(this).text(), id = $(this).data('id');
                 if (text === '') {
-                    editField.html('ADD A NOTE <i class="icon-edit"></i>');
+                    setNoteTitle(3);
                 } else {
-                    query = 'notes=' + unmark.urlEncode(text);
-                    unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
-                        editField.html('Notes <i class="icon-edit"></i>');
-                        $('#mark-'+id).find('.note-placeholder').text(editable.text());
-                    });
+                    saveNotes(text, id);
                 }
                 // Set up for next edit
                 editable.unbind();
@@ -185,7 +198,6 @@
             }
         });
     };
-    unmark.marks_clickEdit = function (btn) { btn.parent().prev().trigger('click'); };
 
     // Method for Adding Notes
     unmark.marks_addNotes = function (btn) {

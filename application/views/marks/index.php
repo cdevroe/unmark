@@ -5,7 +5,7 @@
 
     // Variable Setup
     $heading = array();
-    $link_plural = " ".determinePlurality($total, "mark")." ";
+    $link_plural = " ".determinePlurality($total, "mark", false)." ";
     $search_term = (isset($_GET['q'])) ? $_GET['q'] : '';
     $label_name = (isset($active_label['label_name'])) ? $active_label['label_name'] : '';
     $tag_name = (isset($active_tag['tag_name'])) ? $active_tag['tag_name'] : '';
