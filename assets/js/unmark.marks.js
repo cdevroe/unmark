@@ -149,23 +149,10 @@
 
         var editable = editField.next(), text, query;
 
-        // Clear the Slate
-        editable.unbind();
-
-        // Check if in Edit Mode
-        if (editable.hasClass('editable')) {
-            if(editable.is(':empty')) {
-                editField.html('ADD A NOTE <i class="icon-edit"></i>');
-            } else {
-                editField.html('NOTES <i class="icon-edit"></i>');
-            }
-            editable.attr('contenteditable', false).removeClass('editable');
-            return unmark.tagify_notes(editable);
-        }
-
         // Clean up the field, check for empty etc
         editable.unbind();
         editField.html('EDITING NOTES <i class="icon-heading_close"></i>');
+        editField.removeClass('action');
         editable.attr('contenteditable', true).addClass('editable');
 
         // If Empty, Set Focus or Remove A Tags
@@ -180,22 +167,21 @@
         editable.on('blur keydown', function (e) {
             if (e.which === 13 || e.type === 'blur') {
                 e.preventDefault();
+                editable.attr('contenteditable', false).removeClass('editable');
                 text = $(this).text(), id = $(this).data('id');
                 if (text === '') {
                     editField.html('ADD A NOTE <i class="icon-edit"></i>');
-                    editable.attr('contenteditable', false).removeClass('editable');
                 } else {
                     query = 'notes=' + unmark.urlEncode(text);
                     unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
                         editField.html('Notes <i class="icon-edit"></i>');
-                        editable.attr('contenteditable', false).removeClass('editable');
                         $('#mark-'+id).find('.note-placeholder').text(editable.text());
                     });
                 }
-
                 // Set up for next edit
                 editable.unbind();
                 unmark.tagify_notes(editable);
+                setTimeout( function() { editField.addClass('action'); }, 500);
             }
         });
     };
