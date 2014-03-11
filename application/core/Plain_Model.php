@@ -2,6 +2,9 @@
 
 class Plain_Model extends CI_Model
 {
+    
+    const SELECT_ALL = '*';
+    
     // Public properties
     public $data_types      = array();
     public $sort            = null;
@@ -94,7 +97,7 @@ class Plain_Model extends CI_Model
         return $data;
     }
 
-    public function read($where, $limit=1, $page=1, $select='*')
+    public function read($where, $limit=1, $page=1, $select=self::SELECT_ALL, $sort = null)
     {
         $where      = (is_numeric($where)) ? $this->id_column . " = '$where'" : trim($where);
         $where      = (empty($where)) ? '1=1' : $where;
@@ -102,7 +105,8 @@ class Plain_Model extends CI_Model
         $limit      = ((is_numeric($limit) && $limit > 0) || $limit == 'all') ? $limit : 1;
         $start      = $limit * ($page - 1);
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
-        $sort       = (! empty($this->sort)) ? ' ORDER BY ' . $this->sort : null;
+        $sortSelected = (empty($sort) ? $this->sort : $sort );
+        $sort       = (! empty($sortSelected)) ? ' ORDER BY ' . $sortSelected : null;
 
         $query     = "SELECT " . $select . " FROM `" . $this->table . "` WHERE " . $where . $sort . $q_limit;
         $cache_key = $this->getCacheKey($query);
