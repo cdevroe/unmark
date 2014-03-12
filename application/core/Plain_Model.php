@@ -177,7 +177,7 @@ class Plain_Model extends CI_Model
         }
     }
 
-    protected function stripSlashes($result)
+    public function stripSlashes($result)
     {
         if (! is_array($result) && ! is_object($result)) {
             $result = (is_string($result)) ? stripslashes($result) : $result;
