@@ -8,7 +8,7 @@
 <div class="sidebar-block">
     <div class="sidebar-inner">
         <p>Thanks for checking out Unmark. We hope you enjoy using it.</p>
-		<p>For usage tips follow us on Twitter! Please tell your friends about Unmark.</p>
+		<p>For usage tips <a target="_blank" href="https://twitter.com/unmarkit">follow us on Twitter</a>! Please tell your friends about Unmark.</p>
 		<p>
 			<a href="https://twitter.com/unmarkit" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @unmarkit</a>
 			<span class="sidebar-spacer"></span>
