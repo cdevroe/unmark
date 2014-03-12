@@ -729,14 +729,16 @@ ul.nav-list {
                 width: auto;
                 box-sizing: border-box;
                 float: left;
+                color: $color_white;
+                text-decoration:none;
+            }
+            a {
+                color: $color_dark;
+                text-decoration: underline;
             }
             .sidenote {
                 padding: 10px 0 0 5px;
                 margin-bottom: 0;
-                a {
-                    color: $color_dark;
-                    text-decoration: underline;
-                }
             }
         }
     }
