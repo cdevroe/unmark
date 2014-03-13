@@ -12,7 +12,10 @@ class Users_model extends Plain_Model
         'admin'          => 'Admin',
         'plan_id'        => 'Stripe plan id',
         'created_on'     => 'Registered On',
-        'last_updated'   => 'Last Updated'
+        'last_updated'   => 'Last Updated',
+        'expires_on'     => 'Plan expiration',
+        'marks_count'    => 'Active marks',
+        'over_limit'     => 'Over limit'
     );
     
     /**
