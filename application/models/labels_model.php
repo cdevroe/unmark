@@ -55,6 +55,8 @@ class Labels_model extends Plain_Model
 
             // If good, return full label
             if ($res === true) {
+                $cache_key = (isset($options['user_id'])) ? $this->cache_id . $options['user_id'] . '-*' : $this->cache_id . 'labels-*';
+                $this->removeCacheKey($cache_key);
                 $label_id = $this->db->insert_id();
                 return self::readComplete($label_id);
             }
@@ -117,8 +119,8 @@ class Labels_model extends Plain_Model
         $sort       = (! empty($this->sort)) ? ' ORDER BY l.' . $this->sort : null;
         $sort       = (stristr($this->sort, '.')) ? ' ORDER BY ' . $this->sort : null;
 
-        // Stop, query time
-        $labels = $this->db->query("
+        // Check for cache hit
+        $labels = $this->checkForHit("
             SELECT
             labels.label_id, labels.smart_label_id, labels.name, labels.slug, labels.order, labels.domain AS smart_label_domain, labels.path AS smart_label_path, labels.active,
             l.name AS smart_label_name, l.slug AS smart_label_slug
@@ -127,12 +129,9 @@ class Labels_model extends Plain_Model
             WHERE " . $where . " GROUP BY " . $this->table . '.' . $this->id_column . $sort . $q_limit
         );
 
-        // Check for errors
-        $this->sendException();
-
         // Now format the group names and ids
-        if ($labels->num_rows() > 0) {
-            $labels = $this->formatResults(parent::stripSlashes($labels->result()));
+        if ($this->num_rows > 0) {
+            $labels = $this->formatResults($labels);
             return ($limit == 1) ? $labels[0] : $labels;
         }
 

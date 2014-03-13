@@ -90,7 +90,8 @@ class User_Marks_To_Tags_model extends Plain_Model
         );
 
         $order = (array_key_exists($type, $order_by)) ? $order_by[$type] : 'total';
-        $q = $this->db->query("
+
+        $tags = $this->checkForHit("
             SELECT
             user_marks_to_tags.tag_id,
             COUNT(user_marks_to_tags.tag_id) as total,
@@ -101,11 +102,7 @@ class User_Marks_To_Tags_model extends Plain_Model
             GROUP BY user_marks_to_tags.tag_id ORDER BY " . $order . " DESC LIMIT " . $limit
         );
 
-        // If errors report
-        $this->sendException();
-
-        // Return that ish
-        return ($q->num_rows() > 0) ? parent::stripSlashes($q->result()) : false;
+        return ($this->num_rows > 0) ? $tags : false;
     }
 
 }
