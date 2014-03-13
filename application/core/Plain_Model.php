@@ -113,7 +113,7 @@ class Plain_Model extends CI_Model
     {
         // Set the tables not to cache results for
         // If the current table is one of the list, return null
-        $no_cache = array('marks', 'plain_sessions', 'tokens');
+        $no_cache = array('marks', 'plain_sessions', 'tags', 'tokens');
         if (in_array($this->table, $no_cache)) {
             return null;
         }
