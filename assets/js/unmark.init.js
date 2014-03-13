@@ -142,6 +142,9 @@
         $('.importer').change(function (e) {
             return $('#importForm').submit();
         });
+        $('.importerHTML').change(function (e) {
+            return $('#importFormHTML').submit();
+        });
 
     };
 
