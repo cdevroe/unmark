@@ -28,7 +28,7 @@ class JSONImportStateMarks implements JSONImportStateInterface
      * @var boolean
      */
     const RETURN_DETAILS_ERRORS_ONLY = true;
-    
+
     /*
      * Result keys
      */
@@ -37,13 +37,13 @@ class JSONImportStateMarks implements JSONImportStateInterface
      * @var string
      */
     const RESULT_ADDED = 'added';
-    
+
     /**
      * Number of marks already existing in the system
      * @var string
      */
     const RESULT_SKIPPED = 'skipped';
-    
+
     /**
      * Number of marks not imported due to errors
      * @var string
@@ -59,7 +59,7 @@ class JSONImportStateMarks implements JSONImportStateInterface
 
     /**
      * Cache for 'unlabeled' label id used to mark entries with unknown label
-     * 
+     *
      * @var int
      */
     private $unlabeled_label_id = null;
@@ -91,7 +91,7 @@ class JSONImportStateMarks implements JSONImportStateInterface
             // Strip trailing comma and simulate JSON
             $jsonLine = mb_ereg_replace("\\,[ ]*$", '', $line);
             $decodedMark = json_decode($jsonLine);
-            $importResult = $this->CI->mark_import->importMark($decodedMark);
+            $importResult = $this->CI->Mark_Import->importMark($decodedMark);
             $this->importData['result']['total'] ++;
             $this->importData['result'][$importResult['result']] ++;
             if (self::RETURN_DETAILS && (! self::RETURN_DETAILS_ERRORS_ONLY || $importResult['result'] === self::RESULT_FAILED || ! empty($importResult['warnings']))) {
