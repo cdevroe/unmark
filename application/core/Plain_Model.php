@@ -2,9 +2,9 @@
 
 class Plain_Model extends CI_Model
 {
-    
+
     const SELECT_ALL = '*';
-    
+
     // Public properties
     public $data_types      = array();
     public $sort            = null;
@@ -12,9 +12,12 @@ class Plain_Model extends CI_Model
     public $table           = null;
 
     // Protected properties
+    protected $cache_id     = 'unmark-';
+    protected $db_error     = false;
     protected $delimiter    = '~*~';
     protected $dont_cache   = false;
     protected $id_column    = null;
+    protected $num_rows     = 0;
     protected $read_method  = 'read';
 
     public function __construct()
@@ -46,22 +49,59 @@ class Plain_Model extends CI_Model
         $this->dont_cache = false;
     }
 
+    public function checkForHit($query)
+    {
+        $cache_key      = $this->getCacheKey($query);
+        $data           = $this->plain_cache->read($cache_key);
+        $this->num_rows = 0;
+
+        //$this->plain_cache->delete($cache_key);
+
+
+        //print $cache_key . PHP_EOL;
+        // If data is found, just return it
+        if (! empty($data)) {
+            $data           = unserialize($data);
+            $this->num_rows = (is_array($data)) ? count($data) : 1;
+            //print 'CACHED' . PHP_EOL . PHP_EOL;
+            return $data;
+        }
+
+        // Cache miss, hit DB
+        $q = $this->db->query($query);
+        //print 'NOT CACHED' . PHP_EOL . PHP_EOL;
+
+        // Check for errors
+        $this->sendException();
+
+        // If no DB error, ready results and add to cache
+        if ($this->db_error == false) {
+            $this->num_rows = $q->num_rows();
+            $result         = $this->stripSlashes($q->result());
+
+            if ($this->dont_cache === false) {
+                $this->plain_cache->add($cache_key, serialize($result), true);
+            }
+        }
+        else {
+            $result = array();
+        }
+
+        // Return result
+        return $result;
+    }
+
     public function count($where=null, $join=null)
     {
-        $where = (! empty($where)) ? ' WHERE ' . $where : null;
-        $join  = (! empty($join)) ? ' ' . $join : null;
-
-        $q = $this->db->query("
+        $where  = (! empty($where)) ? ' WHERE ' . $where : null;
+        $join   = (! empty($join)) ? ' ' . $join : null;
+        $result = $this->checkForHit("
             SELECT
             COUNT(" . $this->table . '.' . $this->id_column . ") AS total
             FROM `" . $this->table . "`" . $join . $where
         );
 
-        // Check for errors
-        $this->sendException();
-
-        $row = $q->row();
-        return (integer) $row->{'total'};
+        return (isset($result[0]->total)) ? (integer) $result[0]->total : 0;
     }
 
     public function delete($where)
@@ -73,16 +113,37 @@ class Plain_Model extends CI_Model
     {
         // Set the tables not to cache results for
         // If the current table is one of the list, return null
-        $no_cache = array();
+        $no_cache = array('marks', 'plain_sessions', 'tokens');
         if (in_array($this->table, $no_cache)) {
             return null;
         }
 
-        // Get user ID, query
-        // $_SESSION['user_id'] . '-' . md5($query);
+        $id = null;
+        if ($this->table == 'labels') {
+            $id = (stristr($query, 'user_id IS NULL') && stristr($query, 'smart_key IS NULL')) ? 'labels-system' : null;
+            $id = (empty($id) && stristr($query, 'user_id IS NULL')) ? 'labels-smart' : $id;
+        }
+        elseif ($this->table == 'tags') {
+            $id = 'tags';
+        }
 
-        // Will add caching later
+        $id = (empty($id)) ? $this->getCacheID($query, 'user_id') : $id;
+
+        // If user id is found, set cache key
+        if (! empty($id)) {
+            return $this->cache_id . $id . '-' . md5($query);
+        }
+
+        // Return null by default
         return null;
+    }
+
+    private function getCacheID($query, $column)
+    {
+        // Extract the value sent
+        // If not found, return null
+        preg_match('/.*?WHERE.*?' . $column . '\)?.*?=.*?(\'|")(.*?)\\1.*?/im', $query, $m);
+        return (isset($m[2]) && ! empty($m[2])) ? $m[2] : null;
     }
 
     public function getTotals($where, $page, $limit, $data=array(), $join=null)
@@ -107,60 +168,34 @@ class Plain_Model extends CI_Model
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
         $sortSelected = (empty($sort) ? $this->sort : $sort );
         $sort       = (! empty($sortSelected)) ? ' ORDER BY ' . $sortSelected : null;
+        $result     = $this->checkForHit("SELECT " . $select . " FROM `" . $this->table . "` WHERE " . $where . $sort . $q_limit);
 
-        $query     = "SELECT " . $select . " FROM `" . $this->table . "` WHERE " . $where . $sort . $q_limit;
-        $cache_key = $this->getCacheKey($query);
-        $data      = $this->cache->read($cache_key);
-
-        if (! empty($data)) {
-            return unserialize($data);
+        if ($this->num_rows < 1) {
+            return false;
         }
-        else {
-            $q = $this->db->query($query);
 
-            // Check for errors
-            $this->sendException();
-
-            if ($q->num_rows() <= 0) {
-                return false;
-            }
-
-            $result = self::stripSlashes($q->result());
-
-            if ($this->dont_cache === false) {
-                $this->cache->add($cache_key, serialize($result), true);
-            }
-            else {
-                $this->dont_cache = false;
-            }
-
-            return ($limit == 1) ? $result[0] : $result;
-        }
+        return ($limit == 1) ? $result[0] : $result;
     }
 
-    protected function removeCacheKey($key, $single=false)
+    protected function removeCacheKey($key)
     {
-        // If single, delete only single entry
-        if ($single === true) {
-            $this->cache->delete($key);
-        }
-        // else, delete all entries for the domain token
-        else {
+        if (substr_count($key, '-') >= 2) {
             $tmp = explode('-', $key);
-            if (isset($tmp[0]) && ! empty($tmp[0])) {
-                $this->cache->deleteAll($tmp[0] . '*');
-            }
+            $key = $tmp[0] . '-' . $tmp[1] . '-*';
         }
+        $this->plain_cache->delete($key);
     }
 
     protected function sendException()
     {
-        $err_msg = $this->db->_error_message();
+        $err_msg        = $this->db->_error_message();
+        $this->db_error = false;
 
         // Exceptional!
         if (! empty($err_msg)) {
-            $query  = $this->db->last_query();
-            $err_no = $this->db->_error_number();
+            $query          = $this->db->last_query();
+            $err_no         = $this->db->_error_number();
+            $this->db_error = true;
 
             // Remove column information we don't want logged
             $columns = array('session_id', '.*?_token', 'password', 'email', 'session_data');
@@ -215,9 +250,9 @@ class Plain_Model extends CI_Model
             if ($res) {
                 $cache_key = $this->getCacheKey($q);
                 $this->removeCacheKey($cache_key);
-                $this->dont_cache = true;
+                //$this->dont_cache = true;
                 $method = $this->read_method;
-                return self::stripSlashes($this->{$method}($where));
+                return $this->{$method}($where);
             }
             else {
                 return formatErrors(500);
