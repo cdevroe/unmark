@@ -1,6 +1,6 @@
 <?php defined("BASEPATH") or exit("No direct script access allowed");
 
-function isValid($val, $type)
+function isValid($val, $type, $extra_options = null)
 {
     //Types: email, password
     if ($type == 'email') {
@@ -59,6 +59,9 @@ function isValid($val, $type)
         // Use parse_url
         // If it has a scheme and a host, it's good to go
         $failed_schemes = array('chrome');
+        if(!empty($extra_options) && !empty($extra_options['failed_schemes']) && is_array($extra_options['failed_schemes'])){
+          $failed_schemes = array_merge($failed_schemes, $extra_options['failed_schemes']);  
+        }
         $url            = parse_url($val);
         return (isset($url['scheme']) && ! empty($url['scheme']) && ! in_array($url['scheme'], $failed_schemes) && isset($url['host']) && ! empty($url['host'])) ? true : false;
     }
