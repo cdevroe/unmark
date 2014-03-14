@@ -110,6 +110,9 @@
     unmark.import_data = function () {
         return $('.importer').trigger('click');
     };
+    unmark.import_data_html = function () {
+        return $('.importerHTML').trigger('click');
+    };
 
 
 }(window.jQuery));
