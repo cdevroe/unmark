@@ -47,10 +47,6 @@ class Import extends Plain_Controller
             $this->data['errors'] = formatErrors(100);
             $this->exceptional->createTrace(E_ERROR, 'No JSON file uploaded for import.', __FILE__, __LINE__);
         }
-
-        // FIXME kip9 Change view logic
-        //$this->renderJSON();
-
         $this->view('import/index', array('no_header' => true, 'no_footer' => true));
 
     }
