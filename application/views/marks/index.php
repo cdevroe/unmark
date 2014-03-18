@@ -59,7 +59,7 @@
                         <span class="mark-link"><a target="_blank" href="<?php print $mark->url; ?>"><?php print niceUrl($mark->url); ?></a></span>
                     </div>
                     <div class="mark-actions">
-                        <a title="View Mark Info" class="action mark-archive tabletonly" href="#" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>">
+                        <a title="View Mark Info" class="action mark-archive tabletonly" href="#" data-nofade="true" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>">
                             <i class="icon-ellipsis"></i>
                         </a>
                         <a target="_blank" title="Open Mark" class="mark-info" href="<?php print $mark->url; ?>" data-mark="mark-data-<?php print $mark->mark_id; ?>">
