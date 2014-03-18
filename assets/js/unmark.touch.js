@@ -52,6 +52,7 @@
 				e.preventDefault();
 				var open = $('.sidebar-content').css('right');
 				if (open === '0px') { unmark.mobile_sidebar(true); } else { unmark.mobile_sidebar(); }
+				$('.mark-actions').hide();
 			});
 
 			// Set Max width for view of sidebar expand.
@@ -65,12 +66,14 @@
 			// Unbind the Hover State for Marks in List as well as click
 			$(document).off('mouseenter mouseleave click', '.mark');
 
-			$(document).hammer().on('tap', '.mark', function(e) {
-				e.gesture.preventDefault();
+			// Hide / Show Mark Actions on Mobile when swiping
+			$(document).on('click', '.mark', function(e) {
+				e.preventDefault();
 				$('.mark-actions').hide();
 				$(this).find('.mark-actions').show();
 				unmark.mobile_nav(true);
-    		});
+			});
+
 
 		}
 

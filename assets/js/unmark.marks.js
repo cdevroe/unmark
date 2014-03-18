@@ -20,6 +20,7 @@
             mark_obj        = jQuery.parseJSON(mark_string),
             mark_id         = mark_obj_ref.replace("mark-data-",""),
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
+            mark_nofade     = mark_clicked.data('nofade');
 
         // Quick function to populate the tags
         function populateLabels() {
@@ -28,9 +29,11 @@
         };
 
         // Clean up view
-        $('.mark').removeClass('view-inactive').removeClass('view-active');
-        $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
-        $('#mark-' + mark_id).addClass('view-active');
+        if (mark_nofade === 'true') {
+            $('.mark').removeClass('view-inactive').removeClass('view-active');
+            $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
+            $('#mark-' + mark_id).addClass('view-active');
+        }
 
         // Check for note placeholder and update if there.
         if (mark_notehold !== ''){ mark_obj['notes'] = mark_notehold; }
