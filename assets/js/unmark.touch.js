@@ -10,9 +10,11 @@
 		// Toggle the Mobile Navigation
 		unmark.mobile_nav = function (hide) {
 			if (hide) {
-				$('.main-wrapper').animate({left: 0}, 400);
-				$('.navigation-content').animate({left: '-64'}, 400);
-				$('.navigation-content .menu-activator').animate({left: 62}, 400);
+				if (Modernizr.mq('only screen and (max-width: 480px)')) {
+					$('.main-wrapper').animate({left: 0}, 400);
+					$('.navigation-content').animate({left: '-64'}, 400);
+					$('.navigation-content .menu-activator').animate({left: 62}, 400);
+				}
 				$('.menu-item').removeClass('active-menu');
 			} else {
 				$('.mark-actions').hide();
