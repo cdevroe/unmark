@@ -68,7 +68,7 @@
 
 			// Hide / Show Mark Actions on Mobile when swiping
 			$(document).on('click', '.mark', function(e) {
-				e.preventDefault();
+				//e.preventDefault();
 				$('.mark-actions').hide();
 				$(this).find('.mark-actions').show();
 				unmark.mobile_nav(true);
