@@ -10,6 +10,14 @@
 |
 */
 
+// Loads language translation files
+$hook['pre_controller_method'][''] = array(
+	'class'    => 'Unmark_Localization',
+    'function' => 'loadLanguage',
+    'filename' => 'Unmark_Localization.php',
+    'filepath' => 'hooks', 
+);
+
 
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */

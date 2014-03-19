@@ -2,7 +2,7 @@
 
 class Plain_Controller extends CI_Controller
 {
-
+        
     public $clean          = null;
     public $csrf_valid     = false;
     public $current_user   = array();
@@ -19,6 +19,13 @@ class Plain_Controller extends CI_Controller
     public $user_admin     = false;
     public $user_id        = 0;
     public $user_token     = 0;
+    // Determines if controller tries to load language files
+    // WARN: File has to exist otherwise error will occur
+    public $localized      = false;
+    // User selected language (overriden in config)
+    public $selected_language = null;
+    // Supported languages list (overriden in config)
+    public $supported_languages = array('en' => 'english');
 
     public function __construct()
     {
@@ -30,7 +37,12 @@ class Plain_Controller extends CI_Controller
 
         // Clean incoming variables in a variety of ways
         $this->clean();
-
+        
+        if($this->localized && $this->selected_language === null){
+            // Set list of supported languages for the app and pick selected
+            $this->getLanguageFromConfig();
+        }
+        
         // Get user token
         $this->getUserInfo();
 
@@ -314,7 +326,7 @@ class Plain_Controller extends CI_Controller
         $this->logged_in     = (isset($this->session)) ? $this->session->userdata('logged_in') : false;
         $this->current_user  = (! empty($user_session)) ? $user_session : $this->current_user;
     }
-
+    
     protected function isAdmin()
     {
         return $this->user_admin;
@@ -571,6 +583,35 @@ class Plain_Controller extends CI_Controller
             $data['page_data']      = $data;
             $data['session']        = $this->session->all_userdata();
             $this->load->view('partials/debug', $data);
+        }
+    }
+    
+    /**
+     * Determines language selection based on configuration file
+     */
+    protected function getLanguageFromConfig(){
+        // Get languages
+        $this->load->config('all/language');
+        $languages = $this->config->item('supported_languages');
+        if(empty($languages)){
+            $languages = array('en'=>'english');
+        }
+        $this->supported_languages = $languages;
+        $languageList = array_keys($this->supported_languages);
+        // Check if there is any choice
+        $langsCount = count($languageList);
+        if($langsCount == 0){
+            // No languages available
+            $this->localized = false;
+            $this->selected_language = null;
+        } else{
+            if($langsCount>1){
+                $lang = $this->config->item('default_language');
+                $this->selected_language = $lang;
+            } else if($langsCount == 1){
+                // No choice - return what's available
+                $this->selected_language = $languages[$languageList[0]];
+            }
         }
     }
 
