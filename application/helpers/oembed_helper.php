@@ -2,21 +2,24 @@
 
 function oembed($url, $key) {
 
-  if ($key == '') { return false; } // Embedly is not activated
-  if (!checkOEmbedUrl($url)) { return false; } // This means oEmbed is not supported yet.
+  if (empty($key) || empty($url) || checkOEmbedUrl($url) === false) {
+    return false;
+  }
 
-  ini_set('memory_limit', '500M');
+  $ch = curl_init('http://api.embed.ly/1/oembed?format=json&key=' . urlencode($key) . '&url='. urlencode($url) . '&maxwidth=1200');
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_HEADER, false);
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+  $response = curl_exec($ch);
+  $info     = curl_getinfo($ch);
+  curl_close($ch);
 
-  $endpoint = 'http://api.embed.ly/1/oembed?format=json&key='.$key.'&url='.urlencode($url).'&maxwidth=1200';
+  if (! isset($info['http_code']) || $info['http_code'] != 200) {
+    return false;
+  }
 
-  $curl = curl_init();
-  curl_setopt($curl, CURLOPT_URL, $endpoint);
-  curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($curl, CURLOPT_HEADER, false);
-  $str = curl_exec($curl);
-  curl_close($curl);
-
-  $response = json_decode($str, true);
+  $response = json_decode($response, true);
 
   if (isset($response['provider_name'])) {
 
@@ -29,16 +32,15 @@ function oembed($url, $key) {
     switch ($response['provider_name']) {
 
       case 'Flickr':
-        if (isset($response['html'])) { // This is a photoset or group
+        // This is a photoset or group
+        if (isset($response['html'])) {
           return $response['html'];
-        } else { // Individual photo
+        }
+        // Individual photo
+        else {
           return '<a href="'.$url.'" target="_blank"><img src="'.$response['url'].'" width="'.$response['width'].'" height="'.$response['height'].'" /></a>';
         }
       break;
-
-      /*case 'Viddler':
-        return $response['html']['video']['embed_code'];
-      break;*/
 
       case 'Dribbble':
         return  '<a href="'.$url.'" target="_blank"><img src="'.$response['url'].'" width="'.$response['width'].'" height="'.$response['height'].'" /></a>';
@@ -56,143 +58,31 @@ function oembed($url, $key) {
         return  '<a href="'.$url.'" target="_blank"><img src="'.$response['url'].'" width="'.$response['width'].'" height="'.$response['height'].'" /></a>';
       break;
 
-      case 'Huffduffer':
-        return $response['html'].' <a href="http://huffduffer.com/" target="_blank" title="Powered by Huffduffer"><img src="'.site_url().'assets/images/poweredby_huffduffer.jpeg" /></a>';
-      break;
-
-      /*case 'Wikipedia':
-        return '<div class="row-fluid"><div class="span5"><a href="'.$url.'"><img src="'.$response['thumbnail_url'].'" /></a></div><div class="span4"><p>'.$response['description'].'</p></div></div>';
-      break;*/
-
       case 'YouTube' :
         return $response['html'] . '<div class="videoInfo"><span class="viLeft">by <a target="_blank" href="'.$response['author_url'].'">'.$response['author_name'].'</a></span><p>'.$response['description'].'</p></div>';
       break;
 
       // Vimeo, other video sites and generic HTML
       default:
-        if (isset($response['html'])) {
-          return $response['html'];
-        } else {
-          return false;
-        }
-      break;
-
-    } // end switch()
-
-  } else {
-      return false;
-  } // end $response
-
-return false;
-
-} // end oembed()
-
-
-// Determine the oEmbed endpoint
-function checkOEmbedUrl($url) {
-
-    $parsedUrl = parse_url($url);
-    $domain = str_replace('www.','',$parsedUrl['host']);
-
-    switch ($domain) {
-
-      case 'youtube.com':
-        return true;
-      break;
-
-      case 'm.youtube.com':
-        return true;
-      break;
-
-      case 'flickr.com':
-        return true;
-      break;
-
-      case 'm.flickr.com':
-        return true;
-      break;
-
-      /*case 'viddler.com':
-        return true;
-      break;*/
-
-      case 'vimeo.com':
-        return true;
-      break;
-
-      case 'dribbble.com':
-        return true;
-      break;
-
-      case 'drbl.in':
-        return true;
-      break;
-
-      case 'instagr.am':
-        return true;
-      break;
-
-      case 'instagram.com':
-        return true;
-      break;
-
-      case 'amazon.com':
-        return true;
-      break;
-
-      case 'amzn.com':
-        return true;
-      break;
-
-      case 'twitpic.com':
-        return true;
-      break;
-
-      case 'speakerdeck.com':
-        return true;
-      break;
-
-      case 'slideshare.net':
-        return true;
-      break;
-
-      case 'skitch.com':
-        return true;
-      break;
-
-      case 'img.skitch.com':
-        return true;
-      break;
-
-      case 'gist.github.com':
-        return true;
-      break;
-
-      case 'huffduffer.com':
-        return true;
-      break;
-
-      case 'soundcloud.com':
-        return true;
-      break;
-
-      case 'ted.com':
-        return true;
-      break;
-
-      /*case 'wikipedia.org':
-        return true;
-      break;
-
-      case 'en.wikipedia.org':
-        return true;
-      break;*/
-
-      default:
-        return false;
+        return (isset($response['html'])) ? $response['html'] : false;
       break;
 
     }
+
+  }
+
 return false;
-} // end oembedEndpoint
-?>
+
+}
+
+function checkOEmbedUrl($url) {
+
+    $domain = parse_url($url);
+    $domain = str_replace('www.', '', $domain['host']);
+    $hosts  = array(
+      'youtube.com', 'm.youtube.com', 'flickr.com', 'm.flickr.com', 'vimeo.com', 'dribbble.com', 'drbl.in', 'instagr.am', 'instagram.com', 'amazon.com', 'amzn.com', 'twitpic.com',
+      'speakerdeck.com', 'slideshare.net', 'skitch.com', 'img.skitch.com', 'gist.github.com', 'huffduffer.com', 'soundcloud.com', 'ted.com'
+    );
+
+    return (in_array($domain, $hosts)) ? true : false;
+}

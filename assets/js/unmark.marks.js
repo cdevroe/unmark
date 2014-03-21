@@ -88,18 +88,6 @@
         unmark.updateCounts();
     };
 
-    // Build Mark JSON
-    unmark.get_mark_info = function (mark_id) {
-        var mark_data;
-        unmark.ajax('/mark/info/'+mark_id, 'post', '', function(res) {
-            mark_data = res.mark;
-            mark_data = JSON.stringify(mark_data);
-
-            // Once Data is retrieved, update the mark JSON
-            $('#mark-data-'+mark_id).html(mark_data);
-        });
-    };
-
     // Archive & Restore Mark
     unmark.mark_archive = function (archive_link) {
         var id = archive_link.data("id");
@@ -245,7 +233,7 @@
                 if (label_parent.hasClass('sidebar-label')) {
                     unmark.swapClass(label_parent, 'label-*', 'label-'+label_id);
                     unmark.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
-                    unmark.get_mark_info(mark);
+                    unmark.update_mark_info(res, mark);
                     if ((pattern.test(body_class))  && (body_class !== 'label-'+label_id)) { // If on current label and label change, remove mark from label
                         $('#mark-'+mark).fadeOut();
                         unmark.sidebar_collapse();
@@ -254,6 +242,13 @@
             });
         });
 
+    };
+
+    // Update Mark JSON Data after Successfull label change
+    unmark.update_mark_info = function (res, mark_id) {
+        var mark_data = res.mark;
+        mark_data = JSON.stringify(mark_data);
+        $('#mark-data-'+mark_id).html(mark_data);
     };
 
     // Build a Label List
