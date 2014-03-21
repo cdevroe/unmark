@@ -97,6 +97,7 @@ class Exceptional {
             $CI =& get_instance();
 
             // Get current user if applicable
+            $CI->load->library('session');
             $user = $CI->session->userdata('user');
             $user = (empty($user)) ? array() : $user;
 

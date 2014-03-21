@@ -5,6 +5,6 @@ $config['default_language'] = 'english';
 
 // Supported languages
 $config['supported_languages'] = array(
-    'en' => 'english',
-    'pl' => 'polish'
+    'en' => 'en_US',
+    'pl' => 'pl_PL'
 );

@@ -76,17 +76,14 @@ function formatErrors($errors, $params = null)
 {
     if (is_numeric($errors)) {
         $CI             =& get_instance();
-        $CI->lang->load('error_codes', $CI->selected_language);
-        if(($errorMsg = $CI->lang->line('error_codes_'.$errors)) !== false ){
+        $error_codes    = $CI->config->item('error_codes');
+        if(array_key_exists($errors, $error_codes)){
             $errno = $errors;
-            $message = empty($params) ? $errorMsg : call_user_func_array("sprintf", array_merge(array($errorMsg), $params));            
+            $message = empty($params) ? $error_codes[$errno] : call_user_func_array("sprintf", array_merge(array($error_codes[$errno]), $params));            
         } else{
             $errno = 0;
             $message = 'Unknown Error';
         }
-//         $error_codes    = $CI->config->item('error_codes');
-//         $errno          = (array_key_exists($errors, $error_codes)) ? $errors : 0;
-//         $message        = (! empty($errno)) ? $error_codes[$errno] : 'Unknown Error';
         if ($errors >= 400 & $errors < 600) {
             set_response_code($errors);
         }

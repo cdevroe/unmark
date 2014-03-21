@@ -1,0 +1,77 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Unmark\n"
+"POT-Creation-Date: 2014-03-20 15:32+0100\n"
+"PO-Revision-Date: 2014-03-20 15:35+0100\n"
+"Last-Translator: \n"
+"Language-Team: Plain\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: application/controllers/login.php:24
+#, php-format
+msgid "The email address `%s` was not found."
+msgstr ""
+
+#: application/controllers/login.php:27
+msgid "Your account is no longer active. Please contact support."
+msgstr ""
+
+#: application/controllers/login.php:50
+msgid "Your password is incorrect. Please try again."
+msgstr ""
+
+#: application/views/marks/index.php:2
+msgid "Sorry, No marks found"
+msgstr ""
+
+#: application/views/marks/index.php:16
+#, php-format
+msgid "mark labeled %s"
+msgid_plural "marks labeled %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/marks/index.php:20
+msgid "mark archived"
+msgid_plural "marks archived"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/marks/index.php:24
+#, php-format
+msgid "mark tagged %s"
+msgid_plural "marks tagged %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/marks/index.php:28
+#, php-format
+msgid "mark found containing \"%s\""
+msgid_plural "marks found containing \"%s\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/marks/index.php:32
+msgid "mark"
+msgid_plural "marks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/marks/index.php:38
+msgid "in the "
+msgstr ""
+
+#: application/views/marks/index.php:39
+#, php-format
+msgid "mark created %s %s"
+msgid_plural "marks created %s %s"
+msgstr[0] ""
+msgstr[1] ""

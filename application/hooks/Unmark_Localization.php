@@ -20,7 +20,22 @@ class Unmark_Localization
     public function loadLanguage()
     {
         if($this->CI->localized){
-            $this->CI->lang->load($this->CI->router->fetch_class(), $this->CI->selected_language);
+            // Trying to set locale
+            $lang = $this->CI->selected_language.'.UTF-8';
+            $setLocaleOut = setlocale(LC_ALL, $lang);
+            if($setLocaleOut !== false){
+                // Locale setting success
+                $lang_path = FCPATH.APPPATH.'language/locales';
+                bindtextdomain('unmark', $lang_path);
+                textdomain('unmark');
+            } else {
+                // Locale setting failed - report error
+                $errMsg = 'Setting language to '.$lang.' failed - no such locale';
+                log_message('DEBUG', $errMsg);
+                $this->CI->exceptional->createTrace(E_WARNING, $errMsg, __FILE__, __LINE__, array(
+                    'language'  => $lang
+                ));
+            }
         }
     }
 }
