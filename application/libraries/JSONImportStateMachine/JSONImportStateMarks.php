@@ -91,7 +91,7 @@ class JSONImportStateMarks implements JSONImportStateInterface
             // Strip trailing comma and simulate JSON
             $jsonLine = mb_ereg_replace("\\,[ ]*$", '', $line);
             $decodedMark = json_decode($jsonLine);
-            $importResult = $this->CI->Mark_Import->importMark($decodedMark);
+            $importResult = $this->CI->mark_import->importMark($decodedMark);
             $this->importData['result']['total'] ++;
             $this->importData['result'][$importResult['result']] ++;
             if (self::RETURN_DETAILS && (! self::RETURN_DETAILS_ERRORS_ONLY || $importResult['result'] === self::RESULT_FAILED || ! empty($importResult['warnings']))) {

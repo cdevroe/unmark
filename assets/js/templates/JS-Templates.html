@@ -32,7 +32,7 @@
         <span class="mark-link"><a target="_blank" href="{{url}}">{{prettyurl}}</a></span>
     </div>
     <div class="mark-actions" style="display: none;">
-        <a class="action mark-archive tabletonly" href="#" data-action="show_mark_info" data-mark="mark-data-{{mark_id}}"><i class="icon-ellipsis"></i></a>
+        <a class="action mark-archive tabletonly" href="#" data-nofade="true" data-action="show_mark_info" data-mark="mark-data-{{mark_id}}"><i class="icon-ellipsis"></i></a>
         <a target="_blank" class="mark-info" href="{{url}}" data-mark="mark-data-{{mark_id}}"><i class="icon-goto_link"></i></a>
         {{#archived_on}}
             <a title="Unarchive Mark" class="action mark-archive" data-action="mark_restore" href="#" data-id="{{mark_id}}"><i class="icon-label"></i></a>

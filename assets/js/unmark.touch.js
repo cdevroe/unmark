@@ -10,9 +10,11 @@
 		// Toggle the Mobile Navigation
 		unmark.mobile_nav = function (hide) {
 			if (hide) {
-				$('.main-wrapper').animate({left: 0}, 400);
-				$('.navigation-content').animate({left: '-64'}, 400);
-				$('.navigation-content .menu-activator').animate({left: 62}, 400);
+				if (Modernizr.mq('only screen and (max-width: 480px)')) {
+					$('.main-wrapper').animate({left: 0}, 400);
+					$('.navigation-content').animate({left: '-64'}, 400);
+					$('.navigation-content .menu-activator').animate({left: 62}, 400);
+				}
 				$('.menu-item').removeClass('active-menu');
 			} else {
 				$('.mark-actions').hide();
@@ -52,6 +54,7 @@
 				e.preventDefault();
 				var open = $('.sidebar-content').css('right');
 				if (open === '0px') { unmark.mobile_sidebar(true); } else { unmark.mobile_sidebar(); }
+				$('.mark-actions').hide();
 			});
 
 			// Set Max width for view of sidebar expand.
@@ -65,12 +68,14 @@
 			// Unbind the Hover State for Marks in List as well as click
 			$(document).off('mouseenter mouseleave click', '.mark');
 
-			$(document).hammer().on('tap', '.mark', function(e) {
-				e.gesture.preventDefault();
+			// Hide / Show Mark Actions on Mobile when swiping
+			$(document).on('click', '.mark', function(e) {
+				//e.preventDefault();
 				$('.mark-actions').hide();
 				$(this).find('.mark-actions').show();
 				unmark.mobile_nav(true);
-    		});
+			});
+
 
 		}
 

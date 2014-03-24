@@ -20,6 +20,7 @@
             mark_obj        = jQuery.parseJSON(mark_string),
             mark_id         = mark_obj_ref.replace("mark-data-",""),
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
+            mark_nofade     = mark_clicked.data('nofade');
 
         // Quick function to populate the tags
         function populateLabels() {
@@ -28,9 +29,11 @@
         };
 
         // Clean up view
-        $('.mark').removeClass('view-inactive').removeClass('view-active');
-        $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
-        $('#mark-' + mark_id).addClass('view-active');
+        if (!mark_nofade) {
+            $('.mark').removeClass('view-inactive').removeClass('view-active');
+            $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
+            $('#mark-' + mark_id).addClass('view-active');
+        }
 
         // Check for note placeholder and update if there.
         if (mark_notehold !== ''){ mark_obj['notes'] = mark_notehold; }
@@ -83,18 +86,6 @@
         }
         unmark.getData('labels', updateLabelCount);
         unmark.updateCounts();
-    };
-
-    // Build Mark JSON
-    unmark.get_mark_info = function (mark_id) {
-        var mark_data;
-        unmark.ajax('/mark/info/'+mark_id, 'post', '', function(res) {
-            mark_data = res.mark;
-            mark_data = JSON.stringify(mark_data);
-
-            // Once Data is retrieved, update the mark JSON
-            $('#mark-data-'+mark_id).html(mark_data);
-        });
     };
 
     // Archive & Restore Mark
@@ -242,7 +233,7 @@
                 if (label_parent.hasClass('sidebar-label')) {
                     unmark.swapClass(label_parent, 'label-*', 'label-'+label_id);
                     unmark.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
-                    unmark.get_mark_info(mark);
+                    unmark.update_mark_info(res, mark);
                     if ((pattern.test(body_class))  && (body_class !== 'label-'+label_id)) { // If on current label and label change, remove mark from label
                         $('#mark-'+mark).fadeOut();
                         unmark.sidebar_collapse();
@@ -251,6 +242,13 @@
             });
         });
 
+    };
+
+    // Update Mark JSON Data after Successfull label change
+    unmark.update_mark_info = function (res, mark_id) {
+        var mark_data = res.mark;
+        mark_data = JSON.stringify(mark_data);
+        $('#mark-data-'+mark_id).html(mark_data);
     };
 
     // Build a Label List
