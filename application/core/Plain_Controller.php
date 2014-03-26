@@ -355,7 +355,8 @@ class Plain_Controller extends CI_Controller
         // Going to execute this better, need to think about it
         $host   = (isset($_SERVER['HTTP_HOST'])) ? strtolower($_SERVER['HTTP_HOST']) : null;
         $origin = (isset($_SERVER['HTTP_REFERER'])) ? strtolower(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST)) : null;
-        return (! empty($origin) && ! empty($host) && $host == $origin) ? true : false;
+        $port   = (isset($_SERVER['SERVER_PORT']) && ! empty($_SERVER['SERVER_PORT'])) ? ':' . $_SERVER['SERVER_PORT'] : null;
+        return (! empty($origin) && ! empty($host) && ($host == $origin || $host == $origin . $port)) ? true : false;
     }
 
     public function isWebView()
