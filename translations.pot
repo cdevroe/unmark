@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Unmark\n"
-"POT-Creation-Date: 2014-03-20 15:32+0100\n"
-"PO-Revision-Date: 2014-03-20 15:35+0100\n"
+"POT-Creation-Date: 2014-03-25 15:54+0100\n"
+"PO-Revision-Date: 2014-03-25 15:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: Plain\n"
 "Language: en_US\n"
@@ -26,6 +26,67 @@ msgstr ""
 
 #: application/controllers/login.php:50
 msgid "Your password is incorrect. Please try again."
+msgstr ""
+
+#: application/views/layouts/sidebar.php:7
+#, php-format
+msgid "You saved <span class=\"ns-today\">%s</span> mark today"
+msgid_plural "You saved <span class=\"ns-today\">%s</span> marks today"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/layouts/sidebar.php:8
+#, php-format
+msgid "and archived  <span class=\"na-today\">%s</span>"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:17
+#, php-format
+msgid ""
+"You have <span class=\"ns-year\">%s</span> mark that are over 1 year old. "
+"Want to tidy up a bit?"
+msgid_plural ""
+"You have <span class=\"ns-year\">%s</span> mark that are over 1 year old. "
+"Want to tidy up a bit?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/layouts/sidebar.php:18
+msgid "View Marks"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:19
+msgid "Do Nothing"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:20
+msgid "Archive All"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:27
+msgid "To add marks, drag the button above into your bookmark toolbar."
+msgstr ""
+
+#: application/views/layouts/sidebar.php:28
+msgid "Or, use our"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:28
+msgid "Chrome Extension"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:28
+msgid "Learn More"
+msgstr ""
+
+#: application/views/layouts/sidebar/sidebar_notices.php:10
+msgid "Thanks for checking out Unmark. We hope you enjoy using it."
+msgstr ""
+
+#: application/views/layouts/sidebar/sidebar_notices.php:11
+msgid ""
+"For usage tips <a target=\"_blank\" href=\"https://twitter.com/unmarkit"
+"\">follow us on Twitter</a>! Please tell your friends about Unmark."
 msgstr ""
 
 #: application/views/marks/index.php:2
@@ -75,3 +136,25 @@ msgid "mark created %s %s"
 msgid_plural "marks created %s %s"
 msgstr[0] ""
 msgstr[1] ""
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:3
+msgid ""
+"For usage tips <a href=\"https://twitter.com/unmarkit\">follow us on "
+"Twitter</a>! Please tell your friends about Unmark."
+msgstr ""
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:17
+msgid "Looks like you are over either your daily or total limit."
+msgstr ""
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:18
+msgid "Upgrade to a paid account and save an unlimited amount of marks."
+msgstr ""
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:19
+msgid "UPGRADE NOW"
+msgstr ""
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:22
+msgid "Here are a few interesting marks to get you started..."
+msgstr ""

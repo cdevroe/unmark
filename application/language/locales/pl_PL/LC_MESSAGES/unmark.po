@@ -1,10 +1,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Unmark\n"
-"POT-Creation-Date: 2014-03-20 13:04+0100\n"
-"PO-Revision-Date: 2014-03-20 13:21+0100\n"
+"POT-Creation-Date: 2014-03-25 15:54+0100\n"
+"PO-Revision-Date: 2014-03-25 16:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: Plain\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,7 +14,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"Language: pl\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: application/controllers/login.php:24
@@ -29,8 +29,74 @@ msgstr ""
 msgid "Your password is incorrect. Please try again."
 msgstr ""
 
-#: application/helpers/data_helper.php:79
-msgid "error_codes_"
+#: application/views/layouts/sidebar.php:7
+#, php-format
+msgid "You saved <span class=\"ns-today\">%s</span> mark today"
+msgid_plural "You saved <span class=\"ns-today\">%s</span> marks today"
+msgstr[0] "Zapisałeś dzisiaj <span class=\"ns-today\">%s</span> zakładkę"
+msgstr[1] "Zapisałeś dzisiaj <span class=\"ns-today\">%s</span> zakładki"
+msgstr[2] "Zapisałeś dzisiaj <span class=\"ns-today\">%s</span> zakładek"
+
+#: application/views/layouts/sidebar.php:8
+#, php-format
+msgid "and archived  <span class=\"na-today\">%s</span>"
+msgstr ", zarchiwizowałeś <span class=\"na-today\">%s</span>"
+
+#: application/views/layouts/sidebar.php:17
+#, php-format
+msgid ""
+"You have <span class=\"ns-year\">%s</span> mark that are over 1 year old. "
+"Want to tidy up a bit?"
+msgid_plural ""
+"You have <span class=\"ns-year\">%s</span> mark that are over 1 year old. "
+"Want to tidy up a bit?"
+msgstr[0] ""
+"Masz <span class=\"ns-today\">%s</span> zakładkę starszą niż rok. Czy chcesz "
+"ją zarchiwizować?"
+msgstr[1] ""
+"Masz <span class=\"ns-today\">%s</span> zakładki starsze niż rok. Czy chcesz "
+"je zarchiwizować?"
+msgstr[2] ""
+"Masz <span class=\"ns-today\">%s</span> zakładek starszych niż rok. Czy "
+"chcesz je zarchiwizować?"
+
+#: application/views/layouts/sidebar.php:18
+msgid "View Marks"
+msgstr "Zobacz zakładki"
+
+#: application/views/layouts/sidebar.php:19
+msgid "Do Nothing"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:20
+msgid "Archive All"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:27
+msgid "To add marks, drag the button above into your bookmark toolbar."
+msgstr ""
+"Aby dodać zakładki, przeciągnij przycisk powyżej na swój pasek zakładek."
+
+#: application/views/layouts/sidebar.php:28
+msgid "Or, use our"
+msgstr "Lub użyj naszego"
+
+#: application/views/layouts/sidebar.php:28
+msgid "Chrome Extension"
+msgstr "Rozszerzenia Chrome"
+
+#: application/views/layouts/sidebar.php:28
+msgid "Learn More"
+msgstr "Dowiedz się więcej"
+
+#: application/views/layouts/sidebar/sidebar_notices.php:10
+msgid "Thanks for checking out Unmark. We hope you enjoy using it."
+msgstr ""
+
+#: application/views/layouts/sidebar/sidebar_notices.php:11
+msgid ""
+"For usage tips <a target=\"_blank\" href=\"https://twitter.com/unmarkit"
+"\">follow us on Twitter</a>! Please tell your friends about Unmark."
 msgstr ""
 
 #: application/views/marks/index.php:2
@@ -79,5 +145,30 @@ msgstr ""
 #, php-format
 msgid "mark created %s %s"
 msgid_plural "marks created %s %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "zakładka utworzona %s %s"
+msgstr[1] "zakładki utworzone %s %s"
+msgstr[2] "zakładek utworzonych %s %s"
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:3
+msgid ""
+"For usage tips <a href=\"https://twitter.com/unmarkit\">follow us on "
+"Twitter</a>! Please tell your friends about Unmark."
+msgstr ""
+"Aby uzyskać więcej wskazówek <a href=\"https://twitter.com/unmarkit\">śledź "
+"nas na Twitterze</a>! Nie zapomnij powiedzieć swoim znajomym o Unmark."
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:17
+msgid "Looks like you are over either your daily or total limit."
+msgstr ""
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:18
+msgid "Upgrade to a paid account and save an unlimited amount of marks."
+msgstr ""
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:19
+msgid "UPGRADE NOW"
+msgstr ""
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:22
+msgid "Here are a few interesting marks to get you started..."
+msgstr "Poniżej znajdziesz kilka najciekawszych zakładek..."
