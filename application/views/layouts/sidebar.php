@@ -23,7 +23,7 @@
     <?php endif; ?>
     <div class="sidebar-block">
         <div class="sidebar-inner">
-            <a href="javascript:(function()%7Bl%3D%22<?php print getFullUrl(); ?>%2Fmark%2Fadd%3Furl%3D%22%2BencodeURIComponent(window.location.href)%2B%22%26title%3D%22%2BencodeURIComponent(document.title)%2B%22%26v%3D1%26nowindow%3Dyes%26%22%3Bvar%20e%3Dwindow.open(l%2B%22noui%3D1%22%2C%22Unmark%22%2C%22location%3D0%2Clinks%3D0%2Cscrollbars%3D0%2Ctoolbar%3D0%2Cwidth%3D594%2Cheight%3D485%22)%3Breturn%20false%7D)()" class="btn">Unmark+</a>
+            <a href="javascript:(function()%7Bl%3D%22<?php print getFullUrl(); ?>%2Fmark%2Fadd%3Furl%3D%22%2BencodeURIComponent(window.location.href)%2B%22%26title%3D%22%2BencodeURIComponent(document.title)%2B%22%26v%3D1%26nowindow%3Dyes%26%22%3Bvar%20e%3Dwindow.open(l%2B%22noui%3D1%22%2C%22Unmark%22%2C%22location%3D0%2Clinks%3D0%2Cscrollbars%3D0%2Ctoolbar%3D0%2Cwidth%3D594%2Cheight%3D485%22)%3B%7D)()" class="btn">Unmark+</a>
             <p class="clear sidenote"><?php echo _('To add marks, drag the button above into your bookmark toolbar.'); ?>
                 <br /> <?php echo _('Or, use our'); ?> <a href="https://chrome.google.com/webstore/detail/unmark/cdhnljlbeehjgddokagghpfgahhlifch" target="_blank"><?php echo _('Chrome Extension'); ?></a>. <a href="http://help.unmark.it/bookmarklet" target="_blank"><?php echo _('Learn More')?></a>.</p>
         </div>
