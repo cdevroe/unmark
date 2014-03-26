@@ -13,7 +13,7 @@
     switch ($lookup_type) {
         case 'label':
             $heading['icon']    =   'icon-circle';
-            $heading['title']   =   sprintf(ngettext('mark labeled %s', 'marks labeled %s', $total), $label_name);
+            $heading['title']   =   sprintf(ngettext('mark labeled %s', 'marks labeled %s', $total), _($label_name));
             break;
         case 'archive':
             $heading['icon']    =   'icon-heading_archive';
@@ -35,8 +35,12 @@
 
     // If a lookup time frame
     // Work some magic
-    $in_the           = (stristr($lookup_type, 'last-')) ? gettext('in the ') : '';
-    $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(ngettext('mark created %s %s', 'marks created %s %s', $total),$in_the,str_replace('-', ' ', $lookup_type)) : $heading['title'];
+
+    if(stristr($lookup_type, 'last-')){
+        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(ngettext('mark created in the %s', 'marks created in the %s', $total), _(str_replace('-', ' ', $lookup_type))) : $heading['title'];
+    } else {
+        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(ngettext('mark created %s', 'marks created %s', $total), _(str_replace('-', ' ', $lookup_type))) : $heading['title'];
+    }
 
 ?>
 <h2 class="marks-heading"><i class="<?php print $heading['icon']; ?>"></i> <?php print $heading['title']; ?></h2>

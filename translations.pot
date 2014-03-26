@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Unmark\n"
-"POT-Creation-Date: 2014-03-25 15:54+0100\n"
-"PO-Revision-Date: 2014-03-25 15:54+0100\n"
+"POT-Creation-Date: 2014-03-26 17:21+0100\n"
+"PO-Revision-Date: 2014-03-26 17:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: Plain\n"
 "Language: en_US\n"
@@ -28,54 +28,242 @@ msgstr ""
 msgid "Your password is incorrect. Please try again."
 msgstr ""
 
-#: application/views/layouts/sidebar.php:7
-#, php-format
-msgid "You saved <span class=\"ns-today\">%s</span> mark today"
-msgid_plural "You saved <span class=\"ns-today\">%s</span> marks today"
-msgstr[0] ""
-msgstr[1] ""
-
-#: application/views/layouts/sidebar.php:8
-#, php-format
-msgid "and archived  <span class=\"na-today\">%s</span>"
+#: application/helpers/data_helper.php:131
+msgid "ago"
 msgstr ""
 
-#: application/views/layouts/sidebar.php:17
+#: application/helpers/data_helper.php:135
+msgid "Just Now"
+msgstr ""
+
+#: application/helpers/view_helper.php:7
 #, php-format
-msgid ""
-"You have <span class=\"ns-year\">%s</span> mark that are over 1 year old. "
-"Want to tidy up a bit?"
-msgid_plural ""
-"You have <span class=\"ns-year\">%s</span> mark that are over 1 year old. "
-"Want to tidy up a bit?"
+msgid "%s mark"
+msgid_plural "%s marks"
 msgstr[0] ""
 msgstr[1] ""
 
+#: application/helpers/view_helper.php:9
+msgid "No marks"
+msgstr ""
+
+#: application/language/phrases.php:6
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:7
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:8
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:9
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:10
+msgid "month"
+msgid_plural "months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:11
+msgid "year"
+msgid_plural "years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:13
+msgid "today"
+msgstr ""
+
+#: application/language/phrases.php:14
+msgid "yesterday"
+msgstr ""
+
+#: application/language/phrases.php:15
+msgid "last week"
+msgstr ""
+
+#: application/language/phrases.php:16
+msgid "last month"
+msgstr ""
+
+#: application/language/phrases.php:17
+msgid "last three months"
+msgstr ""
+
+#: application/language/phrases.php:18
+msgid "last six months"
+msgstr ""
+
+#: application/language/phrases.php:19
+msgid "last year"
+msgstr ""
+
+#: application/language/phrases.php:21
+msgid "Read"
+msgstr ""
+
+#: application/language/phrases.php:22
+msgid "Watch"
+msgstr ""
+
+#: application/language/phrases.php:23
+msgid "Listen"
+msgstr ""
+
+#: application/language/phrases.php:24
+msgid "Buy"
+msgstr ""
+
+#: application/language/phrases.php:25
+msgid "Eat & Drink"
+msgstr ""
+
+#: application/language/phrases.php:26
+msgid "Do"
+msgstr ""
+
+#: application/language/phrases.php:27
+msgid "Unlabeled"
+msgstr ""
+
+#: application/views/layouts/accountlinks.php:1
+#, php-format
+msgid "Account %s"
+msgstr ""
+
+#: application/views/layouts/accountlinks.php:3
+#: application/views/layouts/userforms.php:4
+#: custom/views/layouts/accountlinks.php:22
+msgid "Change Password"
+msgstr ""
+
+#: application/views/layouts/accountlinks.php:4
+#: application/views/layouts/userforms.php:16
+#: custom/views/layouts/accountlinks.php:23
+msgid "Change Email Address"
+msgstr ""
+
+#: application/views/layouts/accountlinks.php:5
+#: custom/views/layouts/accountlinks.php:24
+msgid "Import or Export Marks"
+msgstr ""
+
+#: application/views/layouts/accountlinks.php:6
+#: custom/views/layouts/accountlinks.php:25
+msgid "Invite Others"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_helper.php:1
+#: application/views/layouts/timeline.php:5
+msgid "All Marks"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_helper.php:2
+msgid "Labels"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_helper.php:3
+msgid "Timeline"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_helper.php:4
+msgid "Search"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_helper.php:5
+msgid "Archives"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:18
+msgid "SEARCH..."
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:22
+msgid "Most-Used Tags"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:28
+msgid "Sign Out"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:32
+msgid "Help"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:34
+msgid "How to Use Unmark"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:35
+msgid "View Our FAQ"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:36
+msgid "Get the Bookmarklet"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:37
+msgid "Get the Chrome Extension"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:7
+#, php-format
+msgid "You saved %s mark today"
+msgid_plural "You saved %s marks today"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/layouts/sidebar.php:9
+#, php-format
+msgid "and archived %s"
+msgstr ""
+
 #: application/views/layouts/sidebar.php:18
+#, php-format
+msgid "You have %s mark that are over 1 year old. Want to tidy up a bit?"
+msgid_plural ""
+"You have %s mark that are over 1 year old. Want to tidy up a bit?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/layouts/sidebar.php:19
 msgid "View Marks"
 msgstr ""
 
-#: application/views/layouts/sidebar.php:19
+#: application/views/layouts/sidebar.php:20
 msgid "Do Nothing"
 msgstr ""
 
-#: application/views/layouts/sidebar.php:20
+#: application/views/layouts/sidebar.php:21
 msgid "Archive All"
 msgstr ""
 
-#: application/views/layouts/sidebar.php:27
+#: application/views/layouts/sidebar.php:28
 msgid "To add marks, drag the button above into your bookmark toolbar."
 msgstr ""
 
-#: application/views/layouts/sidebar.php:28
+#: application/views/layouts/sidebar.php:29
 msgid "Or, use our"
 msgstr ""
 
-#: application/views/layouts/sidebar.php:28
+#: application/views/layouts/sidebar.php:29
 msgid "Chrome Extension"
 msgstr ""
 
-#: application/views/layouts/sidebar.php:28
+#: application/views/layouts/sidebar.php:29
 msgid "Learn More"
 msgstr ""
 
@@ -87,6 +275,70 @@ msgstr ""
 msgid ""
 "For usage tips <a target=\"_blank\" href=\"https://twitter.com/unmarkit"
 "\">follow us on Twitter</a>! Please tell your friends about Unmark."
+msgstr ""
+
+#: application/views/layouts/timeline.php:8
+msgid "Today"
+msgstr ""
+
+#: application/views/layouts/timeline.php:11
+msgid "Yesterday"
+msgstr ""
+
+#: application/views/layouts/timeline.php:14
+msgid "Last Week"
+msgstr ""
+
+#: application/views/layouts/timeline.php:17
+msgid "Last Month"
+msgstr ""
+
+#: application/views/layouts/timeline.php:20
+msgid "Last 3 Months"
+msgstr ""
+
+#: application/views/layouts/timeline.php:23
+msgid "Last 6 Months"
+msgstr ""
+
+#: application/views/layouts/timeline.php:26
+msgid "Last Year"
+msgstr ""
+
+#: application/views/layouts/userforms.php:6
+msgid "Old Password..."
+msgstr ""
+
+#: application/views/layouts/userforms.php:7
+msgid "New Password..."
+msgstr ""
+
+#: application/views/layouts/userforms.php:8
+msgid "Once More..."
+msgstr ""
+
+#: application/views/layouts/userforms.php:18
+msgid "New Email Address..."
+msgstr ""
+
+#: application/views/layouts/userforms.php:26
+msgid "Export All Marks"
+msgstr ""
+
+#: application/views/layouts/userforms.php:27
+msgid "Export File"
+msgstr ""
+
+#: application/views/layouts/userforms.php:28
+msgid "Import Marks"
+msgstr ""
+
+#: application/views/layouts/userforms.php:31
+msgid "Import File"
+msgstr ""
+
+#: application/views/layouts/userforms.php:33
+msgid "Note: The import needs to be a JSON file."
 msgstr ""
 
 #: application/views/marks/index.php:2
@@ -126,16 +378,43 @@ msgid_plural "marks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: application/views/marks/index.php:38
-msgid "in the "
-msgstr ""
-
-#: application/views/marks/index.php:39
+#: application/views/marks/index.php:40
 #, php-format
-msgid "mark created %s %s"
-msgid_plural "marks created %s %s"
+msgid "mark created in the %s"
+msgid_plural "marks created in the %s"
 msgstr[0] ""
 msgstr[1] ""
+
+#: application/views/marks/index.php:42
+#, php-format
+msgid "mark created %s"
+msgid_plural "marks created %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: custom/views/layouts/accountlinks.php:4
+msgid "ADMIN ACCOUNT"
+msgstr ""
+
+#: custom/views/layouts/accountlinks.php:6
+msgid "PAID ACCOUNT"
+msgstr ""
+
+#: custom/views/layouts/accountlinks.php:8
+msgid "FREE ACCOUNT"
+msgstr ""
+
+#: custom/views/layouts/accountlinks.php:16
+msgid "Manage Paid Account"
+msgstr ""
+
+#: custom/views/layouts/accountlinks.php:18
+msgid "Restart Paid Account"
+msgstr ""
+
+#: custom/views/layouts/accountlinks.php:20
+msgid "Upgrade to Paid"
+msgstr ""
 
 #: custom/views/layouts/sidebar/sidebar_notices.php:3
 msgid ""

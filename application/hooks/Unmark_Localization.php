@@ -16,6 +16,9 @@ class Unmark_Localization
 
     /**
      * Load translations if controller is localized
+     * TODO Think about using locales the other way that doesn't require
+     * locale installation on server:
+     * @see http://stackoverflow.com/questions/15541747/use-php-gettext-without-having-to-install-locales
      */
     public function loadLanguage()
     {

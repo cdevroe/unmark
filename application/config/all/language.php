@@ -1,7 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 // Language to use
-$config['default_language'] = 'english';
+$config['default_language'] = 'en_US';
 
 // Supported languages
 $config['supported_languages'] = array(
