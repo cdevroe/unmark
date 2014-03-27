@@ -11,7 +11,7 @@
 		<div id="error-icon"><img src="/assets/images/icons/large_x.png" /></div>
 		<h1>Yikes!</h1>
 		<p><?php print current($errors); ?></p>
-		<p>This mark could not be added to your stream.</p>
+		<p><?php echo _('This mark could not be added to your stream.')?></p>
 	</div>
 </body>
 </html>

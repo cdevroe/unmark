@@ -4,7 +4,6 @@ class Login extends Plain_Controller {
 
     public function __construct()
     {
-        $this->localized = true;
         parent::__construct();
         parent::redirectIfLoggedIn();
         parent::redirectIfNotInternalAJAX();

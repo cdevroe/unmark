@@ -83,7 +83,7 @@
                 </div>
             <?php endforeach; ?>
         <?php else : ?>
-            <div id="mark-x" class="mark label-x"><h2>No Marks Found</h2></div>
+            <div id="mark-x" class="mark label-x"><h2><?php echo _('No Marks Found')?></h2></div>
         <?php endif; ?>
     </div>
 </div>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>Unmark Setup</title>
+    <title><?php echo _('Unmark - Setup') ?></title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
@@ -20,13 +20,13 @@
 
     <div id="unmark-setup">
 
-        <p>Welcome to Unmark, the to do list for bookmarks.</p>
+        <p><?php echo _('Welcome to Unmark, the to do list for bookmarks.') ?></p>
 
-        <p>In order to use this you need to click the button below to get started.</p>
+        <p><?php echo _('In order to use this you need to click the button below to get started.') ?></p>
 
-        <p>This will install all the db tables and redirect you to a signup page.</p>
+        <p><?php echo _('This will install all the db tables and redirect you to a signup page.') ?></p>
 
-        <a class="abtn" href="/install">INSTALL UNMARK</a>
+        <a class="abtn" href="/install"><?php echo _('INSTALL UNMARK') ?></a>
 
     </div>
 

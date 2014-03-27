@@ -20,8 +20,7 @@ class Plain_Controller extends CI_Controller
     public $user_id        = 0;
     public $user_token     = 0;
     // Determines if controller tries to load language files
-    // WARN: File has to exist otherwise error will occur
-    public $localized      = false;
+    public $localized      = true;
     // User selected language (overriden in config)
     public $selected_language = null;
     // Supported languages list (overriden in config)

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Unmark\n"
-"POT-Creation-Date: 2014-03-26 17:21+0100\n"
-"PO-Revision-Date: 2014-03-26 17:23+0100\n"
+"POT-Creation-Date: 2014-03-27 13:54+0100\n"
+"PO-Revision-Date: 2014-03-27 15:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: Plain\n"
 "Language: pl\n"
@@ -16,18 +16,18 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: application/controllers/login.php:24
+#: application/controllers/login.php:23
 #, php-format
 msgid "The email address `%s` was not found."
 msgstr "Adres email `%s` nie został znaleziony."
 
-#: application/controllers/login.php:27
+#: application/controllers/login.php:26
 msgid "Your account is no longer active. Please contact support."
 msgstr ""
 "Twoje konto jest nieaktywne. Skontaktuj się z pomocą techniczną aby uzyskać "
 "więcej informacji."
 
-#: application/controllers/login.php:50
+#: application/controllers/login.php:49
 msgid "Your password is incorrect. Please try again."
 msgstr "Podane hasło jest nieprawidłowe. Spróbuj ponownie."
 
@@ -175,6 +175,10 @@ msgstr "Importuj / Eksportuj zakładki"
 #: custom/views/layouts/accountlinks.php:25
 msgid "Invite Others"
 msgstr "Zaproś znajomych"
+
+#: application/views/layouts/navigation.php:7
+msgid "Settings"
+msgstr "Ustawienia"
 
 #: application/views/layouts/navigation/nav_helper.php:1
 #: application/views/layouts/timeline.php:5
@@ -356,6 +360,10 @@ msgstr "Import z pliku"
 msgid "Note: The import needs to be a JSON file."
 msgstr "Informacja: Importowany plik musi być w formacie JSON."
 
+#: application/views/marks/error.php:14
+msgid "This mark could not be added to your stream."
+msgstr "Podczas dodawania zakładki wystąpił błąd."
+
 #: application/views/marks/index.php:2
 msgid "Sorry, No marks found"
 msgstr "Nie znaleziono zakładek"
@@ -414,6 +422,91 @@ msgstr[0] "zakładka utworzona %s"
 msgstr[1] "zakładki utworzone %s"
 msgstr[2] "zakładki utworzone %s"
 
+#: application/views/marks/index.php:86
+msgid "No Marks Found"
+msgstr "Nie znaleziono zakładek"
+
+#: application/views/register/index.php:7
+msgid "Unmark - User Registration"
+msgstr "Unmark - Rejestracja"
+
+#: application/views/register/index.php:24
+msgid "Register For"
+msgstr "Rejestracja"
+
+#: application/views/register/index.php:27 application/views/welcome.php:37
+#: application/views/welcome.php:54 custom/views/welcome.php:37
+#: custom/views/welcome.php:52
+msgid "Email Address"
+msgstr "Adres email"
+
+#: application/views/register/index.php:28 application/views/welcome.php:38
+#: custom/views/welcome.php:38
+msgid "Password"
+msgstr "Hasło"
+
+#: application/views/register/index.php:29
+msgid "Password Again"
+msgstr "Powtórz hasło"
+
+#: application/views/register/index.php:33
+msgid "Have An Account? Sign In Here"
+msgstr "Masz już konto? Zaloguj się"
+
+#: application/views/setup.php:7
+msgid "Unmark - Setup"
+msgstr "Unmark - Konfiguracja"
+
+#: application/views/setup.php:23
+msgid "Welcome to Unmark, the to do list for bookmarks."
+msgstr "Witamy w Unmark, aplikacji TODO dla zakładek"
+
+#: application/views/setup.php:25
+msgid "In order to use this you need to click the button below to get started."
+msgstr "Aby zacząć korzystać z usługi musisz kliknąć przycisk poniżej"
+
+#: application/views/setup.php:27
+msgid "This will install all the db tables and redirect you to a signup page."
+msgstr ""
+"Instalujesz teraz tabele bazy danych. Po zakończeniu zostaniesz "
+"przekierowany na stronę tworzenia konta."
+
+#: application/views/setup.php:29
+msgid "INSTALL UNMARK"
+msgstr "Zainstaluj Unmark"
+
+#: application/views/welcome.php:7 custom/views/welcome.php:7
+msgid "Unmark - The to do app for bookmarks."
+msgstr "Unmark - aplikacja TODO dla zakładek"
+
+#: application/views/welcome.php:34 custom/views/welcome.php:34
+msgid "Sign In To"
+msgstr "Logowanie"
+
+#: application/views/welcome.php:42 custom/views/welcome.php:42
+msgid "Forgot Password?"
+msgstr "Zapomniałeś hasła?"
+
+#: application/views/welcome.php:44
+msgid "Visit Us"
+msgstr "Odwiedź naszą stronę"
+
+#: application/views/welcome.php:44 custom/views/welcome.php:64
+msgid "What is Unmark?"
+msgstr "Do czego służy Unmark?"
+
+#: application/views/welcome.php:51 custom/views/welcome.php:49
+msgid "Reset Password For"
+msgstr "Resetowanie hasła"
+
+#: application/views/welcome.php:58 custom/views/welcome.php:56
+msgid "Sign into your account"
+msgstr "Zaloguj się na swoje konto"
+
+#: application/views/welcome.php:58 custom/views/welcome.php:56
+msgid "Need to Sign In?"
+msgstr "Chcesz się zalogować?"
+
 #: custom/views/layouts/accountlinks.php:4
 msgid "ADMIN ACCOUNT"
 msgstr "Administrator"
@@ -461,6 +554,14 @@ msgstr "KUP TERAZ"
 #: custom/views/layouts/sidebar/sidebar_notices.php:22
 msgid "Here are a few interesting marks to get you started..."
 msgstr "Poniżej znajdziesz kilka najciekawszych zakładek..."
+
+#: custom/views/welcome.php:42
+msgid "Register for free"
+msgstr "Zarejestruj się za darmo"
+
+#: custom/views/welcome.php:42
+msgid "Register Free"
+msgstr "Darmowa rejestracja"
 
 #~ msgid "in the "
 #~ msgstr "w"
