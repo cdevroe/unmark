@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Unmark\n"
-"POT-Creation-Date: 2014-03-27 18:42+0100\n"
-"PO-Revision-Date: 2014-03-27 18:45+0100\n"
+"POT-Creation-Date: 2014-03-28 14:32+0100\n"
+"PO-Revision-Date: 2014-03-28 14:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: Plain\n"
 "Language: en\n"
@@ -139,6 +139,56 @@ msgstr ""
 msgid "Unlabeled"
 msgstr ""
 
+#: application/views/import/index.php:3
+msgid "Unmark : Importer"
+msgstr ""
+
+#: application/views/import/index.php:13
+msgid ""
+"Sorry, there was an error. Please <a href='/'>go back</a> and try again."
+msgstr ""
+
+#: application/views/import/index.php:19
+#, php-format
+msgid "ERROR: %s"
+msgstr ""
+
+#: application/views/import/index.php:22
+msgid "Successfull Upload!"
+msgstr ""
+
+#: application/views/import/index.php:23
+#, php-format
+msgid "%s mark added"
+msgid_plural "%s marks added"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/import/index.php:24
+#, php-format
+msgid "%s mark skipped"
+msgid_plural "%s marks skipped"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/import/index.php:25
+#, php-format
+msgid "%s mark failed"
+msgid_plural "%s marks failed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/import/index.php:26
+#, php-format
+msgid "%s mark total"
+msgid_plural "%s marks total"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/import/index.php:27
+msgid "Head <a href='/'>back</a> to see them now!"
+msgstr ""
+
 #: application/views/layouts/accountlinks.php:1
 #, php-format
 msgid "Account %s"
@@ -166,7 +216,18 @@ msgstr ""
 msgid "Invite Others"
 msgstr ""
 
+#: application/views/layouts/header.php:9 custom/views/admin/users.php:3
+#: custom/views/marks/upgrade_notice.php:37
+msgid "Unmark"
+msgstr ""
+
+#: application/views/layouts/header.php:38
+msgid "View/Hide Details"
+msgstr ""
+
 #: application/views/layouts/navigation.php:7
+#: application/views/layouts/navigation/nav_icons.php:7
+#: custom/views/layouts/navigation.php:13
 msgid "Settings"
 msgstr ""
 
@@ -189,6 +250,30 @@ msgstr ""
 
 #: application/views/layouts/navigation/nav_helper.php:5
 msgid "Archives"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_icons.php:1
+msgid "View/Hide Menu"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_icons.php:2
+msgid "View All Marks"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_icons.php:3
+msgid "View Labels"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_icons.php:4
+msgid "View Timeline"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_icons.php:5
+msgid "Search &amp; Tags"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_icons.php:6
+msgid "View Archive"
 msgstr ""
 
 #: application/views/layouts/navigation/nav_panels.php:18
@@ -221,6 +306,11 @@ msgstr ""
 
 #: application/views/layouts/navigation/nav_panels.php:37
 msgid "Get the Chrome Extension"
+msgstr ""
+
+#: application/views/layouts/navigation/tags_list.php:6
+#: custom/views/layouts/navigation/tags_list.php:12
+msgid "No Tags Found"
 msgstr ""
 
 #: application/views/layouts/sidebar.php:7
@@ -380,6 +470,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: application/views/marks/index.php:28
+#: custom/views/marks/upgrade_notice.php:12
 #, php-format
 msgid "mark found containing \"%s\""
 msgid_plural "marks found containing \"%s\""
@@ -393,6 +484,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: application/views/marks/index.php:40
+#: custom/views/marks/upgrade_notice.php:20
 #, php-format
 msgid "mark created in the %s"
 msgid_plural "marks created in the %s"
@@ -400,6 +492,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: application/views/marks/index.php:42
+#: custom/views/marks/upgrade_notice.php:22
 #, php-format
 msgid "mark created %s"
 msgid_plural "marks created %s"
@@ -479,6 +572,10 @@ msgstr ""
 
 #: application/views/setup.php:29
 msgid "INSTALL UNMARK"
+msgstr ""
+
+#: application/views/singletons/reset.php:7
+msgid "Unmark : Reset Password"
 msgstr ""
 
 #: application/views/singletons/reset.php:24
@@ -561,6 +658,40 @@ msgstr ""
 msgid "Upgrade to Paid"
 msgstr ""
 
+#: custom/views/layouts/navigation.php:4
+#: custom/views/layouts/navigation.php:11
+msgid "Upgrade"
+msgstr ""
+
+#: custom/views/layouts/navigation.php:19
+msgid ""
+"You are currently using a free account, which is limited. Upgrade now and "
+"gain the ability to:"
+msgstr ""
+
+#: custom/views/layouts/navigation.php:23
+msgid "Save as many marks as you'd like each day"
+msgstr ""
+
+#: custom/views/layouts/navigation.php:27
+msgid "Keep and access an unlimited amount of marks"
+msgstr ""
+
+#: custom/views/layouts/navigation.php:31
+msgid "Search your marks"
+msgstr ""
+
+#: custom/views/layouts/navigation.php:34
+#: custom/views/layouts/sidebar/sidebar_notices.php:19
+#: custom/views/marks/upgrade_notice.php:30
+#: custom/views/marks/upgrade_notice.php:47
+msgid "UPGRADE NOW"
+msgstr ""
+
+#: custom/views/layouts/navigation/tags_list.php:7
+msgid "Upgrade for more tags"
+msgstr ""
+
 #: custom/views/layouts/sidebar/sidebar_notices.php:3
 msgid ""
 "For usage tips <a href=\"https://twitter.com/unmarkit\">follow us on "
@@ -575,12 +706,28 @@ msgstr ""
 msgid "Upgrade to a paid account and save an unlimited amount of marks."
 msgstr ""
 
-#: custom/views/layouts/sidebar/sidebar_notices.php:19
-msgid "UPGRADE NOW"
-msgstr ""
-
 #: custom/views/layouts/sidebar/sidebar_notices.php:22
 msgid "Here are a few interesting marks to get you started..."
+msgstr ""
+
+#: custom/views/marks/upgrade_notice.php:14
+#, php-format
+msgid "No marks found containing \"%s\""
+msgstr ""
+
+#: custom/views/marks/upgrade_notice.php:29
+msgid "Search results are available for paid accounts"
+msgstr ""
+
+#: custom/views/marks/upgrade_notice.php:44
+msgid "Sorry, you have exceded your daily or total limit."
+msgstr ""
+
+#: custom/views/marks/upgrade_notice.php:46
+#, php-format
+msgid ""
+"Please check out our <a href=\"%s\" target=\"_blank\">FAQ</a> for more "
+"information."
 msgstr ""
 
 #: custom/views/welcome.php:42
