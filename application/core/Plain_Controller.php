@@ -24,7 +24,7 @@ class Plain_Controller extends CI_Controller
     // User selected language (overriden in config)
     public $selected_language = null;
     // Supported languages list (overriden in config)
-    public $supported_languages = array('en' => 'english');
+    public $supported_languages = array('en' => 'en_US');
 
     public function __construct()
     {
