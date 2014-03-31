@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Unmark\n"
-"POT-Creation-Date: 2014-03-28 14:32+0100\n"
-"PO-Revision-Date: 2014-03-28 16:29+0100\n"
+"POT-Creation-Date: 2014-03-31 14:12+0100\n"
+"PO-Revision-Date: 2014-03-31 14:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: Plain\n"
 "Language: pl\n"
@@ -15,6 +15,11 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
+
+#: application/controllers/install.php:71
+#, php-format
+msgid "Upgraded. Please <a href=\"%s\">return home</a>."
+msgstr "Zaktualizowano. Wróc do <a href=\"%s\">strony głównej</a>."
 
 #: application/controllers/login.php:23
 #, php-format
@@ -148,6 +153,193 @@ msgstr "Do zrobienia"
 #: application/language/phrases.php:27 application/views/marks/info.php:34
 msgid "Unlabeled"
 msgstr "Brak etykiety"
+
+#: application/language/phrases_errors.php:2
+msgid "Mark could not be archived."
+msgstr "Nie udało się zarchiwizować zakładki."
+
+#: application/language/phrases_errors.php:3
+msgid "No marks found."
+msgstr "Nie znaleziono zakładek."
+
+#: application/language/phrases_errors.php:4
+msgid "Mark could not be updated."
+msgstr "Błąd podczas aktualizacji zakładki."
+
+#: application/language/phrases_errors.php:5
+msgid "Mark with this id could not be found for this account."
+msgstr "Zakładka o podanym id nie została znaleziona dla tego konta."
+
+#: application/language/phrases_errors.php:6
+msgid "Mark could not be restored."
+msgstr "Nie udało się przywrócenie podanej zakładki."
+
+#: application/language/phrases_errors.php:7
+msgid "Could not add mark."
+msgstr "Nie udało się dodać zakładki."
+
+#: application/language/phrases_errors.php:8
+msgid "Could not delete mark."
+msgstr "Nie można usunąć zakładki."
+
+#: application/language/phrases_errors.php:9
+msgid "This mark doesn't have a valid URL."
+msgstr "Ta zakładka nie posiada prawidłowego adresu URL."
+
+#: application/language/phrases_errors.php:10
+msgid "This mark doesn't have a valid title."
+msgstr "Ta zakładka nie posiada prawidłowego tytułu."
+
+#: application/language/phrases_errors.php:11
+msgid "No `label_id` was found."
+msgstr "Brak identyfikatora etykiety."
+
+#: application/language/phrases_errors.php:12
+msgid "No label found using this label_id for your account."
+msgstr "Brak etykiety o podanym identyfikatorze dla Twojego konta."
+
+#: application/language/phrases_errors.php:13
+msgid "No labels found for your account."
+msgstr "Nie znaleziono etykiet dla Twojego konta."
+
+#: application/language/phrases_errors.php:14
+msgid "This type of label could not be found."
+msgstr "Brak etykiety o podanym typie."
+
+#: application/language/phrases_errors.php:15
+#: application/language/phrases_errors.php:19
+msgid "Label already exists for this account."
+msgstr "Taka etykieta już istnieje."
+
+#: application/language/phrases_errors.php:16
+msgid "No options found to update for this label."
+msgstr "Błąd aktualizacji etykiety - brak danych."
+
+#: application/language/phrases_errors.php:17
+msgid "Label could not be created."
+msgstr "Błąd w trakcie tworzenia etykiety."
+
+#: application/language/phrases_errors.php:18
+msgid "You do not have access to create a system level label."
+msgstr "Nie posiadasz uprawnień do utworzenia etykiety systemowej."
+
+#: application/language/phrases_errors.php:20
+msgid "Label could not be updated."
+msgstr "Błąd aktualizacji etykiety."
+
+#: application/language/phrases_errors.php:21
+msgid "No tags found."
+msgstr "Nie znaleziono tagów."
+
+#: application/language/phrases_errors.php:22
+msgid "No tag provided."
+msgstr "Nie podano taga."
+
+#: application/language/phrases_errors.php:23
+msgid "Tag could not be added."
+msgstr "Błąd podczas dodawania taga."
+
+#: application/language/phrases_errors.php:24
+msgid "Account with given email does not exist."
+msgstr "Konto o podanym adresie e-mail nie istnieje."
+
+#: application/language/phrases_errors.php:25
+msgid "Invalid password recovery token."
+msgstr "Błędny token odzyskania hasła."
+
+#: application/language/phrases_errors.php:26
+#: application/language/phrases_errors.php:44
+msgid "No file uploaded."
+msgstr "Nie dołączono pliku."
+
+#: application/language/phrases_errors.php:27
+msgid "Invalid file format uploaded. Only JSON files accepted"
+msgstr "Błędny format pliku. Obsługiwane są jedynie pliki w formacie JSON."
+
+#: application/language/phrases_errors.php:28
+msgid "Forbidden"
+msgstr "Dostęp zabroniony"
+
+#: application/language/phrases_errors.php:29
+msgid "Not Found"
+msgstr "Nie znaleziono"
+
+#: application/language/phrases_errors.php:30
+msgid "Internal Error"
+msgstr "Błąd wewnętrzny"
+
+#: application/language/phrases_errors.php:31
+msgid "Security token is invalid."
+msgstr "Token bezpieczeństwa jest nieprawidłowy."
+
+#: application/language/phrases_errors.php:32
+msgid "Validation Errors"
+msgstr "Błędy walidacji"
+
+#: application/language/phrases_errors.php:33
+msgid ""
+"Your password is invalid. Passwords must contain at least one CAPITAL "
+"letter, one number and be a minimum of 6 characters."
+msgstr ""
+"Twoje hasło jest niepoprawne. Prawidłowe hasło musi zawierać conajmniej "
+"jedną wielką literę, jedną cyfrę i mieć minimum 6 znaków długości."
+
+#: application/language/phrases_errors.php:34
+msgid "This email address already exists in the system."
+msgstr "Podany adres e-mail już istnieje."
+
+#: application/language/phrases_errors.php:35
+msgid "Your email address is invalid."
+msgstr "Podano nieprawidłowy adres e-mail."
+
+#: application/language/phrases_errors.php:36
+msgid "Email not found. Cannot create subscription."
+msgstr ""
+"Nie udało się znaleźć podanego adresu e-mail. Nie mogę aktywować subskrypcji."
+
+#: application/language/phrases_errors.php:37
+msgid "Customer ID not found."
+msgstr "Nie znaleziono klienta o podanym ID."
+
+#: application/language/phrases_errors.php:38
+msgid ""
+"Customer already active. Please use correct method to restart their "
+"subscription."
+msgstr ""
+"Konto zostało już aktywowane. Proszę użyć odpowiedniej metody aby "
+"wznowić subskrypcję użytkownika."
+
+#: application/language/phrases_errors.php:39
+msgid "Cannot restart an active subscription."
+msgstr "Nie mogę wznowić aktywnej subskrypcji."
+
+#: application/language/phrases_errors.php:40
+msgid "No credit card on file."
+msgstr "Brak karty kredytowej."
+
+#: application/language/phrases_errors.php:41
+msgid "Could not process your request at this time. Please try again."
+msgstr ""
+"W tej chwili nie możemy przetworzyć Twojego żądania. Proszę spróbować "
+"ponownie."
+
+#: application/language/phrases_errors.php:42
+#, php-format
+msgid "You have reached your daily limit of %s marks per day."
+msgstr "Osiągnąłeś dzienny limit %s zakładek."
+
+#: application/language/phrases_errors.php:43
+#, php-format
+msgid "You have reached your limit of %s marks total."
+msgstr "Osiągnąłeś globalny limit %s zakładek."
+
+#: application/language/phrases_errors.php:45
+msgid "Invalid file format uploaded. Only HTML files accepted."
+msgstr "Błędny format pliku. Obsługiwane są jedynie pliki w formacie HTML."
+
+#: application/language/phrases_errors.php:46
+msgid "Invalid bookmark URL."
+msgstr "Nieprawidłowy adres URL zakładki."
 
 #: application/views/import/index.php:3
 msgid "Unmark : Importer"
@@ -661,6 +853,21 @@ msgstr "Zaloguj się na swoje konto"
 #: application/views/welcome.php:58 custom/views/welcome.php:56
 msgid "Need to Sign In?"
 msgstr "Chcesz się zalogować?"
+
+#: custom/controllers/cutils.php:38
+#, php-format
+msgid "File with translation phrases generated succesfully and saved as %s."
+msgstr "Plik z tłumaczeniami wygenerowany poprawnie i zapisany jako %s."
+
+#: custom/controllers/cutils.php:41
+#, php-format
+msgid "Error opening file %s for writing"
+msgstr "Błąd podczas otwierania pliku %s do zapisu"
+
+#: custom/controllers/cutils.php:44
+#, php-format
+msgid "Error opening file %s."
+msgstr "Błąd podczas otwierania pliku %s."
 
 #: custom/views/layouts/accountlinks.php:4
 msgid "ADMIN ACCOUNT"
