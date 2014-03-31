@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Unmark\n"
 "POT-Creation-Date: 2014-03-31 14:12+0100\n"
-"PO-Revision-Date: 2014-03-31 14:33+0100\n"
+"PO-Revision-Date: 2014-03-31 15:03+0100\n"
 "Last-Translator: \n"
 "Language-Team: Plain\n"
 "Language: pl\n"
@@ -500,7 +500,7 @@ msgstr "Pomoc"
 
 #: application/views/layouts/navigation/nav_panels.php:34
 msgid "How to Use Unmark"
-msgstr "Jak używać Unmark"
+msgstr "Jak używać Unmark?"
 
 #: application/views/layouts/navigation/nav_panels.php:35
 msgid "View Our FAQ"
@@ -840,7 +840,7 @@ msgstr "Odwiedź naszą stronę"
 
 #: application/views/welcome.php:44 custom/views/welcome.php:64
 msgid "What is Unmark?"
-msgstr "Do czego służy Unmark?"
+msgstr "Jak używać Unmark?"
 
 #: application/views/welcome.php:51 custom/views/welcome.php:49
 msgid "Reset Password For"
