@@ -593,7 +593,7 @@ class Plain_Controller extends CI_Controller
         $this->load->config('all/language');
         $languages = $this->config->item('supported_languages');
         if(empty($languages)){
-            $languages = array('en'=>'english');
+            $languages = array('en'=>'en_US');
         }
         $this->supported_languages = $languages;
         $languageList = array_keys($this->supported_languages);
@@ -606,7 +606,7 @@ class Plain_Controller extends CI_Controller
         } else{
             if($langsCount>1){
                 $lang = $this->config->item('default_language');
-                $this->selected_language = $lang;
+                $this->selected_language = $languages[$lang];
             } else if($langsCount == 1){
                 // No choice - return what's available
                 $this->selected_language = $languages[$languageList[0]];
