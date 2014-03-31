@@ -44,6 +44,17 @@ if (unmark === undefined) { var unmark = {}; }
 
     };
 
+    // Query String Helper
+    unmark.readQuery = function (v) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for ( var i=0; i<vars.length; i++ ) {
+            var pair = vars[i].split("=");
+            if( pair[0] == v ){ return pair[1]; }
+        }
+        return(false);
+    };
+
     // Simple Swap Class Method that uses regex
     unmark.swapClass = function (elem, removals, additions) {
         var self = elem;
