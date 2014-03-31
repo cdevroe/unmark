@@ -5,6 +5,7 @@ class Marks extends Plain_Controller
 
     public function __construct()
     {
+        $this->localized = true;
         parent::__construct();
         $this->redirectIfLoggedOut();
         $this->load->model('users_to_marks_model', 'user_marks');

@@ -20,10 +20,10 @@ class Login extends Plain_Controller {
         $user = $this->user->read("email = '" . $this->db_clean->email . "'", 1, 1);
 
         if (! isset($user->user_id)) {
-            $this->data['message'] = 'The email address `' . $this->clean->email . '` was not found.';
+            $this->data['message'] = sprintf(_('The email address `%s` was not found.'), $this->clean->email);
         }
         elseif (! isset($user->active) || empty($user->active)) {
-            $this->data['message'] = 'Your account is no longer active. Please contact support.';
+            $this->data['message'] = _('Your account is no longer active. Please contact support.');
         }
         else {
             // Check proper password
@@ -45,7 +45,8 @@ class Login extends Plain_Controller {
 
             // Check if passwords match
             if ($match === false) {
-                $this->data['message'] = 'Your password is incorrect. Please try again.';
+                
+                $this->data['message'] = _('Your password is incorrect. Please try again.');
             }
             else {
                 // At this point we are clear for takeoff

@@ -1,0 +1,939 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Unmark\n"
+"POT-Creation-Date: 2014-03-31 14:12+0100\n"
+"PO-Revision-Date: 2014-03-31 14:12+0100\n"
+"Last-Translator: \n"
+"Language-Team: Plain\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: ../../\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: application/controllers/install.php:71
+#, php-format
+msgid "Upgraded. Please <a href=\"%s\">return home</a>."
+msgstr ""
+
+#: application/controllers/login.php:23
+#, php-format
+msgid "The email address `%s` was not found."
+msgstr ""
+
+#: application/controllers/login.php:26
+msgid "Your account is no longer active. Please contact support."
+msgstr ""
+
+#: application/controllers/login.php:49
+msgid "Your password is incorrect. Please try again."
+msgstr ""
+
+#: application/helpers/data_helper.php:131
+msgid "ago"
+msgstr ""
+
+#: application/helpers/data_helper.php:135
+msgid "Just Now"
+msgstr ""
+
+#: application/helpers/view_helper.php:7
+#, php-format
+msgid "%s mark"
+msgid_plural "%s marks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/helpers/view_helper.php:9
+msgid "No marks"
+msgstr ""
+
+#: application/language/phrases.php:6
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:7
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:8
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:9
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:10
+msgid "month"
+msgid_plural "months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:11
+msgid "year"
+msgid_plural "years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:13
+msgid "today"
+msgstr ""
+
+#: application/language/phrases.php:14
+msgid "yesterday"
+msgstr ""
+
+#: application/language/phrases.php:15
+msgid "last week"
+msgstr ""
+
+#: application/language/phrases.php:16
+msgid "last month"
+msgstr ""
+
+#: application/language/phrases.php:17
+msgid "last three months"
+msgstr ""
+
+#: application/language/phrases.php:18
+msgid "last six months"
+msgstr ""
+
+#: application/language/phrases.php:19
+msgid "last year"
+msgstr ""
+
+#: application/language/phrases.php:21
+msgid "Read"
+msgstr ""
+
+#: application/language/phrases.php:22
+msgid "Watch"
+msgstr ""
+
+#: application/language/phrases.php:23
+msgid "Listen"
+msgstr ""
+
+#: application/language/phrases.php:24
+msgid "Buy"
+msgstr ""
+
+#: application/language/phrases.php:25
+msgid "Eat & Drink"
+msgstr ""
+
+#: application/language/phrases.php:26
+msgid "Do"
+msgstr ""
+
+#: application/language/phrases.php:27 application/views/marks/info.php:34
+msgid "Unlabeled"
+msgstr ""
+
+#: application/language/phrases_errors.php:2
+msgid "Mark could not be archived."
+msgstr ""
+
+#: application/language/phrases_errors.php:3
+msgid "No marks found."
+msgstr ""
+
+#: application/language/phrases_errors.php:4
+msgid "Mark could not be updated."
+msgstr ""
+
+#: application/language/phrases_errors.php:5
+msgid "Mark with this id could not be found for this account."
+msgstr ""
+
+#: application/language/phrases_errors.php:6
+msgid "Mark could not be restored."
+msgstr ""
+
+#: application/language/phrases_errors.php:7
+msgid "Could not add mark."
+msgstr ""
+
+#: application/language/phrases_errors.php:8
+msgid "Could not delete mark."
+msgstr ""
+
+#: application/language/phrases_errors.php:9
+msgid "This mark doesn't have a valid URL."
+msgstr ""
+
+#: application/language/phrases_errors.php:10
+msgid "This mark doesn't have a valid title."
+msgstr ""
+
+#: application/language/phrases_errors.php:11
+msgid "No `label_id` was found."
+msgstr ""
+
+#: application/language/phrases_errors.php:12
+msgid "No label found using this label_id for your account."
+msgstr ""
+
+#: application/language/phrases_errors.php:13
+msgid "No labels found for your account."
+msgstr ""
+
+#: application/language/phrases_errors.php:14
+msgid "This type of label could not be found."
+msgstr ""
+
+#: application/language/phrases_errors.php:15
+#: application/language/phrases_errors.php:19
+msgid "Label already exists for this account."
+msgstr ""
+
+#: application/language/phrases_errors.php:16
+msgid "No options found to update for this label."
+msgstr ""
+
+#: application/language/phrases_errors.php:17
+msgid "Label could not be created."
+msgstr ""
+
+#: application/language/phrases_errors.php:18
+msgid "You do not have access to create a system level label."
+msgstr ""
+
+#: application/language/phrases_errors.php:20
+msgid "Label could not be updated."
+msgstr ""
+
+#: application/language/phrases_errors.php:21
+msgid "No tags found."
+msgstr ""
+
+#: application/language/phrases_errors.php:22
+msgid "No tag provided."
+msgstr ""
+
+#: application/language/phrases_errors.php:23
+msgid "Tag could not be added."
+msgstr ""
+
+#: application/language/phrases_errors.php:24
+msgid "Account with given email does not exist."
+msgstr ""
+
+#: application/language/phrases_errors.php:25
+msgid "Invalid password recovery token."
+msgstr ""
+
+#: application/language/phrases_errors.php:26
+#: application/language/phrases_errors.php:44
+msgid "No file uploaded."
+msgstr ""
+
+#: application/language/phrases_errors.php:27
+msgid "Invalid file format uploaded. Only JSON files accepted"
+msgstr ""
+
+#: application/language/phrases_errors.php:28
+msgid "Forbidden"
+msgstr ""
+
+#: application/language/phrases_errors.php:29
+msgid "Not Found"
+msgstr ""
+
+#: application/language/phrases_errors.php:30
+msgid "Internal Error"
+msgstr ""
+
+#: application/language/phrases_errors.php:31
+msgid "Security token is invalid."
+msgstr ""
+
+#: application/language/phrases_errors.php:32
+msgid "Validation Errors"
+msgstr ""
+
+#: application/language/phrases_errors.php:33
+msgid ""
+"Your password is invalid. Passwords must contain at least one CAPITAL "
+"letter, one number and be a minimum of 6 characters."
+msgstr ""
+
+#: application/language/phrases_errors.php:34
+msgid "This email address already exists in the system."
+msgstr ""
+
+#: application/language/phrases_errors.php:35
+msgid "Your email address is invalid."
+msgstr ""
+
+#: application/language/phrases_errors.php:36
+msgid "Email not found. Cannot create subscription."
+msgstr ""
+
+#: application/language/phrases_errors.php:37
+msgid "Customer ID not found."
+msgstr ""
+
+#: application/language/phrases_errors.php:38
+msgid ""
+"Customer already active. Please use correct method to restart their "
+"subscription."
+msgstr ""
+
+#: application/language/phrases_errors.php:39
+msgid "Cannot restart an active subscription."
+msgstr ""
+
+#: application/language/phrases_errors.php:40
+msgid "No credit card on file."
+msgstr ""
+
+#: application/language/phrases_errors.php:41
+msgid "Could not process your request at this time. Please try again."
+msgstr ""
+
+#: application/language/phrases_errors.php:42
+#, php-format
+msgid "You have reached your daily limit of %s marks per day."
+msgstr ""
+
+#: application/language/phrases_errors.php:43
+#, php-format
+msgid "You have reached your limit of %s marks total."
+msgstr ""
+
+#: application/language/phrases_errors.php:45
+msgid "Invalid file format uploaded. Only HTML files accepted."
+msgstr ""
+
+#: application/language/phrases_errors.php:46
+msgid "Invalid bookmark URL."
+msgstr ""
+
+#: application/views/import/index.php:3
+msgid "Unmark : Importer"
+msgstr ""
+
+#: application/views/import/index.php:13
+msgid ""
+"Sorry, there was an error. Please <a href='/'>go back</a> and try again."
+msgstr ""
+
+#: application/views/import/index.php:19
+#, php-format
+msgid "ERROR: %s"
+msgstr ""
+
+#: application/views/import/index.php:22
+msgid "Successfull Upload!"
+msgstr ""
+
+#: application/views/import/index.php:23
+#, php-format
+msgid "%s mark added"
+msgid_plural "%s marks added"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/import/index.php:24
+#, php-format
+msgid "%s mark skipped"
+msgid_plural "%s marks skipped"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/import/index.php:25
+#, php-format
+msgid "%s mark failed"
+msgid_plural "%s marks failed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/import/index.php:26
+#, php-format
+msgid "%s mark total"
+msgid_plural "%s marks total"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/import/index.php:27
+msgid "Head <a href='/'>back</a> to see them now!"
+msgstr ""
+
+#: application/views/layouts/accountlinks.php:1
+#, php-format
+msgid "Account %s"
+msgstr ""
+
+#: application/views/layouts/accountlinks.php:3
+#: application/views/layouts/userforms.php:4
+#: custom/views/layouts/accountlinks.php:22
+msgid "Change Password"
+msgstr ""
+
+#: application/views/layouts/accountlinks.php:4
+#: application/views/layouts/userforms.php:16
+#: custom/views/layouts/accountlinks.php:23
+msgid "Change Email Address"
+msgstr ""
+
+#: application/views/layouts/accountlinks.php:5
+#: custom/views/layouts/accountlinks.php:24
+msgid "Import or Export Marks"
+msgstr ""
+
+#: application/views/layouts/accountlinks.php:6
+#: custom/views/layouts/accountlinks.php:25
+msgid "Invite Others"
+msgstr ""
+
+#: application/views/layouts/header.php:9 custom/views/admin/users.php:3
+#: custom/views/marks/upgrade_notice.php:37
+msgid "Unmark"
+msgstr ""
+
+#: application/views/layouts/header.php:38
+msgid "View/Hide Details"
+msgstr ""
+
+#: application/views/layouts/navigation.php:7
+#: application/views/layouts/navigation/nav_icons.php:7
+#: custom/views/layouts/navigation.php:13
+msgid "Settings"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_helper.php:1
+#: application/views/layouts/timeline.php:5
+msgid "All Marks"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_helper.php:2
+msgid "Labels"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_helper.php:3
+msgid "Timeline"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_helper.php:4
+msgid "Search"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_helper.php:5
+msgid "Archives"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_icons.php:1
+msgid "View/Hide Menu"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_icons.php:2
+msgid "View All Marks"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_icons.php:3
+msgid "View Labels"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_icons.php:4
+msgid "View Timeline"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_icons.php:5
+msgid "Search &amp; Tags"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_icons.php:6
+msgid "View Archive"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:18
+msgid "SEARCH..."
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:22
+msgid "Most-Used Tags"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:28
+msgid "Sign Out"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:32
+msgid "Help"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:34
+msgid "How to Use Unmark"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:35
+msgid "View Our FAQ"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:36
+msgid "Get the Bookmarklet"
+msgstr ""
+
+#: application/views/layouts/navigation/nav_panels.php:37
+msgid "Get the Chrome Extension"
+msgstr ""
+
+#: application/views/layouts/navigation/tags_list.php:6
+#: custom/views/layouts/navigation/tags_list.php:12
+msgid "No Tags Found"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:7
+#, php-format
+msgid "You saved %s mark today"
+msgid_plural "You saved %s marks today"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/layouts/sidebar.php:9
+#, php-format
+msgid "and archived %s"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:18
+#, php-format
+msgid "You have %s mark that are over 1 year old. Want to tidy up a bit?"
+msgid_plural ""
+"You have %s mark that are over 1 year old. Want to tidy up a bit?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/layouts/sidebar.php:19
+msgid "View Marks"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:20
+msgid "Do Nothing"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:21
+msgid "Archive All"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:28
+msgid "To add marks, drag the button above into your bookmark toolbar."
+msgstr ""
+
+#: application/views/layouts/sidebar.php:29
+msgid "Or, use our"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:29
+msgid "Chrome Extension"
+msgstr ""
+
+#: application/views/layouts/sidebar.php:29
+msgid "Learn More"
+msgstr ""
+
+#: application/views/layouts/sidebar/sidebar_notices.php:10
+msgid "Thanks for checking out Unmark. We hope you enjoy using it."
+msgstr ""
+
+#: application/views/layouts/sidebar/sidebar_notices.php:11
+msgid ""
+"For usage tips <a target=\"_blank\" href=\"https://twitter.com/unmarkit"
+"\">follow us on Twitter</a>! Please tell your friends about Unmark."
+msgstr ""
+
+#: application/views/layouts/timeline.php:8
+msgid "Today"
+msgstr ""
+
+#: application/views/layouts/timeline.php:11
+msgid "Yesterday"
+msgstr ""
+
+#: application/views/layouts/timeline.php:14
+msgid "Last Week"
+msgstr ""
+
+#: application/views/layouts/timeline.php:17
+msgid "Last Month"
+msgstr ""
+
+#: application/views/layouts/timeline.php:20
+msgid "Last 3 Months"
+msgstr ""
+
+#: application/views/layouts/timeline.php:23
+msgid "Last 6 Months"
+msgstr ""
+
+#: application/views/layouts/timeline.php:26
+msgid "Last Year"
+msgstr ""
+
+#: application/views/layouts/userforms.php:6
+msgid "Old Password..."
+msgstr ""
+
+#: application/views/layouts/userforms.php:7
+#: application/views/singletons/reset.php:27
+msgid "New Password..."
+msgstr ""
+
+#: application/views/layouts/userforms.php:8
+#: application/views/singletons/reset.php:28
+msgid "Once More..."
+msgstr ""
+
+#: application/views/layouts/userforms.php:18
+msgid "New Email Address..."
+msgstr ""
+
+#: application/views/layouts/userforms.php:26
+msgid "Export All Marks"
+msgstr ""
+
+#: application/views/layouts/userforms.php:27
+msgid "Export File"
+msgstr ""
+
+#: application/views/layouts/userforms.php:28
+msgid "Import Marks"
+msgstr ""
+
+#: application/views/layouts/userforms.php:31
+msgid "Import File"
+msgstr ""
+
+#: application/views/layouts/userforms.php:33
+msgid "Note: The import needs to be a JSON file."
+msgstr ""
+
+#: application/views/marks/error.php:4
+msgid "Sorry, Could Not Add this Mark"
+msgstr ""
+
+#: application/views/marks/error.php:14
+msgid "This mark could not be added to your stream."
+msgstr ""
+
+#: application/views/marks/index.php:2
+msgid "Sorry, No marks found"
+msgstr ""
+
+#: application/views/marks/index.php:16
+#, php-format
+msgid "mark labeled %s"
+msgid_plural "marks labeled %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/marks/index.php:20
+msgid "mark archived"
+msgid_plural "marks archived"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/marks/index.php:24
+#, php-format
+msgid "mark tagged %s"
+msgid_plural "marks tagged %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/marks/index.php:28
+#: custom/views/marks/upgrade_notice.php:12
+#, php-format
+msgid "mark found containing \"%s\""
+msgid_plural "marks found containing \"%s\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/marks/index.php:32
+msgid "mark"
+msgid_plural "marks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/marks/index.php:40
+#: custom/views/marks/upgrade_notice.php:20
+#, php-format
+msgid "mark created in the %s"
+msgid_plural "marks created in the %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/marks/index.php:42
+#: custom/views/marks/upgrade_notice.php:22
+#, php-format
+msgid "mark created %s"
+msgid_plural "marks created %s"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/views/marks/index.php:86
+msgid "No Marks Found"
+msgstr ""
+
+#: application/views/marks/info.php:7
+msgid "Unmark : Mark Added"
+msgstr ""
+
+#: application/views/marks/info.php:23
+msgid "This link has been added to your stream."
+msgstr ""
+
+#: application/views/marks/info.php:42
+msgid "Add A Note"
+msgstr ""
+
+#: application/views/marks/info.php:43 application/views/marks/info.php:45
+msgid "Type note text or #tags here..."
+msgstr ""
+
+#: application/views/marks/info.php:50
+msgid "Delete Link"
+msgstr ""
+
+#: application/views/marks/info.php:51
+msgid "Update &amp; Close"
+msgstr ""
+
+#: application/views/register/index.php:7
+msgid "Unmark : User Registration"
+msgstr ""
+
+#: application/views/register/index.php:24
+msgid "Register For"
+msgstr ""
+
+#: application/views/register/index.php:27 application/views/welcome.php:37
+#: application/views/welcome.php:54 custom/views/welcome.php:37
+#: custom/views/welcome.php:52
+msgid "Email Address"
+msgstr ""
+
+#: application/views/register/index.php:28 application/views/welcome.php:38
+#: custom/views/welcome.php:38
+msgid "Password"
+msgstr ""
+
+#: application/views/register/index.php:29
+msgid "Password Again"
+msgstr ""
+
+#: application/views/register/index.php:33
+msgid "Have An Account? Sign In Here"
+msgstr ""
+
+#: application/views/setup.php:7
+msgid "Unmark: Setup"
+msgstr ""
+
+#: application/views/setup.php:23
+msgid "Welcome to Unmark, the to do list for bookmarks."
+msgstr ""
+
+#: application/views/setup.php:25
+msgid "In order to use this you need to click the button below to get started."
+msgstr ""
+
+#: application/views/setup.php:27
+msgid "This will install all the db tables and redirect you to a signup page."
+msgstr ""
+
+#: application/views/setup.php:29
+msgid "INSTALL UNMARK"
+msgstr ""
+
+#: application/views/singletons/reset.php:7
+msgid "Unmark : Reset Password"
+msgstr ""
+
+#: application/views/singletons/reset.php:24
+msgid "Reset Password for"
+msgstr ""
+
+#: application/views/singletons/reset.php:32
+msgid "How did I get here?"
+msgstr ""
+
+#: application/views/singletons/reset.php:34
+msgid "You clicked on a link in an email from us."
+msgstr ""
+
+#: application/views/singletons/reset.php:35
+msgid "You can choose a new password here and be on your way."
+msgstr ""
+
+#: application/views/singletons/reset.php:36
+msgid "HELP"
+msgstr ""
+
+#: application/views/singletons/reset.php:36
+msgid "UNMARK.IT"
+msgstr ""
+
+#: application/views/welcome.php:7 custom/views/welcome.php:7
+msgid "Unmark - The to do app for bookmarks."
+msgstr ""
+
+#: application/views/welcome.php:34 custom/views/welcome.php:34
+msgid "Sign In To"
+msgstr ""
+
+#: application/views/welcome.php:42 custom/views/welcome.php:42
+msgid "Forgot Password?"
+msgstr ""
+
+#: application/views/welcome.php:44
+msgid "Visit Us"
+msgstr ""
+
+#: application/views/welcome.php:44 custom/views/welcome.php:64
+msgid "What is Unmark?"
+msgstr ""
+
+#: application/views/welcome.php:51 custom/views/welcome.php:49
+msgid "Reset Password For"
+msgstr ""
+
+#: application/views/welcome.php:58 custom/views/welcome.php:56
+msgid "Sign into your account"
+msgstr ""
+
+#: application/views/welcome.php:58 custom/views/welcome.php:56
+msgid "Need to Sign In?"
+msgstr ""
+
+#: custom/controllers/cutils.php:38
+#, php-format
+msgid "File with translation phrases generated succesfully and saved as %s."
+msgstr ""
+
+#: custom/controllers/cutils.php:41
+#, php-format
+msgid "Error opening file %s for writing"
+msgstr ""
+
+#: custom/controllers/cutils.php:44
+#, php-format
+msgid "Error opening file %s."
+msgstr ""
+
+#: custom/views/layouts/accountlinks.php:4
+msgid "ADMIN ACCOUNT"
+msgstr ""
+
+#: custom/views/layouts/accountlinks.php:6
+msgid "PAID ACCOUNT"
+msgstr ""
+
+#: custom/views/layouts/accountlinks.php:8
+msgid "FREE ACCOUNT"
+msgstr ""
+
+#: custom/views/layouts/accountlinks.php:16
+msgid "Manage Paid Account"
+msgstr ""
+
+#: custom/views/layouts/accountlinks.php:18
+msgid "Restart Paid Account"
+msgstr ""
+
+#: custom/views/layouts/accountlinks.php:20
+msgid "Upgrade to Paid"
+msgstr ""
+
+#: custom/views/layouts/navigation.php:4
+#: custom/views/layouts/navigation.php:11
+msgid "Upgrade"
+msgstr ""
+
+#: custom/views/layouts/navigation.php:19
+msgid ""
+"You are currently using a free account, which is limited. Upgrade now and "
+"gain the ability to:"
+msgstr ""
+
+#: custom/views/layouts/navigation.php:23
+msgid "Save as many marks as you'd like each day"
+msgstr ""
+
+#: custom/views/layouts/navigation.php:27
+msgid "Keep and access an unlimited amount of marks"
+msgstr ""
+
+#: custom/views/layouts/navigation.php:31
+msgid "Search your marks"
+msgstr ""
+
+#: custom/views/layouts/navigation.php:34
+#: custom/views/layouts/sidebar/sidebar_notices.php:19
+#: custom/views/marks/upgrade_notice.php:30
+#: custom/views/marks/upgrade_notice.php:47
+msgid "UPGRADE NOW"
+msgstr ""
+
+#: custom/views/layouts/navigation/tags_list.php:7
+msgid "Upgrade for more tags"
+msgstr ""
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:3
+msgid ""
+"For usage tips <a href=\"https://twitter.com/unmarkit\">follow us on "
+"Twitter</a>! Please tell your friends about Unmark."
+msgstr ""
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:17
+msgid "Looks like you are over either your daily or total limit."
+msgstr ""
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:18
+msgid "Upgrade to a paid account and save an unlimited amount of marks."
+msgstr ""
+
+#: custom/views/layouts/sidebar/sidebar_notices.php:22
+msgid "Here are a few interesting marks to get you started..."
+msgstr ""
+
+#: custom/views/marks/upgrade_notice.php:14
+#, php-format
+msgid "No marks found containing \"%s\""
+msgstr ""
+
+#: custom/views/marks/upgrade_notice.php:29
+msgid "Search results are available for paid accounts"
+msgstr ""
+
+#: custom/views/marks/upgrade_notice.php:44
+msgid "Sorry, you have exceded your daily or total limit."
+msgstr ""
+
+#: custom/views/marks/upgrade_notice.php:46
+#, php-format
+msgid ""
+"Please check out our <a href=\"%s\" target=\"_blank\">FAQ</a> for more "
+"information."
+msgstr ""
+
+#: custom/views/welcome.php:42
+msgid "Register for free"
+msgstr ""
+
+#: custom/views/welcome.php:42
+msgid "Register Free"
+msgstr ""

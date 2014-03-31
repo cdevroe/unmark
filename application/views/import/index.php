@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Unmark Importer</title>
+    <title><?php echo _('Unmark : Importer'); ?></title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
@@ -10,22 +10,21 @@
     <div id="unmark-setup">
         <?php
             if ($success === false) {
+                print '<p>' . _('Sorry, there was an error. Please <a href=\'/\'>go back</a> and try again.').'</p>';
                 if (isset($errors) ) {
                     foreach($errors as $prop) {
                         $first = $prop;
                         break;
                     } 
-                    print "<p>Sorry, there was an error. Please <a href='/''>go back</a> and try again</p>" . "<p>ERROR: " . $first . "</p>";
-                } else{
-                    print "<p>Sorry, there was an error. Please <a href='/''>go back</a> and try again</p>";
+                    print '<p>'. sprintf(_('ERROR: %s'), $first) . '</p>';
                 }
             } else {
-                print "<p>Successfull Upload!</p>";
-                print "<p>" . $result['added'] . " marks added</p>";
-                print "<p>" . $result['skipped'] . " marks skipped</p>";
-                print "<p>" . $result['failed'] . " marks failed</p>";
-                print "<p>" . $result['total'] . " marks total</p>";
-                print "<p>Head <a href='/''>back</a> to see them now!</p>";
+                print '<p>' . _('Successfull Upload!') . '</p>';
+                print '<p>' . sprintf(ngettext('%s mark added', '%s marks added', $result['added']), $result['added']) . '</p>';
+                print '<p>' . sprintf(ngettext('%s mark skipped', '%s marks skipped', $result['skipped']), $result['skipped']) . '</p>';
+                print '<p>' . sprintf(ngettext('%s mark failed', '%s marks failed', $result['failed']), $result['failed']) . '</p>';
+                print '<p>' . sprintf(ngettext('%s mark total', '%s marks total', $result['total']), $result['total']) . '</p>';
+                print '<p>' . _('Head <a href=\'/\'>back</a> to see them now!') . '</p>';
             }
         ?>
     </div>

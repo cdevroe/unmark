@@ -1,17 +1,14 @@
 <?php defined("BASEPATH") or exit("No direct script access allowed");
 
-// Checks the count and makes the string plural (well adds an s) if it's longer than 1 or 0.
-function determinePlurality($num, $str, $show_num=true)
+// Prints marks count in nice format
+function printMarksCount($num)
 {
-    if ($num == 0) { return "No ". $str . "s"; }
-    if ($show_num) {
-        return ($num > 1) ? $num . " " . $str . "s" : $num . " " . $str;
-    } else {
-        return ($num > 1) ? $str . "s" : $str;
+    if($num > 0) {
+        return sprintf(ngettext('%s mark', '%s marks', $num), $num);
+    } else { 
+        return _('No marks');
     }
-
 }
-
 
 // Checks current date with passed date and responsds with proper verbiage.
 function formatExpires($date)

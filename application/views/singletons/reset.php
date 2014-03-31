@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>Unmark : Reset Password</title>
+    <title><?php echo _('Unmark : Reset Password'); ?></title>
     <link href='//fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
@@ -21,23 +21,22 @@
 <div class="resetWrapper">
     <div class="loginInner">
         <div class="login-ball"><img src="/assets/images/logo.png" /></div>
-        <h1>Reset Password for</h1>
+        <h1><?php echo _('Reset Password for'); ?></h1>
         <div class="login-text"><img src="/assets/images/icons/logo_text_light.png" /></div>
         <form id="unmarkReset" method="post" action="/login">
-            <input type="password" class="field-input" name="password" id="password" placeholder="New Password..." autocomplete="off" />
-            <input type="password" class="field-input" name="password2" id="password2" placeholder="Once More..." autocomplete="off" />
+            <input type="password" class="field-input" name="password" id="password" placeholder="<?php echo _('New Password...'); ?>" autocomplete="off" />
+            <input type="password" class="field-input" name="password2" id="password2" placeholder="<?php echo _('Once More...'); ?>" autocomplete="off" />
             <button class="login-submit" type="submit"><i class="icon-go"></i></button>
         </form>
         <div class="response-message"></div>
-        <a href="#" class="forgot-pass">How did I get here?</a>
+        <a href="#" class="forgot-pass"><?php echo _('How did I get here?'); ?></a>
         <div class="gethere">
-            <p>You clicked on a link in an email from us.</p>
-            <p class="last">You can choose a new password here and be on your way.</p>
-            <a class="help" href="http://help.unmark.it">HELP</a><a class="home" href="/">UNMARK.IT</a>
+            <p><?php echo _('You clicked on a link in an email from us.'); ?></p>
+            <p class="last"><?php echo _('You can choose a new password here and be on your way.'); ?></p>
+            <a class="help" href="http://help.unmark.it"><?php echo _('HELP'); ?></a><a class="home" href="/"><?php echo _('UNMARK.IT'); ?></a>
         </div>
     </div>
 </div>
-
 
 <script type="text/javascript">
 var unmark  = unmark || {};

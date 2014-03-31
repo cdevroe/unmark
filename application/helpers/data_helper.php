@@ -66,14 +66,24 @@ function findStartFinish($start, $finish=null)
     return array('start' => date('Y-m-d', $start), 'finish' => date('Y-m-d', $finish));
 }
 
-// Format any errors coming back to standardize them
-function formatErrors($errors)
+/**
+ * Format any errors coming back to standardize them
+ * @param int $errors Error code
+ * @param string $params Params passed to error message (if needed)
+ * @return array Array with error codes and messages
+ */
+function formatErrors($errors, $params = null)
 {
     if (is_numeric($errors)) {
         $CI             =& get_instance();
         $error_codes    = $CI->config->item('error_codes');
-        $errno          = (array_key_exists($errors, $error_codes)) ? $errors : 0;
-        $message        = (! empty($errno)) ? $error_codes[$errno] : 'Unknown Error';
+        if(array_key_exists($errors, $error_codes)){
+            $errno = $errors;
+            $message = empty($params) ? $error_codes[$errno] : call_user_func_array("sprintf", array_merge(array($error_codes[$errno]), $params));            
+        } else{
+            $errno = 0;
+            $message = 'Unknown Error';
+        }
         if ($errors >= 400 & $errors < 600) {
             set_response_code($errors);
         }
@@ -118,11 +128,11 @@ function generateTimeSpan($date)
     foreach ($results as $type => $number) {
         if (! empty($number)) {
             $s = ($number == '1') ? '' : 's';
-            return $number . ' ' . $type . $s . ' ago';
+            return $number . ' ' . ngettext($type, $type.'s', $number) . ' ' . _('ago');
         }
     }
 
-    return 'Just Now';
+    return _('Just Now');
 }
 
 function getLastJsonError()
