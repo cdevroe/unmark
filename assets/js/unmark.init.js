@@ -25,6 +25,14 @@
         this.special_chars     = { '\\+': '&#43;' };
         this.mainpanels = $('#unmark-wrapper');
 
+        // Check Query String
+        var load = unmark.readQuery('load');
+        if (load !== false) {
+            unmark.overlay(true);
+            $('#'+load).show().animate({ top: 0 }, 1000);
+        }
+
+
         // Set any window variables
         window.unmark_current_page = 1;
 
