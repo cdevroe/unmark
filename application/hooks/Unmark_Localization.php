@@ -24,7 +24,7 @@ class Unmark_Localization
     {
         if(!isset($this->CI->localized) || $this->CI->localized == true ){
             // Trying to set locale
-            $lang = isset($this->CI->selected_language) ? $this->CI->selected_language.'.UTF-8' : 'C.UTF-8';
+            $lang = isset($this->CI->selected_language) ? $this->CI->selected_language.'.UTF-8' : 'C';
             $setLocaleOut = setlocale(LC_ALL, $lang);
             if($setLocaleOut !== false){
                 // Locale setting success
