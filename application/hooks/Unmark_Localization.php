@@ -22,7 +22,7 @@ class Unmark_Localization
      */
     public function loadLanguage()
     {
-        if($this->CI->localized){
+        if(!isset($this->CI->localized) || $this->CI->localized == true ){
             // Trying to set locale
             $lang = $this->CI->selected_language.'.UTF-8';
             $setLocaleOut = setlocale(LC_ALL, $lang);
