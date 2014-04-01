@@ -262,12 +262,16 @@
     };
 
     // Reads the passed note field and tagifies it on the fly.
+    // 4.1.14 - Also Linkify's the notes field ... matches http(s)
     unmark.tagify_notes = function (note) {
 
         // Get the note text, replace all tags with a linked tag
         var notetext = note.text();
 
         if (notetext !== '') {
+            // First Linkify Notes
+            notetext = notetext.replace(/(https?:\/\/[^\]\s]+)(?: ([^\]]*))?/g, "<a target='_blank' href='$1'>$1</a>");
+            // Then Tagify It
             notetext = notetext.replace(/#(\S*)/g,'<a href="/marks/tag/$1">#$1</a>');
         } else {
             note.prev().html('Click To Add A Note <i class="icon-edit"></i>');
