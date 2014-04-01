@@ -770,7 +770,12 @@ ul.nav-list {
                     display: block;
                     border-bottom: 1px solid darken($color_lighter, 3%);
                     padding: 25px 25px;
-                    color: $color_dark;
+                    color: darken($color_dark, 5%);
+                    font-weight: 300;
+                    &:visited {
+                        color: lighten($color_dark, 20%);
+                        background-color: rgba(0,0,0,0.02);
+                    }
                 }
             }
         }
