@@ -1,9 +1,10 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /*
-- Define application errors and error codes
+ - Define application errors and error codes
 - This will keep the application lean and the formatErrors method can do easy lookups
 - Feel free to add on
+- After adding here, you need to update application/language/phrases.php, then regenerate .pot and update proper .po translations. Helper script to come
 */
 $config['error_codes'] = array();
 
@@ -15,8 +16,8 @@ $config['error_codes'][4] = 'Mark with this id could not be found for this accou
 $config['error_codes'][5] = 'Mark could not be restored.';
 $config['error_codes'][6] = 'Could not add mark.';
 $config['error_codes'][7] = 'Could not delete mark.';
-$config['error_codes'][8] = 'This mark does\'t have a valid URL.';
-$config['error_codes'][9] = 'This mark does\'t have a valid title.';
+$config['error_codes'][8] = 'This mark doesn\'t have a valid URL.';
+$config['error_codes'][9] = 'This mark doesn\'t have a valid title.';
 
 // Labels - Level 30 - 59
 $config['error_codes'][30] = 'No `label_id` was found.';

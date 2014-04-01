@@ -1,11 +1,10 @@
 <?php if (isset($errors['2'])) : ?>
-<h2 class="marks-heading">Sorry, No marks found</h2>
+<h2 class="marks-heading"><?php echo _('Sorry, No marks found')?></h2>
 <?php else : ?>
 <?php if (isset($lookup_type) && $lookup_type != "all") :
 
     // Variable Setup
     $heading = array();
-    $link_plural = " ".determinePlurality($total, "mark", false)." ";
     $search_term = (isset($_GET['q'])) ? $_GET['q'] : '';
     $label_name = (isset($active_label['label_name'])) ? $active_label['label_name'] : '';
     $tag_name = (isset($active_tag['tag_name'])) ? $active_tag['tag_name'] : '';
@@ -14,30 +13,34 @@
     switch ($lookup_type) {
         case 'label':
             $heading['icon']    =   'icon-circle';
-            $heading['title']   =   $link_plural . "labeled " . $label_name;
+            $heading['title']   =   sprintf(ngettext('mark labeled %s', 'marks labeled %s', $total), _($label_name));
             break;
         case 'archive':
             $heading['icon']    =   'icon-heading_archive';
-            $heading['title']   =   $link_plural . "archived";
+            $heading['title']   =   ngettext('mark archived', 'marks archived', $total);
             break;
         case 'tag':
             $heading['icon']    =   'icon-heading_tag';
-            $heading['title']   =   $link_plural . "tagged " . $tag_name;
+            $heading['title']   =   sprintf(ngettext('mark tagged %s', 'marks tagged %s', $total), $tag_name);
             break;
         case 'search':
             $heading['icon']    =   'icon-heading_search';
-            $heading['title']   =   $link_plural . "found containing \"" . $search_term . "\"";
+            $heading['title']   =   sprintf(ngettext('mark found containing "%s"', 'marks found containing "%s"', $total), $search_term);
             break;
         default:
             $heading['icon']    =   'icon-heading_time';
-            $heading['title']   =   $link_plural;
+            $heading['title']   =   ngettext('mark', 'marks', $total);
             $default_title      =   true;
     }
 
     // If a lookup time frame
     // Work some magic
-    $in_the           = (stristr($lookup_type, 'last-')) ? 'in the ' : '';
-    $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? $link_plural . 'created ' . $in_the . str_replace('-', ' ', $lookup_type) : $heading['title'];
+
+    if(stristr($lookup_type, 'last-')){
+        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(ngettext('mark created in the %s', 'marks created in the %s', $total), _(str_replace('-', ' ', $lookup_type))) : $heading['title'];
+    } else {
+        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(ngettext('mark created %s', 'marks created %s', $total), _(str_replace('-', ' ', $lookup_type))) : $heading['title'];
+    }
 
 ?>
 <h2 class="marks-heading"><i class="<?php print $heading['icon']; ?>"></i> <?php print $heading['title']; ?></h2>
@@ -80,7 +83,7 @@
                 </div>
             <?php endforeach; ?>
         <?php else : ?>
-            <div id="mark-x" class="mark label-x"><h2>No Marks Found</h2></div>
+            <div id="mark-x" class="mark label-x"><h2><?php echo _('No Marks Found')?></h2></div>
         <?php endif; ?>
     </div>
 </div>
