@@ -24,7 +24,7 @@ class Plain_Controller extends CI_Controller
     // User selected language (overriden in config)
     public $selected_language = null;
     // Supported languages list (overriden in config)
-    public $supported_languages = array('en' => 'en_US');
+    public $supported_languages = array('english' => 'en_US');
 
     public function __construct()
     {
@@ -594,10 +594,10 @@ class Plain_Controller extends CI_Controller
         $this->load->config('all/language');
         $languages = $this->config->item('supported_languages');
         if(empty($languages)){
-            $languages = array('en'=>'en_US');
+            $languages = array('english'=>'en_US');
         }
         $this->supported_languages = $languages;
-        $languageList = array_keys($this->supported_languages);
+        $languageList = array_values($this->supported_languages);
         // Check if there is any choice
         $langsCount = count($languageList);
         if($langsCount == 0){
