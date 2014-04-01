@@ -7,6 +7,7 @@ ngettext('second', 'seconds', 1);
 ngettext('minute', 'minutes', 1);
 ngettext('hour', 'hours', 1);
 ngettext('day', 'days', 1);
+ngettext('week', 'weeks', 1);
 ngettext('month', 'months', 1);
 ngettext('year', 'years', 1);
 // Time offset

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Unmark\n"
-"POT-Creation-Date: 2014-03-31 14:12+0100\n"
-"PO-Revision-Date: 2014-03-31 14:12+0100\n"
+"POT-Creation-Date: 2014-04-01 16:51+0100\n"
+"PO-Revision-Date: 2014-04-01 16:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: Plain\n"
 "Language: en\n"
@@ -77,70 +77,76 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: application/language/phrases.php:10
+msgid "week"
+msgid_plural "weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: application/language/phrases.php:11
 msgid "month"
 msgid_plural "months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: application/language/phrases.php:11
+#: application/language/phrases.php:12
 msgid "year"
 msgid_plural "years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: application/language/phrases.php:13
+#: application/language/phrases.php:14
 msgid "today"
 msgstr ""
 
-#: application/language/phrases.php:14
+#: application/language/phrases.php:15
 msgid "yesterday"
 msgstr ""
 
-#: application/language/phrases.php:15
+#: application/language/phrases.php:16
 msgid "last week"
 msgstr ""
 
-#: application/language/phrases.php:16
+#: application/language/phrases.php:17
 msgid "last month"
 msgstr ""
 
-#: application/language/phrases.php:17
+#: application/language/phrases.php:18
 msgid "last three months"
 msgstr ""
 
-#: application/language/phrases.php:18
+#: application/language/phrases.php:19
 msgid "last six months"
 msgstr ""
 
-#: application/language/phrases.php:19
+#: application/language/phrases.php:20
 msgid "last year"
 msgstr ""
 
-#: application/language/phrases.php:21
+#: application/language/phrases.php:22
 msgid "Read"
 msgstr ""
 
-#: application/language/phrases.php:22
+#: application/language/phrases.php:23
 msgid "Watch"
 msgstr ""
 
-#: application/language/phrases.php:23
+#: application/language/phrases.php:24
 msgid "Listen"
 msgstr ""
 
-#: application/language/phrases.php:24
+#: application/language/phrases.php:25
 msgid "Buy"
 msgstr ""
 
-#: application/language/phrases.php:25
+#: application/language/phrases.php:26
 msgid "Eat & Drink"
 msgstr ""
 
-#: application/language/phrases.php:26
+#: application/language/phrases.php:27
 msgid "Do"
 msgstr ""
 
-#: application/language/phrases.php:27 application/views/marks/info.php:34
+#: application/language/phrases.php:28 application/views/marks/info.php:34
 msgid "Unlabeled"
 msgstr ""
 

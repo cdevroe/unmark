@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Unmark\n"
-"POT-Creation-Date: 2014-03-31 14:12+0100\n"
-"PO-Revision-Date: 2014-03-31 15:03+0100\n"
+"POT-Creation-Date: 2014-04-01 16:51+0100\n"
+"PO-Revision-Date: 2014-04-01 16:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: Plain\n"
 "Language: pl\n"
@@ -85,72 +85,79 @@ msgstr[1] "dni"
 msgstr[2] "dni"
 
 #: application/language/phrases.php:10
+msgid "week"
+msgid_plural "weeks"
+msgstr[0] "tydzień"
+msgstr[1] "tygodnie"
+msgstr[2] "tygodni"
+
+#: application/language/phrases.php:11
 msgid "month"
 msgid_plural "months"
 msgstr[0] "miesiąc"
 msgstr[1] "miesiące"
 msgstr[2] "miesięcy"
 
-#: application/language/phrases.php:11
+#: application/language/phrases.php:12
 msgid "year"
 msgid_plural "years"
 msgstr[0] "rok"
 msgstr[1] "lata"
 msgstr[2] "lat"
 
-#: application/language/phrases.php:13
+#: application/language/phrases.php:14
 msgid "today"
 msgstr "dzisiaj"
 
-#: application/language/phrases.php:14
+#: application/language/phrases.php:15
 msgid "yesterday"
 msgstr "wczoraj"
 
-#: application/language/phrases.php:15
+#: application/language/phrases.php:16
 msgid "last week"
 msgstr "ostatnim tygodniu"
 
-#: application/language/phrases.php:16
+#: application/language/phrases.php:17
 msgid "last month"
 msgstr "ostatnim miesiącu"
 
-#: application/language/phrases.php:17
+#: application/language/phrases.php:18
 msgid "last three months"
 msgstr "ostatnich 3 miesiącach"
 
-#: application/language/phrases.php:18
+#: application/language/phrases.php:19
 msgid "last six months"
 msgstr "ostatnich 6 miesiącach"
 
-#: application/language/phrases.php:19
+#: application/language/phrases.php:20
 msgid "last year"
 msgstr "tym roku"
 
-#: application/language/phrases.php:21
+#: application/language/phrases.php:22
 msgid "Read"
 msgstr "Tekst"
 
-#: application/language/phrases.php:22
+#: application/language/phrases.php:23
 msgid "Watch"
 msgstr "Wideo"
 
-#: application/language/phrases.php:23
+#: application/language/phrases.php:24
 msgid "Listen"
 msgstr "Muzyka"
 
-#: application/language/phrases.php:24
+#: application/language/phrases.php:25
 msgid "Buy"
 msgstr "Zakupy"
 
-#: application/language/phrases.php:25
+#: application/language/phrases.php:26
 msgid "Eat & Drink"
 msgstr "Przepisy"
 
-#: application/language/phrases.php:26
+#: application/language/phrases.php:27
 msgid "Do"
 msgstr "Do zrobienia"
 
-#: application/language/phrases.php:27 application/views/marks/info.php:34
+#: application/language/phrases.php:28 application/views/marks/info.php:34
 msgid "Unlabeled"
 msgstr "Brak etykiety"
 
@@ -979,6 +986,14 @@ msgstr "Zarejestruj się za darmo"
 #: custom/views/welcome.php:42
 msgid "Register Free"
 msgstr "Darmowa rejestracja"
+
+#, fuzzy
+#~ msgid ""
+#~ "Sorry, your Twitter account could not be connected at this time, please "
+#~ "try again."
+#~ msgstr ""
+#~ "W tej chwili nie możemy przetworzyć Twojego żądania. Proszę spróbować "
+#~ "ponownie."
 
 #~ msgid "in the "
 #~ msgstr "w"
