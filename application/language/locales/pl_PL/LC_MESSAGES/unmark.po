@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Unmark\n"
-"POT-Creation-Date: 2014-04-01 16:51+0100\n"
-"PO-Revision-Date: 2014-04-01 16:51+0100\n"
+"POT-Creation-Date: 2014-04-02 15:41+0100\n"
+"PO-Revision-Date: 2014-04-02 15:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: Plain\n"
 "Language: pl\n"
@@ -348,6 +348,18 @@ msgstr "Błędny format pliku. Obsługiwane są jedynie pliki w formacie HTML."
 msgid "Invalid bookmark URL."
 msgstr "Nieprawidłowy adres URL zakładki."
 
+#: application/language/phrases_errors.php:47
+msgid "The value for user settings cannot be empty."
+msgstr "Wartość konfiguracyjna nie może być pusta."
+
+#: application/language/phrases_errors.php:48
+msgid "Could not complete request. It's not you it's us."
+msgstr "Nie udało się przetworzyć żądania."
+
+#: application/language/phrases_errors.php:49
+msgid "Could not delete your twitter settings at this time."
+msgstr "Nie udało się usunąć Twojej integracji z kontem Twittera."
+
 #: application/views/import/index.php:3
 msgid "Unmark : Importer"
 msgstr "Unmark - Import"
@@ -420,12 +432,12 @@ msgid "Change Email Address"
 msgstr "Zmień adres email"
 
 #: application/views/layouts/accountlinks.php:5
-#: custom/views/layouts/accountlinks.php:24
+#: custom/views/layouts/accountlinks.php:33
 msgid "Import or Export Marks"
 msgstr "Importuj / Eksportuj zakładki"
 
 #: application/views/layouts/accountlinks.php:6
-#: custom/views/layouts/accountlinks.php:25
+#: custom/views/layouts/accountlinks.php:34
 msgid "Invite Others"
 msgstr "Zaproś znajomych"
 
@@ -900,6 +912,16 @@ msgstr "Przedłuż ważność konta"
 msgid "Upgrade to Paid"
 msgstr "Zakup płatnej wersji"
 
+#: custom/views/layouts/accountlinks.php:27
+#: custom/views/layouts/userforms.php:93
+msgid "Disconnect from Twitter"
+msgstr "Rozłącz Twittera"
+
+#: custom/views/layouts/accountlinks.php:29
+#: custom/views/layouts/userforms.php:104
+msgid "Connect with Twitter"
+msgstr "Połącz z Twitterem"
+
 #: custom/views/layouts/navigation.php:4
 #: custom/views/layouts/navigation.php:11
 msgid "Upgrade"
@@ -956,6 +978,53 @@ msgstr "Wykup konto płatne i dodaj nieograniczoną ilość zakładek."
 msgid "Here are a few interesting marks to get you started..."
 msgstr "Poniżej znajdziesz kilka najciekawszych zakładek..."
 
+#: custom/views/layouts/userforms.php:100
+msgid "You are currently connected to the Twitter account above."
+msgstr "Jesteś aktualnie podłączony z wyżej wymienionym kontem Twittera."
+
+#: custom/views/layouts/userforms.php:102
+msgid "Disconnect Twitter"
+msgstr "Rozłącz Twittera"
+
+#: custom/views/layouts/userforms.php:105
+msgid ""
+"By connecting your account with Twitter, we will automatically import any "
+"link contained in a tweet that you favorite."
+msgstr ""
+"Po połączeniu Twojego konta z Twitterem, będziemy automatycznie importowali "
+"odnośniki zawarte w tweetach, które oznaczyłeś jako ulubione."
+
+#: custom/views/layouts/userforms.php:106
+msgid "Note: We will never tweet on your behalf."
+msgstr "Informacja: Nigdy nie będziemy Tweetowali w Twoim imieniu."
+
+#: custom/views/layouts/userforms.php:107
+msgid "Connect Twitter"
+msgstr "Połącz z Twitterem"
+
+#: custom/views/layouts/userforms.php:114
+msgid ""
+"Sorry, your Twitter account could not be connected at this time, please try "
+"again."
+msgstr ""
+"Przepraszamy, nie udało się podłączyć Twojego konta Twittera, prosimy "
+"spróbuj ponownie."
+
+#: custom/views/layouts/userforms.php:115
+#: custom/views/layouts/userforms.php:122
+msgid "OK"
+msgstr "OK"
+
+#: custom/views/layouts/userforms.php:120
+msgid "Your Twitter account has been successfully connected."
+msgstr "Twoje konto Twittera zostało pomyślnie podłączone."
+
+#: custom/views/layouts/userforms.php:121
+msgid "We will now import the links in any tweet that you favorite."
+msgstr ""
+"Od teraz będziemy importowali wszystkie odnośniki w tweetach, które "
+"oznaczysz jako ulubione."
+
 #: custom/views/marks/upgrade_notice.php:14
 #, php-format
 msgid "No marks found containing \"%s\""
@@ -986,14 +1055,6 @@ msgstr "Zarejestruj się za darmo"
 #: custom/views/welcome.php:42
 msgid "Register Free"
 msgstr "Darmowa rejestracja"
-
-#, fuzzy
-#~ msgid ""
-#~ "Sorry, your Twitter account could not be connected at this time, please "
-#~ "try again."
-#~ msgstr ""
-#~ "W tej chwili nie możemy przetworzyć Twojego żądania. Proszę spróbować "
-#~ "ponownie."
 
 #~ msgid "in the "
 #~ msgstr "w"
