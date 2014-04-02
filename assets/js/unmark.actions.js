@@ -213,7 +213,7 @@
 
     // Show or Hide the Overlay
     unmark.overlay = function (show) {
-        if (show) {
+        if (show === true) {
             unmark.mainpanels.addClass('blurme');
             var overlay = $('<div id="unmark-overlay"><a href="#" id="unmarkModalClose"><i class="icon-big_close"></i></a></div>');
             overlay.appendTo(document.body);

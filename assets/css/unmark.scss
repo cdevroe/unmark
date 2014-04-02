@@ -1695,6 +1695,21 @@ body.label-7 .navigation-pane { border-top: none; }
             background-color: $color_red;
         }
     }
+    #twitterAuth {
+        top: -300px;
+        a.action {
+            background: $color_blue;
+            padding: 10px 20px;
+            @include title-text;
+            color: white;
+            font-size: 12px;
+            display: block;
+            margin-bottom: 36px;
+        }
+    }
+    #twitterSuccess, #twitterFail {
+        top : 0;
+    }
 }
 
 // Overlay
