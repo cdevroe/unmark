@@ -44,3 +44,6 @@ _('You have reached your limit of %s marks total.');
 _('No file uploaded.');
 _('Invalid file format uploaded. Only HTML files accepted.');
 _('Invalid bookmark URL.');
+_('The value for user settings cannot be empty.');
+_('Could not complete request. It\'s not you it\'s us.');
+_('Could not delete your twitter settings at this time.');
