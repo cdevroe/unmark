@@ -1,0 +1,853 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Unmark\n"
+"POT-Creation-Date: 2014-04-04 10:02+0800\n"
+"PO-Revision-Date: 2014-04-04 14:36+0800\n"
+"Last-Translator: hewig <hewigovens@gmail.com>\n"
+"Language-Team: Plain\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: ../../\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Language: zh_Hans_CN\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: application/controllers/install.php:71
+#, php-format
+msgid "Upgraded. Please <a href=\"%s\">return home</a>."
+msgstr "已升级。请返回<a href=\"%s\">首页</a>。"
+
+#: application/controllers/login.php:23
+#, php-format
+msgid "The email address `%s` was not found."
+msgstr "电子邮件地址 `%s` 不存在。"
+
+#: application/controllers/login.php:26
+msgid "Your account is no longer active. Please contact support."
+msgstr "您的账号已停用，请联系客服。"
+
+#: application/controllers/login.php:49
+msgid "Your password is incorrect. Please try again."
+msgstr "您的密码不正确，请重试。"
+
+#: application/helpers/data_helper.php:131
+msgid "ago"
+msgstr "前"
+
+#: application/helpers/data_helper.php:135
+msgid "Just Now"
+msgstr "刚刚"
+
+#: application/helpers/view_helper.php:7
+#, php-format
+msgid "%s mark"
+msgid_plural "%s marks"
+msgstr[0] "%s 枚书签"
+
+#: application/helpers/view_helper.php:9
+msgid "No marks"
+msgstr "暂无书签"
+
+#: application/language/phrases.php:6
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] "秒"
+
+#: application/language/phrases.php:7
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "分钟"
+
+#: application/language/phrases.php:8
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "小时"
+
+#: application/language/phrases.php:9
+msgid "day"
+msgid_plural "days"
+msgstr[0] "天"
+
+#: application/language/phrases.php:10
+msgid "week"
+msgid_plural "weeks"
+msgstr[0] "周"
+
+#: application/language/phrases.php:11
+msgid "month"
+msgid_plural "months"
+msgstr[0] "月"
+
+#: application/language/phrases.php:12
+msgid "year"
+msgid_plural "years"
+msgstr[0] "年"
+
+#: application/language/phrases.php:14
+msgid "today"
+msgstr "今天"
+
+#: application/language/phrases.php:15
+msgid "yesterday"
+msgstr "昨天"
+
+#: application/language/phrases.php:16
+msgid "last week"
+msgstr "上周"
+
+#: application/language/phrases.php:17
+msgid "last month"
+msgstr "上月"
+
+#: application/language/phrases.php:18
+msgid "last three months"
+msgstr "过去三个月"
+
+#: application/language/phrases.php:19
+msgid "last six months"
+msgstr "过去六个月"
+
+#: application/language/phrases.php:20
+msgid "last year"
+msgstr "去年"
+
+#: application/language/phrases.php:22
+msgid "Read"
+msgstr "Read"
+
+#: application/language/phrases.php:23
+msgid "Watch"
+msgstr "Watch"
+
+#: application/language/phrases.php:24
+msgid "Listen"
+msgstr "Listen"
+
+#: application/language/phrases.php:25
+msgid "Buy"
+msgstr "Buy"
+
+#: application/language/phrases.php:26
+msgid "Eat & Drink"
+msgstr "Eat & Drink"
+
+#: application/language/phrases.php:27
+msgid "Do"
+msgstr "Do"
+
+#: application/language/phrases.php:28 application/views/marks/info.php:34
+msgid "Unlabeled"
+msgstr "Unlabeled"
+
+#: application/language/phrases_errors.php:2
+msgid "Mark could not be archived."
+msgstr "无法存档书签。"
+
+#: application/language/phrases_errors.php:3
+msgid "No marks found."
+msgstr "暂无书签。"
+
+#: application/language/phrases_errors.php:4
+msgid "Mark could not be updated."
+msgstr "无法更新书签。"
+
+#: application/language/phrases_errors.php:5
+msgid "Mark with this id could not be found for this account."
+msgstr "当前账号没有此id的书签。"
+
+#: application/language/phrases_errors.php:6
+msgid "Mark could not be restored."
+msgstr "无法恢复书签。"
+
+#: application/language/phrases_errors.php:7
+msgid "Could not add mark."
+msgstr "无法添加书签。"
+
+#: application/language/phrases_errors.php:8
+msgid "Could not delete mark."
+msgstr "无法删除书签。"
+
+#: application/language/phrases_errors.php:9
+msgid "This mark doesn't have a valid URL."
+msgstr "这枚书签的URL无效"
+
+#: application/language/phrases_errors.php:10
+msgid "This mark doesn't have a valid title."
+msgstr "这枚书签标题无效"
+
+#: application/language/phrases_errors.php:11
+msgid "No `label_id` was found."
+msgstr "找不到`label_id`"
+
+#: application/language/phrases_errors.php:12
+msgid "No label found using this label_id for your account."
+msgstr "您的帐户中没有使用这个label_id的标签。"
+
+#: application/language/phrases_errors.php:13
+msgid "No labels found for your account."
+msgstr "您的账号里没有标签。"
+
+#: application/language/phrases_errors.php:14
+msgid "This type of label could not be found."
+msgstr "没有此类型的标签。"
+
+#: application/language/phrases_errors.php:15
+#: application/language/phrases_errors.php:19
+msgid "Label already exists for this account."
+msgstr "您的账号里已存在此标签。"
+
+#: application/language/phrases_errors.php:16
+msgid "No options found to update for this label."
+msgstr "没有可以更新此标签的选项。"
+
+#: application/language/phrases_errors.php:17
+msgid "Label could not be created."
+msgstr "无法创建书签。"
+
+#: application/language/phrases_errors.php:18
+msgid "You do not have access to create a system level label."
+msgstr "抱歉，您没有权限创建系统级的标签。"
+
+#: application/language/phrases_errors.php:20
+msgid "Label could not be updated."
+msgstr "标签无法更新。"
+
+#: application/language/phrases_errors.php:21
+msgid "No tags found."
+msgstr "暂无tag。"
+
+#: application/language/phrases_errors.php:22
+msgid "No tag provided."
+msgstr "没有输入tag。"
+
+#: application/language/phrases_errors.php:23
+msgid "Tag could not be added."
+msgstr "无法添加Tag。"
+
+#: application/language/phrases_errors.php:24
+msgid "Account with given email does not exist."
+msgstr "与此电子邮件关联的账号不存在。"
+
+#: application/language/phrases_errors.php:25
+msgid "Invalid password recovery token."
+msgstr "恢复密码token无效。"
+
+#: application/language/phrases_errors.php:26
+#: application/language/phrases_errors.php:44
+msgid "No file uploaded."
+msgstr "还没有上传过文件。"
+
+#: application/language/phrases_errors.php:27
+msgid "Invalid file format uploaded. Only JSON files accepted"
+msgstr "上传文件格式无效。只支持JSON格式"
+
+#: application/language/phrases_errors.php:28
+msgid "Forbidden"
+msgstr "禁止"
+
+#: application/language/phrases_errors.php:29
+msgid "Not Found"
+msgstr "找不到"
+
+#: application/language/phrases_errors.php:30
+msgid "Internal Error"
+msgstr "内部错误"
+
+#: application/language/phrases_errors.php:31
+msgid "Security token is invalid."
+msgstr "安全token无效"
+
+#: application/language/phrases_errors.php:32
+msgid "Validation Errors"
+msgstr "验证错误"
+
+#: application/language/phrases_errors.php:33
+msgid ""
+"Your password is invalid. Passwords must contain at least one CAPITAL "
+"letter, one number and be a minimum of 6 characters."
+msgstr ""
+"您的密码无效。密码必须包含至少一个大写字母，一个数字并且不少于6个字符。"
+
+#: application/language/phrases_errors.php:34
+msgid "This email address already exists in the system."
+msgstr "邮件地址在系统中已存在。"
+
+#: application/language/phrases_errors.php:35
+msgid "Your email address is invalid."
+msgstr "您的邮件地址无效。"
+
+#: application/language/phrases_errors.php:36
+msgid "Email not found. Cannot create subscription."
+msgstr "没有此电子邮件，无法创建订阅。"
+
+#: application/language/phrases_errors.php:37
+msgid "Customer ID not found."
+msgstr "没有此Customer ID。"
+
+#: application/language/phrases_errors.php:38
+msgid ""
+"Customer already active. Please use correct method to restart their "
+"subscription."
+msgstr "用户已经激活，请使用正确的方法来重新启用他/她的订阅。"
+
+#: application/language/phrases_errors.php:39
+msgid "Cannot restart an active subscription."
+msgstr "无法重新启用一个激活的订阅。"
+
+#: application/language/phrases_errors.php:40
+msgid "No credit card on file."
+msgstr "您还没有添加信用卡。"
+
+#: application/language/phrases_errors.php:41
+msgid "Could not process your request at this time. Please try again."
+msgstr "无法处理您的请求，请重试。"
+
+#: application/language/phrases_errors.php:42
+#, php-format
+msgid "You have reached your daily limit of %s marks per day."
+msgstr "你已经达到今天%s枚书签的限制。"
+
+#: application/language/phrases_errors.php:43
+#, php-format
+msgid "You have reached your limit of %s marks total."
+msgstr "你已经达到总数%s枚书签的限制。"
+
+#: application/language/phrases_errors.php:45
+msgid "Invalid file format uploaded. Only HTML files accepted."
+msgstr "上传文件格式无效，暂时只支持HTML文件。"
+
+#: application/language/phrases_errors.php:46
+msgid "Invalid bookmark URL."
+msgstr "书签URL无效。"
+
+#: application/language/phrases_errors.php:47
+msgid "The value for user settings cannot be empty."
+msgstr "此项用户设置不能为空。"
+
+#: application/language/phrases_errors.php:48
+msgid "Could not complete request. It's not you it's us."
+msgstr "由于我们的错误，无法完成请求。"
+
+#: application/language/phrases_errors.php:49
+msgid "Could not delete your twitter settings at this time."
+msgstr "现在无法删除您的twitter设置。"
+
+#: application/libraries/Plain_Migration.php:194
+#, php-format
+msgid ""
+"Migrations switched from timestamp to unmark, but cannot find mapping for "
+"version %s. Please add correct version to migrations_mapping config entry "
+"for migrations"
+msgstr ""
+"从timestamp迁移到unmark，无法找到版本%s的mapping。请将正确版本添加到"
+"migrations_mapping配置文件。"
+
+#: application/views/import/index.php:3
+msgid "Unmark : Importer"
+msgstr "Unmark：导入"
+
+#: application/views/import/index.php:13
+msgid ""
+"Sorry, there was an error. Please <a href='/'>go back</a> and try again."
+msgstr "抱歉，发生了错误。请<a href='/'>返回</a>并重试。"
+
+#: application/views/import/index.php:19
+#, php-format
+msgid "ERROR: %s"
+msgstr "错误：%s"
+
+#: application/views/import/index.php:22
+msgid "Successfull Upload!"
+msgstr "上传成功！"
+
+#: application/views/import/index.php:23
+#, php-format
+msgid "%s mark added"
+msgid_plural "%s marks added"
+msgstr[0] "添加了%s枚书签"
+
+#: application/views/import/index.php:24
+#, php-format
+msgid "%s mark skipped"
+msgid_plural "%s marks skipped"
+msgstr[0] "跳过了%s枚书签"
+
+#: application/views/import/index.php:25
+#, php-format
+msgid "%s mark failed"
+msgid_plural "%s marks failed"
+msgstr[0] "失败了%s枚书签"
+
+#: application/views/import/index.php:26
+#, php-format
+msgid "%s mark total"
+msgid_plural "%s marks total"
+msgstr[0] "总共%s枚书签"
+
+#: application/views/import/index.php:27
+msgid "Head <a href='/'>back</a> to see them now!"
+msgstr "立刻<a href='/'>查看</a>它们！"
+
+#: application/views/layouts/accountlinks.php:1
+#, php-format
+msgid "Account %s"
+msgstr "账号 %s"
+
+#: application/views/layouts/accountlinks.php:3
+#: application/views/layouts/userforms.php:4
+msgid "Change Password"
+msgstr "修改密码"
+
+#: application/views/layouts/accountlinks.php:4
+#: application/views/layouts/userforms.php:16
+msgid "Change Email Address"
+msgstr "修改邮件地址"
+
+#: application/views/layouts/accountlinks.php:5
+msgid "Import or Export Marks"
+msgstr "导入或导出书签"
+
+#: application/views/layouts/accountlinks.php:6
+msgid "Invite Others"
+msgstr "邀请朋友"
+
+#: application/views/layouts/header.php:9
+msgid "Unmark"
+msgstr "Unmark"
+
+#: application/views/layouts/header.php:38
+msgid "View/Hide Details"
+msgstr "查看/隐藏详情"
+
+#: application/views/layouts/navigation.php:7
+#: application/views/layouts/navigation/nav_icons.php:7
+msgid "Settings"
+msgstr "设置"
+
+#: application/views/layouts/navigation/nav_helper.php:1
+#: application/views/layouts/timeline.php:5
+msgid "All Marks"
+msgstr "所有书签"
+
+#: application/views/layouts/navigation/nav_helper.php:2
+msgid "Labels"
+msgstr "标签"
+
+#: application/views/layouts/navigation/nav_helper.php:3
+msgid "Timeline"
+msgstr "Timeline"
+
+#: application/views/layouts/navigation/nav_helper.php:4
+msgid "Search"
+msgstr "搜索"
+
+#: application/views/layouts/navigation/nav_helper.php:5
+msgid "Archives"
+msgstr "存档"
+
+#: application/views/layouts/navigation/nav_icons.php:1
+msgid "View/Hide Menu"
+msgstr "显示/隐藏 菜单"
+
+#: application/views/layouts/navigation/nav_icons.php:2
+msgid "View All Marks"
+msgstr "查看所有书签"
+
+#: application/views/layouts/navigation/nav_icons.php:3
+msgid "View Labels"
+msgstr "查看标签"
+
+#: application/views/layouts/navigation/nav_icons.php:4
+msgid "View Timeline"
+msgstr "查看Timeline"
+
+#: application/views/layouts/navigation/nav_icons.php:5
+msgid "Search &amp; Tags"
+msgstr "搜索&amp; Tags"
+
+#: application/views/layouts/navigation/nav_icons.php:6
+msgid "View Archive"
+msgstr "查看存档"
+
+#: application/views/layouts/navigation/nav_panels.php:18
+msgid "SEARCH..."
+msgstr "搜索..."
+
+#: application/views/layouts/navigation/nav_panels.php:22
+msgid "Most-Used Tags"
+msgstr "使用最多的Tag"
+
+#: application/views/layouts/navigation/nav_panels.php:28
+msgid "Sign Out"
+msgstr "注销"
+
+#: application/views/layouts/navigation/nav_panels.php:32
+msgid "Help"
+msgstr "帮助"
+
+#: application/views/layouts/navigation/nav_panels.php:34
+msgid "How to Use Unmark"
+msgstr "如何使用Unmark"
+
+#: application/views/layouts/navigation/nav_panels.php:35
+msgid "View Our FAQ"
+msgstr "查看FAQ"
+
+#: application/views/layouts/navigation/nav_panels.php:36
+msgid "Get the Bookmarklet"
+msgstr "安装Bookmarklet"
+
+#: application/views/layouts/navigation/nav_panels.php:37
+msgid "Get the Chrome Extension"
+msgstr "安装Chrome扩展程序"
+
+#: application/views/layouts/navigation/tags_list.php:6
+msgid "No Tags Found"
+msgstr "暂无Tag"
+
+#: application/views/layouts/sidebar.php:7
+#, php-format
+msgid "You saved %s mark today"
+msgid_plural "You saved %s marks today"
+msgstr[0] "今天已保存 %s 枚书签"
+
+#: application/views/layouts/sidebar.php:9
+#, php-format
+msgid "and archived %s"
+msgstr "，存档了%s枚"
+
+#: application/views/layouts/sidebar.php:18
+#, php-format
+msgid "You have %s mark that are over 1 year old. Want to tidy up a bit?"
+msgid_plural ""
+"You have %s mark that are over 1 year old. Want to tidy up a bit?"
+msgstr[0] "您有 %s 枚书签已超过一年，需要清理一下吗？"
+
+#: application/views/layouts/sidebar.php:19
+msgid "View Marks"
+msgstr "查看书签"
+
+#: application/views/layouts/sidebar.php:20
+msgid "Do Nothing"
+msgstr "什么也不做"
+
+#: application/views/layouts/sidebar.php:21
+msgid "Archive All"
+msgstr "存档所有"
+
+#: application/views/layouts/sidebar.php:28
+msgid "To add marks, drag the button above into your bookmark toolbar."
+msgstr "如何添加书签：将下面的按钮拖入到您的书签栏。"
+
+#: application/views/layouts/sidebar.php:29
+msgid "Or, use our"
+msgstr "或者，使用我们的"
+
+#: application/views/layouts/sidebar.php:29
+msgid "Chrome Extension"
+msgstr "Chrome扩展程序"
+
+#: application/views/layouts/sidebar.php:29
+msgid "Learn More"
+msgstr "了解更多"
+
+#: application/views/layouts/sidebar/sidebar_notices.php:10
+msgid "Thanks for checking out Unmark. We hope you enjoy using it."
+msgstr "感谢使用Unmark，希望您用的愉快。"
+
+#: application/views/layouts/sidebar/sidebar_notices.php:11
+msgid ""
+"For usage tips <a target=\"_blank\" href=\"https://twitter.com/unmarkit"
+"\">follow us on Twitter</a>! Please tell your friends about Unmark."
+msgstr ""
+"更多使用技巧，<a target=\"_blank\" href=\"https://twitter.com/unmarkit\">请关"
+"注我们的Twitter</a>! 请把Unmark分享给您的朋友。"
+
+#: application/views/layouts/timeline.php:8
+msgid "Today"
+msgstr "今天"
+
+#: application/views/layouts/timeline.php:11
+msgid "Yesterday"
+msgstr "昨天"
+
+#: application/views/layouts/timeline.php:14
+msgid "Last Week"
+msgstr "上周"
+
+#: application/views/layouts/timeline.php:17
+msgid "Last Month"
+msgstr "上个月"
+
+#: application/views/layouts/timeline.php:20
+msgid "Last 3 Months"
+msgstr "过去3个月"
+
+#: application/views/layouts/timeline.php:23
+msgid "Last 6 Months"
+msgstr "过去6个月"
+
+#: application/views/layouts/timeline.php:26
+msgid "Last Year"
+msgstr "去年"
+
+#: application/views/layouts/userforms.php:6
+msgid "Old Password..."
+msgstr "旧密码..."
+
+#: application/views/layouts/userforms.php:7
+#: application/views/singletons/reset.php:27
+msgid "New Password..."
+msgstr "新密码..."
+
+#: application/views/layouts/userforms.php:8
+#: application/views/singletons/reset.php:28
+msgid "Once More..."
+msgstr "请再输入一次..."
+
+#: application/views/layouts/userforms.php:18
+msgid "New Email Address..."
+msgstr "新电子邮件地址..."
+
+#: application/views/layouts/userforms.php:26
+msgid "Export All Marks"
+msgstr "导出所有书签"
+
+#: application/views/layouts/userforms.php:27
+msgid "Export File"
+msgstr "导出文件"
+
+#: application/views/layouts/userforms.php:28
+msgid "Import Marks"
+msgstr "导入书签"
+
+#: application/views/layouts/userforms.php:31
+msgid "Import File"
+msgstr "导入文件"
+
+#: application/views/layouts/userforms.php:33
+msgid "Note: The import needs to be a JSON file."
+msgstr "注意：只支持导入JSON文件。"
+
+#: application/views/marks/error.php:4
+msgid "Sorry, Could Not Add this Mark"
+msgstr "抱歉，无法添加这枚书签"
+
+#: application/views/marks/error.php:14
+msgid "This mark could not be added to your stream."
+msgstr "这枚书签无法添加到您的stream。"
+
+#: application/views/marks/index.php:2
+msgid "Sorry, No marks found"
+msgstr "抱歉，暂无书签"
+
+#: application/views/marks/index.php:16
+#, php-format
+msgid "mark labeled %s"
+msgid_plural "marks labeled %s"
+msgstr[0] "含有标签 %s 的书签"
+
+#: application/views/marks/index.php:20
+msgid "mark archived"
+msgid_plural "marks archived"
+msgstr[0] "存档书签"
+
+#: application/views/marks/index.php:24
+#, php-format
+msgid "mark tagged %s"
+msgid_plural "marks tagged %s"
+msgstr[0] "含有tag %s 的书签"
+
+#: application/views/marks/index.php:28
+#, php-format
+msgid "mark found containing \"%s\""
+msgid_plural "marks found containing \"%s\""
+msgstr[0] "含有 \"%s\" 的书签"
+
+#: application/views/marks/index.php:32
+msgid "mark"
+msgid_plural "marks"
+msgstr[0] "书签"
+
+#: application/views/marks/index.php:40
+#, php-format
+msgid "mark created in the %s"
+msgid_plural "marks created in the %s"
+msgstr[0] "在 %s 中创建的书签"
+
+#: application/views/marks/index.php:42
+#, php-format
+msgid "mark created %s"
+msgid_plural "marks created %s"
+msgstr[0] "书签%s已创建"
+
+#: application/views/marks/index.php:86
+msgid "No Marks Found"
+msgstr "暂无书签"
+
+#: application/views/marks/info.php:7
+msgid "Unmark : Mark Added"
+msgstr "Unmark：已添加书签"
+
+#: application/views/marks/info.php:23
+msgid "This link has been added to your stream."
+msgstr "此链接已添加到您的stream。"
+
+#: application/views/marks/info.php:42
+msgid "Add A Note"
+msgstr "添加笔记"
+
+#: application/views/marks/info.php:43 application/views/marks/info.php:45
+msgid "Type note text or #tags here..."
+msgstr "添加笔记或#tags..."
+
+#: application/views/marks/info.php:50
+msgid "Delete Link"
+msgstr "删除链接"
+
+#: application/views/marks/info.php:51
+msgid "Update &amp; Close"
+msgstr "更新&amp;关闭"
+
+#: application/views/register/index.php:7
+msgid "Unmark : User Registration"
+msgstr "Unmark：用户注册"
+
+#: application/views/register/index.php:24
+msgid "Register For"
+msgstr "注册"
+
+#: application/views/register/index.php:27 application/views/welcome.php:37
+#: application/views/welcome.php:54
+msgid "Email Address"
+msgstr "电子邮件地址"
+
+#: application/views/register/index.php:28 application/views/welcome.php:38
+msgid "Password"
+msgstr "密码"
+
+#: application/views/register/index.php:29
+msgid "Password Again"
+msgstr "再次输入密码"
+
+#: application/views/register/index.php:33
+msgid "Have An Account? Sign In Here"
+msgstr "已有账号？点此登录"
+
+#: application/views/setup.php:7
+msgid "Unmark: Setup"
+msgstr "Unmark：设置"
+
+#: application/views/setup.php:23
+msgid "Welcome to Unmark, the to do list for bookmarks."
+msgstr "欢迎使用Unmark，为书签量身打造的Todo清单。"
+
+#: application/views/setup.php:25
+msgid "In order to use this you need to click the button below to get started."
+msgstr "点击下面的按钮开始使用。"
+
+#: application/views/setup.php:27
+msgid "This will install all the db tables and redirect you to a signup page."
+msgstr "这一步将会在数据库中创建所有表，并重定向到注册页面。"
+
+#: application/views/setup.php:29
+msgid "INSTALL UNMARK"
+msgstr "安装UNMARK"
+
+#: application/views/singletons/reset.php:7
+msgid "Unmark : Reset Password"
+msgstr "Unmark ：重置密码"
+
+#: application/views/singletons/reset.php:24
+msgid "Reset Password for"
+msgstr "重置密码"
+
+#: application/views/singletons/reset.php:32
+msgid "How did I get here?"
+msgstr "我是如何到这儿的？"
+
+#: application/views/singletons/reset.php:34
+msgid "You clicked on a link in an email from us."
+msgstr "您点击了我们发送给您的邮件中的链接。"
+
+#: application/views/singletons/reset.php:35
+msgid "You can choose a new password here and be on your way."
+msgstr "您可以选择一个新的密码。"
+
+#: application/views/singletons/reset.php:36
+msgid "HELP"
+msgstr "帮助"
+
+#: application/views/singletons/reset.php:36
+msgid "UNMARK.IT"
+msgstr "UNMARK.IT"
+
+#: application/views/welcome.php:7
+msgid "Unmark - The to do app for bookmarks."
+msgstr "Unmark - 为书签量身打造的Todo应用。"
+
+#: application/views/welcome.php:34
+msgid "Sign In To"
+msgstr "登入"
+
+#: application/views/welcome.php:42
+msgid "Forgot Password?"
+msgstr "忘记密码？"
+
+#: application/views/welcome.php:44
+msgid "Visit Us"
+msgstr "访问我们"
+
+#: application/views/welcome.php:44
+msgid "What is Unmark?"
+msgstr "什么是Unmark？"
+
+#: application/views/welcome.php:51
+msgid "Reset Password For"
+msgstr "重置密码"
+
+#: application/views/welcome.php:58
+msgid "Sign into your account"
+msgstr "登入"
+
+#: application/views/welcome.php:58
+msgid "Need to Sign In?"
+msgstr "直接登录？"
+
+#~ msgid "FREE ACCOUNT"
+#~ msgstr "免费账号"
+
+#~ msgid "Upgrade"
+#~ msgstr "升级"
+
+#~ msgid "Search your marks"
+#~ msgstr "搜索书签"
+
+#~ msgid "UPGRADE NOW"
+#~ msgstr "立刻升级"
+
+#~ msgid "Disconnect Twitter"
+#~ msgstr "解除Twitter绑定"
+
+#~ msgid "Connect Twitter"
+#~ msgstr "绑定Twitter"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Sorry, you have exceded your daily or total limit."
+#~ msgstr "抱歉，"
+
+#~ msgid ""
+#~ "Please check out our <a href=\"%s\" target=\"_blank\">FAQ</a> for more "
+#~ "information."
+#~ msgstr "更多详情请阅读<a href=\"%s\" target=\"_blank\">FAQ</a>。"
+
+#~ msgid "Register for free"
+#~ msgstr "免费注册"
+
+#~ msgid "Register Free"
+#~ msgstr "免费注册"
