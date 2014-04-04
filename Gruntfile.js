@@ -16,6 +16,8 @@ module.exports = function(grunt) {
         return object;
     }
 
+    var asset_version = new Date().getTime();
+
     var js_file_config = {
                     'assets/js/production/unmark.plugins.js': [
                         'assets/js/plugins/hogan.js',
@@ -81,6 +83,19 @@ module.exports = function(grunt) {
                 files: js_file_config
             }
         },
+        "string-replace": {
+            src: {
+               files: {
+                   "application/helpers/view_helper.php" : "application/helpers/view_helper.php"
+               },
+               options: {
+                   replacements: [{
+                        pattern: /define\("ASSET_VERSION", ('(?:''|[^'])*'|[^',]+)\);/,
+                        replacement: 'define("ASSET_VERSION", "'+asset_version+'");'
+                   }]
+               }
+            }
+        },
         watch: {
             scripts: {
                 files: ['assets/js/*.js'],
@@ -106,8 +121,8 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     // Register Tasks
-    grunt.registerTask('default', [ 'sass:prod', 'uglify:prod', 'uglify:custom' ]); // Default Production Build
+    grunt.registerTask('default', [ 'sass:prod', 'uglify:prod', 'uglify:custom', 'string-replace' ]); // Default Production Build
 
-    grunt.registerTask('dev', [ 'sass:prod', 'concat:dev', 'concat:custom' ]);
+    grunt.registerTask('dev', [ 'sass:prod', 'concat:dev', 'concat:custom', 'string-replace' ]);
 
 };
