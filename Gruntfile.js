@@ -19,34 +19,34 @@ module.exports = function(grunt) {
     var asset_version = new Date().getTime();
 
     var js_file_config = {
-                    'assets/js/production/unmark.plugins.js': [
-                        'assets/js/plugins/hogan.js',
-                        'assets/js/plugins/pjax.js',
-                        'assets/js/plugins/fitvids.js'
-                    ],
-                    'assets/js/production/unmark.loggedin.js': [
-                        'assets/js/templates/unmark-templates.js',
-                        'assets/js/unmark.js',
-                        'assets/js/unmark.actions.js',
-                        'assets/js/unmark.marks.js',
-                        'assets/js/unmark.client.js',
-                        'assets/js/unmark.init.js',
-                        'assets/js/unmark.touch.js'
-                    ],
-                    'assets/js/production/unmark.loggedout.js': [
-                        'assets/js/unmark.js',
-                        'assets/js/unmark.reset.js',
-                        'assets/js/unmark.login.js',
-                        'assets/js/unmark.register.js'
-                    ],
-                    'assets/js/production/unmark.bookmarklet.js': [
-                        'assets/js/unmark.js',
-                        'assets/js/unmark.actions.js',
-                        'assets/js/unmark.marks.js',
-                        'assets/js/unmark.add.js',
-                        'assets/js/unmark.init.js'
-                    ]
-                }
+		'assets/js/production/unmark.plugins.js': [
+			'assets/js/plugins/hogan.js',
+			'assets/js/plugins/pjax.js',
+			'assets/js/plugins/fitvids.js'
+		],
+		'assets/js/production/unmark.loggedin.js': [
+			'assets/js/templates/unmark-templates.js',
+			'assets/js/unmark.js',
+			'assets/js/unmark.actions.js',
+			'assets/js/unmark.marks.js',
+			'assets/js/unmark.client.js',
+			'assets/js/unmark.init.js',
+			'assets/js/unmark.touch.js'
+		],
+		'assets/js/production/unmark.loggedout.js': [
+			'assets/js/unmark.js',
+			'assets/js/unmark.reset.js',
+			'assets/js/unmark.login.js',
+			'assets/js/unmark.register.js'
+		],
+		'assets/js/production/unmark.bookmarklet.js': [
+			'assets/js/unmark.js',
+			'assets/js/unmark.actions.js',
+			'assets/js/unmark.marks.js',
+			'assets/js/unmark.add.js',
+			'assets/js/unmark.init.js'
+		]
+	};
 
     // Base Config
     var config = {
