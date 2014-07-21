@@ -81,7 +81,7 @@ class Migration_Batshit_Crazy extends Plain_Migration
 
       foreach ($default_labels as $label) {
         $slug = generateSlug($label['name']);
-        $this->db->query("INSERT INTO `labels` (`name`, `slug`, `created_on`) VALUES ('" . $label['name'] . "', '" . $slug . "', '" . date('Y-m-d H:i:s') . "')");
+        $this->db->query("INSERT INTO `labels` (`label_id`, `name`, `slug`, `created_on`) VALUES ('" . $label['label_id'] . "', '" . $label['name'] . "', '" . $slug . "', '" . date('Y-m-d H:i:s') . "')");
       }
 
       // Start default system smart labels
