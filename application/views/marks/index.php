@@ -1,5 +1,8 @@
 <?php if (isset($errors['2'])) : ?>
 <h2 class="marks-heading"><?php echo _('Sorry, No marks found')?></h2>
+<?php if (isset($_GET['q'])) : // Only if this is for a search ?>
+<div class="marks continue-search"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
+<?php endif; ?>
 <?php else : ?>
 <?php if (isset($lookup_type) && $lookup_type != "all") :
 
@@ -16,8 +19,13 @@
             $heading['title']   =   sprintf(ngettext('mark labeled %s', 'marks labeled %s', $total), _($label_name));
             break;
         case 'archive':
-            $heading['icon']    =   'icon-heading_archive';
-            $heading['title']   =   ngettext('mark archived', 'marks archived', $total);
+            if ( $search_term != '' ) { // Someone is searching their archives
+                $heading['icon']    =   'icon-heading_search';
+                $heading['title']   =   sprintf(ngettext('archived mark found containing "%s"', 'archived marks found containing "%s"', $total), $search_term);
+            } else {
+                $heading['icon']    =   'icon-heading_archive';
+                $heading['title']   =   ngettext('mark archived', 'marks archived', $total);
+            }
             break;
         case 'tag':
             $heading['icon']    =   'icon-heading_tag';
