@@ -1,7 +1,7 @@
 <?php if (isset($errors['2'])) : ?>
 <h2 class="marks-heading"><?php echo _('Sorry, No marks found')?></h2>
 <?php if (isset($_GET['q']) & $lookup_type == "search") : // Only if this is for a search ?>
-<div class="marks continue-search"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
+<div class="marks continue-search no-results"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
 <?php endif; ?>
 <?php else : ?>
 <?php if (isset($lookup_type) && $lookup_type != "all") :
@@ -91,7 +91,7 @@
                 </div>
             <?php endforeach; ?>
             <?php if (isset($_GET['q']) && $lookup_type == "search") : ?>
-                <div class="marks continue-search"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
+                <div class="marks continue-search with-results"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
             <?php endif; ?>
         <?php else : ?>
             <div id="mark-x" class="mark label-x"><h2><?php echo _('No Marks Found')?></h2></div>
