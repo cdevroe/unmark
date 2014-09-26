@@ -523,6 +523,9 @@ ul.nav-list {
                 color: black;
                 border-bottom: 1px solid transparentize(black, 0.85);
                 padding-bottom: 2px;
+            }
+            &.no-results {
+                margin-top: 76px;
             } 
         }
     }
@@ -1863,7 +1866,7 @@ button.upgradeNowSidebar {
 }
 
 
-// Table Landscape
+// Tablet Landscape
 @media only screen and (max-width : 1024px) {
 
     body[data-lookup="all"] { opacity: 1; }
@@ -1991,7 +1994,14 @@ button.upgradeNowSidebar {
         left: 0;
         top: 65px;
     }
-    .main-content { width: 100%; }
+    .main-content { 
+        width: 100%;
+        .marks {
+            &.continue-search {
+                font-size: 13px;
+            }
+        }
+    }
     .sidebar-content {
         position: absolute;
         right: -85%;
