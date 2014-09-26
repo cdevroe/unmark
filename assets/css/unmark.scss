@@ -513,6 +513,18 @@ ul.nav-list {
         &#lookup-all {
             margin-top:0;
         }
+        &.continue-search {
+            background: transparentize($color_lightest, 0.94);
+            margin: 20px 18px;
+            padding: 11px 18px 14px;
+            font-size: 15px;
+            font-style: italic;
+            a {
+                color: black;
+                border-bottom: 1px solid transparentize(black, 0.85);
+                padding-bottom: 2px;
+            } 
+        }
     }
 }
 
@@ -1294,9 +1306,10 @@ canvas.graph {
         background: $color_shade;
         position: absolute;
         bottom: 0;
+        width: 100%;
         button {
             color:$color_light;
-            width: 326px;
+            width: 60%;
             color: $color_white;
             padding: 15px 0 16px;
             @include title-text;
@@ -1304,9 +1317,9 @@ canvas.graph {
             font-size: 13px;
             line-height: 13px;
             &.delete {
-                width: 200px;
+                width: 39%;
                 background: $color_red;
-                margin-right: 15px;
+                margin-right: 0;
             }
         }
     }
