@@ -72,6 +72,20 @@ class Plain_Controller extends CI_Controller
             return formatErrors(8);
         }
 
+        // Sometimes browsers will not have a title
+        // for things like a PDF or JPG. 
+        // In these instances, we still want people
+        // to be able to save their marks. ;-)
+        if (empty($title)) {
+            $parsed_url_path = parse_url($url, PHP_URL_PATH);
+
+            // If a path is found at all... use that for title instead
+            if (!empty($parsed_url_path)) {
+                $title = $parsed_url_path;
+            }
+
+        }
+
         if (empty($title)) {
             return formatErrors(9);
         }
