@@ -90,8 +90,8 @@
                     <script id="mark-data-<?php print $mark->mark_id; ?>" type="application/json"><?php echo json_encode($mark); ?></script>
                 </div>
             <?php endforeach; ?>
-            <?php if (isset($_GET['q']) && $lookup_type == "search") : ?>
-                <div class="marks continue-search with-results"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
+            <?php if (isset($_GET['q']) && $lookup_type == "search" || $lookup_type == "tag" ) : ?>
+                <div class="marks continue-search with-results"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : $tag_name); ?></div>
             <?php endif; ?>
         <?php else : ?>
             <div id="mark-x" class="mark label-x"><h2><?php echo _('No Marks Found')?></h2></div>
