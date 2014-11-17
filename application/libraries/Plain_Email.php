@@ -19,8 +19,8 @@ class Plain_Email extends CI_Email {
     {
         $file     = (file_exists(CUSTOMPATH . 'views/email/forgot-password.php')) ? CUSTOMPATH . 'views/email/forgot-password.php' : APPPATH . 'views/email/forgot-password.php';
         $message  = file_get_contents($file);
-        $find     = array('{URL}', '{HOST}');
-        $replace  = array($url, $_SERVER['HTTP_HOST']);
+        $find     = array('{URL}', '{BASEURL}');
+        $replace  = array($url, $this->CI->config->item('base_url'));
         $message  = str_replace($find, $replace, $message);
         $text     = $this->getTextVersion($message);
 
@@ -61,8 +61,8 @@ class Plain_Email extends CI_Email {
     public function updatePassword($email)
     {
         $file     = (file_exists(CUSTOMPATH . 'views/email/update-password.php')) ? CUSTOMPATH . 'views/email/update-password.php' : APPPATH . 'views/email/update-password.php';
-        $find     = array('{HOST}');
-        $replace  = array($_SERVER['HTTP_HOST']);
+        $find     = array('{BASEURL}');
+        $replace  = array($this->CI->config->item('base_url'));
         $message  = file_get_contents($file);
         $message  = str_replace($find, $replace, $message);
         $text     = $this->getTextVersion($message);
@@ -106,7 +106,6 @@ class Plain_Email extends CI_Email {
             // No settings in config - use defaults
             } else{
                 return parent::initialize();
-
             }
         }
     }
