@@ -188,7 +188,7 @@ class Marks extends Plain_Controller
                 $tags = getTagsFromHash($options['notes']);
             }
 
-            // If tags are present, handle differentlu
+            // If tags are present, handle differently
             // Need to add to tags table first
             // Then create association
             // If notes are present set them
