@@ -65,7 +65,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') { // If local, load this
 }
 
 $db['default']['dbdriver'] = 'mysql';
-$db['default']['dbprefix'] = '';
+// $db['default']['dbprefix'] = ''; # Do not use, see: https://github.com/plainmade/unmark/issues/62
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;
 $db['default']['cache_on'] = FALSE;
