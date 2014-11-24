@@ -131,9 +131,11 @@
     };
 
     // Handles editing of notes
+    // Added in 1.6 - Editable mark titles
     unmark.marks_editNotes = function (editField) {
 
         var editable = editField.next(), text, query;
+        var editable_mark_title = $('#mark-'+$(editable).data('id')+' h2'); // 1.6 The title of the current mark to make editable
 
         // Private function to save notes
         function saveNotes(text, id) {
@@ -151,7 +153,7 @@
                     heading = 'Notes <i class="icon-edit"></i>';
                 break;
                 case 2:
-                    heading = 'EDITING NOTES <i class="icon-heading_close"></i>';
+                    heading = 'EDITING MARK <i class="icon-heading_close"></i>';
                 break;
                 case 3:
                     heading = 'ADD A NOTE <i class="icon-edit"></i>';
@@ -159,6 +161,13 @@
             }
             editField.html(heading);
         }
+
+        // 1.6
+        // Strip the Mark Title of the A element. Easier to edit
+        // We will add the A back after editing is turned off
+        editable_mark_title.find('a').contents().unwrap();
+        // Make editable, highlight yellow
+        editable_mark_title.attr('contenteditable', true).addClass('editable');
 
         // Clean up the field, check for empty etc
         editable.unbind();
@@ -172,9 +181,36 @@
 
         // Define the actions that will save the note.
         // Includes Function to save the note
-        editable.on('blur keydown', function (e) {
+
+        function editableActions(e) {
+
+            /*if ( $(this).hasClass('editable') ) {
+                console.log('Current element is OK. Do not unfocus.')
+                return;
+            } else {
+                console.log('Current element is not OK. Unfocus and save!');
+            }*/
+
             if (e.which === 13 || e.type === 'blur') {
+
                 e.preventDefault();
+
+                console.log($( document.activeElement ));
+
+                if ( $(this).hasClass('sidebar-info-notes') ) {
+                    if ( $('#mark-'+$(this).data('id')+':focus').length > 0 ) {
+                        console.log('Just blurred notes. However, the title has focus. So do nothing.');
+                        return;
+                    }
+                } else { // Likely the mark title
+                    if ( $('.sidebar-info-notes:focus').length > 0 ) {
+                        console.log('Just blurred the title. However, the notes have focus. So do nothing.');
+                        return;
+                    }
+                }
+
+                console.log('You shouldnt see this.');
+                
                 editable.attr('contenteditable', false).removeClass('editable');
                 text = $(this).text(), id = $(this).data('id');
                 if (text === '') {
@@ -187,7 +223,11 @@
                 unmark.tagify_notes(editable);
                 setTimeout( function() { editField.addClass('action'); }, 500);
             }
-        });
+        }
+
+        // If we leave either field
+        editable.on('blur keydown', editableActions);
+        editable_mark_title.on('blur keydown', editableActions);
     };
 
     // Method for Adding Notes
@@ -274,7 +314,7 @@
             // Then Tagify It
             notetext = notetext.replace(/#(\S*)/g,'<a href="/marks/tag/$1">#$1</a>');
         } else {
-            note.prev().html('Click To Add A Note <i class="icon-edit"></i>');
+            note.prev().html('Click To Add A Note or Edit Mark <i class="icon-edit"></i>');
         }
 
         // Send the HTML to the notes field.
