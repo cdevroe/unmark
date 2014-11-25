@@ -196,7 +196,7 @@ class Users_To_Marks_model extends Plain_Model
 
         // Default fields
         $fields = "
-            users_to_marks.users_to_mark_id AS mark_id, users_to_marks.notes, users_to_marks.active, users_to_marks.created_on, users_to_marks.archived_on,
+            users_to_marks.users_to_mark_id AS mark_id, users_to_marks.mark_title as mark_title, users_to_marks.notes, users_to_marks.active, users_to_marks.created_on, users_to_marks.archived_on,
             marks.title, marks.url, marks.embed,
             GROUP_CONCAT(tags.tag_id SEPARATOR '" . $this->delimiter . "') AS tag_ids,
             GROUP_CONCAT(tags.name SEPARATOR '" . $this->delimiter . "') AS tag_names,
