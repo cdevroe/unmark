@@ -43,7 +43,7 @@
             unmark.ajax('/tools/resetPassword', 'post', query, function (res) {
                 cleanupForm();
                 if (res.success) {
-                    showMessage(false, 'Your password has been changed. Redirecting now...')
+                    showMessage(false, 'Your password has been changed. Redirecting now...');
                     setTimeout(function(){ window.location.href = "/" }, 3000);
                 } else {
                     if (typeof res.errors[91] !== 'undefined') {

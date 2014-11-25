@@ -58,9 +58,11 @@
             $(this).find('.mark-actions').hide();
         });
 
-        // Global Buton / Action Link Run
+        // Global Button / Action Link Run
         // Create a Function from a string
         $(document).on('click', 'button[data-action], .action', function (e) {
+            console.log('clicked');
+            console.log($(this).data('action'));
             e.preventDefault();
             e.stopPropagation();
             var action = $(this).data('action'), funct; // Get Data Action Attribute
