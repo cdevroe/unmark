@@ -63,7 +63,7 @@
         <?php if (isset($marks)) : ?>
             <?php foreach ($marks as $mark) : ?>
                 <div id="mark-<?php print $mark->mark_id; ?>" class="mark label-<?php print $mark->label_id; ?>">
-                    <h2><a target="_blank" href="<?php print $mark->url; ?>"><?php print $mark->title; ?></a></h2>
+                    <h2 class="hideoutline"><a target="_blank" href="<?php print $mark->url; ?>"><?php print $mark->title; ?></a></h2>
                     <div class="mark-meta">
                         <span class="mark-date"><?php print $mark->nice_time; ?></span>
                         <span class="mark-sep">&bull;</span>
