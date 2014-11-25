@@ -141,23 +141,20 @@
         // Private function to save notes
         function saveMarkInfo(title, notes, id) {
 
+            // 1.6
             // Cannot submit an empty title
             if (title === '') {
                 return;
             }
 
+            // 1.6
+            // Note was empty, set accordingly
             if (notes === '') {
-                setNoteHeading(3); // Note was empty, set accordingly
+                setNoteHeading(3);
             }
-
+            
             query = 'title=' + unmark.urlEncode(title) + '&notes=' + unmark.urlEncode(notes);
             unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
-                //setNoteHeading(1);
-                console.log(res);
-                console.log('Saved title and notes:');
-                console.log(title);
-                console.log(notes);
-                console.log('--------');
                 $('#mark-'+id).find('.note-placeholder').text(notes);
             });
         }
