@@ -33,8 +33,9 @@
                 if (e.which === 13 || e.type === 'blur') {
                     e.preventDefault();
                     var text = $(this).val(),
-                        id = $(this).data('id');
-                    unmark.saveNotes(id, text);
+                        id = $(this).data('id'),
+                        title = $('.mark-added-info h1').text(); // 1.6
+                    unmark.saveNotes(id, text, title);
                 }
             });
 

@@ -227,13 +227,20 @@
     unmark.marks_addNotes = function (btn) {
         var editable = btn.next();
         btn.hide(); // Hide Button
+
+        // 1.6
+        // Make the title of the mark also editable. Nah mean?
+        var editable_mark_title = $('.mark-added-info h1');
+        editable_mark_title.attr('contenteditable',true).addClass('editable');
+
         editable.fadeIn(); // Show Editable Area
         editable.focus(); // Set Focus
     };
 
     // Save me some notes!
-    unmark.saveNotes = function (id, note) {
-        var query = 'notes=' + unmark.urlEncode(note);
+    unmark.saveNotes = function (id, note, title) {
+        if (title == '') return;
+        var query = 'title='+unmark.urlEncode(title)+'&notes=' + unmark.urlEncode(note);
         unmark.ajax('/mark/edit/'+id, 'post', query);
     };
 
