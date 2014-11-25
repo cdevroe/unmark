@@ -183,10 +183,12 @@
         // We will add the A back after editing is turned off
 
         // Make Title and Notes editable
-        editable_mark_title.find('a').contents().unwrap();
+        
         editable_mark_title.attr('contenteditable', true).addClass('editable');
-        editable_notes.find('a').contents().unwrap();
+        editable_mark_title.find('a').contents().unwrap();
+        
         editable_notes.attr('contenteditable', true).addClass('editable');
+        editable_notes.find('a').contents().unwrap();
 
         // Focus notes field for easy editing
         editable_notes.focus();
@@ -217,8 +219,8 @@
         }
 
         // If we leave either field
-        editable_notes.on('blur keydown', editableActions);
-        editable_mark_title.on('blur keydown', editableActions);
+        editable_notes.on('blur', editableActions);
+        editable_mark_title.on('blur', editableActions);
     };
 
     // Method for Adding Notes
