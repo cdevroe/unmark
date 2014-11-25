@@ -175,6 +175,12 @@ class Marks extends Plain_Controller
             // Figure what options to send for update
             $options = array();
 
+            // 1.6
+            // If title is found, attach it
+            if (isset($this->db_clean->title)) {
+                $options['mark_title'] = $this->db_clean->title;
+            }
+
             // If label ID is found, attach it
             if (isset($this->clean->label_id) && is_numeric($this->clean->label_id)) {
                 $options['label_id'] = $this->clean->label_id;
@@ -188,14 +194,13 @@ class Marks extends Plain_Controller
                 $tags = getTagsFromHash($options['notes']);
             }
 
-            // If tags are present, handle differentlu
+            // If tags are present, handle differently
             // Need to add to tags table first
             // Then create association
             // If notes are present set them
             if (isset($tags)) {
                 parent::addTags($tags, $mark_id);
             }
-
 
             // Update users_to_marks record
             $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", $options);

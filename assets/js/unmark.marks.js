@@ -153,6 +153,7 @@
             query = 'title=' + unmark.urlEncode(title) + '&notes=' + unmark.urlEncode(notes);
             unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
                 //setNoteHeading(1);
+                console.log(res);
                 console.log('Saved title and notes:');
                 console.log(title);
                 console.log(notes);
