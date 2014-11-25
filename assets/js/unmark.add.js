@@ -22,7 +22,6 @@
             $('#currLabel').addClass('label-'+label_id).text(label_name);
         };
 
-
         // Grab the labels list
         unmark.getData('labels', built_label_list);
 
@@ -40,7 +39,6 @@
             });
 
         });
-
 
     });
 
