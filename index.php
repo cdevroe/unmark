@@ -39,8 +39,14 @@ if(file_exists($appDir)){
 // Looking for global environment configuration under /etc/unmark/environment.php
 const UNMARK_ENV_CONFIG_GLOBAL = '/etc/unmark/environment.php';
 if(!defined('ENVIRONMENT')){
-    if(file_exists(UNMARK_ENV_CONFIG_GLOBAL)){
-        include_once(UNMARK_ENV_CONFIG_GLOBAL);
+	try {
+		if(!file_exists(UNMARK_ENV_CONFIG_GLOBAL)){
+	        echo 'Error trying to locate environment file. This is no big deal as you likely do not need it. See FAQ to address this issue.';
+	    } else {
+	    	include_once(UNMARK_ENV_CONFIG_GLOBAL);
+	    }
+    } catch(Exception $e) {
+        echo 'Error trying to locate environment file. This is no big deal as you likely do not need it. See FAQ to address this issue.';
     }
 }
 if(!defined('ENVIRONMENT')){
