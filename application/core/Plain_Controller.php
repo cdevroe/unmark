@@ -55,6 +55,7 @@ class Plain_Controller extends CI_Controller
 
     protected function addMark($data=array())
     {
+        $this->load->helper('http_build_url');
         // Set empty $result
         $result = array();
 
@@ -70,6 +71,36 @@ class Plain_Controller extends CI_Controller
         // error out
         if (empty($url)) {
             return formatErrors(8);
+        }
+
+        // 1.6
+        // Remove utm_* from URLs before saving
+
+        // Just grab the querystring
+        $url_query_parameters = parse_url( $url, PHP_URL_QUERY );
+
+        // If utm_ is found, convert to array
+        // Notice the _... so that words with utm do not get included
+        if ( strpos($url_query_parameters,'utm_') === false ) {
+            echo '<br>No utm_ found.<br>';
+        } else {
+            
+            parse_str($url_query_parameters,$url_query_parameters); // convert querystring to array
+
+            // Prepare a new query string
+            $new_query_string = '';
+
+            // Loop through and reconstruct the querystring, leaving off anything with utm_ in key
+            foreach ($url_query_parameters as $key => $value) {
+                if ( strpos($key,'utm_') === false ) {
+                    $new_query_string .= $key.'='.$value.'&';
+                }
+            }
+
+            $new_query_string = rtrim($new_query_string, "&"); // Remove trailing ampersand
+
+            $url = http_build_url( $url, array('query' => $new_query_string) );
+
         }
 
         // Sometimes browsers will not have a title
