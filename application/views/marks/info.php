@@ -25,7 +25,7 @@
     </div>
 
     <div class="mark-added-info">
-        <h1><?php print $mark->title; ?></h1>
+        <h1 class="hideoutline"><?php print $mark->title; ?></h1>
         <span><?php print niceUrl($mark->url); ?></span>
     </div>
 
@@ -39,7 +39,7 @@
 
     <div class="mark-added-note mark-added-settings">
         <?php if (empty($mark->notes)) : ?>
-            <a class="action" data-action="marks_addNotes" href=""><?php echo _('Add A Note'); ?></a>
+            <a class="action" data-action="marks_addNotes" href=""><?php echo _('Add a Note or Edit Title'); ?></a>
             <textarea class="mark-added-notes-area hide" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo _('Type note text or #tags here...'); ?>"></textarea>
         <?php else : ?>
             <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo _('Type note text or #tags here...'); ?>"><?php print $mark->notes; ?></textarea>

@@ -22,7 +22,8 @@ $config['migration_enabled'] = true;
 |
 */
 // Format for migration_type = unmark: (YYYYMMDDXX format where XX is an incremented sequence of changes in selected day)
-$config['migration_version'] = 2014022801;
+// Last time changed (version 1.6.0)
+$config['migration_version'] = 2014112501;
 
 // Set migration type to timestamp to avoid conflicts
 $config['migration_type']    = 'unmark';

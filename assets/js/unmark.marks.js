@@ -130,28 +130,43 @@
         });
     };
 
-    // Handles editing of notes
-    unmark.marks_editNotes = function (editField) {
+    // Handles editing of Mark information (title, notes)
+    // Renamed from editNotes in 1.6
+    unmark.marks_editMarkInfo = function (editField) {
 
-        var editable = editField.next(), text, query;
+        var editable_notes = editField.next(), notes, query;
+        var editable_mark_title = $('#mark-'+$(editable_notes).data('id')+' h2'); // 1.6 The title of the current mark to make editable
+        var id = $(editable_notes).data('id');
 
         // Private function to save notes
-        function saveNotes(text, id) {
-            query = 'notes=' + unmark.urlEncode(text);
+        function saveMarkInfo(title, notes, id) {
+
+            // 1.6
+            // Cannot submit an empty title
+            if (title === '') {
+                return;
+            }
+
+            // 1.6
+            // Note was empty, set accordingly
+            if (notes === '') {
+                setNoteHeading(3);
+            }
+            
+            query = 'title=' + unmark.urlEncode(title) + '&notes=' + unmark.urlEncode(notes);
             unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
-                setNoteTitle(1);
-                $('#mark-'+id).find('.note-placeholder').text(text);
+                $('#mark-'+id).find('.note-placeholder').text(notes);
             });
         }
 
         // Private function to update note title
-        function setNoteTitle(num) {
+        function setNoteHeading(num) {
             switch (num) {
                 case 1:
                     heading = 'Notes <i class="icon-edit"></i>';
                 break;
                 case 2:
-                    heading = 'EDITING NOTES <i class="icon-heading_close"></i>';
+                    heading = 'EDITING MARK <i class="icon-heading_close"></i>';
                 break;
                 case 3:
                     heading = 'ADD A NOTE <i class="icon-edit"></i>';
@@ -160,47 +175,85 @@
             editField.html(heading);
         }
 
-        // Clean up the field, check for empty etc
-        editable.unbind();
-        setNoteTitle(2);
-        editField.removeClass('action');
-        editable.attr('contenteditable', true).addClass('editable');
+        editable_notes.unbind();
+        editable_mark_title.unbind();
 
-        // Set Focus and Clean up Tags
-        editable.find('a').contents().unwrap();
-        editable.focus();
+        // 1.6
+        // Strip the Mark Title of the A element. Easier to edit
+        // We will add the A back after editing is turned off
+
+        // Make Title and Notes editable
+        
+        editable_mark_title.attr('contenteditable', true).addClass('editable');
+        editable_mark_title.find('a').contents().unwrap();
+        
+        editable_notes.attr('contenteditable', true).addClass('editable');
+        editable_notes.find('a').contents().unwrap();
+
+        // Focus notes field for easy editing
+        editable_notes.focus();
+
+        // 1.6
+        // Change Heading, add quitEdit action (see below)
+        // This will make it so that people have to click the X
+        // to stop editing
+        setNoteHeading(2);
+        editField.unbind();
+        editField.attr('data-action','marks_quitEdit');
+        editField.data('action','marks_quitEdit');
 
         // Define the actions that will save the note.
         // Includes Function to save the note
-        editable.on('blur keydown', function (e) {
+        // Fires on blur of either title or notes
+        function editableActions(e) {
+            e.preventDefault();
             if (e.which === 13 || e.type === 'blur') {
-                e.preventDefault();
-                editable.attr('contenteditable', false).removeClass('editable');
-                text = $(this).text(), id = $(this).data('id');
-                if (text === '') {
-                    setNoteTitle(3);
-                } else {
-                    saveNotes(text, id);
+
+                // Check to see if there is any reason
+                // to send data to API
+                if (editable_notes.hasClass('contentsChanged') || editable_mark_title.hasClass('contentsChanged')) {
+
+                    // Save changes
+                    saveMarkInfo(editable_mark_title.text(), editable_notes.text(), id);
+
+                    // Remove classes
+                    editable_notes.removeClass('contentsChanged');
+                    editable_mark_title.removeClass('contentsChanged');
                 }
-                // Set up for next edit
-                editable.unbind();
-                unmark.tagify_notes(editable);
-                setTimeout( function() { editField.addClass('action'); }, 500);
             }
+        }
+
+        // If the contents change, add a class
+        editable_notes.on('keydown',function(e){
+            $(this).addClass('contentsChanged');
         });
+        editable_mark_title.on('keydown',function(e){
+            $(this).addClass('contentsChanged');
+        });
+
+        // If we leave either field, fire function
+        editable_notes.on('blur', editableActions);
+        editable_mark_title.on('blur', editableActions);
     };
 
     // Method for Adding Notes
     unmark.marks_addNotes = function (btn) {
         var editable = btn.next();
         btn.hide(); // Hide Button
+
+        // 1.6
+        // Make the title of the mark also editable. Nah mean?
+        var editable_mark_title = $('.mark-added-info h1');
+        editable_mark_title.attr('contenteditable',true).addClass('editable');
+
         editable.fadeIn(); // Show Editable Area
         editable.focus(); // Set Focus
     };
 
     // Save me some notes!
-    unmark.saveNotes = function (id, note) {
-        var query = 'notes=' + unmark.urlEncode(note);
+    unmark.saveNotes = function (id, note, title) {
+        if (title == '') return;
+        var query = 'title='+unmark.urlEncode(title)+'&notes=' + unmark.urlEncode(note);
         unmark.ajax('/mark/edit/'+id, 'post', query);
     };
 
@@ -261,6 +314,50 @@
         return list;
     };
 
+    // 1.6
+    // Exit edit mode for editing mark info
+    unmark.marks_quitEdit = function (editField) {
+
+        // If the Edit field is currently in "Edit" mode, then 
+        // We can close. If not, don't.
+        if ( editField.html() == 'EDITING MARK <i class="icon-heading_close"></i>' ) {
+            
+            console.log('Quitting editing');
+            
+            var editable_notes = editField.next(), notes, query;
+            var id = $(editable_notes).data('id');
+            var editable_mark_title = $('#mark-'+id+' h2');
+            var mark_url = $('#mark-'+id+' .mark-link a').attr('href');
+
+            // Turn off editability
+            editable_notes.attr('contenteditable', false).removeClass('editable');
+            editable_mark_title.attr('contenteditable', false).removeClass('editable');
+
+            // Return Mark title back to being wrapped by URL
+            editable_mark_title.html('<a target="_blank" href="'+mark_url+'">'+editable_mark_title.text()+'</a>');
+
+            // Taggify the notes (means also wrapping up any links within)
+            unmark.tagify_notes(editable_notes);
+
+            // Set up for next edit
+            editField.unbind();
+            editable_notes.unbind();
+            editable_mark_title.unbind();
+
+            // Return previous action of marks_editMarkInfo
+            editField.html('Notes <i class="icon-edit"></i>');
+            editField.attr('data-action','marks_editMarkInfo');
+            editField.data('action','marks_editMarkInfo');
+
+
+
+            setTimeout( function() { editField.addClass('action'); }, 500);
+        } else {
+            return;
+        }
+
+    };
+
     // Reads the passed note field and tagifies it on the fly.
     // 4.1.14 - Also Linkify's the notes field ... matches http(s)
     unmark.tagify_notes = function (note) {
@@ -274,7 +371,7 @@
             // Then Tagify It
             notetext = notetext.replace(/#(\S*)/g,'<a href="/marks/tag/$1">#$1</a>');
         } else {
-            note.prev().html('Click To Add A Note <i class="icon-edit"></i>');
+            note.prev().html('Click To Add A Note or Edit Mark <i class="icon-edit"></i>');
         }
 
         // Send the HTML to the notes field.
