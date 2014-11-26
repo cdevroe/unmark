@@ -150,7 +150,7 @@
             // 1.6
             // Note was empty, set accordingly
             if (notes === '') {
-                setNoteHeading(3);
+                //setNoteHeading(3);
             }
             
             query = 'title=' + unmark.urlEncode(title) + '&notes=' + unmark.urlEncode(notes);
@@ -163,13 +163,13 @@
         function setNoteHeading(num) {
             switch (num) {
                 case 1:
-                    heading = 'Notes <i class="icon-edit"></i>';
+                    heading = 'Notes (click to edit)<i class="icon-edit"></i>';
                 break;
                 case 2:
-                    heading = 'EDITING MARK <i class="icon-heading_close"></i>';
+                    heading = 'EDITING MARK INFO <i class="icon-heading_close"></i>';
                 break;
                 case 3:
-                    heading = 'ADD A NOTE <i class="icon-edit"></i>';
+                    heading = 'ADD A NOTE OR EDIT MARK INFO<i class="icon-edit"></i>';
                 break;
             }
             editField.html(heading);
@@ -320,7 +320,7 @@
 
         // If the Edit field is currently in "Edit" mode, then 
         // We can close. If not, don't.
-        if ( editField.html() == 'EDITING MARK <i class="icon-heading_close"></i>' ) {
+        if ( editField.html() == 'EDITING MARK INFO <i class="icon-heading_close"></i>' ) {
             
             console.log('Quitting editing');
             
@@ -345,7 +345,7 @@
             editable_mark_title.unbind();
 
             // Return previous action of marks_editMarkInfo
-            editField.html('Notes <i class="icon-edit"></i>');
+            editField.html('Notes (click to edit)<i class="icon-edit"></i>');
             editField.attr('data-action','marks_editMarkInfo');
             editField.data('action','marks_editMarkInfo');
 
