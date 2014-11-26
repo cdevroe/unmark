@@ -88,7 +88,8 @@
         $(document).on('click', '.mark', function (e){
             var node = e.target.className, more_link = $(this).find('a.mark-info');
             // Check for Archive... don't show info for this, otherwise show the info
-            if (node !== "icon-check" && node !== "action mark-archive") {
+            // 1.6 Also, if the node that fires this is from an editable title do nothing
+            if (node !== "icon-check" && node !== "action mark-archive" && node !== 'hideoutline editable' && node !== 'hideoutline editable contentsChanged') {
                 unmark.show_mark_info(more_link);
             }
             // Hide Nav

@@ -209,16 +209,29 @@
             e.preventDefault();
             if (e.which === 13 || e.type === 'blur') {
 
-                notes = editable_notes.text();
-                title = editable_mark_title.text();
+                // Check to see if there is any reason
+                // to send data to API
+                if (editable_notes.hasClass('contentsChanged') || editable_mark_title.hasClass('contentsChanged')) {
 
-                // ! Todo: Set up a check here to see if content had changed.
-                saveMarkInfo(title, notes, id);
-                
+                    // Save changes
+                    saveMarkInfo(editable_mark_title.text(), editable_notes.text(), id);
+
+                    // Remove classes
+                    editable_notes.removeClass('contentsChanged');
+                    editable_mark_title.removeClass('contentsChanged');
+                }
             }
         }
 
-        // If we leave either field
+        // If the contents change, add a class
+        editable_notes.on('keydown',function(e){
+            $(this).addClass('contentsChanged');
+        });
+        editable_mark_title.on('keydown',function(e){
+            $(this).addClass('contentsChanged');
+        });
+
+        // If we leave either field, fire function
         editable_notes.on('blur', editableActions);
         editable_mark_title.on('blur', editableActions);
     };
