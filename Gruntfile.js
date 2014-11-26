@@ -121,9 +121,8 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     // Register Tasks
-    grunt.registerTask('default', [ 'sass:prod', 'uglify:prod', 'string-replace' ]); // Default Production Build
+    grunt.registerTask('default', [ 'sass:prod', 'uglify:prod', 'string-replace' ]); // Default Build for OS Project
+    grunt.registerTask('dev', [ 'sass:prod', 'concat:dev', 'concat:custom', 'string-replace' ]); // Dev build
     grunt.registerTask('production', [ 'sass:prod', 'uglify:prod', 'uglify:custom', 'string-replace' ]); // Default Production Build
-
-    grunt.registerTask('dev', [ 'sass:prod', 'concat:dev', 'concat:custom', 'string-replace' ]);
 
 };
