@@ -29,7 +29,6 @@
         if (editable_mark_title.hasClass('editable')) return;
 
         // However, if it isn't the current mark it should 'kill all -9' the rest of the editing stuff
-        console.log($('[id^=mark-] h2'));
         $('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable');
 
         // Quick function to populate the tags
