@@ -22,6 +22,9 @@
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
             mark_nofade     = mark_clicked.data('nofade');
 
+        var editable_mark_title = $('#mark-'+mark_id+' h2');
+        if (editable_mark_title.hasClass('editable')) return;
+
         // Quick function to populate the tags
         function populateLabels() {
             _labels = arguments[0] || _labels;
@@ -321,8 +324,6 @@
         // If the Edit field is currently in "Edit" mode, then 
         // We can close. If not, don't.
         if ( editField.html() == 'EDITING MARK INFO <i class="icon-heading_close"></i>' ) {
-            
-            console.log('Quitting editing');
             
             var editable_notes = editField.next(), notes, query;
             var id = $(editable_notes).data('id');
