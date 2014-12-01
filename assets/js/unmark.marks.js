@@ -22,8 +22,15 @@
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
             mark_nofade     = mark_clicked.data('nofade');
 
+        // 1.6
+        // If the mark is clicked on is currently being edited,
+        // do nothing
         var editable_mark_title = $('#mark-'+mark_id+' h2');
         if (editable_mark_title.hasClass('editable')) return;
+
+        // However, if it isn't the current mark it should 'kill all -9' the rest of the editing stuff
+        console.log($('[id^=mark-] h2'));
+        $('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable');
 
         // Quick function to populate the tags
         function populateLabels() {
