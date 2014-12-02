@@ -33,6 +33,8 @@ Please read through the installation requirements carefully. We're keeping them 
 - Point your browser to `your-unmark-url/setup` (note that Unmark will error until `/setup` has been successfully completed)
 - Follow the onscreen instructions to complete setup
 
+Note: Using Nginx rather than Apache? Follow [these Nginx configuration instructions](https://github.com/plainmade/unmark/wiki/Nginx-Configuration).
+
 
 ### Upgrading to the latest release
 
