@@ -82,7 +82,7 @@ class Plain_Controller extends CI_Controller
         // If utm_ is found, convert to array
         // Notice the _... so that words with utm do not get included
         if ( strpos($url_query_parameters,'utm_') === false ) {
-            echo '<br>No utm_ found.<br>';
+            // Whoops! echo '<br>No utm_ found.<br>';
         } else {
             
             parse_str($url_query_parameters,$url_query_parameters); // convert querystring to array
