@@ -88,19 +88,18 @@ class Plain_Controller extends CI_Controller
             parse_str($url_query_parameters,$url_query_parameters); // convert querystring to array
 
             // Prepare a new query string
-            $new_query_string = '';
+            $new_query_string = array();
 
             // Loop through and reconstruct the querystring, leaving off anything with utm_ in key
             foreach ($url_query_parameters as $key => $value) {
-                if ( strpos($key,'utm_') === false ) {
-                    $new_query_string .= $key.'='.$value.'&';
+                if (strpos($key, 'utm_') === false) {
+                    $new_query_string[] = $key.'='.$value;
                 }
             }
 
-            $new_query_string = rtrim($new_query_string, "&"); // Remove trailing ampersand
+            $new_query_string = implode('&', $new_query_string);
 
             $url = http_build_url( $url, array('query' => $new_query_string) );
-
         }
 
         // Sometimes browsers will not have a title
