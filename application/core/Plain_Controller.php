@@ -92,8 +92,8 @@ class Plain_Controller extends CI_Controller
 
             // Loop through and reconstruct the querystring, leaving off anything with utm_ in key
             foreach ($url_query_parameters as $key => $value) {
-                if ( strpos($key,'utm_') === false ) {
-                    $new_query_string[] = $key.'='.$value.'&';
+                if (strpos($key, 'utm_') === false) {
+                    $new_query_string[] = $key.'='.$value;
                 }
             }
 
