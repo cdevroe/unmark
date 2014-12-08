@@ -49,7 +49,7 @@ Note: You can also run this from the command line using the following command `p
 Building Unmark locally
 ----------------------------
 
-We use [Grunt](http://gruntjs.com/) to compile our SASS files into CSS and concatinate and compress our JavaScript files for use and a few other small tasks. If you'd like to update your local copy of Unmark do the following...
+We use [Grunt](http://gruntjs.com/) to compile our SASS files into CSS and concatenate and compress our JavaScript files for use and a few other small tasks. If you'd like to update your local copy of Unmark do the following...
 
 - Edit SASS in `/assets/css`
 - Edit JavaScript in `/assets/js`
