@@ -64,7 +64,8 @@ function oembed($url, $key) {
 
       // Vimeo, other video sites and generic HTML
       default:
-        return (isset($response['html'])) ? $response['html'] : false;
+        // return (isset($response['html'])) ? $response['html'] : false;
+        return (isset($response['html'])) ? $response['html'] : $response['description'];
       break;
 
     }
@@ -84,5 +85,6 @@ function checkOEmbedUrl($url) {
       'speakerdeck.com', 'slideshare.net', 'skitch.com', 'img.skitch.com', 'gist.github.com', 'huffduffer.com', 'soundcloud.com', 'ted.com'
     );
 
-    return (in_array($domain, $hosts)) ? true : false;
+    // return (in_array($domain, $hosts)) ? true : false;
+    return true;
 }
