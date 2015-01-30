@@ -41,9 +41,7 @@ if(file_exists($appDir)){
 const UNMARK_ENV_CONFIG_GLOBAL = '/etc/unmark/environment.php';
 if(!defined('ENVIRONMENT')){
 	if (is_readable(UNMARK_ENV_CONFIG_GLOBAL)) {
-		if(file_exists(UNMARK_ENV_CONFIG_GLOBAL)){
-	        include_once(UNMARK_ENV_CONFIG_GLOBAL);
-	    }
+	    include_once(UNMARK_ENV_CONFIG_GLOBAL);
 	}
 }
 if(!defined('ENVIRONMENT')){
