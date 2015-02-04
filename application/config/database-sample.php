@@ -50,20 +50,11 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-if ($_SERVER['HTTP_HOST'] == 'localhost') { // If local, load this
-  $db['default']['hostname'] = '127.0.0.1';
-  $db['default']['username'] = 'root';
-  $db['default']['password'] = 'root';
-  $db['default']['database'] = 'unmark';
 
-} else { // If not local, load this
-  $db['default']['hostname'] = 'localhost';
-  $db['default']['username'] = 'username';
-  $db['default']['password'] = 'password';
-  $db['default']['database'] = 'unmark';
-
-}
-
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'username';
+$db['default']['password'] = 'password';
+$db['default']['database'] = 'unmark';
 $db['default']['dbdriver'] = 'mysql';
 // $db['default']['dbprefix'] = ''; # Do not use, see: https://github.com/plainmade/unmark/issues/62
 $db['default']['pconnect'] = TRUE;
