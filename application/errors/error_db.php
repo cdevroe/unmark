@@ -9,13 +9,8 @@
 <body class="unmark-solo" id="unmark-login">
 	<div id="error-wrapper">
         <div id="error-icon"><img src="/assets/images/icons/large_x.png" /></div>
-    	<?php if (defined('ENVIRONMENT') && ENVIRONMENT === 'production'): ?>
-    		<h1>An unexpected error has occured</h1>
-    		<p>The issue has been logged and will be taken care of shortly.</p>
-    	<?php else: ?>
-    		<h1><?php print $heading; ?></h1>
-    		<p><?php print $message; ?></p>
-    	<?php endif; ?>
+		<h1><?php print $heading; ?></h1>
+		<p><?php print $message; ?></p>
 	</div>
 </body>
 </html>
