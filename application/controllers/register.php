@@ -7,6 +7,9 @@ class Register extends Plain_Controller
         parent::__construct();
         parent::redirectIfNotInternal();
         parent::redirectIfLoggedIn();
+        if ($this->config->item('plain_enable_registrations')===false) {
+        	show_error('Public registrations have been disabled.');
+        }
     }
 
 	public function index()
