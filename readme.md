@@ -45,6 +45,10 @@ Note: Using Nginx rather than Apache? Follow [these Nginx configuration instruct
 
 Note: You can also run this from the command line using the following command `php index.php migrations latest`
 
+Enabling or Disabling Registration
+----------------------------
+Thanks to a feature request by @rpdillon. You can now enable and disable user registration at will by modifying ./application/config/config.php
+Find the configuration key "plain_enable_registrations" and change it to false if you don't want to allow user registration. Keep in mind there isn't a way to add or delete users, so if you want to add a new user you will need to enable registration again.
 
 Building Unmark locally
 ----------------------------
