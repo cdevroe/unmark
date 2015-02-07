@@ -2,8 +2,8 @@
 <head>
     <title><?php echo _('Unmark : Importer'); ?></title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/assets/css/unmark.css" />
-    <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <link rel="stylesheet" href="assets/css/unmark.css" />
+    <link rel="icon" type="image/ico" href="favicon.ico" />
 </head>
 <body class="unmark-solo" id="unmark-login">
 
@@ -29,8 +29,8 @@
         ?>
     </div>
 
-<script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
-<script src="/assets/js/production/unmark.loggedout.js"></script>
+<script src="assets/libraries/jquery/jquery-2.1.0.min.js"></script>
+<script src="assets/js/production/unmark.loggedout.js"></script>
 
 </body>
 </html>
