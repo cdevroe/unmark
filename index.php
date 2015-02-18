@@ -14,8 +14,7 @@
  * APPLICATION ENVIRONMENT
  *---------------------------------------------------------------
  *
- * You can load different configurations depending on your
- * current environment. Setting the environment also influences
+ * Setting the environment influences
  * things like logging and error reporting.
  *
  * This can be set to anything, but default usage is:
@@ -28,22 +27,7 @@
  *
  */
 
-// Looking for local environment configuration under application/config/environment.php
-$appDir = dirname(__FILE__);
-if(file_exists($appDir)){
-    $localEnvConfigFile = $appDir.'/application/config/environment.php';
-    if(file_exists($localEnvConfigFile)){
-        include_once($localEnvConfigFile);
-    }
-}
-
 // Looking for global environment configuration under /etc/unmark/environment.php
-const UNMARK_ENV_CONFIG_GLOBAL = '/etc/unmark/environment.php';
-if(!defined('ENVIRONMENT')){
-	if (is_readable(UNMARK_ENV_CONFIG_GLOBAL)) {
-	    include_once(UNMARK_ENV_CONFIG_GLOBAL);
-	}
-}
 if(!defined('ENVIRONMENT')){
     define('ENVIRONMENT', 'production');
 }
