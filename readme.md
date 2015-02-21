@@ -22,6 +22,11 @@ Please read through the installation requirements carefully. We're keeping them 
 
 - PHP 5.4 or greater with gettext extension. Need help? [Try this](http://php-osx.liip.ch).
 - mySQL 5.5 or greater
+- A webserver with url rewrites enabled
+
+### Special Note
+At this point Unmark has to be installed on the root of your subdomain. Installation of Unmark in a sub directory is unsupported at this time. 
+Keep tabs on our progress with this issue by [monitoring this issue.](https://github.com/plainmade/unmark/issues/94)
 
 ### Installation Instructions
 
