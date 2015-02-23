@@ -8,7 +8,7 @@
     "load-grunt-tasks": "~0.3.0",
     "grunt": "~0.4.2",
     "grunt-contrib-sass": "~0.7.2",
-    "grunt-contrib-uglify": "~0.1.2",
+    "grunt-contrib-uglify": "~0.8.0",
     "grunt-contrib-watch": "~0.5.3",
     "glob": "~3.2.8",
     "grunt-string-replace": "~0.2.7",
