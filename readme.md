@@ -22,6 +22,11 @@ Please read through the installation requirements carefully. We're keeping them 
 
 - PHP 5.4 or greater with gettext extension. Need help? [Try this](http://php-osx.liip.ch).
 - mySQL 5.5 or greater
+- A webserver with url rewrites enabled
+
+### Special Note
+At this point Unmark has to be installed on the root of your subdomain. Installation of Unmark in a sub directory is unsupported at this time. 
+Keep tabs on our progress with this issue by [monitoring this issue.](https://github.com/plainmade/unmark/issues/94)
 
 ### Installation Instructions
 
@@ -45,6 +50,10 @@ Note: Using Nginx rather than Apache? Follow [these Nginx configuration instruct
 
 Note: You can also run this from the command line using the following command `php index.php migrations latest`
 
+Enabling or Disabling Registration
+----------------------------
+Thanks to a feature request by @rpdillon. You can now enable and disable user registration at will by modifying ./application/config/config.php
+Find the configuration key "plain_enable_registrations" and change it to false if you don't want to allow user registration. Keep in mind there isn't a way to add or delete users, so if you want to add a new user you will need to enable registration again.
 
 Building Unmark locally
 ----------------------------

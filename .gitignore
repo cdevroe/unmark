@@ -13,3 +13,4 @@ application/cache/db_backups
 custom
 node_modules
 .sass-cache
+assets/css/.sass-cache/*
