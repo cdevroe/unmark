@@ -7,5 +7,6 @@ $config['default_language'] = 'english';
 $config['supported_languages'] = array(
     'english' => 'en_US',
     'polish' => 'pl_PL',
-    'simple_chinese' => 'zh_CN'
+    'simple_chinese' => 'zh_CN',
+    'spanish' => 'es_ES'
 );
