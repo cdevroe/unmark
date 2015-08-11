@@ -14,3 +14,4 @@ custom
 node_modules
 .sass-cache
 assets/css/.sass-cache/*
+assets/css/*.css.map
