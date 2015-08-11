@@ -388,6 +388,10 @@ $config['plain_db_backup_folder'] = 'cache/db_backups/';
  * Flag saying to remove DB backup on successful migration
  */
 $config['plain_db_backup_remove_on_success'] = false;
+/*
+ * Enable or disable registrations
+ */
+$config['plain_enable_registrations'] = true;
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
