@@ -30,7 +30,7 @@ _('Not Found');
 _('Internal Error');
 _('Security token is invalid.');
 _('Validation Errors');
-_('Your password is invalid. Passwords must contain at least one CAPITAL letter, one number and be a minimum of 6 characters.');
+_('Your password is invalid. Passwords must be a minimum of 6 characters.');
 _('This email address already exists in the system.');
 _('Your email address is invalid.');
 _('Email not found. Cannot create subscription.');

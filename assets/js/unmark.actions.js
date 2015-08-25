@@ -45,14 +45,14 @@
         var expBtn = unmark.sidebar_content.find('a[data-action="sidebar_expand"] i');
 
         if (compress === true) {
-            return unmark.sidebar_content.animate({ width: '42.17749%' }, 800, function () {
+            return unmark.sidebar_content.animate({ width: '40.2914%' }, 800, function () {
                 expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
                 unmark.sidebar_content.removeClass('wide');
             });
         }
 
         if (expBtn.hasClass('icon-heading_collapse')) {
-            unmark.sidebar_content.animate({ width: '42.17749%' }, 800, function () {
+            unmark.sidebar_content.animate({ width: '40.2914%' }, 800, function () {
                 expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
                 unmark.sidebar_content.removeClass('wide');
             });
