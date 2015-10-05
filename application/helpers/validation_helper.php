@@ -6,9 +6,11 @@ function isValid($val, $type, $extra_options = null)
     if ($type == 'email') {
         return (preg_match('/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i', $val)) ? true : false;
     }
-    //At least one upper and one number, min 6 characters
+    // Starting 1.6.5 : Minimum 6 chars
+    // OLD: At least one upper and one number, min 6 characters (deprecated)
     elseif ($type == 'password') {
-        return (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', $val) && strlen($val) >= 6) ? true : false;
+        return (strlen($val) >= 6) ? true : false;
+        //disabled 1.6.5 return (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', $val) && strlen($val) >= 6) ? true : false;
     }
     elseif ($type == 'numeric') {
         return (is_numeric($val) && $val >= 0) ? true : false;

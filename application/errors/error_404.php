@@ -4,7 +4,7 @@
     <title>Sorry, we can't find this page</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css">
-    <link rel="icon" type="image/ico" href="/favicon.ico">
+    <link rel="icon" type="image/ico" href="favicon.ico">
 </head>
 <body class="unmark-solo" id="unmark-login">
     <div id="error-wrapper">
