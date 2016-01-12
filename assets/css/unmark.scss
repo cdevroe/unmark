@@ -479,7 +479,7 @@ ul.nav-list {
 
 // ================ Main Content
 .main-content {
-    @include span-columns(7);
+    @include span-columns(7.5);
     padding-right:0;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;

@@ -31,9 +31,10 @@
 
 	<h4 class="nav-heading"><?php echo _('Help')?></h4>
 	<ul class="nav-list">
-		<li><a target="_blank" href="http://help.unmark.it/"><?php echo _('How to Use Unmark') ?></a></li>
-		<li><a target="_blank" href="http://help.unmark.it/faq"><?php echo _('View Our FAQ') ?></a></li>
-		<li><a target="_blank" href="http://help.unmark.it/bookmarklet"><?php echo _('Get the Bookmarklet') ?></a></li>
+		<li><a target="_blank" href="http://help.unmark.it/" title="Unmark Help"><?php echo _('Unmark Help') ?></a></li>
+		<li><a target="_blank" href="http://twitter.com/unmarkit" title="Follow us on Twitter">Follow us on Twitter</a></li>
+		<li><a target="_blank" href="mailto:support@unmarkit" title="Contact support">Contact Support</a></li>
+		<li><a target="_blank" href="http://help.unmark.it/bookmarklet" title="Get the bookmarklet"><?php echo _('Get the Bookmarklet') ?></a></li>
 		<li><a target="_blank" href="https://chrome.google.com/webstore/detail/unmark/cdhnljlbeehjgddokagghpfgahhlifch"><?php echo _('Get the Chrome Extension') ?></a></li>
 	</ul>
 </div>
