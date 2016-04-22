@@ -57,7 +57,7 @@ class Login extends Plain_Controller {
 
                 $this->session->unset_userdata('add_redirect');
                 $user->email = $this->clean->email;
-                $this->session->sess_update(true);
+                $this->session->sess_update();
                 $this->sessionAddUser($user);
                 $this->data['success'] = true;
                 $this->data['redirect_url'] = $redirect;
