@@ -239,7 +239,7 @@ class Plain_Session extends CI_Session {
 	function sess_update($bypass_timecheck=false)
 	{
 		// We only update the session every five minutes by default
-		if ($bypass_timecheck === false && ($this->userdata['last_activity'] + $this->sess_time_to_update) >= $this->now)
+		if ($bypass_timecheck === false && ($this->CI->input->is_ajax_request() OR ($this->userdata['last_activity'] + $this->sess_time_to_update) >= $this->now))
 		{
 			return;
 		}

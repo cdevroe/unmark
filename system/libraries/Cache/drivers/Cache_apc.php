@@ -5,35 +5,35 @@
  * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2006 - 2012 EllisLab, Inc.
+ * @author		EllisLab Dev Team
+ * @copyright		Copyright (c) 2006 - 2014 EllisLab, Inc.
+ * @copyright		Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 2.0
- * @filesource	
+ * @filesource
  */
 
 // ------------------------------------------------------------------------
 
 /**
- * CodeIgniter APC Caching Class 
+ * CodeIgniter APC Caching Class
  *
  * @package		CodeIgniter
  * @subpackage	Libraries
  * @category	Core
- * @author		ExpressionEngine Dev Team
- * @link		
+ * @author		EllisLab Dev Team
+ * @link
  */
-
 class CI_Cache_apc extends CI_Driver {
 
 	/**
-	 * Get 
+	 * Get
 	 *
-	 * Look for a value in the cache.  If it exists, return the data 
+	 * Look for a value in the cache.  If it exists, return the data
 	 * if not, return FALSE
 	 *
-	 * @param 	string	
+	 * @param 	string
 	 * @return 	mixed		value that is stored/FALSE on failure
 	 */
 	public function get($id)
@@ -43,8 +43,8 @@ class CI_Cache_apc extends CI_Driver {
 		return (is_array($data)) ? $data[0] : FALSE;
 	}
 
-	// ------------------------------------------------------------------------	
-	
+	// ------------------------------------------------------------------------
+
 	/**
 	 * Cache Save
 	 *
@@ -58,7 +58,7 @@ class CI_Cache_apc extends CI_Driver {
 	{
 		return apc_store($id, array($data, time(), $ttl), $ttl);
 	}
-	
+
 	// ------------------------------------------------------------------------
 
 	/**
@@ -90,12 +90,12 @@ class CI_Cache_apc extends CI_Driver {
 	 * Cache Info
 	 *
 	 * @param 	string		user/filehits
-	 * @return 	mixed		array on success, false on failure	
+	 * @return 	mixed		array on success, false on failure
 	 */
-	 public function cache_info($type = NULL)
-	 {
-		 return apc_cache_info($type);
-	 }
+	public function cache_info($type = NULL)
+	{
+		return apc_cache_info($type);
+	}
 
 	// ------------------------------------------------------------------------
 
@@ -137,15 +137,11 @@ class CI_Cache_apc extends CI_Driver {
 			log_message('error', 'The APC PHP extension must be loaded to use APC Cache.');
 			return FALSE;
 		}
-		
+
 		return TRUE;
 	}
 
-	// ------------------------------------------------------------------------
-
-	
 }
-// End Class
 
 /* End of file Cache_apc.php */
 /* Location: ./system/libraries/Cache/drivers/Cache_apc.php */

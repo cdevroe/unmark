@@ -5,8 +5,9 @@
  * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
+ * @author		EllisLab Dev Team
+ * @copyright		Copyright (c) 2008 - 2014, EllisLab, Inc.
+ * @copyright		Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -25,7 +26,7 @@
  * @package		CodeIgniter
  * @subpackage	Drivers
  * @category	Database
- * @author		ExpressionEngine Dev Team
+ * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/database/
  */
 class CI_DB_mysql_driver extends CI_DB {
@@ -70,21 +71,7 @@ class CI_DB_mysql_driver extends CI_DB {
 			$this->hostname .= ':'.$this->port;
 		}
 
-		$result = @mysql_connect($this->hostname, $this->username, $this->password, TRUE);
-		
-    	// Connected successfully
-		if($result !== false){
-    		// If no timezone passed - use local one 
-            if(empty($this->timezone)){
-                $this->timezone = date('P');		
-            }
-            // Set timezone
-            mysql_query("SET time_zone = '".$this->timezone."'", $result);
-            
-            $res = mysql_query('SELECT @@global.time_zone, @@session.time_zone;', $result);
-		}
-		
-		return $result;
+		return @mysql_connect($this->hostname, $this->username, $this->password, TRUE);
 	}
 
 	// --------------------------------------------------------------------
@@ -102,21 +89,7 @@ class CI_DB_mysql_driver extends CI_DB {
 			$this->hostname .= ':'.$this->port;
 		}
 
-		$result = @mysql_pconnect($this->hostname, $this->username, $this->password);
-		
-    	// Connected successfully
-		if($result !== false){
-    		// If no timezone passed - use local one 
-            if(empty($this->timezone)){
-                $this->timezone = date('P');		
-            }
-            // Set timezone
-            mysql_query("SET time_zone = '".$this->timezone."'", $result);
-            
-            $res = mysql_query('SELECT @@global.time_zone, @@session.time_zone;', $result);
-		}
-		
-	    return $result;
+		return @mysql_pconnect($this->hostname, $this->username, $this->password);
 	}
 
 	// --------------------------------------------------------------------
@@ -338,18 +311,7 @@ class CI_DB_mysql_driver extends CI_DB {
 	   		return $str;
 	   	}
 
-		if (function_exists('mysql_real_escape_string') AND is_resource($this->conn_id))
-		{
-			$str = mysql_real_escape_string($str, $this->conn_id);
-		}
-		elseif (function_exists('mysql_escape_string'))
-		{
-			$str = mysql_escape_string($str);
-		}
-		else
-		{
-			$str = addslashes($str);
-		}
+		$str = mysql_real_escape_string($str, $this->conn_id);
 
 		// escape LIKE condition wildcards
 		if ($like === TRUE)
