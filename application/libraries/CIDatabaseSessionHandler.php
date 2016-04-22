@@ -40,6 +40,7 @@ class CIDatabaseSessionHandler {
      */
     public function close(){
         $this->_log('Close called');
+        return true;
     }
     
     /**
@@ -50,6 +51,7 @@ class CIDatabaseSessionHandler {
         $this->_log('Destroy called');
         $this->db->where($this->idColumn, $session_id);
         $this->db->delete($this->dbTable);
+        return true;
     }
     
     /**
@@ -58,6 +60,7 @@ class CIDatabaseSessionHandler {
      */
     public function gc ( $maxlifetime ){
         $this->_log('GC called');
+        return true;
     }
     
     /**
@@ -96,6 +99,7 @@ class CIDatabaseSessionHandler {
         } else{
             $this->db->insert($this->dbTable, array($this->idColumn => $session_id, $this->dataColumn => $session_data));
         }
+        return true;
     }
 
     /**
