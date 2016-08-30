@@ -10,13 +10,17 @@
 |
 */
 
-// Loads language translation files
-$hook['pre_controller_method'][''] = array(
-	'class'    => 'Unmark_Localization',
-    'function' => 'loadLanguage',
-    'filename' => 'Unmark_Localization.php',
-    'filepath' => 'hooks', 
-);
+if ( function_exists( 'bindtextdomain' ) ) :
+
+	// Loads language translation files
+	$hook['pre_controller_method'][''] = array(
+		'class'    => 'Unmark_Localization',
+	    'function' => 'loadLanguage',
+	    'filename' => 'Unmark_Localization.php',
+	    'filepath' => 'hooks',
+	);
+
+endif;
 
 
 /* End of file hooks.php */
