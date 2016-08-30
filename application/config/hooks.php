@@ -10,7 +10,7 @@
 |
 */
 
-if ( function_exists( 'bindtextdomain' ) ) :
+if ( function_exists( 'bindtextdomain' ) ) {
 
 	// Loads language translation files
 	$hook['pre_controller_method'][''] = array(
@@ -20,7 +20,13 @@ if ( function_exists( 'bindtextdomain' ) ) :
 	    'filepath' => 'hooks',
 	);
 
-endif;
+} else {
+
+	function _($v){
+	    echo $v;
+	}
+
+}
 
 
 /* End of file hooks.php */
