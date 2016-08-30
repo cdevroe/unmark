@@ -4,7 +4,7 @@
             <?php if (isset($stats)) : ?>
             <p>
                 <?php 
-                    echo sprintf(ngettext('You saved %s mark today','You saved %s marks today',$stats['saved']['today']), '<span class="ns-today">' . $stats['saved']['today'] . '</span>');
+                    echo sprintf(unmark_ngettext('You saved %s mark today','You saved %s marks today',$stats['saved']['today']), '<span class="ns-today">' . $stats['saved']['today'] . '</span>');
                     echo ' ';
                     echo sprintf(_('and archived %s'), '<span class="na-today">' . $stats['archived']['today'] . '</span>'); 
                 ?>.
@@ -15,7 +15,7 @@
     <?php if (isset($stats) && $stats['marks']['ages ago'] > 0) : ?>
     <div class="sidebar-block">
         <div class="sidebar-inner">
-            <p><?php echo sprintf(ngettext('You have %s mark that are over 1 year old. Want to tidy up a bit?', 'You have %s mark that are over 1 year old. Want to tidy up a bit?',$stats['marks']['ages ago']), '<span class="ns-year">' . $stats['marks']['ages ago'] . '</span>')?></p>
+            <p><?php echo sprintf(unmark_ngettext('You have %s mark that are over 1 year old. Want to tidy up a bit?', 'You have %s mark that are over 1 year old. Want to tidy up a bit?',$stats['marks']['ages ago']), '<span class="ns-year">' . $stats['marks']['ages ago'] . '</span>')?></p>
             <a href="/marks/ages-ago" class="btn"><?php echo _('View Marks'); ?></a>
             <button data-action="dismiss_this"><?php echo _('Do Nothing'); ?></button>
             <button data-action="archive_all"><?php echo _('Archive All'); ?></button>

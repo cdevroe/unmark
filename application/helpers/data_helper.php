@@ -128,7 +128,7 @@ function generateTimeSpan($date)
     foreach ($results as $type => $number) {
         if (! empty($number)) {
             $s = ($number == '1') ? '' : 's';
-            return $number . ' ' . ngettext($type, $type.'s', $number) . ' ' . _('ago');
+            return $number . ' ' . unmark_ngettext($type, $type.'s', $number) . ' ' . _('ago');
         }
     }
 

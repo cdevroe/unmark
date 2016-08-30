@@ -20,10 +20,10 @@
                 }
             } else {
                 print '<p>' . _('Successfull Upload!') . '</p>';
-                print '<p>' . sprintf(ngettext('%s mark added', '%s marks added', $result['added']), $result['added']) . '</p>';
-                print '<p>' . sprintf(ngettext('%s mark skipped', '%s marks skipped', $result['skipped']), $result['skipped']) . '</p>';
-                print '<p>' . sprintf(ngettext('%s mark failed', '%s marks failed', $result['failed']), $result['failed']) . '</p>';
-                print '<p>' . sprintf(ngettext('%s mark total', '%s marks total', $result['total']), $result['total']) . '</p>';
+                print '<p>' . sprintf(unmark_ngettext('%s mark added', '%s marks added', $result['added']), $result['added']) . '</p>';
+                print '<p>' . sprintf(unmark_ngettext('%s mark skipped', '%s marks skipped', $result['skipped']), $result['skipped']) . '</p>';
+                print '<p>' . sprintf(unmark_ngettext('%s mark failed', '%s marks failed', $result['failed']), $result['failed']) . '</p>';
+                print '<p>' . sprintf(unmark_ngettext('%s mark total', '%s marks total', $result['total']), $result['total']) . '</p>';
                 print '<p>' . _('Head <a href=\'/\'>back</a> to see them now!') . '</p>';
             }
         ?>
