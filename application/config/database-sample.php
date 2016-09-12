@@ -37,7 +37,7 @@
 |	['autoinit'] Whether or not to automatically initialize the database.
 |	['stricton'] TRUE/FALSE - forces 'Strict Mode' connections
 |							- good for ensuring strict SQL while developing
-|   ['timezone'] Timezone (time offset from GMT in +XX:YY format) to set on mysql connection. 
+|   ['timezone'] Timezone (time offset from GMT in +XX:YY format) to set on mysql connection.
 |                If null or not set defaults to application server timezone `date('P')`
 |
 | The $active_group variable lets you choose which connection group to
@@ -55,7 +55,7 @@ $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'username';
 $db['default']['password'] = 'password';
 $db['default']['database'] = 'unmark';
-$db['default']['dbdriver'] = 'mysql';
+$db['default']['dbdriver'] = 'mysqli';
 // $db['default']['dbprefix'] = ''; # Do not use, see: https://github.com/plainmade/unmark/issues/62
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;
