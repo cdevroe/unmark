@@ -37,4 +37,5 @@
 		<li><a target="_blank" href="http://help.unmark.it/bookmarklet" title="Get the bookmarklet"><?php echo _('Get the Bookmarklet') ?></a></li>
 		<li><a target="_blank" href="https://chrome.google.com/webstore/detail/unmark/cdhnljlbeehjgddokagghpfgahhlifch"><?php echo _('Get the Chrome Extension') ?></a></li>
 	</ul>
+	<p style="text-align: center;">Version <?php echo $this->config->item('unmark_version'); ?></p>
 </div>
