@@ -38,6 +38,7 @@ $config['migration_version'] = 2014112501;
 */
 $config['migration_type']    = 'unmark'; // legacy
 $config['migration_auto_latest'] = true; // Auto-update to the latest migration
+$config['migration_table'] = 'migrations'; // Table where the migration version number is stored
 
 
 /*
