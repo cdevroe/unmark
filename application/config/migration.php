@@ -8,7 +8,7 @@
 | whenever you intend to do a schema migration.
 |
 */
-$config['migration_enabled'] = true;
+$config['migration_enabled'] = false; // Set to true to do a migration, then set back to false.
 
 
 /*
@@ -20,13 +20,24 @@ $config['migration_enabled'] = true;
 | If you run $this->migration->latest() this is the version that schema will
 | be upgraded / downgraded to.
 |
+| Format for migration (YYYYMMDDXX format where XX is an incremented sequence of changes in selected day)
+|
 */
-// Format for migration_type = unmark: (YYYYMMDDXX format where XX is an incremented sequence of changes in selected day)
-// Last time changed (version 1.6.0)
 $config['migration_version'] = 2014112501;
 
-// Set migration type to timestamp to avoid conflicts
-$config['migration_type']    = 'unmark';
+
+/*
+|--------------------------------------------------------------------------
+| Miscellaneous Migration options
+|--------------------------------------------------------------------------
+|
+| Unlikely you'll want to update these unless you know what you're doing.
+|
+| Format for migration (YYYYMMDDXX format where XX is an incremented sequence of changes in selected day)
+|
+*/
+$config['migration_type']    = 'unmark'; // legacy
+$config['migration_auto_latest'] = true; // Auto-update to the latest migration
 
 
 /*
@@ -46,6 +57,7 @@ $config['migration_path'] = APPPATH . 'migrations/';
  * for already created migration files, to port on 64-bit systems properly
  * If you've created custom migrations, please add entries to this config in form of
  * old number (timestamp) => new number (YYYYMMDDXX format where XX is an incremented sequence of changes in selected day)
+ * This too is legacy.
  */
 $config['migration_mappings'] = array(
 	'20140228091723' => '2014022801',
