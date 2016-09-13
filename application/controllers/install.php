@@ -60,7 +60,7 @@ class Install extends CI_Controller
   // Used to update from one version to another.
   public function upgrade()
   {
-    $this->check_admin();
+    //$this->check_admin(); // Removed in 1.7.1. This is only applicable on unmark.it
     $this->load->library('migration');
 
     if ( ! $this->migration->current() )
