@@ -1,6 +1,8 @@
 Unmark
 ============
 
+[![Join the chat at https://gitter.im/plainmade/unmark](https://badges.gitter.im/plainmade/unmark.svg)](https://gitter.im/plainmade/unmark?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 An open source, to-do application for bookmarks originally created by [Colin Devroe](http://cdevroe.com/) (then called Nilai) and rebuilt from the ground up by [Plain](http://plainmade.com/).
 
 We offer this source code for Unmark completely free. However, if you'd rather us host it for you, as well as a few features not available through this repository, you can sign up for free to [our Unmark hosted service](http://unmark.it). It is free to try with limitations and just a few dollars per year to unlock all features with no limitations.
