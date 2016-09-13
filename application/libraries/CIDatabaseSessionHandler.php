@@ -1,13 +1,13 @@
 <?php
 class CIDatabaseSessionHandler {
-    
+
     private $CI;
     private $db;
-    
+
     private $dbTable = 'plain_sessions';
     private $idColumn = 'session_id';
     private $dataColumn = 'session_data';
-    
+
     /*
      * Table structure
      CREATE TABLE IF NOT EXISTS  `plain_sessions` (
@@ -17,7 +17,7 @@ class CIDatabaseSessionHandler {
 	           PRIMARY KEY (session_id)
                )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
      */
-    
+
     /**
      * Creates session handler.
      * Requires CodeIgniter database library object reference
@@ -29,11 +29,22 @@ class CIDatabaseSessionHandler {
         foreach(array('sess_table_name') as $var){
             $configItem = $this->CI->config->item($var);
             if(!empty($configItem)){
-                $this->{$var} =  $configItem;   
+                $this->{$var} =  $configItem;
             }
         }
     }
-    
+
+    private function checkInstall (){
+      // Added in 1.7.1
+      // This will check to see if the plain_sessions table exists.
+      // If not, likely showing up before installation.
+      if ( !$this->db->table_exists($this->dbTable) ) :
+        $this->_log('Sessions table does not exist.');
+        return false;
+      endif;
+      return true;
+    }
+
     /**
      * (non-PHPdoc)
      * @see SessionHandlerInterface::close()
@@ -42,18 +53,21 @@ class CIDatabaseSessionHandler {
         $this->_log('Close called');
         return true;
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see SessionHandlerInterface::destroy()
      */
     public function destroy ( $session_id ){
         $this->_log('Destroy called');
+        if ( !$this->checkInstall() ) :
+          return false;
+        endif;
         $this->db->where($this->idColumn, $session_id);
         $this->db->delete($this->dbTable);
         return true;
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see SessionHandlerInterface::gc()
@@ -62,7 +76,7 @@ class CIDatabaseSessionHandler {
         $this->_log('GC called');
         return true;
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see SessionHandlerInterface::open()
@@ -71,13 +85,16 @@ class CIDatabaseSessionHandler {
         $this->_log('Open called');
         return true;
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see SessionHandlerInterface::read()
      */
     public function read ( $session_id ){
          $this->_log('Read called');
+         if ( !$this->checkInstall() ) :
+           return null;
+         endif;
          $session = $this->db->get_where($this->dbTable, array($this->idColumn => $session_id));
          if (isset($session) && $session->num_rows() > 0){
              $row = $session->row();
@@ -92,6 +109,9 @@ class CIDatabaseSessionHandler {
      */
     public function write ( $session_id , $session_data ){
         $this->_log('Write called');
+        if ( !$this->checkInstall() ) :
+          return false;
+        endif;
         $session = $this->db->get_where($this->dbTable, array($this->idColumn => $session_id));
         if ($this->read($session_id) !== null){
              $this->db->where($this->idColumn, $session_id);
@@ -108,9 +128,9 @@ class CIDatabaseSessionHandler {
     public function __destruct(){
         session_write_close();
     }
-    
+
     /**
-     * Helper method to write message to log using CI mechanisms 
+     * Helper method to write message to log using CI mechanisms
      * @param unknown $message
      * @param string $level
      */

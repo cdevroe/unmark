@@ -2,7 +2,6 @@
 
 class Plain_Controller extends CI_Controller
 {
-        
     public $clean          = null;
     public $csrf_valid     = false;
     public $current_user   = array();
@@ -36,12 +35,12 @@ class Plain_Controller extends CI_Controller
 
         // Clean incoming variables in a variety of ways
         $this->clean();
-        
+
         if($this->localized && $this->selected_language === null){
             // Set list of supported languages for the app and pick selected
             $this->getLanguageFromConfig();
         }
-        
+
         // Get user token
         $this->getUserInfo();
 
@@ -84,7 +83,7 @@ class Plain_Controller extends CI_Controller
         if ( strpos($url_query_parameters,'utm_') === false ) {
             // Whoops! echo '<br>No utm_ found.<br>';
         } else {
-            
+
             parse_str($url_query_parameters,$url_query_parameters); // convert querystring to array
 
             // Prepare a new query string
@@ -103,7 +102,7 @@ class Plain_Controller extends CI_Controller
         }
 
         // Sometimes browsers will not have a title
-        // for things like a PDF or JPG. 
+        // for things like a PDF or JPG.
         // In these instances, we still want people
         // to be able to save their marks. ;-)
         if (empty($title)) {
@@ -369,7 +368,7 @@ class Plain_Controller extends CI_Controller
         $this->logged_in     = (isset($this->session)) ? $this->session->userdata('logged_in') : false;
         $this->current_user  = (! empty($user_session)) ? $user_session : $this->current_user;
     }
-    
+
     protected function isAdmin()
     {
         return $this->user_admin;
@@ -629,7 +628,7 @@ class Plain_Controller extends CI_Controller
             $this->load->view('partials/debug', $data);
         }
     }
-    
+
     /**
      * Determines language selection based on configuration file
      */

@@ -34,38 +34,38 @@ class Plain_Migration extends CI_Migration
         {
             return;
         }
-        
+
         foreach ($config as $key => $val)
         {
             $this->{'_'.$key} = $val;
         }
-        
+
         log_message('debug', 'Migrations class initialized');
-        
+
         // Are they trying to use migrations while it is disabled?
         if ($this->_migration_enabled !== TRUE)
         {
             show_error('Migrations has been loaded but is disabled or set up incorrectly.');
         }
-        
+
         // If not set, set it
         $this->_migration_path !== '' OR $this->_migration_path = APPPATH.'migrations/';
-        
+
         // Add trailing slash if not set
         $this->_migration_path = rtrim($this->_migration_path, '/').'/';
-        
+
         // Load migration language
         $this->lang->load('migration');
-        
+
         // They'll probably be using dbforge
         $this->load->dbforge();
-        
+
         // Make sure the migration table name was set.
         if (empty($this->_migration_table))
         {
             show_error('Migrations configuration file (migration.php) must have "migration_table" set.');
         }
-        
+
         // Migration basename regex
         switch($this->_migration_type){
         	case 'timestamp':
@@ -76,26 +76,26 @@ class Plain_Migration extends CI_Migration
         	    break;
         	default:
         	    $this->_migration_regex = '/^\d{3}_(\w+)$/';
-        }     
-        
+        }
+
         // Make sure a valid migration numbering type was set.
         if ( ! in_array($this->_migration_type, array('sequential', 'timestamp', 'unmark')))
         {
             show_error('An invalid migration numbering type was specified: '.$this->_migration_type);
         }
-        
+
         // If the migrations table is missing, make it
         if ( ! $this->db->table_exists($this->_migration_table))
         {
             $this->dbforge->add_field(array(
                 'version' => array('type' => 'BIGINT', 'constraint' => 20),
             ));
-        
+
             $this->dbforge->create_table($this->_migration_table, TRUE);
-        
+
             $this->db->insert($this->_migration_table, array('version' => 0));
         }
-        
+
         // Do we auto migrate to the latest migration?
         if ($this->_migration_auto_latest === TRUE && ! $this->latest())
         {
@@ -124,7 +124,8 @@ class Plain_Migration extends CI_Migration
         // Load all *_*.php files in the migrations path
         foreach ($files as $file) {
             $name   = basename($file, '.php');
-            $number = $this->_get_migration_number($name);
+            $name_parts = explode( '_', $name );
+            $number = $name_parts[0];
 
             // There cannot be duplicate migration numbers
             if (isset($migrations[$number]))
@@ -172,7 +173,7 @@ class Plain_Migration extends CI_Migration
         }
         return $migrationsResult;
     }
-    
+
     /**
      * Retrieves current schema version
      * If _migration_type == 'unmark' and previous version matches timestamp - return different version

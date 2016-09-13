@@ -8,7 +8,7 @@
 | whenever you intend to do a schema migration.
 |
 */
-$config['migration_enabled'] = false; // Set to true to do a migration, then set back to false.
+$config['migration_enabled'] = true; // Set to true to do a migration, then set back to false.
 
 
 /*
