@@ -29,8 +29,12 @@ class Unmark_Localization
             if($setLocaleOut !== false){
                 // Locale setting success
                 $lang_path = FCPATH.APPPATH.'language/locales';
-                bindtextdomain('unmark', $lang_path);
-                textdomain('unmark');
+                if ( function_exists('bindtextdomain') ) : // Check for Bindtext Added 1.7.1
+                  bindtextdomain('unmark', $lang_path);
+                  textdomain('unmark');
+                else :
+                  log_message('DEBUG', 'Setting language failed due to gettext not being compliled with PHP. Going with default.');
+                endif;
             } else {
                 // Locale setting failed - report error
                 $errMsg = 'Setting language to '.$lang.' failed - no such locale';
