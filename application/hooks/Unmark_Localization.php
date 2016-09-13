@@ -42,3 +42,10 @@ class Unmark_Localization
         }
     }
 }
+
+/* Added 1.7.1 - Still needs to be completely ripped out. */
+if ( !function_exists('bindtextdomain') && !function_exists('_') ) :
+  function _($v){
+    return $v;
+  }
+endif;
