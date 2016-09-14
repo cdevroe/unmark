@@ -53,3 +53,16 @@ if ( !function_exists('bindtextdomain') && !function_exists('_') ) :
     return $v;
   }
 endif;
+
+// Added 1.7.1 -
+if ( !function_exists('ngettext') ) :
+  function ngettext( $singlular, $plural, $number ) {
+
+    if ( $number == 0 || $number > 1 ) :
+      return $plural;
+    else :
+      return $singlular;
+    endif;
+    
+  }
+endif;
