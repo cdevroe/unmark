@@ -72,8 +72,8 @@ Now it is being maintained by Colin and Kyle and the community. Please consider 
 Contributors
 ----------------------------
 
-Currently being maintained by: @cdevroe and @kyleruane and you?
+Currently being maintained by: [@cdevroe](https://github.com/cdevroe) and [@kyleruane](https://github.com/kyleruane) and you?
 
-With special thanks to: @phpfunk (wrote most of Unmark), @twhitacre (wrote most of the front-end), @kip9 (wrote the languages and migration back-up bits), @cfehnel (support master extraordinaire)
+With special thanks to: [@phpfunk](https://github.com/phpfunk) (wrote most of Unmark), [@twhitacre](https://github.com/twhitacre) (wrote most of the front-end), [@kip9](https://github.com/kip9) (wrote the languages and migration back-up bits), [@cfehnel](https://github.com/cfehnel) (support master extraordinaire)
 
-Also contributions by @thebrandonallen, @simonschaufi, @williamknauss, @hewigovens
+Also contributions by [@thebrandonallen](https://github.com/thebrandonallen), [@simonschaufi](https://github.com/simonschaufi), [@williamknauss](https://github.com/williamknauss), [@hewigovens](https://github.com/hewigovens)
