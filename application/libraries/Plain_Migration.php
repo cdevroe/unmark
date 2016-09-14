@@ -189,6 +189,41 @@ class Plain_Migration extends CI_Migration
                 log_message('debug', 'There was an error when removing backup file.');
             }
         } else{
+
+            if ( $this->_get_version() < $target_version ) : // Added in 1.7.1, still more work to do. The default Migration class is done, now we need to take over.
+              $method = 'up';
+              $migrations = $this->find_migrations();
+              if ( count($migrations) > 0 ) :
+                log_message('DEBUG','Plain Migration taking over for next migration.'.$this->_get_version() );
+                foreach( $migrations as $migration ) :
+                  log_message('DEBUG','Migration =  '.$migration);
+                  $name_parts = explode( '_', $migration );
+                  $number = str_replace( $this->_migration_path, '', $name_parts[0]);
+                  log_message('DEBUG','Number =  ' . $number);
+                  $name_parts = explode( '.php', str_replace( $number.'_', '', $migration ) );
+                  $class_name = str_replace( $this->_migration_path, '', $name_parts[0]);
+                  log_message('DEBUG','class name =  ' . $class_name);
+
+                  if ( $method == 'up' && $number <= $this->_get_version() ) {
+                    continue;
+                  }
+
+                  if ( $method == 'up' && $this->_get_version() < $target_version ) :
+
+                    log_message('DEBUG','Migrating '.$method.' from '.$this->_get_version() . ' to '. $number);
+
+                    include $migration;
+                    $class = 'Migration_' . ucfirst(strtolower($class_name));
+                    call_user_func(array(new $class, $method));
+                    $this->_update_version($number);
+
+                    log_message('DEBUG','Finished migrating to ' . $number);
+                  endif;
+
+                endforeach;
+              endif;
+            endif;
+
             if($backupFile !== FALSE){
                 log_message('error', 'Migrating to version '.$target_version.' failed. Backup from before migration stored in '.$backupFile);
             } else{
