@@ -4,11 +4,11 @@
 | Enable/Disable Migrations
 |--------------------------------------------------------------------------
 |
-| Migrations are disabled by default but should be enabled
-| whenever you intend to do a schema migration.
+| Migrations are _enabled_ by default but should be disabled
+| if you'd rather not have Unmark update to the latest schema automatically.
 |
 */
-$config['migration_enabled'] = true; // Set to true to do a migration, then set back to false.
+$config['migration_enabled'] = 								true; // Set to true to do a migration, then set back to false.
 
 
 /*
@@ -23,7 +23,7 @@ $config['migration_enabled'] = true; // Set to true to do a migration, then set 
 | Format for migration (YYYYMMDDXX format where XX is an incremented sequence of changes in selected day)
 |
 */
-$config['migration_version'] = 2014112501;
+$config['migration_version'] = 								2014112501;
 
 
 /*
@@ -36,9 +36,9 @@ $config['migration_version'] = 2014112501;
 | Format for migration (YYYYMMDDXX format where XX is an incremented sequence of changes in selected day)
 |
 */
-$config['migration_type']    = 'unmark'; // legacy
-$config['migration_auto_latest'] = true; // Auto-update to the latest migration
-$config['migration_table'] = 'migrations'; // Table where the migration version number is stored
+$config['migration_type'] = 									'unmark'; // legacy
+$config['migration_auto_latest'] = 						true; // Auto-update to the latest migration
+$config['migration_table'] = 									'migrations'; // Table where the migration version number is stored
 
 
 /*
@@ -51,7 +51,7 @@ $config['migration_table'] = 'migrations'; // Table where the migration version 
 | Also, writing permission is required within the migrations path.
 |
 */
-$config['migration_path'] = APPPATH . 'migrations/';
+$config['migration_path'] = 									APPPATH . 'migrations/';
 
 /*
  * Due to switch from timestamp to unmark numbering (to support 32-bit systems), we need to add mappings
