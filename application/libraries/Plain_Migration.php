@@ -40,7 +40,7 @@ class Plain_Migration extends CI_Migration
             $this->{'_'.$key} = $val;
         }
 
-        log_message('debug', 'Migrations class initialized');
+        log_message('debug', 'Plain Migrations class initialized');
 
         // Are they trying to use migrations while it is disabled?
         if ($this->_migration_enabled !== TRUE)
@@ -67,6 +67,7 @@ class Plain_Migration extends CI_Migration
         }
 
         // Migration basename regex
+        // Legacy
         switch($this->_migration_type){
         	case 'timestamp':
         	    $this->_migration_regex = '/^\d{14}_(\w+)$/';
@@ -144,6 +145,29 @@ class Plain_Migration extends CI_Migration
         ksort($migrations);
         return $migrations;
     }
+
+    /**
+  	 * Set's the schema to the latest migration
+     * But mostly replacing it because of our new format for migration files.
+  	 *
+  	 * @see	CI_Migration::latest
+  	 */
+  	public function latest()
+  	{
+  		if ( ! $migrations = $this->find_migrations())
+  		{
+  			$this->_error_string = $this->lang->line('migration_none_found');
+  			return false;
+  		}
+
+  		$last_migration = basename(end($migrations));
+      $name_parts = explode( '_', $last_migration );
+      $number = $name_parts[0];
+
+  		// Calculate the last migration step from existing migration
+  		// filenames and procceed to the standard version migration
+  		return $this->version((int) $number);
+  	}
 
     /**
      * Extends migration mechanism to create backup before running migrations and remove it on success, but keep on failure
