@@ -108,7 +108,10 @@
 
     // Import Data
     unmark.import_data = function () {
-        return $('.importer').trigger('click');
+        return $('#importerUnmark').trigger('click');
+    };
+    unmark.import_data_readability = function () {
+        return $('#importerReadability').trigger('click');
     };
     unmark.import_data_html = function () {
         return $('.importerHTML').trigger('click');
