@@ -1,14 +1,14 @@
 <?php defined("BASEPATH") or exit("No direct script access allowed");
 
 // Asset File Version Number
-define("ASSET_VERSION", "1473689179178");
+define("ASSET_VERSION", "1474378916629");
 
 // Prints marks count in nice format
 function printMarksCount($num)
 {
     if($num > 0) {
         return sprintf(unmark_ngettext('%s mark', '%s marks', $num), $num);
-    } else { 
+    } else {
         return _('No marks');
     }
 }

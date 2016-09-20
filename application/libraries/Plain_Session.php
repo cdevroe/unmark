@@ -323,7 +323,6 @@ class Plain_Session extends CI_Session {
 	    {
 	        require_once(APPPATH.'/libraries/CIDatabaseSessionHandler.php');
 	        $dbSessionHandler = new CIDatabaseSessionHandler();
-
 	        session_set_save_handler(
                 array($dbSessionHandler, 'open'),
                 array($dbSessionHandler, 'close'),
