@@ -34,39 +34,40 @@ class Plain_Migration extends CI_Migration
         {
             return;
         }
-        
+
         foreach ($config as $key => $val)
         {
             $this->{'_'.$key} = $val;
         }
-        
-        log_message('debug', 'Migrations class initialized');
-        
+
+        log_message('debug', 'Plain Migrations class initialized');
+
         // Are they trying to use migrations while it is disabled?
         if ($this->_migration_enabled !== TRUE)
         {
             show_error('Migrations has been loaded but is disabled or set up incorrectly.');
         }
-        
+
         // If not set, set it
         $this->_migration_path !== '' OR $this->_migration_path = APPPATH.'migrations/';
-        
+
         // Add trailing slash if not set
         $this->_migration_path = rtrim($this->_migration_path, '/').'/';
-        
+
         // Load migration language
         $this->lang->load('migration');
-        
+
         // They'll probably be using dbforge
         $this->load->dbforge();
-        
+
         // Make sure the migration table name was set.
         if (empty($this->_migration_table))
         {
             show_error('Migrations configuration file (migration.php) must have "migration_table" set.');
         }
-        
+
         // Migration basename regex
+        // Legacy
         switch($this->_migration_type){
         	case 'timestamp':
         	    $this->_migration_regex = '/^\d{14}_(\w+)$/';
@@ -76,26 +77,26 @@ class Plain_Migration extends CI_Migration
         	    break;
         	default:
         	    $this->_migration_regex = '/^\d{3}_(\w+)$/';
-        }     
-        
+        }
+
         // Make sure a valid migration numbering type was set.
         if ( ! in_array($this->_migration_type, array('sequential', 'timestamp', 'unmark')))
         {
             show_error('An invalid migration numbering type was specified: '.$this->_migration_type);
         }
-        
+
         // If the migrations table is missing, make it
         if ( ! $this->db->table_exists($this->_migration_table))
         {
             $this->dbforge->add_field(array(
                 'version' => array('type' => 'BIGINT', 'constraint' => 20),
             ));
-        
+
             $this->dbforge->create_table($this->_migration_table, TRUE);
-        
+
             $this->db->insert($this->_migration_table, array('version' => 0));
         }
-        
+
         // Do we auto migrate to the latest migration?
         if ($this->_migration_auto_latest === TRUE && ! $this->latest())
         {
@@ -124,7 +125,8 @@ class Plain_Migration extends CI_Migration
         // Load all *_*.php files in the migrations path
         foreach ($files as $file) {
             $name   = basename($file, '.php');
-            $number = $this->_get_migration_number($name);
+            $name_parts = explode( '_', $name );
+            $number = $name_parts[0];
 
             // There cannot be duplicate migration numbers
             if (isset($migrations[$number]))
@@ -143,6 +145,29 @@ class Plain_Migration extends CI_Migration
         ksort($migrations);
         return $migrations;
     }
+
+    /**
+  	 * Set's the schema to the latest migration
+     * But mostly replacing it because of our new format for migration files.
+  	 *
+  	 * @see	CI_Migration::latest
+  	 */
+  	public function latest()
+  	{
+  		if ( ! $migrations = $this->find_migrations())
+  		{
+  			$this->_error_string = $this->lang->line('migration_none_found');
+  			return false;
+  		}
+
+  		$last_migration = basename(end($migrations));
+      $name_parts = explode( '_', $last_migration );
+      $number = $name_parts[0];
+
+  		// Calculate the last migration step from existing migration
+  		// filenames and procceed to the standard version migration
+  		return $this->version((int) $number);
+  	}
 
     /**
      * Extends migration mechanism to create backup before running migrations and remove it on success, but keep on failure
@@ -164,6 +189,41 @@ class Plain_Migration extends CI_Migration
                 log_message('debug', 'There was an error when removing backup file.');
             }
         } else{
+
+            if ( $this->_get_version() < $target_version ) : // Added in 1.7.1, still more work to do. The default Migration class is done, now we need to take over.
+              $method = 'up';
+              $migrations = $this->find_migrations();
+              if ( count($migrations) > 0 ) :
+                log_message('DEBUG','Plain Migration taking over for next migration.'.$this->_get_version() );
+                foreach( $migrations as $migration ) :
+                  log_message('DEBUG','Migration =  '.$migration);
+                  $name_parts = explode( '_', $migration );
+                  $number = str_replace( $this->_migration_path, '', $name_parts[0]);
+                  log_message('DEBUG','Number =  ' . $number);
+                  $name_parts = explode( '.php', str_replace( $number.'_', '', $migration ) );
+                  $class_name = str_replace( $this->_migration_path, '', $name_parts[0]);
+                  log_message('DEBUG','class name =  ' . $class_name);
+
+                  if ( $method == 'up' && $number <= $this->_get_version() ) {
+                    continue;
+                  }
+
+                  if ( $method == 'up' && $this->_get_version() < $target_version ) :
+
+                    log_message('DEBUG','Migrating '.$method.' from '.$this->_get_version() . ' to '. $number);
+
+                    include $migration;
+                    $class = 'Migration_' . ucfirst(strtolower($class_name));
+                    call_user_func(array(new $class, $method));
+                    $this->_update_version($number);
+
+                    log_message('DEBUG','Finished migrating to ' . $number);
+                  endif;
+
+                endforeach;
+              endif;
+            endif;
+
             if($backupFile !== FALSE){
                 log_message('error', 'Migrating to version '.$target_version.' failed. Backup from before migration stored in '.$backupFile);
             } else{
@@ -172,7 +232,7 @@ class Plain_Migration extends CI_Migration
         }
         return $migrationsResult;
     }
-    
+
     /**
      * Retrieves current schema version
      * If _migration_type == 'unmark' and previous version matches timestamp - return different version

@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-$config['unmark_version'] = '1.7.0';
+$config['unmark_version'] = '1.7.1';
 
 /*
 |--------------------------------------------------------------------------
