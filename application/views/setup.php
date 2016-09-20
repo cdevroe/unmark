@@ -20,13 +20,11 @@
 
     <div id="unmark-setup">
 
-        <p><?php echo _('Welcome to Unmark, the to do list for bookmarks.') ?></p>
+        <p><?php echo _('Welcome to Unmark , the to-do app for bookmarks.'); ?></p>
 
-        <p><?php echo _('In order to use this you need to click the button below to get started.') ?></p>
+        <p><?php echo _('You\'re about to install version ' . $this->config->item('unmark_version') . ' of the app.</p><p>Please <a href="https://github.com/plainmade/unmark/blob/master/readme.md">read the installation instructions</a> first.'); ?></p>
 
-        <p><?php echo _('This will install all the db tables and redirect you to a signup page.') ?></p>
-
-        <a class="abtn" href="/install"><?php echo _('INSTALL UNMARK') ?></a>
+        <a class="abtn" href="/install"><?php echo _('Click to Install') ?></a>
 
     </div>
 
