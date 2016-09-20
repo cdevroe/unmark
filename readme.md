@@ -63,6 +63,16 @@ This makes it easy for us to test your code locally and also allows the communit
 
 Just a note: We use [Grunt](http://gruntjs.com/) to compile our SASS files into CSS and concatenate and compress our JavaScript files for use and a few other small tasks. For any updates to JavaScript or styles you will need to use Grunt too. See the Grunt web site or ping us on Slack for help.
 
+#### Creating a release
+
+- Be sure that index.php's default environment variable is "production"
+- Be sure version variable in config.php is accurate
+- Compile, check-in, and commit compiled assets by running Grunt
+- Merge into master
+- Test
+- Push master to Github
+- Tag release via Github
+
 History
 ----------------------------
 Unmark was originally created by [Colin Devroe](http://cdevroe.com/). It was a side-project called Nilai (the Indonesian word for "mark") and rebuilt from the ground up by [Plain](http://plainmade.com/) which included Jeff Johns, Kyle Ruane, Tim Whitacre, Chris Fehnel, Jakub Jakubiec and Colin Devroe.
