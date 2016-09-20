@@ -27,8 +27,12 @@
             <a data-action="export_data" class="exportbtn action" href="#"><?php echo _('Export File') ?></a>
             <h1><?php echo _('Import Marks') ?></h1>
             <form id="importForm" method="post" enctype="multipart/form-data" action="/import">
-                <input class="importer" type="file" name="upload">
-                <a data-action="import_data" class="importbtn action" href="#"><?php echo _('Import File') ?></a>
+                <input id="importerUnmark" class="importer" type="file" name="upload">
+                <a data-action="import_data" class="importbtn action" href="#"><?php echo _('Import Unmark File') ?></a>
+            </form>
+            <form id="importFormReadability" method="post" enctype="multipart/form-data" action="/import">
+                <input id="importerReadability" class="importer" type="file" name="uploadReadability">
+                <a data-action="import_data_readability" class="importbtn action" href="#"><?php echo _('Import Readability File') ?></a>
             </form>
             <small><?php echo _('Note: The import needs to be a JSON file.') ?></small>
             <div class="response-message"></div>
