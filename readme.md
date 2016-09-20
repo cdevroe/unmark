@@ -36,6 +36,7 @@ The local-version of Unmark is recommended for at least intermediate users so th
 - Optionally: Update your HOSTS file and create a virtual host for Unmark. We use "unmark.local" most of the time.
 - Point your browser to `/setup`
 - From there Unmark will set up the proper database tables and then ask you to register your username with the app
+- Optional: Change base_url in config.php to your local URL. This will help build proper URLs in some cases.
 
 Note: Using Nginx rather than Apache? Follow [these Nginx configuration instructions](https://github.com/plainmade/unmark/wiki/Nginx-Configuration).
 
@@ -43,6 +44,7 @@ Note: Using Nginx rather than Apache? Follow [these Nginx configuration instruct
 
 - Download [the latest release](https://github.com/plainmade/unmark/releases).
 - Replace all files (keeping your local `/application/config/database.php` intact.)
+- Optional: If you changed base_url in config.php to your local URL make this update
 - Navigate to `your-unmark-url/upgrade`
 - Unmark will then make any needed database updates
 - That's it!
