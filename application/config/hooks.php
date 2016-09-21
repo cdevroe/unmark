@@ -10,39 +10,13 @@
 |
 */
 
-if ( function_exists( 'bindtextdomain' ) ) :
-
-	// Loads language translation files
-	$hook['pre_controller_method'][''] = array(
-		'class'    => 'Unmark_Localization',
-	    'function' => 'loadLanguage',
-	    'filename' => 'Unmark_Localization.php',
-	    'filepath' => 'hooks',
-	);
-
-else :
-
-	// Replace _() with simple function to return value.
-	function _($v){
-	    return $v;
-	}
-
-	// Unmark's own ngettext that simply returns the multiple value.
-	function ngettext( $singular, $plural, $number ) {
-
-		if ( function_exists( 'ngettext' ) ) : // Doubtful to ever be true, but just in case? I don't know.
-			return ngettext( $singular, $plural, $number );
-		else :
-			if ( $number == 0 || $number > 1 ) :
-				return $plural;
-			else :
-				return $singular;
-			endif;
-		endif;
-
-	}
-
-endif; // end if bindtextdomain()
+// Loads language translation files
+$hook['pre_controller_method'][''] = array(
+	'class'    => 'Unmark_Localization',
+    'function' => 'loadLanguage',
+    'filename' => 'Unmark_Localization.php',
+    'filepath' => 'hooks',
+);
 
 
 /* End of file hooks.php */
