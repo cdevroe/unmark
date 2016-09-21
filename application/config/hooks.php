@@ -27,8 +27,8 @@ else :
 	    return $v;
 	}
 
-	// Unmark's own unmark_ngettext that simply returns the multiple value.
-	function unmark_ngettext( $singular, $plural, $number ) {
+	// Unmark's own ngettext that simply returns the multiple value.
+	function ngettext( $singular, $plural, $number ) {
 
 		if ( function_exists( 'ngettext' ) ) : // Doubtful to ever be true, but just in case? I don't know.
 			return ngettext( $singular, $plural, $number );

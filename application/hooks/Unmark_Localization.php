@@ -63,6 +63,6 @@ if ( !function_exists('ngettext') ) :
     else :
       return $singlular;
     endif;
-    
+
   }
 endif;

@@ -18,28 +18,28 @@
     switch ($lookup_type) {
         case 'label':
             $heading['icon']    =   'icon-circle';
-            $heading['title']   =   sprintf(unmark_ngettext('mark labeled %s', 'marks labeled %s', $total), _($label_name));
+            $heading['title']   =   sprintf(ngettext('mark labeled %s', 'marks labeled %s', $total), _($label_name));
             break;
         case 'archive':
             if ( $search_term != '' ) { // Someone is searching their archives
                 $heading['icon']    =   'icon-heading_search';
-                $heading['title']   =   sprintf(unmark_ngettext('archived mark found containing "%s"', 'archived marks found containing "%s"', $total), $search_term);
+                $heading['title']   =   sprintf(ngettext('archived mark found containing "%s"', 'archived marks found containing "%s"', $total), $search_term);
             } else {
                 $heading['icon']    =   'icon-heading_archive';
-                $heading['title']   =   unmark_ngettext('mark archived', 'marks archived', $total);
+                $heading['title']   =   ngettext('mark archived', 'marks archived', $total);
             }
             break;
         case 'tag':
             $heading['icon']    =   'icon-heading_tag';
-            $heading['title']   =   sprintf(unmark_ngettext('mark tagged %s', 'marks tagged %s', $total), $tag_name);
+            $heading['title']   =   sprintf(ngettext('mark tagged %s', 'marks tagged %s', $total), $tag_name);
             break;
         case 'search':
             $heading['icon']    =   'icon-heading_search';
-            $heading['title']   =   sprintf(unmark_ngettext('mark found containing "%s"', 'marks found containing "%s"', $total), $search_term);
+            $heading['title']   =   sprintf(ngettext('mark found containing "%s"', 'marks found containing "%s"', $total), $search_term);
             break;
         default:
             $heading['icon']    =   'icon-heading_time';
-            $heading['title']   =   unmark_ngettext('mark', 'marks', $total);
+            $heading['title']   =   ngettext('mark', 'marks', $total);
             $default_title      =   true;
     }
 
@@ -47,9 +47,9 @@
     // Work some magic
 
     if(stristr($lookup_type, 'last-')){
-        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(unmark_ngettext('mark created in the %s', 'marks created in the %s', $total), _(str_replace('-', ' ', $lookup_type))) : $heading['title'];
+        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(ngettext('mark created in the %s', 'marks created in the %s', $total), _(str_replace('-', ' ', $lookup_type))) : $heading['title'];
     } else {
-        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(unmark_ngettext('mark created %s', 'marks created %s', $total), _(str_replace('-', ' ', $lookup_type))) : $heading['title'];
+        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(ngettext('mark created %s', 'marks created %s', $total), _(str_replace('-', ' ', $lookup_type))) : $heading['title'];
     }
 
 ?>

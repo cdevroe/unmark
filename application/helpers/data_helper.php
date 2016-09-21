@@ -79,7 +79,7 @@ function formatErrors($errors, $params = null)
         $error_codes    = $CI->config->item('error_codes');
         if(array_key_exists($errors, $error_codes)){
             $errno = $errors;
-            $message = empty($params) ? $error_codes[$errno] : call_user_func_array("sprintf", array_merge(array($error_codes[$errno]), $params));            
+            $message = empty($params) ? $error_codes[$errno] : call_user_func_array("sprintf", array_merge(array($error_codes[$errno]), $params));
         } else{
             $errno = 0;
             $message = 'Unknown Error';
@@ -128,7 +128,7 @@ function generateTimeSpan($date)
     foreach ($results as $type => $number) {
         if (! empty($number)) {
             $s = ($number == '1') ? '' : 's';
-            return $number . ' ' . unmark_ngettext($type, $type.'s', $number) . ' ' . _('ago');
+            return $number . ' ' . ngettext($type, $type.'s', $number) . ' ' . _('ago');
         }
     }
 
