@@ -34,6 +34,10 @@
                 <input id="importerReadability" class="importer" type="file" name="uploadReadability">
                 <a data-action="import_data_readability" class="importbtn action" href="#"><?php echo _('Import Readability File') ?></a>
             </form>
+            <form id="importFormDelicious" method="post" enctype="multipart/form-data" action="/import">
+                <input id="importerDelicious" class="importer" type="file" name="uploadDelicious">
+                <a data-action="import_data_delicious" class="importbtn action" href="#"><?php echo _('Import Delicious File') ?></a>
+            </form>
             <small><?php echo _('Note: The import needs to be a JSON file.') ?></small>
             <div class="response-message"></div>
         </div>

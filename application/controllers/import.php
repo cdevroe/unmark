@@ -26,11 +26,13 @@ class Import extends Plain_Controller
 
     public function index()
     {
-        if ( !empty($_FILES) && ( !empty($_FILES['upload']) || !empty($_FILES['uploadReadability']) ) ) {
+        if ( !empty($_FILES) && ( !empty($_FILES['upload']) || !empty($_FILES['uploadReadability']) || !empty($_FILES['uploadDelicious']) ) ) {
             $params = array('user_id' => $this->user_id);
 
             if ( !empty($_FILES['uploadReadability']) ) : // Process Readability file
               $this->_process_readability($_FILES['uploadReadability']);
+            elseif ( !empty($_FILES['uploadDelicious']) ) :
+              $this->_process_delicious($_FILES['uploadDelicious']);
             else :
 
               $this->load->library('JSONImport', $params);
@@ -56,6 +58,54 @@ class Import extends Plain_Controller
         }
 
         $this->view('import/index', array('no_header' => true, 'no_footer' => true));
+
+    }
+
+    public function _process_delicious($file) {
+      $this->CI = & get_instance();
+      $this->CI->load->library('Mark_Import', array('meta'=>array('export_version'=>1),'user_id'=>$this->user_id));
+      $totalImported = 0;
+
+      // Get Delicious HTML
+      $htmlDelicious = file_get_contents($file['tmp_name']);
+
+      // Parse Delicious HTML into DOMDocument
+      $html =               new DOMDocument;
+      $html->loadHTML($htmlDelicious);
+
+      // Get all A tags
+      $bookmarks =          $html->getElementsByTagName('a');
+
+      // Look through links and create and import each
+      foreach($bookmarks as $bookmark):
+        $markObject =                 new stdClass();
+        $markObject->title =          $bookmark->textContent;
+        $markObject->url =            $bookmark->getAttribute('href');
+        $markObject->embed =          '';
+        $markObject->tags =           $bookmark->getAttribute('tags');
+        $markObject->created_on =     date('Y-m-d h:m:s', $bookmark->getAttribute('add_date'));
+        $markObject->archived_on =    null;
+        $markObject->active =         1;
+
+        $importResult =               $this->CI->mark_import->importMark($markObject);
+
+        $totalImported++; // Increment total imported for stats
+
+        // Reset Mark object
+        unset($markObject);
+
+      endforeach;
+
+      // Fake ish stats.
+      $this->data['result'] = array(
+        'total'=>$totalImported,
+        'added'=>$totalImported,
+        'skipped'=>0,
+        'failed'=>0);
+
+      // No check whatsoever here.
+      // Should change this
+      $this->data['success'] = true;
 
     }
 

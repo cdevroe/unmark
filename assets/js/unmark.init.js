@@ -151,11 +151,14 @@
         $('#importerUnmark').change(function (e) {
             return $('#importForm').submit();
         });
-        $('#importerReadability').change(function (e) {
-            return $('#importFormReadability').submit();
+        $('#importerDelicious').change(function (e) {
+            return $('#importFormDelicious').submit();
         });
         $('.importerHTML').change(function (e) {
             return $('#importFormHTML').submit();
+        });
+        $('#importerReadability').change(function (e) {
+            return $('#importFormReadability').submit();
         });
 
     };
