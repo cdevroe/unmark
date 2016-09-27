@@ -175,10 +175,10 @@
                     heading = 'Notes (click to edit)<i class="icon-edit"></i>';
                 break;
                 case 2:
-                    heading = 'EDITING MARK INFO <i class="icon-heading_close"></i>';
+                    heading = 'Editing Mark Info <i class="icon-heading_close"></i>';
                 break;
                 case 3:
-                    heading = 'ADD A NOTE OR EDIT MARK INFO<i class="icon-edit"></i>';
+                    heading = 'Edit Note/Mark Info<i class="icon-edit"></i>';
                 break;
             }
             editField.html(heading);

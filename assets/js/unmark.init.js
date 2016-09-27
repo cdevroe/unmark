@@ -51,11 +51,11 @@
         // Shows the Archive and More Buttons
         $(document).on('mouseenter', '.mark', function () {
             $(this).addClass('hide-dot');
-            $(this).find('.mark-actions').show();
+            $(this).find('.mark-actions').fadeIn(200);
         });
         $(document).on('mouseleave', '.mark', function () {
             $(this).removeClass('hide-dot');
-            $(this).find('.mark-actions').hide();
+            $(this).find('.mark-actions').fadeOut(200);
         });
 
         // Global Button / Action Link Run

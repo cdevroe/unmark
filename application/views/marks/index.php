@@ -72,7 +72,26 @@
                         <span class="mark-sep">&bull;</span>
                         <span class="mark-link"><a target="_blank" href="<?php print $mark->url; ?>"><?php print niceUrl($mark->url); ?></a></span>
                     </div>
+                    <div class="archive-target">
+                        <?php if ($lookup_type == "archive") : ?>
+                            <a title="Unarchive Mark" class="action mark-archive" data-action="mark_restore" href="#" data-id="<?php print $mark->mark_id; ?>">
+                                <i class="icon-unarchive"></i>
+                            </a>
+                        <?php else : ?>
+                            <a title="Archive Mark" class="action mark-archive" data-action="mark_archive" href="#" data-id="<?php print $mark->mark_id; ?>">
+                                <i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="25.8" y="6.95" width="4" height="30.5" transform="translate(23.84 -13.16) rotate(45)"/><rect x="12.16" y="22.45" width="4" height="13.43" transform="translate(-16.47 18.56) rotate(-45)"/></svg>
+                                </i>
+                            </a>
+                        <?php endif; ?>
+                    </div>
                     <div class="mark-actions">
+                        <a title="View Mark Info" class="action mark-info" href="#" data-nofade="true" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>">
+                            <i>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 8"><title>elipsis</title><circle cx="18" cy="4" r="4"/><circle cx="32" cy="4" r="4"/><circle cx="4" cy="4" r="4"/></svg>
+                            </i>
+                        </a>
+                        <!--
                         <a title="View Mark Info" class="action mark-archive tabletonly" href="#" data-nofade="true" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>">
                             <i class="icon-ellipsis"></i>
                         </a>
@@ -88,6 +107,7 @@
                                 <i class="icon-check"></i>
                             </a>
                         <?php endif; ?>
+                        -->
                     </div>
                     <div class="note-placeholder"></div>
                     <script id="mark-data-<?php print $mark->mark_id; ?>" type="application/json"><?php echo json_encode($mark); ?></script>

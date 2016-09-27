@@ -123,7 +123,10 @@ body {
 // Hide Stupid Outlines
 textarea:focus, input:focus, .hideoutline, button { outline: 0; }
 // However for now, show a slight background to know what you are editing.
-.editable { background-color: #FDFBE4; }
+.editable { 
+    background-color: transparentize(saturate(lighten($color_blue, 30%), 20%), .6);
+    box-shadow: 0 0 0 4px transparentize(saturate(lighten($color_blue, 30%), 20%), .6); 
+}
 
 .sidebar-spacer {
     display: inline-block;
@@ -317,6 +320,15 @@ img { max-width: 100%; }
             svg {
                 fill: white;
             }
+        }
+        .version {
+            display: block;
+            font-size: 12px;
+            color: transparentize($color_white, .65);
+            text-align: right;
+            position: absolute;
+            right: 28px;
+            top: 32px;
         }
     }
     ul.navigation-pane-links {
@@ -756,6 +768,11 @@ ul.nav-list {
             right: 0;
             z-index: 400;
             height: 100%;
+            /*
+            -webkit-transition: all .2s;
+            transition: all .2s;
+            opacity: 0;
+            */
             a {
                 background: $color_white;
                 display: block;
@@ -763,7 +780,7 @@ ul.nav-list {
                 width: 30px;
                 height: 30px;
                 border-radius: 50%;
-                border: 1px solid transparentize($color_dark_gray, .7);
+                border: 1px solid transparentize($color_dark_gray, .85);
                 padding: 0;
                 position: absolute;
                 top: 50%;
@@ -779,7 +796,7 @@ ul.nav-list {
                     left: 50%;
                     margin-left: -7px;
                     svg {
-                        fill: transparentize($color_dark_gray, .3);
+                        fill: transparentize($color_dark_gray, .4);
                     }
                 }
                 &.mark-archive {
@@ -917,6 +934,11 @@ ul.nav-list {
             }
             .mark-actions { display: block !important; }
         }
+        &:hover {
+            .mark-actions {
+                //opacity: 1;
+            }
+        }
     }
 }
 
@@ -930,7 +952,7 @@ ul.nav-list {
     padding-right:0;
     position: absolute;
     right: 0;
-    padding: 24px;
+    padding: 30px;
     overflow:scroll;
     -webkit-overflow-scrolling: touch;
     z-index: 600;
@@ -959,7 +981,6 @@ ul.nav-list {
         padding: 15px 0;
         background: $color_white;
         box-shadow: 0 2px 3px 0 transparentize(desaturate(darken($color_gray, 10%), 10%), .4);
-        border-radius: 4px;
         margin-bottom: 20px;
         .sidebar-inner {
             padding: 0 25px 4px;
@@ -969,18 +990,22 @@ ul.nav-list {
                 line-height: 1.6;
             }
             a.btn, button {
-                @include title-text;
+                //@include title-text;
                 @include font-smoothing;
-                font-size: 10px;
+                font-size: 13px;
                 line-height: 16px;
-                padding-top: 7px;
+                padding: 9px 20px 8px;
                 margin: 0;
-                border: 3px solid #fdfdfd;
+                font-weight: 600;
+                //border: 3px solid #fdfdfd;
                 width: auto;
                 box-sizing: border-box;
                 float: left;
                 color: $color_white;
-                text-decoration:none;
+                text-decoration: none;
+                border-radius: 100px;
+                text-transform: none;
+                box-shadow: 0 15px 40px -10px transparentize(white, .8) inset, 0 1px 4px 0 transparentize(black, .9);
             }
             a {
                 color: $color_dark;
@@ -1006,6 +1031,7 @@ ul.nav-list {
         z-index: 1;
     }
     */
+    /*
     &:after {
         content: "";
         display: block;
@@ -1016,6 +1042,7 @@ ul.nav-list {
         left: 0;
         box-shadow: 0 6px 13px -6px transparentize(black, .94) inset, 0 12px 30px -12px transparentize(black, .94) inset;
     }
+    */
     &.wide {
         &:after {
             -webkit-transform: rotate(180deg);
@@ -1057,13 +1084,13 @@ ul.nav-list {
 
 .sidebar-mark-info {
     .sidebar-action {
-        @include drop-shadow-border();
-        position: fixed;
+        //@include drop-shadow-border();
+        //position: fixed;
         width: 100%;
-        top: 8px;
+        //top: 8px;
         height: 56px;
         z-index: 99999;
-        background: $color_shade;
+        //background: $color_shade;
         a {
             position: fixed;
             top: 21px;
@@ -1076,12 +1103,16 @@ ul.nav-list {
                 margin:0;
             }
             i {
-                color: $color_light;
+                color: $color_gray;
                 font-size: 20px;
-                width: 15px;
-                height: 15px;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: 1px solid darken(desaturate($color_gray, 15%), 10%);
                 display: block;
-                background-size: 100%;
+                background-size: 12px 12px;
+                background-position: center center;
+                background-repeat: no-repeat;
                 margin: 7px 7px 0 0;
             }
         }
@@ -1092,6 +1123,7 @@ ul.nav-list {
         //margin-top: 56px;
         //height: 56px;
         //@include drop-shadow-border();
+        margin-bottom: 50px;
         &:before {
             //@include unmark-label-ball(5px, 16px, 0px);
             content: "Label";
@@ -1100,16 +1132,17 @@ ul.nav-list {
             margin-bottom: 16px;
             font-size: 12px;
             color: $color_dark_gray;
+            font-weight: 600;
         }
         a {
             margin: 0;
             //padding: 21px 0 21px 50px;
             //@include title-text;
-            font-size: 12px;
+            font-size: 13px;
             //display: block;
             vertical-align: 2px;
             padding-left: 4px;
-            font-weight: 500;
+            font-weight: 600;
         }
         &.label-2 {
             //background: rgba($color_orange, .2);
@@ -1162,6 +1195,7 @@ ul.nav-list {
             color: $color_dark_gray;
             background: lighten($color_gray, 1%);
             min-width: 54px;
+            font-weight: 600;
             //&.label-2 { color: $color_orange; }
             //&.label-3 { color: $color_blue; }
             //&.label-4 { color: $color_yellow; }
@@ -1171,17 +1205,18 @@ ul.nav-list {
         }
     }
     .sidebar-info-panel {
-        padding: 10px 0 10px 25px;
-        width: 96%;
+        padding: 0;
+        //width: 96%;
         h4 {
-            border-bottom: 1px solid lighten($color_light, 16%);
+            border-bottom: 1px solid darken($color_gray, 6%);
             padding: 0 0 14px 0;
-            @include title-text;
-            font-size: 11px;
+            //@include title-text;
+            font-size: 13px;
             position: relative;
-            color: $color_lightest;
+            color: $color_dark_gray;
             cursor: pointer;
             margin-bottom: 26px;
+            font-weight: 600;
             i {
                 position: absolute;
                 right: 5px;
@@ -1215,7 +1250,7 @@ ul.nav-list {
             }
             span.action { cursor: pointer; }
             &.sidebar-info-notes {
-                padding: 5px 10px;
+                //padding: 5px 10px;
             }
             &.sidebar-info-notes a {
                 color: $color_black;
