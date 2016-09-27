@@ -69,7 +69,7 @@
     unmark.hideNavigation = function () {
         if (Modernizr.mq('only screen and (min-width: 480px)')) { $('.mark-actions').hide(); $('.branding').fadeOut(); }
         unmark.nav_panel.stop().animate({ left: -285 }, 400);
-        unmark.main_panel.stop().animate({ left: 65 }, 200, function () {
+        unmark.main_panel.stop().animate({ left: 80 }, 200, function () {
             $('.nav-panel').hide();
             $('.menu-item').removeClass('active-menu');
             $('.navigation-pane-links').show();
@@ -84,7 +84,7 @@
         var panel_to_show = elem_ckd.attr('href'),
             panel_name = panel_to_show.replace(/^#/, ''),
             panel_width = parseInt(elem_ckd.attr('rel')),
-            panel_animate = panel_width + 65,
+            panel_animate = panel_width + 80,
             elem_parent = elem_ckd.parent(),
             panel_position = parseInt(unmark.nav_panel.css('left'));
 
@@ -123,7 +123,7 @@
         $('.menu-activator i').removeClass('icon-menu_open').addClass('icon-menu_close');
 
         // Check which panel to show
-        unmark.nav_panel.animate({ left: 65 }, { duration: 200, queue: false });
+        unmark.nav_panel.animate({ left: 80 }, { duration: 200, queue: false });
         unmark.main_panel.animate({ left: panel_animate }, { duration: 200, queue: false });
 
         unmark.nav_panel.animate({ width: panel_width, }, 200);
