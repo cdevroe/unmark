@@ -102,6 +102,10 @@ body {
     overflow: hidden;
 }
 
+.mobile-header {
+    display: none;
+}
+
 // Logo
 .branding {
     width: 150px;
@@ -517,7 +521,7 @@ ul.nav-list {
             font-weight: 400;
             box-shadow: none;
             border: none;
-            border-radius: 100px;
+            //border-radius: 100px;
         }
         ::-webkit-input-placeholder {
             //@include title-text;
@@ -584,7 +588,7 @@ ul.nav-list {
         @include title-text;
         @include font-smoothing;
         font-weight: 700;
-        border-radius: 100px;
+        //border-radius: 100px;
         box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize(black, .8);
     }
 }
@@ -957,7 +961,7 @@ ul.nav-list {
     -webkit-overflow-scrolling: touch;
     z-index: 600;
     //display: none;
-    width: 33% !important;
+    width: 33%;
     top: 0;
     .close-sidebar {
         display: block;
@@ -1003,7 +1007,7 @@ ul.nav-list {
                 float: left;
                 color: $color_white;
                 text-decoration: none;
-                border-radius: 100px;
+                //border-radius: 100px;
                 text-transform: none;
                 box-shadow: 0 15px 40px -10px transparentize(white, .8) inset, 0 1px 4px 0 transparentize(black, .9);
             }
@@ -2288,32 +2292,75 @@ button.upgradeNowSidebar {
 
 #mobile-sidebar-show {
     display: none;
-    width: 65px;
-    height: 65px;
+    width: 56px;
+    height: 60px;
     position: absolute;
     right: 0;
     top: 0;
     i {
-        width: 25px;
-        height: 25px;
+        width: 18px;
+        height: 18px;
         background-size: 100%;
         display: block;
-        margin: 19px 0 0 20px;
+        margin: 21px 0 0 20px;
     }
 }
-
+.menu-activator {
+    display: none;
+    width: 56px;
+    height: 60px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    i {
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        display: block;
+        top: 50%;
+        margin-top: -9px;
+        left: 50%;
+        margin-left: -9px;
+        .crossbar {
+            display: block;
+            height: 2px;
+            width: 18px;
+            background: $color_white;
+            position: absolute;
+            top: 50%;
+            margin-top: -1px;
+            left: 50%;
+            margin-left: -9px;
+            &:first-child {
+                margin-top: -6px;
+            }
+            &:last-child {
+                margin-top: 4px;
+            }
+        }
+    }
+}
 
 // Tablet Landscape
 @media only screen and (max-width : 1024px) {
 
     body[data-lookup="all"] { opacity: 1; }
 
-    .marks_list .mark h2 { font-size: 18px; }
-
-    .marks_list .mark .mark-actions a {
-        width: 60px;
-        float: left;
-        height: 100%;
+    .marks_list {
+        .mark {
+            h2 { 
+                font-size: 18px; 
+            }
+            .mark-actions {
+                display: block;
+                a {
+                    width: 30px;
+                    height: 30px;
+                    right: 12px;
+                    border: none;
+                }
+            }
+        }
     }
 
     .tabletonly { display: block !important; }
@@ -2326,6 +2373,29 @@ button.upgradeNowSidebar {
 
     body {
         box-shadow: none;
+        //background: $color_darker;
+    }
+    .mobile-header {
+        display: block;
+        height: 60px;
+        position: fixed;
+        background: $color_darker;
+        width: 100%;
+        padding: 0 60px;
+        .branding {
+            display: block;
+            position: absolute;
+            top: 50%;
+            margin-top: -10px;
+            left: 50%;
+            margin-left: -29px;
+            width: 58px;
+            height: 18px;
+            text-align: center;
+            svg {
+                fill: $color_white; 
+            }
+        }
     }
     .main-wrapper {
         box-shadow: none;
@@ -2414,22 +2484,37 @@ button.upgradeNowSidebar {
 
     .marks_list {
         .mark {
-            padding: 20px 70px 25px 20px;
+            padding: 16px 52px 23px 52px;
             h2 {
-                font-size: 16px;
-                line-height: 22px;
+                font-size: 15px;
+                line-height: 1.4;
+                margin-bottom: 4px;
             }
             &:after {
-                right: 12px;
-                height: 18px;
-                width: 18px;
+                border-width: 8px;
+            }
+            .archive-target {
+                left: 16px;
+                width: 20px;
+                height: 20px;
+                margin-top: -10px;
+                .mark-archive {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+            .mark-meta {
+                font-size: 11px;
             }
         }
     }
-    .navigation-content { left: -64px; }
+    .navigation-content { 
+        width: 60px;
+        left: -60px; 
+    }
     .main-wrapper {
         left: 0;
-        top: 65px;
+        top: 60px;
     }
     .main-content { 
         width: 100%;
@@ -2441,30 +2526,18 @@ button.upgradeNowSidebar {
     }
     .sidebar-content {
         position: absolute;
+        width: 85%;
         right: -85%;
-        padding-right:0;
+        padding-right: 0;
         display: none;
-        border-left: 1px solid $color_light;
+        //border-left: 1px solid $color_light;
     }
     #mobile-sidebar-show { display: block; }
+    .menu-activator { display: block; }
     .navigation-content .menu-activator {
         position: absolute;
         left: 62px;
         top: 0;
-    }
-
-    .branding {
-        position: fixed;
-        top: 21px;
-        left: 60px;
-        margin: 0;
-        width: auto;
-        display: block;
-        .logo-text {
-            background-size: 100%;
-            width: 85px;
-            margin: auto;
-        }
     }
 
     .marks_list .mark h2 a:hover:after { display: none; }

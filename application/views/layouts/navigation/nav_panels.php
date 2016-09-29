@@ -18,7 +18,7 @@
 <div id="panel-search" class="nav-panel">
 	<h4 class="nav-heading"><?php echo _('Search')?></h4>
 	<form method="get" action="/marks/search" id="search-form">
-		<input type="text" name="q" id="search-input" placeholder="<?php echo _('SEARCH...') ?>" autocapitalize="off">
+		<input type="text" name="q" id="search-input" placeholder="<?php echo _('Search...') ?>" autocapitalize="off">
 		<button type="submit"><i class="icon-go"></i></button>
 	</form>
 
