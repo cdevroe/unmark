@@ -1,0 +1,48 @@
+<?php
+
+$unmark_language = array(
+    'timeline' =>         array( 'timeline', 'timelines' ),
+    'mark' =>             array( 'mark', 'marks' ),
+    'second' =>           array( 'second', 'seconds' ),
+    'minute' =>           array( 'minute', 'minutes' ),
+    'hour' =>             array( 'hour', 'hours' ),
+    'day' =>              array( 'day', 'days' ),
+    'month' =>            array( 'month', 'months' ),
+    'year' =>             array( 'year', 'years' ),
+    'today' =>            array( 'today' ),
+    'yesterday' =>        array( 'yesterday' ),
+    'last week' =>        array( 'last week' ),
+    'last month' =>       array( 'last month' ),
+    'last year' =>        array( 'last year' ),
+    'last 3 months' =>    array( 'last 3 months' ),
+    'last 6 months' =>    array( 'last 6 months' ),
+    'all marks' =>        array( 'all marks' ),
+    'most-used tags' =>   array( 'most-used tags' ),
+    'search' =>           array( 'search', 'searches' ),
+    'no tags found' =>    array( 'no tags found' ),
+    'ago' =>              array( 'ago' ), // example "1 month ago" or "2 weeks ago"
+    'you saved 0 marks today and archived 0' =>              array( 'you saved 0 marks today and archived 0' ),
+    'sorry, no marks found' =>                               array( 'sorry, no marks found' ),
+    'sign out' =>              array( 'sign out' ),
+    'register' =>              array( 'register' ),
+    'change password' =>       array( 'change password' ),
+    'change email address' =>  array( 'change email address' ),
+    'import or export marks' =>              array( 'import or export marks' ),
+    'invite others' =>              array( 'invite others' ),
+    'unmark help' =>              array( 'unmark help' ),
+    'bookmarklet help' =>              array( 'bookmarklet help' ),
+    'contact support' =>              array( 'contact support' ),
+    'save to unmark' =>              array( 'save to unmark' ),
+    'follow us on twitter' =>              array( 'follow us on twitter' ),
+    'get the chrome extension' =>              array( 'get the chrome extension' ),
+    'account' =>              array( 'account' ),
+    'help' =>              array( 'help' ),
+    'tools' =>              array( 'tools' ),
+    'label' =>              array( 'label', 'labels' ),
+    'old password' =>              array( 'old password' ),
+    'new password' =>              array( 'new password' ),
+    'new email address' =>              array( 'new email address' ),
+);
+
+
+ ?>
