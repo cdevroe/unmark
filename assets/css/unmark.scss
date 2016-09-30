@@ -2476,6 +2476,21 @@ button.upgradeNowSidebar {
 // Phone Portrait
 @media only screen and (max-width : 480px) {
 
+    #unmark-wrapper {
+        position: absolute;
+        width: 300%;
+        top: 60px;
+        left: -100%;
+        -webkit-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
+        &.nav-active {
+            left: 0;
+        }
+        &.sidebar-active {
+            left: -200%;
+        }
+    }
+
     .sidebar-action { display: none; }
 
     a[data-action="sidebar_expand"] { display: none; }
@@ -2510,26 +2525,37 @@ button.upgradeNowSidebar {
     }
     .navigation-content { 
         width: 60px;
-        left: -60px; 
+        left: 0; 
+    }
+    .navigation-pane {
+        width: calc(33.333333% - 60px);
+        left: 60px;
     }
     .main-wrapper {
-        left: 0;
-        top: 60px;
+        left: 33.33333%;
+        width: 66.66666%;
+        //top: 60px;
     }
     .main-content { 
-        width: 100%;
+        width: 50%;
         .marks {
             &.continue-search {
                 font-size: 13px;
             }
         }
+        .marks-heading {
+            top: 60px;
+            height: 60px;
+            font-size: 14px;
+            padding: 20px;
+        }
     }
     .sidebar-content {
         position: absolute;
-        width: 85%;
-        right: -85%;
-        padding-right: 0;
-        display: none;
+        width: 50% !important;
+        left: 50% !important;
+        //padding-right: 0;
+        //display: none;
         //border-left: 1px solid $color_light;
     }
     #mobile-sidebar-show { display: block; }

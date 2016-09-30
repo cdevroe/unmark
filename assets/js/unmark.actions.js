@@ -27,15 +27,15 @@
     unmark.sidebar_collapse = function () {
         if (Modernizr.mq('only screen and (max-width: 480px)')) {
             $('.mark-actions').hide();
-            $('.sidebar-content').animate({right: '-85%'}, 200, function () {
+            $('.sidebar-content').animate({right: '-85%'}, 600, function () {
                 $(this).hide();
             });
         }
         $('.mark').removeClass('view-inactive').removeClass('view-active');
         $('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable'); // 1.6
         unmark.sidebar_expand(true);
-        unmark.sidebar_mark_info.fadeOut(200, function () {
-            unmark.sidebar_default.fadeIn(200);
+        unmark.sidebar_mark_info.fadeOut(400, function () {
+            unmark.sidebar_default.fadeIn(400);
         });
     };
 
@@ -45,19 +45,19 @@
         var expBtn = unmark.sidebar_content.find('a[data-action="sidebar_expand"] i');
 
         if (compress === true) {
-            return unmark.sidebar_content.animate({ width: '85%' }, 200, function () {
+            return unmark.sidebar_content.animate({ width: '33%' }, 300, function () {
                 expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
                 unmark.sidebar_content.removeClass('wide');
             });
         }
 
         if (expBtn.hasClass('icon-heading_collapse')) {
-            unmark.sidebar_content.animate({ width: '85%' }, 200, function () {
+            unmark.sidebar_content.animate({ width: '33%' }, 300, function () {
                 expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
                 unmark.sidebar_content.removeClass('wide');
             });
         } else {
-            unmark.sidebar_content.animate({ width: '85%' }, 200, function () {
+            unmark.sidebar_content.animate({ width: '33%' }, 300, function () {
                 expBtn.removeClass('icon-heading_expand').addClass('icon-heading_collapse');
                 unmark.sidebar_content.addClass('wide');
             });

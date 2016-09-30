@@ -163,4 +163,17 @@
     // Get this baby in action
     $(document).ready(function(){ unmark.init(); });
 
+    ////////////////////////////////////////////////////////////////////////////
+    $('.mobile-header .menu-activator').on( "click", function(e) {
+        e.preventDefault();
+        $('#unmark-wrapper').removeClass();
+        $('#unmark-wrapper').addClass('nav-active');
+    });
+    $('.mobile-header #mobile-sidebar-show').on( "click", function(e) {
+        e.preventDefault();
+        $('#unmark-wrapper').removeClass();
+        $('#unmark-wrapper').addClass('sidebar-active');
+    });
+
+
 }(window.jQuery));
