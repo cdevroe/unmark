@@ -11,10 +11,19 @@
 */
 
 // Loads language translation files
-$hook['pre_controller_method'][''] = array(
+// COMMENTED OUT
+/*$hook['pre_controller_method'][''] = array(
 	'class'    => 'Unmark_Localization',
     'function' => 'loadLanguage',
     'filename' => 'Unmark_Localization.php',
+    'filepath' => 'hooks',
+);*/
+
+// Loads language translation array
+$hook['pre_controller_method'][''] = array(
+		'class'    => 'Unmark_languages',
+    'function' => 'loadLanguage',
+    'filename' => 'Unmark_Languages.php',
     'filepath' => 'hooks',
 );
 
