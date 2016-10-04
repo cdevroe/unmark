@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title><?php echo unmark_phrase('Unmark : User Registration') ?></title>
     <link href='//fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="assets/css/unmark.css?v=<?php echo ASSET_VERSION; ?>" />
+    <link rel="stylesheet" href="assets/css/unmark.css?v=<?php echo $this->config->item('unmark_version'); ?>" />
     <link rel="icon" type="image/ico" href="favicon.ico" />
     <script src="assets/js/plugins/modernizr-2.7.1.min.js"></script>
     <script>

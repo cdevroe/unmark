@@ -36,7 +36,7 @@
             </form>
             <form id="importFormHTML" method="post" enctype="multipart/form-data" action="/import">
                 <input id="importerHTML" class="importer" type="file" name="uploadHTML">
-                <a data-action="import_data_html" class="importbtn action" href="#"><?php echo _('Import HTML File') ?></a>
+                <a data-action="import_data_html" class="importbtn action" href="#"><?php echo unmark_phrase('Import HTML File') ?></a>
             </form>
             <small><?php echo unmark_phrase('Note: HTML import supports Delicious, Pinboard, and others.'); ?></small>
             <div class="response-message"></div>

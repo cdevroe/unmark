@@ -69,6 +69,7 @@ $unmark_language = array(
     'import marks' =>                                         array( 'Import marks' ),
     'import unmark file' =>                                   array( 'Import Unmark file' ),
     'import readability file' =>                              array( 'Import Readability file' ),
+    'import html file' =>                                     array( 'Import HTML File' ),
     'note: html import supports delicious, pinboard, and others.' =>            array( 'Note: HTML import supports Delicious, Pinboard, and others.' ),
     'labels' =>                                               array( 'Labels' ),
     'archives' =>                                             array( 'Archives' ),
