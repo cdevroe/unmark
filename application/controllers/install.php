@@ -68,7 +68,7 @@ class Install extends CI_Controller
       show_error($this->migration->error_string());
       exit;
     }
-    exit(sprintf(_('Upgraded. Please <a href="%s">return home</a>.'), '/'));
+    exit(sprintf(unmark_phrase('Upgraded. Please <a href="%s">return home</a>.'), '/'));
 
   }
 

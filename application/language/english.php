@@ -62,7 +62,7 @@ $unmark_language = array(
     'do nothing' =>                                           array( 'Do nothing' ),
     'old password...' =>                                      array( 'Old password...' ),
     'new password...' =>                                      array( 'New password...' ),
-    'once more...' =>                                         array( 'Cnce more...' ),
+    'once more...' =>                                         array( 'Once more...' ),
     'new email address...' =>                                 array( 'New Email address...' ),
     'export all marks' =>                                     array( 'Export all marks' ),
     'export file' =>                                          array( 'Export file' ),
@@ -83,8 +83,6 @@ $unmark_language = array(
     'version' =>                                              array( 'Version' ),
     'you have %s mark that are over 1 year old. want to tidy up a bit?' => array( 'You have %s mark that are over 1 year old. Want to tidy up a bit?' ),
     'mark found containing "%s"' =>                           array( 'marks found containing "%s"' ),
-
-
 );
 
 

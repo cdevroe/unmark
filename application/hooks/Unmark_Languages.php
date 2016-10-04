@@ -69,16 +69,3 @@ function unmark_phrase( $phrase, $number=1 )
     log_message('DEBUG', ' The phrase "' . $phrase . '" could not be found in the language file.');
   endif;
 }
-
-// Added 1.7.1
-// For backward compatibility with
-// Unmark's old language locality system
-// Eventually, we could replace ngettext() with unmark_phrase() throughout the app
-if ( !function_exists('ngettext') ) :
-  function ngettext( $singular, $plural, $number ) {
-    return unmark_phrase( $singular, $number );
-  }
-  function _( $phrase ) {
-    return unmark_phrase( $phrase );
-  }
-endif;

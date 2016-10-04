@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title><?php echo _('Unmark : Importer'); ?></title>
+    <title><?php echo unmark_phrase('Unmark : Importer'); ?></title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="assets/css/unmark.css" />
     <link rel="icon" type="image/ico" href="favicon.ico" />
@@ -16,14 +16,14 @@
                         $first = $prop;
                         break;
                     } 
-                    print '<p>'. sprintf(_('ERROR: %s'), $first) . '</p>';
+                    print '<p>'. sprintf(unmark_phrase('ERROR: %s'), $first) . '</p>';
                 }
             } else {
                 print '<p>' . _('Successfull Upload!') . '</p>';
-                print '<p>' . sprintf(ngettext('%s mark added', '%s marks added', $result['added']), $result['added']) . '</p>';
-                print '<p>' . sprintf(ngettext('%s mark skipped', '%s marks skipped', $result['skipped']), $result['skipped']) . '</p>';
-                print '<p>' . sprintf(ngettext('%s mark failed', '%s marks failed', $result['failed']), $result['failed']) . '</p>';
-                print '<p>' . sprintf(ngettext('%s mark total', '%s marks total', $result['total']), $result['total']) . '</p>';
+                print '<p>' . sprintf(unmark_phrase('%s mark added', '%s marks added', $result['added']), $result['added']) . '</p>';
+                print '<p>' . sprintf(unmark_phrase('%s mark skipped', '%s marks skipped', $result['skipped']), $result['skipped']) . '</p>';
+                print '<p>' . sprintf(unmark_phrase('%s mark failed', '%s marks failed', $result['failed']), $result['failed']) . '</p>';
+                print '<p>' . sprintf(unmark_phrase('%s mark total', '%s marks total', $result['total']), $result['total']) . '</p>';
                 print '<p>' . _('Head <a href=\'/\'>back</a> to see them now!') . '</p>';
             }
         ?>

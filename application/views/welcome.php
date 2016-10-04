@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title><?php echo _('Unmark - The to do app for bookmarks.') ?></title>
+    <title><?php echo unmark_phrase('Unmark - The to do app for bookmarks.') ?></title>
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo ASSET_VERSION; ?>" />
     <link rel="stylesheet" href="/assets/css/unmark_welcome.css?v=<?php echo ASSET_VERSION; ?>" />
@@ -31,31 +31,31 @@
     <div class="loginWrapper">
         <div class="loginInner">
             <div class="login-ball"><img src="/assets/images/logo.png" /></div>
-            <h1><?php echo _('Sign In To') ?></h1>
+            <h1><?php echo unmark_phrase('Sign In To') ?></h1>
             <div class="login-text"><img src="/assets/images/icons/logo_text_light.png" /></div>
             <form id="unmarkLogin" method="post" action="/login">
-                <input type="email" class="field-input" name="email" id="email" placeholder="<?php echo _('Email Address') ?>" autocapitalize="off" />
-                <input type="password" class="field-input" name="password" id="password" placeholder="<?php echo _('Password') ?>" />
+                <input type="email" class="field-input" name="email" id="email" placeholder="<?php echo unmark_phrase('Email Address') ?>" autocapitalize="off" />
+                <input type="password" class="field-input" name="password" id="password" placeholder="<?php echo unmark_phrase('Password') ?>" />
                 <button class="login-submit" type="submit"><i class="icon-go"></i></button>
             </form>
             <div class="response-message"></div>
-            <a href="#" class="forgot-pass" title="<?php echo _('Forgot Password?') ?>"><?php echo _('Forgot Password?') ?></a>
+            <a href="#" class="forgot-pass" title="<?php echo unmark_phrase('Forgot Password?') ?>"><?php echo unmark_phrase('Forgot Password?') ?></a>
             <span class="sep">&bull;</span>
-            <a href="http://help.unmark.it" class="register" title="<?php echo _('Visit Us') ?>"><?php echo _('What is Unmark?') ?></a>
+            <a href="http://help.unmark.it" class="register" title="<?php echo unmark_phrase('Visit Us') ?>"><?php echo unmark_phrase('What is Unmark?') ?></a>
         </div>
     </div>
 
     <div class="forgotPassWrapper">
         <div class="loginInner">
             <div class="login-ball"><img src="/assets/images/logo.png" /></div>
-            <h1><?php echo _('Reset Password For') ?></h1>
+            <h1><?php echo unmark_phrase('Reset Password For') ?></h1>
             <div class="login-text"><img src="/assets/images/icons/logo_text_light.png" /></div>
             <form id="unmarkForgotPass" method="post" action="/tools/forgotPassword">
-                <input type="email" class="field-input" name="email" id="forgot_email" placeholder="<?php echo _('Email Address') ?>" autocomplete="off" autocapitalize="off" autocorrect="off" />
+                <input type="email" class="field-input" name="email" id="forgot_email" placeholder="<?php echo unmark_phrase('Email Address') ?>" autocomplete="off" autocapitalize="off" autocorrect="off" />
                 <button class="forgot-submit" type="submit"><i class="icon-go"></i></button>
             </form>
             <div class="response-message"></div>
-            <a href="#" class="forgot-pass" title="<?php echo _('Sign into your account') ?>"><?php echo _('Need to Sign In?') ?></a>
+            <a href="#" class="forgot-pass" title="<?php echo unmark_phrase('Sign into your account') ?>"><?php echo unmark_phrase('Need to Sign In?') ?></a>
         </div>
     </div>
 
