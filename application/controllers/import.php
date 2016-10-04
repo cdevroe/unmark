@@ -26,13 +26,13 @@ class Import extends Plain_Controller
 
     public function index()
     {
-        if ( !empty($_FILES) && ( !empty($_FILES['upload']) || !empty($_FILES['uploadReadability']) || !empty($_FILES['uploadDelicious']) ) ) {
+        if ( !empty($_FILES) && ( !empty($_FILES['upload']) || !empty($_FILES['uploadReadability']) || !empty($_FILES['uploadHTML']) ) ) {
             $params = array('user_id' => $this->user_id);
 
             if ( !empty($_FILES['uploadReadability']) ) : // Process Readability file
               $this->_process_readability($_FILES['uploadReadability']);
-            elseif ( !empty($_FILES['uploadDelicious']) ) :
-              $this->_process_delicious($_FILES['uploadDelicious']);
+            elseif ( !empty($_FILES['uploadHTML']) ) :
+              $this->_process_html($_FILES['uploadHTML']);
             else :
 
               $this->load->library('JSONImport', $params);
@@ -61,17 +61,19 @@ class Import extends Plain_Controller
 
     }
 
-    public function _process_delicious($file) {
-      $this->CI = & get_instance();
+    public function _process_html($file) {
+      $this->CI =           &get_instance();
       $this->CI->load->library('Mark_Import', array('meta'=>array('export_version'=>1),'user_id'=>$this->user_id));
-      $totalImported = 0;
+      $totalImported =      0;
 
-      // Get Delicious HTML
-      $htmlDelicious = file_get_contents($file['tmp_name']);
+      log_message( 'DEBUG', 'Importing bookmarks from an HTML file.' );
 
-      // Parse Delicious HTML into DOMDocument
+      // Get HTML
+      $htmlSource =         file_get_contents($file['tmp_name']);
+
+      // Parse HTML into DOMDocument
       $html =               new DOMDocument;
-      $html->loadHTML($htmlDelicious);
+      $html->loadHTML($htmlSource);
 
       // Get all A tags
       $bookmarks =          $html->getElementsByTagName('a');
@@ -95,6 +97,8 @@ class Import extends Plain_Controller
         unset($markObject);
 
       endforeach;
+
+      log_message( 'DEBUG', 'Finished importing bookmarks from an HTML file.' );
 
       // Fake ish stats.
       $this->data['result'] = array(

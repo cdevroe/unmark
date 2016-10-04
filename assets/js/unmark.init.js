@@ -151,10 +151,7 @@
         $('#importerUnmark').change(function (e) {
             return $('#importForm').submit();
         });
-        $('#importerDelicious').change(function (e) {
-            return $('#importFormDelicious').submit();
-        });
-        $('.importerHTML').change(function (e) {
+        $('#importerHTML').change(function (e) {
             return $('#importFormHTML').submit();
         });
         $('#importerReadability').change(function (e) {

@@ -110,11 +110,8 @@
     unmark.import_data = function () {
         return $('#importerUnmark').trigger('click');
     };
-    unmark.import_data_delicious = function () {
-        return $('#importerDelicious').trigger('click');
-    };
     unmark.import_data_html = function () {
-        return $('.importerHTML').trigger('click');
+        return $('#importerHTML').trigger('click');
     };
     unmark.import_data_readability = function () {
         return $('#importerReadability').trigger('click');
