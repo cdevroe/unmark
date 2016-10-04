@@ -18,10 +18,13 @@
         unmarklogin.pass_form     = $('#unmarkForgotPass');
         unmarklogin.forget_submit = $('.forgot-submit');
         unmarklogin.input_fields  = $('input.field-input');
+        unmarklogin.input_email   = $('#email');
         unmarklogin.helper_buttom = $('.forgot-pass');
         unmarklogin.pass_wrapper  = $('.forgotPassWrapper');
         unmarklogin.login_page    = $('#unmark_login_page');
         unmarklogin.about_page    = $('#unmark_about_page');
+
+        unmarklogin.input_email.focus();
 
         // Toggle the Login Form
         function toggle_login_form(hide, message) {
