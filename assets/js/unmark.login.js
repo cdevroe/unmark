@@ -10,7 +10,7 @@
         // Set up Variables
         var unmarklogin = {};
 
-        unmarklogin.message = $('.response-message');
+        unmarklogin.message =       $('.response-message');
         unmarklogin.login_wrapper = $('.loginWrapper');
         unmarklogin.login_spinner = $('.unmark-spinner');
         unmarklogin.login_success = $('.unmark-success');
