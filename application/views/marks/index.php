@@ -47,9 +47,9 @@
     // Work some magic
 
     if(stristr($lookup_type, 'last-')){
-        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(unmark_phrase('mark created in the %s', 'marks created in the %s', $total), _(str_replace('-', ' ', $lookup_type))) : $heading['title'];
+        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(unmark_phrase('mark created in the %s', 'marks created in the %s', $total), unmark_phrase(str_replace('-', ' ', $lookup_type))) : $heading['title'];
     } else {
-        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(unmark_phrase('mark created %s', 'marks created %s', $total), _(str_replace('-', ' ', $lookup_type))) : $heading['title'];
+        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(unmark_phrase('mark created %s', 'marks created %s', $total), unmark_phrase(str_replace('-', ' ', $lookup_type))) : $heading['title'];
     }
 
 ?>

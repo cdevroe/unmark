@@ -27,7 +27,7 @@ class Unmark_Languages
       if ( file_exists($language_file_to_load) ) :
         include( FCPATH . APPPATH . 'language/' . $language_to_load . '.php' );
         $this->CI->config->set_item( 'phrases', $unmark_language ); // Load phrases into global config
-        log_message('Debug', 'The "' . $language_to_load . '" language file has been loaded.');
+        log_message('DEBUG', 'The "' . $language_to_load . '" language file has been loaded.');
       else :
         log_message('ERROR', 'The "' . $language_to_load . '" language file could be found.');
       endif;
@@ -37,11 +37,11 @@ class Unmark_Languages
 
 /**
  * Loads a phrase
- * Accepts: Phrase (string) and number (0,1,2)
+ * Accepts: Phrase (string), Phrase Plural (for backwards compatibilty) and number (0,1,2)
  * Returns: Prints singular or plural phrase if found
  * Error: If phrase not found it will log a message and respond with "Phrase not found."
  */
-function unmark_phrase( $phrase, $number=1 )
+function unmark_phrase( $phrase, $phrase_plural='', $number=1 )
 {
   // Load instance
   $CI =& get_instance();
@@ -58,7 +58,6 @@ function unmark_phrase( $phrase, $number=1 )
 
   // Be sure language file contains phrase
   if ( array_key_exists( strtolower($phrase), $phrases ) ) :
-
     // See if language file has the singular or plural phrase, if not, default to singular
     if ( isset($phrases[strtolower($phrase)][$plural]) ) :
       return $phrases[strtolower($phrase)][$plural];
@@ -66,6 +65,7 @@ function unmark_phrase( $phrase, $number=1 )
       return $phrases[strtolower($phrase)][0];
     endif;
   else : // Language file does not contain phrase, put something in Debug
-    log_message('DEBUG', ' The phrase "' . $phrase . '" could not be found in the language file.');
+    log_message('DEBUG', 'The phrase "' . $phrase . '" could not be found in the language file.');
+    return $phrase;
   endif;
 }

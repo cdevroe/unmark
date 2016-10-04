@@ -82,7 +82,11 @@ $unmark_language = array(
     '%s mark' =>                                              array( '%s mark', '%s marks' ),
     'version' =>                                              array( 'Version' ),
     'you have %s mark that are over 1 year old. want to tidy up a bit?' => array( 'You have %s mark that are over 1 year old. Want to tidy up a bit?' ),
-    'mark found containing "%s"' =>                           array( 'marks found containing "%s"' ),
+    'mark found containing "%s"' =>                           array( 'Marks found containing "%s"' ),
+    'mark labeled %s' =>                                      array( 'Mark labeled %s', 'Marks labeled %s' ),
+    'mark created in the %s' =>                               array( 'Mark created in the %s', 'Marks created in the %s' ),
+    'mark archived' =>                                        array( 'Mark Archived', 'Marks Archived' ),
+    'mark tagged %s' =>                                       array( 'Mark tagged %s', 'Marks tagged %s' ),
 );
 
 

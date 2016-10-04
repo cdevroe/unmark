@@ -132,7 +132,7 @@ function generateTimeSpan($date)
         }
     }
 
-    return ummark_phrase('Just Now');
+    return unmark_phrase('Just Now');
 }
 
 function getLastJsonError()
