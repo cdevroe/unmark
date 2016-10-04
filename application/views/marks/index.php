@@ -1,9 +1,9 @@
 <?php if (isset($errors['2'])) : ?>
 <h2 class="marks-heading"><?php echo unmark_phrase('Sorry, No marks found')?></h2>
 <?php if (isset($_GET['q']) & $lookup_type == "search") : // Only if this is for a search ?>
-<div class="marks continue-search no-results"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
+<div class="marks continue-search no-results"><?php echo sprintf( unmark_phrase('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
 <?php elseif ($lookup_type == 'tag') : ?>
-<div class="marks continue-search no-results"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), $active_tag['tag_name']); ?></div>
+<div class="marks continue-search no-results"><?php echo sprintf( unmark_phrase('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), $active_tag['tag_name']); ?></div>
 <?php endif; ?>
 <?php else : ?>
 <?php if (isset($lookup_type) && $lookup_type != "all") :
@@ -18,7 +18,7 @@
     switch ($lookup_type) {
         case 'label':
             $heading['icon']    =   'icon-circle';
-            $heading['title']   =   sprintf(unmark_phrase('mark labeled %s', 'marks labeled %s', $total), _($label_name));
+            $heading['title']   =   sprintf(unmark_phrase('mark labeled %s', 'marks labeled %s', $total), unmark_phrase($label_name));
             break;
         case 'archive':
             if ( $search_term != '' ) { // Someone is searching their archives
@@ -94,7 +94,7 @@
                 </div>
             <?php endforeach; ?>
             <?php if (isset($_GET['q']) && $lookup_type == "search" || $lookup_type == "tag" ) : ?>
-                <div class="marks continue-search with-results"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : $tag_name); ?></div>
+                <div class="marks continue-search with-results"><?php echo sprintf( unmark_phrase('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : $tag_name); ?></div>
             <?php endif; ?>
         <?php else : ?>
             <div id="mark-x" class="mark label-x"><h2><?php echo unmark_phrase('No Marks Found')?></h2></div>

@@ -10,21 +10,21 @@
     <div id="unmark-setup">
         <?php
             if ($success === false) {
-                print '<p>' . _('Sorry, there was an error. Please <a href=\'/\'>go back</a> and try again.').'</p>';
+                print '<p>' . unmark_phrase('Sorry, there was an error. Please <a href=\'/\'>go back</a> and try again.').'</p>';
                 if (isset($errors) ) {
                     foreach($errors as $prop) {
                         $first = $prop;
                         break;
-                    } 
+                    }
                     print '<p>'. sprintf(unmark_phrase('ERROR: %s'), $first) . '</p>';
                 }
             } else {
-                print '<p>' . _('Successfull Upload!') . '</p>';
+                print '<p>' . unmark_phrase('Successfull Upload!') . '</p>';
                 print '<p>' . sprintf(unmark_phrase('%s mark added', '%s marks added', $result['added']), $result['added']) . '</p>';
                 print '<p>' . sprintf(unmark_phrase('%s mark skipped', '%s marks skipped', $result['skipped']), $result['skipped']) . '</p>';
                 print '<p>' . sprintf(unmark_phrase('%s mark failed', '%s marks failed', $result['failed']), $result['failed']) . '</p>';
                 print '<p>' . sprintf(unmark_phrase('%s mark total', '%s marks total', $result['total']), $result['total']) . '</p>';
-                print '<p>' . _('Head <a href=\'/\'>back</a> to see them now!') . '</p>';
+                print '<p>' . unmark_phrase('Head <a href=\'/\'>back</a> to see them now!') . '</p>';
             }
         ?>
     </div>
