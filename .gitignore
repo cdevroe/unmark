@@ -1,18 +1,28 @@
+# macOS
+.DS_Store
+
+# Application things
 application/config/database.php
 application/logs/*.php
 application/controllers/test.php
 application/views/test.php
-.DS_Store
-.buildpath
-.project
+application/cache/db_backups
+custom
+error_log
 application/config/environment.php
 application/config/*/**
 !application/config/all/*
-.sass-cache/
-application/cache/db_backups
-custom
+
+# Development files
 node_modules
+.buildpath
+.project
+.sass-cache/
 .sass-cache
 assets/css/.sass-cache/*
 assets/css/*.css.map
-error_log
+
+# Production CSS and JS files
+assets/css/unmark.css
+assets/css/unmark_welcome.css
+assets/js/production/*.js

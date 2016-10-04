@@ -16,8 +16,6 @@ module.exports = function(grunt) {
         return object;
     }
 
-    var asset_version = new Date().getTime();
-
     var js_file_config = {
 		'assets/js/production/unmark.plugins.js': [
 			'assets/js/plugins/hogan.js',
@@ -81,19 +79,6 @@ module.exports = function(grunt) {
                     banner: '/*! DEVELOPMENT VERSION */ \n'
                 },
                 files: js_file_config
-            }
-        },
-        "string-replace": {
-            src: {
-               files: {
-                   "application/helpers/view_helper.php" : "application/helpers/view_helper.php"
-               },
-               options: {
-                   replacements: [{
-                        pattern: /define\("ASSET_VERSION", ('(?:''|[^'])*'|[^',]+)\);/,
-                        replacement: 'define("ASSET_VERSION", "'+asset_version+'");'
-                   }]
-               }
             }
         },
         watch: {
