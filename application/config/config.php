@@ -1,5 +1,16 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/*
+|--------------------------------------------------------------------------
+| Unmark Version Number
+|--------------------------------------------------------------------------
+|
+| The current version of Unmark. Used in a few places throughout the app
+| E.g. as an asset version control
+|
+| version.point.release
+|
+*/
 $config['unmark_version'] = '1.7.2';
 
 /*
@@ -17,6 +28,15 @@ $config['unmark_version'] = '1.7.2';
 |
 */
 $config['base_url']	= '';
+
+
+// If base_url not given, CodeIgniter seems to do a less than stellar
+// job of determining this domain. So we will allow PHP to do it.
+if ( empty($config['base_url']) || $config['base_url'] == '' ) :
+	$config['base_url'] = 'http'.(empty($_SERVER['HTTPS'])?'':'s').'://' . $_SERVER['SERVER_NAME'];
+endif;
+
+
 
 /*
 |--------------------------------------------------------------------------
