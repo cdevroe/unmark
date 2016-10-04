@@ -29,7 +29,7 @@
 
 // Looking for global environment configuration under /etc/unmark/environment.php
 if(!defined('ENVIRONMENT')){
-    define('ENVIRONMENT', 'development');
+    define('ENVIRONMENT', 'production');
 }
 
 // Define DOCROOT
