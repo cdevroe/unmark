@@ -75,7 +75,7 @@
                     <div class="archive-target">
                         <?php if ($lookup_type == "archive") : ?>
                             <a title="Unarchive Mark" class="action mark-archive" data-action="mark_restore" href="#" data-id="<?php print $mark->mark_id; ?>">
-                                <i class="icon-unarchive"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="6" y="28" width="2" height="20"/><rect x="38" y="28" width="2" height="20"/><rect x="29.74" y="-2.79" width="2.06" height="24" transform="translate(2.5 24.45) rotate(-45)"/><rect x="14.18" y="-2.68" width="2.36" height="24" transform="translate(19.63 26.77) rotate(-135)"/><line x1="23.01" x2="39.98" y2="16.97"/><rect x="22" y="3" width="2" height="33"/><rect x="6" y="46" width="34" height="2"/></svg>
                             </a>
                         <?php else : ?>
                             <a title="Archive Mark" class="action mark-archive" data-action="mark_archive" href="#" data-id="<?php print $mark->mark_id; ?>">

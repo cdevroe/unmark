@@ -38,11 +38,17 @@
         };
 
         // Clean up view
+        /*
         if (!mark_nofade) {
             $('.mark').removeClass('view-inactive').removeClass('view-active');
             $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
             $('#mark-' + mark_id).addClass('view-active');
         }
+        */
+
+        $('.mark').removeClass('view-inactive').removeClass('view-active');
+        $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
+        $('#mark-' + mark_id).addClass('view-active');
 
         // Check for note placeholder and update if there.
         if (mark_notehold !== ''){ mark_obj['notes'] = mark_notehold; }

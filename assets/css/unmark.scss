@@ -846,6 +846,12 @@ ul.nav-list {
                         opacity: .4;
                     }
                 }
+                &[data-action="mark_restore"] {
+                    border: none;
+                    svg {
+                        fill: lighten($color_dark_gray, 25%);
+                    }
+                }
             }
         }
         &.label-2 {
@@ -924,23 +930,38 @@ ul.nav-list {
         }
         &.view-active {
             //box-shadow: 0 -1px 0 0 darken($color_gray, 10%) inset;
-            border-bottom: 1px solid darken($color_gray, 8%);
+            border-bottom: 1px solid darken($color_gray, 7%);
+            /*
             &:before {
                 content: "";
                 display: block;
-                height: 10px;
-                width: 10px;
-                border-radius: 50%;
-                background: darken($color_gray, 10%);
+                height: 0;
+                width: 0;
+                border: 10px solid;
+                border-color: transparent darken($color_gray, 3%) transparent transparent;
                 position: absolute;
-                bottom: -5px;
-                right: -5px;
+                top: 50%;
+                margin-top: -10px;
+                right: 0;
             }
-            .mark-actions { display: block !important; }
-        }
-        &:hover {
-            .mark-actions {
-                //opacity: 1;
+            &:after {
+                content: "";
+                display: block;
+                height: 0;
+                width: 0;
+                border: 10px solid;
+                border-color: transparent lighten($color_gray, 1%) transparent transparent;
+                position: absolute;
+                top: 50%;
+                margin-top: -10px;
+                right: -1px;
+            }
+            */
+            //.mark-actions { display: block !important; }
+            &:hover {
+                .mark-actions {
+                    display: none !important;
+                }
             }
         }
     }
@@ -2519,6 +2540,7 @@ button.upgradeNowSidebar {
                     height: 20px;
                 }
             }
+
             .mark-meta {
                 font-size: 11px;
             }
