@@ -88,7 +88,7 @@
                     <div class="mark-actions">
                         <a title="View Mark Info" class="action mark-info" href="#" data-nofade="true" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>">
                             <i>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 8"><title>elipsis</title><circle cx="18" cy="4" r="4"/><circle cx="32" cy="4" r="4"/><circle cx="4" cy="4" r="4"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 8"><circle cx="18" cy="4" r="4"/><circle cx="32" cy="4" r="4"/><circle cx="4" cy="4" r="4"/></svg>
                             </i>
                         </a>
                         <!--
