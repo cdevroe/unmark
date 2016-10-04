@@ -7,9 +7,9 @@ define("ASSET_VERSION", "1475600719567");
 function printMarksCount($num)
 {
     if($num > 0) {
-        return sprintf(ngettext('%s mark', '%s marks', $num), $num);
+        return sprintf(unmark_phrase('%s mark', '%s marks', $num), $num);
     } else {
-        return _('No marks');
+        return unmark_phrase('No marks');
     }
 }
 
