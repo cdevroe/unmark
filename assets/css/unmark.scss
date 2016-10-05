@@ -715,8 +715,8 @@ ul.tag-list {
                 color: $color_darker;
                 &:hover {
                     &:after {
-                        display: inline-block;
-                        content: " ";
+                        /* GOODBYE ARROW 1.8 display: inline-block;
+                        content: " "; */
                         background-image: url('data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0D%0A%3C%21--%20Generator%3A%20Adobe%20Illustrator%2015.0.0%2C%20SVG%20Export%20Plug-In%20.%20SVG%20Version%3A%206.00%20Build%200%29%20%20--%3E%0D%0A%3C%21DOCTYPE%20svg%20PUBLIC%20%22-//W3C//DTD%20SVG%201.1//EN%22%20%22http%3A//www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd%22%3E%0D%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%20x%3D%220px%22%20y%3D%220px%22%0D%0A%09%20width%3D%2228px%22%20height%3D%2228px%22%20viewBox%3D%220%200%2028%2028%22%20enable-background%3D%22new%200%200%2028%2028%22%20xml%3Aspace%3D%22preserve%22%3E%0D%0A%3Cpolygon%20fill%3D%22%23C1C1C1%22%20points%3D%229.003%2C2.048%209.003%2C5.048%2020.758%2C5.048%201.998%2C23.807%204.143%2C25.953%2023.003%2C7.091%2023.003%2C19.049%20%0D%0A%0926.003%2C19.049%2026.003%2C2.048%20%22/%3E%0D%0A%3C/svg%3E%0D%0A');
                         background-repeat: no-repeat;
                         background-size: 100%;

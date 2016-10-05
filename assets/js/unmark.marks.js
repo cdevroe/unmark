@@ -35,20 +35,21 @@
         function populateLabels() {
             _labels = arguments[0] || _labels;
             (! isNaN(_labels)) ? unmark.getData('labels', populateLabels) : $('ul.sidebar-label-list').prepend(unmark.label_list(_labels));
+
+            unmark.marks_addLabel();
         };
 
         // Clean up view
-        /*
-        if (!mark_nofade) {
+
+      //  if (!mark_nofade) {
             $('.mark').removeClass('view-inactive').removeClass('view-active');
             $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
             $('#mark-' + mark_id).addClass('view-active');
-        }
-        */
+        //}
 
-        $('.mark').removeClass('view-inactive').removeClass('view-active');
+        /*$('.mark').removeClass('view-inactive').removeClass('view-active');
         $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
-        $('#mark-' + mark_id).addClass('view-active');
+        $('#mark-' + mark_id).addClass('view-active');*/
 
         // Check for note placeholder and update if there.
         if (mark_notehold !== ''){ mark_obj['notes'] = mark_notehold; }
@@ -79,7 +80,6 @@
                 });
             }
         });
-
     };
 
     // Updates the label count
@@ -167,7 +167,7 @@
             if (notes === '') {
                 //setNoteHeading(3);
             }
-            
+
             query = 'title=' + unmark.urlEncode(title) + '&notes=' + unmark.urlEncode(notes);
             unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
                 $('#mark-'+id).find('.note-placeholder').text(notes);
@@ -198,10 +198,10 @@
         // We will add the A back after editing is turned off
 
         // Make Title and Notes editable
-        
+
         editable_mark_title.attr('contenteditable', true).addClass('editable');
         editable_mark_title.find('a').contents().unwrap();
-        
+
         editable_notes.attr('contenteditable', true).addClass('editable');
         editable_notes.find('a').contents().unwrap();
 
@@ -273,32 +273,37 @@
     };
 
     // Method for adding a label
-    unmark.marks_addLabel = function (btn) {
-
+    unmark.marks_addLabel = function () {
         var mark, label_id, query, label_name, body_class, pattern,
-            labels_list = btn.next(),
-            label_parent = btn.parent();
+            labels_list = $('.sidebar-label-list'),
+            label_chosen = $('#label-chosen'),
+            btn =
+            label_parent = $('.sidebar-label');
 
-        if(labels_list.is(':visible')) { return labels_list.fadeOut(); }
+        // Pre 1.8 used to hide the label list. No longer needed
+        // if(labels_list.is(':visible')) { return labels_list.fadeOut(); }
 
         labels_list.find('a').unbind();
-        labels_list.fadeIn();
+        // Pre 1.8 labels_list.fadeIn();
 
         labels_list.find('a').on('click', function (e) {
             e.preventDefault();
-            mark = labels_list.data('id');
-            label_id = $(this).attr('rel');
-            label_name = $(this).text();
-            body_class = $('body').attr('class');
-            pattern = new RegExp('label');
-            query = 'label_id=' + label_id;
+            mark =            labels_list.data('id');
+            label_id =        $(this).attr('rel');
+            label_name =      $(this).text();
+            body_class =      $('body').attr('class');
+            pattern =         new RegExp('label');
+            query =           'label_id=' + label_id;
+            btn =             $('.action[data-id="'+mark+'"][data-action="marks_addLabel"]');
             unmark.ajax('/mark/edit/'+mark, 'post', query, function(res) {
-                labels_list.fadeOut();
+                // pre 1.8 labels_list.fadeOut();
+                label_chosen.text(label_name);
+                console.log(btn);
                 btn.text(label_name);
                 unmark.swapClass(btn, 'label-*', 'label-'+label_id);
-                labels_list.find('a').unbind();
+                //labels_list.find('a').unbind();
                 unmark.update_label_count(); // Update the count under labels menu
-                if (label_parent.hasClass('sidebar-label')) {
+                //if (label_parent.hasClass('sidebar-label')) {
                     unmark.swapClass(label_parent, 'label-*', 'label-'+label_id);
                     unmark.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
                     unmark.update_mark_info(res, mark);
@@ -306,7 +311,7 @@
                         $('#mark-'+mark).fadeOut();
                         unmark.sidebar_collapse();
                     }
-                }
+                //}
             });
         });
 
@@ -333,10 +338,10 @@
     // Exit edit mode for editing mark info
     unmark.marks_quitEdit = function (editField) {
 
-        // If the Edit field is currently in "Edit" mode, then 
+        // If the Edit field is currently in "Edit" mode, then
         // We can close. If not, don't.
-        if ( editField.html() == 'EDITING MARK INFO <i class="icon-heading_close"></i>' ) {
-            
+        if ( editField.html() == 'Editing Mark Info <i class="icon-heading_close"></i>' ) {
+
             var editable_notes = editField.next(), notes, query;
             var id = $(editable_notes).data('id');
             var editable_mark_title = $('#mark-'+id+' h2');
