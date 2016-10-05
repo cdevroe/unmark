@@ -35,6 +35,8 @@
         function populateLabels() {
             _labels = arguments[0] || _labels;
             (! isNaN(_labels)) ? unmark.getData('labels', populateLabels) : $('ul.sidebar-label-list').prepend(unmark.label_list(_labels));
+
+            unmark.marks_addLabel();
         };
 
         // Clean up view
@@ -78,7 +80,6 @@
                 });
             }
         });
-
     };
 
     // Updates the label count
@@ -272,31 +273,37 @@
     };
 
     // Method for adding a label
-    unmark.marks_addLabel = function (btn) {
+    unmark.marks_addLabel = function () {
         var mark, label_id, query, label_name, body_class, pattern,
-            labels_list = btn.next(),
-            label_parent = btn.parent();
+            labels_list = $('.sidebar-label-list'),
+            label_chosen = $('#label-chosen'),
+            btn =
+            label_parent = $('.sidebar-label');
 
-        if(labels_list.is(':visible')) { return labels_list.fadeOut(); }
+        // Pre 1.8 used to hide the label list. No longer needed
+        // if(labels_list.is(':visible')) { return labels_list.fadeOut(); }
 
         labels_list.find('a').unbind();
-        labels_list.fadeIn();
+        // Pre 1.8 labels_list.fadeIn();
 
         labels_list.find('a').on('click', function (e) {
             e.preventDefault();
-            mark = labels_list.data('id');
-            label_id = $(this).attr('rel');
-            label_name = $(this).text();
-            body_class = $('body').attr('class');
-            pattern = new RegExp('label');
-            query = 'label_id=' + label_id;
+            mark =            labels_list.data('id');
+            label_id =        $(this).attr('rel');
+            label_name =      $(this).text();
+            body_class =      $('body').attr('class');
+            pattern =         new RegExp('label');
+            query =           'label_id=' + label_id;
+            btn =             $('.action[data-id="'+mark+'"][data-action="marks_addLabel"]');
             unmark.ajax('/mark/edit/'+mark, 'post', query, function(res) {
-                labels_list.fadeOut();
+                // pre 1.8 labels_list.fadeOut();
+                label_chosen.text(label_name);
+                console.log(btn);
                 btn.text(label_name);
                 unmark.swapClass(btn, 'label-*', 'label-'+label_id);
-                labels_list.find('a').unbind();
+                //labels_list.find('a').unbind();
                 unmark.update_label_count(); // Update the count under labels menu
-                if (label_parent.hasClass('sidebar-label')) {
+                //if (label_parent.hasClass('sidebar-label')) {
                     unmark.swapClass(label_parent, 'label-*', 'label-'+label_id);
                     unmark.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
                     unmark.update_mark_info(res, mark);
@@ -304,7 +311,7 @@
                         $('#mark-'+mark).fadeOut();
                         unmark.sidebar_collapse();
                     }
-                }
+                //}
             });
         });
 
