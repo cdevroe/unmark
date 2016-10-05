@@ -31,15 +31,26 @@
         <span class="mark-sep">•</span>
         <span class="mark-link"><a target="_blank" href="{{url}}">{{prettyurl}}</a></span>
     </div>
+    <div class="archive-target">
+      {{#archived_on}}
+          <a title="Unarchive Mark" class="action mark-archive" data-action="mark_restore" href="#" data-id="{{mark_id}}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="6" y="28" width="2" height="20"/><rect x="38" y="28" width="2" height="20"/><rect x="29.74" y="-2.79" width="2.06" height="24" transform="translate(2.5 24.45) rotate(-45)"/><rect x="14.18" y="-2.68" width="2.36" height="24" transform="translate(19.63 26.77) rotate(-135)"/><line x1="23.01" x2="39.98" y2="16.97"/><rect x="22" y="3" width="2" height="33"/><rect x="6" y="46" width="34" height="2"/></svg>
+          </a>
+      {{/archived_on}}
+      {{^archived_on}}
+          <a title="Archive Mark" class="action mark-archive" data-action="mark_archive" href="#" data-id="{{mark_id}}">
+              <i>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect x="25.8" y="6.95" width="4" height="30.5" transform="translate(23.84 -13.16) rotate(45)"/><rect x="12.16" y="22.45" width="4" height="13.43" transform="translate(-16.47 18.56) rotate(-45)"/></svg>
+              </i>
+          </a>
+      {{/archived_on}}
+    </div>
     <div class="mark-actions" style="display: none;">
-        <a class="action mark-archive tabletonly" href="#" data-nofade="true" data-action="show_mark_info" data-mark="mark-data-{{mark_id}}"><i class="icon-ellipsis"></i></a>
-        <a target="_blank" class="mark-info" href="{{url}}" data-mark="mark-data-{{mark_id}}"><i class="icon-goto_link"></i></a>
-        {{#archived_on}}
-            <a title="Unarchive Mark" class="action mark-archive" data-action="mark_restore" href="#" data-id="{{mark_id}}"><i class="icon-label"></i></a>
-        {{/archived_on}}
-        {{^archived_on}}
-            <a title="Archive Mark" class="action mark-archive" data-action="mark_archive" href="#" data-id="{{mark_id}}"><i class="icon-check"></i></a>
-        {{/archived_on}}
+        <a title="View Mark Info" class="action mark-info" href="#" data-nofade="true" data-action="show_mark_info" data-mark="mark-data-{{mark_id}}">
+            <i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 8"><circle cx="18" cy="4" r="4"/><circle cx="32" cy="4" r="4"/><circle cx="4" cy="4" r="4"/></svg>
+            </i>
+        </a>
     </div>
     <div class="note-placeholder"></div>
     <script id="mark-data-{{mark_id}}" type="application/json">{"mark_id":"{{mark_id}}","label_id":"{{label_id}}","label_name":"{{label_name}}","notes":"{{notes}}",{{#embed}}"preview":{{embed}},{{/embed}}"archived":{{active}}}</script>
