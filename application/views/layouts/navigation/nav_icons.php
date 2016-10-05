@@ -6,7 +6,7 @@
 	</a>
 </div>
 <div data-menu="panel-label" class="menu-marks menu-item active-menu">
-	<a title="<?php echo unmark_phrase('View All Marks'); ?>" href="#panel-label">
+	<a title="<?php echo unmark_phrase('View All Marks'); ?>" data-panel="#panel-label" href="/marks">
 		<i>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 30"><circle cx="3" cy="3" r="3"/><circle cx="3" cy="15" r="3"/><path d="M3,28a3,3,0,0,0,0,6A3,3,0,0,0,3,28Z" transform="translate(0 -4)"/><rect x="10" y="13" width="30" height="4"/><rect x="10" y="25" width="30" height="4"/><rect x="10" y="1" width="30" height="4"/></svg>
 		</i>
@@ -45,7 +45,7 @@
 </div>
 -->
 <div data-menu="panel-tags" class="menu-tags menu-item">
-	<a title="<?php echo unmark_phrase('View Tags'); ?>" rel="260" href="#panel-tags">
+	<a title="<?php echo unmark_phrase('View Tags'); ?>" rel="260" data-panel="#panel-tags" href="/marks">
 		<i>
 			<!--<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><polygon points="11.01 40 7.01 40 11.01 0 15.01 0 11.01 40"/><polygon points="29.01 40 25.01 40 29.01 0 33.01 0 29.01 40"/><polygon points="0 13 1 9 40 9 39 13 0 13"/><polygon points="0 31 1 27 40 27 39 31 0 31"/></svg>-->
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><polygon points="12 40 6 40 10 0 16 0 12 40"/><polygon points="30 40 24 40 28 0 34 0 30 40"/><polygon points="0 14 1 8 40 8 39 14 0 14"/><polygon points="0 32 1 26 40 26 39 32 0 32"/></svg>
@@ -53,14 +53,14 @@
 	</a>
 </div>
 <div data-menu="panel-archive" class="menu-archive menu-item">
-	<a title="<?php echo unmark_phrase('View Archive'); ?>" href="/marks/archive">
+	<a title="<?php echo unmark_phrase('View Archive'); ?>" data-panel="#panel-archive" href="/marks/archive">
 		<i>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M40,11.68V40H0V11.68L4,0H36ZM5.14,12H34.86l-2.5-8H7.64Z"/></svg>
 		</i>
 	</a>
 </div>
 <div data-menu="panel-settings" class="menu-settings menu-item">
-	<a title="<?php echo unmark_phrase('Settings'); ?>" rel="260" href="#panel-settings">
+	<a title="<?php echo unmark_phrase('Settings'); ?>" rel="260" data-panel="#panel-settings" href="#">
 		<i>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M40,37.48v1.67a0.79,0.79,0,0,1-.83.83H0.83a0.82,0.82,0,0,1-.6-0.23A0.81,0.81,0,0,1,0,39.15V37.48a5.4,5.4,0,0,1,1.55-3.91,11,11,0,0,1,3.75-2.5q2.2-.9,4.4-1.71a12.62,12.62,0,0,0,3.75-2.11A3.92,3.92,0,0,0,15,24.15c-0.12-.12-0.3-0.32-0.53-0.58a16.09,16.09,0,0,1-1.2-1.76,22.41,22.41,0,0,1-1.53-2.89,21.34,21.34,0,0,1-1.2-4A23,23,0,0,1,10,10a9.63,9.63,0,0,1,2.94-7.06A9.63,9.63,0,0,1,20,0a9.63,9.63,0,0,1,7.06,2.94A9.63,9.63,0,0,1,30,10a23.93,23.93,0,0,1-.51,5,19.21,19.21,0,0,1-1.25,4,29.85,29.85,0,0,1-1.48,2.83,14.32,14.32,0,0,1-1.25,1.83L25,24.15a3.92,3.92,0,0,0,1.55,3.1,12.62,12.62,0,0,0,3.75,2.11q2.2,0.81,4.4,1.71a11,11,0,0,1,3.75,2.5A5.41,5.41,0,0,1,40,37.48Z" transform="translate(0 0.02)"/></svg>
 		</i>
