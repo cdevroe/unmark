@@ -1,9 +1,9 @@
 <?php if (isset($errors['2'])) : ?>
-<h2 class="marks-heading"><?php echo _('Sorry, No marks found')?></h2>
+<h2 class="marks-heading"><?php echo unmark_phrase('Sorry, No marks found')?></h2>
 <?php if (isset($_GET['q']) & $lookup_type == "search") : // Only if this is for a search ?>
-<div class="marks continue-search no-results"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
+<div class="marks continue-search no-results"><?php echo sprintf( unmark_phrase('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
 <?php elseif ($lookup_type == 'tag') : ?>
-<div class="marks continue-search no-results"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), $active_tag['tag_name']); ?></div>
+<div class="marks continue-search no-results"><?php echo sprintf( unmark_phrase('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), $active_tag['tag_name']); ?></div>
 <?php endif; ?>
 <?php else : ?>
 <?php if (isset($lookup_type) && $lookup_type != "all") :
@@ -18,28 +18,28 @@
     switch ($lookup_type) {
         case 'label':
             $heading['icon']    =   'icon-circle';
-            $heading['title']   =   sprintf(ngettext('mark labeled %s', 'marks labeled %s', $total), _($label_name));
+            $heading['title']   =   sprintf(unmark_phrase('mark labeled %s', 'marks labeled %s', $total), unmark_phrase($label_name));
             break;
         case 'archive':
             if ( $search_term != '' ) { // Someone is searching their archives
                 $heading['icon']    =   'icon-heading_search';
-                $heading['title']   =   sprintf(ngettext('archived mark found containing "%s"', 'archived marks found containing "%s"', $total), $search_term);
+                $heading['title']   =   sprintf(unmark_phrase('archived mark found containing "%s"', 'archived marks found containing "%s"', $total), $search_term);
             } else {
                 $heading['icon']    =   'icon-heading_archive';
-                $heading['title']   =   ngettext('mark archived', 'marks archived', $total);
+                $heading['title']   =   unmark_phrase('mark archived', 'marks archived', $total);
             }
             break;
         case 'tag':
             $heading['icon']    =   'icon-heading_tag';
-            $heading['title']   =   sprintf(ngettext('mark tagged %s', 'marks tagged %s', $total), $tag_name);
+            $heading['title']   =   sprintf(unmark_phrase('mark tagged %s', 'marks tagged %s', $total), $tag_name);
             break;
         case 'search':
             $heading['icon']    =   'icon-heading_search';
-            $heading['title']   =   sprintf(ngettext('mark found containing "%s"', 'marks found containing "%s"', $total), $search_term);
+            $heading['title']   =   sprintf(unmark_phrase('mark found containing "%s"', 'marks found containing "%s"', $total), $search_term);
             break;
         default:
             $heading['icon']    =   'icon-heading_time';
-            $heading['title']   =   ngettext('mark', 'marks', $total);
+            $heading['title']   =   unmark_phrase('mark', 'marks', $total);
             $default_title      =   true;
     }
 
@@ -47,9 +47,9 @@
     // Work some magic
 
     if(stristr($lookup_type, 'last-')){
-        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(ngettext('mark created in the %s', 'marks created in the %s', $total), _(str_replace('-', ' ', $lookup_type))) : $heading['title'];
+        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(unmark_phrase('mark created in the %s', 'marks created in the %s', $total), unmark_phrase(str_replace('-', ' ', $lookup_type))) : $heading['title'];
     } else {
-        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(ngettext('mark created %s', 'marks created %s', $total), _(str_replace('-', ' ', $lookup_type))) : $heading['title'];
+        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(unmark_phrase('mark created %s', 'marks created %s', $total), unmark_phrase(str_replace('-', ' ', $lookup_type))) : $heading['title'];
     }
 
 ?>
@@ -114,10 +114,10 @@
                 </div>
             <?php endforeach; ?>
             <?php if (isset($_GET['q']) && $lookup_type == "search" || $lookup_type == "tag" ) : ?>
-                <div class="marks continue-search with-results"><?php echo sprintf( _('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : $tag_name); ?></div>
+                <div class="marks continue-search with-results"><?php echo sprintf( unmark_phrase('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : $tag_name); ?></div>
             <?php endif; ?>
         <?php else : ?>
-            <div id="mark-x" class="mark label-x"><h2><?php echo _('No Marks Found')?></h2></div>
+            <div id="mark-x" class="mark label-x"><h2><?php echo unmark_phrase('No Marks Found')?></h2></div>
         <?php endif; ?>
     </div>
 </div>

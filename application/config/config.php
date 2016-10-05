@@ -1,6 +1,17 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-$config['unmark_version'] = '1.7.1';
+/*
+|--------------------------------------------------------------------------
+| Unmark Version Number
+|--------------------------------------------------------------------------
+|
+| The current version of Unmark. Used in a few places throughout the app
+| E.g. as an asset version control
+|
+| version.point.release
+|
+*/
+$config['unmark_version'] = '1.7.2';
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +28,15 @@ $config['unmark_version'] = '1.7.1';
 |
 */
 $config['base_url']	= 'http://unmark.local';
+
+
+// If base_url not given, CodeIgniter seems to do a less than stellar
+// job of determining this domain. So we will allow PHP to do it.
+if ( empty($config['base_url']) || $config['base_url'] == '' ) :
+	$config['base_url'] = 'http'.(empty($_SERVER['HTTPS'])?'':'s').'://' . $_SERVER['SERVER_NAME'];
+endif;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -251,20 +271,20 @@ $config['encryption_key'] = 'nilai1will2make3money!';
 |
 |
 */
-$config['sess_cookie_name']		= 'BookEmDanno';
-$config['sess_expiration']		= 1209600;
-$config['sess_expire_on_close']	= FALSE;
+$config['sess_cookie_name']								= 'BookEmDanno';
+$config['sess_expiration']								= 1209600;
+$config['sess_expire_on_close']						= FALSE;
 // Also enables encryption for data in case of using other storage mechanisms than cookies
-$config['sess_encrypt_cookie']	= FALSE;
-$config['sess_match_ip']		= FALSE;
-$config['sess_match_useragent']	= TRUE;
-$config['sess_time_to_update']	= 300;
+$config['sess_encrypt_cookie']						= FALSE;
+$config['sess_match_ip']									= FALSE;
+$config['sess_match_useragent']						= TRUE;
+$config['sess_time_to_update']						= 300;
 // FOR database storage only
-$config['sess_table_name']		= 'plain_sessions';
+$config['sess_table_name']								= 'plain_sessions';
 
 
 // WARNING: Session settings below refer to CodeIgniter session library which is not being used in Unmark
-$config['sess_use_database']	= FALSE;
+$config['sess_use_database']							= FALSE;
 
 
 /*
@@ -276,7 +296,7 @@ $config['sess_use_database']	= FALSE;
 | 'plain_sess_memcache_addr'  = address of memcache server (valid for memchached session storage only)
 */
 
-$config['plain_sess_storage']		= 'database';
+$config['plain_sess_storage']	= 'database';
 $config['plain_sess_memcache_addr'] = 'localhost';
 
 /*

@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title><?php echo _('Unmark : Reset Password'); ?></title>
+    <title><?php echo unmark_phrase('Unmark : Reset Password'); ?></title>
     <link href='//fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo ASSET_VERSION; ?>" />
+    <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo $this->config->item('unmark_version'); ?>" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
     <script src="/assets/js/plugins/modernizr-2.7.1.min.js"></script>
     <script>
@@ -21,19 +21,19 @@
 <div class="resetWrapper">
     <div class="loginInner">
         <div class="login-ball"><img src="/assets/images/logo.png" /></div>
-        <h1><?php echo _('Reset Password for'); ?></h1>
+        <h1><?php echo unmark_phrase('Reset Password for'); ?></h1>
         <div class="login-text"><img src="/assets/images/icons/logo_text_light.png" /></div>
         <form id="unmarkReset" method="post" action="/login">
-            <input type="password" class="field-input" name="password" id="password" placeholder="<?php echo _('New Password...'); ?>" autocomplete="off" />
-            <input type="password" class="field-input" name="password2" id="password2" placeholder="<?php echo _('Once More...'); ?>" autocomplete="off" />
+            <input type="password" class="field-input" name="password" id="password" placeholder="<?php echo unmark_phrase('New Password...'); ?>" autocomplete="off" />
+            <input type="password" class="field-input" name="password2" id="password2" placeholder="<?php echo unmark_phrase('Once More...'); ?>" autocomplete="off" />
             <button class="login-submit" type="submit"><i class="icon-go"></i></button>
         </form>
         <div class="response-message"></div>
-        <a href="#" class="forgot-pass"><?php echo _('How did I get here?'); ?></a>
+        <a href="#" class="forgot-pass"><?php echo unmark_phrase('How did I get here?'); ?></a>
         <div class="gethere">
-            <p><?php echo _('You clicked on a link in an email from us.'); ?></p>
-            <p class="last"><?php echo _('You can choose a new password here and be on your way.'); ?></p>
-            <a class="help" href="http://help.unmark.it"><?php echo _('HELP'); ?></a><a class="home" href="/"><?php echo _('UNMARK.IT'); ?></a>
+            <p><?php echo unmark_phrase('You clicked on a link in an email from us.'); ?></p>
+            <p class="last"><?php echo unmark_phrase('You can choose a new password here and be on your way.'); ?></p>
+            <a class="help" href="http://help.unmark.it"><?php echo unmark_phrase('HELP'); ?></a><a class="home" href="/"><?php echo unmark_phrase('UNMARK.IT'); ?></a>
         </div>
     </div>
 </div>
@@ -46,7 +46,7 @@ unmark.vars.csrf_token   = '<?php print $csrf_token; ?>';
 </script>
 
 <script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
-<script src="/assets/js/production/unmark.loggedout.js?v=<?php echo ASSET_VERSION; ?>"></script>
+<script src="/assets/js/production/unmark.loggedout.js?v=<?php echo $this->config->item('unmark_version'); ?>"></script>
 
 </body>
 </html>

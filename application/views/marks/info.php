@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title><?php echo _('Unmark : Mark Added'); ?></title>
+    <title><?php echo unmark_phrase('Unmark : Mark Added'); ?></title>
     <link href='//fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo ASSET_VERSION; ?>" />
+    <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo $this->config->item('unmark_version'); ?>" />
     <link rel="icon" type="image/ico" href="favicon.ico" />
     <script src="/assets/js/plugins/modernizr-2.7.1.min.js"></script>
     <script>
@@ -20,7 +20,7 @@
 
 <div class="mark-added" data-label="<?php print $mark->label_id; ?>" data-label-name="<?php print $mark->label_name; ?>">
     <div class="mark-added-block">
-        <?php echo _('This link has been added to your stream.'); ?>
+        <?php echo unmark_phrase('This link has been added to your stream.'); ?>
         <i class="icon-check"></i>
     </div>
 
@@ -31,7 +31,7 @@
 
     <div class="mark-added-label mark-added-settings">
         <span id="label-chosen"></span>
-        <a id="currLabel" class="action" data-action="marks_addLabel" href="#"><?php echo _('Unlabeled'); ?></a>
+        <a id="currLabel" class="action" data-action="marks_addLabel" href="#"><?php echo unmark_phrase('Unlabeled'); ?></a>
         <section data-id="<?php print $mark->mark_id; ?>">
             <ul class="label-choices"></ul>
         </section>
@@ -39,16 +39,16 @@
 
     <div class="mark-added-note mark-added-settings">
         <?php if (empty($mark->notes)) : ?>
-            <a class="action" data-action="marks_addNotes" href=""><?php echo _('Add a Note or Edit Title'); ?></a>
-            <textarea class="mark-added-notes-area hide" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo _('Type note text or #tags here...'); ?>"></textarea>
+            <a class="action" data-action="marks_addNotes" href=""><?php echo unmark_phrase('Add a Note or Edit Title'); ?></a>
+            <textarea class="mark-added-notes-area hide" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text or #tags here...'); ?>"></textarea>
         <?php else : ?>
-            <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo _('Type note text or #tags here...'); ?>"><?php print $mark->notes; ?></textarea>
+            <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text or #tags here...'); ?>"><?php print $mark->notes; ?></textarea>
         <?php endif; ?>
     </div>
 
     <div class="mark-added-actions">
-        <button class="delete" data-action="delete_mark" data-view="bookmarklet" data-id="<?php print $mark->mark_id; ?>"><?php echo _('Delete Link'); ?></button>
-        <button data-action="close_window"><?php echo _('Update &amp; Close'); ?></button>
+        <button class="delete" data-action="delete_mark" data-view="bookmarklet" data-id="<?php print $mark->mark_id; ?>"><?php echo unmark_phrase('Delete Link'); ?></button>
+        <button data-action="close_window"><?php echo unmark_phrase('Update &amp; Close'); ?></button>
     </div>
 
 </div>
@@ -56,7 +56,7 @@
 <?php $this->load->view('layouts/jsvars'); ?>
 
 <script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
-<script src="/assets/js/production/unmark.bookmarklet.js?v=<?php echo ASSET_VERSION; ?>"></script>
+<script src="/assets/js/production/unmark.bookmarklet.js?v=<?php echo $this->config->item('unmark_version'); ?>"></script>
 
 </body>
 </html>

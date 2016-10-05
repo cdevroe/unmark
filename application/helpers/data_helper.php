@@ -128,11 +128,11 @@ function generateTimeSpan($date)
     foreach ($results as $type => $number) {
         if (! empty($number)) {
             $s = ($number == '1') ? '' : 's';
-            return $number . ' ' . ngettext($type, $type.'s', $number) . ' ' . _('ago');
+            return $number . ' ' . unmark_phrase($type, $type.'s', $number) . ' ' . unmark_phrase('ago');
         }
     }
 
-    return _('Just Now');
+    return unmark_phrase('Just Now');
 }
 
 function getLastJsonError()

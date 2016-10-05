@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="apple-mobile-web-app-capable" content="no">
-    <title><?php echo _('Unmark'); ?></title>
+    <title><?php echo unmark_phrase('Unmark'); ?></title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo ASSET_VERSION; ?>" />
+    <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo $this->config->item('unmark_version'); ?>" />
     <link rel="icon" type="image/ico" href="favicon.ico" />
     <link rel="apple-touch-icon" sizes="57x57" href="assets/touch_icons/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="114x114" href="assets/touch_icons/apple-touch-icon-114x114.png">
@@ -52,9 +52,8 @@
             </i>
         </a>
     </header>
-    
-    <div id="unmark-wrapper">
 
+    <div id="unmark-wrapper">
     <?php $this->load->view('layouts/navigation'); ?>
 
     <div class="main-wrapper">

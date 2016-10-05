@@ -25,29 +25,50 @@ The local-version of Unmark is recommended for at least intermediate users so th
 
 - PHP 5.4 or greater with gettext extension. Need help? [Try this](http://php-osx.liip.ch). (we have every intention of removing the need for gettext extension soon)
 - mySQL 5.5 or greater
+- Node for NPM package management and running Grunt
 
 ### Instructions
 
-- Download [the latest release](https://github.com/plainmade/unmark/releases) or clone the repo.
-- Unpack the archive
+#### From Zip (binary)
+- Download [the latest release](https://github.com/plainmade/unmark/releases)
+- Unpack the archive into your desired location
+- Rename `/application/config/database-sample.php` to `/application/config/database.php`
+- Create a database for Unmark to use in mySQL (may we recommend "unmark" as a database name?)
+- Fill in proper database credentials in `/application/config/database.php`
+- Optionally: Update your HOSTS file and create a virtual host for Unmark. We use "unmark.local" as an example.
+- Point your browser to `/setup` on your local Unmark domain E.g. unmark.local/setup
+- From there Unmark will set up the proper database tables and then ask you to register your username with the app
+
+#### From git repository
+- Run `git clone https://github.com/plainmade/unmark.git` (Or, if you've forked the repo, use your URL)
 - Copy `/application/config/database-sample.php` to `/application/config/database.php` (leave `database-sample.php` where it is if you cloned the repo)
 - Create a database for Unmark to use in mySQL (may we recommend "unmark" as a database name?)
 - Fill in proper database credentials in `/application/config/database.php`
-- Optionally: Update your HOSTS file and create a virtual host for Unmark. We use "unmark.local" most of the time.
-- Point your browser to `/setup`
+- Optionally: Update your HOSTS file and create a virtual host for Unmark. We use "unmark.local" as an example.
+- Run `npm install` from the application's root directory
+- Run `grunt` from the app's root directory [more info on Grunt](http://gruntjs.com/)
+- Point your browser to `/setup` on your local Unmark domain E.g. unmark.local/setup
 - From there Unmark will set up the proper database tables and then ask you to register your username with the app
-- Optional: Change base_url in config.php to your local URL. This will help build proper URLs in some cases.
 
 Note: Using Nginx rather than Apache? Follow [these Nginx configuration instructions](https://github.com/plainmade/unmark/wiki/Nginx-Configuration).
 
 ### Upgrading to the latest release
 
-- Download [the latest release](https://github.com/plainmade/unmark/releases).
-- Replace all files (keeping your local `/application/config/database.php` intact.)
-- Optional: If you changed base_url in config.php to your local URL make this update
+#### From Zip (binary)
+- Download [the latest release](https://github.com/plainmade/unmark/releases)
+- Replace all Unmark files (keeping your local `/application/config/database.php` intact.)
 - Navigate to `your-unmark-url/upgrade`
 - Unmark will then make any needed database updates
 - That's it!
+
+#### From git repository
+- Run `git pull origin master`
+- Run `npm update` in the app's root directory
+- Run `grunt` in the app's root directory
+- Navigate to `your-unmark-url/upgrade`
+- Unmark will then make any needed database updates
+- That's it!
+
 
 How to contribute to Unmark
 ----------------------------
@@ -60,6 +81,7 @@ Another way is to contribute your own code via Pull Requests. Here are some note
 - Create your own branch `git checkout -b your-branch-name`
 - Update your code and push those code changes back to your fork's branch `git push origin your-branch-name`
 - [Submit a Pull Request](https://github.com/plainmade/unmark/pulls) using that branch
+- And please accept our _thanks_!
 
 This makes it easy for us to test your code locally and also allows the community to have a discussion around it.
 

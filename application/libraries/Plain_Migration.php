@@ -251,7 +251,7 @@ class Plain_Migration extends CI_Migration
                 $finalVersion = $this->_migration_mappings[$finalVersion];
                 $this->_update_version($finalVersion);
             } else{
-                show_error(sprintf(_('Migrations switched from timestamp to unmark, but cannot find mapping for version %s. Please add correct version to migrations_mapping config entry for migrations'), $finalVersion));
+                show_error(sprintf(unmark_phrase('Migrations switched from timestamp to unmark, but cannot find mapping for version %s. Please add correct version to migrations_mapping config entry for migrations'), $finalVersion));
             }
         }
         return $finalVersion;
