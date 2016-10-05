@@ -14,11 +14,15 @@
     // Grabs relavaent info and shows the sidebar actions with info
     unmark.show_mark_info = function (mark_clicked) {
 
+
+
         var template, output,
             mark_obj_ref    = mark_clicked.data('mark'),
-            mark_string     = $('#' + mark_obj_ref).html(),
-            mark_obj        = jQuery.parseJSON(mark_string),
-            mark_id         = mark_obj_ref.replace("mark-data-",""),
+            mark_string     = $('#' + mark_obj_ref).html();
+            //console.log(mark_string);
+            var mark_obj        = jQuery.parseJSON(mark_string);
+
+            var mark_id         = mark_obj_ref.replace("mark-data-",""),
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
             mark_nofade     = mark_clicked.data('nofade');
 
