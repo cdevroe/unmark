@@ -123,11 +123,18 @@
         $('.menu-activator i').removeClass('icon-menu_open').addClass('icon-menu_close');
 
         // Check which panel to show
-        unmark.nav_panel.animate({ left: 80 }, { duration: 200, queue: false });
-        unmark.main_panel.animate({ left: panel_animate }, { duration: 200, queue: false });
-
-        unmark.nav_panel.animate({ width: panel_width, }, 200);
-        unmark.nav_panel.find('.nav-panel').animate({ width: panel_width, }, 200);
+        if (Modernizr.mq('only screen and (min-width: 480px)')) {
+            unmark.nav_panel.animate({ left: 80 }, { duration: 200, queue: false });
+            unmark.main_panel.animate({ left: panel_animate }, { duration: 200, queue: false });
+            unmark.nav_panel.animate({ width: panel_width, }, 200);
+            unmark.nav_panel.find('.nav-panel').animate({ width: panel_width, }, 200);
+        }
+        else {
+            unmark.nav_panel.animate({ left: 64 }, { duration: 200, queue: false });
+            unmark.main_panel.animate({ left: 280 }, { duration: 200, queue: false });
+            unmark.nav_panel.animate({ width: 216, }, 200);
+            unmark.nav_panel.find('.nav-panel').animate({ width: 216, }, 200);
+        }
 
         // Fade in Logo
         $('.branding').fadeIn();

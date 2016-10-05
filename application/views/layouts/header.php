@@ -45,7 +45,11 @@
             </i>
         </a>
         <a id="mobile-sidebar-show" title="<?php echo _('View/Hide Details'); ?>" href="#">
-            <i class="icon-ellipsis"></i>
+            <i>
+                <span class="ball"></span>
+                <span class="ball"></span>
+                <span class="ball"></span>
+            </i>
         </a>
     </header>
     
