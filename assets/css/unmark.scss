@@ -127,9 +127,9 @@ body {
 // Hide Stupid Outlines
 textarea:focus, input:focus, .hideoutline, button { outline: 0; }
 // However for now, show a slight background to know what you are editing.
-.editable { 
+.editable {
     background-color: transparentize(saturate(lighten($color_blue, 30%), 20%), .6);
-    box-shadow: 0 0 0 4px transparentize(saturate(lighten($color_blue, 30%), 20%), .6); 
+    box-shadow: 0 0 0 4px transparentize(saturate(lighten($color_blue, 30%), 20%), .6);
 }
 
 .sidebar-spacer {
@@ -172,7 +172,7 @@ img { max-width: 100%; }
     height: 100%;
     position: absolute;
     top: 0;
-    left: 80px;
+    left: 340px;
     z-index: 199;
     box-shadow: 0 2px 14px 0 rgba(0,0,0,0.3), 0 1px 3px 0 rgba(0,0,0,0.18);
     .inner-wrapper {
@@ -308,7 +308,7 @@ img { max-width: 100%; }
     height: 100%;
     position: absolute;
     top: 0;
-    left: -260px;
+    left: 80px;
     z-index: 200;
     //border-top: 64px solid $color_darker;
     //margin-top: 64px;
@@ -381,6 +381,9 @@ img { max-width: 100%; }
             overflow: scroll;
             -webkit-overflow-scrolling: touch;
             //box-shadow: 0 6px 10px -6px rgba(0,0,0,0.3) inset;
+            &#panel-label {
+              display: block;
+            }
         }
         #panel-upgrade {
             color: $color_light;
@@ -499,7 +502,7 @@ ul.nav-list {
     li {
         list-style: none;
         color: $color_light;
-        margin: 12px 2px;
+        margin: 8px 2px;
         font-size: 14px;
         a {
             font-size: 13px;
@@ -508,7 +511,23 @@ ul.nav-list {
         }
     }
 }
-
+ul.tag-list {
+    margin: 0;
+    padding:0;
+    li {
+        list-style: none;
+        color: $color_lighter;
+        font-size: 14px;
+        a {
+            color: $color_white;
+            border-bottom: none;
+            padding: 8px 4px;
+            text-transform: inherit;
+            display: block;
+            font-size: 14px;
+        }
+    }
+}
 #panel-search {
     #search-form {
         margin-top: 15px;
@@ -561,35 +580,18 @@ ul.nav-list {
             }
         }
     }
-    ul.tag-list {
-        margin: 0;
-        padding:0;
-        li {
-            list-style: none;
-            color: $color_lighter;
-            font-size: 14px;
-            a {
-                color: $color_white;
-                border-bottom: none;
-                padding: 8px 10px;
-                text-transform: inherit;
-                display: block;
-                font-size: 14px;
-            }
-        }
-    }
 }
 
 #panel-settings {
     button#logout-btn {
         width: 100%;
         margin-top: 36px;
-        padding: 9px 0 12px;
+        padding: 10px 20px 13px;
         font-size: 14px;
         @include title-text;
+        letter-spacing: normal;
         @include font-smoothing;
         font-weight: 700;
-        //border-radius: 100px;
         box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize(black, .8);
     }
 }
@@ -613,7 +615,7 @@ ul.nav-list {
         //left: 0;
         top: 0;
         background: transparent;
-        margin: 0; 
+        margin: 0;
         background: $color_white;
         font-size: 16px;
         font-weight: 600;
@@ -687,7 +689,7 @@ ul.nav-list {
             }
             &.no-results {
                 margin-top: 76px;
-            } 
+            }
         }
     }
 }
@@ -903,7 +905,7 @@ ul.nav-list {
         }
         &.label-6 {
             &:after {
-                border-color: $color_green $color_green $color_light_gray $color_light_gray; 
+                border-color: $color_green $color_green $color_light_gray $color_light_gray;
             }
             .mark-actions a {
                 //background: lighten($color_green, 7%);
@@ -1386,8 +1388,8 @@ ul.nav-list {
 
 // ================ Timeline Rail
 
-.timeline_wrapper { 
-    width: 100%; 
+.timeline_wrapper {
+    width: 100%;
     padding-top: 10px;
 }
 
@@ -2118,7 +2120,7 @@ body.label-7 .navigation-pane { border-top: none; }
         border: 1px solid transparentize($color_dark_gray, .85);
         border-bottom: none;
         font-size: 15px;
-        color: darken($color_dark_gray, 20%); 
+        color: darken($color_dark_gray, 20%);
         margin-bottom: 0;
         text-align: center;
     }
@@ -2200,7 +2202,7 @@ body.label-7 .navigation-pane { border-top: none; }
         }
         &:after {
             -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);   
+            transform: rotate(-45deg);
         }
         i {
             /*
@@ -2385,7 +2387,7 @@ button.upgradeNowSidebar {
                     margin-left: 0px;
                 }
             }
-        }   
+        }
     }
 }
 .menu-activator {
@@ -2457,7 +2459,7 @@ button.upgradeNowSidebar {
                     transform: rotate(45deg);
                 }
             }
-        }   
+        }
     }
 }
 
@@ -2468,8 +2470,8 @@ button.upgradeNowSidebar {
 
     .marks_list {
         .mark {
-            h2 { 
-                font-size: 18px; 
+            h2 {
+                font-size: 18px;
             }
             .mark-actions {
                 display: block;
@@ -2513,7 +2515,7 @@ button.upgradeNowSidebar {
             height: 18px;
             text-align: center;
             svg {
-                fill: $color_white; 
+                fill: $color_white;
             }
         }
     }
@@ -2644,10 +2646,10 @@ button.upgradeNowSidebar {
             }
         }
     }
-    .navigation-content { 
+    .navigation-content {
         //width: 64px;
         width: 10%;
-        left: 0; 
+        left: 0;
         background-color: $color_darkest;
         .menu-item {
             &.brand {
@@ -2674,7 +2676,7 @@ button.upgradeNowSidebar {
         width: 95%;
         //top: 60px;
     }
-    .main-content { 
+    .main-content {
         width: 53%;
         .marks {
             &.continue-search {

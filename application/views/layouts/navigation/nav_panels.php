@@ -11,6 +11,12 @@
 		<?php endforeach; endif; ?>
 	</ul>
 </div>
+<div id="panel-tags" class="nav-panel">
+	<h4 class="nav-heading"><?php echo unmark_phrase('Most-Used Tags') ?></h4>
+	<ul class="tag-list">
+		<?php $this->load->view('layouts/navigation/tags_list.php'); ?>
+	</ul>
+</div>
 <div id="panel-timeline" class="nav-panel">
 	<h4 class="nav-heading"><?php echo unmark_phrase('Timeline')?></h4>
 	<?php $this->load->view('layouts/timeline'); ?>
@@ -21,7 +27,6 @@
 		<input type="text" name="q" id="search-input" placeholder="<?php echo unmark_phrase('SEARCH...') ?>" autocapitalize="off">
 		<button type="submit"><i class="icon-go"></i></button>
 	</form>
-
 	<h4 class="nav-heading"><?php echo unmark_phrase('Most-Used Tags') ?></h4>
 	<ul class="tag-list">
 		<?php $this->load->view('layouts/navigation/tags_list.php'); ?>
@@ -44,4 +49,8 @@
 		<li><a href="javascript:(function()%7Bf%3D%27<?php print rtrim(base_url(),'/'); ?>%2Fmark/add%3Furl%3D%27%2BencodeURIComponent(window.location.href)%2B%27%26title%3D%27%2BencodeURIComponent(document.title)%2B%27%26v%3D6%26%27%3Ba%3Dfunction()%7Bif(!window.open(f%2B%27noui%3D1%26jump%3Ddoclose%27,%27nilaiv2%27,%27location%3D1,links%3D0,scrollbars%3D0,toolbar%3D0,width%3D594,height%3D485%27))location.href%3Df%2B%27jump%3Dyes%27%7D%3Bif(/Firefox/.test(navigator.userAgent))%7BsetTimeout(a,0)%7Delse%7Ba()%7D%7D)();">Save to Unmark</a></li>
 		<li><a target="_blank" href="https://chrome.google.com/webstore/detail/unmark/cdhnljlbeehjgddokagghpfgahhlifch"><?php echo unmark_phrase('Get the Chrome Extension') ?></a></li>
 	</ul>
+</div>
+<div id="panel-archive" class="nav-panel">
+	<h4 class="nav-heading"><?php echo unmark_phrase('Archive')?></h4>
+	<small>Archive stuff here...</small>
 </div>
