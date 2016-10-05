@@ -8,10 +8,6 @@
 		</i>
 		<span class="version"><?php echo $this->config->item('unmark_version'); ?></span>
 	</div>
-    <ul class="navigation-pane-links">
-        <?php $this->load->view('layouts/navigation/nav_helper'); ?>
-        <li class="panel-settings"><a rel="350" href="#panel-settings"><?php unmark_phrase('Settings')?></a></li>
-    </ul>
     <div class="navigation-panel-wrapper">
         <?php $this->load->view('layouts/navigation/nav_panels'); ?>
     </div>

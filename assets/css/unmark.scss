@@ -172,7 +172,7 @@ img { max-width: 100%; }
     height: 100%;
     position: absolute;
     top: 0;
-    left: 80px;
+    left: 340px;
     z-index: 199;
     box-shadow: 0 2px 14px 0 rgba(0,0,0,0.3), 0 1px 3px 0 rgba(0,0,0,0.18);
     .inner-wrapper {
@@ -308,7 +308,7 @@ img { max-width: 100%; }
     height: 100%;
     position: absolute;
     top: 0;
-    left: -260px;
+    left: 80px;
     z-index: 200;
     //border-top: 64px solid $color_darker;
     //margin-top: 64px;
@@ -381,6 +381,9 @@ img { max-width: 100%; }
             overflow: scroll;
             -webkit-overflow-scrolling: touch;
             //box-shadow: 0 6px 10px -6px rgba(0,0,0,0.3) inset;
+            &#panel-label {
+              display: block;
+            }
         }
         #panel-upgrade {
             color: $color_light;
@@ -499,7 +502,7 @@ ul.nav-list {
     li {
         list-style: none;
         color: $color_light;
-        margin: 12px 2px;
+        margin: 8px 2px;
         font-size: 14px;
         a {
             font-size: 13px;
@@ -508,7 +511,23 @@ ul.nav-list {
         }
     }
 }
-
+ul.tag-list {
+    margin: 0;
+    padding:0;
+    li {
+        list-style: none;
+        color: $color_lighter;
+        font-size: 14px;
+        a {
+            color: $color_white;
+            border-bottom: none;
+            padding: 8px 4px;
+            text-transform: inherit;
+            display: block;
+            font-size: 14px;
+        }
+    }
+}
 #panel-search {
     #search-form {
         margin-top: 15px;
@@ -561,35 +580,18 @@ ul.nav-list {
             }
         }
     }
-    ul.tag-list {
-        margin: 0;
-        padding:0;
-        li {
-            list-style: none;
-            color: $color_lighter;
-            font-size: 14px;
-            a {
-                color: $color_white;
-                border-bottom: none;
-                padding: 8px 10px;
-                text-transform: inherit;
-                display: block;
-                font-size: 14px;
-            }
-        }
-    }
 }
 
 #panel-settings {
     button#logout-btn {
         width: 100%;
         margin-top: 36px;
-        padding: 9px 0 12px;
+        padding: 10px 20px 13px;
         font-size: 14px;
         @include title-text;
+        letter-spacing: normal;
         @include font-smoothing;
         font-weight: 700;
-        //border-radius: 100px;
         box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize(black, .8);
     }
 }
