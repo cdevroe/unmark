@@ -167,7 +167,7 @@
             if (notes === '') {
                 //setNoteHeading(3);
             }
-            
+
             query = 'title=' + unmark.urlEncode(title) + '&notes=' + unmark.urlEncode(notes);
             unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
                 $('#mark-'+id).find('.note-placeholder').text(notes);
@@ -198,10 +198,10 @@
         // We will add the A back after editing is turned off
 
         // Make Title and Notes editable
-        
+
         editable_mark_title.attr('contenteditable', true).addClass('editable');
         editable_mark_title.find('a').contents().unwrap();
-        
+
         editable_notes.attr('contenteditable', true).addClass('editable');
         editable_notes.find('a').contents().unwrap();
 
@@ -333,10 +333,10 @@
     // Exit edit mode for editing mark info
     unmark.marks_quitEdit = function (editField) {
 
-        // If the Edit field is currently in "Edit" mode, then 
+        // If the Edit field is currently in "Edit" mode, then
         // We can close. If not, don't.
-        if ( editField.html() == 'EDITING MARK INFO <i class="icon-heading_close"></i>' ) {
-            
+        if ( editField.html() == 'Editing Mark Info <i class="icon-heading_close"></i>' ) {
+
             var editable_notes = editField.next(), notes, query;
             var id = $(editable_notes).data('id');
             var editable_mark_title = $('#mark-'+id+' h2');
