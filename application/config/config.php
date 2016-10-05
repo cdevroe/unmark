@@ -27,7 +27,7 @@ $config['unmark_version'] = '1.7.2';
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://unmark.local';
+$config['base_url']	= '';
 
 
 // If base_url not given, CodeIgniter seems to do a less than stellar

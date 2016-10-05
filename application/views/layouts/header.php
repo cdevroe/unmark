@@ -44,7 +44,7 @@
                 <span class="crossbar"></span>
             </i>
         </a>
-        <a id="mobile-sidebar-show" title="<?php echo _('View/Hide Details'); ?>" href="#">
+        <a id="mobile-sidebar-show" title="<?php echo unmark_phrase('View/Hide Details'); ?>" href="#">
             <i>
                 <span class="ball"></span>
                 <span class="ball"></span>

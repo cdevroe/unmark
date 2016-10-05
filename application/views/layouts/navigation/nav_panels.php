@@ -1,5 +1,5 @@
 <div id="panel-label" class="nav-panel">
-	<h4 class="nav-heading"><?php echo _('Labels')?></h4>
+	<h4 class="nav-heading"><?php echo unmark_phrase('Labels'); ?></h4>
 	<ul class="label-list">
 		<?php
 		if (isset($labels)) :
@@ -12,11 +12,11 @@
 	</ul>
 </div>
 <div id="panel-timeline" class="nav-panel">
-	<h4 class="nav-heading"><?php echo _('Timeline')?></h4>
+	<h4 class="nav-heading"><?php echo unmark_phrase('Timeline')?></h4>
 	<?php $this->load->view('layouts/timeline'); ?>
 </div>
 <div id="panel-search" class="nav-panel">
-	<h4 class="nav-heading"><?php echo _('Search')?></h4>
+	<h4 class="nav-heading"><?php echo unmark_phrase('Search')?></h4>
 	<form method="get" action="/marks/search" id="search-form">
 		<input type="text" name="q" id="search-input" placeholder="<?php echo unmark_phrase('SEARCH...') ?>" autocapitalize="off">
 		<button type="submit"><i class="icon-go"></i></button>
