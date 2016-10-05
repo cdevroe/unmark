@@ -67,6 +67,7 @@
 
     // Hides the left navigation
     unmark.hideNavigation = function () {
+      return;
         if (Modernizr.mq('only screen and (min-width: 480px)')) { $('.mark-actions').hide(); $('.branding').fadeOut(); }
         unmark.nav_panel.stop().animate({ left: -285 }, 400);
         unmark.main_panel.stop().animate({ left: 80 }, 200, function () {

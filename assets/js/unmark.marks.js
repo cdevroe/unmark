@@ -38,17 +38,16 @@
         };
 
         // Clean up view
-        /*
-        if (!mark_nofade) {
+
+      //  if (!mark_nofade) {
             $('.mark').removeClass('view-inactive').removeClass('view-active');
             $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
             $('#mark-' + mark_id).addClass('view-active');
-        }
-        */
+        //}
 
-        $('.mark').removeClass('view-inactive').removeClass('view-active');
+        /*$('.mark').removeClass('view-inactive').removeClass('view-active');
         $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
-        $('#mark-' + mark_id).addClass('view-active');
+        $('#mark-' + mark_id).addClass('view-active');*/
 
         // Check for note placeholder and update if there.
         if (mark_notehold !== ''){ mark_obj['notes'] = mark_notehold; }
@@ -274,7 +273,6 @@
 
     // Method for adding a label
     unmark.marks_addLabel = function (btn) {
-
         var mark, label_id, query, label_name, body_class, pattern,
             labels_list = btn.next(),
             label_parent = btn.parent();

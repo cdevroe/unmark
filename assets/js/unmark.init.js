@@ -85,6 +85,8 @@
         });
 
         // Click / Tap on a Mark opens the more info and shows the buttons
+        /*
+        This will enable mark row clicking which we are getting rid of in 1.8
         $(document).on('click', '.mark', function (e){
             var node = e.target.className, more_link = $(this).find('a.mark-info');
             // Check for Archive... don't show info for this, otherwise show the info
@@ -94,7 +96,7 @@
             }
             // Hide Nav
             unmark.hideNavigation();
-        });
+        }); */
 
         // Watch for internal link click and run PJAX
         // To Do, remove outside links from elem array
@@ -158,38 +160,39 @@
             return $('#importFormReadability').submit();
         });
 
+        // BURN THIS LATER
+        ////////////////////////////////////////////////////////////////////////////
+
+        if ( $('#unmark-wrapper').hasClass('nav-active') ) {
+            $('.mobile-header .menu-activator').on( "click", function(e) {
+                e.preventDefault();
+                $('#unmark-wrapper').removeClass('nav-active');
+                $(this).toggleClass('active');
+            });
+        }
+        else {
+            $('.mobile-header .menu-activator').on( "click", function(e) {
+                e.preventDefault();
+                $('#unmark-wrapper').removeClass();
+                $('#unmark-wrapper').addClass('nav-active');
+                $('.mobile-header #mobile-sidebar-show').removeClass('active');
+                $(this).toggleClass('active');
+            });
+        }
+
+
+        $('.mobile-header #mobile-sidebar-show').on( "click", function(e) {
+            e.preventDefault();
+            $('#unmark-wrapper').removeClass();
+            $('#unmark-wrapper').addClass('sidebar-active');
+            $('.mobile-header .menu-activator').removeClass('active');
+            $(this).toggleClass('active');
+        });
+
     };
 
     // Get this baby in action
     $(document).ready(function(){ unmark.init(); });
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    if ( $('#unmark-wrapper').hasClass('nav-active') ) {
-        $('.mobile-header .menu-activator').on( "click", function(e) {
-            e.preventDefault();
-            $('#unmark-wrapper').removeClass('nav-active');
-            $(this).toggleClass('active');
-        });
-    }
-    else {
-        $('.mobile-header .menu-activator').on( "click", function(e) {
-            e.preventDefault();
-            $('#unmark-wrapper').removeClass();
-            $('#unmark-wrapper').addClass('nav-active');
-            $('.mobile-header #mobile-sidebar-show').removeClass('active');
-            $(this).toggleClass('active');
-        });
-    }
-
-
-    $('.mobile-header #mobile-sidebar-show').on( "click", function(e) {
-        e.preventDefault();
-        $('#unmark-wrapper').removeClass();
-        $('#unmark-wrapper').addClass('sidebar-active');
-        $('.mobile-header .menu-activator').removeClass('active');
-        $(this).toggleClass('active');
-    });
 
 
 }(window.jQuery));
