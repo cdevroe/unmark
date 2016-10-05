@@ -82,7 +82,7 @@
     // This handels both the top level and secondarly level
     unmark.interact_nav = function (e, elem_ckd) {
         // Set variables
-        var panel_to_show = elem_ckd.attr('href'),
+        var panel_to_show = elem_ckd.data('panel'),
             panel_name = panel_to_show.replace(/^#/, ''),
             panel_width = parseInt(elem_ckd.attr('rel')),
             panel_animate = panel_width + 80,
@@ -90,12 +90,12 @@
             panel_position = parseInt(unmark.nav_panel.css('left'));
 
         // For Any Nav Click, Return Sidebar
-        unmark.sidebar_collapse();
+        //unmark.sidebar_collapse();
 
         // If all links pannel - allow click default
         if (panel_to_show.match(/\//)) {
-            unmark.hideNavigation();
-            return true;
+        //    unmark.hideNavigation();
+        //    return true;
         }
 
         // Otherwise prevent click default
@@ -107,7 +107,7 @@
         // If tap/click on open menu, hide menu
         if (elem_parent.hasClass('active-menu')) {
             $('.menu-item').removeClass('active-menu');
-            return unmark.hideNavigation();
+          //  return unmark.hideNavigation();
         }
 
         // Add / Remove Class for current navigation
@@ -117,7 +117,7 @@
         // Check for close action on and open panel
         if (panel_to_show === "#panel-menu") {
             if (panel_position > 0) {
-                return unmark.hideNavigation();
+            //    return unmark.hideNavigation();
             }
         }
 

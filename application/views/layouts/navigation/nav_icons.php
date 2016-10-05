@@ -15,7 +15,7 @@
 </div>
 
 <div data-menu="panel-label" class="menu-labels menu-item">
-	<a title="<?php echo unmark_phrase('View Labels'); ?>" rel="280" href="#panel-label">
+	<a title="<?php echo unmark_phrase('View Labels'); ?>" rel="280" data-panel="#panel-label" href="/marks">
 		<i>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><polygon points="40 40 0 0 40 0 40 40"/></svg>
 		</i>
