@@ -49,6 +49,10 @@ Note: Using Nginx rather than Apache? Follow [these Nginx configuration instruct
 - Unmark will then make any needed database updates
 - That's it!
 
+### Importing bookmarks
+
+Unmark currently supports importing from Unmark's hosted version, any self-hosted version of Unmark, Readability, Pinboard, Delicious, and many other services. However, to ensure this works properly be sure that your PHP.ini file's "max_upload_size" setting is larger than the file you're trying to import.
+
 How to contribute to Unmark
 ----------------------------
 
