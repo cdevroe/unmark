@@ -84,7 +84,7 @@ module.exports = function(grunt) {
         copy: {
             release: {
                 files: [
-                    {expand: true, flatten: false, src: ['application/**'], dest: 'release/unmark/'},
+                    {expand: true, flatten: false, src: ['application/**', '!application/config/database.php'], dest: 'release/unmark/'},
                     {expand: true, flatten: false, src: ['assets/css/*.css'], dest: 'release/unmark/'},
                     {expand: true, flatten: false, src: ['assets/images/**'], dest: 'release/unmark/'},
                     {expand: true, flatten: false, src: ['assets/js/production/*.js'], dest: 'release/unmark/'},
@@ -135,7 +135,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', [ 'sass:prod', 'uglify:prod' ]); // Default Build for OS Project
 
-    grunt.registerTask('release', [ 'sass:prod', 'uglify:prod', 'copy:release', 'compress' ]); // Build for OS release
+    grunt.registerTask('release', [ 'sass:prod', 'uglify:prod', 'copy:release' ]); // Build for OS release
 
     grunt.registerTask('dev', [ 'sass:prod', 'concat:dev', 'concat:custom' ]); // Dev build
     grunt.registerTask('production', [ 'sass:prod', 'uglify:prod', 'uglify:custom' ]); // Default Production Build
