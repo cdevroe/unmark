@@ -46,7 +46,7 @@ class Login extends Plain_Controller {
             // Check if passwords match
             if ($match === false) {
 
-                $this->data['message'] = _('Your password is incorrect. Please try again.');
+                $this->data['message'] = unmark_phrase('Your password is incorrect. Please try again.');
             }
             else {
                 // At this point we are clear for takeoff
