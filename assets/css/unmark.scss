@@ -720,8 +720,9 @@ ul.tag-list {
           border-radius: 50%;
           background: darken($color_gray, 7%);
           position: absolute;
-          right: -12px;
+          right: 0;
           bottom: -6px;
+          opacity: 0;
           -webkit-transition: all .3s ease-in-out;
           transition: all .3s ease-in-out;
         }
@@ -952,6 +953,7 @@ ul.tag-list {
             box-shadow: 0 1px 0 0 $color_gray inset;
             border-bottom: 1px solid darken($color_gray, 7%);
             &:before {
+              opacity: 1;
               right: 333px;
             }
             /*
@@ -1146,6 +1148,12 @@ ul.tag-list {
         height: 56px;
         z-index: 99999;
         //background: $color_shade;
+        .sidebar-heading {
+          margin: 5px 0;
+          font-weight: 400;
+          //color: $color_darker;
+          color: $color_dark_gray;
+        }
         a {
             position: fixed;
             top: 21px;
@@ -1185,7 +1193,7 @@ ul.tag-list {
             @include title-text;
             display: block;
             margin-bottom: 16px;
-            font-size: 13px;
+            font-size: 11px;
             color: $color_dark_gray;
             font-weight: 600;
         }
