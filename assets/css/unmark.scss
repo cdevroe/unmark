@@ -28,14 +28,17 @@ $color_dark_gray : #768d9a;
 $color_light_gray : #f0f5f7;
 
 // Color Variables for labels
-$color_orange : #E28128;
-$color_blue   : #4fb8e5;
-$color_yellow : #EAC863;
-$color_purple : #8E75A6;
-$color_green  : #69B363;
-$color_red    : #EB5556;
+$color_orange : #ff9034;
+$color_blue   : #5fb1e3;
+$color_yellow : #efcc40;
+$color_purple : #9e51ed;
+$color_green  : #5fd581;
+$color_red    : #e26861;
 $color_pink   : #fa736b;
 $color_grey   : #A5A6AA;
+
+$color_yellow_text : darken(saturate($color_yellow, 10%), 15%);
+$color_green_text : darken(saturate($color_green, 2%), 12%);
 
 // Font Variables
 $serif      : 'Merriweather', serif;
@@ -599,7 +602,8 @@ ul.tag-list {
 
 // ================ Main Content
 .main-content {
-    width: 67%;
+    //width: 67%;
+    width: 100%;
     padding-right:0;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
@@ -708,6 +712,19 @@ ul.tag-list {
         position:relative;
         -webkit-transition: all .3s;
         transition: all .3s;
+        &:before {
+          content: "";
+          display: block;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: darken($color_gray, 7%);
+          position: absolute;
+          right: -12px;
+          bottom: -6px;
+          -webkit-transition: all .3s ease-in-out;
+          transition: all .3s ease-in-out;
+        }
         h2 {
             margin:0 0 10px 0;
             font-weight: 400;
@@ -934,6 +951,9 @@ ul.tag-list {
         &.view-active {
             box-shadow: 0 1px 0 0 $color_gray inset;
             border-bottom: 1px solid darken($color_gray, 7%);
+            &:before {
+              right: 333px;
+            }
             /*
             &:before {
                 content: "";
@@ -977,16 +997,22 @@ ul.tag-list {
     border-left: 1px solid darken($color_gray, 5%);
     min-height: 100%;
     height: 100%;
-    padding-right:0;
+    padding-right: 0;
     position: absolute;
-    right: 0;
+    right: -340px;
     padding: 30px;
     overflow:scroll;
     -webkit-overflow-scrolling: touch;
     z-index: 600;
     //display: none;
-    width: 33%;
+    //width: 33%;
+    width: 340px;
     top: 0;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    &.active {
+      right: 0;
+    }
     .close-sidebar {
         display: block;
         width: 24px;
@@ -1111,6 +1137,7 @@ ul.tag-list {
 }
 
 .sidebar-mark-info {
+    width: 100% !important;
     .sidebar-action {
         //@include drop-shadow-border();
         //position: fixed;
@@ -1158,7 +1185,7 @@ ul.tag-list {
             @include title-text;
             display: block;
             margin-bottom: 16px;
-            font-size: 12px;
+            font-size: 13px;
             color: $color_dark_gray;
             font-weight: 600;
         }
@@ -1168,39 +1195,67 @@ ul.tag-list {
             //@include title-text;
             font-size: 13px;
             //display: block;
-            vertical-align: 2px;
+            vertical-align: 1px;
             padding-left: 4px;
             font-weight: 600;
+            &:active, &:focus {
+              outline: 0;
+            }
         }
         &.label-2 {
             //background: rgba($color_orange, .2);
             //box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02), 0 0 0 100px lighten($color_orange, 36) inset;
             //&:before { background: $color_orange; }
             a { color: $color_orange; }
+            ul.sidebar-label-list li.label-2 a:before {
+                box-shadow: 0 0 0 3px lighten($color_gray, 2%), 0 0 0 4px darken($color_gray, 14%);
+                opacity: 1;
+            }
+            #label-chosen.label-2 { opacity: 0; }
         }
         &.label-3 {
             //background: rgba($color_blue, .2);
             //box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02), 0 0 0 100px lighten($color_blue, 46) inset;
             //&:before { background: $color_blue; }
             a { color: $color_blue; }
+            ul.sidebar-label-list li.label-3 a:before {
+                box-shadow: 0 0 0 3px lighten($color_gray, 2%), 0 0 0 4px darken($color_gray, 14%);
+                opacity: 1;
+            }
+            #label-chosen.label-3 { opacity: 0; }
         }
         &.label-4 {
             //background: rgba($color_yellow, .2);
             //box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02), 0 0 0 100px lighten($color_yellow, 29) inset;
             //&:before { background: $color_yellow; }
-            a { color: $color_yellow; }
+            a { color: $color_yellow_text; }
+            ul.sidebar-label-list li.label-4 a:before {
+                box-shadow: 0 0 0 3px lighten($color_gray, 2%), 0 0 0 4px darken($color_gray, 14%);
+                opacity: 1;
+            }
+            #label-chosen.label-4 { opacity: 0; }
         }
         &.label-5 {
             //background: rgba($color_purple, .2);
             //box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02), 0 0 0 100px lighten($color_purple, 38) inset;
             //&:before { background: $color_purple; }
             a { color: $color_purple; }
+            ul.sidebar-label-list li.label-5 a:before {
+                box-shadow: 0 0 0 3px lighten($color_gray, 2%), 0 0 0 4px darken($color_gray, 14%);
+                opacity: 1;
+            }
+            #label-chosen.label-5 { opacity: 0; }
         }
         &.label-6 {
             //background: rgba($color_green, .2);
             //box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02), 0 0 0 100px lighten($color_green, 39) inset;
             //&:before { background: $color_green; }
-            a { color: $color_green; }
+            a { color: $color_green_text; }
+            ul.sidebar-label-list li.label-6 a:before {
+                box-shadow: 0 0 0 3px lighten($color_gray, 2%), 0 0 0 4px darken($color_gray, 14%);
+                opacity: 1;
+            }
+            #label-chosen.label-6 { opacity: 0; }
         }
         &.label-7 {
             //background: rgba($color_pink, .2);
@@ -1208,21 +1263,22 @@ ul.tag-list {
             //&:before { background: $color_pink; }
             a { color: $color_pink; }
             ul.sidebar-label-list li.label-7 a:before {
-                box-shadow: 0 0 0 3px lighten($color_gray, 2%), 0 0 0 4px darken($color_gray, 10%);
+                box-shadow: 0 0 0 3px lighten($color_gray, 2%), 0 0 0 4px darken($color_gray, 14%);
                 opacity: 1;
             }
+            #label-chosen.label-7 { opacity: 0; }
         }
         #label-chosen {
             position: absolute;
             left: 172px;
-            top: 33px;
+            top: 35px;
             z-index: 9999;
             display: none;
-            font-size: 12px;
+            font-size: 13px;
             //@include title-text;
             color: $color_dark_gray;
             background: lighten($color_gray, 1%);
-            min-width: 54px;
+            min-width: 68px; //Covers the longest label
             font-weight: 600;
             //&.label-2 { color: $color_orange; }
             //&.label-3 { color: $color_blue; }
@@ -1686,7 +1742,7 @@ canvas.graph {
             font-size: 11px;
             &:before {
                 @include unmark-label-ball(2px, 0px, 16px);
-                opacity: 0.3;
+                //opacity: 0.3;
             }
             &:hover {
                 &:before {

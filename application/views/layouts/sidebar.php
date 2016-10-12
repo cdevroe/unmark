@@ -1,3 +1,4 @@
+<!--
 <div class="sidebar-default">
     <div class="sidebar-block" id="sidebar-graph">
         <div class="sidebar-inner">
@@ -34,5 +35,6 @@
     <?php endif; ?>
     <?php $this->load->view('layouts/sidebar/sidebar_notices'); ?>
 </div>
+-->
 
 <div id="mark-info-dump" class="sidebar-mark-info"></div>

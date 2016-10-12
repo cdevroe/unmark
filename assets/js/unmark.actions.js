@@ -37,6 +37,7 @@
         unmark.sidebar_mark_info.fadeOut(400, function () {
             unmark.sidebar_default.fadeIn(400);
         });
+        $('.sidebar-content').removeClass('active');
     };
 
     // Expands or Compresses the Info Sidebar
@@ -45,19 +46,19 @@
         var expBtn = unmark.sidebar_content.find('a[data-action="sidebar_expand"] i');
 
         if (compress === true) {
-            return unmark.sidebar_content.animate({ width: '33%' }, 300, function () {
+            return unmark.sidebar_content.animate({ width: '340px' }, 300, function () {
                 expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
                 unmark.sidebar_content.removeClass('wide');
             });
         }
 
         if (expBtn.hasClass('icon-heading_collapse')) {
-            unmark.sidebar_content.animate({ width: '33%' }, 300, function () {
+            unmark.sidebar_content.animate({ width: '340px' }, 300, function () {
                 expBtn.removeClass('icon-heading_collapse').addClass('icon-heading_expand');
                 unmark.sidebar_content.removeClass('wide');
             });
         } else {
-            unmark.sidebar_content.animate({ width: '33%' }, 300, function () {
+            unmark.sidebar_content.animate({ width: '340px' }, 300, function () {
                 expBtn.removeClass('icon-heading_expand').addClass('icon-heading_collapse');
                 unmark.sidebar_content.addClass('wide');
             });
