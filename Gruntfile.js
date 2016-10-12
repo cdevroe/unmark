@@ -86,7 +86,9 @@ module.exports = function(grunt) {
                 files: [
                     {expand: true, flatten: false, src: ['application/**', '!application/config/database.php'], dest: 'release/unmark/'},
                     {expand: true, flatten: false, src: ['assets/css/*.css'], dest: 'release/unmark/'},
+                    {expand: true, flatten: false, src: ['assets/libraries/jquery/*.js'], dest: 'release/unmark/'},
                     {expand: true, flatten: false, src: ['assets/images/**'], dest: 'release/unmark/'},
+                    {expand: true, flatten: false, src: ['assets/js/plugins/*.js'], dest: 'release/unmark/'},
                     {expand: true, flatten: false, src: ['assets/js/production/*.js'], dest: 'release/unmark/'},
                     {expand: true, flatten: false, src: ['assets/js/templates/*.js'], dest: 'release/unmark/'},
                     {expand: true, flatten: false, src: ['assets/touch_icons/*.png'], dest: 'release/unmark/'},
