@@ -1180,6 +1180,52 @@ ul.tag-list {
             }
         }
     }
+    > section {
+      margin-bottom: 40px;
+    }
+    .section-heading {
+      @include title-text;
+      display: block;
+      margin-bottom: 14px;
+      font-size: 11px;
+      color: $color_dark_gray;
+      font-weight: 600;
+    }
+    .button-field {
+      padding-right: 29px;
+      position: relative;
+      input {
+        font-size: 14px;
+        display: block;
+        height: 36px;
+        background: $color_white;
+        border: 1px solid darken(desaturate($color_gray, 15%), 6%);
+        width: 100%;
+        border-radius: 2px 0 0 2px;
+        padding: 8px 9px;
+      }
+      .copy-link {
+        display: block;
+        height: 36px;
+        background: $color_white;
+        border: 1px solid darken(desaturate($color_gray, 15%), 6%);
+        width: 30px;
+        border-radius: 0 2px 2px 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        svg {
+          fill: darken(desaturate($color_gray, 15%), 18%);
+          -webkit-transition: all .2s;
+          transition: all .2s;
+        }
+        &:hover {
+          svg {
+            fill: darken(desaturate($color_gray, 15%), 24%);
+          }
+        }
+      }
+    }
     .sidebar-label {
         //background: white;
         position: relative;
@@ -1279,7 +1325,7 @@ ul.tag-list {
         #label-chosen {
             position: absolute;
             left: 172px;
-            top: 35px;
+            top: 32px;
             z-index: 9999;
             display: none;
             font-size: 13px;
@@ -1300,14 +1346,13 @@ ul.tag-list {
         padding: 0;
         //width: 96%;
         h4 {
-            border-bottom: 1px solid darken($color_gray, 6%);
-            padding: 0 0 14px 0;
-            //@include title-text;
-            font-size: 13px;
             position: relative;
-            color: $color_dark_gray;
             cursor: pointer;
-            margin-bottom: 26px;
+            @include title-text;
+            display: block;
+            margin-bottom: 14px;
+            font-size: 11px;
+            color: $color_dark_gray;
             font-weight: 600;
             i {
                 position: absolute;
@@ -1343,10 +1388,18 @@ ul.tag-list {
             span.action { cursor: pointer; }
             &.sidebar-info-notes {
                 //padding: 5px 10px;
+                background: white;
+                border: 1px solid darken(desaturate($color_gray, 15%), 6%);
+                border-radius: 2px;
+                padding: 14px 18px;
+                font-size: 13px;
+                line-height: 1.6;
+                color: lighten($color_dark, 5%);
+                min-height: 120px;
             }
             &.sidebar-info-notes a {
-                color: $color_black;
-                font-weight: 400;
+                color: $color_darker;
+                font-weight: 600;
             }
             img {
                 max-width:100% !important;
