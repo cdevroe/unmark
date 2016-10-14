@@ -27,5 +27,8 @@ assets/css/unmark.css
 assets/css/unmark_welcome.css
 assets/js/production/*.js
 
+# Custom files
+custom*
+
 # Release build
 release*
