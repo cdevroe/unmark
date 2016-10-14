@@ -1,60 +1,95 @@
-<?php if (isset($errors['2'])) : ?>
-<h2 class="marks-heading"><?php echo unmark_phrase('Sorry, No marks found')?></h2>
-<?php if (isset($_GET['q']) & $lookup_type == "search") : // Only if this is for a search ?>
-<div class="marks continue-search no-results"><?php echo sprintf( unmark_phrase('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
-<?php elseif ($lookup_type == 'tag') : ?>
-<div class="marks continue-search no-results"><?php echo sprintf( unmark_phrase('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), $active_tag['tag_name']); ?></div>
-<?php endif; ?>
-<?php else : ?>
-<?php if (isset($lookup_type) && $lookup_type != "all") :
 
-    // Variable Setup
-    $heading = array();
-    $search_term = (isset($_GET['q'])) ? $_GET['q'] : '';
-    $label_name = (isset($active_label['label_name'])) ? $active_label['label_name'] : '';
-    $tag_name = (isset($active_tag['tag_name'])) ? $active_tag['tag_name'] : '';
 
-    // Page Details
-    switch ($lookup_type) {
-        case 'label':
-            $heading['icon']    =   'icon-circle';
-            $heading['title']   =   sprintf(unmark_phrase('mark labeled %s', 'marks labeled %s', $total), unmark_phrase($label_name));
-            break;
-        case 'archive':
-            if ( $search_term != '' ) { // Someone is searching their archives
-                $heading['icon']    =   'icon-heading_search';
-                $heading['title']   =   sprintf(unmark_phrase('archived mark found containing "%s"', 'archived marks found containing "%s"', $total), $search_term);
-            } else {
-                $heading['icon']    =   'icon-heading_archive';
-                $heading['title']   =   unmark_phrase('mark archived', 'marks archived', $total);
-            }
-            break;
-        case 'tag':
-            $heading['icon']    =   'icon-heading_tag';
-            $heading['title']   =   sprintf(unmark_phrase('mark tagged %s', 'marks tagged %s', $total), $tag_name);
-            break;
-        case 'search':
-            $heading['icon']    =   'icon-heading_search';
-            $heading['title']   =   sprintf(unmark_phrase('mark found containing "%s"', 'marks found containing "%s"', $total), $search_term);
-            break;
-        default:
-            $heading['icon']    =   'icon-heading_time';
-            $heading['title']   =   unmark_phrase('mark', 'marks', $total);
-            $default_title      =   true;
-    }
+            <?php if (isset($errors['2'])) : ?>
+                <header class="marks-heading">
+                    <div class="marks-heading-wrapper">
+                        <div class="marks-heading-bar">
+                            <h2><?php echo unmark_phrase('Sorry, No marks found')?></h2>
+                        </div>
+                    </div>
+                </header>
+            <?php if (isset($_GET['q']) & $lookup_type == "search") : // Only if this is for a search ?>
+                <header class="marks-heading">
+                    <div class="marks-heading-wrapper">
+                        <div class="marks-heading-bar">
+                        </div>
+                    </div>
+                </header>
+                <div class="marks continue-search no-results"><?php echo sprintf( unmark_phrase('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
+            <?php elseif ($lookup_type == 'tag') : ?>
+                <header class="marks-heading">
+                    <div class="marks-heading-wrapper">
+                        <div class="marks-heading-bar">
+                        </div>
+                    </div>
+                </header>
+            <div class="marks continue-search no-results"><?php echo sprintf( unmark_phrase('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), $active_tag['tag_name']); ?></div>
+            <?php endif; ?>
+            <?php else : ?>
+            <?php if (isset($lookup_type) && $lookup_type != "all") :
 
-    // If a lookup time frame
-    // Work some magic
+                // Variable Setup
+                $heading = array();
+                $search_term = (isset($_GET['q'])) ? $_GET['q'] : '';
+                $label_name = (isset($active_label['label_name'])) ? $active_label['label_name'] : '';
+                $tag_name = (isset($active_tag['tag_name'])) ? $active_tag['tag_name'] : '';
 
-    if(stristr($lookup_type, 'last-')){
-        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(unmark_phrase('mark created in the %s', 'marks created in the %s', $total), unmark_phrase(str_replace('-', ' ', $lookup_type))) : $heading['title'];
-    } else {
-        $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(unmark_phrase('mark created %s', 'marks created %s', $total), unmark_phrase(str_replace('-', ' ', $lookup_type))) : $heading['title'];
-    }
+                // Page Details
+                switch ($lookup_type) {
+                    case 'label':
+                        $heading['icon']    =   'icon-circle';
+                        $heading['title']   =   sprintf(unmark_phrase('mark labeled %s', 'marks labeled %s', $total), unmark_phrase($label_name));
+                        break;
+                    case 'archive':
+                        if ( $search_term != '' ) { // Someone is searching their archives
+                            $heading['icon']    =   'icon-heading_search';
+                            $heading['title']   =   sprintf(unmark_phrase('archived mark found containing "%s"', 'archived marks found containing "%s"', $total), $search_term);
+                        } else {
+                            $heading['icon']    =   'icon-heading_archive';
+                            $heading['title']   =   unmark_phrase('mark archived', 'marks archived', $total);
+                        }
+                        break;
+                    case 'tag':
+                        $heading['icon']    =   'icon-heading_tag';
+                        $heading['title']   =   sprintf(unmark_phrase('mark tagged %s', 'marks tagged %s', $total), $tag_name);
+                        break;
+                    case 'search':
+                        $heading['icon']    =   'icon-heading_search';
+                        $heading['title']   =   sprintf(unmark_phrase('mark found containing "%s"', 'marks found containing "%s"', $total), $search_term);
+                        break;
+                    default:
+                        $heading['icon']    =   'icon-heading_time';
+                        $heading['title']   =   unmark_phrase('mark', 'marks', $total);
+                        $default_title      =   true;
+                }
 
-?>
-<h2 class="marks-heading"><i class="<?php print $heading['icon']; ?>"></i> <?php print $heading['title']; ?></h2>
-<?php endif; ?>
+                // If a lookup time frame
+                // Work some magic
+
+                if(stristr($lookup_type, 'last-')){
+                    $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(unmark_phrase('mark created in the %s', 'marks created in the %s', $total), unmark_phrase(str_replace('-', ' ', $lookup_type))) : $heading['title'];
+                } else {
+                    $heading['title'] = (isset($default_title) && $lookup_type != 'custom_date') ? sprintf(unmark_phrase('mark created %s', 'marks created %s', $total), unmark_phrase(str_replace('-', ' ', $lookup_type))) : $heading['title'];
+                }
+
+            ?>
+            <header class="marks-heading">
+                <div class="marks-heading-wrapper">
+                    <div class="marks-heading-bar">
+                        <h2><i class="<?php print $heading['icon']; ?>"></i> <?php print $heading['title']; ?></h2>
+                    </div>
+                </div>
+            </header>
+            <?php else : ?>
+            <header class="marks-heading">
+                <div class="marks-heading-wrapper">
+                    <div class="marks-heading-bar">
+                    </div>
+                </div>
+            </header>
+            <?php endif; ?>
+
+
 
 <?php if (isset($active_label)) : ?>
 <div id="lookup-<?php print $lookup_type; ?>" class="marks" data-label-class="label-<?php print $active_label['label_id']; ?>">

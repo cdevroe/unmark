@@ -610,20 +610,21 @@ ul.tag-list {
     height: 100%;
     position: absolute;
     background: $color_white;
+    padding-top: 80px;
     .marks-heading {
         color: $color_lightest;
         position: fixed;
         width: 100%;
         z-index: 200;
         height: 80px;
-        //left: 0;
+        left: 0;
         top: 0;
         background: transparent;
         margin: 0;
         background: $color_white;
         font-size: 16px;
         font-weight: 600;
-        padding: 28px 30px;
+        //padding: 28px 30px;
         &:after {
             content: "";
             display: block;
@@ -635,7 +636,7 @@ ul.tag-list {
             box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
         }
         .marks-heading-wrapper {
-            max-width: 1440px;
+            //max-width: 1440px;
             margin: 0 auto;
             padding-left: 340px;
         }
@@ -648,6 +649,7 @@ ul.tag-list {
             height: 80px;
             //@include drop-shadow-border();
             position: relative;
+            /*
             &:after {
                 content: "";
                 display: block;
@@ -658,6 +660,7 @@ ul.tag-list {
                 left: 0;
                 box-shadow: 0 6px 13px -6px transparentize(black, .94) inset, 0 12px 30px -12px transparentize(black, .94) inset;
             }
+            */
         }
         i {
             vertical-align: -4px;
@@ -676,9 +679,9 @@ ul.tag-list {
         }
     }
     .marks {
-        margin-top: 80px;
+        //margin-top: 80px;
         &#lookup-all {
-            margin-top:0;
+            //margin-top:0;
         }
         &.continue-search {
             margin: 20px 0;
@@ -791,7 +794,7 @@ ul.tag-list {
             position: absolute;
             top: 0;
             right: 0;
-            z-index: 400;
+            //z-index: 400;
             height: 100%;
             /*
             -webkit-transition: all .2s;
@@ -998,7 +1001,7 @@ ul.tag-list {
     background: lighten($color_gray, 1%);
     border-left: 1px solid darken($color_gray, 5%);
     min-height: 100%;
-    height: 100%;
+    height: calc(100% - 80px);
     padding-right: 0;
     position: absolute;
     right: -340px;
@@ -1009,20 +1012,35 @@ ul.tag-list {
     //display: none;
     //width: 33%;
     width: 340px;
-    top: 0;
+    top: 80px;
     -webkit-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
+    &:after {
+        content: "";
+        display: block;
+        width: 340px;
+        height: 16px;
+        position: fixed;
+        top: 80px;
+        right: -340px;
+        box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
+        -webkit-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
+    }
     &.active {
       right: 0;
+      &:after {
+          right: 0;
+      }
     }
     .close-sidebar {
         display: block;
         width: 24px;
         height: 24px;
         position: absolute;
-        top: 20px;
-        right: 14px;
-        border: 1px solid darken($color_gray, 12%);
+        top: 24px;
+        right: 18px;
+        border: 1px solid darken(desaturate($color_gray, 12%), 15%);
         border-radius: 50%;
         i {
             display: block;
@@ -1155,17 +1173,18 @@ ul.tag-list {
           color: $color_dark_gray;
         }
         a {
-            position: fixed;
-            top: 21px;
-            left: inherit;
-            margin-left: 15px;
+            //position: absolute;
+            //top: 21px;
+            //left: inherit;
+            //margin-left: 15px;
             &:last-child {
-                right: 12px;
-                top: 21px;
-                left: inherit;
-                margin:0;
+                //right: 12px;
+                //top: 100px;
+                //left: inherit;
+                //margin:0;
             }
             i {
+                /*
                 color: $color_gray;
                 font-size: 20px;
                 width: 32px;
@@ -1177,6 +1196,7 @@ ul.tag-list {
                 background-position: center center;
                 background-repeat: no-repeat;
                 margin: 7px 7px 0 0;
+                */
             }
         }
     }
