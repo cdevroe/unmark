@@ -642,7 +642,7 @@ ul.tag-list {
         }
         .marks-heading-bar {
             margin: 0;
-            padding: 16px 30px;
+            padding: 16px 20px 16px 30px;
             font-size: 11px;
             line-height: 28px;
             background: $color_white;
@@ -661,6 +661,102 @@ ul.tag-list {
                 box-shadow: 0 6px 13px -6px transparentize(black, .94) inset, 0 12px 30px -12px transparentize(black, .94) inset;
             }
             */
+            .search-bar {
+                height: 100%;
+                width: 100%;
+                padding: 16px 110px 16px 60px;
+                background: $color_white;
+                position: absolute;
+                display: none;
+                top: 0;
+                left: 0;
+                i {
+                    display: block;
+                    height: 32px;
+                    width: 32px;
+                    position: absolute;
+                    left: 20px;
+                    top: 50%;
+                    margin-top: -16px;
+                    svg {
+                        fill: darken(desaturate($color_gray, 12%), 15%);
+                    }
+                }
+                input[type=text] {
+                    height: 46px;
+                    border: none;
+                    font-size: 16px;
+                    color: $color_dark;
+                    width: 100%;
+                }
+                button {
+                    display: block;
+                    height: 32px;
+                    width: 42px;
+                    background: $color_blue;
+                    border-radius: 4px;
+                    color: $color_white;
+                    padding: 4px 10px 6px;
+                    text-align: center;
+                    @include title-text;
+                    font-weight: 600;
+                    font-size: 14px;
+                    position: absolute;
+                    right: 68px;
+                    top: 50%;
+                    margin-top: -17px;
+                    box-shadow: 0 1px 3px 0 transparentize($color_darkest, .93), 0 2px 5px 0 transparentize($color_darkest, .9), 0 12px 40px -20px transparentize(white, .5) inset;
+                }
+                .close-button {
+                    display: block;
+                    width: 32px;
+                    height: 32px;
+                    position: absolute;
+                    top: 50%;
+                    margin-top: -17px;
+                    right: 20px;
+                    border: 1px solid darken(desaturate($color_gray, 12%), 12%);
+                    border-radius: 50%;
+                    &:before, &:after {
+                        content: "";
+                        display: block;
+                        height: 16px;
+                        width: 2px;
+                        background: darken(desaturate($color_gray, 12%), 15%);
+                        position: absolute;
+                        top: 50%;
+                        margin-top: -8px;
+                        left: 50%;
+                        margin-left: -1px;
+                        -webkit-transform: rotate(45deg);
+                        transform: rotate(45deg);
+                    }
+                    &:after {
+                        -webkit-transform: rotate(-45deg);
+                        transform: rotate(-45deg);
+                    }
+                }
+            }
+            .buttons {
+                display: block;
+                width: auto;
+                height: 32px;
+                position: absolute;
+                top: 50%;
+                margin-top: -17px;
+                right: 20px;
+                > a {
+                    display: block;
+                    width: 32px;
+                    height: 32px;
+                    border: 1px solid darken(desaturate($color_gray, 12%), 12%);
+                    border-radius: 50%;
+                    margin-left: 10px;
+                    svg {
+                        fill: darken(desaturate($color_gray, 12%), 15%);
+                    }
+                }
+            }
         }
         i {
             vertical-align: -4px;
@@ -892,8 +988,6 @@ ul.tag-list {
         &.label-3 {
             &:after {
                 border-color: $color_blue $color_blue $color_light_gray $color_light_gray;
-                font-size: 11px;
-                padding-top: 1px;
             }
             .mark-actions a {
                 //background: lighten($color_blue, 7%);

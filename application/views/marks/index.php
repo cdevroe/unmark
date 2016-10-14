@@ -5,6 +5,19 @@
                     <div class="marks-heading-wrapper">
                         <div class="marks-heading-bar">
                             <h2><?php echo unmark_phrase('Sorry, No marks found')?></h2>
+                            <section class="buttons">
+                                <a class="search-button" href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18,8a6,6,0,1,0,6,6A6,6,0,0,0,18,8Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,18,18Z"/><rect x="10.54" y="16.46" width="2" height="8" transform="translate(17.85 -2.16) rotate(45)"/></svg>
+                                </a>
+                            </section>
+                            <section class="search-bar">
+                                <i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18,8a6,6,0,1,0,6,6A6,6,0,0,0,18,8Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,18,18Z"/><rect x="10.54" y="16.46" width="2" height="8" transform="translate(17.85 -2.16) rotate(45)"/></svg></i>
+                                <form method="get" action="/marks/search" id="search-form">
+                            		<input type="text" name="q" id="search-input" placeholder="<?php echo unmark_phrase('Search...') ?>" autocapitalize="off">
+                            		<button type="submit"><?php echo unmark_phrase('Go') ?></button><!-- **Add to phrases** -->
+                            	</form>
+                                <a class="close-button" href="#"></a>
+                            </section>
                         </div>
                     </div>
                 </header>
@@ -12,6 +25,19 @@
                 <header class="marks-heading">
                     <div class="marks-heading-wrapper">
                         <div class="marks-heading-bar">
+                            <section class="buttons">
+                                <a class="search-button" href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18,8a6,6,0,1,0,6,6A6,6,0,0,0,18,8Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,18,18Z"/><rect x="10.54" y="16.46" width="2" height="8" transform="translate(17.85 -2.16) rotate(45)"/></svg>
+                                </a>
+                            </section>
+                            <section class="search-bar">
+                                <i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18,8a6,6,0,1,0,6,6A6,6,0,0,0,18,8Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,18,18Z"/><rect x="10.54" y="16.46" width="2" height="8" transform="translate(17.85 -2.16) rotate(45)"/></svg></i>
+                                <form method="get" action="/marks/search" id="search-form">
+                            		<input type="text" name="q" id="search-input" placeholder="<?php echo unmark_phrase('Search...') ?>" autocapitalize="off">
+                            		<button type="submit"><?php echo unmark_phrase('Go') ?></button><!-- **Add to phrases** -->
+                            	</form>
+                                <a class="close-button" href="#"></a>
+                            </section>
                         </div>
                     </div>
                 </header>
@@ -20,6 +46,19 @@
                 <header class="marks-heading">
                     <div class="marks-heading-wrapper">
                         <div class="marks-heading-bar">
+                            <section class="buttons">
+                                <a class="search-button" href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18,8a6,6,0,1,0,6,6A6,6,0,0,0,18,8Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,18,18Z"/><rect x="10.54" y="16.46" width="2" height="8" transform="translate(17.85 -2.16) rotate(45)"/></svg>
+                                </a>
+                            </section>
+                            <section class="search-bar">
+                                <i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18,8a6,6,0,1,0,6,6A6,6,0,0,0,18,8Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,18,18Z"/><rect x="10.54" y="16.46" width="2" height="8" transform="translate(17.85 -2.16) rotate(45)"/></svg></i>
+                                <form method="get" action="/marks/search" id="search-form">
+                            		<input type="text" name="q" id="search-input" placeholder="<?php echo unmark_phrase('Search...') ?>" autocapitalize="off">
+                            		<button type="submit"><?php echo unmark_phrase('Go') ?></button><!-- **Add to phrases** -->
+                            	</form>
+                                <a class="close-button" href="#"></a>
+                            </section>
                         </div>
                     </div>
                 </header>
@@ -77,6 +116,19 @@
                 <div class="marks-heading-wrapper">
                     <div class="marks-heading-bar">
                         <h2><i class="<?php print $heading['icon']; ?>"></i> <?php print $heading['title']; ?></h2>
+                        <section class="buttons">
+                            <a class="search-button" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18,8a6,6,0,1,0,6,6A6,6,0,0,0,18,8Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,18,18Z"/><rect x="10.54" y="16.46" width="2" height="8" transform="translate(17.85 -2.16) rotate(45)"/></svg>
+                            </a>
+                        </section>
+                        <section class="search-bar">
+                            <i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18,8a6,6,0,1,0,6,6A6,6,0,0,0,18,8Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,18,18Z"/><rect x="10.54" y="16.46" width="2" height="8" transform="translate(17.85 -2.16) rotate(45)"/></svg></i>
+                            <form method="get" action="/marks/search" id="search-form">
+                        		<input type="text" name="q" id="search-input" placeholder="<?php echo unmark_phrase('Search...') ?>" autocapitalize="off">
+                        		<button type="submit"><?php echo unmark_phrase('Go') ?></button><!-- **Add to phrases** -->
+                        	</form>
+                            <a class="close-button" href="#"></a>
+                        </section>
                     </div>
                 </div>
             </header>
@@ -84,6 +136,19 @@
             <header class="marks-heading">
                 <div class="marks-heading-wrapper">
                     <div class="marks-heading-bar">
+                        <section class="buttons">
+                            <a class="search-button" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18,8a6,6,0,1,0,6,6A6,6,0,0,0,18,8Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,18,18Z"/><rect x="10.54" y="16.46" width="2" height="8" transform="translate(17.85 -2.16) rotate(45)"/></svg>
+                            </a>
+                        </section>
+                        <section class="search-bar">
+                            <i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18,8a6,6,0,1,0,6,6A6,6,0,0,0,18,8Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,18,18Z"/><rect x="10.54" y="16.46" width="2" height="8" transform="translate(17.85 -2.16) rotate(45)"/></svg></i>
+                            <form method="get" action="/marks/search" id="search-form">
+                        		<input type="text" name="q" id="search-input" placeholder="<?php echo unmark_phrase('Search...') ?>" autocapitalize="off">
+                        		<button type="submit"><?php echo unmark_phrase('Go') ?></button><!-- **Add to phrases** -->
+                        	</form>
+                            <a class="close-button" href="#"></a>
+                        </section>
                     </div>
                 </div>
             </header>
@@ -126,23 +191,6 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 8"><circle cx="18" cy="4" r="4"/><circle cx="32" cy="4" r="4"/><circle cx="4" cy="4" r="4"/></svg>
                             </i>
                         </a>
-                        <!--
-                        <a title="View Mark Info" class="action mark-archive tabletonly" href="#" data-nofade="true" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>">
-                            <i class="icon-ellipsis"></i>
-                        </a>
-                        <a target="_blank" title="Open Mark" class="mark-info" href="<?php print $mark->url; ?>" data-mark="mark-data-<?php print $mark->mark_id; ?>">
-                            <i class="icon-goto_link"></i>
-                        </a>
-                        <?php if ($lookup_type == "archive") : ?>
-                            <a title="Unarchive Mark" class="action mark-archive" data-action="mark_restore" href="#" data-id="<?php print $mark->mark_id; ?>">
-                                <i class="icon-unarchive"></i>
-                            </a>
-                        <?php else : ?>
-                            <a title="Archive Mark" class="action mark-archive" data-action="mark_archive" href="#" data-id="<?php print $mark->mark_id; ?>">
-                                <i class="icon-check"></i>
-                            </a>
-                        <?php endif; ?>
-                        -->
                     </div>
                     <div class="note-placeholder"></div>
                     <script id="mark-data-<?php print $mark->mark_id; ?>" type="application/json"><?php echo json_encode($mark); ?></script>

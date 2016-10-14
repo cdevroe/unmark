@@ -74,7 +74,7 @@ $unmark_language = array(
     'labels' =>                                               array( 'Labels' ),
     'archives' =>                                             array( 'Archives' ),
     'no marks' =>                                             array( 'No marks' ),
-    'search...' =>                                            array( 'SEARCH...' ),
+    'search...' =>                                            array( 'Search...' ),
     'you saved %s mark today' =>                              array( 'You saved %s marks today' ),
     'and archived %s' =>                                      array( 'and archived %s' ),
     'view marks' =>                                           array( 'View marks' ),
@@ -88,6 +88,7 @@ $unmark_language = array(
     'mark created in the %s' =>                               array( 'Mark created in the %s', 'Marks created in the %s' ),
     'mark archived' =>                                        array( 'Mark Archived', 'Marks Archived' ),
     'mark tagged %s' =>                                       array( 'Mark tagged %s', 'Marks tagged %s' ),
+    'Go' =>                                                   array( 'Go' ),
 );
 
 
