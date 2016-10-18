@@ -136,6 +136,7 @@
             <header class="marks-heading">
                 <div class="marks-heading-wrapper">
                     <div class="marks-heading-bar">
+                        <h2>Default Message Here...</h2>
                         <section class="buttons">
                             <a class="search-button" href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M18,8a6,6,0,1,0,6,6A6,6,0,0,0,18,8Zm0,10a4,4,0,1,1,4-4A4,4,0,0,1,18,18Z"/><rect x="10.54" y="16.46" width="2" height="8" transform="translate(17.85 -2.16) rotate(45)"/></svg>
