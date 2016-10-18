@@ -190,15 +190,14 @@
         });
 
         // Show & Hide Search Bar
-        $('.marks-heading-bar .search-button').on( "click", function(e) {
+        $(document).on('click', '.marks-heading-bar .search-button', function(e) {
             e.preventDefault();
             $(this).closest('.marks-heading-bar').find('.search-bar').fadeIn(300);
         });
-        $('.marks-heading-bar .search-bar .close-button').on( "click", function(e) {
+        $(document).on('click', '.marks-heading-bar .search-bar .close-button', function(e) {
             e.preventDefault();
             $(this).closest('.search-bar').fadeOut(300);
         });
-
 
     };
 
