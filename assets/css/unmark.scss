@@ -37,8 +37,11 @@ $color_red    : #e26861;
 $color_pink   : #fa736b;
 $color_grey   : #A5A6AA;
 
+$color_orange_text : darken(desaturate($color_orange, 3%), 8%);
+$color_blue_text : darken(desaturate($color_blue, 3%), 8%);
 $color_yellow_text : darken(saturate($color_yellow, 10%), 15%);
 $color_green_text : darken(saturate($color_green, 2%), 12%);
+
 
 // Font Variables
 $serif      : 'Merriweather', serif;
@@ -772,6 +775,10 @@ ul.tag-list {
             font-size: 16px;
             font-weight: 600;
             margin: 9px 0;
+            &.default-message {
+                font-weight: 400;
+                color: transparentize($color_dark, .3);
+            }
         }
     }
     .marks {
@@ -1993,19 +2000,19 @@ body {
         .main-content .marks-heading { color: darken($color_grey, 2); }
     }
     &.label-2 {
-        .main-content .marks-heading { color: darken($color_orange, 2); }
+        .main-content .marks-heading { color: darken($color_orange_text, 2); }
     }
     &.label-3 {
-        .main-content .marks-heading { color: darken($color_blue, 2); }
+        .main-content .marks-heading { color: darken($color_blue_text, 2); }
     }
     &.label-4 {
-        .main-content .marks-heading { color: darken($color_yellow, 2); }
+        .main-content .marks-heading { color: darken($color_yellow_text, 2); }
     }
     &.label-5 {
         .main-content .marks-heading { color: darken($color_purple, 2); }
     }
     &.label-6 {
-        .main-content .marks-heading { color: darken($color_green, 2); }
+        .main-content .marks-heading { color: darken($color_green_text, 2); }
     }
     &.label-7 {
         .main-content .marks-heading { color: darken($color_pink, 2); }

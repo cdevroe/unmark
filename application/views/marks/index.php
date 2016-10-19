@@ -88,7 +88,7 @@
             <header class="marks-heading">
                 <div class="marks-heading-wrapper">
                     <div class="marks-heading-bar">
-                        <h2>Default Message Here...</h2>
+                        <h2 class="default-message">Default Message Here...</h2>
                         <?php $this->load->view('layouts/topbar/searchform.php'); ?>
                     </div>
                 </div>
