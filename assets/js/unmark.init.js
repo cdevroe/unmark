@@ -163,6 +163,7 @@
         // BURN THIS LATER
         ////////////////////////////////////////////////////////////////////////////
 
+        // Adding & Removing Classes for Mobile Navigation & Sidebar "Sliding"
         if ( $('#unmark-wrapper').hasClass('nav-active') ) {
             $('.mobile-header .menu-activator').on( "click", function(e) {
                 e.preventDefault();
@@ -180,13 +181,22 @@
             });
         }
 
-
         $('.mobile-header #mobile-sidebar-show').on( "click", function(e) {
             e.preventDefault();
             $('#unmark-wrapper').removeClass();
             $('#unmark-wrapper').addClass('sidebar-active');
             $('.mobile-header .menu-activator').removeClass('active');
             $(this).toggleClass('active');
+        });
+
+        // Show & Hide Search Bar
+        $(document).on('click', '.marks-heading-bar .search-button', function(e) {
+            e.preventDefault();
+            $(this).closest('.marks-heading-bar').find('.search-bar').fadeIn(300);
+        });
+        $(document).on('click', '.marks-heading-bar .search-bar .close-button', function(e) {
+            e.preventDefault();
+            $(this).closest('.search-bar').fadeOut(300);
         });
 
     };
