@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title><?php echo unmark_phrase('Unmark : Mark Added'); ?></title>
-    <link href='//fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo $this->config->item('unmark_version'); ?>" />
     <link rel="icon" type="image/ico" href="favicon.ico" />
     <script src="/assets/js/plugins/modernizr-2.7.1.min.js"></script>
@@ -47,8 +47,12 @@
     </div>
 
     <div class="mark-added-actions">
-        <button class="delete" data-action="delete_mark" data-view="bookmarklet" data-id="<?php print $mark->mark_id; ?>"><?php echo unmark_phrase('Delete Link'); ?></button>
-        <button data-action="close_window"><?php echo unmark_phrase('Update &amp; Close'); ?></button>
+        <div class="delete-button">
+            <button class="delete" data-action="delete_mark" data-view="bookmarklet" data-id="<?php print $mark->mark_id; ?>"><?php echo unmark_phrase('Delete Link'); ?></button>
+        </div>
+        <div class="update-button">
+            <button data-action="close_window"><?php echo unmark_phrase('Update &amp; Close'); ?></button>
+        </div>
     </div>
 
 </div>

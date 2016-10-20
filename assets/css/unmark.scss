@@ -42,6 +42,7 @@ $color_blue_text : darken(desaturate($color_blue, 3%), 8%);
 $color_yellow_text : darken(saturate($color_yellow, 10%), 15%);
 $color_green_text : darken(saturate($color_green, 2%), 12%);
 
+$color_body : desaturate(darken($color_gray, 4%), 10%);
 
 // Font Variables
 $serif      : 'Merriweather', serif;
@@ -58,7 +59,7 @@ $title      : 'Source Sans Pro', sans-serif;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
-html { background: desaturate(darken($color_gray, 4%), 10%); }
+html { background: $color_body; }
 body, html{
     min-height: 100%;
     height: 100%;
@@ -71,7 +72,7 @@ body {
     font-weight: 400;
     min-height: 100%;
     color: $color_dark;
-    background: desaturate(darken($color_gray, 4%), 10%);
+    background: $color_body;
     @include font-smoothing;
     a {
         color: $color_white;
@@ -93,7 +94,7 @@ body {
         position:relative;
     }
     &.greybg {
-        background: darken($color_gray, .15);
+        background: lighten($color_gray, 1%);
     }
 }
 
@@ -1715,14 +1716,15 @@ canvas.graph {
 .mark-added {
     font-weight: 300;
     .mark-added-block {
-        background: $color_dark;
-        color: $color_lighter;
+        background: $color_darker;
+        color: $color_white;
         padding: 22px;
-        font-size: 11px;
-        @include title-text;
-        word-spacing: 1px;
+        font-size: 14px;
+        //@include title-text;
+        //word-spacing: 1px;
         line-height: 13px;
-        box-shadow: 0 -6px 9px -7px rgba(0,0,0,0.7) inset;
+        font-weight: 600;
+        box-shadow: 0 -1px 0 0 transparentize($color_dark_gray, .8) inset;
         i {
             float: right;
             margin-top: -5px;
@@ -1733,40 +1735,46 @@ canvas.graph {
         }
     }
     .mark-added-info {
-        padding: 25px;
+        padding: 32px 25px;
         color: $color_white;
         background: white;
+        border-bottom: 1px solid transparentize($color_dark_gray, .86);
         h1 {
-            font-weight: 300;
-            color:$color_dark;
+            font-weight: 400;
+            color: $color_darker;
             font-size: 26px;
             margin: 0 0 15px 0;
         }
         span {
-            color: darken($color_light, 30%);
-            font-size: 13px;
+            color: darken($color_light, 25%);
+            font-weight: 400;
+            font-size: 12px;
             display: inline-block;
             @include unmark-truncate(400px);
         }
     }
     .mark-added-settings {
-        font-size: 11px;
-        border-top: 1px solid #e5e5e5;
+        font-size: 12px;
+        //border-top: 1px solid #e5e5e5;
         padding: 25px;
-        color:$color_grey;
+        color: $color_dark_gray;
         position: relative;
-        @include title-text;
+        //@include title-text;
         a {
-            color:$color_grey;
-            text-transform: uppercase;
+            color: $color_dark_gray;
+            //text-transform: uppercase;
+            font-weight: 600;
             display: block;
             position: relative;
             padding-left: 20px;
+            font-size: 13px;
             &#currLabel {
-                margin-left: 4px;
+                position: absolute;
+                left: 200px;
+                padding-left: 0;
             }
             &:before {
-                @include unmark-label-ball(-3px, -9px, 20px);
+                //@include unmark-label-ball(-3px, -9px, 20px);
             }
             &.label-2 {
                 &:before {
@@ -1807,15 +1815,19 @@ canvas.graph {
         }
         &.mark-added-note a {
             padding-left:0;
+            text-transform: none;
+            letter-spacing: normal;
+            font-weight: 400;
+            font-size: 13px;
             &:before {
                 display:none;
             }
         }
         section {
-            display:none;
+            //display: none;
             position: absolute;
-            background: $color_shade;
-            width: 100%;
+            //background: $color_shade;
+            //width: 100%;
             left: 0px;
             top: 45px;
             opacity: .95;
@@ -1823,9 +1835,9 @@ canvas.graph {
             color: $color_darker;
         }
         textarea {
-            background: $color_shade;
+            background: transparent;
             width: 100%;
-            opacity: .95;
+        //    opacity: .95;
             padding: 0;
             color: darken($color_darker, 15%);
             border: none;
@@ -1838,28 +1850,35 @@ canvas.graph {
         }
         :-webkit-input-placeholder {
             @include font-smoothing;
+            text-transform: none;
         }
         ::-moz-placeholder {
             @include font-smoothing;
+            text-transform: none;
         }
         :-ms-input-placeholder {
             @include font-smoothing;
+            text-transform: none;
         }
         &.mark-added-label section {
             padding: 0;
-            top: 16px;
-            left: 15px;
+            top: 23px;
+            left: 25px;
             z-index: 999;
         }
         #label-chosen {
             position: absolute;
-            left: 254px;
+            left: 200px;
             top: 24px;
             z-index: 9999;
             display: none;
-            font-size: 12px;
-            color: $color_grey;
-            @include title-text;
+            font-size: 13px;
+            font-weight: 600;
+            min-width: 80px;
+            color: $color_dark_gray;
+            background: lighten($color_gray, 1%);
+            padding-top: 1px;
+            //@include title-text;
             @include font-smoothing;
             &.label-2 { color: $color_orange; }
             &.label-3 { color: $color_blue; }
@@ -1870,25 +1889,36 @@ canvas.graph {
         }
     }
     .mark-added-note {
-        border-bottom: 1px solid #e5e5e5;
+        //border-bottom: 1px solid #e5e5e5;
     }
     .mark-added-actions {
-        padding: 35px 25px;
-        background: $color_shade;
+        padding: 35px 20px;
+        background: lighten($color_gray, 1%);
         position: absolute;
         bottom: 0;
         width: 100%;
+        .delete-button {
+            width: 45%;
+            padding: 0 5px;
+            float: left;
+        }
+        .update-button {
+            width: 55%;
+            padding: 0 5px;
+            float: left;
+        }
         button {
-            color:$color_light;
-            width: 60%;
+            width: 100%;
             color: $color_white;
-            padding: 15px 0 16px;
-            @include title-text;
+            background: darken($color_blue, 5%);
+            padding: 12px 0 14px;
+            //@include title-text;
             @include font-smoothing;
-            font-size: 13px;
-            line-height: 13px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 30px 60px -24px transparentize(white, .94) inset, 0 2px 7px 0 transparentize($color_dark_gray, .8);
             &.delete {
-                width: 39%;
+                //width: 39%;
                 background: $color_red;
                 margin-right: 0;
             }
@@ -1904,6 +1934,13 @@ canvas.graph {
             margin-top:25px;
         }
     }
+    &[data-label="2"] {
+        .mark-added-settings ul.label-choices li {
+            &.label-2 a:before {
+                box-shadow: 0 0 0 3px lighten($color_gray, 2%), 0 0 0 4px darken($color_gray, 14%);
+            }
+        }
+    }
 }
 
 // Label List
@@ -1917,11 +1954,14 @@ canvas.graph {
         float: left;
         a {
             display: block;
-            color: $color_grey;
+            color: $color_dark_gray;
             text-align: left;
-            padding: 10px 20px 10px 0;
+            padding: 10px 0 10px 24px;
             position: relative;
-            font-size: 11px;
+            font-size: 12px;
+            &:focus, &:active {
+                outline: 0;
+            }
             &:before {
                 @include unmark-label-ball(2px, 0px, 16px);
                 //opacity: 0.3;
@@ -1932,19 +1972,19 @@ canvas.graph {
                 }
             }
             span {
-                display:none;
+                display: none;
             }
         }
         &.label-2 a {
-            color: $color_orange;
+            color: $color_orange_text;
             &:before { background: $color_orange !important; }
         }
         &.label-3 a {
-            color: $color_blue;
+            color: $color_blue_text;
             &:before { background: $color_blue !important; }
         }
         &.label-4 a {
-            color: $color_yellow;
+            color: $color_yellow_text;
             &:before { background: $color_yellow !important; }
         }
         &.label-5 a {
@@ -1952,7 +1992,7 @@ canvas.graph {
             &:before { background: $color_purple !important; }
         }
         &.label-6 a {
-            color: $color_green;
+            color: $color_green_text;
             &:before { background: $color_green !important; }
         }
         &.label-7 a {
