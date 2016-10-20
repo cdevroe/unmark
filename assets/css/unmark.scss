@@ -1911,12 +1911,12 @@ canvas.graph {
             width: 100%;
             color: $color_white;
             background: darken($color_blue, 5%);
-            padding: 15px 0 17px;
+            padding: 12px 0 14px;
             //@include title-text;
             @include font-smoothing;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
-            box-shadow: 0 30px 60px -24px transparentize(white, .9) inset, 0 2px 7px 0 transparentize($color_dark_gray, .8);
+            box-shadow: 0 30px 60px -24px transparentize(white, .94) inset, 0 2px 7px 0 transparentize($color_dark_gray, .8);
             &.delete {
                 //width: 39%;
                 background: $color_red;
@@ -1959,6 +1959,9 @@ canvas.graph {
             padding: 10px 0 10px 24px;
             position: relative;
             font-size: 12px;
+            &:focus, &:active {
+                outline: 0;
+            }
             &:before {
                 @include unmark-label-ball(2px, 0px, 16px);
                 //opacity: 0.3;
