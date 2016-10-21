@@ -29,11 +29,11 @@
         <span><?php print niceUrl($mark->url); ?></span>
     </div>
 
-    <div class="mark-added-label mark-added-settings">
+    <div class="mark-added-label mark-added-settings label-<?php print $mark->label_id; ?>">
         <span id="label-chosen"></span>
         <a id="currLabel" class="action" data-action="marks_addLabel" href="#"><?php echo unmark_phrase('Unlabeled'); ?></a>
         <section data-id="<?php print $mark->mark_id; ?>">
-            <ul class="label-choices"></ul>
+            <ul data-id="<?php print $mark->mark_id; ?>" class="label-choices"></ul>
         </section>
     </div>
 
