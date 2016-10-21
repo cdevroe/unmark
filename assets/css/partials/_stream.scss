@@ -1,0 +1,256 @@
+// Mark Sream
+.marks_list {
+    .mark {
+        border-bottom: 1px solid $color_lighter;
+        padding: 16px 52px 18px 52px;
+        position: relative;
+        -webkit-transition: all .3s;
+        transition: all .3s;
+        @include sm {
+            padding: 26px 64px 30px;
+        }
+        @include lg {
+            padding: 28px 85px 32px 84px;
+        }
+        @include xs {
+            overflow: hidden;
+        }
+        &:before {
+            content: "";
+            display: block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: darken($color_gray, 7%);
+            position: absolute;
+            right: 0;
+            bottom: -6px;
+            opacity: 0;
+            -webkit-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+        }
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 0;
+            width: 0;
+            margin-top: 0;
+            background: transparent;
+            border: 6px solid;
+            border-color: transparent;
+            @include sm {
+                border-width: 10px;
+            }
+        }
+        h2 {
+            margin: 0 0 4px;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 1.25;
+            @include sm {
+                margin:0 0 10px;
+                font-size: 16px;
+                line-height: 1.4;
+            }
+            @include md {
+                font-size: 18px;
+            }
+            @include lg {
+                font-size: 24px;
+            }
+            a {
+                color: $color_darker;
+            }
+        }
+        .mark-meta {
+            font-size: 10px;
+            color: darken($color_light, 15%);
+            @include sm {
+                font-size: 12px;
+            }
+            @include xs {
+                overflow: hidden;
+            }
+            .mark-date {
+                @include xs {
+                    display: none;
+                }
+            }
+            .mark-sep {
+                padding: 0 6px 0 5px;
+                color: lighten($color_light, 15%);
+                @include xs {
+                    display: none;
+                }
+            }
+            .mark-link a {
+                text-decoration: none;
+                color: darken($color_light, 15%);
+                display: inline;
+                vertical-align: bottom;
+                @include unmark-truncate(65%);
+            }
+        }
+        .note-placeholder { display: none; }
+        .mark-actions {
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            @include lg {
+                display: none;
+            }
+            a {
+                background: $color_white;
+                display: block;
+                text-align: center;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                padding: 0;
+                position: absolute;
+                top: 50%;
+                margin-top: -15px;
+                right: 8px;
+                border: none;
+                @include sm {
+                    right: 12px;
+                }
+                @include lg {
+                    right: 30px;
+                    border: 1px solid transparentize($color_dark_gray, .85);
+                }
+                i {
+                    display: block;
+                    width: 10px;
+                    height: 28px;
+                    position: absolute;
+                    top: 50%;
+                    margin-top: -14px;
+                    left: 50%;
+                    margin-left: -5px;
+                    @include sm {
+                        width: 14px;
+                        margin-left: -7px;
+                    }
+                    svg {
+                        fill: transparentize($color_dark_gray, .4);
+                    }
+                }
+            }
+        }
+        .archive-target {
+            display: block;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            margin-top: -10px;
+            @include sm {
+                width: 24px;
+                height: 24px;
+                left: 20px;
+                margin-top: -12px;
+            }
+            @include lg {
+                left: 30px;
+            }
+            .mark-archive {
+                display: block;
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                border-radius: 50%;
+                border: 1px solid transparentize($color_dark_gray, .6);
+                @include sm {
+                    width: 24px;
+                    height: 24px;
+                }
+                i {
+                    display: block;
+                    width: 18px;
+                    height: 18px;
+                    position: absolute;
+                    left: 50%;
+                    margin-left: -9px;
+                    top: 50%;
+                    margin-top: -8px;
+                    opacity: 0;
+                    -webkit-transition: all .2s;
+                    transition: all .2s;
+                    svg {
+                        fill: $color_dark_gray;
+                    }
+                }
+                &:hover {
+                    i {
+                        opacity: .4;
+                    }
+                }
+                &[data-action="mark_restore"] {
+                    border: none;
+                    svg {
+                        fill: lighten($color_dark_gray, 25%);
+                    }
+                }
+            }
+        }
+        &.label-2 {
+            &:after {
+                border-color: $color_orange $color_orange $color_light_gray $color_light_gray;
+            }
+        }
+        &.label-3 {
+            &:after {
+                border-color: $color_blue $color_blue $color_light_gray $color_light_gray;
+            }
+        }
+        &.label-4 {
+            &:after {
+                border-color: $color_yellow $color_yellow $color_light_gray $color_light_gray;
+            }
+        }
+        &.label-5 {
+            &:after {
+                border-color: $color_purple $color_purple $color_light_gray $color_light_gray;
+            }
+        }
+        &.label-6 {
+            &:after {
+                border-color: $color_green $color_green $color_light_gray $color_light_gray;
+            }
+        }
+        &.label-7 {
+            &:after {
+                border-color: $color_pink $color_pink $color_light_gray $color_light_gray;
+            }
+        }
+        &.view-inactive {
+            opacity: .25;
+        }
+        &.view-active {
+            box-shadow: 0 1px 0 0 $color_gray inset;
+            border-bottom: 1px solid darken($color_gray, 7%);
+            &:before {
+              opacity: 1;
+              right: 333px;
+            }
+            &:hover {
+                .mark-actions {
+                    display: none !important;
+                }
+            }
+        }
+    }
+}
+.upgrade-search-results {
+    clear: both;
+    padding: 100px 0 0 0;
+    text-align: center;
+}

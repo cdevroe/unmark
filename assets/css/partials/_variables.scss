@@ -1,0 +1,229 @@
+// Colors - Global
+
+$color_dark     : #3D3D3D;
+$color_darker   : #203145;
+$color_darkest  : #13293d;
+$color_light    : #BEBCBD;
+$color_lighter  : #F2F0F1;
+$color_lightest : #474747;
+$color_white    : #FFFFFF;
+$color_black    : #000000;
+$color_shade    : #F9F9F9;
+
+$color_gray     : #f4f8fa;
+$color_dark_gray : #768d9a;
+$color_light_gray : #f0f5f7;
+
+// Colors - labels
+
+$color_orange : #ff9034;
+$color_blue   : #5fb1e3;
+$color_yellow : #efcc40;
+$color_purple : #9e51ed;
+$color_green  : #5fd581;
+$color_red    : #e26861;
+$color_pink   : #fa736b;
+$color_grey   : #A5A6AA;
+
+$color_orange_text : darken(desaturate($color_orange, 3%), 8%);
+$color_blue_text : darken(desaturate($color_blue, 3%), 8%);
+$color_yellow_text : darken(saturate($color_yellow, 10%), 15%);
+$color_green_text : darken(saturate($color_green, 2%), 12%);
+
+$color_body : desaturate(darken($color_gray, 4%), 10%);
+
+// Fonts
+
+$sans-serif : 'Source Sans Pro', sans-serif;
+$title      : 'Source Sans Pro', sans-serif;
+
+
+// Viewport Sizes
+
+$xs: 	479px;
+$sm: 	480px;
+$md: 	768px;
+$lg: 	1024px;
+$xl: 	1400px;
+$xxl: 	1600px;
+
+// Navigation Sizes
+
+$nav_xs: 85%;
+$nav_sm: 280px;
+$nav_lg: 340px;
+
+$nav_rail_xs: 60px;
+$nav_rail_sm: 72px;
+$nav_rail_lg: 80px;
+
+$nav_pane_xs: calc($nav_xs - $nav_rail_xs);
+$nav_pane_sm: $nav_sm - $nav_rail_sm;
+$nav_pane_lg: $nav_lg - $nav_rail_lg;
+
+
+
+// Mixins
+
+@mixin xs {
+ 	@media only screen and (max-width: #{$xs}) {
+    	@content;
+  	}
+}
+@mixin sm {
+ 	@media only screen and (min-width: #{$sm}) {
+    	@content;
+  	}
+}
+@mixin md {
+ 	@media only screen and (min-width: #{$md}) {
+    	@content;
+  	}
+}
+@mixin lg {
+ 	@media only screen and (min-width: #{$lg}) {
+    	@content;
+  	}
+}
+@mixin xl {
+ 	@media only screen and (min-width: #{$xl}) {
+    	@content;
+  	}
+}
+@mixin xxl {
+ 	@media only screen and (min-width: #{$xxl}) {
+    	@content;
+  	}
+}
+
+@mixin drop-shadow-border() {
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.08), 0 1px 0 0 rgba(0,0,0,0.02);
+}
+@mixin unmark-label-ball($top: 0, $hor: 0, $size: 20px, $right: false) { //label dot
+    content: "";
+    position: absolute;
+    top: $top;
+    @if $right {
+        right: $hor;
+    } @else {
+        left: $hor;
+    }
+    height: $size;
+    width: $size;
+    border-radius: 50%;
+    background: $color_grey;
+}
+@mixin unmark-truncate($width) { //shorten url
+    width: $width;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+@mixin title-text {
+    font-family: $title;
+    letter-spacing: .5px;
+    word-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+@mixin font-smoothing {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+@mixin rotate-forever {
+    0%    { transform: rotate(0deg); }
+    100%  { transform: rotate(360deg); }
+}
+
+
+// Placeholders
+
+%clearfix {
+    &:after {
+        content: " ";
+        display: block;
+        clear: both;
+    }
+}
+
+
+textarea:focus, input:focus, .hideoutline, button { outline: 0; } //hide outlines
+
+.editable {
+    background-color: transparentize(saturate(lighten($color_blue, 30%), 20%), .6);
+    box-shadow: 0 0 0 4px transparentize(saturate(lighten($color_blue, 30%), 20%), .6);
+}
+.sidebar-spacer {
+    display: inline-block;
+    padding: 0 6px;
+}
+
+// Images
+img { max-width: 100%; }
+.centerme { text-align: center; }
+.tempdata { display: none; }
+.hide { display: none; }
+.clear { clear: both; }
+
+// Helper Icon
+i.icon-circle {
+    @include unmark-label-ball(0, 0, 20px);
+    position: relative;
+    background: #A7A9AC;
+}
+
+// Buttons
+
+button, a.btn {
+    display: inline-block;
+    zoom: 1;
+    line-height: normal;
+    white-space: nowrap;
+    vertical-align: baseline;
+    text-align: center;
+    cursor: pointer;
+    font-size: 100%;
+    padding: 5px 15px 7px;
+    color: #FFF;
+    border: 1px solid #999; // PICK COLOR
+    border: 0 rgba(0,0,0,0);
+    background-color: $color_darker;  // PICK COLOR
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 300;
+}
+
+button.danger {
+    background-color: $color_red;
+    color:#FFF;
+}
+button.disabled {
+    color: $color_dark;
+}
+
+// Alert Styles
+
+.alert {
+    background-color: $color_darker;
+    border-radius: 4px;
+    margin: 0 0 15px 0;
+    padding: 10px;
+    color: #FFF;
+}
+#error-wrapper {
+    color: $color_light;
+    width: 400px;
+    margin: 100px auto 0 auto;
+    text-align: center;
+    #error-icon {
+        width: 75px;
+        margin: 0 auto 40px auto;
+        img { max-width:100%; }
+    }
+    h1 {
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: .15em;
+    }
+}

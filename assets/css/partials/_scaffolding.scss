@@ -1,0 +1,78 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+html { background: $color_body; }
+body, html{
+    min-height: 100%;
+    height: 100%;
+
+}
+body[data-lookup="all"] { opacity: 0; }
+body {
+    overflow:hidden;
+    font-family: $sans-serif;
+    font-weight: 400;
+    min-height: 100%;
+    color: $color_dark;
+    background: $color_body;
+    @include font-smoothing;
+    @include xs {
+        overflow-x: hidden;
+    }
+    a {
+        color: $color_white;
+        text-decoration: none;
+        outline: 0;
+    }
+    &.unmark-solo {
+        overflow: auto;
+        border-left:none;
+        border-top:none;
+        background: $color_white;
+        box-shadow:none;
+    }
+    &#unmark-login {
+        background: darken($color_gray, .15);
+        position:relative;
+    }
+    &.greybg {
+        background: lighten($color_gray, 1%);
+    }
+    &[data-lookup="all"] {
+        opacity: 1;
+    }
+}
+#unmark-wrapper {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    top: 60px;
+    left: -20%;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    margin: 0 auto;
+    overflow: hidden;
+    @include sm {
+        position: relative;
+        width: 100%;
+        top: auto;
+        left: auto;
+    }
+    @include xs {
+        width: calc(100% + 560px);
+        left: -280px;
+        height: calc(100% - 60px);
+    }
+    &.nav-active {
+        left: 0;
+        .main-content {
+            .marks-heading {
+                left: 280px;
+            }
+        }
+    }
+    &.sidebar-active {
+        left: -560px
+    }
+}

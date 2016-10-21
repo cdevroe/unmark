@@ -1,0 +1,292 @@
+// Main Content Area - Mark Stream & Sidebar
+.main-wrapper {
+    min-height: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: $nav_sm;
+    z-index: 199;
+    width: 100%;
+    padding-right: $nav_sm;
+    @include xs {
+        //width: 95%;
+        //left: 10%;
+        left: 280px;
+    }
+    @include md {
+        box-shadow: 0 2px 14px 0 rgba(0,0,0,0.3), 0 1px 3px 0 rgba(0,0,0,0.18);
+    }
+    @include lg {
+        left: $nav_lg;
+        padding-right: $nav_lg;
+    }
+    .inner-wrapper {
+        min-height: 100%;
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+}
+.main-content {
+    padding-right:0;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+    position: absolute;
+    background: $color_white;
+    padding-top: 80px;
+    width: 100%;
+    @include xs {
+        //width: 53%;
+        width: calc(100% - 280px);
+        padding-top: 60px;
+    }
+    .marks-heading {
+        color: $color_lightest;
+        position: fixed;
+        width: 100%;
+        z-index: 200;
+        height: 60px;
+        left: 0;
+        top: 60px;
+        background: transparent;
+        margin: 0;
+        background: $color_white;
+        font-size: 14px;
+        font-weight: 600;
+        -webkit-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
+        @include sm {
+            top: 0;
+            height: 80px;
+            font-size: 16px;
+        }
+        &:after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 16px;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
+        }
+        .marks-heading-wrapper {
+            margin: 0 auto;
+            @include sm {
+                padding-left: $nav_sm;
+            }
+            @include lg {
+                padding-left: $nav_lg;
+            }
+        }
+        .marks-heading-bar {
+            margin: 0;
+            padding: 10px 20px;
+            font-size: 11px;
+            line-height: 28px;
+            background: $color_white;
+            height: 60px;
+            position: relative;
+            @include sm {
+                padding: 16px 20px 16px 30px;
+                height: 80px;
+            }
+            .search-bar {
+                height: 100%;
+                width: 100%;
+                padding: 14px 100px 16px 18px;
+                background: $color_white;
+                position: absolute;
+                display: none;
+                top: 0;
+                left: 0;
+                @include sm {
+                    padding: 16px 110px 16px 60px;
+                }
+                i {
+                    display: none;
+                    height: 32px;
+                    width: 32px;
+                    position: absolute;
+                    left: 20px;
+                    top: 50%;
+                    margin-top: -16px;
+                    @include sm {
+                        display: block;
+                    }
+                    svg {
+                        fill: darken(desaturate($color_gray, 12%), 15%);
+                    }
+                }
+                input[type=text] {
+                    height: 33px;
+                    border: none;
+                    font-size: 13px;
+                    color: $color_dark;
+                    width: 100%;
+                    @include sm {
+                        font-size: 16px;
+                        height: 46px;
+                    }
+                }
+                button {
+                    display: block;
+                    height: 26px;
+                    width: 42px;
+                    background: $color_blue;
+                    border-radius: 4px;
+                    color: $color_white;
+                    padding: 4px 10px 6px;
+                    text-align: center;
+                    @include title-text;
+                    font-weight: 600;
+                    font-size: 13px;
+                    position: absolute;
+                    right: 48px;
+                    top: 50%;
+                    margin-top: -13px;
+                    box-shadow: 0 1px 3px 0 transparentize($color_darkest, .93), 0 2px 5px 0 transparentize($color_darkest, .9), 0 12px 40px -20px transparentize(white, .5) inset;
+                    @include sm {
+                        height: 32px;
+                        margin-top: -17px;
+                        right: 68px;
+                        font-size: 14px;
+                    }
+                }
+                .close-button {
+                    display: block;
+                    width: 28px;
+                    height: 28px;
+                    position: absolute;
+                    top: 50%;
+                    margin-top: -14px;
+                    right: 12px;
+                    border-radius: 50%;
+                    @include sm {
+                        width: 32px;
+                        height: 32px;
+                        margin-top: -17px;
+                        right: 20px;
+                        border: 1px solid darken(desaturate($color_gray, 12%), 12%);
+                    }
+                    &:before, &:after {
+                        content: "";
+                        display: block;
+                        height: 16px;
+                        width: 2px;
+                        background: darken(desaturate($color_gray, 12%), 15%);
+                        position: absolute;
+                        top: 50%;
+                        margin-top: -8px;
+                        left: 50%;
+                        margin-left: -1px;
+                        -webkit-transform: rotate(45deg);
+                        transform: rotate(45deg);
+                    }
+                    &:after {
+                        -webkit-transform: rotate(-45deg);
+                        transform: rotate(-45deg);
+                    }
+                }
+            }
+            .buttons {
+                display: block;
+                width: auto;
+                height: 28px;
+                position: absolute;
+                top: 50%;
+                margin-top: -14px;
+                right: 12px;
+                @include sm {
+                    height: 32px;
+                    margin-top: -17px;
+                    right: 20px;
+                }
+                > a {
+                    display: block;
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 50%;
+                    margin-left: 10px;
+                    @include sm {
+                        border: 1px solid darken(desaturate($color_gray, 12%), 12%);
+                        width: 32px;
+                        height: 32px;
+                    }
+                    svg {
+                        fill: darken(desaturate($color_gray, 12%), 15%);
+                    }
+                }
+            }
+        }
+        i {
+            vertical-align: -4px;
+            margin-right: 6px;
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            background-size: 100%;
+            display: none;
+        }
+        h2 {
+            font-size: 13px;
+            font-weight: 600;
+            margin: 7px 0;
+            @include sm {
+                font-size: 16px;
+                margin: 9px 0;
+            }
+            &.default-message {
+                font-weight: 400;
+                color: transparentize($color_dark, .3);
+            }
+        }
+    }
+    .marks {
+        &.continue-search {
+            margin: 20px 0;
+            padding: 20px 30px;
+            font-size: 13px;
+            color: $color_dark_gray;
+            @include sm {
+                font-size: 14px;
+            }
+            a {
+                border-bottom: 1px solid transparentize(black, 0.85);
+                padding-bottom: 2px;
+                font-weight: 600;
+                color: $color_dark_gray;
+            }
+            &.no-results {
+                margin-top: 76px;
+            }
+        }
+    }
+}
+body {
+    &.label-1 {
+        .main-content .marks-heading { color: darken($color_grey, 2); }
+    }
+    &.label-2 {
+        .main-content .marks-heading { color: darken($color_orange_text, 2); }
+    }
+    &.label-3 {
+        .main-content .marks-heading { color: darken($color_blue_text, 2); }
+    }
+    &.label-4 {
+        .main-content .marks-heading { color: darken($color_yellow_text, 2); }
+    }
+    &.label-5 {
+        .main-content .marks-heading { color: darken($color_purple, 2); }
+    }
+    &.label-6 {
+        .main-content .marks-heading { color: darken($color_green_text, 2); }
+    }
+    &.label-7 {
+        .main-content .marks-heading { color: darken($color_pink, 2); }
+    }
+}
+
+@import "stream";
+@import "sidebar";

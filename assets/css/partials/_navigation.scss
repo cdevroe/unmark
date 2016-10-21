@@ -1,0 +1,398 @@
+// Left-Most Rail
+.navigation-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 10%;
+    z-index: 201;
+    background-color: $color_darker;
+    min-height: 100%;
+    @include sm {
+        width: $nav_rail_sm;
+    }
+    @include md {
+        box-shadow: 0 9px 10px -9px rgba(0,0,0,0.3) inset;
+    }
+    @include lg {
+        width: $nav_rail_lg;
+    }
+    @include xs {
+        width: 64px;
+        left: 0;
+        background-color: $color_darkest;
+        box-shadow: -1px 0 0 0 transparentize(white, .95) inset;
+    }
+    .menu-item {
+        height: inherit;
+        text-align: center;
+        cursor: pointer;
+        height: 72px;
+        position: relative;
+        &:after {
+            content: "";
+            display: block;
+            width: 5px;
+            height: 80%;
+            position: absolute;
+            top: 10%;
+            left: 0;
+            background: lighten(saturate($color_blue, .5), .8);
+            -webkit-transition: all .3s;
+            transition: all .3s;
+            opacity: 0;
+        }
+        a {
+            color: $color_white;
+            text-decoration: none;
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: relative;
+            outline: 0;
+            i {
+                width: 20px;
+                height: 20px;
+                display: block;
+                margin: 0 auto;
+                position: absolute;
+                top: 50%;
+                margin-top: -10px;
+                left: 50%;
+                margin-left: -10px;
+                opacity: .3;
+                -webkit-filter: drop-shadow(0 5px 8px transparentize(#08192b, 1));
+                filter: drop-shadow(0 5px 8px transparentize(#08192b, 1));
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                @include xs {
+                    width: 18px;
+                    height: 18px;
+                }
+                svg {
+                    fill: white;
+                    -webkit-transition: all .3s;
+                    transition: all .3s;
+                }
+            }
+        }
+        &.active-menu {
+            &:after {
+                opacity: 1;
+            }
+            a {
+                i {
+                    -webkit-filter: drop-shadow(0 5px 8px transparentize(#08192b, .1));
+                    filter: drop-shadow(0 5px 8px transparentize(#08192b, .1));
+                    opacity: 1;
+                    svg {
+                        fill: $color_blue;
+                    }
+                }
+            }
+        }
+        &.brand {
+            cursor: default;
+            box-shadow: 0 -1px 0 0 transparentize(white, .92) inset;
+            margin-bottom: 12px;
+            height: 80px;
+            display: none;
+            @include sm {
+                display: block;
+            }
+            a {
+                i {
+                    height: 30px;
+                    margin-top: -15px;
+                    opacity: 1;
+                    -webkit-filter: drop-shadow(0 5px 8px transparentize(#08192b, .1));
+                    filter: drop-shadow(0 5px 8px transparentize(#08192b, .1));
+                }
+            }
+        }
+    }
+    .menu-item:first-child {
+        border-bottom:none;
+    }
+    .menu-activator {
+        background-color: transparent;
+        margin-top: -64px;
+        display: none;
+    }
+}
+// Sub-Menu Panel Area
+.navigation-pane {
+    width: 216px;
+    background-color: $color_darkest;
+    min-height: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 64px;
+    z-index: 200;
+    //display: none;
+    @include sm {
+        width: $nav_pane_sm;
+        left: $nav_rail_sm;
+        display: block;
+    }
+    @include lg {
+        width: $nav_pane_lg;
+        left: $nav_rail_lg;
+    }
+    @include xs {
+        width: 216px;
+        left: 64px;
+    }
+    .brand-panel {
+        height: 80px;
+        box-shadow: 0 -1px 0 0 transparentize(white, .92) inset;
+        margin-bottom: 12px;
+        padding: 29px 30px;
+        display: none;
+        @include sm {
+            display: block;
+            padding: 29px 24px;
+        }
+        @include lg {
+            padding: 29px 30px;
+        }
+        i {
+            width: 68px;
+            height: 13px;
+            display: block;
+            svg {
+                fill: white;
+            }
+        }
+        .version {
+            display: block;
+            font-size: 12px;
+            color: transparentize($color_white, .65);
+            text-align: right;
+            position: absolute;
+            right: 28px;
+            top: 32px;
+        }
+    }
+    .navigation-pane-links {
+        margin: 0;
+        padding: 0;
+        li {
+            list-style: none;
+            a {
+                display: block;
+                color: $color_white;
+                font-weight: 400;
+                font-size: 15px;
+                padding: 24px 30px;
+                height: 72px;
+                line-height: 24px;
+            }
+        }
+    }
+    .navigation-panel-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-height: 100%;
+        @include sm {
+            top: 80px;
+        }
+        .nav-panel {
+            position: absolute;
+            display:none;
+            color: #FFF;
+            background-color: $color_darkest;
+            min-height: 100%;
+            width: 260px;
+            padding: 0 22px 0 16px;
+            overflow: scroll;
+            -webkit-overflow-scrolling: touch;
+            @include sm {
+                width: $nav_pane_sm;
+                padding: 0 24px 30px;
+            }
+            @include lg {
+                width: $nav_pane_lg;
+                padding: 0 30px 30px;
+            }
+            @include xs {
+                width: 216px;
+                padding: 0 24px;
+            }
+            &#panel-label {
+                display: block;
+            }
+        }
+        #panel-upgrade {
+            color: $color_light;
+            line-height: 25px;
+            font-size: 15px;
+            text-align: center;
+            p {
+                font-style: italic;
+                font-size: 14px;
+                line-height: 20px;
+            }
+            .upgrade-features {
+                border-top: 1px solid transparentize($color_light, 0.85);
+                border-bottom: 1px solid transparentize($color_light, 0.85);
+                margin: 24px 0;
+                padding: 30px 0 10px 0;
+                i {
+                    font-size: 10px;
+                    background-color: $color_light;
+                    border: 4px solid $color_light;
+                    width: 24px;
+                    height: 24px;
+                    display: inline-block;
+                    color: $color_dark;
+                    background-size: 100%;
+                    border-radius: 50em;
+                }
+                h4 {
+                    font-size: 16px;
+                    line-height: 20px;
+                    font-weight: 300;
+                    padding: 0 45px;
+                    margin-top: 0;
+                }
+            }
+            button#upgradeNow {
+                background-color: $color_blue;
+                font-size: 12px;
+                @include title-text;
+                @include font-smoothing;
+                color: white;
+                padding: 16px;
+                width: 100%;
+            }
+        }
+    }
+    .nav-heading {
+        @include title-text;
+        font-size: 12px;
+        font-weight: 600;
+        border-bottom: 1px solid transparentize($color_white, .9);
+        padding: 0 0 12px 2px;
+        margin-top: 36px;
+        margin-bottom: 20px;
+        color: transparentize($color_light_gray, .3);
+        @include xs {
+            margin-top: 24px;
+        }
+        span {
+            text-transform: none;
+            font-size: 12px;
+            padding-left: 10px;
+            font-family: "Lato", sans-serif;
+            font-weight: 400;
+            letter-spacing: normal;
+            font-style: italic;
+        }
+    }
+    #panel-settings {
+        button#logout-btn {
+            width: 100%;
+            margin-top: 36px;
+            padding: 10px 20px 13px;
+            font-size: 14px;
+            @include title-text;
+            letter-spacing: normal;
+            @include font-smoothing;
+            font-weight: 700;
+            box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize(black, .8);
+        }
+    }
+    .nav-list {
+        margin:0;
+        padding:0;
+        li {
+            list-style: none;
+            color: $color_light;
+            margin: 8px 2px;
+            font-size: 14px;
+            a {
+                font-size: 13px;
+                display: block;
+                color: white;
+            }
+        }
+    }
+    .tag-list {
+        margin: 0;
+        padding:0;
+        li {
+            list-style: none;
+            color: $color_lighter;
+            font-size: 14px;
+            a {
+                color: $color_white;
+                border-bottom: none;
+                padding: 8px 4px;
+                text-transform: inherit;
+                display: block;
+                font-size: 14px;
+            }
+        }
+    }
+}
+.branding {
+    width: 150px;
+    height: 64px;
+    position: absolute;
+    left: 61px;
+    top: -2px;
+    overflow: hidden;
+    display: none;
+    .logo-text {
+        width: 130px;
+        height: 20px;
+        margin: 22px auto 18px;
+        background-size: 65%;
+        background-position: top left;
+    }
+}
+.label-list {
+    margin: 0;
+    padding: 0;
+    li {
+        list-style: none;
+        position: relative;
+        a {
+            //@include title-text;
+            color: $color_white;
+            display: block;
+            border-bottom: none;
+            padding: 0;
+            font-size: 14px;
+            padding: 12px 40px 12px 30px;
+            position: relative;
+            z-index: 900;
+            @include lg {
+                font-size: 15px;
+            }
+        }
+        span {
+            display: block;
+            font-weight: 600;
+            font-size: 11px;
+            color: transparentize($color_white, 0.45);
+            margin-top: 2px;
+            position: absolute;
+            right: 0;
+            top: 13px;
+        }
+        &:after {
+            @include unmark-label-ball(50%, 0px, 16px, false);
+            margin-top: -8px;
+            color: transparentize(white, 0.5);
+        }
+        &.label-2:after { background-color: $color_orange; }
+        &.label-3:after { background-color: $color_blue; }
+        &.label-4:after { background-color: $color_yellow; }
+        &.label-5:after { background-color: $color_purple; }
+        &.label-6:after { background-color: $color_green; }
+        &.label-7:after { background-color: $color_pink; }
+    }
+}
