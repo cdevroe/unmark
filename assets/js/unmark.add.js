@@ -13,6 +13,7 @@
         function built_label_list(res) {
             var list = unmark.label_list(res);
             $('ul.label-choices').prepend(list);
+            unmark.marks_addLabel();
         };
 
         // Function to check the current label for the mark saved
@@ -26,19 +27,16 @@
         unmark.getData('labels', built_label_list);
 
         // Show Current Label
-        $(document).ready(function() {
-            check_for_label();
+        check_for_label();
 
-            $('.mark-added-notes-area').on('blur keydown', function (e) {
-                if (e.which === 13 || e.type === 'blur') {
-                    e.preventDefault();
-                    var text = $(this).val(),
-                        id = $(this).data('id'),
-                        title = $('.mark-added-info h1').text(); // 1.6
-                    unmark.saveNotes(id, text, title);
-                }
-            });
-
+        $('.mark-added-notes-area').on('blur keydown', function (e) {
+            if (e.which === 13 || e.type === 'blur') {
+                e.preventDefault();
+                var text =    $(this).val(),
+                    id =      $(this).data('id'),
+                    title =   $('.mark-added-info h1').text(); // 1.6
+                unmark.saveNotes(id, text, title);
+            }
         });
 
     });

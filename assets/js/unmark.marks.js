@@ -279,12 +279,22 @@
 
     // Method for adding a label
     unmark.marks_addLabel = function () {
-        var mark, label_id, query, label_name, body_class, pattern,
-            labels_list = $('.sidebar-label-list'),
-            label_chosen = $('#label-chosen'),
-            btn =
-            label_parent = $('.sidebar-label');
+        var mark, label_id, query, label_name, body_class, pattern, btn,
+            labels_list =     $('.sidebar-label-list'),
+            label_chosen =    $('#label-chosen'),
+            label_parent =    $('.sidebar-label'),
+            bookmarklet =     false; // If we're in the bookmarklet
 
+        // In the sidebar, there is a different class for this list.
+        // In the bookmarklet popup, it is .label-choices.
+        // So this check was added in 1.8
+        // Should likely be cleaned up.
+        if ( labels_list.length < 1 ) {
+          labels_list =     $('.label-choices');
+          label_parent =    $('.mark-added-label');
+          // Very likely in the bookmarklet added 1.8
+          bookmarklet =     true;
+        }
         // Pre 1.8 used to hide the label list. No longer needed
         // if(labels_list.is(':visible')) { return labels_list.fadeOut(); }
 
@@ -301,22 +311,29 @@
             query =           'label_id=' + label_id;
             btn =             $('.action[data-id="'+mark+'"][data-action="marks_addLabel"]');
             unmark.ajax('/mark/edit/'+mark, 'post', query, function(res) {
-                // pre 1.8 labels_list.fadeOut();
+
                 label_chosen.text(label_name);
-                console.log(btn);
-                btn.text(label_name);
-                unmark.swapClass(btn, 'label-*', 'label-'+label_id);
-                //labels_list.find('a').unbind();
+
+                if ( bookmarklet ) { // If in bookmarklet, added 1.8
+                  $('#currLabel').text(label_name);
+                  unmark.swapClass($('#currLabel'),'label-*','label-'+label_id);
+                  unmark.swapClass(label_parent, 'label-*', 'label-'+label_id);
+                } else {
+                  btn.text(label_name);
+                  unmark.swapClass(btn, 'label-*', 'label-'+label_id);
+                  unmark.swapClass(label_parent, 'label-*', 'label-'+label_id);
+                  unmark.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
+                }
+
                 unmark.update_label_count(); // Update the count under labels menu
-                //if (label_parent.hasClass('sidebar-label')) {
-                    unmark.swapClass(label_parent, 'label-*', 'label-'+label_id);
-                    unmark.swapClass($('#mark-'+mark), 'label-*', 'label-'+label_id);
-                    unmark.update_mark_info(res, mark);
-                    if ((pattern.test(body_class))  && (body_class !== 'label-'+label_id)) { // If on current label and label change, remove mark from label
-                        $('#mark-'+mark).fadeOut();
-                        unmark.sidebar_collapse();
-                    }
-                //}
+
+                unmark.update_mark_info(res, mark); // Update the notes and everything else too.
+
+                if ((pattern.test(body_class))  && (body_class !== 'label-'+label_id)) { // If on current label and label change, remove mark from label
+                    $('#mark-'+mark).fadeOut();
+                    unmark.sidebar_collapse();
+                }
+
             });
         });
 
