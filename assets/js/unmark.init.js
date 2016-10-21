@@ -167,10 +167,10 @@
         ////////////////////////////////////////////////////////////////////////////
 
         // Adding & Removing Classes for Mobile Navigation & Sidebar "Sliding"
-        $(this.hamburger).on( "click", function(e) {
+        $(unmark.hamburger).on( "click", function(e) {
             e.preventDefault();
-            $(this).toggleClass('active');
-            $(this.mainpanels).toggleClass('nav-active');
+            $(unmark.hamburger).toggleClass('active');
+            $(unmark.mainpanels).toggleClass('nav-active');
         });
 
 
