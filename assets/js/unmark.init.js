@@ -49,14 +49,16 @@
 
         // Hover Action on Marks List
         // Shows the Archive and More Buttons
-        $(document).on('mouseenter', '.mark', function () {
-            $(this).addClass('hide-dot');
-            $(this).find('.mark-actions').fadeIn(200);
-        });
-        $(document).on('mouseleave', '.mark', function () {
-            $(this).removeClass('hide-dot');
-            $(this).find('.mark-actions').fadeOut(200);
-        });
+        if (Modernizr.mq('only screen and (min-width: 768px)')) {
+            $(document).on('mouseenter', '.mark', function () {
+                $(this).addClass('hide-dot');
+                $(this).find('.mark-actions').fadeIn(200);
+            });
+            $(document).on('mouseleave', '.mark', function () {
+                $(this).removeClass('hide-dot');
+                $(this).find('.mark-actions').fadeOut(200);
+            });
+        }
 
         // Global Button / Action Link Run
         // Create a Function from a string
@@ -164,6 +166,7 @@
         ////////////////////////////////////////////////////////////////////////////
 
         // Adding & Removing Classes for Mobile Navigation & Sidebar "Sliding"
+        /*
         if ( $('#unmark-wrapper').hasClass('nav-active') ) {
             $('.mobile-header .menu-activator').on( "click", function(e) {
                 e.preventDefault();
@@ -180,6 +183,13 @@
                 $(this).toggleClass('active');
             });
         }
+        */
+        $('.mobile-header .menu-activator').on( "click", function(e) {
+            e.preventDefault();
+            $('#unmark-wrapper').removeClass('sidebar-active');
+            $('#unmark-wrapper').toggleClass('nav-active');
+            $(this).toggleClass('active');
+        });
 
         $('.mobile-header #mobile-sidebar-show').on( "click", function(e) {
             e.preventDefault();

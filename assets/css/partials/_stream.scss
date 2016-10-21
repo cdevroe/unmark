@@ -2,7 +2,7 @@
 .marks_list {
     .mark {
         border-bottom: 1px solid $color_lighter;
-        padding: 16px 52px 23px 52px;
+        padding: 16px 52px 18px 52px;
         position: relative;
         -webkit-transition: all .3s;
         transition: all .3s;
@@ -29,14 +29,30 @@
             -webkit-transition: all .3s ease-in-out;
             transition: all .3s ease-in-out;
         }
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 0;
+            width: 0;
+            margin-top: 0;
+            background: transparent;
+            border: 6px solid;
+            border-color: transparent;
+            @include sm {
+                border-width: 10px;
+            }
+        }
         h2 {
             margin: 0 0 4px;
             font-weight: 400;
             font-size: 15px;
-            line-height: 1.4;
+            line-height: 1.25;
             @include sm {
                 margin:0 0 10px;
                 font-size: 16px;
+                line-height: 1.4;
             }
             @include md {
                 font-size: 18px;
@@ -49,7 +65,7 @@
             }
         }
         .mark-meta {
-            font-size: 11px;
+            font-size: 10px;
             color: darken($color_light, 15%);
             @include sm {
                 font-size: 12px;
@@ -57,9 +73,17 @@
             @include xs {
                 overflow: hidden;
             }
+            .mark-date {
+                @include xs {
+                    display: none;
+                }
+            }
             .mark-sep {
                 padding: 0 6px 0 5px;
                 color: lighten($color_light, 15%);
+                @include xs {
+                    display: none;
+                }
             }
             .mark-link a {
                 text-decoration: none;
@@ -67,21 +91,6 @@
                 display: inline;
                 vertical-align: bottom;
                 @include unmark-truncate(65%);
-            }
-        }
-        &:after {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 0;
-            width: 0;
-            margin-top: 0;
-            background: transparent;
-            border: 8px solid;
-            border-color: transparent;
-            @include sm {
-                border-width: 10px;
             }
         }
         .note-placeholder { display: none; }
@@ -105,21 +114,28 @@
                 position: absolute;
                 top: 50%;
                 margin-top: -15px;
-                right: 12px;
+                right: 8px;
                 border: none;
+                @include sm {
+                    right: 12px;
+                }
                 @include lg {
                     right: 30px;
                     border: 1px solid transparentize($color_dark_gray, .85);
                 }
                 i {
                     display: block;
-                    width: 14px;
+                    width: 10px;
                     height: 28px;
                     position: absolute;
                     top: 50%;
                     margin-top: -14px;
                     left: 50%;
-                    margin-left: -7px;
+                    margin-left: -5px;
+                    @include sm {
+                        width: 14px;
+                        margin-left: -7px;
+                    }
                     svg {
                         fill: transparentize($color_dark_gray, .4);
                     }

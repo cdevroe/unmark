@@ -62,6 +62,7 @@ body {
     @include xs {
         width: calc(100% + 560px);
         left: -280px;
+        height: calc(100% - 60px);
     }
     &.nav-active {
         left: 0;

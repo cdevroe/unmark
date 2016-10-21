@@ -25,12 +25,14 @@
     // Collapse Marks Info Sidebar
     // Hides the marks info and re-displays the default sidebar
     unmark.sidebar_collapse = function () {
+        /*
         if (Modernizr.mq('only screen and (max-width: 480px)')) {
             $('.mark-actions').hide();
             $('.sidebar-content').animate({right: '-85%'}, 600, function () {
                 $(this).hide();
             });
         }
+        */
         $('.mark').removeClass('view-inactive').removeClass('view-active');
         $('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable'); // 1.6
         unmark.sidebar_expand(true);
@@ -69,7 +71,7 @@
     // Hides the left navigation
     unmark.hideNavigation = function () {
       return;
-        if (Modernizr.mq('only screen and (min-width: 480px)')) { $('.mark-actions').hide(); $('.branding').fadeOut(); }
+        if (Modernizr.mq('only screen and (min-width: 768px)')) { $('.mark-actions').hide(); $('.branding').fadeOut(); }
         ///===///===///===///===///===///===///
         //unmark.nav_panel.stop().animate({ left: -285 }, 400);
         //unmark.main_panel.stop().animate({ left: 80 }, 200, function () {
@@ -105,7 +107,7 @@
         e.preventDefault();
 
         // In Case... hide the mark actions
-        $('.mark-actions').hide();
+        //$('.mark-actions').hide();
 
         // If tap/click on open menu, hide menu
         if (elem_parent.hasClass('active-menu')) {
@@ -128,16 +130,16 @@
 
         // Check which panel to show
         if (Modernizr.mq('only screen and (min-width: 480px)')) {
-            unmark.nav_panel.animate({ left: 80 }, { duration: 200, queue: false });
-            unmark.main_panel.animate({ left: panel_animate }, { duration: 200, queue: false });
-            unmark.nav_panel.animate({ width: panel_width, }, 200);
-            unmark.nav_panel.find('.nav-panel').animate({ width: panel_width, }, 200);
+            //unmark.nav_panel.animate({ left: 80 }, { duration: 200, queue: false });
+            //unmark.main_panel.animate({ left: panel_animate }, { duration: 200, queue: false });
+            //unmark.nav_panel.animate({ width: panel_width, }, 200);
+            //unmark.nav_panel.find('.nav-panel').animate({ width: panel_width, }, 200);
         }
         else {
-            unmark.nav_panel.animate({ left: 64 }, { duration: 200, queue: false });
-            unmark.main_panel.animate({ left: 280 }, { duration: 200, queue: false });
-            unmark.nav_panel.animate({ width: 216, }, 200);
-            unmark.nav_panel.find('.nav-panel').animate({ width: 216, }, 200);
+            //unmark.nav_panel.animate({ left: 64 }, { duration: 200, queue: false });
+            //unmark.main_panel.animate({ left: 280 }, { duration: 200, queue: false });
+            //unmark.nav_panel.animate({ width: 216, }, 200);
+            //unmark.nav_panel.find('.nav-panel').animate({ width: 216, }, 200);
         }
 
         // Fade in Logo

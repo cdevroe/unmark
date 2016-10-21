@@ -17,7 +17,7 @@
 				}
 				$('.menu-item').removeClass('active-menu');
 			} else {
-				$('.mark-actions').hide();
+				//$('.mark-actions').hide();
 				$('.main-wrapper').animate({left: 65}, 400);
 				$('.navigation-content').animate({left: 0}, 400);
 				$('.navigation-content .menu-activator').animate({left: 0}, 400);
@@ -53,10 +53,10 @@
 			$('#mobile-sidebar-show').on('click', function (e) {
 				e.preventDefault();
 				var open = $('#unmark-wrapper');
-				if ( open.hasClass('sidebar-active') ) { 
-					unmark.mobile_sidebar(true); } else { unmark.mobile_sidebar(); 
+				if ( open.hasClass('sidebar-active') ) {
+					unmark.mobile_sidebar(true); } else { unmark.mobile_sidebar();
 				}
-				$('.mark-actions').hide();
+				//$('.mark-actions').hide();
 			});
 
 			// Set Max width for view of sidebar expand.

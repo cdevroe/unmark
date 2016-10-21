@@ -95,34 +95,44 @@
             .search-bar {
                 height: 100%;
                 width: 100%;
-                padding: 16px 110px 16px 60px;
+                padding: 14px 100px 16px 18px;
                 background: $color_white;
                 position: absolute;
                 display: none;
                 top: 0;
                 left: 0;
+                @include sm {
+                    padding: 16px 110px 16px 60px;
+                }
                 i {
-                    display: block;
+                    display: none;
                     height: 32px;
                     width: 32px;
                     position: absolute;
                     left: 20px;
                     top: 50%;
                     margin-top: -16px;
+                    @include sm {
+                        display: block;
+                    }
                     svg {
                         fill: darken(desaturate($color_gray, 12%), 15%);
                     }
                 }
                 input[type=text] {
-                    height: 46px;
+                    height: 33px;
                     border: none;
-                    font-size: 16px;
+                    font-size: 13px;
                     color: $color_dark;
                     width: 100%;
+                    @include sm {
+                        font-size: 16px;
+                        height: 46px;
+                    }
                 }
                 button {
                     display: block;
-                    height: 32px;
+                    height: 26px;
                     width: 42px;
                     background: $color_blue;
                     border-radius: 4px;
@@ -131,23 +141,35 @@
                     text-align: center;
                     @include title-text;
                     font-weight: 600;
-                    font-size: 14px;
+                    font-size: 13px;
                     position: absolute;
-                    right: 68px;
+                    right: 48px;
                     top: 50%;
-                    margin-top: -17px;
+                    margin-top: -13px;
                     box-shadow: 0 1px 3px 0 transparentize($color_darkest, .93), 0 2px 5px 0 transparentize($color_darkest, .9), 0 12px 40px -20px transparentize(white, .5) inset;
+                    @include sm {
+                        height: 32px;
+                        margin-top: -17px;
+                        right: 68px;
+                        font-size: 14px;
+                    }
                 }
                 .close-button {
                     display: block;
-                    width: 32px;
-                    height: 32px;
+                    width: 28px;
+                    height: 28px;
                     position: absolute;
                     top: 50%;
-                    margin-top: -17px;
-                    right: 20px;
-                    border: 1px solid darken(desaturate($color_gray, 12%), 12%);
+                    margin-top: -14px;
+                    right: 12px;
                     border-radius: 50%;
+                    @include sm {
+                        width: 32px;
+                        height: 32px;
+                        margin-top: -17px;
+                        right: 20px;
+                        border: 1px solid darken(desaturate($color_gray, 12%), 12%);
+                    }
                     &:before, &:after {
                         content: "";
                         display: block;
@@ -175,7 +197,7 @@
                 position: absolute;
                 top: 50%;
                 margin-top: -14px;
-                right: 18px;
+                right: 12px;
                 @include sm {
                     height: 32px;
                     margin-top: -17px;
@@ -185,10 +207,10 @@
                     display: block;
                     width: 28px;
                     height: 28px;
-                    border: 1px solid darken(desaturate($color_gray, 12%), 12%);
                     border-radius: 50%;
                     margin-left: 10px;
                     @include sm {
+                        border: 1px solid darken(desaturate($color_gray, 12%), 12%);
                         width: 32px;
                         height: 32px;
                     }

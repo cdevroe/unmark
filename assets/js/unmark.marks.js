@@ -46,9 +46,11 @@
         // Clean up view
 
       //  if (!mark_nofade) {
+        if (Modernizr.mq('only screen and (min-width: 768px)')) {
             $('.mark').removeClass('view-inactive').removeClass('view-active');
             $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
             $('#mark-' + mark_id).addClass('view-active');
+        }
             $('.sidebar-content').addClass('active');
         //}
 
