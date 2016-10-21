@@ -153,7 +153,7 @@
         width: 100%;
         height: 56px;
         z-index: 99999;
-        display: none;
+        //display: none;
         @include sm {
             display: block;
         }
