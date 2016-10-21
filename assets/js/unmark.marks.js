@@ -14,8 +14,6 @@
     // Grabs relavaent info and shows the sidebar actions with info
     unmark.show_mark_info = function (mark_clicked) {
 
-
-
         var template, output,
             mark_obj_ref    = mark_clicked.data('mark'),
             mark_string     = $('#' + mark_obj_ref).html();

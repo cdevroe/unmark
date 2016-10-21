@@ -14,16 +14,17 @@
     unmark.init = function () {
 
         // Define some re-usable elements
-        this.nav_panel = $('.navigation-pane'),
-        this.main_panel = $('.main-wrapper'),
-        this.main_content = $('.main-content'),
-        this.sidebar_content = $('.sidebar-content'),
-        this.main_panel_width = unmark.main_panel.width(),
-        this.sidebar_default = $('.sidebar-default'),
-        this.sidebar_mark_info = $('.sidebar-mark-info'),
-        this.body_height = $(window).outerHeight(true),
-        this.special_chars     = { '\\+': '&#43;' };
-        this.mainpanels = $('#unmark-wrapper');
+        this.nav_panel =                      $('.navigation-pane'),
+        this.main_panel =                     $('.main-wrapper'),
+        this.main_content =                   $('.main-content'),
+        this.sidebar_content =                $('.sidebar-content'),
+        this.main_panel_width =               unmark.main_panel.width(),
+        this.sidebar_default =                $('.sidebar-default'),
+        this.sidebar_mark_info =              $('.sidebar-mark-info'),
+        this.body_height =                    $(window).outerHeight(true),
+        this.special_chars =                  { '\\+': '&#43;' };
+        this.mainpanels =                     $('#unmark-wrapper');
+        this.hamburger =                      $('.mobile-header .menu-activator');
 
         // Check Query String
         var load = unmark.readQuery('load');
@@ -166,8 +167,14 @@
         ////////////////////////////////////////////////////////////////////////////
 
         // Adding & Removing Classes for Mobile Navigation & Sidebar "Sliding"
-        /*
-        if ( $('#unmark-wrapper').hasClass('nav-active') ) {
+        $(this.hamburger).on( "click", function(e) {
+            e.preventDefault();
+            $(this).toggleClass('active');
+            $(this.mainpanels).toggleClass('nav-active');
+        });
+
+
+        /*if ( $('#unmark-wrapper').hasClass('nav-active') ) {
             $('.mobile-header .menu-activator').on( "click", function(e) {
                 e.preventDefault();
                 $('#unmark-wrapper').removeClass('nav-active');
@@ -184,12 +191,6 @@
             });
         }
         */
-        $('.mobile-header .menu-activator').on( "click", function(e) {
-            e.preventDefault();
-            $('#unmark-wrapper').removeClass('sidebar-active');
-            $('#unmark-wrapper').toggleClass('nav-active');
-            $(this).toggleClass('active');
-        });
 
         $('.mobile-header #mobile-sidebar-show').on( "click", function(e) {
             e.preventDefault();
@@ -202,7 +203,14 @@
         // Show & Hide Search Bar
         $(document).on('click', '.marks-heading-bar .search-button', function(e) {
             e.preventDefault();
-            $(this).closest('.marks-heading-bar').find('.search-bar').fadeIn(300);
+            $(this).closest('.marks-heading-bar').find('.search-bar').fadeIn(300, function(e){
+              console.log('Focusing search box.');
+              setTimeout(function(){
+                $('#search-input').focus();
+              }, 1000);
+
+            });
+
         });
         $(document).on('click', '.marks-heading-bar .search-bar .close-button', function(e) {
             e.preventDefault();
