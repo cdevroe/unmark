@@ -1,0 +1,102 @@
+.mobileonly { display: none !important; }
+.tabletonly { display: none !important; }
+
+.mobile-header {
+    display: block;
+    height: 60px;
+    position: fixed;
+    background: $color_darker;
+    width: 100%;
+    padding: 0 60px;
+    @include md {
+        display: none;
+    }
+    .branding {
+        display: block;
+        position: absolute;
+        top: 50%;
+        margin-top: -10px;
+        left: 50%;
+        margin-left: -29px;
+        width: 58px;
+        height: 18px;
+        text-align: center;
+        svg {
+            fill: $color_white;
+        }
+    }
+}
+.menu-activator {
+    width: 64px;
+    height: 60px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    outline: 0;
+    @include sm {
+        display: none;
+    }
+    i {
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        display: block;
+        top: 50%;
+        margin-top: -9px;
+        left: 50%;
+        margin-left: -9px;
+        background: none !important;
+        .crossbar {
+            display: block;
+            height: 2px;
+            width: 18px;
+            background: $color_white;
+            position: absolute;
+            top: 50%;
+            margin-top: -1px;
+            left: 50%;
+            margin-left: -9px;
+            -webkit-transition: all .3s;
+            transition: all .3s;
+            &:first-child {
+                margin-top: -6px;
+            }
+            &:last-child {
+                margin-top: 4px;
+            }
+        }
+    }
+    &:focus, &:active {
+        outline: 0;
+    }
+    &.active {
+        i {
+            .crossbar {
+                display: block;
+                height: 2px;
+                width: 17px;
+                background: $color_white;
+                position: absolute;
+                top: 50%;
+                margin-top: -1px;
+                left: 50%;
+                margin-left: -11px;
+                &:first-child {
+                    width: 10px;
+                    margin-top: -4px;
+                    -webkit-transform: rotate(-45deg);
+                    transform: rotate(-45deg);
+                }
+                &:nth-child(2) {
+                    margin-left: -8px;
+                }
+                &:last-child {
+                    margin-top: 2px;
+                    width: 10px;
+                    -webkit-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                }
+            }
+        }
+    }
+}

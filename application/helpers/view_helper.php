@@ -4,9 +4,9 @@
 function printMarksCount($num)
 {
     if($num > 0) {
-        return sprintf(unmark_phrase('%s mark', '%s marks', $num), $num);
+        return $num;
     } else {
-        return unmark_phrase('No marks');
+        return '0';
     }
 }
 
