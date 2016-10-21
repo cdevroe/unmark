@@ -35,11 +35,16 @@
         */
         $('.mark').removeClass('view-inactive').removeClass('view-active');
         $('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable'); // 1.6
-        unmark.sidebar_expand(true);
-        unmark.sidebar_mark_info.fadeOut(400, function () {
-            unmark.sidebar_default.fadeIn(400);
-        });
-        $('.sidebar-content').removeClass('active');
+        //unmark.sidebar_expand(true);
+        /*unmark.sidebar_mark_info.fadeOut(400, function () {
+            //unmark.sidebar_default.fadeIn(400);
+        });*/
+        if (Modernizr.mq('only screen and (max-width: 480px)')) {
+          $('.sidebar-content').removeClass('active');
+          
+        } else {
+          $('.sidebar-content').removeClass('active');
+        }
     };
 
     // Expands or Compresses the Info Sidebar
