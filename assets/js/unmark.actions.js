@@ -86,6 +86,7 @@
     // Function for interacting and animating the left navigation
     // This handels both the top level and secondarly level
     unmark.interact_nav = function (e, elem_ckd) {
+
         // Set variables
         var panel_to_show = elem_ckd.data('panel'),
             panel_name = panel_to_show.replace(/^#/, ''),
@@ -110,10 +111,10 @@
         //$('.mark-actions').hide();
 
         // If tap/click on open menu, hide menu
-        if (elem_parent.hasClass('active-menu')) {
+        /*if (elem_parent.hasClass('active-menu')) {
             $('.menu-item').removeClass('active-menu');
           //  return unmark.hideNavigation();
-        }
+        }*/
 
         // Add / Remove Class for current navigation
         $('.menu-item').removeClass('active-menu');
@@ -126,7 +127,7 @@
             }
         }
 
-        $('.menu-activator i').removeClass('icon-menu_open').addClass('icon-menu_close');
+        //$('.menu-activator i').removeClass('icon-menu_open').addClass('icon-menu_close');
 
         // Check which panel to show
         if (Modernizr.mq('only screen and (min-width: 480px)')) {

@@ -15,7 +15,9 @@
 					//$('.navigation-content').animate({left: '-64'}, 400);
 					//$('.navigation-content .menu-activator').animate({left: 62}, 400);
 				}
-				$('.menu-item').removeClass('active-menu');
+				//$('.menu-item').removeClass('active-menu');
+				unmark.mainpanels.removeClass('nav-active');
+				unmark.hamburger.removeClass('active');
 			} else {
 				//$('.mark-actions').hide();
 				$('.main-wrapper').animate({left: 65}, 400);
