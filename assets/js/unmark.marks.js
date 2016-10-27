@@ -341,7 +341,7 @@
             editable_mark_title.attr('contenteditable', false).removeClass('editable');
 
             // Return Mark title back to being wrapped by URL
-            editable_mark_title.html('<a target="_blank" href="'+mark_url+'">'+editable_mark_title.text()+'</a>');
+            editable_mark_title.html('<a target="_blank" rel="noopener noreferrer" href="'+mark_url+'">'+editable_mark_title.text()+'</a>');
 
             // Taggify the notes (means also wrapping up any links within)
             unmark.tagify_notes(editable_notes);
@@ -374,7 +374,7 @@
 
         if (notetext !== '') {
             // First Linkify Notes
-            notetext = notetext.replace(/(https?:\/\/[^\]\s]+)(?: ([^\]]*))?/g, "<a target='_blank' href='$1'>$1</a>");
+            notetext = notetext.replace(/(https?:\/\/[^\]\s]+)(?: ([^\]]*))?/g, "<a target='_blank' rel='noopener noreferrer' href='$1'>$1</a>");
             // Then Tagify It
             notetext = notetext.replace(/#(\S*)/g,'<a href="/marks/tag/$1">#$1</a>');
         } else {

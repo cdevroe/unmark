@@ -66,17 +66,17 @@
             <?php foreach ($marks as $mark) :
             if (isset($mark->mark_title)) $mark->title = $mark->mark_title; ?>
                 <div id="mark-<?php print $mark->mark_id; ?>" class="mark label-<?php print $mark->label_id; ?>">
-                    <h2 class="hideoutline"><a target="_blank" href="<?php print $mark->url; ?>"><?php print $mark->title; ?></a></h2>
+                    <h2 class="hideoutline"><a target="_blank" rel="noopener noreferrer" href="<?php print $mark->url; ?>"><?php print $mark->title; ?></a></h2>
                     <div class="mark-meta">
                         <span class="mark-date"><?php print $mark->nice_time; ?></span>
                         <span class="mark-sep">&bull;</span>
-                        <span class="mark-link"><a target="_blank" href="<?php print $mark->url; ?>"><?php print niceUrl($mark->url); ?></a></span>
+                        <span class="mark-link"><a target="_blank" rel="noopener noreferrer" href="<?php print $mark->url; ?>"><?php print niceUrl($mark->url); ?></a></span>
                     </div>
                     <div class="mark-actions">
                         <a title="View Mark Info" class="action mark-archive tabletonly" href="#" data-nofade="true" data-action="show_mark_info" data-mark="mark-data-<?php print $mark->mark_id; ?>">
                             <i class="icon-ellipsis"></i>
                         </a>
-                        <a target="_blank" title="Open Mark" class="mark-info" href="<?php print $mark->url; ?>" data-mark="mark-data-<?php print $mark->mark_id; ?>">
+                        <a target="_blank" rel="noopener noreferrer" title="Open Mark" class="mark-info" href="<?php print $mark->url; ?>" data-mark="mark-data-<?php print $mark->mark_id; ?>">
                             <i class="icon-goto_link"></i>
                         </a>
                         <?php if ($lookup_type == "archive") : ?>
