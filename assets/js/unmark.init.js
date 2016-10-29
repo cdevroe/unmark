@@ -170,6 +170,7 @@
         $(unmark.hamburger).on( "click", function(e) {
             e.preventDefault();
             $(unmark.hamburger).toggleClass('active');
+            $(unmark.mainpanels).removeClass('sidebar-active');
             $(unmark.mainpanels).toggleClass('nav-active');
         });
 
