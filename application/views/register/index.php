@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title><?php echo _('Unmark : User Registration') ?></title>
+    <title><?php echo unmark_phrase('Unmark : User Registration') ?></title>
     <link href='//fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="assets/css/unmark.css?v=<?php echo ASSET_VERSION; ?>" />
     <link rel="icon" type="image/ico" href="favicon.ico" />
@@ -21,16 +21,16 @@
 <div class="loginWrapper">
     <div class="loginInner internalform">
         <div class="login-ball"><img src="assets/images/logo.png" /></div>
-        <h1><?php echo _('Register For') ?></h1>
+        <h1><?php echo unmark_phrase('Register For') ?></h1>
         <div class="login-text"><img src="assets/images/icons/logo_text_light.png" /></div>
         <form id="register_user" method="post" action="#" class="ajaxsbmt">
-            <input type="email" class="field-input" name="email" id="email" placeholder="<?php echo _('Email Address') ?>" autocomplete="off" autocapitalize="off" autocorrect="off" />
-            <input type="password" class="field-input" name="password" id="password" placeholder="<?php echo _('Password') ?>" autocomplete="off" />
-            <input type="password" class="field-input" name="password2" id="password2" placeholder="<?php echo _('Password Again') ?>" autocomplete="off" />
+            <input type="email" class="field-input" name="email" id="email" placeholder="<?php echo unmark_phrase('Email Address') ?>" autocomplete="off" autocapitalize="off" autocorrect="off" />
+            <input type="password" class="field-input" name="password" id="password" placeholder="<?php echo unmark_phrase('Password') ?>" autocomplete="off" />
+            <input type="password" class="field-input" name="password2" id="password2" placeholder="<?php echo unmark_phrase('Password Again') ?>" autocomplete="off" />
             <button class="login-submit" type="submit"><i class="icon-go"></i></button>
         </form>
         <div class="response-message"></div>
-        <a href="/" class="register"><?php echo _('Have An Account? Sign In Here') ?></a>
+        <a href="/" class="register"><?php echo unmark_phrase('Have An Account? Sign In Here') ?></a>
     </div>
 </div>
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title><?php echo _('Unmark: Setup') ?></title>
+    <title><?php echo unmark_phrase('Unmark: Setup') ?></title>
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo ASSET_VERSION; ?>" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
@@ -20,11 +20,11 @@
 
     <div id="unmark-setup">
 
-        <p><?php echo _('Welcome to Unmark , the to-do app for bookmarks.'); ?></p>
+        <p><?php echo unmark_phrase('Welcome to Unmark , the to-do app for bookmarks.'); ?></p>
 
-        <p><?php echo _('You\'re about to install version ' . $this->config->item('unmark_version') . ' of the app.</p><p>Please <a href="https://github.com/plainmade/unmark/blob/master/readme.md">read the installation instructions</a> first.'); ?></p>
+        <p><?php echo unmark_phrase('You\'re about to install version ' . $this->config->item('unmark_version') . ' of the app.</p><p>Please <a href="https://github.com/plainmade/unmark/blob/master/readme.md">read the installation instructions</a> first.'); ?></p>
 
-        <a class="abtn" href="/install"><?php echo _('Click to Install') ?></a>
+        <a class="abtn" href="/install"><?php echo unmark_phrase('Click to Install') ?></a>
 
     </div>
 
