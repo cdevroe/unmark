@@ -53,7 +53,7 @@ class Login extends Plain_Controller {
                 // Regenerate session
                 // Set session variables and send user on their way
                 $add_redirect = $this->session->userdata('add_redirect');
-                $redirect     = (empty($add_redirect)) ? '/marks' : $add_redirect;
+                $redirect     = (empty($add_redirect)) ? config_item('base_url').'marks' : $add_redirect;
 
                 $this->session->unset_userdata('add_redirect');
                 $user->email = $this->clean->email;

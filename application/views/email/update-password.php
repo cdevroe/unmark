@@ -74,6 +74,10 @@
 			img[class="image-banner"]{width: 280px!important;height:68px!important;}
 		}
 	</style>
+  <script>
+      /* Set baseurl variable for use in JS */
+      window.unmark_baseurl = "<?php echo config_item('base_url') ?>"
+  </script>
 </head>
 <body style="-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;" bgcolor="#f6f4f5">
 <div class="block hide-mobile">

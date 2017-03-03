@@ -8,23 +8,25 @@
     <meta name="apple-mobile-web-app-capable" content="no">
     <title><?php echo _('Unmark'); ?></title>
     <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic|Merriweather:400,300,300italic,400italic,700,700italic|Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo ASSET_VERSION; ?>" />
+    <link rel="stylesheet" href="<?php echo config_item('base_url') ?>assets/css/unmark.css?v=<?php echo ASSET_VERSION; ?>" />
     <link rel="icon" type="image/ico" href="favicon.ico" />
-    <link rel="apple-touch-icon" sizes="57x57" href="assets/touch_icons/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="assets/touch_icons/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="assets/touch_icons/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="assets/touch_icons/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="assets/touch_icons/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/touch_icons/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/touch_icons/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/touch_icons/apple-touch-icon-152x152.png">
-    <script src="/assets/js/plugins/modernizr-2.7.1.min.js"></script>
+    <link rel="apple-touch-icon" sizes="57x57" href="<?php echo config_item('base_url') ?>assets/touch_icons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="<?php echo config_item('base_url') ?>assets/touch_icons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="<?php echo config_item('base_url') ?>assets/touch_icons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="<?php echo config_item('base_url') ?>assets/touch_icons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="<?php echo config_item('base_url') ?>assets/touch_icons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="<?php echo config_item('base_url') ?>assets/touch_icons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="<?php echo config_item('base_url') ?>assets/touch_icons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="<?php echo config_item('base_url') ?>assets/touch_icons/apple-touch-icon-152x152.png">
+    <script src="<?php echo config_item('base_url') ?>assets/js/plugins/modernizr-2.7.1.min.js"></script>
     <script>
+        /* Set baseurl variable for use in JS */
+        window.unmark_baseurl = "<?php echo config_item('base_url') ?>"
         /* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
         window.grunticon=function(e){if(e&&3===e.length){var t=window,n=!!t.document.createElementNS&&!!t.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect&&!!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"),A=function(A){var o=t.document.createElement("link"),r=t.document.getElementsByTagName("script")[0];o.rel="stylesheet",o.href=e[A&&n?0:A?1:2],r.parentNode.insertBefore(o,r)},o=new t.Image;o.onerror=function(){A(!1)},o.onload=function(){A(1===o.width&&1===o.height)},o.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="}};
-        grunticon( [ "/assets/css/icons.data.svg.css", "/assets/css/icons.data.png.css", "/assets/css/icons.fallback.css" ] );
+        grunticon( [ "<?php echo config_item('base_url') ?>assets/css/icons.data.svg.css", "<?php echo config_item('base_url') ?>assets/css/icons.data.png.css", "<?php echo config_item('base_url') ?>assets/css/icons.fallback.css" ] );
     </script>
-    <noscript><link href="/assets/css/icons.fallback.css" rel="stylesheet"></noscript>
+    <noscript><link href="<?php echo config_item('base_url') ?>assets/css/icons.fallback.css" rel="stylesheet"></noscript>
 </head>
 
 <?php if (isset($active_label)) : ?>

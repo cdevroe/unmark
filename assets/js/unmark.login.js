@@ -53,7 +53,8 @@
         // Process the login
         // Decide what do do on sucess or failure
         function process_login(query) {
-            unmark.ajax('/login', 'post', query, function (res) {
+            alert("About to login");
+            unmark.ajax(window.unmark_baseurl+'login', 'post', query, function (res) {
                 if (res.success === true) {
                     login_success(res.redirect_url); // Run the redirection
                 } else {

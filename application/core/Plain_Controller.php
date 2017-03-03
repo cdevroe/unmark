@@ -445,7 +445,7 @@ class Plain_Controller extends CI_Controller
                 $url = '/json/auth/error';
             }
             else {
-                if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], '/marks/add?') == 0) {
+                if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], config_item('base_url').'marks/add?') == 0) {
                     $this->session->set_userdata('add_redirect', $_SERVER['REQUEST_URI']);
                 }
             }
