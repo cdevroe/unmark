@@ -5,6 +5,10 @@
 	<link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="assets/css/unmark.css">
 	<link rel="icon" type="image/ico" href="<?php echo config_item('base_url') ?>favicon.ico">
+  <script>
+      /* Set baseurl variable for use in JS */
+      window.unmark_baseurl = "<?php echo config_item('base_url') ?>"
+  </script>
 </head>
 <body class="unmark-solo" id="unmark-login">
 	<div id="error-wrapper">
