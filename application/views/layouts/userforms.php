@@ -26,11 +26,11 @@
             <h1><?php echo _('Export All Marks') ?></h1>
             <a data-action="export_data" class="exportbtn action" href="#"><?php echo _('Export File') ?></a>
             <h1><?php echo _('Import Marks') ?></h1>
-            <form id="importForm" method="post" enctype="multipart/form-data" action="/import">
+            <form id="importForm" method="post" enctype="multipart/form-data" action="<?php echo config_item('base_url') ?>import">
                 <input id="importerUnmark" class="importer" type="file" name="upload">
                 <a data-action="import_data" class="importbtn action" href="#"><?php echo _('Import Unmark File') ?></a>
             </form>
-            <form id="importFormReadability" method="post" enctype="multipart/form-data" action="/import">
+            <form id="importFormReadability" method="post" enctype="multipart/form-data" action="<?php echo config_item('base_url') ?>import">
                 <input id="importerReadability" class="importer" type="file" name="uploadReadability">
                 <a data-action="import_data_readability" class="importbtn action" href="#"><?php echo _('Import Readability File') ?></a>
             </form>

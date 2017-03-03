@@ -4,7 +4,7 @@
 		if (isset($labels)) :
 		foreach ($labels as $label) : ?>
 			<li class="label-<?php print $label->label_id ?>">
-				<a href="/marks/label/<?php print $label->slug; ?>"><?php print _($label->name); ?></a>
+				<a href="<?php echo config_item('base_url') ?>marks/label/<?php print $label->slug; ?>"><?php print _($label->name); ?></a>
 				<span><?php echo printMarksCount($label->total_active_marks); ?></span>
 			</li>
 		<?php endforeach; endif; ?>
@@ -14,7 +14,7 @@
 	<?php $this->load->view('layouts/timeline'); ?>
 </div>
 <div id="panel-search" class="nav-panel">
-	<form method="get" action="/marks/search" id="search-form">
+	<form method="get" action="<?php echo config_item('base_url') ?>marks/search" id="search-form">
 		<input type="text" name="q" id="search-input" placeholder="<?php echo _('SEARCH...') ?>" autocapitalize="off">
 		<button type="submit"><i class="icon-go"></i></button>
 	</form>

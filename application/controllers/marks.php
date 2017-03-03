@@ -52,7 +52,7 @@ class Marks extends Plain_Controller
         }
         else {
             $this->data['mark'] = $user_mark;
-            $redirect           = '/mark/info/' . $user_mark->mark_id . '?bookmarklet=true';
+            $redirect           = config_item('base_url').'mark/info/' . $user_mark->mark_id . '?bookmarklet=true';
         }
 
         // Figure what to do here (api, redirect or generate view)

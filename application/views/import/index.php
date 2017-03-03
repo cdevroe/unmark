@@ -29,8 +29,8 @@
         ?>
     </div>
 
-<script src="assets/libraries/jquery/jquery-2.1.0.min.js"></script>
-<script src="assets/js/production/unmark.loggedout.js"></script>
+<script src="<?php echo config_item('base_url') ?>assets/libraries/jquery/jquery-2.1.0.min.js"></script>
+<script src="<?php echo config_item('base_url') ?>assets/js/production/unmark.loggedout.js"></script>
 
 </body>
 </html>

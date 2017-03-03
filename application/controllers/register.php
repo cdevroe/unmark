@@ -53,7 +53,7 @@ class Register extends Plain_Controller
 			}
 
 			// set redirect path
-			$redirect              = '/marks';
+			$redirect              = config_item('base_url').'marks';
 			$this->data['success'] = true;
 			$this->data['email']   = $email;
 

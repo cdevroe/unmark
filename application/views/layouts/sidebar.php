@@ -16,7 +16,7 @@
     <div class="sidebar-block">
         <div class="sidebar-inner">
             <p><?php echo sprintf(ngettext('You have %s mark that are over 1 year old. Want to tidy up a bit?', 'You have %s mark that are over 1 year old. Want to tidy up a bit?',$stats['marks']['ages ago']), '<span class="ns-year">' . $stats['marks']['ages ago'] . '</span>')?></p>
-            <a href="/marks/ages-ago" class="btn"><?php echo _('View Marks'); ?></a>
+            <a href="<?php echo config_item('base_url') ?>marks/ages-ago" class="btn"><?php echo _('View Marks'); ?></a>
             <button data-action="dismiss_this"><?php echo _('Do Nothing'); ?></button>
             <button data-action="archive_all"><?php echo _('Archive All'); ?></button>
         </div>

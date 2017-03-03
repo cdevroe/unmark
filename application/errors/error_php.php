@@ -1,5 +1,5 @@
 <div id="error-wrapper">
-    <div id="error-icon"><img src="/assets/images/icons/large_x.png" /></div>
+    <div id="error-icon"><img src="<?php echo config_item('base_url') ?>assets/images/icons/large_x.png" /></div>
     <?php if (defined('ENVIRONMENT') && ENVIRONMENT === 'production'): ?>
         <h1>An unexpected error has occured</h1>
         <p>The issue has been logged and will be taken care of shortly.</p>
