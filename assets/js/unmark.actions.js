@@ -39,9 +39,11 @@
         /*unmark.sidebar_mark_info.fadeOut(400, function () {
             //unmark.sidebar_default.fadeIn(400);
         });*/
-        if (Modernizr.mq('only screen and (max-width: 480px)')) {
+        if (Modernizr.mq('only screen and (max-width: 768px)')) {
           $('.sidebar-content').removeClass('active');
+
           
+
         } else {
           $('.sidebar-content').removeClass('active');
         }
