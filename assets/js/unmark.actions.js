@@ -41,9 +41,7 @@
         });*/
         if (Modernizr.mq('only screen and (max-width: 768px)')) {
           $('.sidebar-content').removeClass('active');
-
-          
-
+          $('#unmark-wrapper').removeClass('sidebar-active');
         } else {
           $('.sidebar-content').removeClass('active');
         }
