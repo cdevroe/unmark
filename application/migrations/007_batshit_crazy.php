@@ -54,7 +54,7 @@ class Migration_Batshit_Crazy extends Plain_Migration
           `path` varchar(100) DEFAULT NULL COMMENT 'The path to find to for smartlabels to match. If null, just match host.',
           `smart_key` varchar(32) DEFAULT NULL COMMENT 'MD5 checksum of domain and path for lookup purposes.',
           `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1 is active, 0 if not. Defaults to 1.',
-          `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+          `created_on` datetime NOT NULL,
           `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.',
           PRIMARY KEY (`label_id`),
           CONSTRAINT `FK_label_smart_label_id` FOREIGN KEY (`smart_label_id`) REFERENCES `labels` (`label_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
@@ -176,7 +176,7 @@ class Migration_Batshit_Crazy extends Plain_Migration
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `url` `url` text NOT NULL COMMENT 'The full url from the page being bookmarked.'");
       $this->db->query("ALTER TABLE `marks` ADD COLUMN `url_key` varchar(32) DEFAULT NULL COMMENT 'The MD5 checksum of the url for lookup purposes.' AFTER `url`");
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `oembed` `embed` text DEFAULT NULL COMMENT 'The embedded content that could appear on the mark\'s info page.'");
-      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `dateadded` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime this record was created.'");
+      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `dateadded` `created_on` datetime NOT NULL COMMENT 'The datetime this record was created.'");
       $this->db->query("ALTER TABLE `marks` ADD COLUMN `embed_processed` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = yes, 0 if not. Defaults to 0.' AFTER `embed`");
       $this->db->query("ALTER TABLE `marks` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.' AFTER `created_on`");
 
@@ -257,7 +257,7 @@ class Migration_Batshit_Crazy extends Plain_Migration
       $res = $this->db->query("UPDATE `users` SET status = '1' WHERE status = 'active'");
       $this->db->query("ALTER TABLE `users` DROP COLUMN `salt`");
       $this->db->query("ALTER TABLE `users` CHANGE COLUMN `status` `active` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = active, 0 = inactive' AFTER `password`");
-      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `date_joined` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime the account was created'");
+      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `date_joined` `created_on` datetime NOT NULL COMMENT 'The datetime the account was created'");
       $this->db->query("ALTER TABLE `users` CHANGE COLUMN `admin` `admin` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = admin, 0 = admin' AFTER `active`");
       $this->db->query("ALTER TABLE `users` ADD COLUMN `user_token` varchar(30) NOT NULL DEFAULT '0' COMMENT 'Unique user token.' AFTER `password`");
 
@@ -350,7 +350,7 @@ class Migration_Batshit_Crazy extends Plain_Migration
       $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `userid` `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'The user_id from users.user_id' AFTER `mark_id`");
       $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `tags` `label_id` bigint(20) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'The label_id from labels.label_id.'");
       $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `note` `notes` text DEFAULT NULL");
-      $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `dateadded` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime this record was created.'");
+      $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `dateadded` `created_on` datetime NOT NULL COMMENT 'The datetime this record was created.'");
       $this->db->query("ALTER TABLE `users_to_marks` CHANGE COLUMN `datearchived` `archived_on` datetime DEFAULT NULL COMMENT 'The datetime this mark was archived. NULL = not archived.'");
       $this->db->query("ALTER TABLE `users_to_marks` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.' AFTER `archived_on`");
       $this->db->query("ALTER TABLE `users_to_marks` ADD INDEX `mark_id`(mark_id)");
@@ -459,7 +459,7 @@ class Migration_Batshit_Crazy extends Plain_Migration
       $this->db->query("ALTER TABLE `users_marks` CHANGE COLUMN `label_id` `tags` text DEFAULT NULL");
       $this->db->query("ALTER TABLE `users_marks` CHANGE COLUMN `notes` `note` text DEFAULT NULL");
       $this->db->query("ALTER TABLE `users_marks` CHANGE COLUMN `created_on` `dateadded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP");
-      $this->db->query("ALTER TABLE `users_marks` CHANGE COLUMN `archived_on` `datearchived` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'");
+      $this->db->query("ALTER TABLE `users_marks` CHANGE COLUMN `archived_on` `datearchived` timestamp NOT NULL");
       $this->db->query("ALTER TABLE `users_marks` ADD COLUMN `status` varchar(255) DEFAULT NULL AFTER `dateadded`");
       $this->db->query("ALTER TABLE `users_marks` ADD COLUMN `addedby` int(11) NOT NULL AFTER `tags`");
       $this->db->query("ALTER TABLE `users_marks` ADD COLUMN `groups` int(11) NOT NULL AFTER `addedby`");
@@ -593,7 +593,7 @@ class Migration_Batshit_Crazy extends Plain_Migration
       $res = $this->db->query("UPDATE `users` SET status = 'inactive' WHERE status <> '1'");
       $res = $this->db->query("UPDATE `users` SET status = 'active' WHERE status = '1'");
       $this->db->query("ALTER TABLE `users` ADD COLUMN `salt` varchar(50) DEFAULT NULL COMMENT 'The salt used to generate password.' AFTER `password`");
-      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `created_on` `date_joined` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
+      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `created_on` `date_joined` datetime NOT NULL");
       $this->db->query("ALTER TABLE `users` DROP INDEX `user_token`");
       $this->db->query("ALTER TABLE `users` DROP COLUMN `user_token`");
 
