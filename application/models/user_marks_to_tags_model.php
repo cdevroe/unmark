@@ -3,7 +3,8 @@
 class User_Marks_To_Tags_model extends Plain_Model
 {
 
-    public $sort = 'user_marks_to_tag_id DESC';
+    //public $sort = 'user_marks_to_tag_id DESC';
+    public $sort = 'tag_id DESC';
 
 
     public function __construct()
@@ -86,8 +87,10 @@ class User_Marks_To_Tags_model extends Plain_Model
     {
         $order_by = array(
             'popular' => 'total',
-            'recent'  => 'user_marks_to_tags.user_marks_to_tag_id'
+            'recent'  => 'user_marks_to_tags.tag_id'
         );
+
+        //'recent'  => 'user_marks_to_tags.user_marks_to_tag_id'
 
         $order = (array_key_exists($type, $order_by)) ? $order_by[$type] : 'total';
 
