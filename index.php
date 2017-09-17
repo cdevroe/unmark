@@ -228,7 +228,5 @@ if (defined('ENVIRONMENT'))
  */
 require_once APPPATH . 'core/Plain_CodeIgniter.php';
 
-mysql_query("SET SESSION sql_mode = ''");
-
 /* End of file index.php */
 /* Location: ./index.php */
