@@ -1,14 +1,4 @@
 <?php
-
-/*
- *---------------------------------------------------------------
- * Unmark Version
- *---------------------------------------------------------------
-*/
-
-//  For up todate version info on Unmark, please see our releases page
-//  https://github.com/plainmade/unmark/releases
-
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
