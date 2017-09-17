@@ -54,7 +54,7 @@ class Migration_Batshit_Crazy extends Plain_Migration
           `path` varchar(100) DEFAULT NULL COMMENT 'The path to find to for smartlabels to match. If null, just match host.',
           `smart_key` varchar(32) DEFAULT NULL COMMENT 'MD5 checksum of domain and path for lookup purposes.',
           `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1 is active, 0 if not. Defaults to 1.',
-          `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+          `created_on` datetime NOT NULL,
           `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.',
           PRIMARY KEY (`label_id`),
           CONSTRAINT `FK_label_smart_label_id` FOREIGN KEY (`smart_label_id`) REFERENCES `labels` (`label_id`)   ON UPDATE CASCADE ON DELETE CASCADE,
@@ -176,7 +176,7 @@ class Migration_Batshit_Crazy extends Plain_Migration
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `url` `url` text NOT NULL COMMENT 'The full url from the page being bookmarked.'");
       $this->db->query("ALTER TABLE `marks` ADD COLUMN `url_key` varchar(32) DEFAULT NULL COMMENT 'The MD5 checksum of the url for lookup purposes.' AFTER `url`");
       $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `oembed` `embed` text DEFAULT NULL COMMENT 'The embedded content that could appear on the mark\'s info page.'");
-      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `dateadded` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime this record was created.'");
+      $this->db->query("ALTER TABLE `marks` CHANGE COLUMN `dateadded` `created_on` datetime NOT NULL COMMENT 'The datetime this record was created.'");
       $this->db->query("ALTER TABLE `marks` ADD COLUMN `embed_processed` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = yes, 0 if not. Defaults to 0.' AFTER `embed`");
       $this->db->query("ALTER TABLE `marks` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The last datetime this record was updated.' AFTER `created_on`");
 
@@ -257,7 +257,7 @@ class Migration_Batshit_Crazy extends Plain_Migration
       $res = $this->db->query("UPDATE `users` SET status = '1' WHERE status = 'active'");
       $this->db->query("ALTER TABLE `users` DROP COLUMN `salt`");
       $this->db->query("ALTER TABLE `users` CHANGE COLUMN `status` `active` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = active, 0 = inactive' AFTER `password`");
-      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `date_joined` `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The datetime the account was created'");
+      $this->db->query("ALTER TABLE `users` CHANGE COLUMN `date_joined` `created_on` datetime NOT NULL COMMENT 'The datetime the account was created'");
       $this->db->query("ALTER TABLE `users` CHANGE COLUMN `admin` `admin` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = admin, 0 = admin' AFTER `active`");
       $this->db->query("ALTER TABLE `users` ADD COLUMN `user_token` varchar(30) NOT NULL DEFAULT '0' COMMENT 'Unique user token.' AFTER `password`");
 
