@@ -3,7 +3,8 @@
 class User_Marks_To_Tags_model extends Plain_Model
 {
 
-    public $sort = 'user_marks_to_tag_id DESC';
+    //public $sort = 'user_marks_to_tag_id DESC';
+    public $sort = 'tag_id DESC';
 
 
     public function __construct()
