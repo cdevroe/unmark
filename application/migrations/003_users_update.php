@@ -15,7 +15,7 @@ class Migration_Users_update extends Plain_Migration {
       $this->db->query('ALTER TABLE `users` DROP PRIMARY KEY, ADD PRIMARY KEY (`user_id`)');
       $this->db->query('ALTER TABLE `users` CHANGE COLUMN `emailaddress` `email` varchar(255) NOT NULL');
       $this->db->query('ALTER TABLE `users` CHANGE COLUMN `password` `password` varchar(150) NOT NULL');
-      $this->db->query('ALTER TABLE `users` CHANGE COLUMN `datejoined` `date_joined` datetime NOT NULL DEFAULT \'0000-00-00 00:00:00\'');
+      $this->db->query('ALTER TABLE `users` CHANGE COLUMN `datejoined` `date_joined` datetime NOT NULL');
       $this->db->query('ALTER TABLE `users` CHANGE COLUMN `status` `status` varchar(25) NOT NULL DEFAULT \'inactive\'');
       $this->db->query('ALTER TABLE `users` ADD COLUMN `last_updated` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP AFTER `status`');
       $this->db->query('ALTER TABLE `users` DROP INDEX `emailaddress`');
