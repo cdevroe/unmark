@@ -11,7 +11,7 @@ class Migration_Archive_stats extends Plain_Migration
 	public function up()
 	{
 		// Add column to track when a mark was archived
-		$this->dbforge->add_column('users_marks', array('datearchived' => array('type'=>'timestamp')));
+		$this->dbforge->add_column('users_marks', array('datearchived' => array('type'=>'timestamp default current_timestamp')));
 	}
 
 	public function down()
