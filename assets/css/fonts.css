@@ -1,0 +1,196 @@
+@font-face {
+  font-family: 'Lato';
+  font-weight: 300;
+  font-style: normal;
+  src: url('/assets/fonts/Lato-300/Lato-300.eot');
+  src: url('/assets/fonts/Lato-300/Lato-300.eot?#iefix') format('embedded-opentype'),
+       local('Lato Light'),
+       local('Lato-300'),
+       url('/assets/fonts/Lato-300/Lato-300.woff2') format('woff2'),
+       url('/assets/fonts/Lato-300/Lato-300.woff') format('woff'),
+       url('/assets/fonts/Lato-300/Lato-300.ttf') format('truetype'),
+       url('/assets/fonts/Lato-300/Lato-300.svg#Lato') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-weight: 400;
+  font-style: normal;
+  src: url('/assets/fonts/Lato-regular/Lato-regular.eot');
+  src: url('/assets/fonts/Lato-regular/Lato-regular.eot?#iefix') format('embedded-opentype'),
+       local('Lato Regular'),
+       local('Lato-regular'),
+       url('/assets/fonts/Lato-regular/Lato-regular.woff2') format('woff2'),
+       url('/assets/fonts/Lato-regular/Lato-regular.woff') format('woff'),
+       url('/assets/fonts/Lato-regular/Lato-regular.ttf') format('truetype'),
+       url('/assets/fonts/Lato-regular/Lato-regular.svg#Lato') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/assets/fonts/Lato-700/Lato-700.eot');
+  src: url('/assets/fonts/Lato-700/Lato-700.eot?#iefix') format('embedded-opentype'),
+       local('Lato Bold'),
+       local('Lato-700'),
+       url('/assets/fonts/Lato-700/Lato-700.woff2') format('woff2'),
+       url('/assets/fonts/Lato-700/Lato-700.woff') format('woff'),
+       url('/assets/fonts/Lato-700/Lato-700.ttf') format('truetype'),
+       url('/assets/fonts/Lato-700/Lato-700.svg#Lato') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-weight: 300;
+  font-style: italic;
+  src: url('/assets/fonts/Lato-300italic/Lato-300italic.eot');
+  src: url('/assets/fonts/Lato-300italic/Lato-300italic.eot?#iefix') format('embedded-opentype'),
+       local('Lato Light Italic'),
+       local('Lato-300italic'),
+       url('/assets/fonts/Lato-300italic/Lato-300italic.woff2') format('woff2'),
+       url('/assets/fonts/Lato-300italic/Lato-300italic.woff') format('woff'),
+       url('/assets/fonts/Lato-300italic/Lato-300italic.ttf') format('truetype'),
+       url('/assets/fonts/Lato-300italic/Lato-300italic.svg#Lato') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-weight: 400;
+  font-style: italic;
+  src: url('/assets/fonts/Lato-italic/Lato-italic.eot');
+  src: url('/assets/fonts/Lato-italic/Lato-italic.eot?#iefix') format('embedded-opentype'),
+       local('Lato Italic'),
+       local('Lato-italic'),
+       url('/assets/fonts/Lato-italic/Lato-italic.woff2') format('woff2'),
+       url('/assets/fonts/Lato-italic/Lato-italic.woff') format('woff'),
+       url('/assets/fonts/Lato-italic/Lato-italic.ttf') format('truetype'),
+       url('/assets/fonts/Lato-italic/Lato-italic.svg#Lato') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-weight: 700;
+  font-style: italic;
+  src: url('/assets/fonts/Lato-700italic/Lato-700italic.eot');
+  src: url('/assets/fonts/Lato-700italic/Lato-700italic.eot?#iefix') format('embedded-opentype'),
+       local('Lato Bold Italic'),
+       local('Lato-700italic'),
+       url('/assets/fonts/Lato-700italic/Lato-700italic.woff2') format('woff2'),
+       url('/assets/fonts/Lato-700italic/Lato-700italic.woff') format('woff'),
+       url('/assets/fonts/Lato-700italic/Lato-700italic.ttf') format('truetype'),
+       url('/assets/fonts/Lato-700italic/Lato-700italic.svg#Lato') format('svg');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-weight: 300;
+  font-style: normal;
+  src: url('/assets/fonts/Merriweather-300/Merriweather-300.eot');
+  src: url('/assets/fonts/Merriweather-300/Merriweather-300.eot?#iefix') format('embedded-opentype'),
+       local('Merriweather Light'),
+       local('Merriweather-300'),
+       url('/assets/fonts/Merriweather-300/Merriweather-300.woff2') format('woff2'),
+       url('/assets/fonts/Merriweather-300/Merriweather-300.woff') format('woff'),
+       url('/assets/fonts/Merriweather-300/Merriweather-300.ttf') format('truetype'),
+       url('/assets/fonts/Merriweather-300/Merriweather-300.svg#Merriweather') format('svg');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-weight: 400;
+  font-style: normal;
+  src: url('/assets/fonts/Merriweather-regular/Merriweather-regular.eot');
+  src: url('/assets/fonts/Merriweather-regular/Merriweather-regular.eot?#iefix') format('embedded-opentype'),
+       local('Merriweather'),
+       local('Merriweather-regular'),
+       url('/assets/fonts/Merriweather-regular/Merriweather-regular.woff2') format('woff2'),
+       url('/assets/fonts/Merriweather-regular/Merriweather-regular.woff') format('woff'),
+       url('/assets/fonts/Merriweather-regular/Merriweather-regular.ttf') format('truetype'),
+       url('/assets/fonts/Merriweather-regular/Merriweather-regular.svg#Merriweather') format('svg');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/assets/fonts/Merriweather-700/Merriweather-700.eot');
+  src: url('/assets/fonts/Merriweather-700/Merriweather-700.eot?#iefix') format('embedded-opentype'),
+       local('Merriweather Bold'),
+       local('Merriweather-700'),
+       url('/assets/fonts/Merriweather-700/Merriweather-700.woff2') format('woff2'),
+       url('/assets/fonts/Merriweather-700/Merriweather-700.woff') format('woff'),
+       url('/assets/fonts/Merriweather-700/Merriweather-700.ttf') format('truetype'),
+       url('/assets/fonts/Merriweather-700/Merriweather-700.svg#Merriweather') format('svg');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-weight: 300;
+  font-style: italic;
+  src: url('/assets/fonts/Merriweather-300italic/Merriweather-300italic.eot');
+  src: url('/assets/fonts/Merriweather-300italic/Merriweather-300italic.eot?#iefix') format('embedded-opentype'),
+       local('Merriweather Light Italic'),
+       local('Merriweather-300italic'),
+       url('/assets/fonts/Merriweather-300italic/Merriweather-300italic.woff2') format('woff2'),
+       url('/assets/fonts/Merriweather-300italic/Merriweather-300italic.woff') format('woff'),
+       url('/assets/fonts/Merriweather-300italic/Merriweather-300italic.ttf') format('truetype'),
+       url('/assets/fonts/Merriweather-300italic/Merriweather-300italic.svg#Merriweather') format('svg');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-weight: 400;
+  font-style: italic;
+  src: url('/assets/fonts/Merriweather-italic/Merriweather-italic.eot');
+  src: url('/assets/fonts/Merriweather-italic/Merriweather-italic.eot?#iefix') format('embedded-opentype'),
+       local('Merriweather Italic'),
+       local('Merriweather-italic'),
+       url('/assets/fonts/Merriweather-italic/Merriweather-italic.woff2') format('woff2'),
+       url('/assets/fonts/Merriweather-italic/Merriweather-italic.woff') format('woff'),
+       url('/assets/fonts/Merriweather-italic/Merriweather-italic.ttf') format('truetype'),
+       url('/assets/fonts/Merriweather-italic/Merriweather-italic.svg#Merriweather') format('svg');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-weight: 700;
+  font-style: italic;
+  src: url('/assets/fonts/Merriweather-700italic/Merriweather-700italic.eot');
+  src: url('/assets/fonts/Merriweather-700italic/Merriweather-700italic.eot?#iefix') format('embedded-opentype'),
+       local('Merriweather Bold Italic'),
+       local('Merriweather-700italic'),
+       url('/assets/fonts/Merriweather-700italic/Merriweather-700italic.woff2') format('woff2'),
+       url('/assets/fonts/Merriweather-700italic/Merriweather-700italic.woff') format('woff'),
+       url('/assets/fonts/Merriweather-700italic/Merriweather-700italic.ttf') format('truetype'),
+       url('/assets/fonts/Merriweather-700italic/Merriweather-700italic.svg#Merriweather') format('svg');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: 400;
+  font-style: normal;
+  src: url('/assets/fonts/Montserrat-regular/Montserrat-regular.eot');
+  src: url('/assets/fonts/Montserrat-regular/Montserrat-regular.eot?#iefix') format('embedded-opentype'),
+       local('Montserrat-Regular'),
+       local('Montserrat-regular'),
+       url('/assets/fonts/Montserrat-regular/Montserrat-regular.woff2') format('woff2'),
+       url('/assets/fonts/Montserrat-regular/Montserrat-regular.woff') format('woff'),
+       url('/assets/fonts/Montserrat-regular/Montserrat-regular.ttf') format('truetype'),
+       url('/assets/fonts/Montserrat-regular/Montserrat-regular.svg#Montserrat') format('svg');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/assets/fonts/Montserrat-700/Montserrat-700.eot');
+  src: url('/assets/fonts/Montserrat-700/Montserrat-700.eot?#iefix') format('embedded-opentype'),
+       local('Montserrat-Bold'),
+       local('Montserrat-700'),
+       url('/assets/fonts/Montserrat-700/Montserrat-700.woff2') format('woff2'),
+       url('/assets/fonts/Montserrat-700/Montserrat-700.woff') format('woff'),
+       url('/assets/fonts/Montserrat-700/Montserrat-700.ttf') format('truetype'),
+       url('/assets/fonts/Montserrat-700/Montserrat-700.svg#Montserrat') format('svg');
+}
+
