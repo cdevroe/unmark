@@ -595,10 +595,10 @@ msgstr "Dziękujemy za wypróbowanie Unmark. Mamy nadzieję, że "
 
 #: application/views/layouts/sidebar/sidebar_notices.php:11
 msgid ""
-"For usage tips <a target=\"_blank\" href=\"https://twitter.com/unmarkit"
+"For usage tips <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://twitter.com/unmarkit"
 "\">follow us on Twitter</a>! Please tell your friends about Unmark."
 msgstr ""
-"Aby uzyskać więcej wskazówek <a href=\"https://twitter.com/unmarkit\">śledź "
+"Aby uzyskać więcej wskazówek <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://twitter.com/unmarkit\">śledź "
 "nas na Twitterze</a>! Nie zapomnij powiedzieć swoim znajomym o Unmark."
 
 #: application/views/layouts/timeline.php:8
@@ -1042,10 +1042,10 @@ msgstr ""
 #: custom/views/marks/upgrade_notice.php:46
 #, php-format
 msgid ""
-"Please check out our <a href=\"%s\" target=\"_blank\">FAQ</a> for more "
+"Please check out our <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">FAQ</a> for more "
 "information."
 msgstr ""
-"Sprawdź nasz <a href=\"%s\" target=\"_blank\">FAQ</a> aby uzyskać więcej "
+"Sprawdź nasz <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">FAQ</a> aby uzyskać więcej "
 "informacji."
 
 #: custom/views/welcome.php:42
