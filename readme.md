@@ -3,34 +3,26 @@ Unmark
 
 An open source to-do application for bookmarks.
 
-We offer this source code for Unmark completely free. We do so in hopes that Unmark will live on for many years even if we stop maintaining it. To support its further development please consider subscribing to the hosted version at [unmark.it](https://unmark.it) (which is free with an option to pay). Or, you can simply [donate via Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XSYNN4MGM826N). Or you can contribute to the code.
+We offer this source code for Unmark completely free. We do so in hopes that Unmark will live on for many years even if we stop maintaining it.
 
-Here are some useful links:
+To support its further development please consider [donating via Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XSYNN4MGM826N). Or, you can contribute to the code.
 
 - [Download the latest release](https://github.com/plainmade/unmark/releases) - Grab the latest and greatest version of Unmark.
-- [Unmark.it](https://unmark.it) - Sign up for free to the hosted version.
-- [Unmark Help](http://help.unmark.it) - Get a little help with Unmark.
 
-Support
-----------------
 
-We want you to have a good experience using Unmark so we do offer some support via Slack, and Twitter. Follow [@unmarkit](https://twitter.com/unmarkit) on Twitter and send us a tweet. Or, send us a tweet to get access to our Slack channels.
+## Installation
 
-Installation
-----------------
-
-The local-version of Unmark is recommended for at least intermediate users so the instructions are rather light on detail. However, if you need assistance beyond what is provided please ping us on Twitter. Alternatively, if you have issues setting up Unmark after following the instructions, we recommend [looking through the issues on GitHub](https://github.com/plainmade/unmark/issues) to see how others have solved their problems. Or, to create your own issue.
+The local-version of Unmark is recommended for at least intermediate users so the instructions are rather light on detail. However, if you need assistance beyond what is provided please ping us on Twitter. Alternatively, if you have issues setting up Unmark after following the instructions, we recommend [looking through the issues on GitHub](https://github.com/cdevroe/unmark/issues) to see how others have solved their problems. Or, to create your own issue.
 
 ### Technical requirements
 
-- PHP 5.4 or greater with gettext extension. Need help? [Try this](http://php-osx.liip.ch). (we have every intention of removing the need for gettext extension soon)
+- PHP 5.4 or greater
 - mySQL 5.5 or greater
-- Node for NPM package management and running Grunt
 
-### Instructions
+### Installation Instructions
 
 #### From Zip (binary)
-- Download [the latest release](https://github.com/plainmade/unmark/releases)
+- Download [the latest release](https://github.com/cdevroe/unmark/releases)
 - Unpack the archive into your desired location
 - Rename `/application/config/database-sample.php` to `/application/config/database.php`
 - Create a database for Unmark to use in mySQL (may we recommend "unmark" as a database name?)
@@ -40,7 +32,7 @@ The local-version of Unmark is recommended for at least intermediate users so th
 - From there Unmark will set up the proper database tables and then ask you to register your username with the app
 
 #### From git repository
-- Run `git clone https://github.com/plainmade/unmark.git` (Or, if you've forked the repo, use your URL)
+- Run `git clone https://github.com/cdevroe/unmark.git` (Or, if you've forked the repo, use your URL)
 - Copy `/application/config/database-sample.php` to `/application/config/database.php` (leave `database-sample.php` where it is if you cloned the repo)
 - Create a database for Unmark to use in mySQL (may we recommend "unmark" as a database name?)
 - Fill in proper database credentials in `/application/config/database.php`
@@ -50,14 +42,12 @@ The local-version of Unmark is recommended for at least intermediate users so th
 - Point your browser to `/setup` on your local Unmark domain E.g. unmark.local/setup
 - From there Unmark will set up the proper database tables and then ask you to register your username with the app
 
-Note: Using Nginx rather than Apache? Follow [these Nginx configuration instructions](https://github.com/plainmade/unmark/wiki/Nginx-Configuration).
-
 ### Upgrading to the latest release
 
 #### From Zip (binary)
 - Download [the latest release](https://github.com/plainmade/unmark/releases)
 - Replace all Unmark files (keeping your local `/application/config/database.php` intact.)
-- Navigate to `your-unmark-url/upgrade`
+- Navigate to `/upgrade`
 - Unmark will then make any needed database updates
 - That's it!
 
@@ -65,16 +55,15 @@ Note: Using Nginx rather than Apache? Follow [these Nginx configuration instruct
 - Run `git pull origin master`
 - Run `npm update` in the app's root directory
 - Run `grunt` in the app's root directory
-- Navigate to `your-unmark-url/upgrade`
+- Navigate to `/upgrade`
 - Unmark will then make any needed database updates
 - That's it!
 
 ### Importing bookmarks
 
-Unmark currently supports importing from Unmark's hosted version, any self-hosted version of Unmark, Readability, Pinboard, Delicious, and many other services. However, to ensure this works properly be sure that your PHP.ini file's "max_upload_size" setting is larger than the file you're trying to import.
+Unmark currently supports importing from Unmark export file, Readability, Pinboard, Delicious, and many other services. However, to ensure this works properly be sure that your PHP.ini file's "max_upload_size" setting is larger than the file you're trying to import.
 
-How to contribute to Unmark
-----------------------------
+## How to contribute to Unmark
 
 One major way you can contribute is to report any issues you find with Unmark on Github and being as verbose as you can be for us to replicate the issue. This goes a long way in making Unmark better for everyone on every type of set up.
 
@@ -100,17 +89,22 @@ Just a note: We use [Grunt](http://gruntjs.com/) to compile our SASS files into 
 - Push master to Github
 - Tag release via Github
 
-History
-----------------------------
+## Support via Twitter and Email
+
+We want you to have a good experience using Unmark so we do offer some support via Twitter. Follow [@unmarkit](https://twitter.com/unmarkit) on Twitter and send us a tweet.
+
+You can find an email to send a note from within the app by choosing Settings > Contact Support.
+
+## History
+
 Unmark was originally created by [Colin Devroe](http://cdevroe.com/). It was a side-project called Nilai (the Indonesian word for "mark") and rebuilt from the ground up by [Plain](http://plainmade.com/) which included Jeff Johns, Kyle Ruane, Tim Whitacre, Chris Fehnel, Jakub Jakubiec and Colin Devroe.
 
-Now it is being maintained by Colin and Kyle and the community. Please consider donating, subscribing to the hosted version, or contributing code in order to keep Unmark alive and well.
+Now it is being maintained by Colin and Kyle and the community. Please consider donating or contributing code in order to keep Unmark alive and well.
 
-Contributors
-----------------------------
+## Contributors
 
-Currently being maintained by: [@cdevroe](https://github.com/cdevroe) and [@kyleruane](https://github.com/kyleruane) and you?
-
-With special thanks to: [@phpfunk](https://github.com/phpfunk) (wrote most of Unmark), [@twhitacre](https://github.com/twhitacre) (wrote most of the front-end), [@kip9](https://github.com/kip9) (wrote the languages and migration back-up bits), [@cfehnel](https://github.com/cfehnel) (support master extraordinaire)
+Currently being maintained by: [@cdevroe](https://github.com/cdevroe) and [@kyleruane](https://github.com/kyleruane).
 
 Also contributions by [@thebrandonallen](https://github.com/thebrandonallen), [@simonschaufi](https://github.com/simonschaufi), [@williamknauss](https://github.com/williamknauss), [@hewigovens](https://github.com/hewigovens)
+
+Extra special thanks to: [@phpfunk](https://github.com/phpfunk) (wrote most of Unmark), [@twhitacre](https://github.com/twhitacre) (wrote most of the front-end), [@kip9](https://github.com/kip9) (wrote the languages and migration back-up bits), [@cfehnel](https://github.com/cfehnel) (support master extraordinaire)
