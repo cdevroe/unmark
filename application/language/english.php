@@ -79,7 +79,7 @@ $unmark_language = array(
     'and archived %s' =>                                      array( 'and archived %s' ),
     'view marks' =>                                           array( 'View marks' ),
     'archive all' =>                                          array( 'Archive all' ),
-    'for usage tips <a target="_blank" href="https://twitter.com/unmarkit">follow us on twitter</a>!' => array( 'For usage tips <a target="_blank" href="https://twitter.com/unmarkit">follow us on Twitter</a>!'),
+    'for usage tips <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/unmarkit">follow us on twitter</a>!' => array( 'For usage tips <a target="_blank" href="https://twitter.com/unmarkit">follow us on Twitter</a>!'),
     '%s mark' =>                                              array( '%s mark', '%s marks' ),
     'version' =>                                              array( 'Version' ),
     'you have %s mark that are over 1 year old. want to tidy up a bit?' => array( 'You have %s mark that are over 1 year old. Want to tidy up a bit?' ),

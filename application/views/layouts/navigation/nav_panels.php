@@ -39,15 +39,14 @@
 
 	<h4 class="nav-heading"><?php echo unmark_phrase('Help')?></h4>
 	<ul class="nav-list">
-		<li><a target="_blank" href="http://help.unmark.it/" title="Unmark Help"><?php echo unmark_phrase('Unmark Help') ?></a></li>
-		<li><a target="_blank" href="http://help.unmark.it/bookmarklet" title="Get the bookmarklet"><?php echo unmark_phrase('Bookmarklet Help') ?></a></li>
-		<li><a target="_blank" href="http://twitter.com/unmarkit" title="Follow us on Twitter">Follow us on Twitter</a></li>
-		<li><a target="_blank" href="mailto:colin+unmark@cdevroe.com" title="Contact support">Contact Support</a></li>
+		<li><a target="_blank" rel="noopener noreferrer" href="https://github.com/cdevroe/unmark/issues/" title="Report Issue"><?php echo unmark_phrase('Report Issue') ?></a></li>
+		<li><a target="_blank" rel="noopener noreferrer" href="https://twitter.com/unmarkit" title="Follow us on Twitter">Follow us on Twitter</a></li>
+		<li><a href="mailto:colin+unmark@cdevroe.com" title="Contact support">Contact Support</a></li>
 	</ul>
 	<h4 class="nav-heading"><?php echo unmark_phrase('Tools')?></h4>
 	<ul class="nav-list">
 		<li><a href="javascript:(function()%7Bf%3D%27<?php print rtrim(base_url(),'/'); ?>%2Fmark/add%3Furl%3D%27%2BencodeURIComponent(window.location.href)%2B%27%26title%3D%27%2BencodeURIComponent(document.title)%2B%27%26v%3D6%26%27%3Ba%3Dfunction()%7Bif(!window.open(f%2B%27noui%3D1%26jump%3Ddoclose%27,%27nilaiv2%27,%27location%3D1,links%3D0,scrollbars%3D0,toolbar%3D0,width%3D594,height%3D485%27))location.href%3Df%2B%27jump%3Dyes%27%7D%3Bif(/Firefox/.test(navigator.userAgent))%7BsetTimeout(a,0)%7Delse%7Ba()%7D%7D)();">Save to Unmark</a></li>
-		<li><a target="_blank" href="https://chrome.google.com/webstore/detail/unmark/cdhnljlbeehjgddokagghpfgahhlifch"><?php echo unmark_phrase('Get the Chrome Extension') ?></a></li>
+		<li><a target="_blank" rel=\"noopener noreferrer\" href="https://chrome.google.com/webstore/detail/unmark/cdhnljlbeehjgddokagghpfgahhlifch"><?php echo unmark_phrase('Get the Chrome Extension') ?></a></li>
 	</ul>
 </div>
 <div id="panel-archive" class="nav-panel">

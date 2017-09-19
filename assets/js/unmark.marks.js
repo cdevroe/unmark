@@ -374,7 +374,7 @@
             editable_mark_title.attr('contenteditable', false).removeClass('editable');
 
             // Return Mark title back to being wrapped by URL
-            editable_mark_title.html('<a target="_blank" href="'+mark_url+'">'+editable_mark_title.text()+'</a>');
+            editable_mark_title.html('<a target="_blank" rel="noopener noreferrer" href="'+mark_url+'">'+editable_mark_title.text()+'</a>');
 
             // Taggify the notes (means also wrapping up any links within)
             unmark.tagify_notes(editable_notes);

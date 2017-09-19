@@ -38,28 +38,16 @@ function oembed($url, $key) {
         }
         // Individual photo
         else {
-          return '<a href="'.$url.'" target="_blank"><img src="'.$response['url'].'" width="'.$response['width'].'" height="'.$response['height'].'" /></a>';
+          return '<a href="'.$url.'" target="_blank" rel="noopener noreferrer"><img src="'.$response['url'].'" width="'.$response['width'].'" height="'.$response['height'].'" /></a>';
         }
       break;
 
-      case 'Dribbble':
-        return  '<a href="'.$url.'" target="_blank"><img src="'.$response['url'].'" width="'.$response['width'].'" height="'.$response['height'].'" /></a>';
+      case 'Dribbble' || 'Instagram' || 'Twitpic' || 'skitch':
+        return  '<a href="'.$url.'" target="_blank" rel="noopener noreferrer"><img src="'.$response['url'].'" width="'.$response['width'].'" height="'.$response['height'].'" /></a>';
       break;
 
-      case 'Instagram':
-        return  '<a href="'.$url.'" target="_blank"><img src="'.$response['url'].'" width="'.$response['width'].'" height="'.$response['height'].'" /></a>';
-      break;
-
-      case 'Twitpic':
-        return  '<a href="'.$url.'" target="_blank"><img src="'.$response['url'].'" width="'.$response['width'].'" height="'.$response['height'].'" /></a>';
-      break;
-
-      case 'skitch':
-        return  '<a href="'.$url.'" target="_blank"><img src="'.$response['url'].'" width="'.$response['width'].'" height="'.$response['height'].'" /></a>';
-      break;
-
-      case 'YouTube' :
-        return $response['html'] . '<div class="videoInfo"><span class="viLeft">by <a target="_blank" href="'.$response['author_url'].'">'.$response['author_name'].'</a></span><p>'.$response['description'].'</p></div>';
+      case 'YouTube':
+        return $response['html'] . '<div class="videoInfo"><span class="viLeft">by <a target="_blank" rel="noopener noreferrer" href="'.$response['author_url'].'">'.$response['author_name'].'</a></span><p>'.$response['description'].'</p></div>';
       break;
 
       // Vimeo, other video sites and generic HTML

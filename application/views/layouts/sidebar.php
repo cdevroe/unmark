@@ -28,8 +28,7 @@
     <div class="sidebar-block">
         <div class="sidebar-inner">
             <a href="javascript:(function()%7Bl%3D%22<?php print rtrim(base_url(),'/'); ?>%2Fmark%2Fadd%3Furl%3D%22%2BencodeURIComponent(window.location.href)%2B%22%26title%3D%22%2BencodeURIComponent(document.title)%2B%22%26v%3D1%26nowindow%3Dyes%26%22%3Bvar%20e%3Dwindow.open(l%2B%22noui%3D1%22%2C%22Unmark%22%2C%22location%3D0%2Clinks%3D0%2Cscrollbars%3D0%2Ctoolbar%3D0%2Cwidth%3D594%2Cheight%3D485%22)%3B%7D)()" class="btn">Unmark+</a>
-            <li><a target="_blank" href="https://chrome.google.com/webstore/detail/unmark/cdhnljlbeehjgddokagghpfgahhlifch"><?php echo unmark_phrase('Get the Chrome Extension') ?></a></li>
-            <p class="clear sidenote"><a href="http://help.unmark.it/bookmarklet" target="_blank"><?php echo unmark_phrase('Learn more')?></a></p>
+            <li><a target="_blank" rel="noopener noreferrer" href="https://chrome.google.com/webstore/detail/unmark/cdhnljlbeehjgddokagghpfgahhlifch"><?php echo unmark_phrase('Get the Chrome Extension') ?></a></li>
         </div>
     </div>
     <?php endif; ?>
