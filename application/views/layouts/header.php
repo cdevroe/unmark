@@ -7,17 +7,17 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="apple-mobile-web-app-capable" content="no">
     <title><?php echo unmark_phrase('Unmark'); ?></title>
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo $this->config->item('unmark_version'); ?>" />
-    <link rel="icon" type="image/ico" href="favicon.ico" />
-    <link rel="apple-touch-icon" sizes="57x57" href="assets/touch_icons/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="assets/touch_icons/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="assets/touch_icons/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="assets/touch_icons/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="assets/touch_icons/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/touch_icons/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/touch_icons/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/touch_icons/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/assets/touch_icons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/touch_icons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/touch_icons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/touch_icons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/touch_icons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/touch_icons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/touch_icons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/touch_icons/apple-touch-icon-152x152.png">
     <script src="/assets/js/plugins/modernizr-2.7.1.min.js"></script>
     <script>
         /* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
