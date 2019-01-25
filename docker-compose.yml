@@ -1,0 +1,54 @@
+##
+## Docker Containers
+## This creates containers running mySQL and WordPress
+## for running Unmark.
+##
+## Written by Colin Devroe cdevroe.com
+## 
+## Version 1.0 Build 001
+##
+
+version: '3.3'
+
+services:
+  apache:
+    container_name: unmark_apache
+    build:
+      context: ./
+    image: php:5.6-apache
+    hostname: apache
+    ports:
+    - "80:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker-configs/php-custom.ini:/usr/local/etc/php/conf.d/custom.ini
+    depends_on:
+      - mysql
+    links:
+      - mysql
+  mysql:
+    container_name: unmark_mysql
+    image: mysql:5.7
+    hostname: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+     - unmark_db_volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: unmarkrootmysqlpass
+      MYSQL_DATABASE: unmark
+      MYSQL_USER: unmarkuser
+      MYSQL_PASSWORD: unmarkpass
+  phpmyadmin:
+    container_name: unmark_phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql:db
+    ports:
+      - "8082:80"
+    environment:
+      - PMA_USER=unmarkuser
+      - PMA_PASSWORD=unmarkpass
+      - PHP_UPLOAD_MAX_FILESIZE=100MB
+volumes:
+  unmark_db_volume:
