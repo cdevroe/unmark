@@ -207,6 +207,7 @@
             width: 260px;
             padding: 0 22px 0 16px;
             overflow: scroll;
+            scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
             @include sm {
                 width: $nav_pane_sm;
