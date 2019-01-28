@@ -80,12 +80,17 @@ class Import extends Plain_Controller
 
       // Look through links and create and import each
       foreach($bookmarks as $bookmark):
+
+        // Added for Pocket
+        // Pocket uses time_added
+        $dateAdded = ( $bookmark->getAttribute('time_added') ) ? $bookmark->getAttribute('time_added') : $bookmark->getAttribute('add_date');
+
         $markObject =                 new stdClass();
         $markObject->title =          $bookmark->textContent;
         $markObject->url =            $bookmark->getAttribute('href');
         $markObject->embed =          '';
         $markObject->tags =           $bookmark->getAttribute('tags');
-        $markObject->created_on =     date('Y-m-d h:m:s', $bookmark->getAttribute('add_date'));
+        $markObject->created_on =     date('Y-m-d h:m:s', $dateAdded);
         $markObject->archived_on =    null;
         $markObject->active =         1;
 
