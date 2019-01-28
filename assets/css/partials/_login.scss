@@ -99,6 +99,11 @@
                 float: left;
             }
         }
+        .login-submit2 {
+            background: $color_red;
+            color: $color_white;
+            font-size: 17px;
+        }
         .login-submit, .forgot-submit {
             background: none;
             position: absolute;

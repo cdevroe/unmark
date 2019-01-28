@@ -36,7 +36,7 @@
             <form id="unmarkLogin" method="post" action="/login">
                 <input type="email" class="field-input" name="email" id="email" placeholder="<?php echo unmark_phrase('Email Address') ?>" autocapitalize="off" />
                 <input type="password" class="field-input" name="password" id="password" placeholder="<?php echo unmark_phrase('Password') ?>" />
-                <button class="login-submit" type="submit"><i class="icon-go"></i></button>
+                <button class="login-submit2" type="submit">Log in</button>
             </form>
             <div class="response-message"></div>
             <a href="#" class="forgot-pass" title="<?php echo unmark_phrase('Forgot Password?') ?>"><?php echo unmark_phrase('Forgot Password?') ?></a>
