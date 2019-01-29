@@ -147,7 +147,7 @@ class CI_Migration {
 			$name = basename($f[0], '.php');
 
 			// Filename validations
-			if (preg_match('/^\d{3}_(\w+)$/', $name, $match))
+			if (preg_match('/^\d{3}_(\w+)$/', $name, $match) || preg_match('/^\d{10}_(\w+)$/', $name, $match))
 			{
 				$match[1] = strtolower($match[1]);
 

@@ -62,6 +62,7 @@ $config['migration_path'] = 									APPPATH . 'migrations/';
  */
 $config['migration_mappings'] = array(
 	'20140228091723' => '2014022801',
+	'20141125010000' => '2014112501'
 );
 
 

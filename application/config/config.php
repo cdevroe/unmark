@@ -33,7 +33,9 @@ $config['base_url']	= '';
 // If base_url not given, CodeIgniter seems to do a less than stellar
 // job of determining this domain. So we will allow PHP to do it.
 if ( empty($config['base_url']) || $config['base_url'] == '' ) :
-	$config['base_url'] = 'http'.(empty($_SERVER['HTTPS'])?'':'s').'://' . $_SERVER['SERVER_NAME'];
+	if ( isset($_SERVER['SERVER_NAME']) ) :
+		$config['base_url'] = 'http'.(empty($_SERVER['HTTPS'])?'':'s').'://' . $_SERVER['SERVER_NAME'];
+	endif;
 endif;
 
 
