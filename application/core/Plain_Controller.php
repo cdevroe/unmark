@@ -488,7 +488,7 @@ class Plain_Controller extends CI_Controller
     protected function redirectIfNotCommandLine()
     {
         if (self::isCommandLine() === false) {
-            $url = (self::isWebView() === false) ? '/json' : $url;
+            //Causes bug $url = (self::isWebView() === false) ? '/json' : $url;
             header('Location: /');
             exit;
         }
