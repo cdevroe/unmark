@@ -386,7 +386,7 @@ class Plain_Controller extends CI_Controller
 
     public function isCommandLine()
     {
-        return $this->input->is_cli_request();
+        return $this->input->is_cli();
     }
 
     public function isChromeExtension()
