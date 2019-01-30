@@ -48,7 +48,8 @@
 */
 
 $active_group = 'default';
-$active_record = TRUE;
+// removed for CI 3+ $active_record = TRUE;
+$query_builder = TRUE;
 
 
 $db['default']['hostname'] = 'localhost';
