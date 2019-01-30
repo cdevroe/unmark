@@ -298,7 +298,7 @@ $config['sess_use_database']							= FALSE;
 | 'plain_sess_memcache_addr'  = address of memcache server (valid for memchached session storage only)
 */
 
-$config['plain_sess_storage']							= 'database';
+$config['plain_sess_storage']							= 'files';
 $config['plain_sess_memcache_addr'] 					= 'localhost';
 
 /*
