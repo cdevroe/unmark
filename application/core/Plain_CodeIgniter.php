@@ -33,7 +33,7 @@
  * @var string
  *
  */
-    define('CI_VERSION', '2.1.4');
+    define('CI_VERSION', '3.1.10');
 
 /**
  * CodeIgniter Branch (Core = TRUE, Reactor = FALSE)
@@ -69,7 +69,7 @@
  *  Define a custom error handler so we can log PHP errors
  * ------------------------------------------------------
  */
-    set_error_handler('_exception_handler');
+    //set_error_handler('_exception_handler');
 
     if ( ! is_php('5.3'))
     {
@@ -128,7 +128,7 @@
  *  Is there a "pre_system" hook?
  * ------------------------------------------------------
  */
-    $EXT->_call_hook('pre_system');
+    //$EXT->_call_hook('pre_system');
 
 /*
  * ------------------------------------------------------
@@ -190,7 +190,7 @@
  *  Is there a valid cache file?  If so, we're done...
  * ------------------------------------------------------
  */
-    if ($EXT->_call_hook('cache_override') === FALSE)
+    if ($EXT->call_hook('cache_override') === FALSE)
     {
         if ($OUT->_display_cache($CFG, $URI) == TRUE)
         {

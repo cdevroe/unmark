@@ -82,7 +82,7 @@ class Plain_Router extends CI_Router
         }
 
         // Fetch the complete URI string
-        $this->uri->_fetch_uri_string();
+        $this->uri->uri_string(); // updated from _fetch_uri_string when upgrading to CI 3.x
 
         // Is there a URI string? If not, the default controller specified in the "routes" file will be shown.
         if ($this->uri->uri_string == '')
