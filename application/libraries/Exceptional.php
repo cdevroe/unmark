@@ -110,7 +110,7 @@ class Exceptional {
                 'type'        => $type,
                 'backtrace'   => $backtrace,
                 'custom_data' => $custom_data,
-                'enviornment' => $env,
+                'environment' => $env,
                 'user'        => $user
             );
 

@@ -216,7 +216,7 @@ $view_folder = '';
 	define('BASEPATH', $system_path);
 
 	// Path to the front controller (this file)
-	define('FCPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
+	// Removed when upgrading to CI 3.x define('FCPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
 
 	// Name of the "system folder"
 	define('SYSDIR', basename(BASEPATH));

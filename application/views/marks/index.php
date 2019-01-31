@@ -41,6 +41,7 @@
                 switch ($lookup_type) {
                     case 'label':
                         $heading['icon']    =   'icon-circle';
+                        //print_r($total);exit;
                         $heading['title']   =   sprintf(unmark_phrase('mark labeled %s', 'marks labeled %s', $total), unmark_phrase($label_name));
                         break;
                     case 'archive':

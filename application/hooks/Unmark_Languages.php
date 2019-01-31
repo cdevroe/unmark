@@ -22,14 +22,14 @@ class Unmark_Languages
     {
       $language_to_load =           $this->CI->config->item('language');
       $language_to_load =           ( !isset($language_to_load) || empty($language_to_load) ) ? 'english' : $language_to_load;
-      $language_file_to_load =      FCPATH . APPPATH . 'language/' . $language_to_load . '.php';
+      $language_file_to_load =      APPPATH . 'language/' . $language_to_load . '.php';
 
       if ( file_exists($language_file_to_load) ) :
-        include( FCPATH . APPPATH . 'language/' . $language_to_load . '.php' );
+        include( APPPATH . 'language/' . $language_to_load . '.php' );
         $this->CI->config->set_item( 'phrases', $unmark_language ); // Load phrases into global config
         log_message('DEBUG', 'The "' . $language_to_load . '" language file has been loaded.');
       else :
-        log_message('ERROR', 'The "' . $language_to_load . '" language file could be found.');
+        log_message('ERROR', 'The "' . $language_to_load . '" language file could not be found.');
       endif;
 
     }
@@ -48,6 +48,9 @@ function unmark_phrase( $phrase, $phrase_plural='', $number=1 )
 
   // Load phrases from config
   $phrases = $CI->config->item('phrases');
+
+  //print_r($phrases);
+  //exit;
 
   if ( !is_array($phrases) ) :
     return $phrase;
