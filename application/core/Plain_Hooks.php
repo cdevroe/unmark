@@ -8,7 +8,7 @@ class Plain_Hooks extends CI_Hooks
     {
         parent::__construct();
         
-        log_message('debug', 'Plain_Hooks Class Initialized');
+        log_message('info', 'Plain_Hooks Class Initialized');
     }
 
     // --------------------------------------------------------------------

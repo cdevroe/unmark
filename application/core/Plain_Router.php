@@ -5,7 +5,7 @@ class Plain_Router extends CI_Router
     function __construct()
     {
         parent::__construct();
-        log_message('debug', 'Plain_Router Class Initialized');
+        log_message('info', 'Plain_Router Class Initialized');
     }
 
     /**
@@ -91,10 +91,10 @@ class Plain_Router extends CI_Router
         }
 
         // Do we need to remove the URL suffix?
-        $this->uri->_remove_url_suffix();
+        // Unneeded in CI 3.x $this->uri->_set_uri_string();
 
         // Compile the segments into an array
-        $this->uri->_explode_segments();
+        // No longer needed in CI 3.x $this->uri->_explode_segments();
 
         // Parse any custom routing that may exist
         $this->_parse_routes();

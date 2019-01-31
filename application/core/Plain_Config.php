@@ -6,7 +6,7 @@ class Plain_Config extends CI_Config
     public function __construct()
     {
         parent::__construct();
-        log_message('debug', 'Plain_Config Class Initialized');
+        log_message('info', 'Plain_Config Class Initialized');
     }
 
     // --------------------------------------------------------------------

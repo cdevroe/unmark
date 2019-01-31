@@ -7,7 +7,7 @@ class Plain_Loader extends CI_Loader
         parent::__construct();
 
         // Add custom path information for libraries, helpers, models and views
-        log_message('debug', 'Plain_Loader Class Initialized');
+        log_message('info', 'Plain_Loader Class Initialized');
         array_unshift($this->_ci_library_paths, CUSTOMPATH);
         array_unshift($this->_ci_helper_paths, CUSTOMPATH);
         array_unshift($this->_ci_model_paths, CUSTOMPATH);

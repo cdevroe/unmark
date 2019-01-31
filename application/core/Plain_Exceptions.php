@@ -6,6 +6,8 @@ class Plain_Exceptions extends CI_Exceptions
     public function __construct()
     {
         parent::__construct();
+
+        log_message('info', 'Plain_Exceptions Class Initialized');
     }
 
     // Log using CI if using default method
