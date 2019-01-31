@@ -28,7 +28,8 @@ class Register extends Plain_Controller
 		$this->data['success'] = false;
 		$this->load->model('users_model', 'user');
 		$user = $this->user->create(array('email' => $email, 'password' => $password, 'active' => '1'));
-
+		// print_r($user);
+		// exit;
 		// If good
 		// Add user data to session
 		// Set user id
@@ -50,6 +51,10 @@ class Register extends Plain_Controller
 					$label_id = $this->db->escape_str($arr['label_id']);
 					$res      = parent::addMark(array('url' => $url, 'title' => $title, 'label_id' => $label_id));
 				}
+
+				echo 'added default marks';
+				print_r($res);
+				exit;
 			}
 
 			// set redirect path

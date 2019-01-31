@@ -243,8 +243,8 @@
     // PLAIN SECTION
     // Made so we can load controllers from custom directory
     $plain_controllers = array(
-        CUSTOMPATH . 'controllers/' . $RTR->fetch_directory() . $RTR->fetch_class() . '.php',
-        APPPATH . 'controllers/' . $RTR->fetch_directory() . $RTR->fetch_class() . '.php',
+        CUSTOMPATH . 'controllers/' . $RTR->fetch_directory() . ucfirst($RTR->fetch_class()) . '.php',
+        APPPATH . 'controllers/' . $RTR->fetch_directory() . ucfirst($RTR->fetch_class()) . '.php',
     );
 
     $plain_controller = false;

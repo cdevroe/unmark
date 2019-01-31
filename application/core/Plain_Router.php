@@ -78,6 +78,7 @@ class Plain_Router extends CI_Router
         // Were there any query string segments?  If so, we'll validate them and bail out since we're done.
         if (count($segments) > 0)
         {
+            
             return $this->_validate_request($segments);
         }
 
@@ -100,7 +101,7 @@ class Plain_Router extends CI_Router
         $this->_parse_routes();
 
         // Re-index the segment array so that it starts with 1 rather than 0
-        $this->uri->_reindex_segments();
+        // Removed with CI 3.x $this->uri->_reindex_segments();
     }
 
     /**
@@ -113,13 +114,16 @@ class Plain_Router extends CI_Router
      */
     function _validate_request($segments)
     {
+
+        log_message('debug', 'Validating request for '. $this->directory.'/controllers/'.ucfirst($segments[0]).'.php');
+
         if (count($segments) == 0)
         {
             return $segments;
         }
 
         // Does the requested controller exist in the root folder?
-        if (file_exists(APPPATH.'controllers/'.$segments[0].'.php') || file_exists(CUSTOMPATH.'controllers/'.$segments[0].'.php'))
+        if (file_exists(APPPATH.'controllers/'.ucfirst($segments[0]).'.php') || file_exists(CUSTOMPATH.'controllers/'.ucfirst($segments[0]).'.php'))
         {
             return $segments;
         }
@@ -135,7 +139,7 @@ class Plain_Router extends CI_Router
             if (count($segments) > 0)
             {
                 // Does the requested controller exist in the sub-folder?
-                if ( ! file_exists($c_path.'controllers/'.$this->fetch_directory().$segments[0].'.php'))
+                if ( ! file_exists($c_path.'controllers/'.$this->fetch_directory().ucfirst($segments[0]).'.php'))
                 {
                     if ( ! empty($this->routes['404_override']))
                     {

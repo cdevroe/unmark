@@ -84,15 +84,21 @@ class Users_model extends Plain_Model
 
         } while ($total > 0);
 
+        //print_r($options);
+        //exit;
+
         // Add record
         $q   = $this->db->insert_string('users', $options);
         $res = $this->db->query($q);
+
 
         // Check for errors
         $this->sendException();
 
         if ($res === true) {
             $user_id = $this->db->insert_id();
+
+            // Return the entire user obj
             return $this->read($user_id);
         }
         else {

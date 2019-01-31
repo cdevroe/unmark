@@ -51,9 +51,20 @@ class Plain_Model extends CI_Model
 
     public function checkForHit($query)
     {
+        if ( strpos($query,'COUNT') === false ) {
+            // print_r($query);
+            // exit;
+        }
         $cache_key      = $this->getCacheKey($query);
         $data           = $this->plain_cache->read($cache_key);
         $this->num_rows = 0;
+
+        if ( strpos($query,'COUNT') === false ) {
+            if ( ! empty($data) ) {
+                // print_r($data);
+                // exit;
+            }
+        }
 
         //$this->plain_cache->delete($cache_key);
 
@@ -71,8 +82,17 @@ class Plain_Model extends CI_Model
         $q = $this->db->query($query);
         //print 'NOT CACHED' . PHP_EOL . PHP_EOL;
 
+        if ( strpos($query,'COUNT') === false ) {
+            // print_r($q);
+            // exit;
+        }
+
         // Check for errors
         $this->sendException();
+
+        // if ( strpos($query,'COUNT') === false ) {
+        //     print_r($this->db->error());
+        // }
 
         // If no DB error, ready results and add to cache
         if ($this->db_error == false) {
@@ -85,6 +105,11 @@ class Plain_Model extends CI_Model
         }
         else {
             $result = array();
+        }
+
+        if ( strpos($query,'COUNT') === false ) {
+            // print_r($result);
+            // exit;
         }
 
         // Return result
@@ -188,13 +213,15 @@ class Plain_Model extends CI_Model
 
     protected function sendException()
     {
-        $err_msg        = $this->db->_error_message();
+        $err            = $this->db->error(); // Changed in CI 3.x
         $this->db_error = false;
 
         // Exceptional!
-        if (! empty($err_msg)) {
+        if ( is_array($err) && $err['message'] != '' ) {
             $query          = $this->db->last_query();
-            $err_no         = $this->db->_error_number();
+            $err_no         = $err['code'];
+            $err_msg        = $err['message'];
+            // Taken out in CI 3.x $err_no         = $this->db->_error_number();
             $this->db_error = true;
 
             // Remove column information we don't want logged
