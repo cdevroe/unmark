@@ -283,6 +283,8 @@ $config['sess_match_ip']								= FALSE;
 $config['sess_time_to_update']							= 300;
 // FOR database storage only
 $config['sess_table_name']								= 'plain_sessions';
+$config['sess_driver']									= 'files';
+$config['sess_save_path']								= '/tmp';
 
 
 // WARNING: Session settings below refer to CodeIgniter session library which is not being used in Unmark
@@ -416,6 +418,11 @@ $config['plain_db_backup_remove_on_success'] = false;
  * Enable or disable registrations
  */
 $config['plain_enable_registrations'] = true;
+
+// Temporary fix
+// https://github.com/bcit-ci/CodeIgniter/issues/5686
+define('ICONV_ENABLED', null);
+define('MB_ENABLED', null);
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

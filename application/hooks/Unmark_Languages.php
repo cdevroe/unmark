@@ -49,6 +49,10 @@ function unmark_phrase( $phrase, $phrase_plural='', $number=1 )
   // Load phrases from config
   $phrases = $CI->config->item('phrases');
 
+  if ( !is_array($phrases) ) :
+    return $phrase;
+  endif;
+
   // Determine whether or not to use the plural phrase
   if ( $number == 0 || $number > 1 ) :
     $plural = 1;

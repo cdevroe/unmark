@@ -2,10 +2,12 @@
 
 class Plain_Hooks extends CI_Hooks
 {
-
+    protected $in_progress = NULL;
+    
     function __construct()
     {
         parent::__construct();
+        
         log_message('debug', 'Plain_Hooks Class Initialized');
     }
 
