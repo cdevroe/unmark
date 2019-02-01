@@ -30,6 +30,7 @@ services:
     container_name: unmark_mysql
     image: mysql:5.7
     hostname: mysql
+    command: --sql_mode=''
     ports:
       - "3306:3306"
     volumes:
