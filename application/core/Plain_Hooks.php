@@ -8,7 +8,9 @@ class Plain_Hooks extends CI_Hooks
     {
         parent::__construct();
         
-        log_message('info', 'Plain_Hooks Class Initialized');
+        log_message('info', 'Plain_Hooks Class Constructed');
+
+        self::_initialize();
     }
 
     // --------------------------------------------------------------------
@@ -21,6 +23,7 @@ class Plain_Hooks extends CI_Hooks
      */
     function _initialize()
     {
+
         $CFG =& load_class('Config', 'core');
 
         // If hooks are not enabled in the config file
@@ -85,6 +88,7 @@ class Plain_Hooks extends CI_Hooks
             }
         }
 
+
         if ( ! isset($hook) OR ! is_array($hook))
         {
             return;
@@ -92,6 +96,7 @@ class Plain_Hooks extends CI_Hooks
 
         $this->hooks =& $hook;
         $this->enabled = TRUE;
+        log_message('info', 'Plain_Hooks Class Initialized');
     }
 
     /**
