@@ -89,7 +89,7 @@
     };
 
     // Function for interacting and animating the left navigation
-    // This handels both the top level and secondarly level
+    // This handles both the top level and secondary level
     unmark.interact_nav = function (e, elem_ckd) {
 
         // Set variables
