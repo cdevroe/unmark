@@ -114,7 +114,11 @@ class Labels_model extends Plain_Model
         $where      = (is_numeric($where)) ? $this->table . '.' . $this->id_column . " = '$where'" : trim($where);
         $page       = (is_numeric($page) && $page > 0) ? $page : 1;
         $limit      = ((is_numeric($limit) && $limit > 0) || $limit == 'all') ? $limit : 1;
-        $start      = (! is_null($start)) ? $start : $limit * ($page - 1);
+
+        if ( is_numeric($limit)) {
+            $start      = (! is_null($start)) ? $start : $limit * ($page - 1);
+        }
+
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
         $sort       = (! empty($this->sort)) ? ' ORDER BY l.' . $this->sort : null;
         $sort       = (stristr($this->sort, '.')) ? ' ORDER BY ' . $this->sort : null;

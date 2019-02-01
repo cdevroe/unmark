@@ -189,7 +189,9 @@ class Plain_Model extends CI_Model
         $where      = (empty($where)) ? '1=1' : $where;
         $page       = (is_numeric($page) && $page > 0) ? $page : 1;
         $limit      = ((is_numeric($limit) && $limit > 0) || $limit == 'all') ? $limit : 1;
-        $start      = $limit * ($page - 1);
+        if ( is_numeric($limit)) {
+            $start      = $limit * ($page - 1);
+        }
         $q_limit    = ($limit != 'all') ? ' LIMIT ' . $start . ',' . $limit : null;
         $sortSelected = (empty($sort) ? $this->sort : $sort );
         $sort       = (! empty($sortSelected)) ? ' ORDER BY ' . $sortSelected : null;
