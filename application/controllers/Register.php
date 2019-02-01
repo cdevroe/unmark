@@ -51,10 +51,6 @@ class Register extends Plain_Controller
 					$label_id = $this->db->escape_str($arr['label_id']);
 					$res      = parent::addMark(array('url' => $url, 'title' => $title, 'label_id' => $label_id));
 				}
-
-				echo 'added default marks';
-				print_r($res);
-				exit;
 			}
 
 			// set redirect path
