@@ -30,7 +30,8 @@
             <button class="login-submit2" type="submit">Register</button>
         </form>
         <div class="response-message"></div>
-        <a href="/" class="register"><?php echo unmark_phrase('Have An Account? Sign In Here') ?></a>
+        <p><a href="https://www.notion.so/cdevroe/Unmark-Terms-of-Use-505bfd6398634ceaba0865274b9ba258" class="register" title="Terms of Use">By registering an account, you are agreeing with our <?php echo unmark_phrase('Terms of Use') ?>.</a></p>
+        <p><a href="/" class="register"><?php echo unmark_phrase('Have An Account? Sign In Here') ?></a></p>
     </div>
 </div>
 </div>

@@ -64,12 +64,16 @@ $config['error_codes'][604] = 'Your email address is invalid.';
  have some links to *do* something with. The label of 'Do' will be added automatically.
 */
 $config['new_account_links'] = array(
-    'Read Unmark\'s FAQ' => array(
-        'url'      => 'http://help.unmark.it/faq',
-        'label_id' => '7'
+    'Step 1: Learn how to add marks to Unmark' => array(
+        'url'      => 'https://www.notion.so/cdevroe/Unmark-Help-How-to-add-bookmarks-cd5893f118ed40cd8400275e49f40d51',
+        'label_id' => '2'
     ),
-    'How To Use Unmark'  => array(
-        'url'      => 'http://help.unmark.it',
+    'Step 2: Watch a video walkthrough of Unmark'  => array(
+        'url'      => 'https://www.notion.so/cdevroe/Unmark-Help-Video-walkthrough-of-Unmark-UI-e5efd1ed5eaf42298e67fb087e476f33',
+        'label_id' => '3'
+    ),
+    'Step 3: Discover new bookmarks'  => array(
+        'url'      => 'https://www.notion.so/cdevroe/Unmark-Help-Discover-featured-bookmarks-2091a6b3871c4b29a209b72d5c3e9bca',
         'label_id' => '7'
     )
 );

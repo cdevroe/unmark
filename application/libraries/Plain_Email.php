@@ -94,13 +94,13 @@ class Plain_Email extends CI_Email {
         return $result;
     }
 
-    public function initialize($config = array()){
+    public function initialize(array $config = array() ){
         // Use passed config first
         if(!empty($config)){
             return parent::initialize($config);
         } else{
             // If nothing passed - try loading settings from config
-            $emailConfig = $this->CI->config->item('plain_email_settings');
+            $emailConfig = config_item('plain_email_settings');
             if(!empty($emailConfig)){
                 return parent::initialize($emailConfig);
             // No settings in config - use defaults
