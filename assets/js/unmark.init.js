@@ -135,6 +135,10 @@
             e.preventDefault();
             return unmark.overlay(false);
         });
+        $(document).on('click', '#unmark-overlay', function (e) {
+            e.preventDefault();
+            return unmark.overlay(false);
+        });
 
         // Label Hovers
         $(document).on('mouseenter', '.label-choices li, .sidebar-label-list li', function (e) {

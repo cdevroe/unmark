@@ -235,12 +235,19 @@
     unmark.overlay = function (show) {
         if (show === true) {
             unmark.mainpanels.addClass('blurme');
-            var overlay = $('<div id="unmark-overlay"><a href="#" id="unmarkModalClose"><i class="icon-big_close"></i></a></div>');
+            var overlay = $('<div id="unmark-overlay"></div>');
             overlay.appendTo(document.body);
+            $('#unmark-overlay').fadeIn(200);
         } else {
-            $('.hiddenform').hide().css('top', '-300px');
+            //$('#unmark-overlay').removeClass('active');
+            //$('.hiddenform').hide();
             unmark.mainpanels.removeClass('blurme');
-            $('#unmark-overlay').remove();
+            $('#unmark-overlay').fadeOut(400);
+            $('.hiddenform').fadeOut(300);
+            setTimeout(function() {
+              $('#unmark-overlay').remove();
+              $('.hiddenform').hide();
+            }, 500);
             $('#helperforms input').val('');
         }
     };

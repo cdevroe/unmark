@@ -121,8 +121,7 @@ $nav_pane_lg: $nav_lg - $nav_rail_lg;
 }
 @mixin title-text {
     font-family: $title;
-    letter-spacing: .5px;
-    word-spacing: 2px;
+    letter-spacing: .25px;
     text-transform: uppercase;
     font-weight: 400;
 }
@@ -212,10 +211,14 @@ button.disabled {
     color: #FFF;
 }
 #error-wrapper {
-    color: $color_light;
+    color: $color_darkest;
     width: 400px;
-    margin: 100px auto 0 auto;
+    margin: 0 auto;
     text-align: center;
+    padding-top: 50px;
+    @include sm {
+      padding-top: 100px;
+    }
     #error-icon {
         width: 75px;
         margin: 0 auto 40px auto;
@@ -224,6 +227,15 @@ button.disabled {
     h1 {
         font-size: 18px;
         text-transform: uppercase;
-        letter-spacing: .15em;
+        letter-spacing: .05em;
+    }
+    p {
+      line-height: 1.7;
+      color: $color_dark;
+      a {
+        color: inherit;
+        border-bottom: 1px solid transparentize($color_dark, .75);
+        font-weight: 600;
+      }
     }
 }

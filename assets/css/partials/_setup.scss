@@ -1,9 +1,9 @@
 // Setup Page
 #unmark-setup {
-    width: 500px;
-    margin: 50px auto;
-    color: $color_white;
-    text-align: center;
+    //width: 500px;
+    //margin: 50px auto;
+    //color: $color_white;
+    //text-align: center;
     a {
         color: $color_white;
         border-bottom: 1px dashed $color_light;
@@ -14,5 +14,84 @@
         margin-top: 25px;
         background-color: $color_red;
         display: inline-block;
+    }
+
+    ///////
+    position: absolute;
+    z-index: 20000;
+    width: 100%;
+    max-width: 320px;
+    top: 35px;
+    padding: 0 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    @include sm {
+        top: 60px;
+    }
+    figure {
+      background: white;
+      border-radius: 6px;
+      width: 100%;
+      padding: 0;
+      box-shadow: 0 2px 5px 0 transparentize(darken($color_darkest, 20%), .7), 0 9px 20px 0 transparentize(darken($color_darkest, 20%), .8);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      header {
+        background: $color-gray;
+        padding: 24px 18px 22px;
+        border-bottom: 1px solid transparentize($color_dark, .92);
+        text-align: center;
+        margin-bottom: 24px;
+        h1 {
+          text-align: center;
+          font-size: 16px;
+          text-transform: none;
+          letter-spacing: normal;
+          word-spacing: normal;
+          margin: 0;
+          color: $color_darkest;
+          font-weight: 600;
+          &:last-child  {
+            margin-bottom: 0;
+          }
+        }
+      }
+      p {
+        color: lighten(desaturate($color_darkest, 12%), 13%);
+        font-size: 14px;
+        margin-bottom: 6px;
+        padding: 0 18px;
+        a {
+          color: inherit;
+          border-bottom: 1px solid transparentize($color_darkest, .86);
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }
+        &.disclaimer {
+          font-style: italic;
+        }
+      }
+      .back-button {
+        display: block;
+        margin: 24px 0 0;
+        top: auto;
+        left: auto;
+        right: auto;
+        background: $color_blue;
+        padding: 13px 15px 15px;
+        color: white;
+        @include title-text;
+        font-weight: 700;
+        font-size: 13px;
+        width: 100%;
+        height: 54px;
+        box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 10px 12px -12px transparentize($color_darkest, .7) inset;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border: none;
+      }
     }
 }

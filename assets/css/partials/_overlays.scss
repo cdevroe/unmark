@@ -1,14 +1,48 @@
 #importExportForm {
-    margin: 0 auto;
+  margin: 0 auto;
+  .loginInner {
+    background: $color-gray;
+    header {
+      padding-top: 24px;
+      padding-bottom: 18px;
+    }
+  }
+  .from-unmark, .from-other {
+    padding: 0 18px 12px;
+    p {
+      font-size: 12px;
+      color: $color_dark;
+      margin-top: 0;
+      em {
+        margin-top: 16px;
+      }
+    }
+  }
+  .export {
+    padding: 0 18px 20px;
+    border-bottom: 1px solid transparentize($color_dark, .92);
+  }
+  .import {
+    padding-bottom: 8px;
+  }
     a.exportbtn, a.importbtn {
         background: $color_blue;
-        padding: 12px 34px 13px;
         color: white;
-        font-size: 14px;
-        font-weight: 600;
         display: block;
-        margin-bottom: 20px;
-        box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize($color_dark_gray, .8);
+        box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize($color_dark, .85);
+        padding: 9px 20px 11px;
+        @include title-text;
+        font-size: 13px;
+        font-weight: 700;
+        height: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 0 10px;
+        border-radius: 3px;
+    }
+    a.exportbtn {
+      margin-bottom: 0;
     }
     .importer, .importerHTML {
         display:none;
@@ -21,6 +55,10 @@
     p {
         font-size: 14px;
         color: transparentize($color_dark_gray, .1);
+        &.note {
+          margin-bottom: 0;
+          margin-top: 14px;
+        }
     }
     h1 {
         font-weight: 600;
@@ -40,22 +78,97 @@
     position: absolute;
     z-index: 20000;
     width: 100%;
+    max-width: 320px;
     top: 35px;
+    padding: 0 20px;
+    left: 50%;
+    transform: translateX(-50%);
     @include sm {
         top: 60px;
     }
     .hiddenform { display: none; }
+
+    figure {
+      background: white;
+      border-radius: 6px;
+      width: 100%;
+      //max-width: 280px;
+      //margin: 0 auto;
+      padding: 0;
+      box-shadow: 0 2px 5px 0 transparentize(darken($color_darkest, 20%), .7), 0 9px 20px 0 transparentize(darken($color_darkest, 20%), .8);
+      position: relative;
+      overflow: hidden;
+      #unmarkModalClose {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 30px;
+        width: 30px;
+        //border: 1px solid transparentize($color_dark_gray, .65);
+        //border-radius: 50%;
+        cursor: pointer;
+        &:before, &:after {
+          content: " ";
+          display: block;
+          height: 2px;
+          width: 12px;
+          background: lighten($color_dark_gray, 10%);
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+          position: absolute;
+          top: 50%;
+          right: 50%;
+          margin-right: -6px;
+          margin-top: -1px;
+        }
+        &:after {
+          -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+        }
+        i {
+          display: none;
+        }
+      }
+      header {
+        background: $color-gray;
+        padding: 28px 20px 30px;
+        h1 {
+          margin: 0 0 20px;
+          color: $color_darkest;
+          font-weight: 600;
+          &:last-child  {
+            margin-bottom: 0;
+          }
+        }
+        p {
+          color: lighten(desaturate($color_darkest, 15%), 15%);
+          font-size: 12px;
+          margin-bottom: 6px;
+          a {
+            color: inherit;
+            border-bottom: 1px solid transparentize($color_darkest, .86);
+          }
+          &:last-child {
+            margin-bottom: 0;
+          }
+          &.disclaimer {
+            font-style: italic;
+          }
+        }
+      }
+    }
+
     #resetPasswordForm {
         .login-submit {
             display: block;
         }
         form {
-            margin-top: 20px;
+            //margin-top: 20px;
             input {
-                font-size: 22px;
-                letter-spacing: 1px;
-                font-weight: 300;
-                padding: 9px 15px 11px;
+                //font-size: 22px;
+                //letter-spacing: 1px;
+                //font-weight: 300;
+                //padding: 9px 15px 11px;
             }
         }
     }
@@ -64,13 +177,13 @@
             display: block;
         }
         form {
-            margin-top: 20px;
+            //margin-top: 20px;
         }
     }
     #upgradeToPro {
         .login-submit {
             display: block;
-            top: 101px;
+            //top: 101px;
         }
         button.cnclAcct {
             border-radius: 5px;
@@ -82,12 +195,20 @@
     #twitterAuth {
         a.action {
             background: $color_blue;
-            padding: 10px 20px;
+            padding: 9px 20px 12px;
             @include title-text;
             color: white;
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: 700;
             display: block;
-            margin-bottom: 36px;
+            //margin-bottom: 36px;
+            height: 52px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .twitterMessage {
+          display: none;
         }
     }
     #twitterSuccess, #twitterFail {
@@ -95,12 +216,17 @@
     }
     input {
         padding: 14px 15px 16px;
-        border: 1px solid transparentize($color_dark_gray, .85);
-        border-bottom: none;
+        border: solid lighten($color_dark_gray, 37%);
+        border-width: 1px 0 1px 0;
         font-size: 15px;
         color: darken($color_dark_gray, 20%);
         margin-bottom: 0;
         text-align: center;
+        border-width: 1px 0 1px 0;
+        border-bottom-width: 0;
+        &:not(:last-of-type) {
+          //border-bottom-width: 0;
+        }
     }
     h1 {
         font-weight: 600;
@@ -112,7 +238,25 @@
         margin: 50px 0 24px;
     }
     form {
-        box-shadow: 0 2px 5px 0 transparentize($color_dark_gray, .8), 0 4px 12px 0 transparentize($color_dark_gray, .9);
+        //box-shadow: 0 2px 5px 0 transparentize($color_dark_gray, .8), 0 4px 12px 0 transparentize($color_dark_gray, .9);
+        .exp-date {
+          display: flex;
+          flex-direction: row;
+          input {
+            //width: auto;
+            flex-grow: 0;
+            flex-shrink: 0;
+            &.exp-month {
+              flex-basis: calc(50% + 1px);
+              border-width: 1px 1px 0 0;
+            }
+            &.exp-year  {
+              flex-basis: 50%;
+              //margin-left: -1px;
+              border-width: 1px 0 0 0;
+            }
+          }
+        }
         button, .login-submit {
             position: relative;
             margin: 0;
@@ -123,14 +267,14 @@
             padding: 14px 15px 15px;
             font-size: 14px;
             width: 100%;
-            height: 50px;
-            box-shadow: 0 30px 60px -24px transparentize(white, .8) inset;
+            height: 54px;
+            box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 10px 12px -12px transparentize($color_darkest, .7) inset;
             &:after {
                 content: "";
                 width: 14px;
                 height: 7px;
-                border: 1px solid;
-                border-color: transparent transparent $color_white $color_white;
+                border: solid white;
+                border-width: 0 0 2px 2px;
                 -webkit-transform: rotate(-45deg);
                 transform: rotate(-45deg);
                 position: absolute;
@@ -153,16 +297,17 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: $color_gray;
-    opacity: 0.97;
+    background-color: transparentize($color_darkest, .05);
+    //opacity: 0;
     z-index: 10000;
+    display: none;
     #unmarkModalClose {
         position: absolute;
         top: 27px;
         right: 25px;
         height: 32px;
         width: 32px;
-        border: 1px solid transparentize($color_dark_gray, .65);
+        //border: 1px solid transparentize($color_dark_gray, .65);
         border-radius: 50%;
         &:before, &:after {
             content: " ";

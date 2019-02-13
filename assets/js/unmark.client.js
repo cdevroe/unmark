@@ -33,15 +33,15 @@
     // Change Password Function
     unmark.change_password = function () {
         unmark.overlay(true);
-        $('#resetPasswordForm').show().animate({ top: 0 }, 1000);
+        $('#resetPasswordForm').fadeIn(400);
     };
     unmark.change_email = function () {
         unmark.overlay(true);
-        $('#changePasswordForm').show().animate({ top: 0 }, 1000);
+        $('#changePasswordForm').fadeIn(400);
     };
     unmark.import_export = function () {
         unmark.overlay(true);
-        $('#importExportForm').show().animate({ top: 0 }, 1000);
+        $('#importExportForm').fadeIn(400);
     };
 
     // Submit Password Change

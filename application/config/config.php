@@ -417,7 +417,7 @@ $config['plain_db_backup_remove_on_success'] = false;
 /*
  * Enable or disable registrations
  */
-$config['plain_enable_registrations'] = false;
+$config['plain_enable_registrations'] = true;
 
 // Temporary fix
 // https://github.com/bcit-ci/CodeIgniter/issues/5686

@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: #303030;
+    background: $color_darkest;
     top: 0;
     z-index: 99999;
 }
@@ -53,12 +53,13 @@
 
 .loginWrapper, .forgotPassWrapper, .resetWrapper {
     width: 275px;
-    margin: 25px auto 0;
+    //margin: 25px auto 0;
+    margin: 0 auto;
     text-align: center;
     position: relative;
     color:$color_light;
     @include sm {
-        margin-top: 50px;
+        //margin-top: 50px;
     }
     .loginInner {
         position: relative;
@@ -80,13 +81,13 @@
         margin-bottom: 0;
         position: relative;
         .field-input {
-            width: 275px;
+            width: 100%;
             background: $color_white;
             margin-bottom: 15px;
             padding: 10px;
             border: none;
             font-size: 12px;
-            color: $color_black;
+            color: $color_darkest;
             font-family: $sans-serif;
             @include font-smoothing;
             &.small-left {
@@ -125,24 +126,27 @@
         }
         ::-webkit-input-placeholder {
             @include title-text;
+            letter-spacing: .35px;
             @include font-smoothing;
-            font-size: 11px;
-            color: $color_light;
-            line-height: 17px;
+            font-size: 12px;
+            color: darken($color_light, 5%);
+            line-height: 13px;
         }
         ::-moz-placeholder {
             @include title-text;
+            letter-spacing: .35px;
             @include font-smoothing;
-            font-size: 11px;
-            color: $color_light;
-            line-height: 17px;
+            font-size: 12px;
+            color: darken($color_light, 5%);
+            line-height: 13px;
         }
         :-ms-input-placeholder {
             @include title-text;
+            letter-spacing: .35px;
             @include font-smoothing;
-            font-size: 11px;
-            color: $color_light;
-            line-height: 17px;
+            font-size: 12px;
+            color: darken($color_light, 5%);
+            line-height: 13px;
         }
     }
     a.forgot-pass, a.register {
@@ -156,13 +160,14 @@
         padding:0 10px;
     }
     .response-message {
-        padding: 10px 10px 12px;
-        margin: 0 0 25px 0;
-        color: $color_light;
-        border: 1px solid $color_light;
-        font-size: 12px;
+        padding: 12px 12px 15px;
+        //margin: 0 0 25px 0;
+        color: $color_darkest;
+        //border: 1px solid $color_light;
+        font-size: 13px;
         display: none;
         font-weight: 400;
+        background: $color_gray;
         &.error {
             color: $color_white;
             background: $color_red;

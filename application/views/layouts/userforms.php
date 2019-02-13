@@ -1,5 +1,5 @@
 <div id="helperforms">
-    <div id="resetPasswordForm" class="resetWrapper hiddenform">
+    <figure id="resetPasswordForm" class="hiddenform">
         <div class="loginInner">
             <h1><?php echo unmark_phrase('Change Password') ?></h1>
             <form id="send_password_change" method="post" action="#" class="ajaxsbmt">
@@ -10,8 +10,8 @@
             </form>
             <div class="response-message"></div>
         </div>
-    </div>
-    <div id="changePasswordForm" class="resetWrapper hiddenform">
+    </figure>
+    <figure id="changePasswordForm" class="hiddenform">
         <div class="loginInner">
             <h1><?php echo unmark_phrase('Change Email Address') ?></h1>
             <form id="send_email_change" method="post" action="#" class="ajaxsbmt">
@@ -20,8 +20,8 @@
             </form>
             <div class="response-message"></div>
         </div>
-    </div>
-    <div id="importExportForm" class="resetWrapper hiddenform">
+    </figure>
+    <figure id="importExportForm" class="hiddenform">
         <div class="loginInner">
             <h1><?php echo unmark_phrase('Export All Marks') ?></h1>
             <a data-action="export_data" class="exportbtn action" href="#"><?php echo unmark_phrase('Export File') ?></a>
@@ -41,5 +41,5 @@
             <small><?php echo unmark_phrase('Note: HTML import supports Delicious, Pinboard, and others.'); ?></small>
             <div class="response-message"></div>
         </div>
-    </div>
+    </figure>
 </div>

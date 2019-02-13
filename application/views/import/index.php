@@ -8,9 +8,12 @@
 <body class="unmark-solo" id="unmark-login">
 <div id="unmark_login_page">
     <div id="unmark-setup">
+      <figure>
         <?php
             if ($success === false) {
-                print '<p>' . unmark_phrase('Sorry, there was an error. Please <a href=\'/\'>go back</a> and try again.').'</p>';
+                print '<header><h1>' . unmark_phrase('Sorry, there was an error.').'</h1></header>';
+                print '<p><span>' . unmark_phrase('Please make sure you have a valid export.json file.') . '</span></p>';
+                print unmark_phrase('<a href=\'/\' class="back-button"> Go back & try again</a>');
                 if (isset($errors) ) {
                     foreach($errors as $prop) {
                         $first = $prop;
@@ -19,14 +22,15 @@
                     print '<p>'. sprintf(unmark_phrase('ERROR: %s'), $first) . '</p>';
                 }
             } else {
-                print '<p>' . unmark_phrase('Successfull Upload!') . '</p>';
+                print '<header><h1>' . unmark_phrase('Successful Upload!') . '</h1></header>';
                 print '<p>' . sprintf(unmark_phrase('%s marks added', '%s marks added', $result['added']), $result['added']) . '</p>';
                 print '<p>' . sprintf(unmark_phrase('%s marks skipped', '%s marks skipped', $result['skipped']), $result['skipped']) . '</p>';
                 print '<p>' . sprintf(unmark_phrase('%s marks failed', '%s marks failed', $result['failed']), $result['failed']) . '</p>';
                 print '<p>' . sprintf(unmark_phrase('%s marks total', '%s marks total', $result['total']), $result['total']) . '</p>';
-                print '<p>' . unmark_phrase('Head <a href=\'/\'>back</a> to see them now!') . '</p>';
+                print unmark_phrase('<a href=\'/\' class="back-button"> Go back & see them</a>');
             }
         ?>
+      </figure>
     </div>
 </div>
 
