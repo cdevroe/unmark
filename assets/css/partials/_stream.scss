@@ -16,6 +16,7 @@
             overflow: hidden;
         }
         &:before {
+          /*
             content: "";
             display: block;
             width: 12px;
@@ -28,6 +29,19 @@
             opacity: 0;
             -webkit-transition: all .3s ease-in-out;
             transition: all .3s ease-in-out;
+          */
+          content: "";
+          display: block;
+          width: 5px;
+          height: 100%;
+          //background: darken($color_gray, 9%);
+          background: $color_darkest;
+          position: absolute;
+          right: 0;
+          top: 0;
+          opacity: 0;
+          -webkit-transition: all .3s ease-in-out;
+          transition: all .3s ease-in-out;
         }
         &:after {
             content: "";
@@ -168,6 +182,7 @@
                 top: 0;
                 border-radius: 50%;
                 border: 1px solid transparentize($color_dark_gray, .6);
+                transition: all .3s;
                 @include sm {
                     width: 24px;
                     height: 24px;
@@ -189,9 +204,12 @@
                     }
                 }
                 &:hover {
+                  @include sm {
+                    border-color: transparentize($color_dark_gray, .1);
                     i {
                         opacity: .4;
                     }
+                  }
                 }
                 &[data-action="mark_restore"] {
                     border: none;
@@ -235,11 +253,11 @@
             opacity: .25;
         }
         &.view-active {
-            box-shadow: 0 1px 0 0 $color_gray inset;
-            border-bottom: 1px solid darken($color_gray, 7%);
+            box-shadow: 0 -1px 0 0 darken($color_gray, 4%);
+            border-bottom: 1px solid darken($color_gray, 4%);
             &:before {
               opacity: 1;
-              right: 333px;
+              right: 340px;
             }
             &:hover {
                 .mark-actions {

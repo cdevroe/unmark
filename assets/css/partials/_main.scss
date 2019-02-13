@@ -210,12 +210,12 @@
                     border-radius: 50%;
                     margin-left: 10px;
                     @include sm {
-                        border: 1px solid darken(desaturate($color_gray, 12%), 12%);
+                        border: 1px solid darken(desaturate($color_gray, 10%), 18%);
                         width: 32px;
                         height: 32px;
                     }
                     svg {
-                        fill: darken(desaturate($color_gray, 12%), 15%);
+                        fill: darken(desaturate($color_gray, 10%), 18%);
                     }
                 }
             }
