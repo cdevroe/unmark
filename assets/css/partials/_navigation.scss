@@ -278,7 +278,7 @@
         padding: 0 0 12px 2px;
         margin-top: 36px;
         margin-bottom: 20px;
-        color: transparentize($color_light_gray, .3);
+        color: transparentize($color_light_gray, .5);
         @include xs {
             margin-top: 24px;
         }
@@ -286,23 +286,52 @@
             text-transform: none;
             font-size: 12px;
             padding-left: 10px;
-            font-family: "Lato", sans-serif;
             font-weight: 400;
             letter-spacing: normal;
             font-style: italic;
+            margin-top: 5px;
+        }
+        #user-email {
+          text-overflow: ellipsis;
+          display: block;
+          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          color: white;
         }
     }
     #panel-settings {
+        .nav-heading {
+          text-transform: none;
+          color: white;
+          font-size: 13px;
+          span {
+            color: white;
+            font-size: 13px;
+            padding: 0;
+            font-style: normal;
+            font-weight: 600;
+          }
+          .account-type {
+            font-size: 12px;
+            font-weight: 400;
+            color: transparentize($color_light_gray, .3);
+            font-style: italic;
+            text-transform: none;
+            margin-top: 4px;
+          }
+        }
         button#logout-btn {
             width: 100%;
             margin-top: 36px;
             padding: 10px 20px 13px;
             font-size: 14px;
+            border-radius: 3px;
             @include title-text;
             letter-spacing: normal;
             @include font-smoothing;
             font-weight: 700;
-            box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize(black, .8);
+            box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize(darken($color_darkest, 20%), .85);
         }
     }
     .nav-list {
@@ -394,6 +423,6 @@
         &.label-4:after { background-color: $color_yellow; }
         &.label-5:after { background-color: $color_purple; }
         &.label-6:after { background-color: $color_green; }
-        &.label-7:after { background-color: $color_pink; }
+        &.label-7:after { background-color: $color_red; }
     }
 }

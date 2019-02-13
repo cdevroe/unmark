@@ -1,4 +1,7 @@
-<h4 class="nav-heading"><?php echo sprintf(unmark_phrase('Account %s'), '<span id="user-email">[ ' . ((isset($user)) ? $user['email'] : '').' ]</span>'); ?></h4>
+<h4 class="nav-heading">
+  <?php echo sprintf('<span id="user-email">' . ((isset($user)) ? $user['email'] : '') . '</span>'); ?>
+  <?php echo print '<span class="account-type">' . sprintf(unmark_phrase('Account %s') . '</span>'); ?>
+</h4>
 <ul class="nav-list">
     <li><a href="#" class="action" data-action="change_password"><?php echo unmark_phrase('Change Password'); ?></a></li>
     <li><a href="#" class="action" data-action="change_email"><?php echo unmark_phrase('Change Email Address'); ?></a></li>
