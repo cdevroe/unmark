@@ -30,6 +30,30 @@ class Marks extends Plain_Controller
         $title     = (isset($this->db_clean->title)) ? $this->db_clean->title : null;
         $options   = array('url' => $url, 'title' => $title);
 
+        //print_r( $_GET );
+
+        if ( empty($url) ) { // May be from an app via "share"
+            if ( isset($this->db_clean->notes) && ! empty($this->db_clean->notes) ) {
+                $notes = $this->db_clean->notes;
+
+                // Quick check to see if notes starts with http
+                if ( substr( $notes, 0, 4 ) === "http") {
+                    $url = $notes;
+                    // If URL is empty and Notes has value likely we're dealing with app share via PWA
+                    $title = ( empty($title) ? 'Untitled mark from app' : $title );
+
+                    $options   = array('url' => $url, 'title' => $title);
+                } 
+            }
+        }
+
+        // print_r($url);
+        // print_r($title);
+        // exit;
+
+        //print_r( $_SERVER['REQUEST_URI'] );
+        //exit;
+
         // If label id was passed, use it.
         if (isset($this->clean->label_id) && is_numeric($this->clean->label_id)) {
             $options['label_id'] = $this->clean->label_id;

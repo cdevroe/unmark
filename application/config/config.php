@@ -34,7 +34,7 @@ $config['base_url']	= '';
 // job of determining this domain. So we will allow PHP to do it.
 if ( empty($config['base_url']) || $config['base_url'] == '' ) :
 	if ( isset($_SERVER['SERVER_NAME']) ) :
-		$config['base_url'] = 'http'.(empty($_SERVER['HTTPS'])?'':'s').'://' . $_SERVER['SERVER_NAME'];
+		$config['base_url'] = 'http'.(empty($_SERVER['HTTPS'])?'':'s').'://' . $_SERVER['SERVER_NAME'].'/';
 	endif;
 endif;
 

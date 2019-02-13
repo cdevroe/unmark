@@ -1,0 +1,30 @@
+{
+    "short_name": "Unmark",
+    "name": "Unmark",
+    "icons": [
+      {
+        "src": "/assets/images/pwa/icon-192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "/assets/images/pwa/icon-512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "share_target": {
+      "action": "/mark/add/",
+      "params": {
+        "url": "url",
+        "title": "title",
+        "text": "notes"
+      }
+    },
+    "start_url": "/?source=pwa",
+    "background_color": "#13293d",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "/",
+    "theme_color": "#13293d"
+  }

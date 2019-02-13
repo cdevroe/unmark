@@ -29,19 +29,21 @@ module.exports = function(grunt) {
 			'assets/js/unmark.marks.js',
 			'assets/js/unmark.client.js',
 			'assets/js/unmark.init.js',
-			'assets/js/unmark.touch.js'
+            'assets/js/unmark.touch.js',
+            'assets/js/unmark.pwa.js'
 		],
 		'assets/js/production/unmark.loggedout.js': [
 			'assets/js/unmark.js',
 			'assets/js/unmark.reset.js',
-			'assets/js/unmark.login.js',
+            'assets/js/unmark.login.js',
+            'assets/js/unmark.pwa.js',
 			'assets/js/unmark.register.js'
 		],
 		'assets/js/production/unmark.bookmarklet.js': [
 			'assets/js/unmark.js',
 			'assets/js/unmark.actions.js',
 			'assets/js/unmark.marks.js',
-			'assets/js/unmark.add.js',
+            'assets/js/unmark.add.js',
 			'assets/js/unmark.init.js'
 		]
 	};
@@ -97,6 +99,8 @@ module.exports = function(grunt) {
                     {expand: true, flatten: false, src: ['custom_example/**'], dest: 'release/unmark/'},
                     {expand: true, flatten: false, src: ['system/**'], dest: 'release/unmark/'},
                     {expand: true, flatten: false, src: ['docker-configs/*.ini'], dest: 'release/unmark/'},
+                    {expand: false, flatten: true, src: ['manifest.json'], dest: 'release/unmark/manifest.json'},
+                    {expand: false, flatten: true, src: ['service-worker.js'], dest: 'release/unmark/service-worker.js'},
                     {expand: false, flatten: true, src: ['.htaccess'], dest: 'release/unmark/.htaccess'},
                     {expand: true, flatten: true, src: ['*', '!Gruntfile.js', '!.DS_Store', '!.gitignore', '!package.json', '!package-lock.json'], dest: 'release/unmark/', filter: 'isFile'}
                 ]
