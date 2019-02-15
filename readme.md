@@ -5,14 +5,14 @@ The open source to-do application for bookmarks.
 
 We offer this source code for Unmark completely free. We do so in hopes that Unmark will live on for many years even if we stop maintaining it.
 
-To support its further development please consider [donating via Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XSYNN4MGM826N). Or, you can contribute to the code.
+To support its further development please consider [subscribing to Unmark.it](https://unmark.it/), [donating via Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XSYNN4MGM826N). Or, you can contribute to the code.
 
 - [Download the latest release](https://github.com/cdevroe/unmark/releases) - Grab the latest and greatest version of Unmark.
 
 
 ## Installation
 
-Running Unmark is only recommended for intermediate users. This doesn't mean if you're a beginner we don't want you to try. Hack away! Just that you should expect some speedbumps. If you need assistance beyond what is provided please [create an issue on Github](https://github.com/cdevroe/unmark/issues). Before creating a new issue we recommend [search through the issues on GitHub](https://github.com/cdevroe/unmark/issues) to see how others have solved their problems.
+Running Unmark is only recommended for intermediate users. This doesn't mean if you're a beginner we don't want you to try. Hack away! Just that you should expect some speedbumps (though, we're eliminating them all the time). If you need assistance beyond what is provided please [create an issue on Github](https://github.com/cdevroe/unmark/issues). Before creating a new issue we recommend [search through the issues on GitHub](https://github.com/cdevroe/unmark/issues) to see how others have solved their problems.
 
 ### Technical requirements
 
@@ -21,7 +21,7 @@ Running Unmark is only recommended for intermediate users. This doesn't mean if 
 - mySQL 5.5 or greater
 
 **Experimental: Docker**
-If you're going to use Docker we've included the appropriate Docker Compose, Dockerfile, and PHP.ini files to do so. This is still in its experimental phase though.
+If you're going to use Docker we've included the appropriate Docker Compose, Dockerfile, and PHP.ini files to do so. This is still in its experimental phase though. We will update this readme with better instructions.
 
 ### Common Issues
 
@@ -74,7 +74,7 @@ Other common things that come up:
 
 ### Importing bookmarks
 
-Unmark currently supports importing from Unmark's hosted version, any self-hosted version of Unmark, Readability, Pinboard, Delicious, and many other services. However, to ensure this works properly be sure that your PHP.ini file's "max_upload_size" setting is larger than the file you're trying to import.
+Unmark currently supports importing from Unmark's hosted version, any self-hosted version of Unmark, Readability, Pinboard, Delicious, Pocket and many other services. However, to ensure this works properly be sure that your PHP.ini file's "max_upload_size" setting is larger than the file you're trying to import.
 
 ## How to contribute to Unmark
 
@@ -106,4 +106,4 @@ Currently being maintained by: [@cdevroe](https://github.com/cdevroe) and [@kyle
 
 Also contributions by [@thebrandonallen](https://github.com/thebrandonallen), [@simonschaufi](https://github.com/simonschaufi), [@williamknauss](https://github.com/williamknauss), [@hewigovens](https://github.com/hewigovens)
 
-Extra special thanks to: [@phpfunk](https://github.com/phpfunk) (who wrote most of Unmark), [@twhitacre](https://github.com/twhitacre) (wrote most of the front-end), [@kip9](https://github.com/kip9) (wrote the languages and migration back-up bits), [@cfehnel](https://github.com/cfehnel) (who handled support for the app).
+Extra special thanks to: [@phpfunk](https://github.com/phpfunk) (who wrote most of Unmark), [@twhitacre](https://github.com/twhitacre), [@kip9](https://github.com/kip9) (wrote the languages and migration back-up bits), [@cfehnel](https://github.com/cfehnel) (who handled support for the app).

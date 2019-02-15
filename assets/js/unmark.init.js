@@ -1,11 +1,5 @@
 /*!
-    Action Scripts for Unmark.it
-    Copyright 2014 - Plain - http://plainmade.com
-
-    A set of functions used to show interactions throughout Unmark.
-
-    Also includes the INIT file.
-
+    Init for Unmark
 */
 
 (function ($) {

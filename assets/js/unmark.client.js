@@ -1,9 +1,5 @@
 /*!
-    User Scripts for Unmark.it
-    Copyright 2014 - Plain - http://plainmade.com
-
-    A set of functions used push and pull user info.
-
+    User Scripts
 */
 
 (function ($) {

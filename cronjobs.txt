@@ -1,2 +1,0 @@
-*/2 * * * * /usr/bin/curl --silent --compressed http://hanauma.local:8888/marks/backprocessOembed
-*/2 * * * * /usr/bin/curl --silent --compressed http://hanauma.local:8888/marks/backprocessRecipes

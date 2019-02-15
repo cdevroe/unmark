@@ -1,6 +1,5 @@
 /*!
-    Register/Signup Scripts for Unmark.it
-    Copyright 2014 - Plain - http://plainmade.com
+    Register/Signup
 */
 
 (function ($) {

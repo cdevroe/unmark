@@ -7,13 +7,13 @@
 // Full
 
 javascript: (function () {
-    l = 'http://unmark.it/mark/add?url=' + encodeURIComponent(window.location.href) + '&title=' + encodeURIComponent(document.title) + '&v=1&nowindow=yes&';
+    l = 'https://unmark.it/mark/add?url=' + encodeURIComponent(window.location.href) + '&title=' + encodeURIComponent(document.title) + '&v=1&nowindow=yes&';
     var w = window.open(l + 'noui=1', 'Unmark', 'location=0,links=0,scrollbars=0,toolbar=0,width=594,height=585');
 })();
 
 // Minified
 
-javascript:(function(){l="http://unmark.it/mark/add?url="+encodeURIComponent(window.location.href)+"&title="+encodeURIComponent(document.title)+"&v=1&nowindow=yes&";var e=window.open(l+"noui=1","Unmark","location=0,links=0,scrollbars=0,toolbar=0,width=594,height=485")})()
+javascript:(function(){l="https://unmark.it/mark/add?url="+encodeURIComponent(window.location.href)+"&title="+encodeURIComponent(document.title)+"&v=1&nowindow=yes&";var e=window.open(l+"noui=1","Unmark","location=0,links=0,scrollbars=0,toolbar=0,width=594,height=485")})()
 
 // URL Encoded in Link
 

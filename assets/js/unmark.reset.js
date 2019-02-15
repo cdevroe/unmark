@@ -1,6 +1,5 @@
 /*!
-    Password Reset Scripts for Unmark.it
-    Copyright 2014 - Plain - http://plainmade.com
+    Password Reset
 */
 
 (function ($) {

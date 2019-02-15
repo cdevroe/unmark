@@ -1,6 +1,5 @@
 /*!
-	Mobile & Touch Scripts for Unmark.it
-	Copyright 2014 - Plain - http://plainmade.com
+	Mobile & Touch Scripts
 */
 
 (function ($) {

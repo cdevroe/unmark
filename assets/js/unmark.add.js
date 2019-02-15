@@ -1,6 +1,5 @@
 /*!
-    Add Page scripts for Unmark.it
-    Copyright 2014 - Plain - http://plainmade.com
+    Add Mark
 */
 
 (function ($) {

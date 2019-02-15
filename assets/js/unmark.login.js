@@ -1,6 +1,5 @@
 /*!
-    Login Scripts for Unmark.it
-    Copyright 2014 - Plain - http://plainmade.com
+    Login Scripts
 */
 
 (function ($) {

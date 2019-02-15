@@ -1,9 +1,5 @@
 /*!
-    Main scripts for Unmark.it
-    Copyright 2014 - Plain - http://plainmade.com
-
-    A set of helper functions that can be called and used throughout the app
-
+    Main scripts
 */
 
 if (unmark === undefined) { var unmark = {}; }

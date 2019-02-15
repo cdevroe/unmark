@@ -1,9 +1,5 @@
 /*!
-    Marks Scripts for Unmark.it
-    Copyright 2014 - Plain - http://plainmade.com
-
-    A set of functions used to pull and push data for Marks
-
+    Marks Scripts
 */
 
 (function ($) {

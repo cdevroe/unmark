@@ -1,6 +1,5 @@
 /*!
     Graph Main scripts for Unmark.it
-    Copyright 2014 - Plain - http://plainmade.com
     REQUIRES - Chart.min.js file
 */
 
