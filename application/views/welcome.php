@@ -41,7 +41,7 @@
             <div class="response-message"></div>
             <a href="#" class="forgot-pass" title="<?php echo unmark_phrase('Forgot Password?') ?>"><?php echo unmark_phrase('Forgot Password?') ?></a>
             <span class="sep">&bull;</span>
-            <a href="http://help.unmark.it" class="register" title="<?php echo unmark_phrase('Visit Us') ?>"><?php echo unmark_phrase('What is Unmark?') ?></a>
+            <a href="/register" class="register" title="<?php echo unmark_phrase('Register') ?>"><?php echo unmark_phrase('Register') ?></a>
         </div>
     </div>
 
