@@ -37,6 +37,7 @@ $unmark_language = array(
     'follow us on twitter' =>                                 array( 'Follow us on Twitter' ),
     'get the chrome extension' =>                             array( 'Get the Chrome Extension' ),
     'account' =>                                              array( 'Account' ),
+    'local account' =>                                        array( 'Local Account'),
     'help' =>                                                 array( 'Help' ),
     'tools' =>                                                array( 'Tools' ),
     'label' =>                                                array( 'Label', 'Labels' ),
