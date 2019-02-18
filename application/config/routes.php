@@ -56,6 +56,7 @@ $route['labels?(.*?)']           = 'labels/index$1';
 
 // Single Mark Actions
 $route['marks?/add(.*?)']        = 'marks/add$1';
+$route['marks?/add_by_url(.*?)'] = 'marks/add_by_url$1';
 $route['mark/archive(.*?)']      = 'marks/archive$1';
 $route['marks?/archive/old.*?']  = 'marks/archive/old';
 $route['mark/check(.*?)']        = 'marks/check';
