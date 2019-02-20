@@ -227,6 +227,12 @@
         &:not(:last-of-type) {
           //border-bottom-width: 0;
         }
+        &:not([type=submit]):not([type=file]) {
+          @include xs {
+            line-height: 1;
+            -webkit-appearance: none;
+          }
+        }
     }
     h1 {
         font-weight: 600;
