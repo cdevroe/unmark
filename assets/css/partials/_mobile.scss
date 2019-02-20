@@ -8,6 +8,7 @@
     background: $color_darker;
     width: 100%;
     padding: 0 60px;
+    z-index: 1000;
     @include md {
         display: none;
     }

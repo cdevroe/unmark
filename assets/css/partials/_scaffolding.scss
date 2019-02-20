@@ -43,6 +43,19 @@ body {
         opacity: 1;
     }
 }
+.unmark-stage {
+  height: auto;
+  //min-height: calc(100vh - 60px);
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  @include sm {
+    overflow: auto;
+    position: static;
+    min-height: 100vh;
+  }
+}
 #unmark-wrapper {
     position: absolute;
     width: 200%;
@@ -54,7 +67,7 @@ body {
     margin: 0 auto;
     overflow: hidden;
     @include sm {
-        position: relative;
+        //position: relative;
         width: 100%;
         top: auto;
         left: auto;
@@ -73,6 +86,15 @@ body {
         }
     }
     &.sidebar-active {
-        left: -560px
+        left: -560px;
+        .main-content {
+          .marks-heading {
+            @include xs {
+              //position: absolute;
+              //top: 0;
+              left: -280px;
+            }
+          }
+        }
     }
 }
