@@ -222,8 +222,10 @@
           transition: all .2s;
         }
         &:hover {
-          svg {
-            fill: darken(desaturate($color_gray, 15%), 24%);
+          @include sm {
+            svg {
+              fill: darken(desaturate($color_gray, 15%), 24%);
+            }
           }
         }
       }
@@ -309,7 +311,7 @@
         #label-chosen {
             position: absolute;
             left: 172px;
-            top: 32px;
+            top: 26px;
             z-index: 9999;
             display: none;
             font-size: 13px;

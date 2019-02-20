@@ -215,11 +215,12 @@
             -webkit-overflow-scrolling: touch;
             @include sm {
                 width: $nav_pane_sm;
-                padding: 0 24px 30px;
+                padding: 0 24px 120px;
+                max-height: calc(100% - 80px);
             }
             @include lg {
                 width: $nav_pane_lg;
-                padding: 0 30px 30px;
+                padding: 0 30px 120px;
             }
             @include xs {
                 width: 216px;
