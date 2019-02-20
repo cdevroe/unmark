@@ -202,14 +202,10 @@
         // Show & Hide Search Bar
         $(document).on('click', '.marks-heading-bar .search-button', function(e) {
             e.preventDefault();
-            $(this).closest('.marks-heading-bar').find('.search-bar').fadeIn(300, function(e){
-              console.log('Focusing search box.');
-              setTimeout(function(){
-                $('#search-input').focus();
-              }, 1000);
-
+            //$(this).closest('.marks-heading-bar').find('.search-bar').fadeIn(300, function(e){
+            $('.search-bar').fadeIn(300, function(e){
+                setTimeout("$('#search-input').focus();", 0);
             });
-
         });
         $(document).on('click', '.marks-heading-bar .search-bar .close-button', function(e) {
             e.preventDefault();
