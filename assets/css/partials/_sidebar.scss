@@ -7,7 +7,6 @@
     padding-right: 0;
     position: absolute;
     right: -340px;
-    padding: 30px;
     overflow:scroll;
     -webkit-overflow-scrolling: touch;
     z-index: 600;
@@ -19,9 +18,11 @@
         width: 280px !important;
         left: auto !important;
         right: 0 !important;
-        padding: 20px 21px 20px 20px;
+        //padding: 20px 21px 20px 20px;
         display: block !important;
-        top: 60px;
+        //top: 60px;
+        top: 0;
+        box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
     }
     &:after {
         content: "";
@@ -38,7 +39,9 @@
             box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
         }
         @include xs {
+            display: none;
             top: 120px;
+            width: 280px;
             box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
         }
     }
@@ -53,10 +56,14 @@
         width: 24px;
         height: 24px;
         position: absolute;
-        top: 24px;
-        right: 18px;
+        top: 17px;
+        right: 14px;
         border: 1px solid darken(desaturate($color_gray, 12%), 15%);
         border-radius: 50%;
+        @include sm {
+          top: 22px;
+          right: 18px;
+        }
         i {
             display: block;
             width: 22px;
@@ -150,27 +157,35 @@
 .sidebar-mark-info {
     width: 100% !important;
     //opacity: 0;
-    .sidebar-action {
+    > header {  // (.sidebar-action)
         width: 100%;
-        height: 56px;
         z-index: 99999;
-        //display: none;
+        padding: 14px;
+        border-bottom: 1px solid darken(desaturate($color_gray, 15%), 6%);
         @include sm {
             display: block;
+            padding: 20px;
         }
         .sidebar-heading {
             margin: 5px 0;
             font-weight: 400;
             color: $color_dark_gray;
+            font-size: 14px;
+            @include sm {
+                font-size: 16px;
+            }
         }
     }
-    > section {
-      margin-bottom: 40px;
+    > main {
+      padding: 24px 20px;
+      section {
+        margin-bottom: 30px;
+      }
     }
     .section-heading {
       @include title-text;
       display: block;
-      margin-bottom: 14px;
+      margin: 0 0 8px;
       font-size: 11px;
       color: $color_dark_gray;
       font-weight: 600;
@@ -187,6 +202,9 @@
         width: 100%;
         border-radius: 2px 0 0 2px;
         padding: 8px 9px;
+        &[type=text] {
+          -webkit-appearance: none;
+        }
       }
       .copy-link {
         display: block;
@@ -210,14 +228,22 @@
         }
       }
     }
+    .mark-url {
+      .button-field {
+        input {
+          background: transparentize($color_white, .6);
+          color: $color_dark_gray;
+        }
+      }
+    }
     .sidebar-label {
         position: relative;
-        margin-bottom: 50px;
+        margin-bottom: 34px;
         &:before {
             content: "Label";
             @include title-text;
             display: block;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
             font-size: 11px;
             color: $color_dark_gray;
             font-weight: 600;
@@ -300,25 +326,24 @@
             cursor: pointer;
             @include title-text;
             display: block;
-            margin-bottom: 14px;
+            margin: 0 0 8px;
             font-size: 11px;
             color: $color_dark_gray;
             font-weight: 600;
             i {
                 position: absolute;
                 right: 5px;
-                top: 0px;
-                color: $color_dark;
+                top: 4px;
+                color: $color_dark_gray;
                 background-size: 100%;
-                width: 12px;
-                height: 12px;
+                width: 10px;
+                height: 10px;
             }
         }
         section {
-            margin-bottom: 45px;
+            margin-bottom: 36px;
             font-size: 14px;
             line-height: 23px;
-            padding: 0 2px;
             overflow:hidden;
             a.social-link {
                 float:left;
@@ -341,11 +366,24 @@
                 background: white;
                 border: 1px solid darken(desaturate($color_gray, 15%), 6%);
                 border-radius: 2px;
-                padding: 14px 18px;
+                padding: 10px 12px;
                 font-size: 13px;
-                line-height: 1.6;
+                line-height: 1.5;
                 color: lighten($color_dark, 5%);
                 min-height: 120px;
+                transition: all .3s;
+                &.editable {
+                  box-shadow: none;
+                  border: 1px solid darken(desaturate($color_gray, 10%), 15%);
+                }
+                a {
+                  display: inline-block;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  max-width: 100%;
+                  vertical-align: bottom;
+                }
             }
             &.sidebar-info-notes a {
                 color: $color_darker;
@@ -358,22 +396,26 @@
             }
             .videoInfo {
                 clear: both;
-                padding: 15px 0 5px 0;
+                padding: 8px 0 0 0;
+                font-size: 13px;
                 span.viLeft {
                     font-style: italic;
                     float: left;
+                    font-size: 12px;
                 }
                 span.viRight {
                     font-style: italic;
                     float: right;
+                    font-size: 12px;
                 }
                 a {
                     color: $color_dark;
-                    box-shadow: 0px 1px 0px $color_dark;
+                    box-shadow: 0px 1px 0px transparentize($color_dark, .7);
                 }
                 p {
                     clear: both;
-                    padding-top: 20px;
+                    padding-top: 18px;
+                    line-height: 1.5;
                 }
             }
             .hrecipe {
@@ -407,12 +449,20 @@
     }
     button {
         clear: both;
-        margin: 25px;
-        width: 89%;
-        padding: 17px 0;
+        width: 100%;
+        padding: 10px 20px 13px;
+        font-size: 14px;
+        color: white;
+        border-radius: 3px;
         @include title-text;
+        letter-spacing: normal;
         @include font-smoothing;
-        font-size: 13px;
+        font-weight: 700;
+        box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize(darken($color_darkest, 20%), .85);
+        cursor: pointer;
+        &[data-action="delete_mark"] {
+          background: $color_red;
+        }
     }
 }
 #mark-info-dump ul.sidebar-label-list {
