@@ -148,6 +148,9 @@
         // Fade in Logo
         $('.branding').fadeIn();
 
+        //$.pjax(e,'.main-content');
+        $.pjax({ url: elem_ckd.attr('href'), container: '.main-content' });
+
         if (panel_to_show === "#panel-menu"){
             $('.navigation-pane-links').show();
             $('.nav-panel').hide();

@@ -98,9 +98,10 @@
         // Watch for internal link click and run PJAX
         // To Do, remove outside links from elem array
         if ( $('#unmark').length > 0 ) {
-            $(document).pjax("a[href*='/']", unmark.main_content);
+            //console.log("Running pjax");
+            $(document).pjax("a[href*='/']", '.main-content');
             $(document).on('submit', '#search-form', function(e) {
-                $.pjax.submit(e, unmark.main_content);
+                $.pjax.submit(e, '.main-content');
             });
             $(document).on('pjax:complete', function() {
                 if (Modernizr.mq('only screen and (max-width: 480px)')) { unmark.mobile_nav(true); }
