@@ -9,16 +9,9 @@
 		// Toggle the Mobile Navigation
 		unmark.mobile_nav = function (hide) {
 			if (hide) {
-				if (Modernizr.mq('only screen and (max-width: 480px)')) {
-					//$('.main-wrapper').animate({left: 0}, 400);
-					//$('.navigation-content').animate({left: '-64'}, 400);
-					//$('.navigation-content .menu-activator').animate({left: 62}, 400);
-				}
-				//$('.menu-item').removeClass('active-menu');
 				unmark.mainpanels.removeClass('nav-active');
 				unmark.hamburger.removeClass('active');
 			} else {
-				//$('.mark-actions').hide();
 				$('.main-wrapper').animate({left: 65}, 400);
 				$('.navigation-content').animate({left: 0}, 400);
 				$('.navigation-content .menu-activator').animate({left: 0}, 400);
@@ -34,7 +27,6 @@
 					$('a#mobile-sidebar-show i').removeClass('icon-heading_close').addClass('icon-ellipsis');
 				});
 			} else {
-				//$('.sidebar-content').show().css('width', '85%').animate({right: 0 }, 600);
 				$('a#mobile-sidebar-show i').removeClass('.icon-ellipsis').addClass('icon-heading_close');
 				unmark.mobile_nav(true); // Hide Mobile Nav
 			}
@@ -57,7 +49,6 @@
 				if ( open.hasClass('sidebar-active') ) {
 					unmark.mobile_sidebar(true); } else { unmark.mobile_sidebar();
 				}
-				//$('.mark-actions').hide();
 			});
 
 			// Set Max width for view of sidebar expand.
@@ -68,25 +59,23 @@
 
 		// Tablets & Netbooks...
 		if (Modernizr.mq('only screen and (max-width: 1024px)')) {
-			// Unbind the Hover State for Marks in List as well as click
-			$(document).off('mouseenter mouseleave click', '.mark');
+			// // Unbind the Hover State for Marks in List as well as click
+			// $(document).off('mouseenter mouseleave click', '.mark');
 
-			// Hide / Show Mark Actions on Mobile when swiping
-			$(document).on('click', '.mark', function(e) {
-				//e.preventDefault();
-				$('.mark-actions').hide();
-				$(this).find('.mark-actions').show();
-				unmark.mobile_nav(true);
-			});
+			// // Hide / Show Mark Actions on Mobile when swiping
+			// $(document).on('click', '.mark', function(e) {
+			// 	$('.mark-actions').hide();
+			// 	$(this).find('.mark-actions').show();
+			// 	unmark.mobile_nav(true);
+			// });
 
 
 		}
 
 		// Tablet Portrait & Below
+		// No longer used 
+		// Removed 1.8.06
 		if (Modernizr.mq('only screen and (max-width: 767px)')) {
-			$('.nav-panel a').on('click', function (e) {
-				unmark.hideNavigation();
-			});
 		}
 
 
