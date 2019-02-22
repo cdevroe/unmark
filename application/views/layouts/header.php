@@ -54,6 +54,7 @@
         </a>
     </header>
 
+    <main class="unmark-stage">
     <div id="unmark-wrapper">
     <?php $this->load->view('layouts/navigation'); ?>
 
