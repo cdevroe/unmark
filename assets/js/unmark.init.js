@@ -40,6 +40,7 @@
         // Shows and Tabs the Vertical navigition inside the Navigation Panel
         $('.navigation-content a, .navigation-pane-links a, .label-list a, .tag-list a').on('click', function (e) {
             unmark.interact_nav(e, $(this));
+            return false;
         });
 
         // Hover Action on Marks List
@@ -155,6 +156,7 @@
             $(unmark.hamburger).toggleClass('active');
             $(unmark.mainpanels).removeClass('sidebar-active');
             $(unmark.mainpanels).toggleClass('nav-active');
+            return false;
         });
 
 
@@ -182,6 +184,7 @@
             $('#unmark-wrapper').addClass('sidebar-active');
             $('.mobile-header .menu-activator').removeClass('active');
             $(this).toggleClass('active');
+            return false;
         });
 
         // Show & Hide Search Bar
@@ -191,10 +194,12 @@
             $('.search-bar').fadeIn(300, function(e){
                 setTimeout("$('#search-input').focus();", 0);
             });
+            return false;
         });
         $(document).on('click', '.marks-heading-bar .search-bar .close-button', function(e) {
             e.preventDefault();
             $(this).closest('.search-bar').fadeOut(300);
+            return false;
         });
 
     };

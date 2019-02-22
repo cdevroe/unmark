@@ -65,22 +65,23 @@
     // Function for interacting and animating the left navigation
     // This handles both the top level and secondary level
     unmark.interact_nav = function (e, elem_ckd) {
-
-        var panel_to_show       = (elem_ckd.data('panel')) ? elem_ckd.data('panel') : '',
-            panel_name          = (panel_to_show !== '') ? panel_to_show.replace(/^#/, '') : '',
-            is_label_filter     = (elem_ckd.attr('href').indexOf('label') !== -1) ? true : false,
-            is_tag_filter       = (elem_ckd.attr('href').indexOf('tag') !== -1) ? true : false;
-
         e.preventDefault();
 
+        var panel_to_show       = (elem_ckd.data('panel')) ? elem_ckd.data('panel') : '', // kept in data attribute
+            panel_name          = (panel_to_show !== '') ? panel_to_show.replace(/^#/, '') : '', // just removes #
+            is_label_menu       = (elem_ckd.attr('href').indexOf('label') !== -1) ? true : false, // checks href to see if this is label menu
+            is_tag_menu         = (panel_name.indexOf('tags') !== -1) ? true : false, // checks name of panel to see if it is tags menu
+            is_tag_filter       = (elem_ckd.attr('href').indexOf('tag') !== -1) ? true : false; // checks href to see if this is an actual hashtag
+
         // This means one of the labels was clicked.
-        if ( is_label_filter ) {
+        if ( is_label_menu ) {
             panel_name      = 'panel-label';
             panel_to_show   = '#'+panel_name;
             
         }
 
-        if ( is_tag_filter ) {
+        // For the tag menu, or actual hashtags
+        if ( is_tag_menu || is_tag_filter ) {
             panel_name = 'panel-tags';
             panel_to_show = '#'+panel_name;
         }
@@ -94,15 +95,17 @@
             $.pjax({ url: elem_ckd.attr('href'), container: '.main-content' });
         }
 
-
         // Hides all panels except the one we're navigation to
         $('.nav-panel').not(panel_to_show).hide();
         $(panel_to_show).show();
 
-    
-        if (Modernizr.mq('only screen and (max-width: 480px)') && panel_to_show !== '#panel-tags' && panel_to_show !== '#panel-settings') {
+        // hide mobile menu if these conditions are met:
+        //      clicked on any main navigation item other than hashtags
+        //      click on an actual hashtag
+        if (Modernizr.mq('only screen and (max-width: 480px)') && panel_to_show !== '#panel-settings' && is_tag_filter) {
             unmark.mobile_nav(true);
         }
+        return false;
     };
 
     // Pagination on Scroll

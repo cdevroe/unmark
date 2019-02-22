@@ -17,6 +17,7 @@
 				$('.navigation-content .menu-activator').animate({left: 0}, 400);
 				unmark.mobile_sidebar(true); // Hide Mobile Sidebar
 			}
+			return false;
 		};
 
 		// Toggle the Mobile Sidebar
@@ -30,6 +31,7 @@
 				$('a#mobile-sidebar-show i').removeClass('.icon-ellipsis').addClass('icon-heading_close');
 				unmark.mobile_nav(true); // Hide Mobile Nav
 			}
+			return false;
 		}
 
 		// For Small Phone Size Devices
@@ -40,6 +42,7 @@
 				e.preventDefault();
 				var open = $('.main-wrapper').css('left');
 				if (open === '65px') { unmark.mobile_nav(true); } else { unmark.mobile_nav(); }
+				return false;
 			});
 
 			// Mobile Show Sidebar
@@ -49,6 +52,7 @@
 				if ( open.hasClass('sidebar-active') ) {
 					unmark.mobile_sidebar(true); } else { unmark.mobile_sidebar();
 				}
+				return false;
 			});
 
 			// Set Max width for view of sidebar expand.
