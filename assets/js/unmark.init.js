@@ -38,7 +38,7 @@
 
         // Vertical Tabs
         // Shows and Tabs the Vertical navigition inside the Navigation Panel
-        $('.navigation-content a, .navigation-pane-links a').on('click', function (e) {
+        $('.navigation-content a, .navigation-pane-links a, .label-list a, .tag-list a').on('click', function (e) {
             unmark.interact_nav(e, $(this));
         });
 
@@ -63,7 +63,6 @@
             var action = $(this).data('action'), funct; // Get Data Action Attribute
             funct = eval('unmark.' + action); // Convert it to an executable function
             funct($(this)); // Run it with passed in object
-            //unmark.hideNavigation(); // Hide Main Navigation
         });
 
         // Slide Toggle the Sidebar Info Blocks
@@ -81,30 +80,15 @@
             }
         });
 
-        // Click / Tap on a Mark opens the more info and shows the buttons
-        /*
-        This will enable mark row clicking which we are getting rid of in 1.8
-        $(document).on('click', '.mark', function (e){
-            var node = e.target.className, more_link = $(this).find('a.mark-info');
-            // Check for Archive... don't show info for this, otherwise show the info
-            // 1.6 Also, if the node that fires this is from an editable title do nothing
-            if (node !== "icon-check" && node !== "action mark-archive" && node !== 'hideoutline editable' && node !== 'hideoutline editable contentsChanged') {
-                unmark.show_mark_info(more_link);
-            }
-            // Hide Nav
-            unmark.hideNavigation();
-        }); */
-
         // Watch for internal link click and run PJAX
         // To Do, remove outside links from elem array
         if ( $('#unmark').length > 0 ) {
-            //console.log("Running pjax");
-            $(document).pjax("a[href*='/']", '.main-content');
+
+            //$(document).pjax(".label-list a[href*='/']", '.main-content');
             $(document).on('submit', '#search-form', function(e) {
                 $.pjax.submit(e, '.main-content');
             });
-            $(document).on('pjax:complete', function() {
-                if (Modernizr.mq('only screen and (max-width: 480px)')) { unmark.mobile_nav(true); }
+            $(document).on('pjax:complete', function() { // Runs when list is retrieved (example: archive list)
                 window.unmark_current_page = 1;
                 unmark.main_content.scrollTop(0);
                 unmark.main_content.find('.marks').hide().fadeIn();
