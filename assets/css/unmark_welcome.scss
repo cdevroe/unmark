@@ -1,5 +1,5 @@
-$title: 'Montserrat', sans-serif;
-$copy: 'Lato', sans-serif;
+$title: 'Source Sans Pro', sans-serif;
+$copy: 'Source Sans Pro', sans-serif;
 $red_bg: #f0635a;
 $black_bg: #303030;
 
@@ -36,7 +36,7 @@ $black_bg: #303030;
     &:after {
         clear: both;
     }
-} 
+}
 * {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -47,7 +47,8 @@ $black_bg: #303030;
 body {
 	margin: 0;
 	padding: 0;
-	color: white;
+	//color: white;
+	color: #13293d;
 	@include font-smooth;
 	&#unmark-login {
 		position: static;
@@ -64,7 +65,7 @@ p {
 	font-size: 15px;
 	line-height: 23px;
 	font-family: $copy;
-	font-weight: 300;
+	font-weight: 400;
 	text-align: center;
 	margin-bottom: 22px;
 	strong {
@@ -178,7 +179,7 @@ nav {
 	.feature-detail {
 		margin: 0 -15px;
 		@extend .clearfix;
-	}	
+	}
 	.feature {
 		float: left;
 		width: 33.333%;
@@ -364,10 +365,3 @@ p {
 }
 
 }
-
-
-
-
-
-
-

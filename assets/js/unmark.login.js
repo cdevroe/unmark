@@ -28,14 +28,17 @@
         // Toggle the Login Form
         function toggle_login_form(hide, message) {
             if (hide === true) {
-                unmarklogin.login_wrapper.animate({ top: '-500px' }, 500, function () {
+              unmarklogin.login_wrapper.fadeOut();
+              /*()
+                unmarklogin.login_wrapper.fadeOut(), function () {
                     $(this).hide();
-                    unmarklogin.login_spinner.fadeIn();
+                    //unmarklogin.login_spinner.fadeIn();
                 });
+                */
             } else {
                 unmarklogin.login_spinner.fadeOut(400, function () {
                     $(this).hide();
-                    unmarklogin.login_wrapper.show().animate({ top: '0' }, 500);
+                    unmarklogin.login_wrapper.show().fadeIn();
                     if (message){
                         showMessage(true, message);
                     }
@@ -77,6 +80,18 @@
 
         // Toggle the forgot password screen
         function toggleForgotPass() {
+          if (unmarklogin.pass_wrapper.is(':visible')) {
+              unmarklogin.pass_wrapper.fadeOut(300, function () {
+                  $(this).hide();
+                  toggle_login_form();
+              });
+          } else {
+              unmarklogin.login_wrapper.fadeOut(300, function () {
+                  $(this).hide();
+                  unmarklogin.pass_wrapper.fadeIn(300);
+              });
+          }
+          /*
             if (unmarklogin.pass_wrapper.is(':visible')) {
                 unmarklogin.pass_wrapper.animate({ top: '-500px' }, 500, function () {
                     $(this).hide();
@@ -88,6 +103,7 @@
                     unmarklogin.pass_wrapper.show().animate({ top: '0' }, 500);
                 });
             }
+            */
         }
 
         // Login Submit Action
