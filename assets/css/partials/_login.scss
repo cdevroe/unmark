@@ -13,7 +13,18 @@
     justify-content: center;
     @include sm {
       //padding-top: 80px;
+      //padding-bottom: 150px;
     }
+}
+.homepage {
+  #unmark_login_page {
+    @include sm {
+      height: calc(100% - 68px);
+    }
+    @include md {
+      height: calc(100% - 150px);
+    }
+  }
 }
 
 #unmark_about_page { display: none; }
@@ -23,37 +34,60 @@
     position: relative;
     bottom: 0;
     height: 68px;
-    padding: 20px 10px;
     text-align: center;
     margin-top: 30px;
     @include sm {
-        background: #f0635a;
+        background: $color_darkest;
         position: absolute;
         margin-top: 0;
+        bottom: auto;
+        top: 100%;
     }
     @include md {
         height: 150px;
         padding: 10px 20px 20px 20px;
         box-shadow: 0 18px 26px -20px rgba(0,0,0,0.4) inset, 0 5px 8px -6px rgba(0,0,0,0.35) inset;
     }
+    a {
+      display: block;
+      //padding: 30px;
+      height: 68px;
+      @include sm {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        padding: 20px;
+      }
+      @include md {
+        //height: 150px;
+        padding: 40px 30px;
+      }
+    }
     i {
         display: none;
         width: 27px;
         height: 27px;
-        margin: 25px auto;
+        margin: 25px auto 0;
         background-size: 100%;
         opacity: 0.6;
+        transform: rotate(180deg);
         @include md {
             display: inline-block;
         }
     }
     span {
         @include title-text;
-        color: transparentize(white, 0.2);
+        color: $color_darkest;
         display: inline-block;
         font-size: 11px;
+        font-weight: 600;
+        @include sm {
+          color: transparentize(white, 0.2);
+        }
         @include md {
-            font-size: 12px;
+            font-size: 13px;
             display: block;
         }
     }

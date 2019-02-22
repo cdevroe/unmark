@@ -3,12 +3,12 @@
     "name": "Unmark",
     "icons": [
       {
-        "src": "/assets/images/pwa/icon-192.png",
+        "src": "/assets/images/pwa/android-chrome-192x192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "/assets/images/pwa/icon-512.png",
+        "src": "/assets/images/pwa/android-chrome-512x512.png",
         "type": "image/png",
         "sizes": "512x512"
       }
