@@ -69,12 +69,13 @@
 
         var panel_to_show       = (elem_ckd.data('panel')) ? elem_ckd.data('panel') : '', // kept in data attribute
             panel_name          = (panel_to_show !== '') ? panel_to_show.replace(/^#/, '') : '', // just removes #
-            is_label_menu       = (elem_ckd.attr('href').indexOf('label') !== -1) ? true : false, // checks href to see if this is label menu
+            is_label_menu       = (panel_name.indexOf('label') !== -1) ? true : false, // checks name of panel to see if this is label menu
+            is_label_filter     = (elem_ckd.attr('href').indexOf('label') !== -1) ? true : false, // checks href to see if this is label filter
             is_tag_menu         = (panel_name.indexOf('tags') !== -1) ? true : false, // checks name of panel to see if it is tags menu
             is_tag_filter       = (elem_ckd.attr('href').indexOf('tag') !== -1) ? true : false; // checks href to see if this is an actual hashtag
 
         // This means one of the labels was clicked.
-        if ( is_label_menu ) {
+        if ( is_label_menu || is_label_filter ) {
             panel_name      = 'panel-label';
             panel_to_show   = '#'+panel_name;
             
@@ -102,7 +103,8 @@
         // hide mobile menu if these conditions are met:
         //      clicked on any main navigation item other than hashtags
         //      click on an actual hashtag
-        if (Modernizr.mq('only screen and (max-width: 480px)') && panel_to_show !== '#panel-settings' && is_tag_filter) {
+        //      click on an actual label
+        if (Modernizr.mq('only screen and (max-width: 480px)') && panel_to_show !== '#panel-settings' && (is_tag_filter || is_label_filter)) {
             unmark.mobile_nav(true);
         }
         return false;

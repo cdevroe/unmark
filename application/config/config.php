@@ -11,7 +11,7 @@
 | version.point.release
 |
 */
-$config['unmark_version'] = '1.8.08';
+$config['unmark_version'] = '1.8.09';
 
 /*
 |--------------------------------------------------------------------------
