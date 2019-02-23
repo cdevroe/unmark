@@ -93,7 +93,7 @@
 
         // For all panels run pjax manually.
         if ( panel_to_show !== "#panel-settings" ) {
-            $.pjax({ url: elem_ckd.attr('href'), container: '.main-content' });
+            $.pjax({ url: elem_ckd.attr('href'), container: '.main-content', timeout:6000 });
         }
 
         // Hides all panels except the one we're navigation to
@@ -104,7 +104,7 @@
         //      clicked on any main navigation item other than hashtags
         //      click on an actual hashtag
         //      click on an actual label
-        if (Modernizr.mq('only screen and (max-width: 480px)') && panel_to_show !== '#panel-settings' && (is_tag_filter || is_label_filter)) {
+        if (Modernizr.mq('only screen and (max-width: 480px)') && panel_to_show !== '#panel-settings' && (is_label_menu || is_tag_filter || is_label_filter)) {
             unmark.mobile_nav(true);
         }
         return false;
