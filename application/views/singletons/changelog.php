@@ -22,6 +22,15 @@
 
 <p>This changelog relates to the hosted version of Unmark at <a href="https://unmark.it/">unmark.it</a></p>
 
+<h2>Wednesday, February 27, 2019</h2>
+<small>Version: 1.8.1</small>
+<ul>
+    <li>Fix: The information sidebar wasn't loading correct bookmark's info</li>
+    <li>Fix: On iPad Pro you no longer need to double-tap to visit or archive a bookmark.</li>
+    <li>Fix: On iPad Pro the bookmark information sidebar can now be shown.</li>
+    <li>New: This changelog! Clicking on the version number shows this changelog on Unmark.it</li>
+</ul>
+
 <h2>Saturday, February 23, 2019</h2>
 <small>Version: 1.8.095</small>
 <ul>
