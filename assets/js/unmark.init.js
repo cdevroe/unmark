@@ -45,16 +45,18 @@
 
         // Hover Action on Marks List
         // Shows the Archive and More Buttons
-        if (Modernizr.mq('only screen and (min-width: 768px)')) {
-            $(document).on('mouseenter', '.mark', function () {
-                $(this).addClass('hide-dot');
-                $(this).find('.mark-actions').fadeIn(200);
-            });
-            $(document).on('mouseleave', '.mark', function () {
-                $(this).removeClass('hide-dot');
-                $(this).find('.mark-actions').fadeOut(200);
-            });
-        }
+        // Temporarily disabled on all device sizes.
+        // This caused issues with iPad/Pro.
+        // if (Modernizr.mq('only screen and (min-width: 768px)')) {
+        //     $(document).on('mouseenter', '.mark', function () {
+        //         $(this).addClass('hide-dot');
+        //         $(this).find('.mark-actions').fadeIn(200);
+        //     });
+        //     $(document).on('mouseleave', '.mark', function () {
+        //         $(this).removeClass('hide-dot');
+        //         $(this).find('.mark-actions').fadeOut(200);
+        //     });
+        // }
 
         // Global Button / Action Link Run
         // Create a Function from a string
