@@ -1,7 +1,8 @@
-$title: 'Montserrat', sans-serif;
-$copy: 'Lato', sans-serif;
+$title: 'Source Sans Pro', sans-serif;
+$copy: 'Source Sans Pro', sans-serif;
 $red_bg: #f0635a;
 $black_bg: #303030;
+$navy: #13293d;
 
 @mixin title-text {
 	font-family: $title;
@@ -36,7 +37,7 @@ $black_bg: #303030;
     &:after {
         clear: both;
     }
-} 
+}
 * {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -47,10 +48,14 @@ $black_bg: #303030;
 body {
 	margin: 0;
 	padding: 0;
-	color: white;
+	//color: white;
+	color: #13293d;
 	@include font-smooth;
 	&#unmark-login {
 		position: static;
+	}
+	&.homepage {
+		background-color: $navy !important;
 	}
 }
 a {
@@ -64,7 +69,7 @@ p {
 	font-size: 15px;
 	line-height: 23px;
 	font-family: $copy;
-	font-weight: 300;
+	font-weight: 400;
 	text-align: center;
 	margin-bottom: 22px;
 	strong {
@@ -74,63 +79,83 @@ p {
 #top {
 	position: fixed;
 	z-index: 2;
-	height: 83px;
+	height: 68px;
 	width: 100%;
-	background: $black_bg;
+	//background: $navy;
+	background: #f4f8fa;
 	top: 0;
-	box-shadow: 0 4px 7px 1px rgba(0,0,0,0.14), 0 1px 3px 1px rgba(0,0,0,0.1);
+	box-shadow: 0 6px 16px -7px transparentize($navy, .92), 0 2px 5px -2px transparentize($navy, .95);
+	display: flex;
+	justify-content: space-between;
 }
 #bottom {
-	background: $red-bg;
+	background: $navy;
+	background: #e9f1f5;
 	min-height:	100%;
-	margin-top: 83px;
+	padding-top: 68px;
 }
 .logo {
-	float: left;
 	width: auto;
-	height: 46px;
-	margin: 19px 22px;
+	height: 100%;
+	padding: 20px;
+	display: flex;
+	align-items: center;
 	.logo-mark {
-		width: 44px;
-		margin-right: 13px;
-		float: left;
+		width: 22px;
+		margin-right: 12px;
 	}
 	.logo-text {
-		width: 86px;
-		height: 19px;
-		float: left;
-		background-size: 100%;
-		margin-top: 10px;
+		width: 68px;
+		margin-bottom: 2px;
 	}
 }
 nav {
 	float: right;
 	width: auto;
-	margin: 27px 22px;
+	padding: 10px;
 	ul {
 		list-style: none;
 		margin: 0;
 		padding: 0;
-		float: right;
+		display: flex;
+		justify-content: flex-end;
+		height: 100%;
 		li {
-			float: left;
-			padding: 0 0 0 20px;
+			padding: 0 12px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
 			a {
-				@include title-text;
-				font-size: 11px;
-				color: transparentize(white, 0.3);
+				//@include title-text;
+				font-size: 14px;
+				color: desaturate(lighten($navy, 7%), 12%);
+				display: flex;
+				align-items: center;
+				padding-bottom: 2px;
 				span {
 					display: inline-block;
-					width: 24px;
-					height: 24px;
-					background-size: 100%;
-					margin-left: 5px;
-					opacity: 0.4;
-					vertical-align: -8px;
+					width: 20px;
+					height: 20px;
+					//background-size: 100%;
+					background: none;
+					margin-left: 8px;
+					opacity: 1;
+					//vertical-align: -8px;
+					display: none;
+					&.signin {
+						transform: rotate(180deg);
+					}
+					&.register {
+						transform: rotate(-90deg);
+					}
+					svg {
+						fill: darken(#5bbfe7, 3%);
+					}
 				}
 			}
 			i {
 				font-style: normal;
+				padding: 0 3px;
 			}
 		}
 	}
@@ -141,13 +166,19 @@ nav {
 	width: 598px;
 	max-width: 100%;
 	@extend .clearfix;
+	a {
+		color: $navy;
+		border-bottom: 1px solid transparentize($navy, .85);
+	}
 	h2 {
-		@include title-text;
-		font-size: 16px;
-		line-height: 24px;
-		color: transparentize(white, 0.1);
+		//@include title-text;
+		font-weight: 600;
+		font-size: 28px;
+		line-height: 1.3px;
+		color: $navy;
 		margin-bottom: 50px;
-		margin-top: 100px;
+		text-align: center;
+		margin-top: 160px;
 		&:first-of-type {
 			margin-top: 0;
 		}
@@ -178,7 +209,7 @@ nav {
 	.feature-detail {
 		margin: 0 -15px;
 		@extend .clearfix;
-	}	
+	}
 	.feature {
 		float: left;
 		width: 33.333%;
@@ -211,10 +242,10 @@ nav {
 				background: #f7f7f7;
 				ul {
 					li {
-						font-weight: 300;
+						//font-weight: 300;
 						text-align: left;
 						&:last-child {
-							font-weight: 300;
+							//font-weight: 300;
 						}
 					}
 				}
@@ -317,6 +348,7 @@ nav {
 .content {
 	margin: 64px auto 0;
 	h2 {
+		font-size: 18px;
 		margin-bottom: 40px;
 	}
 	.demo {
@@ -332,22 +364,23 @@ nav {
 	}
 }
 .logo {
-	margin: 12px 12px;
-	height: 40px;
+	//margin: 12px 12px;
+	//height: 40px;
 	.logo-mark {
-		width: 40px;
+		width: 20px;
+		padding-top: 2px;
 	}
 	.logo-text {
 		display: none;
 	}
 }
 nav {
-	margin: 19px 12px 0 0;
+	//margin: 19px 12px 0 0;
 	ul {
 		li {
-			padding-left: 14px;
+			padding: 0 8px;
 			a {
-				font-size: 10px;
+				font-size: 13px;
 				span {
 					width: 18px;
 					height: 18px;
@@ -364,10 +397,3 @@ p {
 }
 
 }
-
-
-
-
-
-
-

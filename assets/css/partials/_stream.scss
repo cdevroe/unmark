@@ -115,7 +115,7 @@
             right: 0;
             height: 100%;
             @include lg {
-                display: none;
+                display: block;
             }
             a {
                 background: $color_white;

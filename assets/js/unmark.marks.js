@@ -69,7 +69,7 @@
                     unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
                         unmark.tagify_notes($('#notes-' + mark_id));
                         populateLabels();
-                        $("section.sidebar-info-preview").fitVids();
+                        // $("section.sidebar-info-preview").fitVids();
                     });
                 });
             } else {
@@ -77,7 +77,7 @@
                 unmark.tagify_notes($('#notes-' + mark_id));
                 populateLabels();
                 unmark.sidebar_mark_info.fadeIn(400, function () {
-                    $("section.sidebar-info-preview").fitVids();
+                    //$("section.sidebar-info-preview").fitVids();
                 });
             }
         });

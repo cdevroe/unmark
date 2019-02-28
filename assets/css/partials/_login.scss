@@ -4,10 +4,29 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: $color_darkest;
+    background: darken($color_gray, 3%);
     top: 0;
     z-index: 99999;
+    //padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @include sm {
+      //padding-top: 80px;
+      //padding-bottom: 150px;
+    }
 }
+.homepage {
+  #unmark_login_page {
+    @include sm {
+      height: calc(100% - 68px);
+    }
+    @include md {
+      height: calc(100% - 150px);
+    }
+  }
+}
+
 #unmark_about_page { display: none; }
 .login-page-bottom {
     background: none;
@@ -15,37 +34,60 @@
     position: relative;
     bottom: 0;
     height: 68px;
-    padding: 20px 10px;
     text-align: center;
     margin-top: 30px;
     @include sm {
-        background: #f0635a;
+        background: $color_darkest;
         position: absolute;
         margin-top: 0;
+        bottom: auto;
+        top: 100%;
     }
     @include md {
         height: 150px;
         padding: 10px 20px 20px 20px;
         box-shadow: 0 18px 26px -20px rgba(0,0,0,0.4) inset, 0 5px 8px -6px rgba(0,0,0,0.35) inset;
     }
+    a {
+      display: block;
+      //padding: 30px;
+      height: 68px;
+      @include sm {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        padding: 20px;
+      }
+      @include md {
+        //height: 150px;
+        padding: 40px 30px;
+      }
+    }
     i {
         display: none;
         width: 27px;
         height: 27px;
-        margin: 25px auto;
+        margin: 25px auto 0;
         background-size: 100%;
         opacity: 0.6;
+        transform: rotate(180deg);
         @include md {
             display: inline-block;
         }
     }
     span {
         @include title-text;
-        color: transparentize(white, 0.2);
+        color: $color_darkest;
         display: inline-block;
         font-size: 11px;
+        font-weight: 600;
+        @include sm {
+          color: transparentize(white, 0.2);
+        }
         @include md {
-            font-size: 12px;
+            font-size: 13px;
             display: block;
         }
     }
@@ -69,13 +111,28 @@
         font-size: 11px;
         margin: 15px 0 5px 0;
     }
-    .login-ball {
-        width: 100px;
+    .login-branding {
+      padding-bottom: 28px;
+      .login-branding-wrapper {
         margin: 0 auto;
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .login-ball {
+        width: 28px;
+        //margin: 0 auto;
+        margin: 0 7px;
     }
     .login-text {
-        width: 150px;
-        margin: 0 auto 30px auto;
+        width: 90px;
+        //margin: 0 auto 30px auto;
+        margin: 0 7px;
+        svg {
+          fill: $color_darkest;
+        }
     }
     form {
         margin-bottom: 0;
@@ -83,13 +140,29 @@
         .field-input {
             width: 100%;
             background: $color_white;
-            margin-bottom: 15px;
-            padding: 10px;
-            border: none;
-            font-size: 12px;
-            color: $color_darkest;
             font-family: $sans-serif;
             @include font-smoothing;
+            padding: 14px 15px 16px;
+            border: solid lighten($color_dark_gray, 37%);
+            border-width: 1px 0 1px 0;
+            font-size: 15px;
+            color: darken($color_dark_gray, 20%);
+            margin-bottom: 0;
+            text-align: center;
+            border-width: 1px 0 1px 0;
+            border-bottom-width: 0;
+            &:first-child {
+              border-top-width: 0;
+            }
+            &:not([type=submit]):not([type=file]) {
+              @include xs {
+                line-height: 1;
+                -webkit-appearance: none;
+              }
+            }
+            &[type=password] {
+              letter-spacing: 1.75px;
+            }
             &.small-left {
                 width: 110px;
                 float: left;
@@ -106,12 +179,36 @@
             font-size: 17px;
         }
         .login-submit, .forgot-submit {
-            background: none;
-            position: absolute;
-            top: 51px;
-            color: $color_dark;
-            font-size: 17px;
-            right: -5px;
+            position: relative;
+            margin: 0;
+            top: auto;
+            left: auto;
+            right: auto;
+            background: $color_blue;
+            padding: 12px 15px 15px;
+            font-size: 15px;
+            letter-spacing: .35px;
+            width: 100%;
+            height: 54px;
+            box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 10px 12px -12px transparentize($color_darkest, .7) inset;
+            color: white;
+            font-weight: 700;
+            &:after {
+              /*
+                content: "";
+                width: 14px;
+                height: 7px;
+                border: solid white;
+                border-width: 0 0 2px 2px;
+                -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -4px;
+                margin-top: -6px;
+                */
+            }
             i {
                 width: 12px;
                 height: 12px;
@@ -119,10 +216,11 @@
                 background-size: 100%;
                 margin-top: 4px;
                 margin-right: -3px;
+                display: none;
             }
         }
         .forgot-submit {
-            top: 2px;
+            //top: 2px;
         }
         ::-webkit-input-placeholder {
             @include title-text;
@@ -149,27 +247,39 @@
             line-height: 13px;
         }
     }
+    .login-links {
+      margin-top: 22px;
+      @include sm {
+        margin-bottom: 40px;
+      }
+      p {
+        font-size: 13px;
+        color: desaturate(lighten($color_darkest, 12%), 20%);
+      }
+    }
     a.forgot-pass, a.register {
         font-size: 13px;
-        margin: 0 0 25px 0;
         font-weight: 400;
-        color:$color_light;
+        color: $color_darkest;
+        border-bottom: 1px solid transparentize($color_dark, .85);
     }
     span.sep {
-        color: transparentize($color_light, 0.5);
-        padding:0 10px;
+        color: transparentize($color_dark, .8);
+        padding: 0 8px;
     }
     .response-message {
-        padding: 12px 12px 15px;
-        //margin: 0 0 25px 0;
         color: $color_darkest;
-        //border: 1px solid $color_light;
         font-size: 13px;
         display: none;
         font-weight: 400;
         background: $color_gray;
+        margin-top: 20px;
+        border-radius: 4px;
+        font-weight: 600;
+        line-height: 1.4;
+        padding: 12px 16px 14px;
         &.error {
-            color: $color_white;
+            color: white;
             background: $color_red;
             border:none;
         }
@@ -180,7 +290,7 @@
         font-size: 13px;
     }
     form#register_user .login-submit {
-        top: 101px;
+        //top: 101px;
         display:block;
     }
 }
@@ -190,8 +300,14 @@
 }
 
 .forgotPassWrapper {
-    top: -500px;
+    //top: -500px;
     display: none;
+}
+#unmarkLogin, #unmarkForgotPass, #register_user {
+  overflow: hidden;
+  border-radius: 6px;
+  padding: 0;
+  box-shadow: 0 4px 5px 0 transparentize(darken($color_darkest, 20%), .93), 0 12px 20px 0 transparentize(darken($color_darkest, 20%), .95);
 }
 
 .resetWrapper {

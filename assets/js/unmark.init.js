@@ -40,20 +40,23 @@
         // Shows and Tabs the Vertical navigition inside the Navigation Panel
         $('.navigation-content a, .navigation-pane-links a, .label-list a, .tag-list a').on('click', function (e) {
             unmark.interact_nav(e, $(this));
+            return false;
         });
 
         // Hover Action on Marks List
         // Shows the Archive and More Buttons
-        if (Modernizr.mq('only screen and (min-width: 768px)')) {
-            $(document).on('mouseenter', '.mark', function () {
-                $(this).addClass('hide-dot');
-                $(this).find('.mark-actions').fadeIn(200);
-            });
-            $(document).on('mouseleave', '.mark', function () {
-                $(this).removeClass('hide-dot');
-                $(this).find('.mark-actions').fadeOut(200);
-            });
-        }
+        // Temporarily disabled on all device sizes.
+        // This caused issues with iPad/Pro.
+        // if (Modernizr.mq('only screen and (min-width: 768px)')) {
+        //     $(document).on('mouseenter', '.mark', function () {
+        //         $(this).addClass('hide-dot');
+        //         $(this).find('.mark-actions').fadeIn(200);
+        //     });
+        //     $(document).on('mouseleave', '.mark', function () {
+        //         $(this).removeClass('hide-dot');
+        //         $(this).find('.mark-actions').fadeOut(200);
+        //     });
+        // }
 
         // Global Button / Action Link Run
         // Create a Function from a string
@@ -155,6 +158,7 @@
             $(unmark.hamburger).toggleClass('active');
             $(unmark.mainpanels).removeClass('sidebar-active');
             $(unmark.mainpanels).toggleClass('nav-active');
+            return false;
         });
 
 
@@ -182,6 +186,7 @@
             $('#unmark-wrapper').addClass('sidebar-active');
             $('.mobile-header .menu-activator').removeClass('active');
             $(this).toggleClass('active');
+            return false;
         });
 
         // Show & Hide Search Bar
@@ -191,10 +196,12 @@
             $('.search-bar').fadeIn(300, function(e){
                 setTimeout("$('#search-input').focus();", 0);
             });
+            return false;
         });
         $(document).on('click', '.marks-heading-bar .search-bar .close-button', function(e) {
             e.preventDefault();
             $(this).closest('.search-bar').fadeOut(300);
+            return false;
         });
 
     };

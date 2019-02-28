@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title><?php echo unmark_phrase('Unmark: Setup') ?></title>
+    <title><?php echo unmark_phrase('Unmark : Version Changelog'); ?></title>
     <link href='//fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo $this->config->item('unmark_version'); ?>" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
@@ -16,15 +16,39 @@
     </script>
     <noscript><link href="/assets/css/icons.fallback.css" rel="stylesheet"></noscript>
 </head>
-<body class="unmark-solo" id="unmark-login">
+<body class="unmark-solo">
 
-    <div id="unmark-setup">
+<h1>Changelog</h1>
 
-        <p><?php echo unmark_phrase('Welcome to Unmark, the to-do app for bookmarks.'); ?><?php echo unmark_phrase('You\'re about to install version ' . $this->config->item('unmark_version') . ' of the app.</p><p>Please <a href="https://github.com/plainmade/unmark/blob/master/readme.md">read the installation instructions</a> first.'); ?></p>
+<p>This changelog relates to the hosted version of Unmark at <a href="https://unmark.it/">unmark.it</a></p>
 
-        <a class="abtn" href="/install"><?php echo unmark_phrase('Click to Install') ?></a>
+<h2>Wednesday, February 27, 2019</h2>
+<small>Version: 1.8.1</small>
+<ul>
+    <li>Fix: The information sidebar wasn't loading correct bookmark's info</li>
+    <li>Fix: On iPad Pro you no longer need to double-tap to visit or archive a bookmark.</li>
+    <li>Fix: On iPad Pro the bookmark information sidebar can now be shown.</li>
+    <li>New: This changelog! Clicking on the version number shows this changelog on Unmark.it</li>
+</ul>
 
-    </div>
+<h2>Saturday, February 23, 2019</h2>
+<small>Version: 1.8.095</small>
+<ul>
+    <li>New: An all-new design</li>
+    <li>New: A new icon!</li>
+    <li>New: Support for importing from Pocket</li>
+    <li>Fix: Better compatibility with password managers</li>
+    <li>New: Progressive Web App Support (to install, Add To Homescreen on your mobile device)</li>
+    <li>New: Share to Unmark (Android only)</li>
+    <li>Fix: Speed improvements throughout the app</li>
+</ul>
+
+<script type="text/javascript">
+var unmark  = unmark || {};
+unmark.vars = {};
+unmark.vars.token   = '<?php print $token; ?>';
+unmark.vars.csrf_token   = '<?php print $csrf_token; ?>';
+</script>
 
 <script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
 <script src="/assets/js/production/unmark.loggedout.js?v=<?php echo $this->config->item('unmark_version'); ?>"></script>

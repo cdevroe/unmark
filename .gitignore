@@ -21,7 +21,6 @@ node_modules
 .sass-cache
 assets/css/.sass-cache/*
 assets/css/*.css.map
-package-lock.json
 
 # Production CSS and JS files
 assets/css/unmark.css

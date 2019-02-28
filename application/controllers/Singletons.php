@@ -12,7 +12,9 @@ class Singletons extends Plain_Controller
     // Changelog
     public function changelog()
     {
-        $this->view('singletons/changelog');
+        $data['no_header'] = true;
+        $data['no_footer'] = true;
+        $this->view('singletons/changelog', $data);
     }
 
     // Redirect folks awayz

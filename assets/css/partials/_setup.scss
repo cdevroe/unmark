@@ -1,12 +1,37 @@
 // Setup Page
 #unmark-setup {
-    //width: 500px;
-    //margin: 50px auto;
-    //color: $color_white;
-    //text-align: center;
+    margin: 0 auto;
+    color: $color_darkest;
+    text-align: center;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    @include sm {
+        max-width: 500px;
+        padding: 50px 20px 60px;
+    }
+    p {
+      margin: 0 0 20px;
+    }
     a {
-        color: $color_white;
-        border-bottom: 1px dashed $color_light;
+        color: $color_darkest;
+        border-bottom: 1px solid transparentize($color_darkest, .88);
+        &.abtn {
+          display: inline-block;
+          border-radius: 5px;
+          margin: 20px 0 0;
+          background: $color_blue;
+          padding: 14px 30px 17px;
+          font-size: 15px;
+          letter-spacing: .35px;
+          box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 5px 0 transparentize(darken($color_darkest, 20%), .9);
+          color: white;
+          font-weight: 700;
+          border: none;
+        }
     }
     a.unmark-setup {
         border-radius: 5px;
@@ -14,19 +39,6 @@
         margin-top: 25px;
         background-color: $color_red;
         display: inline-block;
-    }
-
-    ///////
-    position: absolute;
-    z-index: 20000;
-    width: 100%;
-    max-width: 320px;
-    top: 35px;
-    padding: 0 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    @include sm {
-        top: 60px;
     }
     figure {
       background: white;
