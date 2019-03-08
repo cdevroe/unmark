@@ -67,31 +67,42 @@
     unmark.interact_nav = function (e, elem_ckd) {
         e.preventDefault();
 
-        var panel_to_show       = (elem_ckd.data('panel')) ? elem_ckd.data('panel') : '', // kept in data attribute
-            panel_name          = (panel_to_show !== '') ? panel_to_show.replace(/^#/, '') : '', // just removes #
-            is_label_menu       = (panel_name.indexOf('label') !== -1) ? true : false, // checks name of panel to see if this is label menu
-            is_label_filter     = (elem_ckd.attr('href').indexOf('label') !== -1) ? true : false, // checks href to see if this is label filter
-            is_tag_menu         = (panel_name.indexOf('tags') !== -1) ? true : false, // checks name of panel to see if it is tags menu
-            is_tag_filter       = (elem_ckd.attr('href').indexOf('tag') !== -1) ? true : false; // checks href to see if this is an actual hashtag
+        var panel_to_show                   = (elem_ckd.data('panel')) ? elem_ckd.data('panel') : '', // kept in data attribute
+            panel_name                      = (panel_to_show !== '') ? panel_to_show.replace(/^#/, '') : '', // just removes #
+            is_label_menu                   = (panel_name.indexOf('label') !== -1) ? true : false, // checks name of panel to see if this is label menu
+            is_label_filter                 = (elem_ckd.attr('href').indexOf('label') !== -1) ? true : false, // checks href to see if this is label filter
+            is_tag_menu                     = (panel_name.indexOf('tags') !== -1) ? true : false, // checks name of panel to see if it is tags menu
+            is_tag_filter                   = (elem_ckd.attr('href').indexOf('tag') !== -1) ? true : false, // checks href to see if this is an actual hashtag
+            is_archive_menu                 = (panel_name.indexOf('archive') !== -1) ? true : false, // checks panel name to see if this is the archive menu
+            hide_mobile_sub_menu            = false; // on mobile, hide the submenu, default false
 
         // This means one of the labels was clicked.
         if ( is_label_menu || is_label_filter ) {
-            panel_name      = 'panel-label';
-            panel_to_show   = '#'+panel_name;
-            
+            panel_name              = 'panel-label';
+            panel_to_show           = '#'+panel_name;
+            hide_mobile_sub_menu    = true; // hiding submenu 
         }
 
         // For the tag menu, or actual hashtags
         if ( is_tag_menu || is_tag_filter ) {
-            panel_name = 'panel-tags';
-            panel_to_show = '#'+panel_name;
+            panel_name              = 'panel-tags';
+            panel_to_show           = '#'+panel_name;
+            if ( is_tag_menu && is_tag_filter ) {
+                hide_mobile_sub_menu = true;
+            } else if ( is_tag_menu && !is_tag_filter ) { // tag menu was clicked, but _Not_ tag filter
+                hide_mobile_sub_menu = false;
+            }
+        }
+
+        if ( is_archive_menu ) {
+            hide_mobile_sub_menu = true;
         }
 
         // Add / Remove Class for current navigation
         $('.menu-item').removeClass('active-menu');
         $('.navigation-content').find("[data-menu='" + panel_name + "']").addClass('active-menu');
 
-        // For all panels run pjax manually.
+        // For all panels (except settings) run pjax manually.
         if ( panel_to_show !== "#panel-settings" ) {
             $.pjax({ url: elem_ckd.attr('href'), container: '.main-content', timeout:6000 });
         }
@@ -104,7 +115,7 @@
         //      clicked on any main navigation item other than hashtags
         //      click on an actual hashtag
         //      click on an actual label
-        if (Modernizr.mq('only screen and (max-width: 480px)') && panel_to_show !== '#panel-settings' && (is_label_menu || is_tag_filter || is_label_filter)) {
+        if (Modernizr.mq('only screen and (max-width: 480px)') && hide_mobile_sub_menu ) {
             unmark.mobile_nav(true);
         }
         return false;
