@@ -92,7 +92,7 @@
                 padding: 16px 20px 16px 30px;
                 height: 80px;
             }
-            .search-bar {
+            .search-bar, .add-mark-bar {
                 height: 100%;
                 width: 100%;
                 padding: 14px 100px 16px 18px;
@@ -190,6 +190,23 @@
                     }
                 }
             }
+            .add-mark-bar {
+              @include sm {
+                  padding: 16px 170px 16px 60px;
+              }
+              button {
+                width: 42px;
+                @include sm {
+                    width: 86px;
+                }
+                span {
+                  display: none;
+                  @include sm {
+                      display: inline;
+                  }
+                }
+              }
+            }
             .buttons {
                 display: block;
                 width: auto;
@@ -204,15 +221,16 @@
                     right: 20px;
                 }
                 > a {
-                    display: block;
+                    display: inline-block;
                     width: 28px;
                     height: 28px;
                     border-radius: 50%;
-                    margin-left: 10px;
+                    margin-left: 4px;
                     @include sm {
                         border: 1px solid darken(desaturate($color_gray, 10%), 18%);
                         width: 32px;
                         height: 32px;
+                        margin-left: 10px;
                     }
                     svg {
                         fill: darken(desaturate($color_gray, 10%), 18%);
