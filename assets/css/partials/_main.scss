@@ -34,21 +34,21 @@
     height: 100%;
     position: absolute;
     background: $color_white;
-    padding-top: 80px;
+    margin-top: 80px;
     width: 100%;
     @include xs {
         //width: 53%;
         width: calc(100% - 280px);
-        padding-top: 60px;
+        margin-top: 52px;
     }
     .marks-heading {
         color: $color_lightest;
         position: fixed;
         width: 100%;
         z-index: 200;
-        height: 60px;
+        height: 52px;
         left: 0;
-        top: 60px;
+        top: 52px;
         background: transparent;
         margin: 0;
         background: $color_white;
@@ -86,7 +86,7 @@
             font-size: 11px;
             line-height: 28px;
             background: $color_white;
-            height: 60px;
+            height: 52px;
             position: relative;
             @include sm {
                 padding: 16px 20px 16px 30px;
@@ -232,7 +232,7 @@
         h2 {
             font-size: 13px;
             font-weight: 600;
-            margin: 7px 0;
+            margin: 3px 0;
             @include sm {
                 font-size: 16px;
                 margin: 9px 0;

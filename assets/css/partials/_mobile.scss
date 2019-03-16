@@ -3,7 +3,7 @@
 
 .mobile-header {
     display: block;
-    height: 60px;
+    height: 52px;
     position: fixed;
     background: $color_darker;
     width: 100%;
@@ -19,7 +19,7 @@
         margin-top: -10px;
         left: 50%;
         margin-left: -29px;
-        width: 58px;
+        width: 64px;
         height: 18px;
         text-align: center;
         svg {
@@ -28,8 +28,8 @@
     }
 }
 .menu-activator {
-    width: 64px;
-    height: 60px;
+    width: 52px;
+    height: 52px;
     position: absolute;
     left: 0;
     top: 0;
