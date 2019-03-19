@@ -16,9 +16,10 @@
 </section>
 <section class="add-mark-bar">
     <i><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 32 32"><polygon points="22,26 16,22 10,26 10,6 22,6 "/></svg></i>
-    <form method="get" action="" id="add-mark-form">
-      <input type="text" name="q" id="add-mark-input" placeholder="<?php echo unmark_phrase('Enter URL...') ?>" autocapitalize="off">
-      <button type="submit"><?php echo unmark_phrase('Add<span> Mark</span>') ?></button><!-- **Add to phrases** -->
+    <form method="post" action="/marks/add" id="add-mark-form">
+        <input type="hidden" name="add_from_url" value="1">
+        <input type="text" name="url" id="add-mark-input" placeholder="<?php echo unmark_phrase('Enter URL...') ?>" autocapitalize="off">
+        <button type="submit"><?php echo unmark_phrase('Add<span> Mark</span>') ?></button><!-- **Add to phrases** -->
     </form>
     <a class="close-button" href="#"></a>
 </section>

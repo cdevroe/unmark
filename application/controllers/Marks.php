@@ -110,7 +110,11 @@ class Marks extends Plain_Controller
         }
         else {
             $this->data['mark'] = $user_mark;
-            $redirect           = '/mark/info/' . $user_mark->mark_id . '?bookmarklet=true';
+            if ( $add_from_url ) {
+                $redirect           = '/mark/info/' . $user_mark->mark_id . '?bookmarklet=false';
+            } else {
+                $redirect           = '/mark/info/' . $user_mark->mark_id . '?bookmarklet=true';
+            }
         }
 
         // Figure what to do here (api, redirect or generate view)
@@ -606,6 +610,11 @@ class Marks extends Plain_Controller
 
         $this->data['no_header'] = true;
         $this->data['no_footer'] = true;
+
+        // print_r($_GET['bookmarklet']);
+        // exit;
+
+        $this->data['bookmarklet'] = (isset($_GET['bookmarklet'])) ? $_GET['bookmarklet'] : true;
 
         // Figure view
         $this->figureView('marks/info');
