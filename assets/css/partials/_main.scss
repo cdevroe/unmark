@@ -34,21 +34,21 @@
     height: 100%;
     position: absolute;
     background: $color_white;
-    padding-top: 80px;
+    margin-top: 80px;
     width: 100%;
     @include xs {
         //width: 53%;
         width: calc(100% - 280px);
-        padding-top: 60px;
+        margin-top: 52px;
     }
     .marks-heading {
         color: $color_lightest;
         position: fixed;
         width: 100%;
         z-index: 200;
-        height: 60px;
+        height: 52px;
         left: 0;
-        top: 60px;
+        top: 52px;
         background: transparent;
         margin: 0;
         background: $color_white;
@@ -86,7 +86,7 @@
             font-size: 11px;
             line-height: 28px;
             background: $color_white;
-            height: 60px;
+            height: 52px;
             position: relative;
             @include sm {
                 padding: 16px 20px 16px 30px;
@@ -95,7 +95,7 @@
             .search-bar {
                 height: 100%;
                 width: 100%;
-                padding: 14px 100px 16px 18px;
+                padding: 10px 100px 10px 18px;
                 background: $color_white;
                 position: absolute;
                 display: none;
@@ -133,9 +133,9 @@
                 button {
                     display: block;
                     height: 26px;
-                    width: 42px;
+                    width: 40px;
                     background: $color_blue;
-                    border-radius: 4px;
+                    border-radius: 3px;
                     color: $color_white;
                     padding: 4px 10px 6px;
                     text-align: center;
@@ -143,10 +143,10 @@
                     font-weight: 600;
                     font-size: 13px;
                     position: absolute;
-                    right: 48px;
+                    right: 42px;
                     top: 50%;
                     margin-top: -13px;
-                    box-shadow: 0 1px 3px 0 transparentize($color_darkest, .93), 0 2px 5px 0 transparentize($color_darkest, .9), 0 12px 40px -20px transparentize(white, .5) inset;
+                    box-shadow: 0 1px 3px 0 transparentize($color_darkest, .96), 0 2px 5px 0 transparentize($color_darkest, .94), 0 12px 40px -20px transparentize(white, .5) inset;
                     @include sm {
                         height: 32px;
                         margin-top: -17px;
@@ -161,7 +161,7 @@
                     position: absolute;
                     top: 50%;
                     margin-top: -14px;
-                    right: 12px;
+                    right: 9px;
                     border-radius: 50%;
                     @include sm {
                         width: 32px;
@@ -232,7 +232,7 @@
         h2 {
             font-size: 13px;
             font-weight: 600;
-            margin: 7px 0;
+            margin: 3px 0;
             @include sm {
                 font-size: 16px;
                 margin: 9px 0;
