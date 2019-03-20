@@ -47,11 +47,17 @@
     </div>
 
     <div class="mark-added-actions">
+    <?php if ( $bookmarklet == 'true' ) { ?>
         <div class="delete-button">
             <button class="delete" data-action="delete_mark" data-view="bookmarklet" data-id="<?php print $mark->mark_id; ?>"><?php echo unmark_phrase('Delete Link'); ?></button>
         </div>
+    <?php } ?>
         <div class="update-button">
-            <button data-action="close_window"><?php echo unmark_phrase('Update &amp; Close'); ?></button>
+            <?php if ( $bookmarklet == 'true' ) { ?>
+                <button data-action="close_window"><?php echo unmark_phrase('Update &amp; Close'); ?></button>
+            <?php } else { ?>
+                <button><a href="/"><?php echo unmark_phrase('Update &amp; Return'); ?></a></button>
+            <?php } ?>
         </div>
     </div>
 

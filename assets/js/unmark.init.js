@@ -203,6 +203,15 @@
             $(this).closest('.search-bar').fadeOut(300);
             return false;
         });
+        // Show & Hide Add Mark Bar
+        $(document).on('click', '.marks-heading-bar .add-mark-button', function(e) {
+            e.preventDefault();
+            $(this).closest('.marks-heading-bar').find('.add-mark-bar').fadeIn(300);
+        });
+        $(document).on('click', '.marks-heading-bar .add-mark-bar .close-button', function(e) {
+            e.preventDefault();
+            $(this).closest('.add-mark-bar').fadeOut(300);
+        });
 
     };
 
