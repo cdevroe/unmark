@@ -18,7 +18,7 @@ Running Unmark is only recommended for intermediate users. This doesn't mean if 
 
 - Apache 2.x
 - PHP 5.6 or greater
-- mySQL 5.5 or greater
+- mySQL 5.7 or greater
 
 **Experimental: Docker**
 If you're going to use Docker we've included the appropriate Docker Compose, Dockerfile, and PHP.ini files to do so. This is still in its experimental phase though. We will update this readme with better instructions.
