@@ -87,7 +87,7 @@
         if ( is_tag_menu || is_tag_filter ) {
             panel_name              = 'panel-tags';
             panel_to_show           = '#'+panel_name;
-            if ( is_tag_menu && is_tag_filter ) {
+            if ( !is_tag_menu && is_tag_filter ) { // tag filter was clicked
                 hide_mobile_sub_menu = true;
             } else if ( is_tag_menu && !is_tag_filter ) { // tag menu was clicked, but _Not_ tag filter
                 hide_mobile_sub_menu = false;
