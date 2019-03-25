@@ -11,6 +11,12 @@ class Marks extends Plain_Controller
         $this->load->model('users_to_marks_model', 'user_marks');
     }
 
+    public function add_by_url()
+    {
+        // Figure view
+        $this->figureView('marks/add_by_url');
+    }
+
      /*
         - Add a mark
         - URLS
@@ -24,13 +30,48 @@ class Marks extends Plain_Controller
     */
     public function add()
     {
-        $redirect  = null;
-        $view      = null;
-        $url       = (isset($this->db_clean->url)) ? $this->db_clean->url : null;
-        $title     = (isset($this->db_clean->title)) ? $this->db_clean->title : null;
-        $options   = array('url' => $url, 'title' => $title);
+        $redirect       = null;
+        $view           = null;
+        $add_from_url   = ($this->input->post('add_from_url') !== null ) ? true : false;
 
-        //print_r( $_GET );
+        if ( $add_from_url ) : // URL submitted by form within app
+            $url        = $this->input->post('url');
+            if (!preg_match("~^(?:f|ht)tps?://~i", $url)) { // Adds HTTP if needed
+                $url = "http://" . $url;
+            }
+            $title      = '';
+            $dom        = new DOMDocument();
+            libxml_use_internal_errors(true);
+            if (!$dom->loadHTMLFile($url, LIBXML_NOWARNING)) {
+                foreach (libxml_get_errors() as $error) {
+                    // handle errors here
+                    echo '<p>There was an error adding the mark.</p>';
+                    if ( $error->code == 1549 ) {
+                        echo '<p>Most likely the URL is invalid or the web site isn\'t currently available.</p>';
+                    }
+                    //print_r($error);
+
+                }
+                libxml_clear_errors();
+                exit;
+                
+            } else {
+                $list = $dom->getElementsByTagName("title");
+                if ($list->length > 0) {
+                    $title = $list->item(0)->textContent;
+                }
+            }
+            
+            if ( strlen($title) == 0 ) :
+                $title = "Unknown Page Title"; 
+            endif;
+
+        else : // URL submitted via bookmarklet, API, or mobile app
+            $url       = (isset($this->db_clean->url)) ? $this->db_clean->url : null;
+            $title     = (isset($this->db_clean->title)) ? $this->db_clean->title : null;
+        endif;
+
+        $options   = array('url' => $url, 'title' => $title);
 
         if ( empty($url) ) { // May be from an app via "share"
             if ( isset($this->db_clean->notes) && ! empty($this->db_clean->notes) ) {
@@ -46,13 +87,6 @@ class Marks extends Plain_Controller
                 } 
             }
         }
-
-        // print_r($url);
-        // print_r($title);
-        // exit;
-
-        //print_r( $_SERVER['REQUEST_URI'] );
-        //exit;
 
         // If label id was passed, use it.
         if (isset($this->clean->label_id) && is_numeric($this->clean->label_id)) {
@@ -76,7 +110,11 @@ class Marks extends Plain_Controller
         }
         else {
             $this->data['mark'] = $user_mark;
-            $redirect           = '/mark/info/' . $user_mark->mark_id . '?bookmarklet=true';
+            if ( $add_from_url ) {
+                $redirect           = '/mark/info/' . $user_mark->mark_id . '?bookmarklet=false';
+            } else {
+                $redirect           = '/mark/info/' . $user_mark->mark_id . '?bookmarklet=true';
+            }
         }
 
         // Figure what to do here (api, redirect or generate view)
@@ -572,6 +610,11 @@ class Marks extends Plain_Controller
 
         $this->data['no_header'] = true;
         $this->data['no_footer'] = true;
+
+        // print_r($_GET['bookmarklet']);
+        // exit;
+
+        $this->data['bookmarklet'] = (isset($_GET['bookmarklet'])) ? $_GET['bookmarklet'] : true;
 
         // Figure view
         $this->figureView('marks/info');
