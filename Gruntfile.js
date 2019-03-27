@@ -54,8 +54,7 @@ module.exports = function(grunt) {
         sass: {
             prod: {
                 options: {
-                    style: 'compressed',
-                    banner: '/*! <%= pkg.name %> - <%=pkg.url %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> - <%= pkg.author %> */ \n'
+                    style: 'compressed'
                 },
                 files: {
                     'assets/css/unmark.css': 'assets/css/unmark.scss',
