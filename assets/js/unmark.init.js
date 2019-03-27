@@ -134,6 +134,7 @@
         });
 
         // Set up Scrolling
+        pages_already_loaded = [];
         unmark.main_content.on('scroll', function (e){
             unmark.scrollPaginate($(this));
         });

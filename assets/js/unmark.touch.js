@@ -61,28 +61,6 @@
 
 		}
 
-		// Tablets & Netbooks...
-		if (Modernizr.mq('only screen and (max-width: 1024px)')) {
-			// // Unbind the Hover State for Marks in List as well as click
-			// $(document).off('mouseenter mouseleave click', '.mark');
-
-			// // Hide / Show Mark Actions on Mobile when swiping
-			// $(document).on('click', '.mark', function(e) {
-			// 	$('.mark-actions').hide();
-			// 	$(this).find('.mark-actions').show();
-			// 	unmark.mobile_nav(true);
-			// });
-
-
-		}
-
-		// Tablet Portrait & Below
-		// No longer used 
-		// Removed 1.8.06
-		if (Modernizr.mq('only screen and (max-width: 767px)')) {
-		}
-
-
 	});
 
 }(window.jQuery));

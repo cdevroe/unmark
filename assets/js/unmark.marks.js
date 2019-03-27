@@ -291,11 +291,8 @@
           // Very likely in the bookmarklet added 1.8
           bookmarklet =     true;
         }
-        // Pre 1.8 used to hide the label list. No longer needed
-        // if(labels_list.is(':visible')) { return labels_list.fadeOut(); }
 
         labels_list.find('a').unbind();
-        // Pre 1.8 labels_list.fadeIn();
 
         labels_list.find('a').on('click', function (e) {
             e.preventDefault();
@@ -384,8 +381,6 @@
             editField.html('Notes (click to edit)<i class="icon-edit"></i>');
             editField.attr('data-action','marks_editMarkInfo');
             editField.data('action','marks_editMarkInfo');
-
-
 
             setTimeout( function() { editField.addClass('action'); }, 500);
         } else {

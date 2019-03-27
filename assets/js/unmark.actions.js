@@ -123,16 +123,21 @@
 
     // Pagination on Scroll
     unmark.scrollPaginate = function (cont) {
-        var url, page, i, template, output = '', next_page, mark_count,
+        var url, i, template, output = '', next_page, mark_count,
+            ajax_loading = false,
             next_page = window.unmark_current_page + 1,
             total_pages = window.unmark_total_pages;
 
-        if (cont.scrollTop() + cont.innerHeight() >= cont[0].scrollHeight) {
+        if ( pages_already_loaded[next_page] == true ) { return; }
+        
+        if (cont.scrollTop() + cont.innerHeight() >= cont[0].scrollHeight && ajax_loading !== true) { // Only load if the amount scrolled is greater than the view area for the marks, also if the ajax isn't already firing
 
-            if (next_page <= total_pages) {
+            if (next_page <= total_pages && pages_already_loaded[next_page] !== true && ajax_loading !== true) { // only fire if this page hasn't already been retrieved
+                ajax_loading = true;
 
                 template = Hogan.compile(unmark.template.marks);
                 url = window.location.pathname;
+                pages_already_loaded[next_page] = true; // jot down that this page has already been loaded
                 unmark.ajax(url+'/'+next_page, 'post', '', function (res) {
                     if (res.marks) {
                         mark_count = Object.keys(res.marks).length;
@@ -142,6 +147,7 @@
                         }
                         unmark.main_content.find('.marks_list').append(output);
                         window.unmark_current_page = next_page;
+                        ajax_loading = false;
                     }
                 });
             }

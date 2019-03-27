@@ -1,7 +1,7 @@
 {
   "name": "unmark",
-  "url": "http://unmark.it",
-  "version": "1.9.0",
+  "url": "https://unmark.it",
+  "version": "1.9.1",
   "description": "The open source to-do application for bookmarks.",
   "author": "https://unmark.it/",
   "main": "Gruntfile.js",
