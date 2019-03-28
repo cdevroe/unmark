@@ -1,4 +1,4 @@
-var CACHE_NAME = 'unmark-version-1.9.0';
+var CACHE_NAME = 'unmark-version-1.9.1';
 var urlsToCache = [
   '/assets/css/unmark.css',
   '/assets/libraries/jquery/jquery-2.1.0.min.js',
