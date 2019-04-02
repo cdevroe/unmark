@@ -11,16 +11,11 @@ class Marks extends Plain_Controller
         $this->load->model('users_to_marks_model', 'user_marks');
     }
 
-    public function add_by_url()
-    {
-        // Figure view
-        $this->figureView('marks/add_by_url');
-    }
-
      /*
         - Add a mark
         - URLS
             /mark/add
+            /mark/add/?url=URL
             /api/mark/add
 
         // Query variables
@@ -34,18 +29,25 @@ class Marks extends Plain_Controller
         $view           = null;
         $add_from_url   = ($this->input->post('add_from_url') !== null ) ? true : false;
 
+        if ( isset($_GET['url']) ) {
+            $add_from_url = true;
+        }
+
         if ( $add_from_url ) : // URL submitted by form within app
-            $url        = $this->input->post('url');
+
+            $url = (isset($_GET['url'])) ? $this->input->get('url') : $this->input->post('url');
+
             if (!preg_match("~^(?:f|ht)tps?://~i", $url)) { // Adds HTTP if needed
                 $url = "http://" . $url;
             }
-            $title      = '';
+            
+            $title      = (isset($_GET['title'])) ? $this->input->get('title') : '';
             $dom        = new DOMDocument();
             libxml_use_internal_errors(true);
             if (!$dom->loadHTMLFile($url, LIBXML_NOWARNING)) {
                 foreach (libxml_get_errors() as $error) {
                     // handle errors here
-                    echo '<p>There was an error adding the mark.</p>';
+                    echo '<p><a href="/">BACK</a> There was an error adding the mark.</p>';
                     if ( $error->code == 1549 ) {
                         echo '<p>Most likely the URL is invalid or the web site isn\'t currently available.</p>';
                     }
