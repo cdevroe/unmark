@@ -101,7 +101,7 @@
             }
         }
         unmark.getData('labels', updateLabelCount);
-        unmark.updateCounts();
+        // Removed 1.9.2 unmark.updateCounts();
     };
 
     // Archive & Restore Mark

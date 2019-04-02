@@ -155,6 +155,7 @@
     };
 
     // Update the count in the sidebar and graph upon mark archive/unarchive
+    // Not in use as of 1.9.2 (unless we bring back stats)
     unmark.updateCounts = function () {
         unmark.getData('stats', function (res) {
 

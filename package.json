@@ -1,7 +1,7 @@
 {
   "name": "unmark",
   "url": "https://unmark.it",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "repository": "https://github.com/cdevroe/unmark",
   "license": "https://github.com/cdevroe/unmark/blob/master/license.txt",
   "description": "The open source to-do application for bookmarks.",

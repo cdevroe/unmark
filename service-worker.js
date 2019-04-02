@@ -1,4 +1,4 @@
-var CACHE_NAME = 'unmark-version-1.9.1';
+var CACHE_NAME = 'unmark-version-1.9.2';
 var urlsToCache = [
   '/assets/css/unmark.css',
   '/assets/libraries/jquery/jquery-2.1.0.min.js',
@@ -8,11 +8,13 @@ var urlsToCache = [
 ];
 
 self.addEventListener('install', function(event) {
+  self.skipWaiting();
+  console.log('Service Worker: Installed');
   // Perform install steps
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('Opened cache');
+        console.log('Service Worker: Opened cache');
         return cache.addAll(urlsToCache);
       })
   );
@@ -26,8 +28,8 @@ self.addEventListener('activate', e => {
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cache => {
-          if (cache !== cacheName) {
-            console.log('Service Worker: Clearing Old Cache');
+          if (cache !== CACHE_NAME) {
+            console.log('Service Worker: Clearing Old Cache ' + cache);
             return caches.delete(cache);
           }
         })
@@ -36,42 +38,8 @@ self.addEventListener('activate', e => {
   );
 });
 
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-
-        return fetch(event.request).then(
-          function(response) {
-            // Check if we received a valid response
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // IMPORTANT: Clone the response. A response is a stream
-            // and because we want the browser to consume the response
-            // as well as the cache consuming the response, we need
-            // to clone it so we have two streams.
-            var responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then(function(cache) {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          }
-        );
-      })
-    );
+// Call Fetch Event
+self.addEventListener('fetch', e => {
+  console.log('Service Worker: Fetching ' + e.request);
+  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
 });
-
-
-  // self.addEventListener("OpenGraphData", function(e) {
-  //   var shareData = JSON.parse(e.detail);
-  //   $("#shared").text(shareData.url);
-  // })

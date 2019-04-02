@@ -21,7 +21,7 @@
 	<h4 class="nav-heading"><?php echo unmark_phrase('Timeline')?></h4>
 	<?php $this->load->view('layouts/timeline'); ?>
 </div>
-<div id="panel-search" class="nav-panel">
+<!-- <div id="panel-search" class="nav-panel">
 	<h4 class="nav-heading"><?php echo unmark_phrase('Search')?></h4>
 	<form method="get" action="/marks/search" id="search-form">
 		<input type="text" name="q" id="search-input" placeholder="<?php echo unmark_phrase('SEARCH...') ?>" autocapitalize="off">
@@ -31,7 +31,7 @@
 	<ul class="tag-list">
 		<?php $this->load->view('layouts/navigation/tags_list.php'); ?>
 	</ul>
-</div>
+</div> -->
 <div id="panel-settings" class="nav-panel">
 
 	<?php $this->load->view('layouts/accountlinks'); ?>
