@@ -12,7 +12,7 @@ class Marks extends Plain_Controller
     }
 
      /*
-        - Add a mark
+        - Add a mark 
         - URLS
             /mark/add
             /mark/add/?url=URL
@@ -37,36 +37,43 @@ class Marks extends Plain_Controller
 
             $url = (isset($_GET['url'])) ? $this->input->get('url') : $this->input->post('url');
 
-            if (!preg_match("~^(?:f|ht)tps?://~i", $url)) { // Adds HTTP if needed
-                $url = "http://" . $url;
-            }
-            
-            $title      = (isset($_GET['title'])) ? $this->input->get('title') : '';
-            $dom        = new DOMDocument();
-            libxml_use_internal_errors(true);
-            if (!$dom->loadHTMLFile($url, LIBXML_NOWARNING)) {
-                foreach (libxml_get_errors() as $error) {
-                    // handle errors here
-                    echo '<p><a href="/">BACK</a> There was an error adding the mark.</p>';
-                    if ( $error->code == 1549 ) {
-                        echo '<p>Most likely the URL is invalid or the web site isn\'t currently available.</p>';
-                    }
-                    //print_r($error);
-
-                }
-                libxml_clear_errors();
+            if ( !$url || $url == '' ) :
+                echo '<a href="/">BACK</a> - Please supply an URL.';
                 exit;
-                
-            } else {
-                $list = $dom->getElementsByTagName("title");
-                if ($list->length > 0) {
-                    $title = $list->item(0)->textContent;
-                }
-            }
-            
-            if ( strlen($title) == 0 ) :
-                $title = "Unknown Page Title"; 
             endif;
+
+            if (!preg_match("~^(?:f|ht)tps?://~i", $url)) : // Adds HTTP if needed
+                $url = "http://" . $url;
+            endif;
+            
+            $title      = (isset($_GET['title'])) ? $this->input->get('title') : ''; // If title is supplied, use that
+
+            if ( $title == '' ) : // If title is empty, go get it
+                $dom        = new DOMDocument();
+                libxml_use_internal_errors(true);
+                if (!$dom->loadHTMLFile($url, LIBXML_NOWARNING)) :
+                    foreach (libxml_get_errors() as $error) :
+                        // handle errors here
+                        echo '<p><a href="/">BACK</a> There was an error adding the mark.</p>';
+                        if ( $error->code == 1549 ) :
+                            echo '<p>Most likely the URL is invalid or the web site isn\'t currently available.</p>';
+                        endif;
+                    endforeach;
+                    libxml_clear_errors();
+                    exit;
+                    
+                else :
+                    $list = $dom->getElementsByTagName("title");
+                    if ($list->length > 0) :
+                        $title = $list->item(0)->textContent;
+                    endif;
+                endif;
+                
+                if ( strlen($title) == 0 ) :
+                    $title = "Unknown Page Title"; 
+                endif;
+
+            endif; // end if empty title
 
         else : // URL submitted via bookmarklet, API, or mobile app
             $url       = (isset($this->db_clean->url)) ? $this->db_clean->url : null;
