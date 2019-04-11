@@ -207,7 +207,10 @@
         // Show & Hide Add Mark Bar
         $(document).on('click', '.marks-heading-bar .add-mark-button', function(e) {
             e.preventDefault();
-            $(this).closest('.marks-heading-bar').find('.add-mark-bar').fadeIn(300);
+            //$(this).closest('.marks-heading-bar').find('.add-mark-bar').fadeIn(300);
+            $('.add-mark-bar').fadeIn(300, function(e){
+                setTimeout("$('#add-mark-input').focus();", 0);
+            });
         });
         $(document).on('click', '.marks-heading-bar .add-mark-bar .close-button', function(e) {
             e.preventDefault();
