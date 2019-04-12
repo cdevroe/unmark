@@ -262,7 +262,12 @@ class Marks extends Plain_Controller
                 $options['notes'] = $this->db_clean->notes;
 
                 // Check for hashmarks to tags
-                $tags = getTagsFromHash($options['notes']);
+                //Removed in 2.0 $tags = getTagsFromHash($options['notes']);
+            }
+
+            // If tags are present, set them
+            if (isset($this->db_clean->tags)) {
+                $tags = explode( ',', $this->db_clean->tags );
             }
 
             // If tags are present, handle differently

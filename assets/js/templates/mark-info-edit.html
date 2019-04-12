@@ -1,0 +1,32 @@
+<header class="sidebar-action">
+    <h4 class="sidebar-heading">Edit Mark</h4>
+    <a class="close-sidebar action" data-action="sidebar_collapse" href="#"><i class="icon-heading_close"></i></a>
+</header>
+<main>
+  <section class="mark-url">
+    <h4 section-heading>URL</h4>
+    <div class="button-field">
+      <input type="text" value="{{mark_url}}" readonly="readonly">
+      <a href="#" class="copy-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 34"><rect x="13" y="14" width="7" height="9"/><polygon points="11 12 15 12 15 9 8 9 8 18 11 18 11 12"/></svg></a>
+    </div>
+  </section>
+  <div class="sidebar-label label-{{label_id}}">
+      <span id="label-chosen"></span>
+      <a class="action" data-action="marks_addLabel" href="#" data-id="{{mark_id}}">{{label_name}}</a>
+      <ul class="sidebar-label-list" data-id="{{mark_id}}"></ul>
+  </div>
+  <div class="sidebar-info-panel">
+      {{#embed}}
+          <h4 class="prev-coll">Preview <i class="icon-up"></i></h4>
+          <section class="sidebar-info-preview">{{{embed}}}</section>
+      {{/embed}}
+    
+    <h4>Tags</h4>
+    <section id="tags-{{mark_id}}"><input data-mark-id="{{mark_id}}" type="text" id="input-tags" class="selectize" value=""></section>
+
+    <h4 class="action" data-action="marks_editMarkInfo">Notes (click to edit) <i class="icon-edit"></i></h4>
+    <section id="notes-{{mark_id}}" data-id="{{mark_id}}" class="sidebar-info-notes hideoutline">{{{notes}}}</section>
+
+  </div>
+  <button data-id="{{mark_id}}" data-view="sidebar" data-action="delete_mark">Delete Link</button>
+</main>

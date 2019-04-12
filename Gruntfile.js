@@ -18,7 +18,8 @@ module.exports = function(grunt) {
 
     var js_file_config = {
 		'assets/js/production/unmark.plugins.js': [
-			'assets/js/plugins/hogan.js',
+            'assets/js/plugins/hogan.js',
+            'assets/js/plugins/selectize.min.js',
 			'assets/js/plugins/jquery.pjax.js',
 			'assets/js/plugins/fitvids.js'
 		],
