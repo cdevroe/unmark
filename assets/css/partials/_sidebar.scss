@@ -153,6 +153,64 @@
         font-style: italic;
         border-bottom: 1px solid #e7e7e7;
     }
+
+    /////// Tag Input Replacement
+    .selectize-control {
+      &.multi {
+        .item {
+          background: #62b3e4;
+          border-radius: 2px;
+          border: 1px solid darken(#62b3e4, 3%);
+          box-shadow: none;
+          text-shadow: none;
+          margin: 2px 3px 2px 2px;
+          &:last-of-type {
+            margin-right: 6px;
+          }
+          &.active {
+            background: #62b3e4;
+            border-radius: 2px;
+            border: 1px solid darken(#62b3e4, 3%);
+            box-shadow: none;
+            text-shadow: none;
+          }
+        }
+      }
+      .selectize-input {
+        background: white;
+        border: 1px solid darken(desaturate($color_gray, 15%), 6%);
+        border-radius: 2px;
+        box-shadow: none;
+        padding: 10px 12px;
+        font-size: 13px;
+        line-height: 1.5;
+        color: lighten($color_dark, 5%);
+        transition: all .3s;
+        height: 39px;
+        &.has-items {
+          padding: 4px 5px;
+        }
+      }
+      .selectize-dropdown {
+          border: 1px solid darken(desaturate($color_gray, 15%), 6%);
+          background: #fff;
+          margin: -1px 0 0 0;
+          border-top: 0 none;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+          border-radius: 0 0 3px 3px;
+          box-shadow: 0 12px 12px -16px transparentize($color_darkest, .8);
+          overflow: hidden;
+          .selectize-dropdown-content {
+            .create {
+              padding: 10px;
+              background: white;
+              color: $color_darkest;
+            }
+          }
+      }
+    }
 }
 .sidebar-mark-info {
     width: 100% !important;

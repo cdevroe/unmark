@@ -37,3 +37,13 @@
 */ ?>
 
 <div id="mark-info-dump" class="sidebar-mark-info"></div>
+
+<!-- Test Tag Module -->
+<div>
+  <main style="padding: 24px 20px;">
+    <section>
+      <h4 class="section-heading" style="letter-spacing: .25px;text-transform: uppercase;display: block;margin: 0 0 8px;font-size: 11px;color: #768d9a;font-weight: 600;">Tags</h4>
+      <input type="text" id="input-tags" class="selectize" value="dip,derp">
+    </section>
+  </main>
+</div>
