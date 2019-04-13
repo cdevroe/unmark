@@ -267,7 +267,12 @@ class Marks extends Plain_Controller
 
             // If tags are present, set them
             if (isset($this->db_clean->tags)) {
-                $tags = explode( ',', $this->db_clean->tags );
+                if ( $this->db_clean->tags == 'unmark:removeAllTags' ) { // Remove all tags by sending empty array
+                    $tags = array();
+                    parent::removeTags($mark_id);
+                } else {
+                    $tags = explode( ',', $this->db_clean->tags );
+                }
             }
 
             // If tags are present, handle differently

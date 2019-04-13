@@ -195,12 +195,12 @@
             $(this).closest('.add-mark-bar').fadeOut(300);
         });
 
-        $(document).on('change','#input-tags',function(e){
-            var mark_id = $(this).data('mark-id'), $tags = $(this).val();
-            if ( !$tags || $tags == '' ) return;
-            unmark.saveTags( mark_id, $tags);
-            //console.log($(this).val());
-        });
+        // $(document).on('change','#input-tags',function(e){
+        //     var mark_id = $(this).data('mark-id'), $tags = $(this).val();
+        //     if ( !$tags || $tags == '' ) return;
+        //     unmark.saveTags( mark_id, $tags);
+        //     //console.log($(this).val());
+        // });
 
     };
 

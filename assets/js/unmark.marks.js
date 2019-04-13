@@ -112,7 +112,7 @@
                 unmark.sidebar_mark_info.fadeIn(400, function () {
                     // Tags
                     $('#input-tags').selectize({
-                        plugins: ['remove_button'],
+                        plugins: ['remove_button', 'restore_on_backspace'],
                         delimiter: ',',
                         persist: false,
                         create: function(input) {
@@ -120,6 +120,11 @@
                                 value: input,
                                 text: input
                             }
+                        },
+                        onChange: function(input) {
+                            console.log( 'tags: ' + input );
+                            unmark.saveTags( mark_id, input);
+                            unmark.update_tag_count();
                         }
                     });
                     //$("section.sidebar-info-preview").fitVids();
@@ -146,6 +151,27 @@
             }
         }
         unmark.getData('labels', updateLabelCount);
+        // Removed 1.9.2 unmark.updateCounts();
+    };
+
+    unmark.update_tag_count = function () {
+        console.log('updating tag count');
+        var tag_list = $('ul.tag-list');
+        function updateTagCount(res) {
+            var i, tags = res.tags.popular, count;
+            for (i in tags) {
+                count = tags[i].total;
+                if (count === "1") {
+                    count = count + " mark";
+                } else if (count === "0") {
+                    count = "no marks";
+                } else {
+                    count = count + " marks";
+                }
+                tag_list.find('.tag-'+tags[i].tag_id + ' span').text(count);
+            }
+        }
+        unmark.getData('tags', updateTagCount);
         // Removed 1.9.2 unmark.updateCounts();
     };
 
@@ -319,8 +345,13 @@
 
     // Save tags for a bookmark
     unmark.saveTags = function ( id, tags ) {
-        if ( !tags || tags == '' ) return;
+        //if ( !tags ) return;
         var title = $('#mark-'+id+' h2 a').text();
+
+        if ( tags == '' ) {
+            console.log('remove all tags');
+            tags = 'unmark:removeAllTags';
+        }
         
         var query = 'title='+unmark.urlEncode(title)+'&tags=' + unmark.urlEncode(tags);
         unmark.ajax('/mark/edit/'+id, 'post', query);
