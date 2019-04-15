@@ -83,29 +83,29 @@
 
         // Run the view interaction
         unmark.sidebar_mark_info.fadeOut(400, function () {
-            if (unmark.sidebar_default.is(':visible')) {
-                unmark.sidebar_default.fadeOut(400, function () {
-                    unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
-                        //unmark.tagify_notes($('#notes-' + mark_id));
-                        populateLabels();
+            // if (unmark.sidebar_default.is(':visible')) {
+            //     unmark.sidebar_default.fadeOut(400, function () {
+            //         unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
+            //             //unmark.tagify_notes($('#notes-' + mark_id));
+            //             populateLabels();
 
-                        // Tags
-                        $('#input-tags').selectize({
-                            plugins: ['remove_button', 'restore_on_backspace'],
-                            delimiter: ',',
-                            persist: false,
-                            create: function(input) {
-                                return {
-                                    value: input,
-                                    text: input
-                                }
-                            }
-                        });
+            //             // Tags
+            //             $('#input-tags').selectize({
+            //                 plugins: ['remove_button', 'restore_on_backspace'],
+            //                 delimiter: ',',
+            //                 persist: false,
+            //                 create: function(input) {
+            //                     return {
+            //                         value: input,
+            //                         text: input
+            //                     }
+            //                 }
+            //             });
 
-                        // $("section.sidebar-info-preview").fitVids();
-                    });
-                });
-            } else {
+            //             // $("section.sidebar-info-preview").fitVids();
+            //         });
+            //     });
+            // } else {
                 unmark.sidebar_mark_info.html(output);
                 //unmark.tagify_notes($('#notes-' + mark_id));
                 populateLabels();
@@ -129,7 +129,7 @@
                     });
                     //$("section.sidebar-info-preview").fitVids();
                 });
-            }
+           // }
         });
     };
 
