@@ -594,7 +594,7 @@ class Marks extends Plain_Controller
         // Get stats, labels and tags
         // else skip this section and just return the marks
         if (parent::isWebView() === true) {
-            self::getStats();
+            //self::getStats();
             self::getLabels();
             self::getTags();
         }
@@ -629,9 +629,6 @@ class Marks extends Plain_Controller
 
         $this->data['no_header'] = true;
         $this->data['no_footer'] = true;
-
-        // print_r($_GET['bookmarklet']);
-        // exit;
 
         $this->data['bookmarklet'] = (isset($_GET['bookmarklet'])) ? $_GET['bookmarklet'] : true;
 

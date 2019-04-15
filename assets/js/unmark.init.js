@@ -202,6 +202,19 @@
         //     //console.log($(this).val());
         // });
 
+        // Tags
+        $('#input-tags').selectize({
+            plugins: ['remove_button', 'restore_on_backspace'],
+            delimiter: ',',
+            persist: false,
+            create: function(input) {
+                return {
+                    value: input,
+                    text: input
+                }
+            }
+        });
+
     };
 
     // Get this baby in action

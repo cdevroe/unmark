@@ -36,8 +36,22 @@
             <ul data-id="<?php print $mark->mark_id; ?>" class="label-choices"></ul>
         </section>
     </div>
+    
+    <div class="mark-added-tags mark-added-settings">
+        <h4>Tags</h4>
+
+        <?php if ( !empty($mark->tags) ) :
+            $tag_csv = '';
+            foreach ($mark->tags as $tag=>$tag_array) :
+                $tag_csv.=$tag.',';
+            endforeach;
+            $tag_csv = trim($tag_csv,',');
+        endif; ?>
+        <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>"><input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="selectize" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>"></section>
+    </div>
 
     <div class="mark-added-note mark-added-settings">
+        <h4>Notes</h4>
         <?php if (empty($mark->notes)) : ?>
             <a class="action" data-action="marks_addNotes" href=""><?php echo unmark_phrase('Add a Note or Edit Title'); ?></a>
             <textarea class="mark-added-notes-area hide" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text or #tags here...'); ?>"></textarea>
@@ -66,6 +80,7 @@
 <?php $this->load->view('layouts/jsvars'); ?>
 
 <script src="/assets/libraries/jquery/jquery-2.1.0.min.js"></script>
+<script src="/assets/js/production/unmark.plugins.js?v=<?php echo $this->config->item('unmark_version'); ?>"></script>
 <script src="/assets/js/production/unmark.bookmarklet.js?v=<?php echo $this->config->item('unmark_version'); ?>"></script>
 
 </body>
