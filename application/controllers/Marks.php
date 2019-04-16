@@ -29,7 +29,7 @@ class Marks extends Plain_Controller
         $view           = null;
         $add_from_url   = ($this->input->post('add_from_url') !== null ) ? true : false;
 
-        if ( isset($_GET['url']) ) {
+        if ( isset($_GET['url']) && !isset($_GET['title']) ) {
             $add_from_url = true;
         }
 
