@@ -1,11 +1,12 @@
 // Bookmarklet Pop Up Window
 .mark-added {
     font-weight: 300;
-    .mark-added-block {
+    background: lighten($color_gray, 1%);
+    .mark-added-block {  ///// feedback mesage across the top
         background: $color_darker;
         color: $color_white;
-        padding: 22px;
-        font-size: 14px;
+        padding: 18px 20px;
+        font-size: 13px;
         //@include title-text;
         //word-spacing: 1px;
         line-height: 13px;
@@ -13,15 +14,15 @@
         box-shadow: 0 -1px 0 0 transparentize($color_dark_gray, .8) inset;
         i {
             float: right;
-            margin-top: -5px;
+            margin-top: -3px;
             margin-right: -6px;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             background-size: 100%;
         }
     }
-    .mark-added-info {
-        padding: 32px 25px;
+    .mark-added-info {  ///// mark title & url
+        padding: 28px 20px 22px;
         color: $color_white;
         background: white;
         border-bottom: 1px solid transparentize($color_dark_gray, .86);
@@ -30,6 +31,7 @@
             color: $color_darker;
             font-size: 26px;
             margin: 0 0 15px 0;
+            line-height: 1.2;
         }
         span {
             color: darken($color_light, 25%);
@@ -39,10 +41,14 @@
             @include unmark-truncate(400px);
         }
     }
+    .mark-added-meta {
+      padding: 28px 20px 0;
+    }
     .mark-added-settings {
         font-size: 12px;
         //border-top: 1px solid #e5e5e5;
-        padding: 25px;
+        //padding: 18px 20px;
+        margin-bottom: 20px;
         color: $color_dark_gray;
         position: relative;
         //@include title-text;
@@ -56,7 +62,8 @@
             font-size: 13px;
             &#currLabel {
                 position: absolute;
-                left: 200px;
+                left: 172px;
+                top: 2px;
                 padding-left: 0;
             }
             &:before {
@@ -99,7 +106,19 @@
                 color: $color_red;
             }
         }
-        &.mark-added-note a {
+        &.mark-added-note {
+          .mark-added-note-box {
+            background: white;
+            border: 1px solid darken(desaturate($color_gray, 15%), 6%);
+            border-radius: 2px;
+            padding: 12px 14px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: lighten($color_dark, 5%);
+            min-height: 90px;
+            transition: all .3s;
+          }
+          a {
             padding-left:0;
             text-transform: none;
             letter-spacing: normal;
@@ -108,16 +127,24 @@
             &:before {
                 display:none;
             }
+          }
+        }
+        h4 {
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: .01em;
+          margin-top: 0;
+          margin-bottom: 8px;
         }
         section {
             //display: none;
-            position: absolute;
+            //position: absolute;
             //background: $color_shade;
             //width: 100%;
-            left: 0px;
-            top: 45px;
-            opacity: .95;
-            padding: 10px 25px;
+            //left: 0px;
+            //top: 45px;
+            //opacity: .95;
+            //padding: 10px 25px;
             color: $color_darker;
         }
         textarea {
@@ -146,16 +173,20 @@
             @include font-smoothing;
             text-transform: none;
         }
-        &.mark-added-label section {
+        &.mark-added-label {
+          height: 20px;
+          margin-bottom: 28px;
+          section {
             padding: 0;
             top: 23px;
             left: 25px;
             z-index: 999;
+          }
         }
         #label-chosen {
             position: absolute;
-            left: 200px;
-            top: 24px;
+            left: 172px;
+            top: 1px;
             z-index: 9999;
             display: none;
             font-size: 13px;
@@ -173,25 +204,108 @@
             &.label-6 { color: $color_green; }
             &.label-7 { color: $color_red; }
         }
+
+        /////// Tag Input Replacement
+        .selectize-control {
+          &.multi {
+            .item {
+              background: #62b3e4;
+              border-radius: 3px;
+              border: none;
+              box-shadow: none;
+              text-shadow: none;
+              margin: 2px 3px 2px 2px;
+              font-size: 12px;
+              padding: 2px 6px 2px 7px;
+              &:last-of-type {
+                margin-right: 6px;
+              }
+              &.active {
+                background: darken(#62b3e4, 12%);
+                border-radius: 3px;
+                border: none;
+                box-shadow: none;
+                text-shadow: none;
+              }
+            }
+          }
+          .selectize-input {
+            background: white;
+            border: 1px solid darken(desaturate($color_gray, 15%), 6%);
+            border-radius: 2px;
+            box-shadow: none;
+            padding: 10px 12px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: lighten($color_dark, 5%);
+            transition: all .3s;
+            min-height: 40px;
+            &.has-items {
+              padding: 6px;
+            }
+          }
+          .selectize-dropdown {
+            border: 1px solid darken(desaturate($color_gray, 15%), 6%);
+            background: #fff;
+            margin: -1px 0 0 0;
+            border-top: 0 none;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            border-radius: 0 0 3px 3px;
+            box-shadow: 0 12px 12px -16px transparentize($color_darkest, .8);
+            overflow: hidden;
+            .selectize-dropdown-content {
+              .create {
+                padding: 10px;
+                background: white;
+                color: $color_darkest;
+              }
+            }
+          }
+          &.plugin-remove_button {
+             .remove {
+               width: 18px;
+               font-weight: 500;
+               font-size: 16px;
+               display: flex;
+               flex-direction: column;
+               height: 100%;
+               justify-content: center;
+               align-items: center;
+               padding: 0 0 1px 1px;
+               box-shadow: 1px 0 0 0 transparentize(white, .8) inset;
+               border: none;
+               border-radius: 0 3px 3px 0;
+               @include sm {
+                 &:hover {
+                   background: transparentize(darken(#62b3e4, 25%), .84);
+                 }
+               }
+             }
+          }
+        }
+
     }
     .mark-added-note {
         //border-bottom: 1px solid #e5e5e5;
     }
     .mark-added-actions {
-        padding: 35px 20px;
-        background: lighten($color_gray, 1%);
-        position: absolute;
-        bottom: 0;
+        padding: 10px 15px 34px;
+        //background: lighten($color_gray, 1%);
+        //position: absolute;
+        //bottom: 0;
         width: 100%;
+        display: flex;
         .delete-button {
-            width: 45%;
+            flex-basis: 45%;
             padding: 0 5px;
-            float: left;
         }
         .update-button {
-            width: 55%;
-            padding: 0 5px;
-            float: left;
+          flex-basis: 55%;
+          flex-grow: 1;
+          padding: 0 5px;
+          &:only-child {}
         }
         button {
             width: 100%;
@@ -200,13 +314,18 @@
             padding: 12px 0 14px;
             //@include title-text;
             @include font-smoothing;
+            text-transform: uppercase;
+            letter-spacing: .01em;
+            border-radius: 3px;
             font-size: 14px;
-            font-weight: 600;
-            box-shadow: 0 30px 60px -24px transparentize(white, .94) inset, 0 2px 7px 0 transparentize($color_dark_gray, .8);
+            font-weight: 700;
+            //box-shadow: 0 30px 60px -24px transparentize(white, .94) inset, 0 2px 7px 0 transparentize($color_dark_gray, .8);
+            box-shadow: 0 30px 60px -24px transparentize(white, .94) inset, 0 2px 7px 0 transparentize(darken($color_blue, 25%), .7);
             &.delete {
                 //width: 39%;
                 background: $color_red;
                 margin-right: 0;
+                box-shadow: 0 30px 60px -24px transparentize(white, .94) inset, 0 2px 7px 0 transparentize(darken($color_red, 25%), .7);
             }
         }
     }

@@ -361,6 +361,7 @@
             list-style: none;
             color: $color_lighter;
             font-size: 14px;
+            position: relative;
             a {
                 color: $color_white;
                 border-bottom: none;
@@ -368,6 +369,16 @@
                 text-transform: inherit;
                 display: block;
                 font-size: 14px;
+            }
+            span {
+                display: block;
+                font-weight: 600;
+                font-size: 11px;
+                color: transparentize($color_white, 0.45);
+                margin-top: 2px;
+                position: absolute;
+                right: 0;
+                top: 9px;
             }
         }
     }
