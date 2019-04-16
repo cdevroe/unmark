@@ -47,14 +47,14 @@
               endforeach;
               $tag_csv = trim($tag_csv,',');
           endif; ?>
-          <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>"><input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="selectize" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>"></section>
+          <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>"><input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="selectize" placeholder="work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>"></section>
       </div>
       <div class="mark-added-note mark-added-settings">
           <h4>Notes</h4>
           <div class="mark-added-note-box">
             <?php if (empty($mark->notes)) : ?>
-                <a class="action" data-action="marks_addNotes" href=""><?php echo unmark_phrase('Add a Note or Edit Title'); ?></a>
-                <textarea class="mark-added-notes-area hide" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text or #tags here...'); ?>"></textarea>
+                <!-- <a class="action" data-action="marks_addNotes" href=""><?php echo unmark_phrase('Add a Note or Edit Title'); ?></a>-->
+                <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text or #tags here...'); ?>"></textarea>
             <?php else : ?>
                 <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text or #tags here...'); ?>"><?php print $mark->notes; ?></textarea>
             <?php endif; ?>
