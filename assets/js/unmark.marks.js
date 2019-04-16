@@ -81,55 +81,61 @@
         // Show Mobile Sidebar
         if (Modernizr.mq('only screen and (max-width: 480px)')) { $('#mobile-sidebar-show').trigger('click'); }
 
-        // Run the view interaction
-        unmark.sidebar_mark_info.fadeOut(400, function () {
-            // if (unmark.sidebar_default.is(':visible')) {
-            //     unmark.sidebar_default.fadeOut(400, function () {
-            //         unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
-            //             //unmark.tagify_notes($('#notes-' + mark_id));
-            //             populateLabels();
+        // Update Sidebar contents for this bookmark
+        unmark.sidebar_mark_info.html(output);
+        
+        populateLabels();
 
-            //             // Tags
-            //             $('#input-tags').selectize({
-            //                 plugins: ['remove_button', 'restore_on_backspace'],
-            //                 delimiter: ',',
-            //                 persist: false,
-            //                 create: function(input) {
-            //                     return {
-            //                         value: input,
-            //                         text: input
-            //                     }
-            //                 }
-            //             });
+        unmark.sidebar_mark_info.fadeIn(400, function () {
+            var input_title         = $('#input-title'),
+                input_tags          = $('#input-tags'),
+                input_notes         = $('#input-notes');
 
-            //             // $("section.sidebar-info-preview").fitVids();
-            //         });
-            //     });
-            // } else {
-                unmark.sidebar_mark_info.html(output);
-                //unmark.tagify_notes($('#notes-' + mark_id));
-                populateLabels();
-                unmark.sidebar_mark_info.fadeIn(400, function () {
-                    // Tags
-                    $('#input-tags').selectize({
-                        plugins: ['remove_button', 'restore_on_backspace'],
-                        delimiter: ',',
-                        persist: false,
-                        create: function(input) {
-                            return {
-                                value: input,
-                                text: input
-                            }
-                        },
-                        onChange: function(input) {
-                            //console.log( 'tags: ' + input );
-                            unmark.saveTags( mark_id, input);
-                            unmark.update_tag_count();
-                        }
-                    });
-                    //$("section.sidebar-info-preview").fitVids();
-                });
-           // }
+            intervalSaveTitle = setInterval(function(){
+                if ( input_title.hasClass('contentsChanged') ) {
+                    unmark.saveTitle( mark_id, input_title.val() );
+                    input_title.removeClass('contentsChanged');
+                }
+            },1000);
+
+            intervalSaveNotes = setInterval(function(){
+                if ( input_notes.hasClass('contentsChanged') ) {
+                    unmark.saveNotes( mark_id, input_notes.val() );
+                    input_notes.removeClass('contentsChanged');
+                }
+            },1000);
+
+            input_title.on('keyup', function(e){
+                if ( !input_title.hasClass('contentsChanged') ) {
+                    input_title.addClass('contentsChanged');
+                }
+            });
+
+            input_notes.on('keyup', function(e){
+                if ( !input_notes.hasClass('contentsChanged') ) {
+                    input_notes.addClass('contentsChanged');
+                }
+            });
+
+            // Initialize tags
+            input_tags.selectize({
+                plugins: ['remove_button', 'restore_on_backspace'],
+                delimiter: ',',
+                persist: false,
+                create: function(input) {
+                    return {
+                        value: input,
+                        text: input
+                    }
+                },
+                onChange: function(input) {
+                    //console.log( 'tags: ' + input );
+                    unmark.saveTags( mark_id, input);
+                    unmark.update_tag_count();
+                }
+            });
+
+
         });
     };
 
@@ -190,7 +196,6 @@
             }
         });
     };
-
 
     // Archive & Restore Mark
     unmark.mark_restore = function (archive_link) {
@@ -337,24 +342,27 @@
         editable.focus(); // Set Focus
     };
 
-    // Save me some notes!
-    unmark.saveNotes = function (id, note, title) {
-        if (title == '') return;
-        var query = 'title='+unmark.urlEncode(title)+'&notes=' + unmark.urlEncode(note);
+    // save title only, can't be blank
+    unmark.saveTitle = function (id, title) {
+        if ( title == '' ) return;
+        var query = 'title=' + unmark.urlEncode(title);
         unmark.ajax('/mark/edit/'+id, 'post', query);
     };
 
-    // Save tags for a bookmark
-    unmark.saveTags = function ( id, tags ) {
-        //if ( !tags ) return;
-        var title = $('#mark-'+id+' h2 a').text();
+    // Save notes, can be blank
+    unmark.saveNotes = function (id, note) {
+        var query = 'notes=' + unmark.urlEncode(note);
+        unmark.ajax('/mark/edit/'+id, 'post', query);
+    };
 
-        if ( tags == '' ) {
-            console.log('remove all tags');
+    // Save tags, can be blank
+    unmark.saveTags = function (id, tags) {
+
+        if ( tags == '' ) { // Remove all tags
             tags = 'unmark:removeAllTags';
         }
         
-        var query = 'title='+unmark.urlEncode(title)+'&tags=' + unmark.urlEncode(tags);
+        var query = 'tags=' + unmark.urlEncode(tags);
         unmark.ajax('/mark/edit/'+id, 'post', query);
     };
 

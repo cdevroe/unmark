@@ -22,11 +22,13 @@
     // Collapse Marks Info Sidebar
     // Hides the marks info and re-displays the default sidebar
     unmark.sidebar_collapse = function () {
-        $('.mark').removeClass('view-inactive').removeClass('view-active');
-        $('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable'); // 1.6
+        //$('.mark').removeClass('view-inactive').removeClass('view-active');
+        //$('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable'); // 1.6
         //unmark.sidebar_expand(true);
         unmark.sidebar_mark_info.fadeOut(400, function () {
             //unmark.sidebar_default.fadeIn(400);
+            clearInterval(intervalSaveTitle);
+            clearInterval(intervalSaveNotes);
         });
         if (Modernizr.mq('only screen and (max-width: 768px)')) {
           $('.sidebar-content').removeClass('active');

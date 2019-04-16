@@ -47,7 +47,7 @@
               endforeach;
               $tag_csv = trim($tag_csv,',');
           endif; ?>
-          <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>"><input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="selectize" placeholder="work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>"></section>
+          <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>"><input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="selectize" placeholder="e.g. work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>"></section>
       </div>
       <div class="mark-added-note mark-added-settings">
           <h4>Notes</h4>
