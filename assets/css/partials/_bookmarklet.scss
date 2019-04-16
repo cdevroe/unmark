@@ -380,29 +380,91 @@
                 display: none;
             }
         }
-        &.label-2 a {
+        &.label-2 {
+          a {
             color: $color_orange_text;
-            &:before { background: $color_orange !important; }
+            &:before { background: $color_orange !important;}
+          }
         }
-        &.label-3 a {
+        &.label-3 {
+          a {
             color: $color_blue_text;
-            &:before { background: $color_blue !important; }
+            &:before { background: $color_blue !important;}
+          }
         }
-        &.label-4 a {
-            color: $color_yellow_text;
-            &:before { background: $color_yellow !important; }
+        &.label-4 {
+          a {
+            &:before { background: $color_yellow !important;}
+          }
         }
-        &.label-5 a {
+        &.label-5 {
+          a {
             color: $color_purple;
-            &:before { background: $color_purple !important; }
+            &:before { background: $color_purple !important;}
+          }
         }
-        &.label-6 a {
+        &.label-6 {
+          a {
             color: $color_green_text;
-            &:before { background: $color_green !important; }
+            &:before { background: $color_green !important;}
+          }
         }
-        &.label-7 a {
+        &.label-7 {
+          a {
             color: $color_red;
-            &:before { background: $color_red !important; }
+            &:before { background: $color_red !important;}
+          }
         }
     }
+}
+.mark-added-label {
+  &.label-2 {
+    .label-choices {
+      li a { &:before { box-shadow: none; } }
+      .label-2 {
+        a { &:before { box-shadow: 0 0 0 3px #fbfcfd, 0 0 0 4px #c3d9e4; } }
+      }
+    }
+  }
+  &.label-3 {
+    .label-choices {
+      li a { &:before { box-shadow: none; } }
+      .label-3 {
+        a { &:before { box-shadow: 0 0 0 3px #fbfcfd, 0 0 0 4px #c3d9e4; } }
+      }
+    }
+  }
+  &.label-4 {
+    .label-choices {
+      li a { &:before { box-shadow: none; } }
+      .label-4 {
+        a { &:before { box-shadow: 0 0 0 3px #fbfcfd, 0 0 0 4px #c3d9e4; } }
+      }
+    }
+  }
+  &.label-5 {
+    .label-choices {
+      li a { &:before { box-shadow: none; } }
+      .label-5 {
+        a { &:before { box-shadow: 0 0 0 3px #fbfcfd, 0 0 0 4px #c3d9e4; } }
+      }
+    }
+  }
+  &.label-6 {
+    .label-choices {
+      li a { &:before { box-shadow: none; } }
+      .label-6 {
+        a { &:before { box-shadow: 0 0 0 3px #fbfcfd, 0 0 0 4px #c3d9e4; } }
+      }
+    }
+  }
+  &.label-7 {
+    .label-choices {
+      li a { &:before { box-shadow: none; } }
+      .label-7 {
+        a { &:before { box-shadow: 0 0 0 3px #fbfcfd, 0 0 0 4px #c3d9e4; } }
+      }
+    }
+  }
+
 }
