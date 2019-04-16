@@ -122,7 +122,7 @@
                             }
                         },
                         onChange: function(input) {
-                            console.log( 'tags: ' + input );
+                            //console.log( 'tags: ' + input );
                             unmark.saveTags( mark_id, input);
                             unmark.update_tag_count();
                         }
@@ -155,9 +155,10 @@
     };
 
     unmark.update_tag_count = function () {
-        console.log('updating tag count');
+        //console.log('updating tag count');
         var tag_list = $('ul.tag-list');
         function updateTagCount(res) {
+            console.log(res);
             var i, tags = res.tags.popular, count;
             for (i in tags) {
                 count = tags[i].total;
