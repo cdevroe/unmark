@@ -6,6 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title><?php echo unmark_phrase('Unmark : Mark Added'); ?></title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo $this->config->item('unmark_version'); ?>" />
     <link rel="icon" type="image/ico" href="favicon.ico" />
     <script src="/assets/js/plugins/modernizr-2.7.1.min.js"></script>
@@ -19,45 +20,46 @@
 <body class="unmark-solo greybg">
 
 <div class="mark-added" data-label="<?php print $mark->label_id; ?>" data-label-name="<?php print $mark->label_name; ?>">
+
     <div class="mark-added-block">
         <?php echo unmark_phrase('This link has been added to your stream.'); ?>
         <i class="icon-check"></i>
     </div>
-
     <div class="mark-added-info">
         <h1 class="hideoutline"><?php print $mark->title; ?></h1>
         <span><?php print niceUrl($mark->url); ?></span>
     </div>
 
-    <div class="mark-added-label mark-added-settings label-<?php print $mark->label_id; ?>">
-        <span id="label-chosen"></span>
-        <a id="currLabel" class="action" data-action="marks_addLabel" href="#"><?php echo unmark_phrase('Unlabeled'); ?></a>
-        <section data-id="<?php print $mark->mark_id; ?>">
-            <ul data-id="<?php print $mark->mark_id; ?>" class="label-choices"></ul>
-        </section>
-    </div>
-    
-    <div class="mark-added-tags mark-added-settings">
-        <h4>Tags</h4>
-
-        <?php if ( !empty($mark->tags) ) :
-            $tag_csv = '';
-            foreach ($mark->tags as $tag=>$tag_array) :
-                $tag_csv.=$tag.',';
-            endforeach;
-            $tag_csv = trim($tag_csv,',');
-        endif; ?>
-        <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>"><input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="selectize" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>"></section>
-    </div>
-
-    <div class="mark-added-note mark-added-settings">
-        <h4>Notes</h4>
-        <?php if (empty($mark->notes)) : ?>
-            <a class="action" data-action="marks_addNotes" href=""><?php echo unmark_phrase('Add a Note or Edit Title'); ?></a>
-            <textarea class="mark-added-notes-area hide" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text or #tags here...'); ?>"></textarea>
-        <?php else : ?>
-            <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text or #tags here...'); ?>"><?php print $mark->notes; ?></textarea>
-        <?php endif; ?>
+    <div class="mark-added-meta">
+      <div class="mark-added-label mark-added-settings label-<?php print $mark->label_id; ?>">
+          <span id="label-chosen"></span>
+          <a id="currLabel" class="action" data-action="marks_addLabel" href="#"><?php echo unmark_phrase('Unlabeled'); ?></a>
+          <section data-id="<?php print $mark->mark_id; ?>">
+              <ul data-id="<?php print $mark->mark_id; ?>" class="label-choices"></ul>
+          </section>
+      </div>
+      <div class="mark-added-tags mark-added-settings">
+          <h4>Tags</h4>
+          <?php if ( !empty($mark->tags) ) :
+              $tag_csv = '';
+              foreach ($mark->tags as $tag=>$tag_array) :
+                  $tag_csv.=$tag.',';
+              endforeach;
+              $tag_csv = trim($tag_csv,',');
+          endif; ?>
+          <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>"><input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="selectize" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>"></section>
+      </div>
+      <div class="mark-added-note mark-added-settings">
+          <h4>Notes</h4>
+          <div class="mark-added-note-box">
+            <?php if (empty($mark->notes)) : ?>
+                <a class="action" data-action="marks_addNotes" href=""><?php echo unmark_phrase('Add a Note or Edit Title'); ?></a>
+                <textarea class="mark-added-notes-area hide" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text or #tags here...'); ?>"></textarea>
+            <?php else : ?>
+                <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text or #tags here...'); ?>"><?php print $mark->notes; ?></textarea>
+            <?php endif; ?>
+          </div>
+      </div>
     </div>
 
     <div class="mark-added-actions">

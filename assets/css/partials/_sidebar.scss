@@ -28,7 +28,7 @@
         content: "";
         display: block;
         width: 340px;
-        height: 16px;
+        height: 12px;
         position: fixed;
         top: 65px;
         right: -340px;
@@ -36,13 +36,15 @@
         transition: all .3s ease-in-out;
         @include md {
             top: 80px;
-            box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
+            //box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
+            background: linear-gradient(transparentize(desaturate(darken($color_gray, 50%), 2%), .95), transparentize(desaturate(darken($color_gray, 50%), 2%), .98), transparentize(desaturate(darken($color_gray, 50%), 2%), 1));
         }
         @include xs {
             display: none;
             top: 120px;
             width: 280px;
-            box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
+            //box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
+            background: linear-gradient(transparentize(desaturate(darken($color_gray, 50%), 2%), .95), transparentize(desaturate(darken($color_gray, 50%), 2%), .98), transparentize(desaturate(darken($color_gray, 50%), 2%), 1));
         }
     }
     &.active {
@@ -427,7 +429,7 @@
             margin-bottom: 36px;
             font-size: 14px;
             line-height: 23px;
-            overflow:hidden;
+            //overflow:hidden;
             a.social-link {
                 float:left;
                 border: 1px solid $color_light;
