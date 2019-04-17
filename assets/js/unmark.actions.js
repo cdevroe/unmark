@@ -22,7 +22,7 @@
     // Collapse Marks Info Sidebar
     // Hides the marks info and re-displays the default sidebar
     unmark.sidebar_collapse = function () {
-        //$('.mark').removeClass('view-inactive').removeClass('view-active');
+        $('.mark').removeClass('view-inactive').removeClass('view-active');
         //$('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable'); // 1.6
         //unmark.sidebar_expand(true);
         unmark.sidebar_mark_info.fadeOut(400, function () {
