@@ -8,10 +8,11 @@
 </head>
 <body class="unmark-solo" id="unmark-login">
 	<div id="error-wrapper">
-		<div id="error-icon"><img src="assets/images/icons/large_x.png" /></div>
+		<div id="error-icon"><img src="/assets/images/icons/logo.png" /></div>
 		<h1>Yikes!</h1>
 		<p><?php print current($errors); ?></p>
 		<p><?php echo unmark_phrase('This mark could not be added to your stream.')?></p>
+		<p><a href="/">BACK</a>
 	</div>
 </body>
 </html>
