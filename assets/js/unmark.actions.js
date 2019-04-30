@@ -68,7 +68,7 @@
     // This handles both the top level and secondary level
     unmark.interact_nav = function (e, elem_ckd) {
         e.preventDefault();
-
+        unmark.sidebar_collapse(); // close bookmark info panel
         var panel_to_show                   = (elem_ckd.data('panel')) ? elem_ckd.data('panel') : '', // kept in data attribute
             panel_name                      = (panel_to_show !== '') ? panel_to_show.replace(/^#/, '') : '', // just removes #
             is_label_menu                   = (panel_name.indexOf('label') !== -1) ? true : false, // checks name of panel to see if this is label menu

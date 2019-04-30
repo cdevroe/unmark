@@ -129,9 +129,8 @@
                     }
                 },
                 onChange: function(input) {
-                    //console.log( 'tags: ' + input );
                     unmark.saveTags( mark_id, input );
-                    unmark.update_tag_count();
+                    setTimeout(unmark.update_tag_count,1000); // Delayed slightly, otherwise 404 (unsure why)
                 }
             });
 
