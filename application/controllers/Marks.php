@@ -29,7 +29,7 @@ class Marks extends Plain_Controller
         $view           = null;
         $add_from_url   = ($this->input->post('add_from_url') !== null ) ? true : false;
 
-        if ( isset($_GET['url']) ) {
+        if ( isset($_GET['url']) && !isset($_GET['title']) ) {
             $add_from_url = true;
         }
 
@@ -262,19 +262,33 @@ class Marks extends Plain_Controller
                 $options['notes'] = $this->db_clean->notes;
 
                 // Check for hashmarks to tags
-                $tags = getTagsFromHash($options['notes']);
+                //Removed in 2.0 $tags = getTagsFromHash($options['notes']);
+            }
+
+            // If tags are present, set them
+            if (isset($this->db_clean->tags)) {
+                if ( $this->db_clean->tags == 'unmark:removeAllTags' ) { // Remove all tags by sending empty array
+                    $tags = array();
+                    parent::removeTags($mark_id);
+                } else {
+                    $tags = explode( ',', $this->db_clean->tags );
+                }
             }
 
             // If tags are present, handle differently
             // Need to add to tags table first
             // Then create association
             // If notes are present set them
-            if (isset($tags)) {
+            if (isset($tags) && count($tags) > 0) {
                 parent::addTags($tags, $mark_id);
             }
 
-            // Update users_to_marks record
-            $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", $options);
+            if ( isset($options) && count($options) > 0) {
+                // Update users_to_marks record
+                $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", $options);
+            } else {
+                $mark = $this->user_marks->readComplete($mark_id);
+            }
 
             // Check if it was updated
             if ($mark === false) {
@@ -322,6 +336,8 @@ class Marks extends Plain_Controller
 
     public function get($what='stats')
     {
+        log_message( 'DEBUG', 'Running get method for ' . $what );
+        
         parent::redirectIfWebView();
         $method = 'get' . ucwords($what);
 
@@ -393,13 +409,15 @@ class Marks extends Plain_Controller
 
     }
 
-    // Get the 10 most used tags for a user
+    // Get the 10 most used and most recent tags for a user
     private function getTags()
     {
-        $this->data['tags'] = array();
         $this->load->model('user_marks_to_tags_model', 'user_tags');
-        $this->data['tags']['popular'] = $this->user_tags->getPopular($this->user_id);
-        $this->data['tags']['recent']  = $this->user_tags->getMostRecent($this->user_id);
+        $this->data['tags'] = array();
+        
+
+        $this->data['tags']['popular']      = $this->user_tags->getPopular($this->user_id);
+        $this->data['tags']['recent']       = $this->user_tags->getMostRecent($this->user_id);
     }
 
     // The index of the marks page
@@ -584,7 +602,7 @@ class Marks extends Plain_Controller
         // Get stats, labels and tags
         // else skip this section and just return the marks
         if (parent::isWebView() === true) {
-            self::getStats();
+            //self::getStats();
             self::getLabels();
             self::getTags();
         }
@@ -619,9 +637,6 @@ class Marks extends Plain_Controller
 
         $this->data['no_header'] = true;
         $this->data['no_footer'] = true;
-
-        // print_r($_GET['bookmarklet']);
-        // exit;
 
         $this->data['bookmarklet'] = (isset($_GET['bookmarklet'])) ? $_GET['bookmarklet'] : true;
 

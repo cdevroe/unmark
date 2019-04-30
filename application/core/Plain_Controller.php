@@ -192,6 +192,14 @@ class Plain_Controller extends CI_Controller
 
     }
 
+    protected function removeTags($mark_id)
+    {
+        $this->load->model('tags_model', 'tag');
+        $this->load->model('user_marks_to_tags_model', 'mark_to_tag');
+
+        $delete       = $this->mark_to_tag->delete("users_to_mark_id = '" . $mark_id . "' AND user_id = '" . $this->user_id . "'");
+    }
+
     protected function addTags($tags, $mark_id)
     {
         if (! empty($tags) && is_array($tags)) {

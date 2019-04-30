@@ -20,6 +20,25 @@
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
             mark_nofade     = mark_clicked.data('nofade');
 
+            // Reformat tags to a csv string for mustache template
+            var mark_tags_string = '';
+            var mark_tags_count = Object.keys(mark_obj['tags']).length;
+            var iterator = 1;
+
+            for ( var tag in mark_obj['tags'] ) {
+                if ( tag === undefined ) {
+                    continue;
+                }
+                if ( iterator == mark_tags_count ){
+                    mark_tags_string += tag.toString();
+                } else {
+                    mark_tags_string += tag.toString() + ',';
+                }
+                iterator++;
+            }
+
+            mark_obj['tags_string'] = mark_tags_string;
+
         // 1.6
         // If the mark is clicked on is currently being edited,
         // do nothing
@@ -62,24 +81,60 @@
         // Show Mobile Sidebar
         if (Modernizr.mq('only screen and (max-width: 480px)')) { $('#mobile-sidebar-show').trigger('click'); }
 
-        // Run the view interaction
-        unmark.sidebar_mark_info.fadeOut(400, function () {
-            if (unmark.sidebar_default.is(':visible')) {
-                unmark.sidebar_default.fadeOut(400, function () {
-                    unmark.sidebar_mark_info.html(output).fadeIn(400, function () {
-                        unmark.tagify_notes($('#notes-' + mark_id));
-                        populateLabels();
-                        // $("section.sidebar-info-preview").fitVids();
-                    });
-                });
-            } else {
-                unmark.sidebar_mark_info.html(output);
-                unmark.tagify_notes($('#notes-' + mark_id));
-                populateLabels();
-                unmark.sidebar_mark_info.fadeIn(400, function () {
-                    //$("section.sidebar-info-preview").fitVids();
-                });
-            }
+        // Update Sidebar contents for this bookmark
+        unmark.sidebar_mark_info.html(output);
+        
+        populateLabels();
+
+        unmark.sidebar_mark_info.fadeIn(400, function () {
+            var input_title         = $('#input-title'),
+                input_tags          = $('#input-tags'),
+                input_notes         = $('#input-notes');
+
+            intervalSaveTitle = setInterval(function(){
+                if ( input_title.hasClass('contentsChanged') ) {
+                    unmark.saveTitle( mark_id, input_title.val() );
+                    input_title.removeClass('contentsChanged');
+                }
+            },1000);
+
+            intervalSaveNotes = setInterval(function(){
+                if ( input_notes.hasClass('contentsChanged') ) {
+                    unmark.saveNotes( mark_id, input_notes.val() );
+                    input_notes.removeClass('contentsChanged');
+                }
+            },1000);
+
+            input_title.on('keyup', function(e){
+                if ( !input_title.hasClass('contentsChanged') ) {
+                    input_title.addClass('contentsChanged');
+                }
+            });
+
+            input_notes.on('keyup', function(e){
+                if ( !input_notes.hasClass('contentsChanged') ) {
+                    input_notes.addClass('contentsChanged');
+                }
+            });
+
+            // Initialize tags
+            input_tags.selectize({
+                plugins: ['remove_button', 'restore_on_backspace'],
+                delimiter: ',',
+                persist: false,
+                create: function(input) {
+                    return {
+                        value: input,
+                        text: input
+                    }
+                },
+                onChange: function(input) {
+                    unmark.saveTags( mark_id, input );
+                    setTimeout(unmark.update_tag_count,1000); // Delayed slightly, otherwise 404 (unsure why)
+                }
+            });
+
+
         });
     };
 
@@ -90,18 +145,30 @@
             var i, labels = res.labels, count;
             for (i in labels) {
                 count = labels[i].total_active_marks;
-                if (count === "1") {
-                    count = count + " mark";
-                } else if (count === "0") {
-                    count = "no marks";
-                } else {
-                    count = count + " marks";
-                }
+                // Removed in 2.0
+                // if (count === "1") {
+                //     count = count + " mark";
+                // } else if (count === "0") {
+                //     count = "no marks";
+                // } else {
+                //     count = count + " marks";
+                // }
                 label_list.find('.label-'+labels[i].label_id + ' span').text(count);
             }
         }
         unmark.getData('labels', updateLabelCount);
-        // Removed 1.9.2 unmark.updateCounts();
+    };
+
+    unmark.update_tag_count = function () {
+        var tag_list = $('ul.tag-list');
+        function updateTagCount(res) {
+            var i, tags = res.tags.popular, list = '';
+            for (i in tags) {
+                list += '<li class="tag-' + tags[i].tag_id + '"><a href="/marks/tag/' + tags[i].slug + '">#' + tags[i].name + '</a><span>' + tags[i].total + '</span></li>';
+            }
+            tag_list.html(list);
+        }
+        unmark.getData('tags', updateTagCount);
     };
 
     // Archive & Restore Mark
@@ -118,7 +185,6 @@
             }
         });
     };
-
 
     // Archive & Restore Mark
     unmark.mark_restore = function (archive_link) {
@@ -147,7 +213,6 @@
     };
 
     // Handles editing of Mark information (title, notes)
-    // Renamed from editNotes in 1.6
     unmark.marks_editMarkInfo = function (editField) {
 
         var editable_notes = editField.next(), notes, query;
@@ -155,7 +220,7 @@
         var id = $(editable_notes).data('id');
 
         // Private function to save notes
-        function saveMarkInfo(title, notes, id) {
+        function saveMarkInfo(title, notes, tags, id) {
 
             // 1.6
             // Cannot submit an empty title
@@ -169,7 +234,7 @@
                 //setNoteHeading(3);
             }
 
-            query = 'title=' + unmark.urlEncode(title) + '&notes=' + unmark.urlEncode(notes);
+            query = 'title=' + unmark.urlEncode(title) + '&notes=' + unmark.urlEncode(notes) + '&tags='+unmark.urlEncode(tags);
             unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
                 $('#mark-'+id).find('.note-placeholder').text(notes);
             });
@@ -266,10 +331,27 @@
         editable.focus(); // Set Focus
     };
 
-    // Save me some notes!
-    unmark.saveNotes = function (id, note, title) {
-        if (title == '') return;
-        var query = 'title='+unmark.urlEncode(title)+'&notes=' + unmark.urlEncode(note);
+    // save title only, can't be blank
+    unmark.saveTitle = function (id, title) {
+        if ( title == '' ) return;
+        var query = 'title=' + unmark.urlEncode(title);
+        unmark.ajax('/mark/edit/'+id, 'post', query);
+    };
+
+    // Save notes, can be blank
+    unmark.saveNotes = function (id, note) {
+        var query = 'notes=' + unmark.urlEncode(note);
+        unmark.ajax('/mark/edit/'+id, 'post', query);
+    };
+
+    // Save tags, can be blank
+    unmark.saveTags = function (id, tags) {
+
+        if ( tags == '' ) { // Remove all tags
+            tags = 'unmark:removeAllTags';
+        }
+        
+        var query = 'tags=' + unmark.urlEncode(tags);
         unmark.ajax('/mark/edit/'+id, 'post', query);
     };
 
