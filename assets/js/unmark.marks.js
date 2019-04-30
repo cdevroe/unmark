@@ -130,7 +130,7 @@
                 },
                 onChange: function(input) {
                     //console.log( 'tags: ' + input );
-                    unmark.saveTags( mark_id, input);
+                    unmark.saveTags( mark_id, input );
                     unmark.update_tag_count();
                 }
             });
@@ -146,6 +146,7 @@
             var i, labels = res.labels, count;
             for (i in labels) {
                 count = labels[i].total_active_marks;
+                // Removed in 2.0
                 // if (count === "1") {
                 //     count = count + " mark";
                 // } else if (count === "0") {
@@ -157,30 +158,18 @@
             }
         }
         unmark.getData('labels', updateLabelCount);
-        // Removed 1.9.2 unmark.updateCounts();
     };
 
     unmark.update_tag_count = function () {
-        //console.log('updating tag count');
         var tag_list = $('ul.tag-list');
         function updateTagCount(res) {
-            //console.log(res);
-            var i, tags = res.tags.popular, count;
+            var i, tags = res.tags.popular, list = '';
             for (i in tags) {
-                console.log(tags[i].name + ' - ' + tags[i].total);
-                count = tags[i].total;
-                // if (count === "1") {
-                //     count = count + " mark";
-                // } else if (count === "0") {
-                //     count = "no marks";
-                // } else {
-                //     count = count + " marks";
-                // }
-                tag_list.find('.tag-'+tags[i].tag_id + ' span').text(count);
+                list += '<li class="tag-' + tags[i].tag_id + '"><a href="/marks/tag/' + tags[i].slug + '">#' + tags[i].name + '</a><span>' + tags[i].total + '</span></li>';
             }
+            tag_list.html(list);
         }
         unmark.getData('tags', updateTagCount);
-        // Removed 1.9.2 unmark.updateCounts();
     };
 
     // Archive & Restore Mark
