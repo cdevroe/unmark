@@ -146,13 +146,13 @@
             var i, labels = res.labels, count;
             for (i in labels) {
                 count = labels[i].total_active_marks;
-                if (count === "1") {
-                    count = count + " mark";
-                } else if (count === "0") {
-                    count = "no marks";
-                } else {
-                    count = count + " marks";
-                }
+                // if (count === "1") {
+                //     count = count + " mark";
+                // } else if (count === "0") {
+                //     count = "no marks";
+                // } else {
+                //     count = count + " marks";
+                // }
                 label_list.find('.label-'+labels[i].label_id + ' span').text(count);
             }
         }
@@ -164,17 +164,18 @@
         //console.log('updating tag count');
         var tag_list = $('ul.tag-list');
         function updateTagCount(res) {
-            console.log(res);
+            //console.log(res);
             var i, tags = res.tags.popular, count;
             for (i in tags) {
+                console.log(tags[i].name + ' - ' + tags[i].total);
                 count = tags[i].total;
-                if (count === "1") {
-                    count = count + " mark";
-                } else if (count === "0") {
-                    count = "no marks";
-                } else {
-                    count = count + " marks";
-                }
+                // if (count === "1") {
+                //     count = count + " mark";
+                // } else if (count === "0") {
+                //     count = "no marks";
+                // } else {
+                //     count = count + " marks";
+                // }
                 tag_list.find('.tag-'+tags[i].tag_id + ' span').text(count);
             }
         }

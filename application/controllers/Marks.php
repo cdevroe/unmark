@@ -279,12 +279,16 @@ class Marks extends Plain_Controller
             // Need to add to tags table first
             // Then create association
             // If notes are present set them
-            if (isset($tags)) {
+            if (isset($tags) && count($tags) > 0) {
                 parent::addTags($tags, $mark_id);
             }
 
-            // Update users_to_marks record
-            $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", $options);
+            if ( isset($options) && count($options) > 0) {
+                // Update users_to_marks record
+                $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", $options);
+            } else {
+                $mark = $this->user_marks->readComplete($mark_id);
+            }
 
             // Check if it was updated
             if ($mark === false) {
@@ -332,6 +336,8 @@ class Marks extends Plain_Controller
 
     public function get($what='stats')
     {
+        log_message( 'DEBUG', 'Running get method for ' . $what );
+        
         parent::redirectIfWebView();
         $method = 'get' . ucwords($what);
 
@@ -403,13 +409,15 @@ class Marks extends Plain_Controller
 
     }
 
-    // Get the 10 most used tags for a user
+    // Get the 10 most used and most recent tags for a user
     private function getTags()
     {
-        $this->data['tags'] = array();
         $this->load->model('user_marks_to_tags_model', 'user_tags');
-        $this->data['tags']['popular'] = $this->user_tags->getPopular($this->user_id);
-        $this->data['tags']['recent']  = $this->user_tags->getMostRecent($this->user_id);
+        $this->data['tags'] = array();
+        
+
+        $this->data['tags']['popular']      = $this->user_tags->getPopular($this->user_id);
+        $this->data['tags']['recent']       = $this->user_tags->getMostRecent($this->user_id);
     }
 
     // The index of the marks page

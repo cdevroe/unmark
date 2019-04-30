@@ -40,7 +40,7 @@ unmark.template.sidebar = '<header class="sidebar-action">'+
 ''+
 '<!--<h4 class="action" data-action="marks_editMarkInfo">Notes (click to edit) <i class="icon-edit"></i></h4>-->'+
 '<h4 class="action">Notes</h4>'+
-'<textarea id="input-notes" data-id="{{mark_id}}" placeholder="<?php echo unmark_phrase(\'Type note text or #tags here...\'); ?>" class="sidebar-info-notes">{{{notes}}}</textarea>'+
+'<textarea id="input-notes" data-id="{{mark_id}}" placeholder="Type note text or #tags here..." class="sidebar-info-notes">{{{notes}}}</textarea>'+
 ''+
 '</div>'+
 '<button data-id="{{mark_id}}" data-view="sidebar" data-action="delete_mark">Delete Link</button>'+
