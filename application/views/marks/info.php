@@ -54,9 +54,9 @@
           <div class="mark-added-note-box">
             <?php if (empty($mark->notes)) : ?>
                 <!-- <a class="action" data-action="marks_addNotes" href=""><?php echo unmark_phrase('Add a Note or Edit Title'); ?></a>-->
-                <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text or #tags here...'); ?>"></textarea>
+                <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text here...'); ?>"></textarea>
             <?php else : ?>
-                <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text or #tags here...'); ?>"><?php print $mark->notes; ?></textarea>
+                <textarea class="mark-added-notes-area" data-id="<?php print $mark->mark_id; ?>" placeholder="<?php echo unmark_phrase('Type note text here...'); ?>"><?php print $mark->notes; ?></textarea>
             <?php endif; ?>
           </div>
       </div>

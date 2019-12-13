@@ -313,7 +313,7 @@
         }
       }
     }
-    .mark-url {
+    .mark-title, .mark-url {
       h4 {
           position: relative;
           cursor: pointer;
@@ -547,12 +547,20 @@
         textarea {
             width: 100%;
             min-height: 75px;
-            border: none;
-            background-color: $color_shade;
+            background: white;
+            border: 1px solid darken(desaturate($color_gray, 15%), 6%);
+            border-radius: 2px;
+            box-shadow: none;
+            padding: 10px 12px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: lighten($color_dark, 5%);
+            /*background-color: $color_shade;*/
         }
     }
     button {
         clear: both;
+        margin-top: 30px;
         width: 100%;
         padding: 10px 20px 13px;
         font-size: 14px;

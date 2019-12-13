@@ -7,18 +7,19 @@
     var _labels = 0;
 
     // Show Mark Info in Sidebar
-    // Grabs relavaent info and shows the sidebar actions with info
     unmark.show_mark_info = function (mark_clicked) {
 
         var template, output,
             mark_obj_ref    = mark_clicked.data('mark'),
-            mark_string     = $('#' + mark_obj_ref).html();
-            //console.log(mark_string);
-            var mark_obj        = jQuery.parseJSON(mark_string);
-
-            var mark_id         = mark_obj_ref.replace("mark-data-",""),
-            mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text();
+            mark_string     = $('#' + mark_obj_ref).html(),  // a string of metadata
+            mark_obj        = jQuery.parseJSON(mark_string),
+            mark_id         = mark_obj_ref.replace("mark-data-",""),
+            mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text(),
             mark_nofade     = mark_clicked.data('nofade');
+
+            // Replace mark title with user's provided title if it exists
+            var mark_title      = (mark_obj.mark_title != null) ? mark_obj.mark_title : mark_obj.title;
+            mark_obj.mark_title      = mark_title;
 
             // Reformat tags to a csv string for mustache template
             var mark_tags_string = '';
@@ -94,6 +95,9 @@
             intervalSaveTitle = setInterval(function(){
                 if ( input_title.hasClass('contentsChanged') ) {
                     unmark.saveTitle( mark_id, input_title.val() );
+                    // TODO: Needs to update JSON here 
+                    // 2.0 unmark.update_mark_info(res, mark);
+                    $('#mark-'+mark_id+' h2 a').html( input_title.val() );
                     input_title.removeClass('contentsChanged');
                 }
             },1000);
@@ -216,7 +220,7 @@
     unmark.marks_editMarkInfo = function (editField) {
 
         var editable_notes = editField.next(), notes, query;
-        var editable_mark_title = $('#mark-'+$(editable_notes).data('id')+' h2'); // 1.6 The title of the current mark to make editable
+        //removed 2.0 var editable_mark_title = $('#mark-'+$(editable_notes).data('id')+' h2'); // 1.6 The title of the current mark to make editable
         var id = $(editable_notes).data('id');
 
         // Private function to save notes
@@ -257,7 +261,7 @@
         }
 
         editable_notes.unbind();
-        editable_mark_title.unbind();
+        //removed in 2.0 editable_mark_title.unbind();
 
         // 1.6
         // Strip the Mark Title of the A element. Easier to edit
@@ -265,14 +269,14 @@
 
         // Make Title and Notes editable
 
-        editable_mark_title.attr('contenteditable', true).addClass('editable');
-        editable_mark_title.find('a').contents().unwrap();
+        //removed in 2.0 editable_mark_title.attr('contenteditable', true).addClass('editable');
+        //removed in 2.0 editable_mark_title.find('a').contents().unwrap();
 
         editable_notes.attr('contenteditable', true).addClass('editable');
         editable_notes.find('a').contents().unwrap();
 
         // Focus notes field for easy editing
-        editable_notes.focus();
+        //editable_notes.focus();
 
         // 1.6
         // Change Heading, add quitEdit action (see below)
@@ -299,7 +303,7 @@
 
                     // Remove classes
                     editable_notes.removeClass('contentsChanged');
-                    editable_mark_title.removeClass('contentsChanged');
+                    //remove 2.0 editable_mark_title.removeClass('contentsChanged');
                 }
             }
         }
@@ -308,13 +312,13 @@
         editable_notes.on('keydown',function(e){
             $(this).addClass('contentsChanged');
         });
-        editable_mark_title.on('keydown',function(e){
-            $(this).addClass('contentsChanged');
-        });
+        //removed 2.0 editable_mark_title.on('keydown',function(e){
+        //    $(this).addClass('contentsChanged');
+        //});
 
         // If we leave either field, fire function
         editable_notes.on('blur', editableActions);
-        editable_mark_title.on('blur', editableActions);
+        //removed 2.0 editable_mark_title.on('blur', editableActions);
     };
 
     // Method for Adding Notes
@@ -446,10 +450,10 @@
 
             // Turn off editability
             editable_notes.attr('contenteditable', false).removeClass('editable');
-            editable_mark_title.attr('contenteditable', false).removeClass('editable');
+            //removed 2.0 editable_mark_title.attr('contenteditable', false).removeClass('editable');
 
             // Return Mark title back to being wrapped by URL
-            editable_mark_title.html('<a target="_blank" rel="noopener noreferrer" href="'+mark_url+'">'+editable_mark_title.text()+'</a>');
+            //removed 2.0 editable_mark_title.html('<a target="_blank" rel="noopener noreferrer" href="'+mark_url+'">'+editable_mark_title.text()+'</a>');
 
             // Taggify the notes (means also wrapping up any links within)
             unmark.tagify_notes(editable_notes);
@@ -457,7 +461,7 @@
             // Set up for next edit
             editField.unbind();
             editable_notes.unbind();
-            editable_mark_title.unbind();
+            //editable_mark_title.unbind();
 
             // Return previous action of marks_editMarkInfo
             editField.html('Notes (click to edit)<i class="icon-edit"></i>');
