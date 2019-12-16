@@ -17,28 +17,28 @@
             mark_notehold   = $('#mark-'+mark_id).find('.note-placeholder').text(),
             mark_nofade     = mark_clicked.data('nofade');
 
-            // Replace mark title with user's provided title if it exists
-            var mark_title          = (mark_obj.mark_title != null) ? mark_obj.mark_title : mark_obj.title;
-            mark_obj.mark_title     = mark_title;
+        // Replace mark title with user's provided title if it exists
+        var mark_title          = (mark_obj.mark_title != null) ? mark_obj.mark_title : mark_obj.title;
+        mark_obj.mark_title     = mark_title;
 
-            // Reformat tags to a csv string for mustache template
-            var mark_tags_string        = '';
-            var mark_tags_count         = Object.keys(mark_obj['tags']).length;
-            var iterator                = 1;
+        // Reformat tags to a csv string for mustache template
+        var mark_tags_string        = '';
+        var mark_tags_count         = Object.keys(mark_obj['tags']).length;
+        var iterator                = 1;
 
-            for ( var tag in mark_obj['tags'] ) {
-                if ( tag === undefined ) {
-                    continue;
-                }
-                if ( iterator == mark_tags_count ){
-                    mark_tags_string += tag.toString();
-                } else {
-                    mark_tags_string += tag.toString() + ',';
-                }
-                iterator++;
+        for ( var tag in mark_obj['tags'] ) {
+            if ( tag === undefined ) {
+                continue;
             }
+            if ( iterator == mark_tags_count ){
+                mark_tags_string += tag.toString();
+            } else {
+                mark_tags_string += tag.toString() + ',';
+            }
+            iterator++;
+        }
 
-            mark_obj['tags_string'] = mark_tags_string;
+        mark_obj['tags_string'] = mark_tags_string;
 
         // 1.6
         // If the mark is clicked on is currently being edited,
@@ -97,11 +97,6 @@
                     
                     // Save new Title
                     unmark.saveTitle( mark_id, input_title.val() );
-                    
-                    // Update JSON for Mark in DOM to new Title
-                    mark_obj.mark_title = input_title.val();
-                    mark_data = JSON.stringify(mark_obj);
-                    $('#mark-data-'+mark_id).html(mark_data);
                     
                     // Update visible Title in list to new Title
                     $('#mark-'+mark_id+' h2 a').html( input_title.val() );
@@ -330,31 +325,21 @@
         //removed 2.0 editable_mark_title.on('blur', editableActions);
     };
 
-    // Method for Adding Notes
-    unmark.marks_addNotes = function (btn) {
-        var editable = btn.next();
-        btn.hide(); // Hide Button
-
-        // 1.6
-        // Make the title of the mark also editable. Nah mean?
-        var editable_mark_title = $('.mark-added-info h1');
-        editable_mark_title.attr('contenteditable',true).addClass('editable');
-
-        editable.fadeIn(); // Show Editable Area
-        editable.focus(); // Set Focus
-    };
-
     // save title only, can't be blank
     unmark.saveTitle = function (id, title) {
         if ( title == '' ) return;
         var query = 'title=' + unmark.urlEncode(title);
-        unmark.ajax('/mark/edit/'+id, 'post', query);
+        unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
+            unmark.update_mark_info(res, id); // Update the notes and everything else too.
+        });
     };
 
     // Save notes, can be blank
     unmark.saveNotes = function (id, note) {
         var query = 'notes=' + unmark.urlEncode(note);
-        unmark.ajax('/mark/edit/'+id, 'post', query);
+        unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
+            unmark.update_mark_info(res, id); // Update the notes and everything else too.
+        });
     };
 
     // Save tags, can be blank
@@ -365,7 +350,9 @@
         }
         
         var query = 'tags=' + unmark.urlEncode(tags);
-        unmark.ajax('/mark/edit/'+id, 'post', query);
+        unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
+            unmark.update_mark_info(res, id); // Update the notes and everything else too.
+        });
     };
 
     // Method for adding a label
