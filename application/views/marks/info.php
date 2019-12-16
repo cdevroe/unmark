@@ -22,7 +22,7 @@
 <div class="mark-added" data-label="<?php print $mark->label_id; ?>" data-label-name="<?php print $mark->label_name; ?>">
 
     <div class="mark-added-block">
-        <?php echo unmark_phrase('This link has been added to your stream.'); ?>
+        <?php echo unmark_phrase('This mark has been added to your stream.'); ?>
         <i class="icon-check"></i>
     </div>
     <div class="mark-added-info">
@@ -47,7 +47,7 @@
               endforeach;
               $tag_csv = trim($tag_csv,',');
           endif; ?>
-          <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>"><input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="selectize" placeholder="e.g. work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>"></section>
+          <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>"><input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="mark-added-tags-area selectize" placeholder="e.g. work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>"></section>
       </div>
       <div class="mark-added-note mark-added-settings">
           <h4>Notes</h4>
