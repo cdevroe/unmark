@@ -18,13 +18,13 @@
             mark_nofade     = mark_clicked.data('nofade');
 
             // Replace mark title with user's provided title if it exists
-            var mark_title      = (mark_obj.mark_title != null) ? mark_obj.mark_title : mark_obj.title;
-            mark_obj.mark_title      = mark_title;
+            var mark_title          = (mark_obj.mark_title != null) ? mark_obj.mark_title : mark_obj.title;
+            mark_obj.mark_title     = mark_title;
 
             // Reformat tags to a csv string for mustache template
-            var mark_tags_string = '';
-            var mark_tags_count = Object.keys(mark_obj['tags']).length;
-            var iterator = 1;
+            var mark_tags_string        = '';
+            var mark_tags_count         = Object.keys(mark_obj['tags']).length;
+            var iterator                = 1;
 
             for ( var tag in mark_obj['tags'] ) {
                 if ( tag === undefined ) {
@@ -43,11 +43,11 @@
         // 1.6
         // If the mark is clicked on is currently being edited,
         // do nothing
-        var editable_mark_title = $('#mark-'+mark_id+' h2');
-        if (editable_mark_title.hasClass('editable')) return;
+        // var editable_mark_title = $('#mark-'+mark_id+' h2');
+        // if (editable_mark_title.hasClass('editable')) return;
 
         // However, if it isn't the current mark it should 'kill all -9' the rest of the editing stuff
-        $('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable');
+        // $('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable');
 
         // Quick function to populate the tags
         function populateLabels() {
@@ -94,10 +94,19 @@
 
             intervalSaveTitle = setInterval(function(){
                 if ( input_title.hasClass('contentsChanged') ) {
+                    
+                    // Save new Title
                     unmark.saveTitle( mark_id, input_title.val() );
-                    // TODO: Needs to update JSON here 
-                    // 2.0 unmark.update_mark_info(res, mark);
+                    
+                    // Update JSON for Mark in DOM to new Title
+                    mark_obj.mark_title = input_title.val();
+                    mark_data = JSON.stringify(mark_obj);
+                    $('#mark-data-'+mark_id).html(mark_data);
+                    
+                    // Update visible Title in list to new Title
                     $('#mark-'+mark_id+' h2 a').html( input_title.val() );
+
+                    // Remove the class on the input to stop updates
                     input_title.removeClass('contentsChanged');
                 }
             },1000);
