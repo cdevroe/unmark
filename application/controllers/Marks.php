@@ -415,7 +415,6 @@ class Marks extends Plain_Controller
         $this->load->model('user_marks_to_tags_model', 'user_tags');
         $this->data['tags'] = array();
         
-
         $this->data['tags']['popular']      = $this->user_tags->getPopular($this->user_id);
         $this->data['tags']['recent']       = $this->user_tags->getMostRecent($this->user_id);
     }

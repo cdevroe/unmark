@@ -54,7 +54,9 @@
             _labels = arguments[0] || _labels;
             (! isNaN(_labels)) ? unmark.getData('labels', populateLabels) : $('ul.sidebar-label-list').prepend(unmark.label_list(_labels));
 
-            unmark.marks_addLabel();
+            //unmark.marks_addLabel();
+
+            
         };
 
         // Clean up view
@@ -125,22 +127,85 @@
                 }
             });
 
-            // Initialize tags
-            input_tags.selectize({
-                plugins: ['remove_button', 'restore_on_backspace'],
-                delimiter: ',',
-                persist: false,
-                create: function(input) {
-                    return {
-                        value: input,
-                        text: input
+            // Getting Tags for autocomplete _after_ labels
+            unmark.ajax('/tags', 'get', '', function (res) {
+                if (res.error) {
+                    console.log(res.error);
+                }
+                if (res.tags) {
+                    tagList = [];
+                    for(i=0;i<Object.keys(res.tags).length;i++){
+                        tagList.push({text: res.tags[i].name});
                     }
-                },
-                onChange: function(input) {
-                    unmark.saveTags( mark_id, input );
-                    setTimeout(unmark.update_tag_count,1000); // Delayed slightly, otherwise 404 (unsure why)
+                    mark_added_tags_value = mark_tags_string.split(',');
+                    
+                    for (i=0;i<mark_added_tags_value.length;i++) {
+                        tagList.push({text: mark_added_tags_value[i]});
+                    }
+                    ajax_loading = false;
+                    initializeTagInput(tagList);
                 }
             });
+
+            function initializeTagInput(tagList) {
+                input_tags.selectize({
+                    plugins: ['remove_button', 'restore_on_backspace'],
+                    delimiter: ',',
+                    openOnFocus: false,
+                    persist: false,
+                    createOnBlur: true,
+                    closeAfterSelect: true,
+                    labelField: 'text',
+                    valueField: 'text',
+                    searchField: 'text',
+                    options: tagList,
+                    create: function(input) {
+                        return {
+                            value: input,
+                            text: input
+                        }
+                    },
+                    onChange: function(input) {
+                        unmark.saveTags( mark_id, input );
+                        setTimeout(unmark.update_tag_count,1000); // Delayed slightly, otherwise 404 (unsure why)
+                    }
+                });
+
+                // Selectize won't work properly without having the initial
+                // tags be added as options. So this code does that.
+                // See:
+                // http://jsfiddle.net/dchvatik/tjckrh6r/
+                // https://github.com/selectize/selectize.js/issues/568#issuecomment-128667562
+                // https://github.com/selectize/selectize.js/issues/693
+                // tags_autocomplete = input_tags[0].selectize;
+                // for (i = 0; i < mark_added_tags_value.length; i++) {
+                //     tags_autocomplete.addOption({
+                //         value: mark_added_tags_value[i],
+                //         text: mark_added_tags_value[i],
+                //     });
+                //     tags_autocomplete.addItem(mark_added_tags_value[i]);
+                // }
+
+            }
+
+            
+
+            // // Initialize tags
+            // input_tags.selectize({
+            //     plugins: ['remove_button', 'restore_on_backspace'],
+            //     delimiter: ',',
+            //     persist: false,
+            //     create: function(input) {
+            //         return {
+            //             value: input,
+            //             text: input
+            //         }
+            //     },
+            //     onChange: function(input) {
+            //         unmark.saveTags( mark_id, input );
+            //         setTimeout(unmark.update_tag_count,1000); // Delayed slightly, otherwise 404 (unsure why)
+            //     }
+            // });
 
 
         });

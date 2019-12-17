@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title><?php echo unmark_phrase('Unmark : Mark Added'); ?></title>
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo $this->config->item('unmark_version'); ?>" />
-    <link rel="icon" type="image/ico" href="favicon.ico" />
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
     <script src="/assets/js/plugins/modernizr-2.7.1.min.js"></script>
     <script>
         /* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
@@ -46,6 +46,7 @@
                   $tag_csv.=$tag.',';
               endforeach;
               $tag_csv = trim($tag_csv,',');
+
           endif; ?>
           <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>">
             <input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="mark-added-tags-area selectize" placeholder="e.g. work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>">

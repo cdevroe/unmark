@@ -19,7 +19,10 @@
         function built_label_list(res) {
             var list            = unmark.label_list(res);
             ul_label_choices.prepend(list);
-            unmark.marks_addLabel();
+            
+            //unmark.marks_addLabel();
+            // Show Current Label
+            check_for_label();
         };
 
         // Function to check the current label for the mark saved
@@ -30,11 +33,27 @@
             current_label.addClass('label-'+label_id).text(label_name);
         };
 
-        // Grab the labels list
-        unmark.getData('labels', built_label_list);
-
-        // Show Current Label
-        check_for_label();
+        // Getting Tags for autocomplete _after_ labels
+        unmark.ajax('/tags', 'get', '', function (res) {
+            if (res.error) {
+                console.log(res.error);
+            }
+            if (res.tags) {
+                tagList = [];
+                for(i=0;i<Object.keys(res.tags).length;i++){
+                    tagList.push({text: res.tags[i].name});
+                }
+                mark_added_tags_value = mark_added_tags.val().split(',');
+                
+                for (i=0;i<mark_added_tags_value.length;i++) {
+                    tagList.push({text: mark_added_tags_value[i]});
+                }
+                ajax_loading = false;
+                initializeSelect(tagList);
+            }
+            // Grab the labels list
+            unmark.getData('labels', built_label_list);
+        });
 
         // When typing in notes field, progressively save
         mark_added_notes.on('blur keydown', function (e) {
@@ -47,23 +66,51 @@
             }
         });
 
-        // Initialize tags, provide anon functions for create and change
-        mark_added_tags.selectize({
-            plugins: ['remove_button', 'restore_on_backspace'],
-            delimiter: ',',
-            persist: false,
-            create: function(input) {
-                return {
-                    value: input,
-                    text: input
+        // Runs after built_label_list and after server returns list of tags
+        function initializeSelect(tagList) {
+            // Grab starting value of tags, to add to list of options
+            // mark_added_tags_value = mark_added_tags.val().split(',');
+            
+            // Initialize tags, provide anon functions for create and change
+            mark_added_tags.selectize({
+                plugins: ['remove_button', 'restore_on_backspace'],
+                delimiter: ',',
+                openOnFocus: false,
+                persist: false,
+                createOnBlur: true,
+                closeAfterSelect: true,
+                labelField: 'text',
+                valueField: 'text',
+                searchField: 'text',
+                options: tagList,
+                create: function(input) {
+                    return {
+                        value: input,
+                        text: input
+                    }
+                },
+                onChange: function(input) {
+                    unmark.saveTags( mark_added_tags.data('mark-id'), input );
                 }
-            },
-            onChange: function(input) {
-                unmark.saveTags( mark_added_tags.data('mark-id'), input );
-            }
-        });
+            });
 
-        // When a frequently used tag is clicked, add to tag list and update mark info
+            // Selectize won't work properly without having the initial
+            // tags be added as options. So this code does that.
+            // See:
+            // http://jsfiddle.net/dchvatik/tjckrh6r/
+            // https://github.com/selectize/selectize.js/issues/568#issuecomment-128667562
+            // https://github.com/selectize/selectize.js/issues/693
+            // tags_autocomplete = mark_added_tags[0].selectize;
+            // for (i = 0; i < mark_added_tags_value.length; i++) {
+            //     tags_autocomplete.addOption({
+            //         value: mark_added_tags_value[i],
+            //         text: mark_added_tags_value[i],
+            //     });
+            //     tags_autocomplete.addItem(mark_added_tags_value[i]);
+            // }
+        }
+
+        // When a frequently used tag is clicked, add to tag list
         frequently_used_tags.on('click', function(e) {
 
             var selectize = mark_added_tags[0].selectize;
