@@ -27,8 +27,13 @@
         //unmark.sidebar_expand(true);
         unmark.sidebar_mark_info.fadeOut(400, function () {
             //unmark.sidebar_default.fadeIn(400);
-            clearInterval(intervalSaveTitle);
-            clearInterval(intervalSaveNotes);
+            //TODO: Figure out a way to clear the intervals when they aren't running (bug introduced in 2.0?)
+            if (intervalSaveTitle) {
+                clearInterval(intervalSaveTitle);
+            }
+            if (intervalSaveNotes) {
+                clearInterval(intervalSaveNotes);
+            }
         });
         if (Modernizr.mq('only screen and (max-width: 768px)')) {
           $('.sidebar-content').removeClass('active');

@@ -51,24 +51,28 @@
           <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>">
             <input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="mark-added-tags-area selectize" placeholder="e.g. work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>">
           </section>
-          <p>Most-used: 
-          <?php $tagcount = 6;
-                $i = 0;
-                foreach ($tags['popular'] as $tag) :
-                    if ($i == $tagcount) continue;
-                    echo '<a href="#" class="quick-tag">#'.$tag->name.'</a>';
-                    $i++;
-                endforeach; ?>
-          </p>
-          <p>Recently-used: 
-          <?php 
-                $i=0;
-                foreach ($tags['recent'] as $tag) :
-                    if ($i == $tagcount) continue;
-                    echo '<a href="#" class="quick-tag">#'.$tag->name.'</a>';
-                    $i++;
-                endforeach; ?>
-          </p>
+          <?php if ( !empty($tags['tags']) ) : ?>
+            <p>Most-used: 
+            <?php $tagcount = 6;
+                    $i = 0;
+                    foreach ($tags['popular'] as $tag) :
+                        if ($i == $tagcount) continue;
+                        echo '<a href="#" class="quick-tag">#'.$tag->name.'</a>';
+                        $i++;
+                    endforeach; ?>
+            </p>
+          <?php endif; // Tags popular ?>
+          <?php if ( !empty($tags['recent']) ) : ?>
+            <p>Recently-used: 
+            <?php 
+                    $i=0;
+                    foreach ($tags['recent'] as $tag) :
+                        if ($i == $tagcount) continue;
+                        echo '<a href="#" class="quick-tag">#'.$tag->name.'</a>';
+                        $i++;
+                    endforeach; ?>
+            </p>
+        <?php endif; // Tags recent ?>
       </div>
       <div class="mark-added-note mark-added-settings">
           <h4>Notes</h4>
