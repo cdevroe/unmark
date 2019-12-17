@@ -197,6 +197,7 @@
         min-height: 100%;
         width: 100%;
         overflow-y: scroll;
+        scrollbar-width: none;
         @include sm {
             top: 80px;
             height: calc(100% - 80px);

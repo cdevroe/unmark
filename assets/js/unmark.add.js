@@ -21,8 +21,6 @@
             ul_label_choices.prepend(list);
             
             //unmark.marks_addLabel();
-            // Show Current Label
-            check_for_label();
         };
 
         // Function to check the current label for the mark saved
@@ -32,6 +30,9 @@
 
             current_label.addClass('label-'+label_id).text(label_name);
         };
+
+        // Show Current Label
+        check_for_label();
 
         // Getting Tags for autocomplete _after_ labels
         unmark.ajax('/tags', 'get', '', function (res) {
