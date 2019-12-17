@@ -7,11 +7,12 @@
     // Wait for Page to load
     $(document).ready(function () {
 
-        var current_label       = $('#currLabel'),
-            mark_added          = $('.mark-added'),
-            mark_added_notes    = $('.mark-added-notes-area'),
-            mark_added_tags     = $('.mark-added-tags-area'),
-            ul_label_choices    = $('ul.label-choices');
+        var current_label           = $('#currLabel'),
+            frequently_used_tags    = $('.frequently-used-tag'),
+            mark_added              = $('.mark-added'),
+            mark_added_notes        = $('.mark-added-notes-area'),
+            mark_added_tags         = $('.mark-added-tags-area'),
+            ul_label_choices        = $('ul.label-choices');
 
         // Gets an HTML list of data and prepends the list
         // Run as a callback for the getData function below
@@ -35,6 +36,7 @@
         // Show Current Label
         check_for_label();
 
+        // When typing in notes field, progressively save
         mark_added_notes.on('blur keydown', function (e) {
             if (e.which === 13 || e.type === 'blur') {
                 e.preventDefault();
@@ -45,7 +47,7 @@
             }
         });
 
-        // Initialize tags
+        // Initialize tags, provide anon functions for create and change
         mark_added_tags.selectize({
             plugins: ['remove_button', 'restore_on_backspace'],
             delimiter: ',',
@@ -60,6 +62,16 @@
                 unmark.saveTags( mark_added_tags.data('mark-id'), input );
             }
         });
+
+        // When a frequently used tag is clicked, add to tag list and update mark info
+        frequently_used_tags.on('click', function(e) {
+
+            var selectize = mark_added_tags[0].selectize;
+                
+            selectize.createItem($(this).html().replace('#',''))
+            selectize.focus();
+        });
+        
 
     });
 

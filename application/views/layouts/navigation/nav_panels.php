@@ -14,7 +14,29 @@
 <div id="panel-tags" class="nav-panel">
 	<h4 class="nav-heading"><?php echo unmark_phrase('Most-Used Tags') ?></h4>
 	<ul class="tag-list">
-		<?php $this->load->view('layouts/navigation/tags_list.php'); ?>
+		<?php if (isset($tags) && $tags['popular'] != '') : ?>
+			<?php foreach ($tags['popular'] as $pop_tag) : ?>
+				<li class="tag-<?php print $pop_tag->tag_id ?>">
+					<a href="/marks/tag/<?php print $pop_tag->slug; ?>">#<?php print $pop_tag->name; ?></a>
+					<span><?php echo printMarksCount($pop_tag->total); ?></span>	
+				</li>
+			<?php endforeach; ?>
+		<?php else : ?>
+			<li><?php echo unmark_phrase('No Tags Found'); ?></li>
+		<?php endif; ?>
+	</ul>
+	<h4 class="nav-heading"><?php echo unmark_phrase('Recently-Used Tags') ?></h4>
+	<ul class="tag-list">
+	<?php if (isset($tags) && $tags['recent'] != '') : ?>
+			<?php foreach ($tags['recent'] as $recent_tag) : ?>
+				<li class="tag-<?php print $recent_tag->tag_id ?>">
+					<a href="/marks/tag/<?php print $recent_tag->slug; ?>">#<?php print $recent_tag->name; ?></a>
+					<span><?php echo printMarksCount($recent_tag->total); ?></span>	
+				</li>
+			<?php endforeach; ?>
+		<?php else : ?>
+			<li><?php echo unmark_phrase('No Tags Found'); ?></li>
+		<?php endif; ?>
 	</ul>
 </div>
 <div id="panel-timeline" class="nav-panel">

@@ -47,7 +47,27 @@
               endforeach;
               $tag_csv = trim($tag_csv,',');
           endif; ?>
-          <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>"><input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="mark-added-tags-area selectize" placeholder="e.g. work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>"></section>
+          <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>">
+            <input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="mark-added-tags-area selectize" placeholder="e.g. work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>">
+          </section>
+          <p>Frequently used: 
+          <?php $tagcount = 6;
+                $i = 0;
+                foreach ($tags['popular'] as $tag) :
+                    if ($i == $tagcount) continue;
+                    echo '<a href="#" class="frequently-used-tag">#'.$tag->name.'</a>';
+                    $i++;
+                endforeach; ?>
+          </p>
+          <p><span>Recently used: 
+          <?php 
+                $i=0;
+                foreach ($tags['recent'] as $tag) :
+                    if ($i == $tagcount) continue;
+                    echo '<a href="#" class="frequently-used-tag">#'.$tag->name.'</a>';
+                    $i++;
+                endforeach; ?>
+          </p>
       </div>
       <div class="mark-added-note mark-added-settings">
           <h4>Notes</h4>

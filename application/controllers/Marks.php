@@ -640,6 +640,8 @@ class Marks extends Plain_Controller
 
         $this->data['bookmarklet'] = (isset($_GET['bookmarklet'])) ? $_GET['bookmarklet'] : true;
 
+        self::getTags();
+
         // Figure view
         $this->figureView('marks/info');
     }

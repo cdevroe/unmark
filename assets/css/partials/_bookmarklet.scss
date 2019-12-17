@@ -60,6 +60,10 @@
             position: relative;
             padding-left: 20px;
             font-size: 13px;
+            &.frequently-used-tag { // Added by Colin
+              display: inline;
+              padding-left: 5px;
+            }
             &#currLabel {
                 position: absolute;
                 left: 172px;
