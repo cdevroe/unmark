@@ -54,7 +54,8 @@
             _labels = arguments[0] || _labels;
             (! isNaN(_labels)) ? unmark.getData('labels', populateLabels) : $('ul.sidebar-label-list').prepend(unmark.label_list(_labels));
 
-            //unmark.marks_addLabel();
+            // Enabled event listeners for adding labels
+            unmark.marks_addLabel();
 
             
         };

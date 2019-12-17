@@ -8,7 +8,7 @@
     $(document).ready(function () {
 
         var current_label           = $('#currLabel'),
-            frequently_used_tags    = $('.frequently-used-tag'),
+            quick_tags              = $('.quick-tag'),
             mark_added              = $('.mark-added'),
             mark_added_notes        = $('.mark-added-notes-area'),
             mark_added_tags         = $('.mark-added-tags-area'),
@@ -20,7 +20,8 @@
             var list            = unmark.label_list(res);
             ul_label_choices.prepend(list);
             
-            //unmark.marks_addLabel();
+            // enable label updating - adds event listeners
+            unmark.marks_addLabel();
         };
 
         // Function to check the current label for the mark saved
@@ -111,8 +112,8 @@
             // }
         }
 
-        // When a frequently used tag is clicked, add to tag list
-        frequently_used_tags.on('click', function(e) {
+        // When a most-used and recently-used tag is clicked, add to tag list
+        quick_tags.on('click', function(e) {
 
             var selectize = mark_added_tags[0].selectize;
                 

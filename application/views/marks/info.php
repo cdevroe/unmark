@@ -51,21 +51,21 @@
           <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>">
             <input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="mark-added-tags-area selectize" placeholder="e.g. work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>">
           </section>
-          <p>Frequently used: 
+          <p>Most-used: 
           <?php $tagcount = 6;
                 $i = 0;
                 foreach ($tags['popular'] as $tag) :
                     if ($i == $tagcount) continue;
-                    echo '<a href="#" class="frequently-used-tag">#'.$tag->name.'</a>';
+                    echo '<a href="#" class="quick-tag">#'.$tag->name.'</a>';
                     $i++;
                 endforeach; ?>
           </p>
-          <p><span>Recently used: 
+          <p>Recently-used: 
           <?php 
                 $i=0;
                 foreach ($tags['recent'] as $tag) :
                     if ($i == $tagcount) continue;
-                    echo '<a href="#" class="frequently-used-tag">#'.$tag->name.'</a>';
+                    echo '<a href="#" class="quick-tag">#'.$tag->name.'</a>';
                     $i++;
                 endforeach; ?>
           </p>
