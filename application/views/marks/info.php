@@ -6,7 +6,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title><?php echo unmark_phrase('Unmark : Mark Added'); ?></title>
     <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo $this->config->item('unmark_version'); ?>" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
     <script src="/assets/js/plugins/modernizr-2.7.1.min.js"></script>
@@ -51,10 +50,12 @@
           <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>">
             <input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="mark-added-tags-area selectize" placeholder="e.g. work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>">
           </section>
-          <?php if ( !empty($tags['tags']) ) : ?>
+          <?php
+          $tagcount = 6; // Number of tags to show
+          
+          if ( !empty($tags['tags']) ) : ?>
             <p>Most-used: 
-            <?php $tagcount = 6;
-                    $i = 0;
+            <?php   $i = 0;
                     foreach ($tags['popular'] as $tag) :
                         if ($i == $tagcount) continue;
                         echo '<a href="#" class="quick-tag">#'.$tag->name.'</a>';

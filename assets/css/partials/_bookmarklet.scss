@@ -247,6 +247,9 @@
             &.has-items {
               padding: 6px;
             }
+            div {
+              color: white;
+            }
           }
           .selectize-dropdown {
             border: 1px solid darken(desaturate($color_gray, 15%), 6%);

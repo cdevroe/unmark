@@ -8,9 +8,6 @@
     <meta name="apple-mobile-web-app-capable" content="no">
     <title><?php echo unmark_phrase('Unmark'); ?></title>
     <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700" rel="stylesheet">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo $this->config->item('unmark_version'); ?>" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/pwa/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/pwa/favicon-16x16.png">
