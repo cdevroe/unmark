@@ -73,5 +73,5 @@
 </div>
 <div id="panel-archive" class="nav-panel">
 	<h4 class="nav-heading"><?php echo unmark_phrase('Archive')?></h4>
-	<small>Archive stuff here...</small>
+	<small>Tip: You can restore a mark from your Archive. Additionally, when searching you can search just your archive.</small>
 </div>
