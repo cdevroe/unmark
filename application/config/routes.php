@@ -79,6 +79,7 @@ $route['marks?(.*?)']            = 'marks/index$1';
 
 // Tags
 $route['tag/add(.*?)']           = 'tags/add';
+$route['tags/getAutocomplete(.*?)']          = 'tags/getAutocomplete';
 $route['tags?(.*?)']             = 'tags/index$1';
 
 // Registration

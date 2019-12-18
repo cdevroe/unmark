@@ -128,24 +128,31 @@
                 }
             });
 
-            // Getting Tags for autocomplete _after_ labels
-            unmark.ajax('/tags', 'get', '', function (res) {
-                if (res.error) {
-                    console.log(res.error);
+            // Getting Tags for autocomplete
+            unmark.ajax('/tags/getAutocomplete', 'get', '', function (res) {
+
+                tagList = [];
+
+                if (res.error) { // Put error from API in console, but still load empty list
+                    console.log(res.error); 
                 }
-                if (res.tags) {
-                    tagList = [];
+
+                if (res.tags !== false) { // If it _is_ false, it likely means user has no tags yet
+
+                    // Create a list of autocomplete tags
                     for(i=0;i<Object.keys(res.tags).length;i++){
                         tagList.push({text: res.tags[i].name});
-                    }
-                    mark_added_tags_value = mark_tags_string.split(',');
-                    
-                    for (i=0;i<mark_added_tags_value.length;i++) {
-                        tagList.push({text: mark_added_tags_value[i]});
-                    }
-                    ajax_loading = false;
-                    initializeTagInput(tagList);
+                    }    
                 }
+                
+                // Restore the value of the tags already assigned
+                mark_added_tags_value = mark_tags_string.split(',');
+                for (i=0;i<mark_added_tags_value.length;i++) {
+                    tagList.push({text: mark_added_tags_value[i]});
+                }
+
+                ajax_loading = false;
+                initializeTagInput(tagList);
             });
 
             function initializeTagInput(tagList) {
