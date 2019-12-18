@@ -40,15 +40,6 @@
 
         mark_obj['tags_string'] = mark_tags_string;
 
-        // 1.6
-        // If the mark is clicked on is currently being edited,
-        // do nothing
-        // var editable_mark_title = $('#mark-'+mark_id+' h2');
-        // if (editable_mark_title.hasClass('editable')) return;
-
-        // However, if it isn't the current mark it should 'kill all -9' the rest of the editing stuff
-        // $('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable');
-
         // Quick function to populate the tags
         function populateLabels() {
             _labels = arguments[0] || _labels;
@@ -62,18 +53,12 @@
 
         // Clean up view
 
-      //  if (!mark_nofade) {
         if (Modernizr.mq('only screen and (min-width: 768px)')) {
             $('.mark').removeClass('view-inactive').removeClass('view-active');
             $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
             $('#mark-' + mark_id).addClass('view-active');
         }
-            $('.sidebar-content').addClass('active');
-        //}
-
-        /*$('.mark').removeClass('view-inactive').removeClass('view-active');
-        $('.mark').not('#mark-' + mark_id).addClass('view-inactive');
-        $('#mark-' + mark_id).addClass('view-active');*/
+        $('.sidebar-content').addClass('active');
 
         // Check for note placeholder and update if there.
         if (mark_notehold !== ''){ mark_obj['notes'] = mark_notehold; }
@@ -179,42 +164,7 @@
                     }
                 });
 
-                // Selectize won't work properly without having the initial
-                // tags be added as options. So this code does that.
-                // See:
-                // http://jsfiddle.net/dchvatik/tjckrh6r/
-                // https://github.com/selectize/selectize.js/issues/568#issuecomment-128667562
-                // https://github.com/selectize/selectize.js/issues/693
-                // tags_autocomplete = input_tags[0].selectize;
-                // for (i = 0; i < mark_added_tags_value.length; i++) {
-                //     tags_autocomplete.addOption({
-                //         value: mark_added_tags_value[i],
-                //         text: mark_added_tags_value[i],
-                //     });
-                //     tags_autocomplete.addItem(mark_added_tags_value[i]);
-                // }
-
             }
-
-            
-
-            // // Initialize tags
-            // input_tags.selectize({
-            //     plugins: ['remove_button', 'restore_on_backspace'],
-            //     delimiter: ',',
-            //     persist: false,
-            //     create: function(input) {
-            //         return {
-            //             value: input,
-            //             text: input
-            //         }
-            //     },
-            //     onChange: function(input) {
-            //         unmark.saveTags( mark_id, input );
-            //         setTimeout(unmark.update_tag_count,1000); // Delayed slightly, otherwise 404 (unsure why)
-            //     }
-            // });
-
 
         });
     };
@@ -303,13 +253,11 @@
         // Private function to save notes
         function saveMarkInfo(title, notes, tags, id) {
 
-            // 1.6
             // Cannot submit an empty title
             if (title === '') {
                 return;
             }
 
-            // 1.6
             // Note was empty, set accordingly
             if (notes === '') {
                 //setNoteHeading(3);
@@ -320,49 +268,6 @@
                 $('#mark-'+id).find('.note-placeholder').text(notes);
             });
         }
-
-        // Private function to update note title
-        function setNoteHeading(num) {
-            switch (num) {
-                case 1:
-                    heading = 'Notes (click to edit)<i class="icon-edit"></i>';
-                break;
-                case 2:
-                    heading = 'Editing Mark Info <i class="icon-heading_close"></i>';
-                break;
-                case 3:
-                    heading = 'Edit Note/Mark Info<i class="icon-edit"></i>';
-                break;
-            }
-            editField.html(heading);
-        }
-
-        editable_notes.unbind();
-        //removed in 2.0 editable_mark_title.unbind();
-
-        // 1.6
-        // Strip the Mark Title of the A element. Easier to edit
-        // We will add the A back after editing is turned off
-
-        // Make Title and Notes editable
-
-        //removed in 2.0 editable_mark_title.attr('contenteditable', true).addClass('editable');
-        //removed in 2.0 editable_mark_title.find('a').contents().unwrap();
-
-        editable_notes.attr('contenteditable', true).addClass('editable');
-        editable_notes.find('a').contents().unwrap();
-
-        // Focus notes field for easy editing
-        //editable_notes.focus();
-
-        // 1.6
-        // Change Heading, add quitEdit action (see below)
-        // This will make it so that people have to click the X
-        // to stop editing
-        setNoteHeading(2);
-        editField.unbind();
-        editField.attr('data-action','marks_quitEdit');
-        editField.data('action','marks_quitEdit');
 
         // Define the actions that will save the note.
         // Includes Function to save the note
@@ -389,13 +294,9 @@
         editable_notes.on('keydown',function(e){
             $(this).addClass('contentsChanged');
         });
-        //removed 2.0 editable_mark_title.on('keydown',function(e){
-        //    $(this).addClass('contentsChanged');
-        //});
 
         // If we leave either field, fire function
         editable_notes.on('blur', editableActions);
-        //removed 2.0 editable_mark_title.on('blur', editableActions);
     };
 
     // save title only, can't be blank
@@ -502,66 +403,6 @@
            list += '<li class="label-'+ obj['label_id'] +'"><a href="#" rel="'+ obj['label_id'] +'"><span>'+ obj['name'] +'</span></a></li>';
         }
         return list;
-    };
-
-    // 1.6
-    // Exit edit mode for editing mark info
-    unmark.marks_quitEdit = function (editField) {
-
-        // If the Edit field is currently in "Edit" mode, then
-        // We can close. If not, don't.
-        if ( editField.html() == 'Editing Mark Info <i class="icon-heading_close"></i>' ) {
-
-            var editable_notes = editField.next(), notes, query;
-            var id = $(editable_notes).data('id');
-            var editable_mark_title = $('#mark-'+id+' h2');
-            var mark_url = $('#mark-'+id+' .mark-link a').attr('href');
-
-            // Turn off editability
-            editable_notes.attr('contenteditable', false).removeClass('editable');
-            //removed 2.0 editable_mark_title.attr('contenteditable', false).removeClass('editable');
-
-            // Return Mark title back to being wrapped by URL
-            //removed 2.0 editable_mark_title.html('<a target="_blank" rel="noopener noreferrer" href="'+mark_url+'">'+editable_mark_title.text()+'</a>');
-
-            // Taggify the notes (means also wrapping up any links within)
-            unmark.tagify_notes(editable_notes);
-
-            // Set up for next edit
-            editField.unbind();
-            editable_notes.unbind();
-            //editable_mark_title.unbind();
-
-            // Return previous action of marks_editMarkInfo
-            editField.html('Notes (click to edit)<i class="icon-edit"></i>');
-            editField.attr('data-action','marks_editMarkInfo');
-            editField.data('action','marks_editMarkInfo');
-
-            setTimeout( function() { editField.addClass('action'); }, 500);
-        } else {
-            return;
-        }
-
-    };
-
-    // Reads the passed note field and tagifies it on the fly.
-    // 4.1.14 - Also Linkify's the notes field ... matches http(s)
-    unmark.tagify_notes = function (note) {
-
-        // Get the note text, replace all tags with a linked tag
-        var notetext = note.text();
-
-        if (notetext !== '') {
-            // First Linkify Notes
-            notetext = notetext.replace(/(https?:\/\/[^\]\s]+)(?: ([^\]]*))?/g, "<a target='_blank' href='$1'>$1</a>");
-            // Then Tagify It
-            notetext = notetext.replace(/#(\S*)/g,'<a href="/marks/tag/$1">#$1</a>');
-        } else {
-            note.prev().html('Click To Add A Note or Edit Mark <i class="icon-edit"></i>');
-        }
-
-        // Send the HTML to the notes field.
-        note.html(notetext);
     };
 
     // Delete a Mark

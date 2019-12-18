@@ -23,18 +23,6 @@
     // Hides the marks info and re-displays the default sidebar
     unmark.sidebar_collapse = function () {
         $('.mark').removeClass('view-inactive').removeClass('view-active');
-        //$('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable'); // 1.6
-        //unmark.sidebar_expand(true);
-        unmark.sidebar_mark_info.fadeOut(400, function () {
-            //unmark.sidebar_default.fadeIn(400);
-            //TODO: Figure out a way to clear the intervals when they aren't running (bug introduced in 2.0?)
-            if (intervalSaveTitle) {
-                clearInterval(intervalSaveTitle);
-            }
-            if (intervalSaveNotes) {
-                clearInterval(intervalSaveNotes);
-            }
-        });
         if (Modernizr.mq('only screen and (max-width: 768px)')) {
           $('.sidebar-content').removeClass('active');
           $('#unmark-wrapper').removeClass('sidebar-active');

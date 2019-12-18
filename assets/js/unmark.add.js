@@ -77,9 +77,7 @@
 
         // Runs after built_label_list and after server returns list of tags
         function initializeSelect(tagList) {
-            // Grab starting value of tags, to add to list of options
-            // mark_added_tags_value = mark_added_tags.val().split(',');
-            
+    
             // Initialize tags, provide anon functions for create and change
             mark_added_tags.selectize({
                 plugins: ['remove_button', 'restore_on_backspace'],
@@ -102,21 +100,6 @@
                     unmark.saveTags( mark_added_tags.data('mark-id'), input );
                 }
             });
-
-            // Selectize won't work properly without having the initial
-            // tags be added as options. So this code does that.
-            // See:
-            // http://jsfiddle.net/dchvatik/tjckrh6r/
-            // https://github.com/selectize/selectize.js/issues/568#issuecomment-128667562
-            // https://github.com/selectize/selectize.js/issues/693
-            // tags_autocomplete = mark_added_tags[0].selectize;
-            // for (i = 0; i < mark_added_tags_value.length; i++) {
-            //     tags_autocomplete.addOption({
-            //         value: mark_added_tags_value[i],
-            //         text: mark_added_tags_value[i],
-            //     });
-            //     tags_autocomplete.addItem(mark_added_tags_value[i]);
-            // }
         }
 
         // When a most-used and recently-used tag is clicked, add to tag list
