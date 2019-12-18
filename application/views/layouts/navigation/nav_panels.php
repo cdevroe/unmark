@@ -22,7 +22,7 @@
 				</li>
 			<?php endforeach; ?>
 		<?php else : ?>
-			<li><?php echo unmark_phrase('No Tags Found'); ?></li>
+			<li><?php echo unmark_phrase('You haven\'t added any tags yet. When you do the ones you use most will be listed here.'); ?></li>
 		<?php endif; ?>
 	</ul>
 	<h4 class="nav-heading"><?php echo unmark_phrase('Recently-Used Tags') ?></h4>
@@ -35,7 +35,7 @@
 				</li>
 			<?php endforeach; ?>
 		<?php else : ?>
-			<li><?php echo unmark_phrase('No Tags Found'); ?></li>
+			<li><?php echo unmark_phrase('When saving a mark, add a tag, and the most recent ones you use will show up here.'); ?></li>
 		<?php endif; ?>
 	</ul>
 </div>
