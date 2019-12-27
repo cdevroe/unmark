@@ -29,7 +29,7 @@
         background: $color_blue;
         color: white;
         display: block;
-        box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize($color_dark, .85);
+        //box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize($color_dark, .85);
         padding: 9px 20px 11px;
         @include title-text;
         font-size: 13px;
@@ -39,7 +39,7 @@
         flex-direction: column;
         justify-content: center;
         margin: 0 0 10px;
-        border-radius: 3px;
+        border-radius: 5px;
     }
     a.exportbtn {
       margin-bottom: 0;

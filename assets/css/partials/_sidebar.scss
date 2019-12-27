@@ -99,7 +99,7 @@
                 color: $color_white;
                 text-decoration: none;
                 text-transform: none;
-                box-shadow: 0 15px 40px -10px transparentize(white, .8) inset, 0 1px 4px 0 transparentize(black, .9);
+                //box-shadow: 0 15px 40px -10px transparentize(white, .8) inset, 0 1px 4px 0 transparentize(black, .9);
                 @include md {
                     width: auto;
                     margin: 0;
@@ -228,7 +228,7 @@
            justify-content: center;
            align-items: center;
            padding: 0 0 1px 1px;
-           box-shadow: 1px 0 0 0 transparentize(white, .8) inset;
+           //box-shadow: 1px 0 0 0 transparentize(white, .8) inset;
            border: none;
            border-radius: 0 3px 3px 0;
            @include sm {
@@ -265,7 +265,7 @@
     > main {
       padding: 24px 20px;
       section {
-        margin-bottom: 30px;
+        margin-bottom: 24px;
       }
     }
     .section-heading {
@@ -276,13 +276,28 @@
       color: $color_dark_gray;
       font-weight: 600;
     }
+    .input-field {
+      input {
+        font-size: 14px;
+        display: block;
+        height: 40px;
+        background: $color_white;
+        border: 1px solid darken(desaturate($color_gray, 15%), 6%);
+        width: 100%;
+        border-radius: 2px 0 0 2px;
+        padding: 8px 9px;
+        &[type=text] {
+          -webkit-appearance: none;
+        }
+      }
+    }
     .button-field {
-      padding-right: 29px;
+      padding-right: 33px;
       position: relative;
       input {
         font-size: 14px;
         display: block;
-        height: 36px;
+        height: 40px;
         background: $color_white;
         border: 1px solid darken(desaturate($color_gray, 15%), 6%);
         width: 100%;
@@ -294,10 +309,10 @@
       }
       .copy-link {
         display: block;
-        height: 36px;
+        height: 40px;
         background: $color_white;
         border: 1px solid darken(desaturate($color_gray, 15%), 6%);
-        width: 30px;
+        width: 34px;
         border-radius: 0 2px 2px 0;
         position: absolute;
         top: 0;
@@ -430,7 +445,7 @@
         padding: 0;
         h4 {
             position: relative;
-            cursor: pointer;
+            //cursor: pointer;
             @include title-text;
             display: block;
             margin: 0 0 8px;
@@ -448,7 +463,7 @@
             }
         }
         section {
-            margin-bottom: 36px;
+            margin-bottom: 24px;
             font-size: 14px;
             line-height: 23px;
             //overflow:hidden;
@@ -568,12 +583,12 @@
         padding: 10px 20px 13px;
         font-size: 14px;
         color: white;
-        border-radius: 3px;
+        border-radius: 5px;
         @include title-text;
         letter-spacing: normal;
         @include font-smoothing;
         font-weight: 700;
-        box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize(darken($color_darkest, 20%), .85);
+        //box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize(darken($color_darkest, 20%), .85);
         cursor: pointer;
         &[data-action="delete_mark"] {
           background: $color_red;

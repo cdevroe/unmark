@@ -54,7 +54,7 @@ unmark.template.sidebar = '<header class="sidebar-action">'+
 '<main>'+
 '<section class="mark-title">'+
 '<h4>TITLE</h4>'+
-'<div class="button-field">'+
+'<div class="input-field">'+
 '<input data-id="{{mark_id}}" id="input-title" type="text" value="{{mark_title}}">'+
 '</div>'+
 '</section>'+
@@ -78,7 +78,7 @@ unmark.template.sidebar = '<header class="sidebar-action">'+
 ''+
 '<h4>Tags</h4>'+
 '<section id="tags-{{mark_id}}"><input data-mark-id="{{mark_id}}" type="text" id="input-tags" class="selectize" placeholder="e.g. work, technology, interview" value="{{tags_string}}"></section>'+
-''+
+//''+
 '<h4>Notes</h4>'+
 '<textarea id="input-notes" data-id="{{mark_id}}" placeholder="Type note text here..." class="sidebar-info-notes">{{{notes}}}</textarea>'+
 '</div>'+

@@ -308,9 +308,9 @@
     }
     #panel-settings {
         .nav-heading {
-          text-transform: none;
-          color: white;
-          font-size: 13px;
+          //text-transform: none;
+          //color: white;
+          //font-size: 13px;
           span {
             color: white;
             font-size: 13px;
@@ -332,12 +332,12 @@
             margin-top: 36px;
             padding: 10px 20px 13px;
             font-size: 14px;
-            border-radius: 3px;
+            border-radius: 5px;
             @include title-text;
             letter-spacing: normal;
             @include font-smoothing;
             font-weight: 700;
-            box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize(darken($color_darkest, 20%), .85);
+            //box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 2px 7px 0 transparentize(darken($color_darkest, 20%), .85);
         }
     }
     .nav-list {
@@ -366,20 +366,20 @@
             a {
                 color: $color_white;
                 border-bottom: none;
-                padding: 8px 4px;
+                padding: 5px 4px;
                 text-transform: inherit;
                 display: block;
                 font-size: 14px;
             }
             span {
                 display: block;
-                font-weight: 600;
-                font-size: 11px;
+                font-weight: 400;
+                font-size: 12px;
                 color: transparentize($color_white, 0.45);
-                margin-top: 2px;
+                margin-top: 0px;
                 position: absolute;
                 right: 0;
-                top: 9px;
+                top: 6px;
             }
         }
     }
@@ -413,7 +413,7 @@
             border-bottom: none;
             padding: 0;
             font-size: 14px;
-            padding: 12px 40px 12px 30px;
+            padding: 10px 40px 10px 30px;
             position: relative;
             z-index: 900;
             @include lg {
@@ -422,10 +422,10 @@
         }
         span {
             display: block;
-            font-weight: 600;
-            font-size: 11px;
+            font-weight: 400;
+            font-size: 12px;
             color: transparentize($color_white, 0.45);
-            margin-top: 2px;
+            margin-top: 0px;
             position: absolute;
             right: 0;
             top: 13px;
