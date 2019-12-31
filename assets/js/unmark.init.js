@@ -19,6 +19,7 @@
         this.special_chars =                  { '\\+': '&#43;' };
         this.mainpanels =                     $('#unmark-wrapper');
         this.hamburger =                      $('.mobile-header .menu-activator');
+        this.mobile_header =                  $('.mobile-header');
 
         // Check Query String
         var load = unmark.readQuery('load');
@@ -159,6 +160,7 @@
             $(unmark.hamburger).toggleClass('active');
             $(unmark.mainpanels).removeClass('sidebar-active');
             $(unmark.mainpanels).toggleClass('nav-active');
+            $(unmark.mobile_header).toggleClass('shift-right');
             return false;
         });
 
@@ -186,6 +188,7 @@
             $('#unmark-wrapper').removeClass();
             $('#unmark-wrapper').addClass('sidebar-active');
             $('.mobile-header .menu-activator').removeClass('active');
+            $(unmark.mobile_header).addClass('shift-left');
             $(this).toggleClass('active');
             return false;
         });

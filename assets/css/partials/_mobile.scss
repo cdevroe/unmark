@@ -9,6 +9,8 @@
     width: 100%;
     padding: 0 60px;
     z-index: 1000;
+    transition: all .3s ease-in-out;
+    left: 0;
     @include md {
         display: none;
     }
@@ -25,6 +27,12 @@
         svg {
             fill: $color_white;
         }
+    }
+    &.shift-right {
+      left: 280px;
+    }
+    &.shift-left {
+      left: -280px;
     }
 }
 .menu-activator {
