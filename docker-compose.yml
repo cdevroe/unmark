@@ -18,7 +18,7 @@ services:
     image: php:5.6-apache
     hostname: apache
     ports:
-    - "80:80"
+    - "81:80"
     volumes:
       - ./:/var/www/html
       - ./docker-configs/php-custom.ini:/usr/local/etc/php/conf.d/custom.ini

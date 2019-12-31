@@ -65,11 +65,12 @@
             content: "";
             display: block;
             width: 100%;
-            height: 16px;
+            height: 12px;
             position: absolute;
             top: 100%;
             left: 0;
-            box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
+            //box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
+            background: linear-gradient(transparentize(desaturate(darken($color_gray, 50%), 2%), .95), transparentize(desaturate(darken($color_gray, 50%), 2%), .98), transparentize(desaturate(darken($color_gray, 50%), 2%), 1));
         }
         .marks-heading-wrapper {
             margin: 0 auto;
@@ -135,7 +136,7 @@
                     height: 26px;
                     width: 40px;
                     background: $color_blue;
-                    border-radius: 3px;
+                    border-radius: 5px;
                     color: $color_white;
                     padding: 4px 10px 6px;
                     text-align: center;
@@ -146,7 +147,7 @@
                     right: 42px;
                     top: 50%;
                     margin-top: -13px;
-                    box-shadow: 0 1px 3px 0 transparentize($color_darkest, .96), 0 2px 5px 0 transparentize($color_darkest, .94), 0 12px 40px -20px transparentize(white, .5) inset;
+                    //box-shadow: 0 1px 3px 0 transparentize($color_darkest, .96), 0 2px 5px 0 transparentize($color_darkest, .94), 0 12px 40px -20px transparentize(white, .5) inset;
                     @include sm {
                         height: 32px;
                         margin-top: -17px;
@@ -197,7 +198,7 @@
               button {
                 width: 42px;
                 @include sm {
-                    width: 86px;
+                    width: 90px;
                 }
                 span {
                   display: none;

@@ -23,11 +23,6 @@
     // Hides the marks info and re-displays the default sidebar
     unmark.sidebar_collapse = function () {
         $('.mark').removeClass('view-inactive').removeClass('view-active');
-        $('[id^=mark-] h2').attr('contenteditable',false).removeClass('editable'); // 1.6
-        //unmark.sidebar_expand(true);
-        unmark.sidebar_mark_info.fadeOut(400, function () {
-            //unmark.sidebar_default.fadeIn(400);
-        });
         if (Modernizr.mq('only screen and (max-width: 768px)')) {
           $('.sidebar-content').removeClass('active');
           $('#unmark-wrapper').removeClass('sidebar-active');
@@ -67,7 +62,7 @@
     // This handles both the top level and secondary level
     unmark.interact_nav = function (e, elem_ckd) {
         e.preventDefault();
-
+        unmark.sidebar_collapse(); // close bookmark info panel
         var panel_to_show                   = (elem_ckd.data('panel')) ? elem_ckd.data('panel') : '', // kept in data attribute
             panel_name                      = (panel_to_show !== '') ? panel_to_show.replace(/^#/, '') : '', // just removes #
             is_label_menu                   = (panel_name.indexOf('label') !== -1) ? true : false, // checks name of panel to see if this is label menu
