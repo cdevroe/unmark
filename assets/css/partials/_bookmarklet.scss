@@ -30,15 +30,16 @@
             font-weight: 400;
             color: $color_darker;
             font-size: 26px;
-            margin: 0 0 15px 0;
+            margin: 0 0 10px 0;
             line-height: 1.2;
+            @include unmark-truncate(380px);
         }
         span {
             color: darken($color_light, 25%);
             font-weight: 400;
             font-size: 12px;
             display: inline-block;
-            @include unmark-truncate(400px);
+            @include unmark-truncate(380px);
         }
     }
     .mark-added-meta {
@@ -48,7 +49,7 @@
         font-size: 12px;
         //border-top: 1px solid #e5e5e5;
         //padding: 18px 20px;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
         color: $color_dark_gray;
         position: relative;
         //@include title-text;
@@ -67,7 +68,7 @@
             &#currLabel {
                 position: absolute;
                 left: 172px;
-                top: 2px;
+                top: 23px;
                 padding-left: 0;
             }
             &:before {
@@ -110,6 +111,9 @@
                 color: $color_red;
             }
         }
+        p {
+          margin: 8px 0 0;
+        }
         &.mark-added-note {
           .mark-added-note-box {
             background: white;
@@ -119,7 +123,7 @@
             font-size: 13px;
             line-height: 1.5;
             color: lighten($color_dark, 5%);
-            min-height: 90px;
+            //min-height: 90px;
             transition: all .3s;
           }
           a {
@@ -160,7 +164,7 @@
             border: none;
             overflow: auto;
             resize: none;
-            height: 84px;
+            height: 60px;
             font-size: 14px;
             font-family: $sans-serif;
             @include font-smoothing;
@@ -178,8 +182,8 @@
             text-transform: none;
         }
         &.mark-added-label {
-          height: 20px;
-          margin-bottom: 28px;
+          height: 40px;
+          margin-bottom: 30px;
           section {
             padding: 0;
             top: 23px;
@@ -190,7 +194,7 @@
         #label-chosen {
             position: absolute;
             left: 172px;
-            top: 1px;
+            top: 22px;
             z-index: 9999;
             display: none;
             font-size: 13px;
@@ -298,7 +302,7 @@
         //border-bottom: 1px solid #e5e5e5;
     }
     .mark-added-actions {
-        padding: 10px 15px 34px;
+        padding: 6px 15px 24px;
         //background: lighten($color_gray, 1%);
         //position: absolute;
         //bottom: 0;
@@ -323,16 +327,16 @@
             @include font-smoothing;
             text-transform: uppercase;
             letter-spacing: .01em;
-            border-radius: 3px;
+            border-radius: 5px;
             font-size: 14px;
             font-weight: 700;
             //box-shadow: 0 30px 60px -24px transparentize(white, .94) inset, 0 2px 7px 0 transparentize($color_dark_gray, .8);
-            box-shadow: 0 30px 60px -24px transparentize(white, .94) inset, 0 2px 7px 0 transparentize(darken($color_blue, 25%), .7);
+            //box-shadow: 0 30px 60px -24px transparentize(white, .94) inset, 0 2px 7px 0 transparentize(darken($color_blue, 25%), .7);
             &.delete {
                 //width: 39%;
                 background: $color_red;
                 margin-right: 0;
-                box-shadow: 0 30px 60px -24px transparentize(white, .94) inset, 0 2px 7px 0 transparentize(darken($color_red, 25%), .7);
+                //box-shadow: 0 30px 60px -24px transparentize(white, .94) inset, 0 2px 7px 0 transparentize(darken($color_red, 25%), .7);
             }
         }
     }

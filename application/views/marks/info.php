@@ -31,6 +31,7 @@
 
     <div class="mark-added-meta">
       <div class="mark-added-label mark-added-settings label-<?php print $mark->label_id; ?>">
+          <h4>Label</h4>
           <span id="label-chosen"></span>
           <a id="currLabel" class="action" data-action="marks_addLabel" href="#"><?php echo unmark_phrase('Unlabeled'); ?></a>
           <section data-id="<?php print $mark->mark_id; ?>">
@@ -52,9 +53,9 @@
           </section>
           <?php
           $tagcount = 6; // Number of tags to show
-          
+
           if ( !empty($tags['tags']) ) : ?>
-            <p>Most-used: 
+            <p>Most-used:
             <?php   $i = 0;
                     foreach ($tags['popular'] as $tag) :
                         if ($i == $tagcount) continue;
@@ -64,8 +65,8 @@
             </p>
           <?php endif; // Tags popular ?>
           <?php if ( !empty($tags['recent']) ) : ?>
-            <p>Recently-used: 
-            <?php 
+            <p>Recently-used:
+            <?php
                     $i=0;
                     foreach ($tags['recent'] as $tag) :
                         if ($i == $tagcount) continue;
