@@ -114,6 +114,7 @@
         if (Modernizr.mq('only screen and (max-width: 480px)') && hide_mobile_sub_menu ) {
             unmark.mobile_nav(true);
         }
+
         return false;
     };
 

@@ -11,6 +11,7 @@
 			if (hide) {
 				unmark.mainpanels.removeClass('nav-active');
 				unmark.hamburger.removeClass('active');
+				unmark.mobile_header.removeClass('shift-right');
 			} else {
 				$('.main-wrapper').animate({left: 65}, 400);
 				$('.navigation-content').animate({left: 0}, 400);

@@ -58,7 +58,7 @@
         width: 24px;
         height: 24px;
         position: absolute;
-        top: 17px;
+        top: 14px;
         right: 14px;
         border: 1px solid darken(desaturate($color_gray, 12%), 15%);
         border-radius: 50%;
@@ -246,7 +246,7 @@
     > header {  // (.sidebar-action)
         width: 100%;
         z-index: 99999;
-        padding: 14px;
+        padding: 12px 14px;
         border-bottom: 1px solid darken(desaturate($color_gray, 15%), 6%);
         @include sm {
             display: block;
