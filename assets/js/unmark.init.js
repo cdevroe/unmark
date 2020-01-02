@@ -163,6 +163,13 @@
             $(unmark.mobile_header).toggleClass('shift-right');
             return false;
         });
+        $('#navigation-close-overlay').on( "click", function(e) {
+            e.preventDefault();
+            $(unmark.hamburger).removeClass('active');
+            $(unmark.mainpanels).removeClass('nav-active');
+            $(unmark.mobile_header).removeClass('shift-right');
+            return false;
+        });
 
         $('.mobile-header #mobile-sidebar-show').on( "click", function(e) {
             e.preventDefault();
@@ -171,6 +178,13 @@
             $('.mobile-header .menu-activator').removeClass('active');
             $(unmark.mobile_header).addClass('shift-left');
             $(this).toggleClass('active');
+            return false;
+        });
+        $('#sidebar-close-overlay').on( "click", function(e) {
+            e.preventDefault();
+            $('#unmark-wrapper').removeClass('sidebar-active');
+            $(unmark.mobile_header).removeClass('shift-left');
+            $('.mobile-header #mobile-sidebar-show').removeClass('active');
             return false;
         });
 
