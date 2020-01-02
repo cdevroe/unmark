@@ -34,12 +34,12 @@
     height: 100%;
     position: absolute;
     background: $color_white;
-    margin-top: 80px;
+    padding-top: 80px;
     width: 100%;
     @include xs {
         //width: 53%;
         width: calc(100% - 280px);
-        margin-top: 104px;
+        padding-top: 104px;
     }
     .marks-heading {
         color: $color_lightest;
@@ -60,6 +60,12 @@
             top: 0;
             height: 80px;
             font-size: 16px;
+            width: calc(100% - #{$nav_sm});
+            left: $nav_sm;
+        }
+        @include lg {
+          width: calc(100% - #{$nav_lg});
+          left: $nav_lg;
         }
         &:after {
             content: "";
@@ -71,14 +77,15 @@
             left: 0;
             //box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
             background: linear-gradient(transparentize(desaturate(darken($color_gray, 50%), 2%), .95), transparentize(desaturate(darken($color_gray, 50%), 2%), .98), transparentize(desaturate(darken($color_gray, 50%), 2%), 1));
+            border-top: 1px solid transparentize(desaturate(darken($color_gray, 50%), 2%), .9);
         }
         .marks-heading-wrapper {
             margin: 0 auto;
             @include sm {
-                padding-left: $nav_sm;
+                //padding-left: $nav_sm;
             }
             @include lg {
-                padding-left: $nav_lg;
+                //padding-left: $nav_lg;
             }
         }
         .marks-heading-bar {

@@ -33,7 +33,7 @@
         window.unmark_current_page = 1;
 
         // Animate the body fading in
-        if (Modernizr.mq('only screen and (min-width: 480px)')) {
+        if (Modernizr.mq('only screen and (min-width: 768px)')) {
             $('body').animate({opacity: 1}, 1000);
         }
 

@@ -15,10 +15,12 @@ body {
     font-weight: 400;
     min-height: 100%;
     color: $color_dark;
-    background: $color_body;
+    //background: $color_body;
+    background: white;
     @include font-smoothing;
     @include xs {
-        overflow-x: hidden;
+        //overflow-x: hidden;
+        -webkit-overflow-scrolling: auto;
     }
     a {
         color: $color_white;
@@ -49,7 +51,7 @@ body {
   min-height: 100vh;
   width: 100%;
   overflow: hidden;
-  position: relative;
+  position: fixed; // stops ios "pulling" off-screen
   @include sm {
     overflow: auto;
     position: static;
@@ -81,6 +83,9 @@ body {
     &.nav-active {
         left: 0;
         .main-content {
+            @include xs {
+              overflow: hidden;
+            }
             .marks-heading {
                 left: 280px;
             }

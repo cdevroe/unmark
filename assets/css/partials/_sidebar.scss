@@ -1,9 +1,11 @@
 // Sidebar Panel / Mark Details
 .sidebar-content {
-    background: lighten($color_gray, 1%);
+    //background: lighten($color_gray, 1%);
+    background: $color_gray;
     border-left: 1px solid darken($color_gray, 5%);
-    min-height: 100%;
-    height: calc(100% - 80px);
+    //min-height: 100%;
+    //height: calc(100% - 80px);
+    height: 100%;
     padding-right: 0;
     position: absolute;
     right: -340px;
@@ -22,7 +24,7 @@
         display: block !important;
         //top: 60px;
         top: 0;
-        box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
+        //box-shadow: 0 6px 13px -6px transparentize(desaturate(darken($color_gray, 50%), 2%), .9) inset, 0 12px 30px -12px transparentize(desaturate(darken($color_gray, 50%), 2%), .93) inset;
     }
     &:after {
         content: "";
@@ -51,6 +53,9 @@
       right: 0;
       &:after {
           right: 0;
+      }
+      .sidebar-mark-info>header {
+        right: 0;
       }
     }
     .close-sidebar {
@@ -252,6 +257,15 @@
             display: block;
             padding: 20px;
         }
+        @include xs {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            background: $color_gray;
+            right: -340px;
+            transition: all .3s ease-in-out;
+        }
         .sidebar-heading {
             margin: 5px 0;
             font-weight: 400;
@@ -264,6 +278,10 @@
     }
     > main {
       padding: 24px 20px;
+      @include xs {
+        padding-top: 76px;
+        padding-bottom: 120px;
+      }
       section {
         margin-bottom: 24px;
       }
@@ -376,6 +394,7 @@
             vertical-align: 1px;
             padding-left: 4px;
             font-weight: 600;
+            color: $color_dark_gray;
             &:active, &:focus {
                 outline: 0;
             }

@@ -111,7 +111,7 @@
         //      clicked on any main navigation item other than hashtags
         //      click on an actual hashtag
         //      click on an actual label
-        if (Modernizr.mq('only screen and (max-width: 480px)') && hide_mobile_sub_menu ) {
+        if (Modernizr.mq('only screen and (max-width: 767px)') && hide_mobile_sub_menu ) {
             unmark.mobile_nav(true);
         }
 

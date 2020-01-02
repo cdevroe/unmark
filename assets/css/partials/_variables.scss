@@ -40,9 +40,11 @@ $title      : 'Source Sans Pro', sans-serif;
 
 // Viewport Sizes
 
-$xs: 	479px;
-$sm: 	480px;
-$md: 	768px;
+//$xs: 	479px;
+//$sm: 	480px;
+$xs: 	767px;
+$sm: 	768px;
+$md: 	$sm;
 $lg: 	1024px;
 $xl: 	1400px;
 $xxl: 	1600px;

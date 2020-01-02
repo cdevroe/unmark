@@ -36,7 +36,7 @@
 		}
 
 		// For Small Phone Size Devices
-		if (Modernizr.mq('only screen and (max-width: 480px)')) {
+		if (Modernizr.mq('only screen and (max-width: 767px)')) {
 
 			// Unbind/Bind the Hamburger to show correct sidebar menu
 			$('.menu-activator a').off().on('click', function (e) {
