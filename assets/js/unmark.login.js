@@ -28,13 +28,13 @@
         // Toggle the Login Form
         function toggle_login_form(hide, message) {
             if (hide === true) {
-              unmarklogin.login_wrapper.fadeOut();
-              /*()
-                unmarklogin.login_wrapper.fadeOut(), function () {
+              //unmarklogin.login_wrapper.fadeOut();
+
+                unmarklogin.login_wrapper.fadeOut(400, function () {
                     $(this).hide();
-                    //unmarklogin.login_spinner.fadeIn();
+                    unmarklogin.login_spinner.fadeIn();
                 });
-                */
+
             } else {
                 unmarklogin.login_spinner.fadeOut(400, function () {
                     $(this).hide();
