@@ -7,8 +7,8 @@
             <form id="send_password_change" method="post" action="#" class="ajaxsbmt">
                 <input type="password" class="field-input" name="oldpass" id="oldpass" placeholder="<?php echo unmark_phrase('Old Password...') ?>" autocomplete="off" />
                 <input type="password" class="field-input" name="pass1" id="pass1" placeholder="<?php echo unmark_phrase('New Password...') ?>" autocomplete="off" />
-                <input type="password" class="field-input" name="pass2" id="pass2" placeholder="<?php echo unmark_phrase('Once More...') ?>" autocomplete="off" />
-                <button class="login-submit" type="submit"><i class="icon-go"></i></button>
+                <input type="password" class="field-input" name="pass2" id="pass2" placeholder="<?php echo unmark_phrase('New Password Again...') ?>" autocomplete="off" />
+                <button class="login-submit" type="submit">Update</button>
             </form>
             <div class="response-message"></div>
         </div>
@@ -21,7 +21,7 @@
             </header>
             <form id="send_email_change" method="post" action="#" class="ajaxsbmt">
                 <input type="email" class="field-input" name="emailupdate" id="emailupdate" placeholder="<?php echo unmark_phrase('New Email Address...') ?>" autocomplete="off" />
-                <button class="login-submit" type="submit"><i class="icon-go"></i></button>
+                <button class="login-submit" type="submit">Update</button>
             </form>
             <div class="response-message"></div>
         </div>

@@ -153,6 +153,13 @@ $nav_pane_lg: $nav_lg - $nav_rail_lg;
     border-radius: 3px;
     margin-bottom: $spacing;
 }
+@mixin input-placeholder {
+  letter-spacing: normal;
+  @include font-smoothing;
+  font-size: 15px;
+  color: darken($color_light, 5%);
+  line-height: normal;
+}
 
 
 // Placeholders

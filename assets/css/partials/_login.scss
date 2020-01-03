@@ -97,7 +97,7 @@
 .loginWrapper, .forgotPassWrapper, .resetWrapper {
     width: 300px;
     margin: 0 auto;
-    text-align: center;
+    //text-align: center;
     position: relative;
     color: $color_light;
     border-radius: 8px;
@@ -117,6 +117,7 @@
     }
     .login-branding {
       padding: 10px 0 28px;
+      text-align: center;
       .login-branding-wrapper {
         margin: 0 auto;
         display: inline-flex;
@@ -214,33 +215,19 @@
             //top: 2px;
         }
         ::-webkit-input-placeholder {
-            //@include title-text;
-            letter-spacing: normal;
-            @include font-smoothing;
-            font-size: 15px;
-            color: darken($color_light, 5%);
-            line-height: normal;
+            @include input-placeholder;
         }
         ::-moz-placeholder {
-            //@include title-text;
-            letter-spacing: normal;
-            @include font-smoothing;
-            font-size: 15px;
-            color: darken($color_light, 5%);
-            line-height: normal;
+            @include input-placeholder;
         }
         :-ms-input-placeholder {
-            //@include title-text;
-            letter-spacing: normal;
-            @include font-smoothing;
-            font-size: 15px;
-            color: darken($color_light, 5%);
-            line-height: normal;
+            @include input-placeholder;
         }
     }
     .login-links {
       margin-top: 22px;
       margin-bottom: 8px;
+      text-align: center;
       @include sm {
         margin-bottom: 10px;
       }

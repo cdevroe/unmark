@@ -1,14 +1,14 @@
 #importExportForm {
   margin: 0 auto;
   .loginInner {
-    background: $color-gray;
+    //background: $color-gray;
     header {
-      padding-top: 24px;
-      padding-bottom: 18px;
+      padding-top: 4px;
+      padding-bottom: 20px;
     }
   }
   .from-unmark, .from-other {
-    padding: 0 18px 12px;
+    padding: 0 0 12px;
     p {
       font-size: 12px;
       color: $color_dark;
@@ -19,11 +19,11 @@
     }
   }
   .export {
-    padding: 0 18px 20px;
+    padding: 0 0 30px;
     border-bottom: 1px solid transparentize($color_dark, .92);
   }
   .import {
-    padding-bottom: 8px;
+    padding-top: 20px;
   }
     a.exportbtn, a.importbtn {
         background: $color_blue;
@@ -40,6 +40,7 @@
         justify-content: center;
         margin: 0 0 10px;
         border-radius: 5px;
+        text-align: center;
     }
     a.exportbtn {
       margin-bottom: 0;
@@ -80,7 +81,7 @@
     width: 100%;
     max-width: 320px;
     top: 35px;
-    padding: 0 20px;
+    padding: 0 10px;
     left: 50%;
     transform: translateX(-50%);
     @include sm {
@@ -90,22 +91,22 @@
 
     figure {
       background: white;
-      border-radius: 6px;
+      border-radius: 8px;
       width: 100%;
       //max-width: 280px;
       //margin: 0 auto;
-      padding: 0;
+      padding: 20px;
       box-shadow: 0 2px 5px 0 transparentize(darken($color_darkest, 20%), .7), 0 9px 20px 0 transparentize(darken($color_darkest, 20%), .8);
       position: relative;
       overflow: hidden;
       #unmarkModalClose {
         position: absolute;
-        top: 0;
-        right: 0;
-        height: 30px;
-        width: 30px;
-        //border: 1px solid transparentize($color_dark_gray, .65);
-        //border-radius: 50%;
+        top: 12px;
+        right: 12px;
+        height: 26px;
+        width: 26px;
+        border: 1px solid transparentize($color_dark_gray, .75);
+        border-radius: 50%;
         cursor: pointer;
         &:before, &:after {
           content: " ";
@@ -130,8 +131,8 @@
         }
       }
       header {
-        background: $color-gray;
-        padding: 28px 20px 30px;
+        //background: $color-gray;
+        padding: 4px 0 28px;
         h1 {
           margin: 0 0 20px;
           color: $color_darkest;
@@ -215,21 +216,12 @@
         top : 0;
     }
     input {
-        padding: 14px 15px 16px;
-        border: solid lighten($color_dark_gray, 37%);
-        border-width: 1px 0 1px 0;
-        font-size: 15px;
-        color: darken($color_dark_gray, 20%);
-        margin-bottom: 0;
-        text-align: center;
-        border-width: 1px 0 1px 0;
-        border-bottom-width: 0;
+        @include input-style(12px);
         &:not(:last-of-type) {
           //border-bottom-width: 0;
         }
         &:not([type=submit]):not([type=file]) {
           @include xs {
-            line-height: 1;
             -webkit-appearance: none;
           }
         }
@@ -237,7 +229,7 @@
     h1 {
         font-weight: 600;
         color: $color_dark_gray;
-        font-size: 16px;
+        font-size: 18px;
         text-transform: none;
         letter-spacing: normal;
         word-spacing: normal;
@@ -248,18 +240,16 @@
         .exp-date {
           display: flex;
           flex-direction: row;
+          justify-content: space-between;
           input {
             //width: auto;
             flex-grow: 0;
             flex-shrink: 0;
             &.exp-month {
-              flex-basis: calc(50% + 1px);
-              border-width: 1px 1px 0 0;
+              flex-basis: calc(50% - 4px);
             }
             &.exp-year  {
-              flex-basis: 50%;
-              //margin-left: -1px;
-              border-width: 1px 0 0 0;
+              flex-basis: calc(50% - 4px);
             }
           }
         }
@@ -270,11 +260,13 @@
             left: auto;
             right: auto;
             background: $color_blue;
-            padding: 14px 15px 15px;
-            font-size: 14px;
+            padding: 12px 15px 15px;
+            font-size: 15px;
             width: 100%;
-            height: 54px;
-            box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 10px 12px -12px transparentize($color_darkest, .7) inset;
+            height: 48px;
+            margin-top: 6px;
+            //box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 10px 12px -12px transparentize($color_darkest, .7) inset;
+            /*
             &:after {
                 content: "";
                 width: 14px;
@@ -289,6 +281,7 @@
                 margin-left: -4px;
                 margin-top: -6px;
             }
+            */
             i {
                 display: none;
             }
