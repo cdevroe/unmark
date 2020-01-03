@@ -11,6 +11,7 @@
 			if (hide) {
 				unmark.mainpanels.removeClass('nav-active');
 				unmark.hamburger.removeClass('active');
+				unmark.mobile_header.removeClass('shift-right');
 			} else {
 				$('.main-wrapper').animate({left: 65}, 400);
 				$('.navigation-content').animate({left: 0}, 400);
@@ -35,7 +36,7 @@
 		}
 
 		// For Small Phone Size Devices
-		if (Modernizr.mq('only screen and (max-width: 480px)')) {
+		if (Modernizr.mq('only screen and (max-width: 767px)')) {
 
 			// Unbind/Bind the Hamburger to show correct sidebar menu
 			$('.menu-activator a').off().on('click', function (e) {

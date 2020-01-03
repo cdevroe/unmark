@@ -26,6 +26,7 @@
         if (Modernizr.mq('only screen and (max-width: 768px)')) {
           $('.sidebar-content').removeClass('active');
           $('#unmark-wrapper').removeClass('sidebar-active');
+          $('.mobile-header').removeClass('shift-left');
         } else {
           $('.sidebar-content').removeClass('active');
         }
@@ -75,7 +76,7 @@
         if ( is_label_menu || is_label_filter ) {
             panel_name              = 'panel-label';
             panel_to_show           = '#'+panel_name;
-            hide_mobile_sub_menu    = true; // hiding submenu 
+            hide_mobile_sub_menu    = true; // hiding submenu
         }
 
         // For the tag menu, or actual hashtags
@@ -110,9 +111,10 @@
         //      clicked on any main navigation item other than hashtags
         //      click on an actual hashtag
         //      click on an actual label
-        if (Modernizr.mq('only screen and (max-width: 480px)') && hide_mobile_sub_menu ) {
+        if (Modernizr.mq('only screen and (max-width: 767px)') && hide_mobile_sub_menu ) {
             unmark.mobile_nav(true);
         }
+
         return false;
     };
 
@@ -124,7 +126,7 @@
             total_pages = window.unmark_total_pages;
 
         if ( pages_already_loaded[next_page] == true ) { return; }
-        
+
         if (cont.scrollTop() + cont.innerHeight() >= cont[0].scrollHeight && ajax_loading !== true) { // Only load if the amount scrolled is greater than the view area for the marks, also if the ajax isn't already firing
 
             if (next_page <= total_pages && pages_already_loaded[next_page] !== true && ajax_loading !== true) { // only fire if this page hasn't already been retrieved

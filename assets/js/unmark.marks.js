@@ -48,7 +48,7 @@
             // Enabled event listeners for adding labels
             unmark.marks_addLabel();
 
-            
+
         };
 
         // Clean up view
@@ -68,11 +68,11 @@
         output = template.render(mark_obj);
 
         // Show Mobile Sidebar
-        if (Modernizr.mq('only screen and (max-width: 480px)')) { $('#mobile-sidebar-show').trigger('click'); }
+        if (Modernizr.mq('only screen and (max-width: 767px)')) { $('#mobile-sidebar-show').trigger('click'); }
 
         // Update Sidebar contents for this bookmark
         unmark.sidebar_mark_info.html(output);
-        
+
         populateLabels();
 
         unmark.sidebar_mark_info.fadeIn(400, function () {
@@ -82,10 +82,10 @@
 
             intervalSaveTitle = setInterval(function(){
                 if ( input_title.hasClass('contentsChanged') ) {
-                    
+
                     // Save new Title
                     unmark.saveTitle( mark_id, input_title.val() );
-                    
+
                     // Update visible Title in list to new Title
                     $('#mark-'+mark_id+' h2 a').html( input_title.val() );
 
@@ -119,7 +119,7 @@
                 tagList = [];
 
                 if (res.error) { // Put error from API in console, but still load empty list
-                    console.log(res.error); 
+                    console.log(res.error);
                 }
 
                 if (res.tags !== false) { // If it _is_ false, it likely means user has no tags yet
@@ -127,9 +127,9 @@
                     // Create a list of autocomplete tags
                     for(i=0;i<Object.keys(res.tags).length;i++){
                         tagList.push({text: res.tags[i].name});
-                    }    
+                    }
                 }
-                
+
                 // Restore the value of the tags already assigned
                 mark_added_tags_value = mark_tags_string.split(',');
                 for (i=0;i<mark_added_tags_value.length;i++) {
@@ -322,7 +322,7 @@
         if ( tags == '' ) { // Remove all tags
             tags = 'unmark:removeAllTags';
         }
-        
+
         var query = 'tags=' + unmark.urlEncode(tags);
         unmark.ajax('/mark/edit/'+id, 'post', query, function(res) {
             unmark.update_mark_info(res, id); // Update the notes and everything else too.
