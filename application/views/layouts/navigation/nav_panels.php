@@ -51,7 +51,7 @@
 	</form>
 	<h4 class="nav-heading"><?php echo unmark_phrase('Most-Used Tags') ?></h4>
 	<ul class="tag-list">
-		<?php $this->load->view('layouts/navigation/tags_list.php'); ?>
+		<?php //$this->load->view('layouts/navigation/tags_list.php'); ?>
 	</ul>
 </div> -->
 <div id="panel-settings" class="nav-panel">
