@@ -53,8 +53,8 @@
           </section>
           <?php
           $tagcount = 6; // Number of tags to show
-
-          if ( !empty($tags['tags']) ) : ?>
+          
+          if ( !empty($tags['popular']) ) : ?>
             <p>Most-used:
             <?php   $i = 0;
                     foreach ($tags['popular'] as $tag) :
