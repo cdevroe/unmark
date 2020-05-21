@@ -9,22 +9,44 @@
     width: 100%;
     padding: 0 60px;
     z-index: 1000;
+    transition: all .3s ease-in-out;
+    left: 0;
     @include md {
         display: none;
     }
     .branding {
-        display: block;
+        display: flex;
         position: absolute;
         top: 50%;
         margin-top: -10px;
         left: 50%;
-        margin-left: -29px;
-        width: 64px;
-        height: 18px;
+        margin-left: -50px;
+        width: 96px;
+        height: 20px;
         text-align: center;
-        svg {
-            fill: $color_white;
+        justify-content: center;
+        span {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
+        .icon {
+          width: 16px;
+        }
+        .text {
+          padding-left: 8px;
+          padding-bottom: 1px;
+          width: 72px;
+          svg {
+              fill: $color_white;
+          }
+        }
+    }
+    &.shift-right {
+      left: 280px;
+    }
+    &.shift-left {
+      left: -280px;
     }
 }
 .menu-activator {

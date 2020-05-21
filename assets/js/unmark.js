@@ -30,7 +30,10 @@ if (unmark === undefined) { var unmark = {}; }
                 var json = {
                     'error': error,
                     'status': status,
-                    'request': xhr
+                    'request': xhr,
+                    'url': path,
+                    'type': method.toUpperCase(),
+                    'data': query
                 };
                 if ($.isFunction(callback)) {
                     callback(json);

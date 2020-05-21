@@ -4,7 +4,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: darken($color_gray, 3%);
+    //background: darken($color_gray, 3%);
+    background: $color_darkest;
     top: 0;
     z-index: 99999;
     //padding-top: 40px;
@@ -46,7 +47,7 @@
     @include md {
         height: 150px;
         padding: 10px 20px 20px 20px;
-        box-shadow: 0 18px 26px -20px rgba(0,0,0,0.4) inset, 0 5px 8px -6px rgba(0,0,0,0.35) inset;
+        //box-shadow: 0 18px 26px -20px rgba(0,0,0,0.4) inset, 0 5px 8px -6px rgba(0,0,0,0.35) inset;
     }
     a {
       display: block;
@@ -94,12 +95,15 @@
 }
 
 .loginWrapper, .forgotPassWrapper, .resetWrapper {
-    width: 275px;
-    //margin: 25px auto 0;
+    width: 300px;
     margin: 0 auto;
-    text-align: center;
+    //text-align: center;
     position: relative;
-    color:$color_light;
+    color: $color_light;
+    border-radius: 8px;
+    box-shadow: 0 4px 5px 0 transparentize(darken($color_darkest, 20%), .93), 0 12px 20px 0 transparentize(darken($color_darkest, 20%), .95);
+    padding: 20px;
+    background: $color_white;
     @include sm {
         //margin-top: 50px;
     }
@@ -112,7 +116,8 @@
         margin: 15px 0 5px 0;
     }
     .login-branding {
-      padding-bottom: 28px;
+      padding: 10px 0 28px;
+      text-align: center;
       .login-branding-wrapper {
         margin: 0 auto;
         display: inline-flex;
@@ -122,14 +127,15 @@
       }
     }
     .login-ball {
-        width: 28px;
+        width: 26px;
         //margin: 0 auto;
-        margin: 0 7px;
+        margin: 0 7px 0 5px;
     }
     .login-text {
-        width: 90px;
+        width: 86px;
         //margin: 0 auto 30px auto;
         margin: 0 7px;
+        padding-bottom: 2px;
         svg {
           fill: $color_darkest;
         }
@@ -138,25 +144,10 @@
         margin-bottom: 0;
         position: relative;
         .field-input {
-            width: 100%;
-            background: $color_white;
-            font-family: $sans-serif;
-            @include font-smoothing;
-            padding: 14px 15px 16px;
-            border: solid lighten($color_dark_gray, 37%);
-            border-width: 1px 0 1px 0;
-            font-size: 15px;
-            color: darken($color_dark_gray, 20%);
-            margin-bottom: 0;
-            text-align: center;
-            border-width: 1px 0 1px 0;
-            border-bottom-width: 0;
-            &:first-child {
-              border-top-width: 0;
-            }
+            @include input-style(14px);
             &:not([type=submit]):not([type=file]) {
               @include xs {
-                line-height: 1;
+                //line-height: 1;
                 -webkit-appearance: none;
               }
             }
@@ -189,10 +180,11 @@
             font-size: 15px;
             letter-spacing: .35px;
             width: 100%;
-            height: 54px;
-            box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 10px 12px -12px transparentize($color_darkest, .7) inset;
+            height: 48px;
+            //box-shadow: 0 30px 60px -24px transparentize(white, .8) inset, 0 10px 12px -12px transparentize($color_darkest, .7) inset;
             color: white;
             font-weight: 700;
+            border-radius: 5px;
             &:after {
               /*
                 content: "";
@@ -223,34 +215,21 @@
             //top: 2px;
         }
         ::-webkit-input-placeholder {
-            @include title-text;
-            letter-spacing: .35px;
-            @include font-smoothing;
-            font-size: 12px;
-            color: darken($color_light, 5%);
-            line-height: 13px;
+            @include input-placeholder;
         }
         ::-moz-placeholder {
-            @include title-text;
-            letter-spacing: .35px;
-            @include font-smoothing;
-            font-size: 12px;
-            color: darken($color_light, 5%);
-            line-height: 13px;
+            @include input-placeholder;
         }
         :-ms-input-placeholder {
-            @include title-text;
-            letter-spacing: .35px;
-            @include font-smoothing;
-            font-size: 12px;
-            color: darken($color_light, 5%);
-            line-height: 13px;
+            @include input-placeholder;
         }
     }
     .login-links {
       margin-top: 22px;
+      margin-bottom: 8px;
+      text-align: center;
       @include sm {
-        margin-bottom: 40px;
+        margin-bottom: 10px;
       }
       p {
         font-size: 13px;
@@ -304,10 +283,10 @@
     display: none;
 }
 #unmarkLogin, #unmarkForgotPass, #register_user {
-  overflow: hidden;
-  border-radius: 6px;
+  //overflow: hidden;
+  //border-radius: 6px;
   padding: 0;
-  box-shadow: 0 4px 5px 0 transparentize(darken($color_darkest, 20%), .93), 0 12px 20px 0 transparentize(darken($color_darkest, 20%), .95);
+  //box-shadow: 0 4px 5px 0 transparentize(darken($color_darkest, 20%), .93), 0 12px 20px 0 transparentize(darken($color_darkest, 20%), .95);
 }
 
 .resetWrapper {

@@ -3,7 +3,7 @@ Unmark
 
 The open source to-do application for bookmarks.
 
-We offer this source code for Unmark completely free. We do so in hopes that Unmark will live on for many years even if we stop maintaining it.
+We offer this source code for Unmark completely free. We do so in hopes that Unmark will live on for many years even if we stop maintaining it. You can also use it for free (with a paid upgrade) at [Unmark.it](https://unmark.it/)
 
 To support its further development please consider [subscribing to Unmark.it](https://unmark.it/), [donating via Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XSYNN4MGM826N). Or, you can contribute to the code.
 
@@ -20,12 +20,12 @@ Running Unmark is only recommended for intermediate users. This doesn't mean if 
 - PHP 5.6 or greater
 - mySQL 5.7 or greater
 
-**Experimental: Docker**
-If you're going to use Docker we've included the appropriate Docker Compose, Dockerfile, and PHP.ini files to do so. This is still in its experimental phase though. We will update this readme with better instructions.
+** Using Docker to run locally**
+If know how to use Docker we've included the appropriate Docker Compose, Dockerfile, and PHP.ini files to do so. We've been using Docker on both Windows and Mac for the last two releases and we like it. However, this is still in its experimental phase.
 
 ### Common Issues
 
-Some common issues have been reported. Some are trying to load Unmark on a sub-domain, using different versions of PHP or Apache, or using completely different databases. While it may be possible to do so, expect issues.
+Some common issues have been reported. Some are trying to load Unmark on a sub-directory, using different versions of PHP or Apache, or using completely different databases. While it may be possible to do so, expect issues.
 
 Other common things that come up:
 - PHP mod_rewrite isn't enabled
@@ -37,22 +37,20 @@ Other common things that come up:
 - Download [the latest release](https://github.com/cdevroe/unmark/releases)
 - Unpack the archive into your desired location
 - Rename the file `/application/config/database-sample.php` to `/application/config/database.php`
-- Create a database for Unmark to use in mySQL (may we recommend "unmark" as a database name?)
+- Create a database for Unmark to use in mySQL
 - Fill in proper database credentials in `/application/config/database.php`
-- Optionally: Update your HOSTS file and create a virtual host for Unmark. We use "unmark.local" as an example.
-- Point your browser to `your-local-url/setup` E.g. unmark.local/setup
+- Point your browser to `your-local-url/setup`
 - If succesfull, you'll be asked to register a username and password
 
 #### From git repository
 - Run `git clone https://github.com/cdevroe/unmark.git` (Or, if you've forked the repo, use your URL)
 - Copy the file `/application/config/database-sample.php` to `/application/config/database.php` (leave `database-sample.php` in place)
-- Create a database for Unmark to use in mySQL (may we recommend "unmark" as a database name?)
+- Create a database for Unmark to use in mySQL
 - Fill in proper database credentials in `/application/config/database.php`
-- Optionally: Update your HOSTS file and create a virtual host for Unmark. We use "unmark.local" as an example.
 - Run `npm install`
 - Run `grunt` [more info on Grunt](http://gruntjs.com/)
     - To run Grunt you'll need to also install Ruby and the SASS gem
-- Point your browser to `your-local-url/setup` E.g. unmark.local/setup
+- Point your browser to `your-local-url/setup`
 - If successful, you'll be asked to register a username and password
 
 ### Upgrading to the latest release
@@ -74,7 +72,9 @@ Other common things that come up:
 
 ### Importing bookmarks
 
-Unmark currently supports importing from Unmark's hosted version, any self-hosted version of Unmark, Readability, Pinboard, Delicious, Pocket and many other services. However, to ensure this works properly be sure that your PHP.ini file's "max_upload_size" setting is larger than the file you're trying to import.
+Unmark currently supports importing from Unmark's hosted version, any self-hosted version of Unmark, Readability, Pinboard, Delicious, Pocket and many other services.
+
+To ensure this works properly be sure that your PHP.ini file's "max_upload_size" setting is larger than the file you're trying to import.
 
 ## How to contribute to Unmark
 
@@ -98,7 +98,7 @@ We use [Grunt](http://gruntjs.com/) to compile our SASS files into CSS and conca
 
 Unmark was originally created by [Colin Devroe](http://cdevroe.com/). It was a side-project called Nilai (the Indonesian word for "mark") and rebuilt from the ground up by Plain, a small software company, which included Jeff Johns, Kyle Ruane, Tim Whitacre, Chris Fehnel, Jakub Jakubiec and Colin Devroe.
 
-Now it is being maintained by Colin, Kyle and the community. Please consider donating or contributing code in order to keep Unmark alive and well.
+Now it is being maintained by Colin, Kyle and the community in their spare time. Please consider donating or contributing code in order to keep Unmark alive and well.
 
 ## Contributors
 

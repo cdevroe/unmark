@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Eek, something is wrong</title>
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/assets/css/unmark.css">
     <link rel="icon" type="image/ico" href="/favicon.ico">
 </head>

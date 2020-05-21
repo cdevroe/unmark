@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title><?php echo unmark_phrase('Unmark : Reset Password'); ?></title>
-    <link href='//fonts.googleapis.com/css?family=Lato:300,400|Merriweather' rel='stylesheet' type='text/css'>
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/unmark.css?v=<?php echo $this->config->item('unmark_version'); ?>" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
     <script src="/assets/js/plugins/modernizr-2.7.1.min.js"></script>
@@ -25,8 +25,8 @@
         <div class="login-text"><img src="/assets/images/icons/logo_text_light.png" /></div>
         <form id="unmarkReset" method="post" action="/login">
             <input type="password" class="field-input" name="password" id="password" placeholder="<?php echo unmark_phrase('New Password...'); ?>" autocomplete="off" />
-            <input type="password" class="field-input" name="password2" id="password2" placeholder="<?php echo unmark_phrase('Once More...'); ?>" autocomplete="off" />
-            <button class="login-submit" type="submit"><i class="icon-go"></i></button>
+            <input type="password" class="field-input" name="password2" id="password2" placeholder="<?php echo unmark_phrase('New Password Again...'); ?>" autocomplete="off" />
+            <button class="login-submit" type="submit">Update</button>
         </form>
         <div class="response-message"></div>
         <a href="#" class="forgot-pass"><?php echo unmark_phrase('How did I get here?'); ?></a>

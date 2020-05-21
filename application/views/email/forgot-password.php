@@ -4,7 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Unmark // Reset Password</title>
 	<style type="text/css">
-		@import url(http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Montserrat:400);
+		@import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700);
 
 		/* Client-specific Styles */
 		#outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */

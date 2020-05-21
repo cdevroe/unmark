@@ -11,16 +11,11 @@ class Marks extends Plain_Controller
         $this->load->model('users_to_marks_model', 'user_marks');
     }
 
-    public function add_by_url()
-    {
-        // Figure view
-        $this->figureView('marks/add_by_url');
-    }
-
      /*
-        - Add a mark
+        - Add a mark 
         - URLS
             /mark/add
+            /mark/add/?url=URL
             /api/mark/add
 
         // Query variables
@@ -34,37 +29,51 @@ class Marks extends Plain_Controller
         $view           = null;
         $add_from_url   = ($this->input->post('add_from_url') !== null ) ? true : false;
 
-        if ( $add_from_url ) : // URL submitted by form within app
-            $url        = $this->input->post('url');
-            if (!preg_match("~^(?:f|ht)tps?://~i", $url)) { // Adds HTTP if needed
-                $url = "http://" . $url;
-            }
-            $title      = '';
-            $dom        = new DOMDocument();
-            libxml_use_internal_errors(true);
-            if (!$dom->loadHTMLFile($url, LIBXML_NOWARNING)) {
-                foreach (libxml_get_errors() as $error) {
-                    // handle errors here
-                    echo '<p>There was an error adding the mark.</p>';
-                    if ( $error->code == 1549 ) {
-                        echo '<p>Most likely the URL is invalid or the web site isn\'t currently available.</p>';
-                    }
-                    //print_r($error);
+        if ( isset($_GET['url']) && !isset($_GET['title']) ) {
+            $add_from_url = true;
+        }
 
-                }
-                libxml_clear_errors();
+        if ( $add_from_url ) : // URL submitted by form within app
+
+            $url = (isset($_GET['url'])) ? $this->input->get('url') : $this->input->post('url');
+
+            if ( !$url || $url == '' ) :
+                echo '<a href="/">BACK</a> - Please supply an URL.';
                 exit;
-                
-            } else {
-                $list = $dom->getElementsByTagName("title");
-                if ($list->length > 0) {
-                    $title = $list->item(0)->textContent;
-                }
-            }
-            
-            if ( strlen($title) == 0 ) :
-                $title = "Unknown Page Title"; 
             endif;
+
+            if (!preg_match("~^(?:f|ht)tps?://~i", $url)) : // Adds HTTP if needed
+                $url = "http://" . $url;
+            endif;
+            
+            $title      = (isset($_GET['title'])) ? $this->input->get('title') : ''; // If title is supplied, use that
+
+            if ( $title == '' ) : // If title is empty, go get it
+                $dom        = new DOMDocument();
+                libxml_use_internal_errors(true);
+                if (!$dom->loadHTMLFile($url, LIBXML_NOWARNING)) :
+                    foreach (libxml_get_errors() as $error) :
+                        // handle errors here
+                        echo '<p><a href="/">BACK</a> There was an error adding the mark.</p>';
+                        if ( $error->code == 1549 ) :
+                            echo '<p>Most likely the URL is invalid or the web site isn\'t currently available.</p>';
+                        endif;
+                    endforeach;
+                    libxml_clear_errors();
+                    exit;
+                    
+                else :
+                    $list = $dom->getElementsByTagName("title");
+                    if ($list->length > 0) :
+                        $title = $list->item(0)->textContent;
+                    endif;
+                endif;
+                
+                if ( strlen($title) == 0 ) :
+                    $title = "Unknown Page Title"; 
+                endif;
+
+            endif; // end if empty title
 
         else : // URL submitted via bookmarklet, API, or mobile app
             $url       = (isset($this->db_clean->url)) ? $this->db_clean->url : null;
@@ -253,19 +262,33 @@ class Marks extends Plain_Controller
                 $options['notes'] = $this->db_clean->notes;
 
                 // Check for hashmarks to tags
-                $tags = getTagsFromHash($options['notes']);
+                //Removed in 2.0 $tags = getTagsFromHash($options['notes']);
+            }
+
+            // If tags are present, set them
+            if (isset($this->db_clean->tags)) {
+                if ( $this->db_clean->tags == 'unmark:removeAllTags' ) { // Remove all tags by sending empty array
+                    $tags = array();
+                    parent::removeTags($mark_id);
+                } else {
+                    $tags = explode( ',', $this->db_clean->tags );
+                }
             }
 
             // If tags are present, handle differently
             // Need to add to tags table first
             // Then create association
             // If notes are present set them
-            if (isset($tags)) {
+            if (isset($tags) && count($tags) > 0) {
                 parent::addTags($tags, $mark_id);
             }
 
-            // Update users_to_marks record
-            $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", $options);
+            if ( isset($options) && count($options) > 0) {
+                // Update users_to_marks record
+                $mark = $this->user_marks->update("users_to_marks.user_id = '" . $this->user_id . "' AND users_to_marks.users_to_mark_id = '" . $mark_id . "'", $options);
+            } else {
+                $mark = $this->user_marks->readComplete($mark_id);
+            }
 
             // Check if it was updated
             if ($mark === false) {
@@ -313,6 +336,8 @@ class Marks extends Plain_Controller
 
     public function get($what='stats')
     {
+        log_message( 'DEBUG', 'Running get method for ' . $what );
+        
         parent::redirectIfWebView();
         $method = 'get' . ucwords($what);
 
@@ -384,13 +409,14 @@ class Marks extends Plain_Controller
 
     }
 
-    // Get the 10 most used tags for a user
+    // Get the 10 most used and most recent tags for a user
     private function getTags()
     {
-        $this->data['tags'] = array();
         $this->load->model('user_marks_to_tags_model', 'user_tags');
-        $this->data['tags']['popular'] = $this->user_tags->getPopular($this->user_id);
-        $this->data['tags']['recent']  = $this->user_tags->getMostRecent($this->user_id);
+        $this->data['tags'] = array();
+        
+        $this->data['tags']['popular']      = $this->user_tags->getPopular($this->user_id);
+        $this->data['tags']['recent']       = $this->user_tags->getMostRecent($this->user_id);
     }
 
     // The index of the marks page
@@ -575,7 +601,7 @@ class Marks extends Plain_Controller
         // Get stats, labels and tags
         // else skip this section and just return the marks
         if (parent::isWebView() === true) {
-            self::getStats();
+            //self::getStats();
             self::getLabels();
             self::getTags();
         }
@@ -611,10 +637,9 @@ class Marks extends Plain_Controller
         $this->data['no_header'] = true;
         $this->data['no_footer'] = true;
 
-        // print_r($_GET['bookmarklet']);
-        // exit;
-
         $this->data['bookmarklet'] = (isset($_GET['bookmarklet'])) ? $_GET['bookmarklet'] : true;
+
+        self::getTags();
 
         // Figure view
         $this->figureView('marks/info');

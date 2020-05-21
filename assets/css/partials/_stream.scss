@@ -61,7 +61,7 @@
         h2 {
             margin: 0 0 4px;
             font-weight: 400;
-            font-size: 17px;
+            font-size: 18px;
             line-height: 1.25;
             @include sm {
                 margin:0 0 10px;
@@ -79,7 +79,7 @@
             }
         }
         .mark-meta {
-            font-size: 10px;
+            font-size: 11px;
             color: darken($color_light, 15%);
             @include sm {
                 font-size: 12px;
@@ -147,8 +147,8 @@
                     left: 50%;
                     margin-left: -5px;
                     @include sm {
-                        width: 14px;
-                        margin-left: -7px;
+                        width: 12px;
+                        margin-left: -6px;
                     }
                     svg {
                         fill: transparentize($color_dark_gray, .4);

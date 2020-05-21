@@ -19,6 +19,7 @@
         this.special_chars =                  { '\\+': '&#43;' };
         this.mainpanels =                     $('#unmark-wrapper');
         this.hamburger =                      $('.mobile-header .menu-activator');
+        this.mobile_header =                  $('.mobile-header');
 
         // Check Query String
         var load = unmark.readQuery('load');
@@ -32,7 +33,7 @@
         window.unmark_current_page = 1;
 
         // Animate the body fading in
-        if (Modernizr.mq('only screen and (min-width: 480px)')) {
+        if (Modernizr.mq('only screen and (min-width: 768px)')) {
             $('body').animate({opacity: 1}, 1000);
         }
 
@@ -159,34 +160,31 @@
             $(unmark.hamburger).toggleClass('active');
             $(unmark.mainpanels).removeClass('sidebar-active');
             $(unmark.mainpanels).toggleClass('nav-active');
+            $(unmark.mobile_header).toggleClass('shift-right');
             return false;
         });
-
-
-        /*if ( $('#unmark-wrapper').hasClass('nav-active') ) {
-            $('.mobile-header .menu-activator').on( "click", function(e) {
-                e.preventDefault();
-                $('#unmark-wrapper').removeClass('nav-active');
-                $(this).toggleClass('active');
-            });
-        }
-        else {
-            $('.mobile-header .menu-activator').on( "click", function(e) {
-                e.preventDefault();
-                $('#unmark-wrapper').removeClass();
-                $('#unmark-wrapper').addClass('nav-active');
-                $('.mobile-header #mobile-sidebar-show').removeClass('active');
-                $(this).toggleClass('active');
-            });
-        }
-        */
+        $('#navigation-close-overlay').on( "click", function(e) {
+            e.preventDefault();
+            $(unmark.hamburger).removeClass('active');
+            $(unmark.mainpanels).removeClass('nav-active');
+            $(unmark.mobile_header).removeClass('shift-right');
+            return false;
+        });
 
         $('.mobile-header #mobile-sidebar-show').on( "click", function(e) {
             e.preventDefault();
             $('#unmark-wrapper').removeClass();
             $('#unmark-wrapper').addClass('sidebar-active');
             $('.mobile-header .menu-activator').removeClass('active');
+            $(unmark.mobile_header).addClass('shift-left');
             $(this).toggleClass('active');
+            return false;
+        });
+        $('#sidebar-close-overlay').on( "click", function(e) {
+            e.preventDefault();
+            $('#unmark-wrapper').removeClass('sidebar-active');
+            $(unmark.mobile_header).removeClass('shift-left');
+            $('.mobile-header #mobile-sidebar-show').removeClass('active');
             return false;
         });
 
@@ -207,12 +205,35 @@
         // Show & Hide Add Mark Bar
         $(document).on('click', '.marks-heading-bar .add-mark-button', function(e) {
             e.preventDefault();
-            $(this).closest('.marks-heading-bar').find('.add-mark-bar').fadeIn(300);
+            //$(this).closest('.marks-heading-bar').find('.add-mark-bar').fadeIn(300);
+            $('.add-mark-bar').fadeIn(300, function(e){
+                setTimeout("$('#add-mark-input').focus();", 0);
+            });
         });
         $(document).on('click', '.marks-heading-bar .add-mark-bar .close-button', function(e) {
             e.preventDefault();
             $(this).closest('.add-mark-bar').fadeOut(300);
         });
+
+        // $(document).on('change','#input-tags',function(e){
+        //     var mark_id = $(this).data('mark-id'), $tags = $(this).val();
+        //     if ( !$tags || $tags == '' ) return;
+        //     unmark.saveTags( mark_id, $tags);
+        //     //console.log($(this).val());
+        // });
+
+        // // Tags
+        // $('#input-tags').selectize({
+        //     plugins: ['remove_button', 'restore_on_backspace'],
+        //     delimiter: ',',
+        //     persist: false,
+        //     create: function(input) {
+        //         return {
+        //             value: input,
+        //             text: input
+        //         }
+        //     }
+        // });
 
     };
 
