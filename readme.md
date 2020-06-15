@@ -3,6 +3,8 @@ Unmark
 
 The open source to-do application for bookmarks.
 
+**NOTICE June 15, 2020:** The new default branch is named "trunk". ✊
+
 We offer this source code for Unmark completely free. We do so in hopes that Unmark will live on for many years even if we stop maintaining it. You can also use it for free (with a paid upgrade) at [Unmark.it](https://unmark.it/)
 
 To support its further development please consider [subscribing to Unmark.it](https://unmark.it/), [donating via Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XSYNN4MGM826N). Or, you can contribute to the code.

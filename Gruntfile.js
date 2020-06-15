@@ -104,10 +104,7 @@ module.exports = function(grunt) {
                     {expand: true, flatten: false, src: ['custom_example/**'], dest: 'release/unmark/'},
                     {expand: true, flatten: false, src: ['system/**'], dest: 'release/unmark/'},
                     {expand: true, flatten: false, src: ['docker-configs/*.ini'], dest: 'release/unmark/'},
-                    {expand: false, flatten: true, src: ['manifest.json'], dest: 'release/unmark/manifest.json'},
-                    {expand: false, flatten: true, src: ['service-worker.js'], dest: 'release/unmark/service-worker.js'},
-                    {expand: false, flatten: true, src: ['.htaccess'], dest: 'release/unmark/.htaccess'},
-                    {expand: true, flatten: true, src: ['*', '!Gruntfile.js', '!.DS_Store', '!.gitignore', '!package.json', '!package-lock.json'], dest: 'release/unmark/', filter: 'isFile'}
+                    {expand: true, flatten: true, src: ['*', '!Gruntfile.js', '!.DS_Store', '!.gitignore', '!package.json', '!package-lock.json'], dest: 'release/unmark/', filter: 'isFile', dot: true}
                 ]
             }
         },
@@ -122,7 +119,7 @@ module.exports = function(grunt) {
                     archive: 'release/unmark.zip'
                 },
                 files: [
-                    {src: ['release/unmark/**'] }
+                    {src: ['release/unmark/**'], dot: true }
                 ]
             }
         },
