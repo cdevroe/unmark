@@ -86,11 +86,7 @@ class Export extends Plain_Controller
         <H1>Bookmarks</H1>" . "\n\n";
         
         $html .= "<DL>" . "\n";
-        // Enable export library
-        $this->load->library('JSONExport');
-        // Add import version info
-        //$this->jsonexport->addMeta('export_version', self::EXPORT_FILE_VERSION);
-        //$this->jsonexport->addMeta('export_date', date('Y-m-d H:i:s'));
+    
         // Retrieve user marks
         $this->load->model('users_to_marks_model', 'user_marks');
         $where = 'users_to_marks.user_id='. $this->user_id;
@@ -105,22 +101,15 @@ class Export extends Plain_Controller
             // Add all retrieved marks
             if(is_array($pageResults)){
                 foreach($pageResults as $key=>$singleMark){
-
-                    //$this->jsonexport->addMark($singleMark);
-                    //print_r($key);
-                    //print_r($singleMark);
-                    $html .= "<DT><A 
-                        HREF=\"" . $singleMark->url . "\"
-                        ADD_DATE=\"" . strtotime( $singleMark->created_on ) . "\"";
+                    $html .= "<DT><A HREF=\"" . $singleMark->url . "\" ADD_DATE=\"" . strtotime( $singleMark->created_on ) . "\"";
                         if ( !empty($singleMark->tags) && count($singleMark->tags) > 0 ) :
-                            //print_r($singleMark->tags);
                             $tags = "";
                             
                             foreach($singleMark->tags as $tag=>$meta) {
                                 $tags .= $tag . ",";
                             }
 
-                            $html .= " TAGS=" . $tags;
+                            $html .= " TAGS=\"" . $tags . "\" ";
                         endif;
                         
                         $html .= ">" . $singleMark->title . "</A>" . "\n";
@@ -134,49 +123,36 @@ class Export extends Plain_Controller
             // Add single mark
             } else if(!empty($pageResults)){
 
-                //$this->jsonexport->addMark($pageResults);
                 $singleMark = $pageResults;
-                //$this->jsonexport->addMark($singleMark);
-                    //print_r($key);
-                    //print_r($singleMark);
-                    $html .= "<DT><A 
-                        HREF=\"" . $singleMark->url . "\"
-                        ADD_DATE=\"" . strtotime( $singleMark->created_on ) . "\"";
-                        if ( !empty($singleMark->tags) && count($singleMark->tags) > 0 ) :
-                            //print_r($singleMark->tags);
-                            $tags = "";
-                            
-                            foreach($singleMark->tags as $tag=>$meta) {
-                                $tags .= $tag . ",";
-                            }
+                
+                $html .= "<DT><A HREF=\"" . $singleMark->url . "\" ADD_DATE=\"" . strtotime( $singleMark->created_on ) . "\"";
+                if ( !empty($singleMark->tags) && count($singleMark->tags) > 0 ) :
+                    $tags = "";
+                    
+                    foreach($singleMark->tags as $tag=>$meta) {
+                        $tags .= $tag . ",";
+                    }
 
-                            $html .= " TAGS=" . $tags;
-                        endif;
-                        
-                        $html .= ">" . $singleMark->title . "</A>" . "\n";
+                    $html .= " TAGS=\"" . $tags . "\" ";
+                endif;
+                
+                $html .= ">" . $singleMark->title . "</A>" . "\n";
 
-                    if ( !empty($singleMark->notes) ) :
-                        $html .= "<DD>" . $singleMark->notes . "\n\n";
-                    else :
-                        $html .= "\n";
-                    endif;
+                if ( !empty($singleMark->notes) ) :
+                    $html .= "<DD>" . $singleMark->notes . "\n\n";
+                else :
+                    $html .= "\n";
+                endif;
             }
         }
 
         $html .= "</DL>" . "\n\n";
-
-        echo $html;
-        exit;
     
         // Write the file as attachment
-        //$file = $this->jsonexport->getFileForOutput();
         header('Content-type: text/html');
         header('Content-Disposition: attachment; filename=' . 'unmark-export.html');
 
         echo $html;
-        //while (!$file->eof()) {
-        //    $this->output->append_output($file->fgets());
-        //}
     }
 
 }

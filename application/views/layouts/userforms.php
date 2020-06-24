@@ -39,6 +39,7 @@
             <div class="to-html">
               <a data-action="export_data_html" class="exportbtn action" href="#"><?php echo unmark_phrase('Export HTML File') ?></a>
             </div>
+            <p class="note"><em><?php echo unmark_phrase('Note: HTML export is compatible with Pocket, Delicious, Pinboard, and others.'); ?></em></p>
           </div>
           <div class="import">
             <header>
