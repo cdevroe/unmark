@@ -97,9 +97,14 @@
         }
     };
 
-    // Export Data
+    // Export Data to Unmark
     unmark.export_data = function () {
         return window.location.href = "/export";
+    };
+
+    // Export Data to HTML
+    unmark.export_data_html = function () {
+        return window.location.href = "/export/html";
     };
 
     // Import Data
