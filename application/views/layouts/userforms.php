@@ -31,9 +31,14 @@
         <div class="loginInner">
           <div class="export">
             <header>
-              <h1><?php echo unmark_phrase('Export All Marks') ?></h1>
+              <h1><?php echo unmark_phrase('Exporting Marks') ?></h1>
             </header>
-            <a data-action="export_data" class="exportbtn action" href="#"><?php echo unmark_phrase('Export File') ?></a>
+            <div class="to-unmark">
+              <a data-action="export_data" class="exportbtn action" href="#"><?php echo unmark_phrase('Export Unmark File') ?></a>
+            </div>
+            <div class="to-html">
+              <a data-action="export_data_html" class="exportbtn action" href="#"><?php echo unmark_phrase('Export HTML File') ?></a>
+            </div>
           </div>
           <div class="import">
             <header>
