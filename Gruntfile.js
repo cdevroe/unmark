@@ -163,7 +163,7 @@ module.exports = function(grunt) {
     
     // Production build task:
     // Deletes contents of custom folder, copies new custom files, compresses everything (used primarily for unmark.it)
-    grunt.registerTask('production', [ 'makeCustom', 'sass:prod', 'uglify:prod', 'uglify:custom' ]);
+    grunt.registerTask('production', [ 'makeCustom', 'sass:prod', 'uglify:prod' ]);
 
     // Utility tasks that deletes/copies /custom/
     grunt.registerTask( 'makeCustom', [ 'clean:custom', 'copy:custom' ] ); // Copies ../unmark-internal/custom to ../unmark/custom
