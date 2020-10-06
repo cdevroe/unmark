@@ -110,7 +110,7 @@ Another way is to contribute your own code via Pull Requests. Here are some note
 ### Forking and Pull Requests
 
 - Fork [the repository on GitHub](https://github.com/cdevroe/unmark/) into your own account
-- Create your own branch of the master branch `git checkout -b your-branch-name`
+- Create your own branch of the trunk branch `git checkout -b your-branch-name`
 - Update your code and push those code changes back to your fork's branch `git push origin your-branch-name`
 - [Submit a Pull Request](https://github.com/cdevroe/unmark/pulls) using that branch
 - And please accept our _thanks_!
