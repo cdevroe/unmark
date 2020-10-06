@@ -18,12 +18,13 @@ Running Unmark is only recommended for intermediate users. This doesn't mean if 
 
 ### Technical requirements
 
+It is now recommended to use Docker / Docker Compose to install and run Unmark locally both for personal use and for development. Please see the installation instructions section below.
+
+However, if you're going to run your own server:
+
 - Apache 2.x
 - PHP 5.6 or greater
 - mySQL 5.7 or greater
-
-** Using Docker to run locally**
-If know how to use Docker we've included the appropriate Docker Compose, Dockerfile, and PHP.ini files to do so. We've been using Docker on both Windows and Mac for the last two releases and we like it. However, this is still in its experimental phase.
 
 ### Common Issues
 
@@ -35,7 +36,39 @@ Other common things that come up:
 
 ### Installation Instructions
 
-#### From Zip
+#### With Docker / Docker Compose
+
+We've included the appropriate Docker Compose, Dockerfile, and PHP.ini files to run Unmark locally on Windows or Mac with almost zero set up. We've been using Docker on both Windows and Mac for the last two releases and we like it. However, this is still in its early phases so please report any issues that you find.
+
+**Warning:** Running `docker-compose down -v` will erase Docker volumes including your local database. If you do not include the -v argument your database will remain intact. If you need to run -v log into Unmark and export your marks first.
+
+### How to start Unmark via Docker for personal use
+- Download and install [Docker](https://docs.docker.com/get-docker/)
+- Download and install [Docker Compose](https://docs.docker.com/compose/install/)
+- Download [the latest release](https://github.com/cdevroe/unmark/releases)
+- Unpack the archive into your desired location
+- Rename the file `/application/config/database-sample.php` to `/application/config/database.php`
+- In Terminal or Powershell - Run `docker-compose up -d` (to shut Unmark down run `docker-compose down`)
+- Navigate to [http://localhost](http://localhost) and click "Install"
+- If successful, you'll be asked to create an account
+
+#### From start Unmark via Docker for development
+- Download and install [Docker](https://docs.docker.com/get-docker/)
+- Download and install [Docker Compose](https://docs.docker.com/compose/install/)
+- Run `git clone https://github.com/cdevroe/unmark.git` (Or, if you've forked the repo, use your URL)
+- **Copy the file** `/application/config/database-sample.php` to `/application/config/database.php` (leave `database-sample.php` in place)
+- Rename the file `/application/config/database-sample.php` to `/application/config/database.php`
+- Run `docker-compose up -d` (to shut Unmark down run `docker-compose down`)
+- Run `npm install`
+- Run `grunt` [more info on Grunt](http://gruntjs.com/)
+    - To run Grunt you'll need to also install Ruby and the [SASS gem](https://sass-lang.com/ruby-sass)
+- Navigate to [http://localhost](http://localhost) and click "Install"
+- If successful, you'll be asked to create an account
+
+#### How to start Unmark from Zip on your own server for personal use
+
+No longer recommended, but do whatever you want!
+
 - Download [the latest release](https://github.com/cdevroe/unmark/releases)
 - Unpack the archive into your desired location
 - Rename the file `/application/config/database-sample.php` to `/application/config/database.php`
@@ -44,32 +77,22 @@ Other common things that come up:
 - Point your browser to `your-local-url/setup`
 - If succesfull, you'll be asked to register a username and password
 
-#### From git repository
-- Run `git clone https://github.com/cdevroe/unmark.git` (Or, if you've forked the repo, use your URL)
-- Copy the file `/application/config/database-sample.php` to `/application/config/database.php` (leave `database-sample.php` in place)
-- Create a database for Unmark to use in mySQL
-- Fill in proper database credentials in `/application/config/database.php`
-- Run `npm install`
-- Run `grunt` [more info on Grunt](http://gruntjs.com/)
-    - To run Grunt you'll need to also install Ruby and the SASS gem
-- Point your browser to `your-local-url/setup`
-- If successful, you'll be asked to register a username and password
-
 ### Upgrading to the latest release
 
-#### From Zip (binary)
+#### From Release
 - Download [the latest release](https://github.com/cdevroe/unmark/releases)
+- Shut down Unmark `docker-compose down`
 - Replace all Unmark files (keeping your local `/application/config/database.php` intact.)
-- Navigate to `your-local-url/upgrade`
-- Unmark will then make any needed database updates
+- Navigate to [http://localhost/upgrade](http://localhost/upgrade)
+- Unmark will then make any database updates if needed
 - That's it!
 
 #### From git repository
-- Run `git pull origin master`
+- Run `git pull origin trunk`
 - Run `npm update` in the app's root directory
 - Run `grunt` in the app's root directory
-- Navigate to `your-local-url/upgrade`
-- Unmark will then make any needed database updates
+- Navigate to [http://localhost/upgrade](http://localhost/upgrade)
+- Unmark will then make any database updates if needed
 - That's it!
 
 ### Importing bookmarks
@@ -80,7 +103,7 @@ To ensure this works properly be sure that your PHP.ini file's "max_upload_size"
 
 ## How to contribute to Unmark
 
-Please consider donating. Another major way you can contribute is to report any issues you find with Unmark on Github and being as detailed as possible about the issue you're having.
+Please consider [donating via Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XSYNN4MGM826N). Another major way you can contribute is to report any issues you find with Unmark on Github and being as detailed as possible about the issue you're having.
 
 Another way is to contribute your own code via Pull Requests. Here are some notes on how to do that.
 
@@ -94,7 +117,7 @@ Another way is to contribute your own code via Pull Requests. Here are some note
 
 This makes it easy for us to test your code locally and also allows the community to have a discussion around it.
 
-We use [Grunt](http://gruntjs.com/) to compile our SASS files into CSS and concatenate and compress our JavaScript files for use and a few other small tasks. For any updates to JavaScript or styles you will need to use Grunt too. See the Grunt web site for help.
+We use [Grunt](http://gruntjs.com/) to compile our SASS files into CSS and concatenate and compress our JavaScript files for use and a few other small tasks. For any updates to JavaScript or styles you will need to use Grunt too. See the Grunt web site for help. We'd like to someday move away from Grunt for most of these tasks.
 
 ## History
 
@@ -106,6 +129,11 @@ Now it is being maintained by Colin, Kyle and the community in their spare time.
 
 Currently being maintained by: [@cdevroe](https://github.com/cdevroe) and [@kyleruane](https://github.com/kyleruane).
 
-Also contributions by [@thebrandonallen](https://github.com/thebrandonallen), [@simonschaufi](https://github.com/simonschaufi), [@williamknauss](https://github.com/williamknauss), [@hewigovens](https://github.com/hewigovens)
+Extra special thanks to: 
 
-Extra special thanks to: [@phpfunk](https://github.com/phpfunk) (who wrote most of Unmark), [@twhitacre](https://github.com/twhitacre), [@kip9](https://github.com/kip9) (wrote the languages and migration back-up bits), [@cfehnel](https://github.com/cfehnel) (who handled support for the app).
+- [@phpfunk](https://github.com/phpfunk) - who wrote most of Unmark's original codebase
+- [@twhitacre](https://github.com/twhitacre)
+- [@kip9](https://github.com/kip9) - wrote the languages and migration back-up bits
+- [@cfehnel](https://github.com/cfehnel) - who handled support for the app
+
+Also contributions by [@thebrandonallen](https://github.com/thebrandonallen), [@simonschaufi](https://github.com/simonschaufi), [@williamknauss](https://github.com/williamknauss), [@hewigovens](https://github.com/hewigovens)
