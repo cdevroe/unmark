@@ -86,7 +86,8 @@ module.exports = function(grunt) {
         copy: {
             custom: {
                 files: [
-                    {expand: true, flatten: false, cwd: '../unmark-internal/custom/', src: ['**'], dest: '../unmark/custom/'}
+                    {expand: true, flatten: false, cwd: '../unmark-internal/custom/', src: ['**'], dest: '../unmark/custom/'},
+                    {expand: true, flatten: true, src: 'assets/js/production/unmark.loggedin.js', dest: '../unmark/custom/assets/js/production/'}
                 ]
             },
             release: {
