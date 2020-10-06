@@ -52,9 +52,9 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'username';
-$db['default']['password'] = 'password';
+$db['default']['hostname'] = 'unmark_mysql';
+$db['default']['username'] = 'unmarkuser';
+$db['default']['password'] = 'unmarkpass';
 $db['default']['database'] = 'unmark';
 $db['default']['dbdriver'] = 'mysqli';
 // $db['default']['dbprefix'] = ''; # Do not use, see: https://github.com/plainmade/unmark/issues/62

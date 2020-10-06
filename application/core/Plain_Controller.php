@@ -531,6 +531,18 @@ class Plain_Controller extends CI_Controller
         }
     }
 
+    // If no tables exist, redirect to install
+    protected function redirectIfNotInstalled($url='/setup')
+    {
+        $this->load->database();
+		$query = $this->db->query("SHOW TABLES LIKE 'users'");
+		$result = $query->result();
+		if ( count($result) == 0 ) : 
+			header('Location: ' . $url);
+            exit;
+        endif;
+    }
+
     public function renderJSON()
     {
         $json         = json_encode($this->data, JSON_FORCE_OBJECT);
