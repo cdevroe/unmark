@@ -152,7 +152,7 @@ module.exports = function(grunt) {
 
     // Default task:
     // Compiles CSS, compresses JavaScript.
-    grunt.registerTask('default', [ 'sass:prod', 'uglify:prod' ]);
+    grunt.registerTask('default', [ 'sass:prod', 'concat:dev', 'uglify:prod' ]);
 
     
     // Utility tasks that deletes/copies /custom/
@@ -164,7 +164,7 @@ module.exports = function(grunt) {
     grunt.registerTask('release', [ 'clean:releasePrepare', 'sass:prod', 'uglify:prod', 'copy:release', 'compress:dist', 'clean:releaseFinal' ]);
 
     
-    // Dev build task:
+    // Dev custom build task:
     // Does not compress files, easier to debug
     grunt.registerTask('dev', [ 'sass:prod', 'concat:dev', 'concat:custom' ]);
     

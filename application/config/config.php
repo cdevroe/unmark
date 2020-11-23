@@ -11,7 +11,7 @@
 | version.point.release
 |
 */
-$config['unmark_version'] = '2020.3';
+$config['unmark_version'] = '2020.4';
 
 /*
 |--------------------------------------------------------------------------
