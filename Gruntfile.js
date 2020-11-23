@@ -154,19 +154,22 @@ module.exports = function(grunt) {
     // Compiles CSS, compresses JavaScript.
     grunt.registerTask('default', [ 'sass:prod', 'uglify:prod' ]);
 
+    
+    // Utility tasks that deletes/copies /custom/
+    grunt.registerTask( 'makeCustom', [ 'clean:custom', 'copy:custom' ] ); // Copies ../unmark-internal/custom to ../unmark/custom
+
+
     // Release task:
     // Cleans release directory, compiles CSS and compresses JavaScript. Copies all files to /release/unmark, compresses a zip, deletes /release/unmark
     grunt.registerTask('release', [ 'clean:releasePrepare', 'sass:prod', 'uglify:prod', 'copy:release', 'compress:dist', 'clean:releaseFinal' ]);
 
+    
     // Dev build task:
     // Does not compress files, easier to debug
     grunt.registerTask('dev', [ 'sass:prod', 'concat:dev', 'concat:custom' ]);
     
+    
     // Production build task:
     // Deletes contents of custom folder, copies new custom files, compresses everything (used primarily for unmark.it)
-    grunt.registerTask('production', [ 'makeCustom', 'sass:prod', 'uglify:prod' ]);
-
-    // Utility tasks that deletes/copies /custom/
-    grunt.registerTask( 'makeCustom', [ 'clean:custom', 'copy:custom' ] ); // Copies ../unmark-internal/custom to ../unmark/custom
-
+    grunt.registerTask('production', [ 'makeCustom', 'concat:dev', 'concat:custom', 'sass:prod', 'uglify:prod' ]);
 };
