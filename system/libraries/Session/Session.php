@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
+ * Copyright (c) 2019 - 2022, CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 2.0.0
@@ -44,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	Libraries
  * @category	Sessions
  * @author		Andrey Andreev
- * @link		https://codeigniter.com/user_guide/libraries/sessions.html
+ * @link		https://codeigniter.com/userguide3/libraries/sessions.html
  */
 class CI_Session {
 
@@ -102,31 +103,24 @@ class CI_Session {
 		$this->_configure($params);
 		$this->_config['_sid_regexp'] = $this->_sid_regexp;
 
-		$class = new $class($this->_config);
-		if ($class instanceof SessionHandlerInterface)
+		$class   = new $class($this->_config);
+		$wrapper = new CI_SessionWrapper($class);
+		if (is_php('5.4'))
 		{
-			if (is_php('5.4'))
-			{
-				session_set_save_handler($class, TRUE);
-			}
-			else
-			{
-				session_set_save_handler(
-					array($class, 'open'),
-					array($class, 'close'),
-					array($class, 'read'),
-					array($class, 'write'),
-					array($class, 'destroy'),
-					array($class, 'gc')
-				);
-
-				register_shutdown_function('session_write_close');
-			}
+			session_set_save_handler($wrapper, TRUE);
 		}
 		else
 		{
-			log_message('error', "Session: Driver '".$this->_driver."' doesn't implement SessionHandlerInterface. Aborting.");
-			return;
+			session_set_save_handler(
+				array($wrapper, 'open'),
+				array($wrapper, 'close'),
+				array($wrapper, 'read'),
+				array($wrapper, 'write'),
+				array($wrapper, 'destroy'),
+				array($wrapper, 'gc')
+			);
+
+			register_shutdown_function('session_write_close');
 		}
 
 		// Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
@@ -160,15 +154,36 @@ class CI_Session {
 		// unless it is being currently created or regenerated
 		elseif (isset($_COOKIE[$this->_config['cookie_name']]) && $_COOKIE[$this->_config['cookie_name']] === session_id())
 		{
-			setcookie(
-				$this->_config['cookie_name'],
-				session_id(),
-				(empty($this->_config['cookie_lifetime']) ? 0 : time() + $this->_config['cookie_lifetime']),
-				$this->_config['cookie_path'],
-				$this->_config['cookie_domain'],
-				$this->_config['cookie_secure'],
-				TRUE
-			);
+			$expires = empty($this->_config['cookie_lifetime']) ? 0 : time() + $this->_config['cookie_lifetime'];
+			if (is_php('7.3'))
+			{
+				setcookie(
+					$this->_config['cookie_name'],
+					session_id(),
+					array(
+						'expires' => $expires,
+						'path' => $this->_config['cookie_path'],
+						'domain' => $this->_config['cookie_domain'],
+						'secure' => $this->_config['cookie_secure'],
+						'httponly' => TRUE,
+						'samesite' => $this->_config['cookie_samesite']
+					)
+				);
+			}
+			else
+			{
+				$header = 'Set-Cookie: '.$this->_config['cookie_name'].'='.session_id();
+				$header .= empty($expires) ? '' : '; Expires='.gmdate('D, d-M-Y H:i:s T', $expires).'; Max-Age='.$this->_config['cookie_lifetime'];
+				$header .= '; Path='.$this->_config['cookie_path'];
+				$header .= ($this->_config['cookie_domain'] !== '' ? '; Domain='.$this->_config['cookie_domain'] : '');
+				$header .= ($this->_config['cookie_secure'] ? '; Secure' : '').'; HttpOnly; SameSite='.$this->_config['cookie_samesite'];
+				header($header);
+			}
+
+			if ( ! $this->_config['cookie_secure'] && $this->_config['cookie_samesite'] === 'None')
+			{
+				log_message('error', "Session: '".$this->_config['cookie_name']."' cookie sent with SameSite=None, but without Secure attribute.'");
+			}
 		}
 
 		$this->_ci_init_vars();
@@ -192,6 +207,12 @@ class CI_Session {
 	{
 		// PHP 5.4 compatibility
 		interface_exists('SessionHandlerInterface', FALSE) OR require_once(BASEPATH.'libraries/Session/SessionHandlerInterface.php');
+		// PHP 7 compatibility
+		interface_exists('SessionUpdateTimestampHandlerInterface', FALSE) OR require_once(BASEPATH.'libraries/Session/SessionUpdateTimestampHandlerInterface.php');
+
+		require_once(BASEPATH.'libraries/Session/CI_Session_driver_interface.php');
+		$wrapper = is_php('8.0') ? 'PHP8SessionWrapper' : 'OldSessionWrapper';
+		require_once(BASEPATH.'libraries/Session/'.$wrapper.'.php');
 
 		$prefix = config_item('subclass_prefix');
 
@@ -286,13 +307,43 @@ class CI_Session {
 		isset($params['cookie_domain']) OR $params['cookie_domain'] = config_item('cookie_domain');
 		isset($params['cookie_secure']) OR $params['cookie_secure'] = (bool) config_item('cookie_secure');
 
-		session_set_cookie_params(
-			$params['cookie_lifetime'],
-			$params['cookie_path'],
-			$params['cookie_domain'],
-			$params['cookie_secure'],
-			TRUE // HttpOnly; Yes, this is intentional and not configurable for security reasons
-		);
+		isset($params['cookie_samesite']) OR $params['cookie_samesite'] = config_item('sess_samesite');
+		if ( ! isset($params['cookie_samesite']) && is_php('7.3'))
+		{
+			$params['cookie_samesite'] = ini_get('session.cookie_samesite');
+		}
+
+		if (isset($params['cookie_samesite']))
+		{
+			$params['cookie_samesite'] = ucfirst(strtolower($params['cookie_samesite']));
+			in_array($params['cookie_samesite'], array('Lax', 'Strict', 'None'), TRUE) OR $params['cookie_samesite'] = 'Lax';
+		}
+		else
+		{
+			$params['cookie_samesite'] = 'Lax';
+		}
+
+		if (is_php('7.3'))
+		{
+			session_set_cookie_params(array(
+				'lifetime' => $params['cookie_lifetime'],
+				'path'     => $params['cookie_path'],
+				'domain'   => $params['cookie_domain'],
+				'secure'   => $params['cookie_secure'],
+				'httponly' => TRUE,
+				'samesite' => $params['cookie_samesite']
+			));
+		}
+		else
+		{
+			session_set_cookie_params(
+				$params['cookie_lifetime'],
+				$params['cookie_path'].'; SameSite='.$params['cookie_samesite'],
+				$params['cookie_domain'],
+				$params['cookie_secure'],
+				TRUE // HttpOnly; Yes, this is intentional and not configurable for security reasons
+			);
+		}
 
 		if (empty($expiration))
 		{
@@ -415,9 +466,7 @@ class CI_Session {
 				{
 					$_SESSION['__ci_vars'][$key] = 'old';
 				}
-				// Hacky, but 'old' will (implicitly) always be less than time() ;)
-				// DO NOT move this above the 'new' check!
-				elseif ($value < $current_time)
+				elseif ($value === 'old' || $value < $current_time)
 				{
 					unset($_SESSION[$key], $_SESSION['__ci_vars'][$key]);
 				}
@@ -725,7 +774,7 @@ class CI_Session {
 	 *
 	 * Legacy CI_Session compatibility method
 	 *
-	 * @returns	array
+	 * @return	array
 	 */
 	public function &get_userdata()
 	{
