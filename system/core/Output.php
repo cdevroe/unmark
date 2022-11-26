@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
+ * Copyright (c) 2019 - 2022, CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
@@ -46,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	Libraries
  * @category	Output
  * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/user_guide/libraries/output.html
+ * @link		https://codeigniter.com/userguide3/libraries/output.html
  */
 class CI_Output {
 
@@ -55,7 +56,7 @@ class CI_Output {
 	 *
 	 * @var	string
 	 */
-	public $final_output;
+	public $final_output = '';
 
 	/**
 	 * Cache expiration time
@@ -145,7 +146,7 @@ class CI_Output {
 			&& extension_loaded('zlib')
 		);
 
-		isset(self::$func_overload) OR self::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
+		isset(self::$func_overload) OR self::$func_overload = ( ! is_php('8.0') && extension_loaded('mbstring') && @ini_get('mbstring.func_overload'));
 
 		// Get mime types for later
 		$this->mimes =& get_mimes();
@@ -299,10 +300,14 @@ class CI_Output {
 	 */
 	public function get_header($header)
 	{
-		// Combine headers already sent with our batched headers
+		// We only need [x][0] from our multi-dimensional array
+		$header_lines = array_map(function ($headers)
+		{
+			return array_shift($headers);
+		}, $this->headers);
+
 		$headers = array_merge(
-			// We only need [x][0] from our multi-dimensional array
-			array_map('array_shift', $this->headers),
+			$header_lines,
 			headers_list()
 		);
 
