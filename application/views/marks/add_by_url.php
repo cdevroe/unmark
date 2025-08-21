@@ -4,8 +4,15 @@ if ( $_POST ) :
     $time_start = microtime(true);
 
 
-    $url = $_POST['url'];
-    echo '<p><strong>URL:</strong>' . $url . '</p>';
+    $url = filter_var($_POST['url'], FILTER_VALIDATE_URL);
+
+    if ($url === false) {
+        $url = '';
+        die('The URL submitted was invalid.');
+    }
+
+
+    echo '<p><strong>URL:</strong>' . htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '</p>';
 
     $title = '';
     $dom = new DOMDocument();
