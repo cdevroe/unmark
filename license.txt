@@ -1,7 +1,7 @@
 == UNMARK LICENSE ==
 The MIT License (MIT)
 
-Copyright (c) 2013-2019 Colin Devroe, Kyle Ruane, Plain, Unmark
+Copyright (c) 2013-2025 Colin Devroe, Kyle Ruane
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ SOFTWARE.
 == CODEIGNITER LICENSE ==
 The MIT License (MIT)
 
-Copyright (c) 2014 - 2019, British Columbia Institute of Technology
+Copyright (c) 2014 - 2025, British Columbia Institute of Technology
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
