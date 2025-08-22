@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
+ * Copyright (c) 2019 - 2022, CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,11 +30,12 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 3.0.0
  * @filesource
-*/
+ */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -44,9 +45,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	Libraries
  * @category	Sessions
  * @author	Andrey Andreev
- * @link	https://codeigniter.com/user_guide/libraries/sessions.html
+ * @link	https://codeigniter.com/userguide3/libraries/sessions.html
  */
-class CI_Session_files_driver extends CI_Session_driver implements SessionHandlerInterface {
+class CI_Session_files_driver extends CI_Session_driver implements CI_Session_driver_interface {
 
 	/**
 	 * Save path
@@ -115,7 +116,7 @@ class CI_Session_files_driver extends CI_Session_driver implements SessionHandle
 
 		$this->_sid_regexp = $this->_config['_sid_regexp'];
 
-		isset(self::$func_overload) OR self::$func_overload = (extension_loaded('mbstring') && ini_get('mbstring.func_overload'));
+		isset(self::$func_overload) OR self::$func_overload = ( ! is_php('8.0') && extension_loaded('mbstring') && @ini_get('mbstring.func_overload'));
 	}
 
 	// ------------------------------------------------------------------------
@@ -135,12 +136,14 @@ class CI_Session_files_driver extends CI_Session_driver implements SessionHandle
 		{
 			if ( ! mkdir($save_path, 0700, TRUE))
 			{
-				throw new Exception("Session: Configured save path '".$this->_config['save_path']."' is not a directory, doesn't exist or cannot be created.");
+				log_message('error', "Session: Configured save path '".$this->_config['save_path']."' is not a directory, doesn't exist or cannot be created.");
+				return $this->_failure;
 			}
 		}
 		elseif ( ! is_writable($save_path))
 		{
-			throw new Exception("Session: Configured save path '".$this->_config['save_path']."' is not writable by the PHP process.");
+			log_message('error', "Session: Configured save path '".$this->_config['save_path']."' is not writable by the PHP process.");
+			return $this->_failure;
 		}
 
 		$this->_config['save_path'] = $save_path;
@@ -194,6 +197,10 @@ class CI_Session_files_driver extends CI_Session_driver implements SessionHandle
 				$this->_fingerprint = md5('');
 				return '';
 			}
+
+			// Prevent possible data corruption
+			// See https://github.com/bcit-ci/CodeIgniter/issues/5857
+			clearstatcache(TRUE, $this->_file_path.$session_id);
 		}
 		// We shouldn't need this, but apparently we do ...
 		// See https://github.com/bcit-ci/CodeIgniter/issues/4039
@@ -394,15 +401,31 @@ class CI_Session_files_driver extends CI_Session_driver implements SessionHandle
 	// --------------------------------------------------------------------
 
 	/**
+	 * Update Timestamp
+	 *
+	 * Update session timestamp without modifying data
+	 *
+	 * @param	string	$id	Session ID
+	 * @param	string	$data	Unknown & unused
+	 * @return	bool
+	 */
+	public function updateTimestamp($id, $unknown)
+	{
+		return touch($this->_file_path.$id);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
 	 * Validate ID
 	 *
 	 * Checks whether a session ID record exists server-side,
 	 * to enforce session.use_strict_mode.
 	 *
-	 * @param	string	$id
+	 * @param	string	$id	Session ID
 	 * @return	bool
 	 */
-	public function validateSessionId($id)
+	public function validateId($id)
 	{
 		$result = is_file($this->_file_path.$id);
 		clearstatcache(TRUE, $this->_file_path.$id);

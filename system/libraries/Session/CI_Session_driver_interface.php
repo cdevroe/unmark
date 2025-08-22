@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2019 - 2022, CodeIgniter Foundation
+ * Copyright (c) 2022, CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,32 +28,33 @@
  *
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
- * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
+ * @copyright	Copyright (c) 2022, CodeIgniter Foundation (https://codeigniter.com/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
- * @since	Version 1.0.0
+ * @since	Version 3.0.0
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$lang['ut_test_name'] = 'Test Name';
-$lang['ut_test_datatype'] = 'Test Datatype';
-$lang['ut_res_datatype'] = 'Expected Datatype';
-$lang['ut_result'] = 'Result';
-$lang['ut_undefined'] = 'Undefined Test Name';
-$lang['ut_file'] = 'File Name';
-$lang['ut_line'] = 'Line Number';
-$lang['ut_passed'] = 'Passed';
-$lang['ut_failed'] = 'Failed';
-$lang['ut_boolean'] = 'Boolean';
-$lang['ut_integer'] = 'Integer';
-$lang['ut_float'] = 'Float';
-$lang['ut_double'] = 'Float'; // can be the same as float
-$lang['ut_string'] = 'String';
-$lang['ut_array'] = 'Array';
-$lang['ut_object'] = 'Object';
-$lang['ut_resource'] = 'Resource';
-$lang['ut_null'] = 'Null';
-$lang['ut_notes'] = 'Notes';
+/**
+ * CI_Session_driver_interface
+ *
+ * A compatibility typeless SessionHandlerInterface alias
+ *
+ * @package	CodeIgniter
+ * @subpackage	Libraries
+ * @category	Sessions
+ * @author	Andrey Andreev
+ * @link	https://codeigniter.com/userguide3/libraries/sessions.html
+ */
+interface CI_Session_driver_interface {
+
+	public function open($save_path, $name);
+	public function close();
+	public function read($session_id);
+	public function write($session_id, $session_data);
+	public function destroy($session_id);
+	public function gc($maxlifetime);
+	public function updateTimestamp($session_id, $data);
+	public function validateId($session_id);
+}

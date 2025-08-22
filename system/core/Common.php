@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
+ * Copyright (c) 2019 - 2022, CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
@@ -46,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	CodeIgniter
  * @category	Common Functions
  * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/user_guide/
+ * @link		https://codeigniter.com/userguide3/
  */
 
 // ------------------------------------------------------------------------
@@ -565,7 +566,7 @@ if ( ! function_exists('set_status_header'))
 			return;
 		}
 
-		$server_protocol = (isset($_SERVER['SERVER_PROTOCOL']) && in_array($_SERVER['SERVER_PROTOCOL'], array('HTTP/1.0', 'HTTP/1.1', 'HTTP/2'), TRUE))
+		$server_protocol = (isset($_SERVER['SERVER_PROTOCOL']) && in_array($_SERVER['SERVER_PROTOCOL'], array('HTTP/1.0', 'HTTP/1.1', 'HTTP/2', 'HTTP/2.0'), TRUE))
 			? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
 		header($server_protocol.' '.$code.' '.$text, TRUE, $code);
 	}
@@ -778,11 +779,9 @@ if ( ! function_exists('_stringify_attributes'))
 	 */
 	function _stringify_attributes($attributes, $js = FALSE)
 	{
-		$atts = NULL;
-
 		if (empty($attributes))
 		{
-			return $atts;
+			return NULL;
 		}
 
 		if (is_string($attributes))
@@ -792,6 +791,7 @@ if ( ! function_exists('_stringify_attributes'))
 
 		$attributes = (array) $attributes;
 
+		$atts = '';
 		foreach ($attributes as $key => $val)
 		{
 			$atts .= ($js) ? $key.'='.$val.',' : ' '.$key.'="'.$val.'"';
