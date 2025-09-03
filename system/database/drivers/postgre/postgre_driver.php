@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2019, British Columbia Institute of Technology
+ * Copyright (c) 2019 - 2022, CodeIgniter Foundation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
  * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
  * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.3.0
@@ -48,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	Drivers
  * @category	Database
  * @author		EllisLab Dev Team
- * @link		https://codeigniter.com/user_guide/database/
+ * @link		https://codeigniter.com/userguide3/database/
  */
 class CI_DB_postgre_driver extends CI_DB {
 
@@ -78,22 +79,12 @@ class CI_DB_postgre_driver extends CI_DB {
 	// --------------------------------------------------------------------
 
 	/**
-	 * Class constructor
+	 * Build DSN
 	 *
-	 * Creates a DSN string to be used for db_connect() and db_pconnect()
-	 *
-	 * @param	array	$params
 	 * @return	void
 	 */
-	public function __construct($params)
+	protected function _build_dsn()
 	{
-		parent::__construct($params);
-
-		if ( ! empty($this->dsn))
-		{
-			return;
-		}
-
 		$this->dsn === '' OR $this->dsn = '';
 
 		if (strpos($this->hostname, '/') !== FALSE)
@@ -145,10 +136,11 @@ class CI_DB_postgre_driver extends CI_DB {
 	 * Database connection
 	 *
 	 * @param	bool	$persistent
-	 * @return	resource
+	 * @return	resource|object
 	 */
 	public function db_connect($persistent = FALSE)
 	{
+		empty($this->dsn) && $this->_build_dsn();
 		$this->conn_id = ($persistent === TRUE)
 			? pg_pconnect($this->dsn)
 			: pg_connect($this->dsn);
@@ -235,7 +227,7 @@ class CI_DB_postgre_driver extends CI_DB {
 	 * Execute the query
 	 *
 	 * @param	string	$sql	an SQL query
-	 * @return	resource
+	 * @return	resource|object
 	 */
 	protected function _execute($sql)
 	{
@@ -428,7 +420,7 @@ class CI_DB_postgre_driver extends CI_DB {
 	{
 		return 'SELECT "column_name"
 			FROM "information_schema"."columns"
-			WHERE LOWER("table_name") = '.$this->escape(strtolower($table));
+			WHERE "table_schema" = \''.$this->schema.'\' AND LOWER("table_name") = '.$this->escape(strtolower($table));
 	}
 
 	// --------------------------------------------------------------------
@@ -443,7 +435,7 @@ class CI_DB_postgre_driver extends CI_DB {
 	{
 		$sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default"
 			FROM "information_schema"."columns"
-			WHERE LOWER("table_name") = '.$this->escape(strtolower($table));
+			WHERE "table_schema" = \''.$this->schema.'\' AND LOWER("table_name") = '.$this->escape(strtolower($table));
 
 		if (($query = $this->query($sql)) === FALSE)
 		{

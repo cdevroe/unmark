@@ -5,34 +5,33 @@
 ##
 ## Written by Colin Devroe cdevroe.com
 ##
-## Version 1.0 Build 001
+## Version 2.0
 ##
-
-version: '3.3'
 
 services:
   apache:
     container_name: unmark_apache
     build:
       context: ./
-    image: php:5.6-apache
+    platform: linux/amd64
     hostname: apache
     ports:
-    - "80:80"
+    - "8080:80"
     volumes:
       - ./:/var/www/html
       - ./docker-configs/php-custom.ini:/usr/local/etc/php/conf.d/custom.ini
     depends_on:
       - mysql
-    links:
-      - mysql
+    networks:
+      - unmark_network
   mysql:
     container_name: unmark_mysql
-    image: mysql:5.7
+    image: mysql:8.0
+    platform: linux/amd64
     hostname: mysql
-    command: --sql_mode=''
+    command: --default-authentication-plugin=mysql_native_password --sql_mode=''
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
      - unmark_db_volume:/var/lib/mysql
     environment:
@@ -40,16 +39,26 @@ services:
       MYSQL_DATABASE: unmark
       MYSQL_USER: unmarkuser
       MYSQL_PASSWORD: unmarkpass
+    networks:
+      - unmark_network
   phpmyadmin:
     container_name: unmark_phpmyadmin
     image: phpmyadmin/phpmyadmin
-    links:
-      - mysql:db
+    platform: linux/amd64
+    depends_on:
+      - mysql
     ports:
-      - "8082:80"
+      - "8083:80"
     environment:
+      - PMA_HOST=mysql
       - PMA_USER=unmarkuser
       - PMA_PASSWORD=unmarkpass
       - PHP_UPLOAD_MAX_FILESIZE=100MB
+    networks:
+      - unmark_network
 volumes:
   unmark_db_volume:
+
+networks:
+  unmark_network:
+    driver: bridge

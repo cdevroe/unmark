@@ -3,8 +3,6 @@ Unmark
 
 The open source to-do application for bookmarks.
 
-**NOTICE June 15, 2020:** The new default branch is named "trunk". ✊
-
 We offer this source code for Unmark completely free. We do so in hopes that Unmark will live on for many years even if we stop maintaining it. You can also use it for free (with a paid upgrade) at [Unmark.it](https://unmark.it/)
 
 To support its further development please consider [subscribing to Unmark.it](https://unmark.it/), [donating via Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XSYNN4MGM826N). Or, you can contribute to the code.
@@ -88,7 +86,7 @@ No longer recommended, but do whatever you want!
 - That's it!
 
 #### From git repository
-- Run `git pull origin trunk`
+- Run `git pull origin main`
 - Run `npm update` in the app's root directory
 - Run `grunt` in the app's root directory
 - Navigate to [http://localhost/upgrade](http://localhost/upgrade)
@@ -110,7 +108,7 @@ Another way is to contribute your own code via Pull Requests. Here are some note
 ### Forking and Pull Requests
 
 - Fork [the repository on GitHub](https://github.com/cdevroe/unmark/) into your own account
-- Create your own branch of the trunk branch `git checkout -b your-branch-name`
+- Create your own branch of the main branch `git checkout -b your-branch-name`
 - Update your code and push those code changes back to your fork's branch `git push origin your-branch-name`
 - [Submit a Pull Request](https://github.com/cdevroe/unmark/pulls) using that branch
 - And please accept our _thanks_!

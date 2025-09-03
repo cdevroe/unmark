@@ -1,2 +1,2 @@
-FROM php:5.6-apache
-RUN docker-php-ext-install -j$(nproc) mysqli && a2enmod rewrite
+FROM php:7.4-apache
+RUN docker-php-ext-install -j$(nproc) mysqli pdo pdo_mysql && a2enmod rewrite
