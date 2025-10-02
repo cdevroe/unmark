@@ -43,7 +43,7 @@ class Export extends Plain_Controller
         $this->jsonexport->addMeta('export_date', date('Y-m-d H:i:s'));
         // Retrieve user marks
         $this->load->model('users_to_marks_model', 'user_marks');
-        $where = 'users_to_marks.user_id='. $this->user_id;
+        $where = 'users_to_marks.user_id='. $this->user_id.' AND users_to_marks.active=1';
         $marksCount = $this->user_marks->count($where);
         // Number of marks
         $this->jsonexport->addMeta('marks_count', $marksCount);
@@ -89,7 +89,7 @@ class Export extends Plain_Controller
     
         // Retrieve user marks
         $this->load->model('users_to_marks_model', 'user_marks');
-        $where = 'users_to_marks.user_id='. $this->user_id;
+        $where = 'users_to_marks.user_id='.$this->user_id.' AND users_to_marks.active=1';
         $marksCount = $this->user_marks->count($where);
         // Number of marks
         //$this->jsonexport->addMeta('marks_count', $marksCount);
