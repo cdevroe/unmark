@@ -12,7 +12,7 @@ class Plain_Controller extends CI_Controller
     public $header         = 'layouts/header';
     public $html_clean     = null;
     public $is_api         = false;
-    public $limit          = 30;
+    public $limit          = 50;
     public $logged_in      = false;
     public $original       = null;
     public $user_admin     = false;
