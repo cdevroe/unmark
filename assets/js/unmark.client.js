@@ -90,7 +90,7 @@
                     showMessage(form, true, res.message);
                 }
                 showSpinner(form, false);
-                setTimeout(()=>{
+                setTimeout( function() { // old syntax for uglifying
                     location.href = '/';
                 }, 3000);
                 
