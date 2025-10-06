@@ -26,7 +26,6 @@
     };
 
 
-    // Change Password Function
     unmark.change_password = function () {
         unmark.overlay(true);
         $('#resetPasswordForm').fadeIn(400);
@@ -38,6 +37,10 @@
     unmark.import_export = function () {
         unmark.overlay(true);
         $('#importExportForm').fadeIn(400);
+    };
+    unmark.delete_user = function () {
+        unmark.overlay(true);
+        $('#deleteUserForm').fadeIn(400);
     };
 
     // Submit Password Change
@@ -67,6 +70,35 @@
             new_pass_field.val('');
             showSpinner(form, false);
             return showMessage(form, true, 'New Passwords do not match');
+        }
+    };
+
+    // Submit Delete User Account Request
+    unmark.send_delete_user_request = function (form) {
+        var query,
+            pass_field = $('#pass'),
+            pass = $('#pass').val();
+
+        showSpinner(form, true);
+
+        if (pass.length > 0) {
+            query = 'password='+unmark.urlEncode(pass);
+            unmark.ajax('/user/delete', 'post', query, function (res) {
+                if (res.success) {
+                    showMessage(form, false, 'Your account has been deleted. You are logged out.');
+                } else {
+                    showMessage(form, true, res.message);
+                }
+                showSpinner(form, false);
+                setTimeout(()=>{
+                    location.href = '/';
+                }, 3000);
+                
+            });
+        } else {
+            pass_field.val('');
+            showSpinner(form, false);
+            return showMessage(form, true, 'Please enter your password.');
         }
     };
 

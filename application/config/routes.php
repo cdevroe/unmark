@@ -89,6 +89,7 @@ $route['register/user']          = 'register/user';
 // User methods
 $route['user/update/email']      = 'user/updateEmail';
 $route['user/update/password']   = 'user/updatePassword';
+$route['user/delete']            = 'user/delete';
 $route['user(.*?)']              = 'user/index';
 
 // help
