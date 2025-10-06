@@ -14,6 +14,20 @@
         </div>
         <a href="#" id="unmarkModalClose"><i class="icon-big_close"></i></a>
     </figure>
+    <figure id="deleteUserForm" class="resetWrapper hiddenform">
+        <div class="loginInner">
+            <header>
+              <h1><?php echo unmark_phrase('Delete Account') ?></h1>
+              <p><strong>Warning:</strong> This cannot be undone.</p>
+            </header>
+            <form id="send_delete_user_request" method="post" action="#" class="ajaxsbmt">
+                <input type="password" class="field-input" name="pass" id="pass" placeholder="<?php echo unmark_phrase('Password...') ?>" autocomplete="off" />
+                <button class="login-submit" type="submit">Delete Account</button>
+            </form>
+            <div class="response-message"></div>
+        </div>
+        <a href="#" id="unmarkModalClose"><i class="icon-big_close"></i></a>
+    </figure>
     <figure id="changePasswordForm" class="resetWrapper hiddenform">
         <div class="loginInner">
             <header>
