@@ -11,7 +11,7 @@
 | version.point.release
 |
 */
-$config['unmark_version'] = '2025.1';
+$config['unmark_version'] = '2025.2';
 
 /*
 |--------------------------------------------------------------------------
