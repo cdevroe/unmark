@@ -30,6 +30,42 @@ class User extends Plain_Controller
         $this->renderJSON();
     }
 
+    // Delete a user
+    public function delete()
+    {
+        if (! isset($this->clean->password) || ! isValid($this->clean->password, 'password')) {
+            $this->data['message'] = reset(array_values(formatErrors(602)));
+        } else {
+
+            $current_password = (isset($this->clean->password)) ? $this->clean->password : null;
+            $res              = $this->user->read($this->user_id, 1, 1, 'email,password');
+
+            if (! isset($res->password)) {
+                $this->data['message'] = 'We could not verify your current password.';
+            }
+            elseif (verifyHash($current_password, $res->password) != $res->password) {
+                $this->data['message'] = 'Your current password does not match what we have on record.';
+            }
+            else {
+                $this->data['success'] = false;
+                if (! empty($this->user_id) && is_numeric($this->user_id)) {
+
+                    // Get the user information
+                    // If user has a customer id, remove them from stripe
+                    $this->load->model('users_model', 'users');
+                    $user = $this->users->read($this->user_id);
+
+                    if (isset($user->user_id) && ! empty($user->user_id)) {
+                        $this->data['success'] = $this->db->query("DELETE FROM `users` WHERE users.user_id = '" . $this->user_id . "'");
+                        $this->sessionClear();
+                    }
+                }
+            }
+        }
+
+        $this->renderJSON();
+    }
+
     // Update a user's email address
     public function updateEmail()
     {

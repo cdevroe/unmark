@@ -127,7 +127,7 @@
 
         if ( pages_already_loaded[next_page] == true ) { return; }
 
-        if (cont.scrollTop() + cont.innerHeight() >= cont[0].scrollHeight && ajax_loading !== true) { // Only load if the amount scrolled is greater than the view area for the marks, also if the ajax isn't already firing
+        if (cont.scrollTop() + cont.innerHeight() - 200 >= cont[0].scrollHeight && ajax_loading !== true) { // Only load if the amount scrolled is greater than the view area for the marks, also if the ajax isn't already firing
 
             if (next_page <= total_pages && pages_already_loaded[next_page] !== true && ajax_loading !== true) { // only fire if this page hasn't already been retrieved
                 ajax_loading = true;

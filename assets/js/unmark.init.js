@@ -195,6 +195,10 @@
             $('.search-bar').fadeIn(300, function(e){
                 setTimeout("$('#search-input').focus();", 0);
             });
+            // If already in archive, search the archive first
+            if ( location.pathname == '/marks/archive' || location.pathname == '/marks/archive/search' ) {
+                $('#search-form').attr('action','/marks/archive/search');
+            }
             return false;
         });
         $(document).on('click', '.marks-heading-bar .search-bar .close-button', function(e) {

@@ -28,6 +28,7 @@ $unmark_language = array(
     'register' =>                                             array( 'Register' ),
     'change password' =>                                      array( 'Change password' ),
     'change email address' =>                                 array( 'Change email address' ),
+    'delete_account' =>                                       array( 'Delete Account' ),
     'import or export marks' =>                               array( 'Import or export marks' ),
     'invite others' =>                                        array( 'Invite others' ),
     'unmark help' =>                                          array( 'Unmark help' ),

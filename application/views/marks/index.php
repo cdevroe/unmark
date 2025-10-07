@@ -18,6 +18,15 @@
                     </div>
                 </header>
                 <div class="marks continue-search no-results"><?php echo sprintf( unmark_phrase('Would you like to <a href="/marks/archive/search?q=%s">try searching your archive</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>
+            <?php elseif (isset($_GET['q']) & $lookup_type == 'archive') : ?>
+                <header class="marks-heading">
+                    <div class="marks-heading-wrapper">
+                        <div class="marks-heading-bar">
+                            <?php $this->load->view('layouts/topbar/searchform.php'); ?>
+                        </div>
+                    </div>
+                </header>
+            <div class="marks continue-search no-results"><?php echo sprintf( unmark_phrase('Would you like to <a href="/marks/search?q=%s">try searching outside of your archived marks</a>?'), (isset($_GET['q'])) ? $_GET['q'] : ''); ?></div>    
             <?php elseif ($lookup_type == 'tag') : ?>
                 <header class="marks-heading">
                     <div class="marks-heading-wrapper">
