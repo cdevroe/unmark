@@ -49,28 +49,18 @@ class Marks extends Plain_Controller
             $title      = (isset($_GET['title'])) ? $this->input->get('title') : ''; // If title is supplied, use that
 
             if ( $title == '' ) : // If title is empty, go get it
-                $dom        = new DOMDocument();
-                libxml_use_internal_errors(true);
-                if (!$dom->loadHTMLFile($url, LIBXML_NOWARNING)) :
-                    foreach (libxml_get_errors() as $error) :
-                        // handle errors here
-                        echo '<p><a href="/">BACK</a> There was an error adding the mark.</p>';
-                        if ( $error->code == 1549 ) :
-                            echo '<p>Most likely the URL is invalid or the web site isn\'t currently available.</p>';
-                        endif;
-                    endforeach;
-                    libxml_clear_errors();
-                    exit;
-                    
-                else :
-                    $list = $dom->getElementsByTagName("title");
-                    if ($list->length > 0) :
-                        $title = $list->item(0)->textContent;
-                    endif;
-                endif;
-                
-                if ( strlen($title) == 0 ) :
-                    $title = "Unknown Page Title"; 
+                $this->load->helper('title');
+                $html = unmark_fetch_url_html($url);
+                if (! empty($html)) {
+                    $title = unmark_extract_title($html);
+                }
+
+                if ( empty($title) ) {
+                    $title = unmark_title_from_url($url);
+                }
+
+                if ( empty($title) ) :
+                    $title = "Unknown Page Title";
                 endif;
 
             endif; // end if empty title
