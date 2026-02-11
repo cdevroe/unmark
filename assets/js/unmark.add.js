@@ -108,7 +108,7 @@
             var selectize = mark_added_tags[0].selectize;
                 
             selectize.createItem($(this).html().replace('#',''))
-            selectize.focus();
+            selectize.close();
         });
         
 
