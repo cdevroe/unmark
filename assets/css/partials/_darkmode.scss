@@ -201,6 +201,12 @@ $dark-icon-strong: rgba(240, 245, 247, 0.85);
     color: $dark-muted;
   }
 
+  #helperforms #importExportForm p,
+  #helperforms #importExportForm p.note,
+  #helperforms #importExportForm p em {
+    color: $dark-muted-strong;
+  }
+
   #helperforms .response-message {
     background: rgba(255, 255, 255, 0.08);
     color: $dark-text;
@@ -251,6 +257,18 @@ $dark-icon-strong: rgba(240, 245, 247, 0.85);
     background: $dark-elevated;
     border-color: rgba(255, 255, 255, 0.14);
     color: $dark-text;
+  }
+
+  #input-notes,
+  textarea.sidebar-info-notes {
+    background: $dark-elevated;
+    border-color: rgba(255, 255, 255, 0.14);
+    color: $dark-text;
+  }
+
+  #input-notes::placeholder,
+  textarea.sidebar-info-notes::placeholder {
+    color: rgba(228, 238, 245, 0.6);
   }
 
   .sidebar-mark-info .sidebar-info-panel section.sidebar-info-notes.editable {
