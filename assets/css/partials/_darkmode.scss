@@ -1,0 +1,347 @@
+// Dark mode adjustments for main marks list area (sidebar unchanged)
+$dark-main: #0f2233;
+$dark-bar: #132a40;
+$dark-elevated: #173047;
+$dark-cut: #1d344b;
+$dark-text: #e4eef5;
+$dark-muted: #9fb2c0;
+$dark-muted-strong: #b9c9d4;
+$dark-border: rgba(255, 255, 255, 0.08);
+$dark-icon: rgba(240, 245, 247, 0.7);
+$dark-icon-strong: rgba(240, 245, 247, 0.85);
+
+@media (prefers-color-scheme: dark) {
+  .main-content {
+    background: $dark-main;
+    color: $dark-text;
+  }
+
+  .main-content .marks-heading {
+    background: $dark-bar;
+    color: $dark-text;
+  }
+
+  .main-content .marks-heading:after {
+    background: linear-gradient(rgba(8, 18, 27, 0.9), rgba(8, 18, 27, 0.55), rgba(8, 18, 27, 0));
+    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .main-content .marks-heading .marks-heading-bar {
+    background: $dark-bar;
+  }
+
+  .main-content .marks-heading .marks-heading-bar .search-bar,
+  .main-content .marks-heading .marks-heading-bar .add-mark-bar {
+    background: $dark-bar;
+  }
+
+  .main-content .marks-heading .marks-heading-bar .search-bar i svg,
+  .main-content .marks-heading .marks-heading-bar .add-mark-bar i svg {
+    fill: $dark-icon;
+  }
+
+  .main-content .marks-heading .marks-heading-bar .search-bar input[type=text],
+  .main-content .marks-heading .marks-heading-bar .add-mark-bar input[type=text] {
+    color: $dark-text;
+    background: transparent;
+  }
+
+  .main-content .marks-heading .marks-heading-bar .search-bar input[type=text]::placeholder,
+  .main-content .marks-heading .marks-heading-bar .add-mark-bar input[type=text]::placeholder {
+    color: rgba(228, 238, 245, 0.6);
+  }
+
+  .main-content .marks-heading .marks-heading-bar .search-bar .close-button,
+  .main-content .marks-heading .marks-heading-bar .add-mark-bar .close-button {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .main-content .marks-heading .marks-heading-bar .search-bar .close-button:before,
+  .main-content .marks-heading .marks-heading-bar .search-bar .close-button:after,
+  .main-content .marks-heading .marks-heading-bar .add-mark-bar .close-button:before,
+  .main-content .marks-heading .marks-heading-bar .add-mark-bar .close-button:after {
+    background: $dark-icon;
+  }
+
+  .main-content .marks-heading .marks-heading-bar .buttons > a {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .main-content .marks-heading .marks-heading-bar .buttons > a svg {
+    fill: $dark-icon-strong;
+  }
+
+  .main-content .marks-heading h2.default-message {
+    color: rgba(228, 238, 245, 0.7);
+  }
+
+  .main-content .marks.continue-search {
+    color: $dark-muted;
+  }
+
+  .main-content .marks.continue-search a {
+    color: $dark-muted-strong;
+    border-bottom-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .marks_list .mark {
+    border-bottom: 1px solid $dark-border;
+  }
+
+  .marks_list .mark:before {
+    background: rgba(95, 177, 227, 0.6);
+  }
+
+  .marks_list .mark h2 a {
+    color: $dark-text;
+  }
+
+  .marks_list .mark .mark-meta {
+    color: $dark-muted;
+  }
+
+  .marks_list .mark .mark-meta .mark-sep {
+    color: rgba(159, 178, 192, 0.6);
+  }
+
+  .marks_list .mark .mark-meta .mark-link a {
+    color: $dark-muted-strong;
+  }
+
+  .marks_list .mark .mark-actions a {
+    background: $dark-elevated;
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  .marks_list .mark .mark-actions a i svg {
+    fill: rgba(228, 238, 245, 0.75);
+  }
+
+  .marks_list .mark .archive-target .mark-archive {
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  .marks_list .mark .archive-target .mark-archive i svg {
+    fill: rgba(228, 238, 245, 0.75);
+  }
+
+  .marks_list .mark .archive-target .mark-archive[data-action="mark_restore"] svg {
+    fill: rgba(228, 238, 245, 0.55);
+  }
+
+  .marks_list .mark.view-active {
+    box-shadow: 0 -1px 0 0 $dark-border;
+    border-bottom-color: $dark-border;
+  }
+
+  .marks_list .mark.label-2:after {
+    border-color: $color_orange $color_orange $dark-cut $dark-cut;
+  }
+
+  .marks_list .mark.label-3:after {
+    border-color: $color_blue $color_blue $dark-cut $dark-cut;
+  }
+
+  .marks_list .mark.label-4:after {
+    border-color: $color_yellow $color_yellow $dark-cut $dark-cut;
+  }
+
+  .marks_list .mark.label-5:after {
+    border-color: $color_purple $color_purple $dark-cut $dark-cut;
+  }
+
+  .marks_list .mark.label-6:after {
+    border-color: $color_green $color_green $dark-cut $dark-cut;
+  }
+
+  .marks_list .mark.label-7:after {
+    border-color: $color_pink $color_pink $dark-cut $dark-cut;
+  }
+
+  #helperforms figure {
+    background: $dark-elevated;
+    color: $dark-text;
+    box-shadow: 0 6px 16px rgba(8, 18, 27, 0.5), 0 18px 40px rgba(8, 18, 27, 0.45);
+  }
+
+  #helperforms figure header h1 {
+    color: $dark-text;
+  }
+
+  #helperforms figure header p {
+    color: $dark-muted;
+  }
+
+  #helperforms figure header p a {
+    border-bottom-color: rgba(255, 255, 255, 0.25);
+  }
+
+  #helperforms figure #unmarkModalClose {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  #helperforms figure #unmarkModalClose:before,
+  #helperforms figure #unmarkModalClose:after {
+    background: $dark-icon;
+  }
+
+  #helperforms input {
+    background: $dark-cut;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: $dark-text;
+  }
+
+  #helperforms input::placeholder {
+    color: rgba(228, 238, 245, 0.55);
+  }
+
+  #helperforms small,
+  #helperforms p {
+    color: $dark-muted;
+  }
+
+  #helperforms #importExportForm p,
+  #helperforms #importExportForm p.note,
+  #helperforms #importExportForm p em {
+    color: $dark-muted-strong;
+  }
+
+  #helperforms .response-message {
+    background: rgba(255, 255, 255, 0.08);
+    color: $dark-text;
+  }
+
+  #unmark-overlay {
+    background-color: rgba(8, 18, 27, 0.92);
+  }
+
+  #unmark-overlay #unmarkModalClose:before,
+  #unmark-overlay #unmarkModalClose:after {
+    background: $dark-icon;
+  }
+
+  .sidebar-mark-info {
+    background: $dark-main;
+    color: $dark-text;
+    min-height: 100%;
+  }
+
+  .sidebar-mark-info > header {
+    background: $dark-main;
+    border-bottom-color: $dark-border;
+  }
+
+  .sidebar-mark-info > header .sidebar-heading {
+    color: $dark-muted-strong;
+  }
+
+  .sidebar-mark-info .section-heading,
+  .sidebar-mark-info .mark-title h4,
+  .sidebar-mark-info .mark-url h4,
+  .sidebar-mark-info .sidebar-label:before,
+  .sidebar-mark-info .sidebar-info-panel h4 {
+    color: $dark-muted-strong;
+  }
+
+  .sidebar-mark-info .mark-title h4 i,
+  .sidebar-mark-info .mark-url h4 i,
+  .sidebar-mark-info .sidebar-info-panel h4 i {
+    color: $dark-muted;
+  }
+
+  .sidebar-mark-info .input-field input,
+  .sidebar-mark-info .button-field input,
+  .sidebar-mark-info textarea,
+  .sidebar-mark-info .sidebar-info-panel section.sidebar-info-notes {
+    background: $dark-elevated;
+    border-color: rgba(255, 255, 255, 0.14);
+    color: $dark-text;
+  }
+
+  #input-notes,
+  textarea.sidebar-info-notes {
+    background: $dark-elevated;
+    border-color: rgba(255, 255, 255, 0.14);
+    color: $dark-text;
+  }
+
+  #input-notes::placeholder,
+  textarea.sidebar-info-notes::placeholder {
+    color: rgba(228, 238, 245, 0.6);
+  }
+
+  .sidebar-mark-info .sidebar-info-panel section.sidebar-info-notes.editable {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .sidebar-mark-info .sidebar-info-panel section.sidebar-info-notes a {
+    color: $dark-text;
+  }
+
+  .sidebar-mark-info .button-field .copy-link {
+    background: $dark-elevated;
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  .sidebar-mark-info .button-field .copy-link svg {
+    fill: $dark-icon-strong;
+  }
+
+  .sidebar-mark-info .mark-title .button-field input,
+  .sidebar-mark-info .mark-url .button-field input {
+    background: rgba(255, 255, 255, 0.06);
+    color: $dark-muted-strong;
+  }
+
+  .sidebar-mark-info .sidebar-label a,
+  .sidebar-mark-info .sidebar-label #label-chosen {
+    color: $dark-muted-strong;
+  }
+
+  .sidebar-mark-info .sidebar-label #label-chosen {
+    background: $dark-elevated;
+  }
+
+  .sidebar-mark-info .sidebar-info-panel section a.social-link {
+    background: $dark-elevated;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .sidebar-mark-info .sidebar-info-panel section a.social-link i {
+    color: $dark-icon-strong;
+  }
+
+  .sidebar-content .selectize-control .selectize-input {
+    background: $dark-elevated;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: $dark-text;
+  }
+
+  .sidebar-content .selectize-control .selectize-input input {
+    color: $dark-text;
+  }
+
+  .sidebar-content .selectize-control .selectize-dropdown {
+    background: $dark-elevated;
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 18px rgba(8, 18, 27, 0.5);
+  }
+
+  .sidebar-content .selectize-control .selectize-dropdown .create {
+    background: $dark-elevated;
+    color: $dark-text;
+  }
+
+  .sidebar-content .selectize-control .selectize-dropdown .option {
+    color: $dark-text;
+  }
+
+  body.label-1 .main-content .marks-heading { color: lighten($color_grey, 10%); }
+  body.label-2 .main-content .marks-heading { color: $color_orange; }
+  body.label-3 .main-content .marks-heading { color: $color_blue; }
+  body.label-4 .main-content .marks-heading { color: $color_yellow; }
+  body.label-5 .main-content .marks-heading { color: $color_purple; }
+  body.label-6 .main-content .marks-heading { color: $color_green; }
+  body.label-7 .main-content .marks-heading { color: $color_pink; }
+}
