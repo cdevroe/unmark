@@ -49,7 +49,7 @@
 
           endif; ?>
           <section id="tags-<?php print $mark->mark_id; ?>" data-id="<?php print $mark->mark_id; ?>">
-            <input data-mark-id="<?php print $mark->mark_id; ?>" type="text" id="input-tags" class="mark-added-tags-area selectize" placeholder="e.g. work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>">
+            <input data-mark-id="<?php print $mark->mark_id; ?>" autocomplete="off" type="text" id="input-tags" class="mark-added-tags-area selectize" placeholder="e.g. work, technology, interview" value="<?php if ( !empty($mark->tags)) { print $tag_csv; } ?>">
           </section>
           <?php
           $tagcount = 6; // Number of tags to show
