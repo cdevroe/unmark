@@ -3,6 +3,8 @@ Unmark
 
 The open source to-do application for bookmarks.
 
+> **Notice:** Unmark is no longer actively developed or maintained. Its successor is Rinku: visit the [Rinku website](https://cdevroe.com/rinku) or view [Rinku on GitHub](https://github.com/cdevroe/rinku).
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/cdevroe/unmark)](../../issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/cdevroe/unmark)](../../pulls)
@@ -81,11 +83,11 @@ Unmark currently supports importing from Unmark's hosted version, any self-hoste
 
 Unmark was originally created by [Colin Devroe](http://cdevroe.com/). It was a side-project called Nilai (the Indonesian word for "mark") and rebuilt from the ground up by Plain, a small software company, which included Jeff Johns, Kyle Ruane, Tim Whitacre, Chris Fehnel, Jakub Jakubiec and Colin Devroe.
 
-Now it is being maintained by Colin, Kyle and the community in their spare time.
+It was subsequently maintained by Colin, Kyle and the community in their spare time.
 
 ## Contributors
 
-Currently being maintained by: [@cdevroe](https://github.com/cdevroe) and [@kyleruane](https://github.com/kyleruane).
+Previously maintained by: [@cdevroe](https://github.com/cdevroe) and [@kyleruane](https://github.com/kyleruane).
 
 Extra special thanks to: 
 
